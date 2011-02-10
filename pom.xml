@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+	  <artifactId>lutece-plugins-pom</artifactId>
+	  <groupId>fr.paris.lutece.plugins</groupId>
+	  <version>2.25</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.paris.lutece.plugins</groupId>
+	<artifactId>plugin-directory</artifactId>
+	<packaging>lutece-plugin</packaging>
+	<version>2.0.5-SNAPSHOT</version>
+	<name>Lutece directory plugin</name>
+	
+	<repositories>
+	  <repository>
+	    <id>lutece</id>
+	    <name>luteceRepository</name>
+	    <url>http://dev.lutece.paris.fr/maven_repository</url>
+	    <layout>default</layout>
+	  </repository>
+	  <repository>
+          <id>luteceSnapshot</id>
+          <name>luteceSnapshot</name>
+          <url>http://dev.lutece.paris.fr/snapshot_repository</url>
+          <snapshots>
+              <enabled>true</enabled>
+          </snapshots>
+        </repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+	    	<groupId>fr.paris.lutece</groupId>
+	    	<artifactId>lutece-core</artifactId>
+	    	<version>[2.4.0,3.0.0-SNAPSHOT)</version>
+	    	<type>lutece-core</type>
+	   </dependency>
+	   <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20080701</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.paris.lutece.plugins</groupId>
+			<artifactId>library-image</artifactId>
+			<version>[1.0.0,3.0.0-SNAPSHOT)</version>
+		</dependency>
+   </dependencies>
+
+   <properties>
+		<componentName>directory</componentName>
+		<jiraProjectName>DIRECTORY</jiraProjectName>
+		<jiraComponentId>10148</jiraComponentId>
+	</properties>
+</project>

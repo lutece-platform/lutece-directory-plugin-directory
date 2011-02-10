@@ -1,0 +1,6 @@
+<#if record_field.file?exists>
+	<a  href="jsp/site/plugins/directory/DoDownloadFile.jsp?id_file=${record_field.file.idFile}"/>
+		${record_field.file.title}(${record_field.file.size} O)
+	</a>
+</#if>
+							 

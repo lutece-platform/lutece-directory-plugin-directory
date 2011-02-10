@@ -1,0 +1,16 @@
+<div class="content-box">
+  <h2> #i18n{directory.tasks_form_workflow.title}</h2>
+      <form action="jsp/admin/plugins/directory/DoSaveTasksFormWorkflow.jsp?plugin_name=directory" method="post" name="" id=""  enctype="multipart/form-data" >
+	   
+	   <input name="id_action" value="${id_action}" type="hidden" />
+	   <input name="id_record" value="${id_record}" type="hidden" />
+	   	
+	   	${tasks_form}
+	   	
+	    <p>
+	  		<input type="submit" value="#i18n{workflow.tasks_form_test_workflow.button_save}" class="button" name="save" />
+	  		<input type="submit" value="#i18n{workflow.tasks_form_test_workflow.button_cancel}" class="button" name="cancel" />
+	   </p>
+   		  
+   	</form>	  
+ </div>

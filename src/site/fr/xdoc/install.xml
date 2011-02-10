@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" ?>
+<document>
+	<properties>
+	</properties>
+	<body>
+		<section name="Installation">
+			<p>
+				Ce plugin respecte les normes d'installation de Lutèce et peut être
+				ajouté en dépendance d'un site Lutèce (voir la
+				<a
+					href="http://dev.lutece.paris.fr/wikilutece/index.php?title=R%C3%A9alisation_d%27un_site">documentation de création d'un site Lutèce</a>
+				sur le wiki).
+			</p>
+			<p>
+				<a href="http://dev.lutece.paris.fr/fr/install.html">Cliquer ici</a>
+				pour accèder à la page d'installation et de configuration d'un site
+				Lutèce.
+			</p>
+		</section>
+	</body>
+</document>

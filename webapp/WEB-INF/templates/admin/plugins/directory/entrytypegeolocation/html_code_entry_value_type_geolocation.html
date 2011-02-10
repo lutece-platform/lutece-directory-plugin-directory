@@ -1,0 +1,16 @@
+<#if record_field.field?exists>
+	<#if record_field.field.title == 'address'>
+		<#if record_field.value?has_content> ${record_field.value} <#else> - </#if>
+	<#elseif record_field.field.title == 'X'>
+		<#if !(record_field.value?has_content) || (record_field.value == '0')>
+			#i18n{directory.message.noGeolocation}
+		<#else>
+			<input type="hidden" name="geolocation" value="${record_field.entry.idEntry}" />
+			<input type="hidden" id="${record_field.entry.idEntry}_x" name="x" value="${record_field.value}"/>
+		</#if>
+	<#elseif record_field.field.title == 'Y'>
+		<#if record_field.value?has_content && record_field.value != '0'>
+			<input type="hidden" id="${record_field.entry.idEntry}_y" name="y" value="${record_field.value}"/>
+		</#if>
+	</#if>
+</#if>

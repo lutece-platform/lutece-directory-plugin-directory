@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>
+            Menu principal du plugin  directory
+        </title>
+    </properties>
+    <body>
+        <section name="Plugin Directory">
+             <p>
+            	 Le menu principal récapitule en fonction des rôles de l'utilisateur courant les fonctionnalités nécessaires à la gestion des annuaires.
+            </p>
+
+             <ul>
+                 <li>Gestion des annuaires</li>
+                 <li>Gestion des feuilles de transformation</li>
+                 <li>Gestion de l'indexation des annuaires</li>
+             </ul>
+           </section>
+   </body>
+</document>       
+             

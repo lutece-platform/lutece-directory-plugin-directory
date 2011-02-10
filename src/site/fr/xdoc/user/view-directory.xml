@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>
+           Visualisation sur le site des annuaires créés
+        </title>
+    </properties>
+    <body>
+		<section name="Visualisation des annuaires sur le site">
+			<p>
+				Vous pouvez accèder sur le site à la liste des annuaires activés à partir de l'url "jsp/site/Portal.jsp?page=directory" 
+				
+			</p>
+				<p>
+					<center>
+						<img src="images/view_all_directory_fr.png" />
+					</center>
+				</p>
+				
+				<p>
+				Vous pouvez accèder à l'annuaire que vous avez créer en cliquant sur son titre.
+				</p>
+				
+		</section>
+		<section name="Recherche de fiches à partir de l'annuaire">
+			<p>
+					Vous pouvez rechercher des fiches à partir du formulaire de recherche dédié à votre annuaire.
+				
+			</p>
+				<p>
+					<center>
+						<img src="images/view_directory_fr.png" />
+					</center>
+				</p>
+				
+		</section>
+		<section name="Visualisation d'une fiche">
+			<p>
+				Vous pouvez  visualiser le contenu des fiches de votre annuaire
+				
+			</p>
+				<p>
+					<center>
+						<img src="images/view_directory_record_fr.png" />
+					</center>
+				</p>
+				
+		</section>
+		
+		
+   </body>
+</document>       
+             

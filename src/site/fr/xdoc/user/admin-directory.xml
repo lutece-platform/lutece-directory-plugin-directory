@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Gestion des annuaires</title>
+	</properties>
+	<body>
+		<section name="Gestion des annuaires">
+			<p>
+				L’interface de gestion des annuaires récapitule en fonction
+				 des rôles de l’utilisateur courant les différentes actions
+				 pouvant être effectuées sur un annuaire.   
+			</p>
+				<p>
+					<center>
+						<img src="images/manage_directory_fr.png"/>
+					</center>
+				</p>
+			<ul>
+				<li>Création d’un annuaire</li>
+				<li>Modification d’un annuaire</li>
+				<li>Gestion des fiches de l’annuaire</li>
+				<li>Importation de fiches dans l’annuaire</li>
+				<li>Suppression de l’ensemble des fiches d’un annuaire</li>
+				<li>Activation/Désactivation d’un annuaire</li>
+				<li>Duplication d’un annuaire</li>
+				<li>Suppression d’un annuaire</li>
+			</ul>
+			<p>
+				La liste des annuaires  est triée par date de création, du plus récent au plus ancien.
+				Les filtres sur le statut  et sur l'appartenance d'un annuaire à un groupe de travail 
+				vous permettent d’affiner cette liste.
+			</p>
+		</section>	
+		<section name="Création d’un annuaire">
+			<p>
+				L'interface de saisie suivante récapitule les informations nécessaires à la création d'un annuaire.
+			</p>
+			<p>
+				<center>
+					<img src="images/create_directory_fr.png" />
+				</center>
+			</p>
+			<ul>
+				<li>
+					Titre de l’annuaire: Ce champ est obligatoire, il permet d’identifier un annuaire parmi 
+					l’ensemble des annuaires listés dans l’interface d’administration
+				</li>
+				<li>
+					Description: Ce champ est obligatoire il permet de fournir un descriptif de l’annuaire
+				</li>
+				
+				<li>
+					Groupe de travail: La sélection d'un groupe de travail permet d'associer un annuaire à un groupe de travail Lutèce.
+					L'administration de l’annuaire sera alors restreinte aux utilisateurs faisant parti du groupe sélectionné
+				</li>
+				<li>
+					Accès restreint au rôle: La sélection d'un rôle permet d'associer un annuaire à un rôle front office.
+					La visualisation de l’annuaire ne sera alors rendu possible qu’aux utilisateurs du site disposant du rôle sélectionné
+					(prérequis : L’authentification Front office doit être activée)
+				</li>
+				<li>
+					Présentation du formulaire de recherche: Ce champ est obligatoire il permet de sélectionner la feuille de transformation
+				    à appliquer sur le formulaire de recherche de l’annuaire      
+				</li>
+				<li>
+					Présentation de la liste résultats: Ce champ est obligatoire il permet de sélectionner la feuille de transformation
+					 à appliquer sur la liste de résultats
+				</li>
+				<li>
+					Présentation de la fiche résultat: Ce champ est obligatoire il permet de sélectionner la feuille de transformation 
+					à appliquer sur la fiche résultat.
+					Les feuilles de transformations proposées dans les différentes listes déroulantes ci-dessus 
+					peuvent être administrées dans le menu 
+					<a href="admin-directory-transformation.html" title="Gestion des feuilles de transformation">
+								Gestion des feuilles de transformation 
+					</a>.
+					Ces feuilles de transformation permettent de définir la structure (HTML) ainsi que les styles (CSS) 
+					de présentations à appliquer aux différents éléments de l’annuaire (Coté Front Office)
+				</li>
+				<li>
+					Nombre de résultats par page: Ce champ est obligatoire, il permet d’indiquer le nombre de résultats
+					à afficher par page lors d'une recherche utilisateur 
+				</li>
+				<li>
+					Message d’indisponibilité: Ce champ est obligatoire, le message saisi remplacera le formulaire de recherche
+					 lorsque l’annuaire sera désactivé
+				</li>				
+		</ul>	
+		 <p>
+				La gestion des différents champs qui composeront l’annuaire est accessible dans l’interface de modification d’un annuaire. 
+				Il faut donc  renseigner l’ensemble des informations nécessaires à la création d’un annuaire avant de pouvoir accéder 
+				à cette fonctionnalité.
+		 </p>
+		</section>
+		<section name="Modification d’un annuaire">
+			<p>
+				L'interface de modification permet de modifier les informations renseignées lors de la création  
+				et d'administrer les champs de l’annuaire.
+			</p>
+			
+			<p>
+				<center>
+						<img src="images/modify_directory_fr.png" />
+						
+				</center>
+			</p>
+			<p>
+				Les actions possibles sur les entrées d’un annuaire (champs, regroupement) sont les suivantes :
+				<ul>
+					<li>Création d’un nouveau champ à partir de son type</li>
+					<li>Création d’un regroupement </li>
+					<li>Déplacement d’un champ dans l’annuaire</li>
+					<li>Modification d’un champ</li>
+					<li>Duplication d’un champ</li>
+					<li>Suppression d’un champ</li>
+					
+				</ul>
+			</p>	
+
+			<p>
+				Pour créer un nouveau champ, il suffit de sélectionner dans la liste des champs possibles, le type de champ à insérer 
+				et de cliquer sur le bouton 'Ajouter'.
+				Lors de la demande de création, si l’annuaire contient des fiches, un message d’erreur s’affiche vous indiquant 
+				que vous ne pouvez pas créer de champs tant que l’annuaire n’est pas vide.
+		   </p>
+		    <p>	  
+				 Pour regrouper des champs, il suffit de créer un 'regroupement', en saisissant son libellé 
+				 puis de déplacer les champs concernés à l’intérieur de ce dernier.
+			</p>
+			<p>  
+				Le déplacement des entrées dans le formulaire se fait en utilisant les flèches ‘bas’ et ‘haut’ placées à coté de chaque entrée. 
+				L'insertion des champs dans un regroupement se fait en cliquant sur l’icône correspondante puis en sélectionnant le regroupement de destination. 
+				De même pour sortir un champ d’un regroupement il suffit de cliquer sur l’icône correspondante, le champ se place alors en dernière position dans la liste des champs de l’annuaire. 
+			</p>
+			<p>
+				Lors de la demande de suppression d’un champ si l’annuaire contient des fiches un message d’erreur s’affiche 
+				vous indiquant que vous ne pouvez pas supprimer un champ si l’annuaire n’est pas vide.
+			</p>
+			
+			<subsection name="Gestion des champs de l'annuaire">
+				<p>
+					Les différents types de champs pouvant être administrés sont les suivants:
+					<ul>
+					  <li>Zone de texte court</li>
+					  <li>Zone de texte long</li>
+					  <li>Date</li>
+					  <li>Commentaire</li>
+					  <li>Liste déroulante</li>
+					  <li>Bouton radio</li>
+					  <li>Case à cocher</li>
+					  <li>Image</li>
+					  <li>Fichier</li>
+					</ul>	  
+				</p>	
+			 <p>  
+				 Chaque champ dispose de  caractéristiques communes à l’ensemble  des champs  ainsi que de caractéristiques spécifiques à son type.
+				Les caractéristiques communes à tous les champs  sont les suivantes:
+				<ul>
+					  <li>
+							Libellé: Ce champ de saisie est obligatoire,  il permet de définir un nom au  champ de l’annuaire
+					  </li>
+					  <li>
+							Aide (Formulaire de saisie): Il permet d’ajouter une aide à la saisie. 
+							Cette dernière sera placée à coté du champ dans l’interface de saisie d’une fiche de l’annuaire  
+					 </li>
+					 <li>
+							 Aide (Formulaire de recherche): Il permet d’ajouter une aide à la saisie. 
+							 Cette dernière sera placée à coté du champ dans le formulaire de recherche de l’annuaire 
+							 (Cette option n’est disponible que pour les types de champs pouvant faire l’objet de recherche)
+					  </li>
+					  <li>
+							 Commentaire: permet de fournir un descriptif du champ
+					  </li>
+					  <li>
+							Champ obligatoire: Cette option permet de vérifier lors de la saisie d’une fiche  que le champ a bien été renseigné par l’utilisateur 
+					  </li>
+					  <li>
+					  		Présent dans la recherche: En cochant cette option vous indiquez que le champ sera présent dans le formulaire de recherche.
+					  		Il sera donc proposé à l’utilisateur la possibilité d’effectuer des recherches sur la valeur de ce champ
+					  		(Cette option n’est disponible que pour les types de champs pouvant faire l’objet de recherche).
+							Attention si vous sélectionnez cette option  après avoir saisie des fiches, il est nécessaire d’effectuer
+							une réindexation totale de l’annuaire. 
+							Cette opération est nécessaire  pour que les fiches  soit prises en compte
+							lors d’une recherche utilisateur sur le champ concerné.
+							Pour savoir comment lancer une indexation totale reportez-vous au chapitre
+							<a href="admin-directory-index.html" title="Gestion de l'indexation">
+									Gestion de l'indexation
+							</a>	
+					  </li>
+					  
+					   <li>
+					   		Présent dans la recherche avancée: Cette option permet d’indiquer que le champ de recherche ne sera proposé
+					   		à l’utilisateur qu'en recherche avancée. Attention cette option n’est prise en compte que
+					   		 dans le cas ou le champ a été sélectionné comme faisant partie de la recherche
+					   		  (Cette option n’est disponible que pour les types de champs pouvant  faire l’objet de recherche)
+					   </li>
+					    <li>		  
+							Présent dans la liste résultats: Cette option indique que la valeur du champ 
+							doit faire partie des informations à afficher dans la liste résultats.
+						</li>
+						<li>
+							Présent dans la fiche résultat: Cette option indique que la valeur du champ 
+							doit faire partie des informations à afficher dans le descriptif d’une fiche.
+
+						</li>						  
+					</ul>
+				</p>
+				<subsection name="Champ de type Zone de texte court">
+					<p>
+						<center>
+							<img src="images/modify_entry_text_fr.png" />
+						</center>
+					</p>
+					<p>	
+						Les caractéristiques spécifiques aux champs de type « Zone de texte court »  sont les suivantes :
+					<ul>
+						<li>
+							Valeur par défaut: Ce champ donne la possibilité de pré remplir le champ  avec le message saisi
+						</li>
+						<li>
+						 	Longueur de la zone de texte: Ce  champ de saisie est obligatoire et permet de spécifier la taille 
+						 	d’affichage du champ
+						 </li>
+						 <li>	
+							Longueur maximale de la zone de texte: Ce  champ de saisie permet de spécifier la taille de saisie  maximale du champ
+						</li>
+					</ul>	
+					</p>
+					<p>		
+					Dans l’interface de modification  d’un champ  de type« Zone de texte court » il est possible de demander que des vérifications soient effectuées lors de la saisie d’une fiche de l’annuaire. Les vérifications proposées sont fournies par le service d’expression régulière du cœur de Lutèce. Cette liste d’expressions régulières est indépendante du plugin Directory et s’administre à partir du menu « Gestion des expressions régulières » (prérequis : Le service d’expression régulière est activé).
+					Les vérifications associées au champ  peuvent par exemple servir à  tester la validité d’une adresse mail ou d’un numéro de téléphone.
+					Lors de la saisie d’une fiche de l’annuaire si le texte renseigné ne correspond pas à une des vérifications, le message d’erreur associé à la vérification s’affiche.
+				 </p>
+				</subsection>
+				<subsection name="Champ de type Zone de texte long">
+					<p>
+						<center>
+								<img src="images/modify_entry_text_area_fr.png" />
+							
+						</center>
+					</p>
+					<p>	
+						Les caractéristiques spécifiques aux champs de type « Zone de texte Long » sont les suivantes :
+					<ul>
+						<li>
+							Valeur par défaut: Ce champ donne la possibilité de pré remplir le champ  avec le message saisi
+						</li>
+						<li>
+						 	Longueur de la zone de texte: Ce  champ de saisie est obligatoire et permet de spécifier la longueur d’affichage du champ
+						 </li>
+						 <li>	
+							Hauteur  de la zone de texte: Ce  champ de saisie est obligatoire et permet de spécifier la hauteur d’affichage du champ
+						</li>
+					</ul>	
+					</p>
+				</subsection>
+				<subsection name="Champ de type date">
+					<p>
+						<center>
+							<img src="images/modify_entry_date_fr.png" />
+						</center>
+					</p>
+					<p>	
+						Les caractéristiques spécifiques aux champs de type « Date» sont les suivantes :
+					<ul>
+						<li>
+							Valeur par défaut: Ce champ donne la possibilité de pré remplir le champ avec la date renseignée
+						</li>
+					</ul>
+					</p>	
+					<p>
+						Lors de la saisie d’une fiche dans l’annuaire  la validité de la date saisie est automatiquement vérifiée.
+						 Si la date n’est pas valide un message d’erreur s’affiche 
+					
+					</p>
+				</subsection>
+				<subsection name="Champ de type commentaire">
+					<p>
+						<center>
+								<img src="images/modify_entry_comment_fr.png" />
+								
+						</center>
+					</p>
+					<p>	
+						Les champs de type «Commentaire »  permettent d’insérer des commentaires entre les champs de saisies
+					   du formulaire de soumission d’une fiche.
+						L’interface de saisie d’un commentaire se compose du champ :
+						<ul>
+							<li>
+								Commentaire: Ce champ de saisie est obligatoire 
+							</li>
+						</ul>
+					</p>	
+				</subsection>
+				<subsection name="Les champs de type Liste déroulante,Bouton radio,Case à cocher">
+					<p>
+						<center>
+						
+								<img src="images/modify_entry_select_fr.png" />
+								
+						</center>
+					</p>
+					<p>	
+						Ces types de champs permettent de proposer à l’utilisateur de choisir des valeurs prédéfinies.
+						Ils disposent des caractéristiques communes à tous les champs de l’annuaire ainsi que d’une gestion des valeurs prédéfinies.
+						La gestion des différentes valeurs sélectionnables s’effectue via les interfaces de modification de ce type de champ.
+						Il est possible de créer, modifier, déplacer, supprimer des « valeurs prédéfinies ».
+						On accède à l’interface de création d’une «valeur prédéfinie» en cliquant sur le bouton «Créer un élément associé ».
+					</p>
+					
+					<p>
+						<center>
+								<img src="images/modify_entry_select_field_fr.png" />
+							
+						</center>
+					</p>
+					<p>
+						Les caractéristiques d’un élément  associé sont les suivantes :
+					
+					<ul>
+						<li>
+							Titre: Ce champ permet de choisir le libellé de l’élément. Ce libellé peut être vide
+						</li>
+						<li>
+						 	Valeur: Ce champ permet de choisir la valeur de l’élément.
+						 	C’est cette valeur qui sera stockée lors de la création d’une fiche.
+						 	Il est possible de ne pas affecter de valeur à un élément, dans ce cas l’élément est considéré comme étant « vide ».
+							Si le champ est  obligatoire, la sélection d'un élément « vide » lors de la saisie d’une fiche entraînera l’affichage d’un message d’erreur.
+							Lors d’une recherche dans l’annuaire la sélection d’un  élément « vide » ne sera pas prise en compte 
+						</li>
+						 <li>	
+							Valeur par défaut: Cette option permet de demander que cet élément soit présélectionné lors de la saisie d’une fiche.  
+						</li>
+						 <li>	
+							Accès restreint au rôle: La sélection d'un rôle permet d'associer un élément  à un rôle Front office. La visualisation de cet élément sera alors rendu possible qu’aux utilisateurs du site disposant du rôle sélectionné.
+						(prérequis: L’authentification Front office doit être activée).
+
+						</li>
+					
+					</ul>	
+					</p>
+				</subsection>
+				
+				<subsection name="Champ de type Image et Fichier">
+					<p>
+						<center>
+							<img src="images/modify_entry_img_fr.png" />
+						</center>
+					</p>
+					<p>	
+						Ces types de champs ne peuvent pas faire l’objet de recherche.
+						Les caractéristiques spécifiques aux champs de type Fichier et Image sont les suivantes :
+
+					<ul>
+						<li>
+							Longueur de la zone de texte: Ce  champ de saisie est obligatoire et permet de spécifier la longueur d’affichage du champ
+						</li>
+						<li>
+							Largeur d'affichage: Ce champ n'est présent que pour les champs de type image,
+							il permet de définir la largeur d'affichage des  images 	
+						 </li>
+						 <li>	
+							Hauteur d'affichage:Ce champ n'est présent que pour les champs de type image,
+							il permet de définir la hauteur d'affichage des  images
+						
+						</li>
+					</ul>	
+					</p>
+					<p>		
+						Dans l’interface de modification  de ces  types de champs, il est possible de demander que des vérifications 
+						sur le type MIME du fichier uploadé soit effectuées.
+						Les vérifications proposées sont fournies par le service d’expression régulière du cœur de Lutèce. 
+						Cette liste d’expressions régulières est indépendante du plugin Directory et s’administre à partir du menu 
+						« Gestion des expressions régulières » (prérequis : Le service d’expression régulière est activé).
+						Les vérifications  peuvent par exemple servir à  tester si le fichier télécharger est une image ou un fichier PDF. 
+						Lors de la saisie d’une fiche de l’annuaire si le type MIME du fichier  ne correspond pas à une des vérifications, 
+						le message d’erreur associé à la vérification s’affiche.
+					</p>
+				</subsection>
+		</subsection>
+	</section>
+	<section name="Gestion des fiches de l’annuaire">
+			<p>
+				Cette fonctionnalité est accessible via  l’icône représentant l’action d’administration des fiches de l’annuaire.
+			</p>
+			
+			<p>
+				<center>
+						<img src="images/manage_directory_record_fr.png" />
+						
+				</center>
+			</p>
+		<p>	
+						Cette interface d’administration se compose de trois blocs:
+
+					<ul>
+						<li>
+							Le premier bloc contient le formulaire de recherche.
+							Les champs présents dans ce formulaire ont été sélectionné comme faisant partie de la recherche.	
+							Ce formulaire permet de filtrer la liste des fiches de l’annuaire
+						</li>
+						<li>
+							Le deuxième bloc contient les fiches de l’annuaire résultats de la  recherche.
+							Les champs à afficher pour chaque fiche  ont été sélectionné comme faisant partie de la liste résultats. 
+							Les fiches de l’annuaire affichées sont triées par date de création, du plus ancien au plus récent
+						</li>
+						<li>
+							Le dernier bloc permet d’exporter les fiches de l’annuaire.
+							Il est possible d’exporter l’ensemble des fiches ou le résultat d’une recherche.
+							Les formats disponibles pour l’export des fiches  
+							peuvent être administrées dans le menu 
+							<a href="admin-directory-transformation.html" title="Gestion des feuilles de transformation">
+								Gestion des feuilles de transformation 
+							</a>	
+						</li>
+					</ul>
+		</p>						
+		<p>	
+						Les différentes actions pouvant être effectuées sur les fiches de l’annuaire sont:
+
+					<ul>
+						<li>Création d’une fiche</li>
+						<li>Modification d’une fiche</li>
+						<li>Duplication d’une fiche</li>
+						<li>Suppression d’une fiche</li>
+						<li>Activation/Désactivation d’une fiche</li>
+					</ul>
+		</p>
+			
+		
+										
+		<subsection name="Création,Modification d'une fiche de l'annuaire">
+			<p>
+				<center>
+					<img src="images/modify_directory_record_fr.png" />
+				</center>
+			</p>
+			<p>
+				Les interfaces de création et modification d’une fiche sont composées 
+				des champs de l’annuaire et  du champ:
+				<ul>
+						<li>
+							Accès restreint au rôle: ce champ permet d'associer une fiche à un rôle Front office.
+							 La  visualisation de cet fiche sera alors rendu possible qu’aux utilisateurs du site disposant du rôle sélectionné
+						 	(prérequis : L’authentification Front office doit être activée)
+						 </li>
+						
+				</ul>			
+			</p>		
+		</subsection>			
+	</section>	
+	<section name="Importation de fiches dans l’annuaire">
+			<p>
+				Cette fonctionnalité est accessible via  l’icône représentant l’action d’importation.
+				Elle vise à permettre l’import de fiches dans l’annuaire à partir de fichiers CSV fournis par les webmestres.
+			</p>
+			
+			<p>
+				<center>
+				
+						<img src="images/import_directory_record_fr.png" />
+						
+				</center>
+			</p>
+			<p>
+				Les caractéristiques des fichiers CSV à fournir  sont:
+				<ul>
+						<li>
+							Le fichier doit être au format CSV
+						</li>
+						<li>
+							Chaque ligne du fichier contient les valeurs des différents champs d’une fiche de l’annuaire
+						</li>
+						<li>
+							La valeur des champs de la fiche doivent être séparées par la valeur de la propriété 
+							« directory.import.csv.delimiter »  défini dans le fichier « directory.properties ».
+							cette valeur est par défaut égale au caractère ';'
+						</li>
+						<li>
+							Pour les champs de type « Case à cocher », « Bouton radio » , « Liste déroulante »
+							les valeurs fournies doivent correspondent aux valeurs des différents éléments sélectionnables.
+							Voir les caractéristiques des champs de type « Case à cocher », « Bouton radio » , « Liste déroulante »
+						</li>
+						<li>
+							Dans les cas ou un champ de la fiche dispose de plusieurs valeurs(Exemple: Champ de type case à cocher)
+							il est nécessaire de séparer les différentes valeurs par le séparateur défini par la propriété 
+							«directory.import.multiple_value.delimiter»  .
+							Ce séparateur est par défaut égale au caractère ','
+
+						</li>
+				</ul>		
+			</p>
+			<p>
+				Avant d’insérer une fiche les règles de vérifications propres à chaque champ  sont appliquées.
+				Par exemple si un champ de saisie de l’annuaire est obligatoire, la valeur associée à ce champ ne doit pas être vide dans le fichier CSV.
+				Dans le cas ou une fiche ne satisfait pas aux règles de vérifications, elle n’est pas insérée dans l’annuaire et l’erreur associée à cette fiche est tracée. 
+				A la fin du processus le résultat de l’importation s’affiche.
+			    Ce résultat indique le nombre de lignes insérées et le nombre de lignes en erreurs.
+			    Chaque erreur survenue lors de l’import est affichée avec son numéro de ligne.   
+	    	</p>
+	    	<p>
+					Exemple de fichier CSV valide:
+					Prenons le cas ou nous souhaitons insérer les données  d’un fichier CSV dans un annuaire contenant trois champs intitulés: 
+					<ul>
+						<li>‘Nom’ de type ‘Zone de texte court’ </li>
+						<li>‘Date de naissance’ de type ‘date’</li>
+						<li>
+							‘Sports pratiqués’ de type  ‘Case à cocher ’ possédant deux éléments sélectionnables :
+							<ul>
+									<li>Un élément de libellé ‘Tennis’ et de valeur ‘TEN’ </li>
+									<li>Un élément de libellé ‘Football’ et de valeur ‘FOOT’</li>
+							</ul>
+						</li>
+					</ul>
+			</p>
+			<p>
+					Une exemple d'un fichier CSV valide serait:
+<source>
+DUPONT;20/11/1950 ;TEN,FOOT
+DUBOIS ;21/10/1930 ;TEN
+DURAND;25/12/1960 ;FOOT
+DUPUIS;29/12/1975 ;TEN,FOOT
+</source>
+					
+			</p>					
+	</section>
+	<section name="Suppression d'un annuaire">
+			<p>
+				Pour supprimer un annuaire il faut cliquer sur l’icône représentant l’action de suppression associée à l’annuaire.
+				La suppression d’un annuaire entraîne la suppression de toutes les fiches associées.
+				Cette action n’est disponible que si l’annuaire a été préalablement désactivé. 
+			</p>
+	</section>
+	<section name="Activation/Désactivation d'un annuaire">
+			<p>
+				Pour Activer un annuaire il faut cliquer sur l’icône représentant l’action d’activation associée à l’annuaire.
+				Cette action est possible si l’annuaire est dans l’état ‘indisponible’ De même il est possible de désactiver un annuaire.
+				Cette action est possible si l’annuaire est dans l’état ‘disponible’.
+				Coté front office le formulaire de recherche  sera  alors remplacé par le  message d’indisponibilité  de l’annuaire
+			</p>
+	</section>		
+	<section name="Suppression de l’ensemble des fiches d’un annuaire">
+			<p>
+				Pour supprimer l'ensemble des fiches d'un annuaire il faut cliquer sur l’icône représentant cette action.				
+			</p>
+	</section>
+	<section name="Duplication d'un annuaire">
+			<p>
+				Pour dupliquer un annuaire il faut cliquer sur l’icône représentant l’action de duplication associée à l’annuaire.
+				L’annuaire nouvellement créé a le statut inactivé, il apparaît en tête dans la liste des annuaires, la liste des fiches  lui étant associée est vide. 
+			</p>
+	</section>
+</body>
+</document>

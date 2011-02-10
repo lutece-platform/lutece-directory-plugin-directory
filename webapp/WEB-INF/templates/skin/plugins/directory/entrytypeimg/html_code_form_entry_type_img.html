@@ -1,0 +1,44 @@
+<div class="form-element">
+	 <span class="form-label">
+		 <label for="${entry.idEntry}">	
+				${entry.title}
+				<#if entry.mandatory>
+					*
+				</#if>
+				 : 
+		</label>
+	</span>
+	 <span class="form-field-column">	 
+		<#list entry.fields as field>
+			<#if default_values?has_content>
+					<#list default_values as default_value>
+						<#if default_value.file?exists  && default_value.entry?exists>
+							<img  src="image?resource_type=directory_entry_img&id=${default_value.file.idFile}"
+							<#if default_value.entry.displayWidth!=-1>
+									  width="${default_value.entry.displayWidth}"
+		 					</#if> 
+							<#if default_value.entry.displayHeight!=-1>
+		 								height="${default_value.entry.displayHeight}"
+							 </#if> 
+							/>
+							#i18n{directory.html_code_form_entry_img.label_update_file}: <input class="checkbox" type="checkbox" name="update_entry_${entry.idEntry}" />
+						<#else>
+							<input  type="hidden" name="update_entry_${entry.idEntry}" value="true" />
+						</#if>	
+	
+					</#list>	 	
+			 	<#else>
+			 		<input  type="hidden" name="update_file" value="true" />
+			 	</#if>
+			<input type="file" name="${entry.idEntry}" id="${entry.idEntry}" size="${field.maxSizeEnter}"/>
+			
+		</#list>
+		</span>	
+		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+			<span class="form-help">
+				<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
+					<span><pre> ${entry.helpMessage}</pre></span>
+				</a>
+			</span>
+		</#if>	
+</div>	

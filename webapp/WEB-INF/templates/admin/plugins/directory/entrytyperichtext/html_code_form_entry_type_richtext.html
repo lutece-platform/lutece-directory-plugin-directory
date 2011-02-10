@@ -1,0 +1,38 @@
+<div class="form-element">
+	
+	<span class="form-label">
+		<label for="entry_${entry.idEntry}">	
+			${entry.title}<#if entry.mandatory> * </#if> : 
+		</label>
+	</span>
+		
+    <span class="form-field-column">
+    	
+    	<#list entry.fields as field>
+		
+			<#if field.value?exists && !default_values?has_content>
+				<#assign field_value = field.value/>			
+			<#elseif default_values?has_content>
+				<#assign field_value = default_values[0].entry.convertRecordFieldValueToString(default_values[0],locale,false,false)/>
+		 	<#else>
+				<#assign field_value = ""/>
+			</#if>
+		
+			<div class="editor">
+				<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" class="richtext" 
+					style="width:100%" rows="20" cols="90">${field_value}</textarea>
+			</div>
+			
+		 </#list>
+		 
+	</span>
+	
+	<#if entry.helpMessage?exists && entry.helpMessage!=''>
+		<span class="form-help">
+			<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
+				<span><pre>${entry.helpMessage}</pre></span>
+			</a>
+		</span>
+	</#if>	
+		
+</div>

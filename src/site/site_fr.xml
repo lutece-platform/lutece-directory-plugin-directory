@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Lut&#232;ce - Directory">
+	<body>
+		<links>
+			<item name="EN" href="../index.html" />
+		</links>
+
+		<menu name="Aper&#231;u">
+			<item name="Introduction" href="index.html" />
+			<item name="T&#233;l&#233;chargement" href="download.html" />
+			<item name="Utilisation" href="/user/admin-plugin.html" collapse="true">
+                <item name="Gestion des annuaires" href="/user/admin-directory.html"/>
+                <item name="Gestion des feuilles de transformation" href="/user/admin-directory-transformation.html"/>
+				<item name="Gestion de l'indexation des annuaires" href="/user/admin-directory-index.html"/>
+				<item name="Visualisation des annuaires créés" href="/user/view-directory.html"/>
+			</item>
+		</menu>
+		
+		<menu name="T&#233;l&#233;chargements" inherit="bottom" >
+			     <item name="Versions stables" href="../../../stable_builds/plugins/plugin-directory/"/>
+			     <item name="Nightly builds" href="../../../nightly_builds/plugins/plugin-directory/" />
+		</menu>
+
+		<menu ref="reports" />
+		
+	</body>
+</project>

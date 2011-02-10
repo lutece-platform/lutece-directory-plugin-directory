@@ -1,0 +1,16 @@
+<#include "/admin/util/editor/editor.html" />
+<div class="content-box">
+  	<h2>#i18n{directory.modify_entry.title_group} : '${entry.directory.title}'</h2>
+ 	<form action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id=""  >
+    	<input name="id_entry" value="${entry.idEntry}" type="hidden" />
+   		<p>
+			<label for="title">#i18n{directory.create_entry.label_title} * : </label>
+			<input type="text" name="title" id="title" size="80" value="${entry.title}"  maxlength="255" />
+		</p>
+		<p>
+			<input type="submit" value="#i18n{directory.create_directory.button_save}" class="button"  name="save" / >
+			<input type="submit" value="#i18n{directory.create_directory.button_cancel}" class="button" name="cancel" />
+		</p>
+	</form>
+</div>
+<@initEditor />

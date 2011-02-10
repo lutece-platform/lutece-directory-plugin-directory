@@ -1,0 +1,42 @@
+<div class="content-box">
+ <h2>#i18n{directory.create_field.title}:'${field.entry.title}'</h2>
+ <form action="jsp/admin/plugins/directory/DoCreateField.jsp#list" method="post" name="" id=""  >
+   <p>
+    	<label for="title">#i18n{directory.create_field.label_title} * :  </label>
+    	<input type="text" name="title" id="title" size="80" value=""  maxlength="255" />
+    </p>
+    <p>
+    	<label for="value">#i18n{directory.create_field.label_value} * :  </label>
+    	<input type="text" name="value" id="value" size="80" value="" />
+    </p>
+  	<p>
+    	<label for="default_value">#i18n{directory.create_field.label_default_value}</label>
+    	<input name="default_value" value="1" type="checkbox" >
+  	</p>
+  	<#if field.entry.roleAssociated && role_list?exists >
+	   	<p>
+	    	<label for="role">#i18n{directory.create_field.label_role} : </label>
+        		 <@combo name="role_key" default_value="none" items=role_list />
+			 <br/>
+		  	<label>&nbsp;</label>
+		#i18n{directory.create_field.label_role}
+		</p>
+	</#if>
+	 <#if field.entry.workgroupAssociated && user_workgroup_list?exists> 
+		<p>
+		    <label for="">#i18n{directory.create_field.label_workgroup}  : </label>
+		     <@combo name="workgroup"  items=user_workgroup_list default_value="all" />
+			 <br/>
+			<label>&nbsp;</label>
+			#i18n{directory.create_field.label_workgroup_comment}
+		</p>
+	</#if>	
+  	<p>
+  		<input type="submit" value="#i18n{directory.create_field.button_save}" class="button" name="save" />
+  		<input type="submit" value="#i18n{directory.create_field.button_cancel}" class="button" name="cancel" />
+   </p>
+  </form>
+ </div>
+
+
+ 

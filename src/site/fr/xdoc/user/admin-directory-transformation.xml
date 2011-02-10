@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>
+           Gestion des feuilles de transformation
+        </title>
+    </properties>
+    <body>
+		<section name="Gestion des feuilles de transformation">
+			<p>
+				L’interface de gestion des feuilles de transformation
+				 récapitule les différentes actions pouvant être effectuées 
+				 sur une feuille de transformation
+			</p>
+				<p>
+					<center>
+						<img src="images/manage_directory_xsl_fr.png" />
+					</center>
+				</p>
+				<p>
+					<ul>
+						<li>Création d’une feuille de transformation</li>
+						<li>Modification d’une feuille de transformation</li>
+						<li>Suppression d’une feuille de transformation</li>
+					</ul>
+				 Les feuilles de transformation sont utilisées:
+				 <ul>
+						<li>
+							Coté Front Office  pour définir la structure (HTML) 
+							ainsi que les styles (CSS) de présentation à appliquer aux différents 
+							éléments de l’annuaire(formulaire de recherche,liste résultats,fiche résultat)
+						</li>
+						<li>
+							Coté Back office pour définir la structure des fichiers d’export des fiches de l’annuaire
+						</li>
+					</ul>
+					Par défaut la liste contient trois feuilles  de transformations dédiées aux différents éléments de l’annuaire:
+					<ul>
+						<li>Formulaire de recherche</li>
+						<li>Liste résultats</li>
+						<li>Fiche résultat</li>
+					</ul>
+					   Et deux feuilles de transformation dédiées à l’export des résultats:
+					   <ul>
+						<li>Export au format XML</li>
+						<li>Export au format CSV</li>
+					  </ul>
+				</p>
+				
+				<subsection name="Création d'une feuille de transformation">
+				<p>
+					L'interface de saisie suivante récapitule les informations nécessaires à la création d'une feuille de transformation
+				</p>
+				<p>
+					<center>
+						<img src="images/create_directory_xsl_fr.png" />
+					</center>
+				</p>
+				<p>
+					 <ul>
+						<li>
+							Nom : Ce champ de saisie est obligatoire et permet d’identifier la feuille de transformation
+						</li>
+						<li>
+							Utiliser Pour : Ce champ est obligatoire et permet de spécifier qu’elle utilisation sera faite de la feuille de transformation.
+							Les quatre cas d’utilisation  possibles sont :
+							<ul>
+								<li>
+									Export des résultats. Sélectionnez cette option si vous souhaitez que cette feuille de transformation soit proposée lors de l’export des données
+								</li>
+								<li>
+									Affichage du formulaire de recherche. Sélectionnez cette option si vous souhaitez que cette feuille de transformation soit proposée lors de création d’un annuaire dans la  liste « Présentation du formulaire de recherche »
+								</li>
+								<li>
+									Affichage de la liste résultats. Sélectionnez cette option si vous souhaitez que cette feuille de transformation soit proposée lors de création d’un annuaire dans la  liste « Présentation de la liste résultats »
+								</li>
+								<li>
+									Affichage d’une fiche résultat. Sélectionnez cette option si vous souhaitez que cette feuille de transformation soit proposée lors de création d’un annuaire dans la  liste « Présentation de la fiche résultat » 
+								</li>	
+							
+							</ul>
+						</li>
+						<li>
+							Description: Ce champ de saisie est obligatoire et permet d’ajouter un descriptif à la feuille de transformation
+						</li>
+						<li>
+							Extension du fichier généré : Ce champ de saisie est à renseigner que dans le cas ou la feuille de transformation est destinée à l’export des données.
+							Cette valeur permet de définir l’extension du fichier  généré lors de l’export
+						</li>
+						<li>
+							Fichier : Ce champ est obligatoire et permet d’uploder le fichier XSL utilisé durant la transformation(Le fichier fourni doit avoir une structure XML valide).    
+						</li>
+					</ul>
+				</p>
+			</subsection>
+          	<subsection name="Modification d'une feuille de transformation">
+	           <p>
+	             Pour accèder à l'interface de  modification d'une feuille de transformation il suffit de cliquer sur le libellé de la feuille souhaitée.
+	           </p>
+	       </subsection> 
+	       <subsection name="Suppression d’une feuille de transformation">
+	        <p>
+           Pour supprimer une feuille de transformation il faut cliquer sur l’icône représentant l’action de suppression associée à la feuille.
+		   La suppression d’une feuille de transformation n’est possible que si elle n’est  référencée par aucun annuaire
+
+           </p>
+           </subsection>
+           </section>
+   </body>
+</document>       
+             

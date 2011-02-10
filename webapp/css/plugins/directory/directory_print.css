@@ -1,0 +1,9 @@
+div#admin-header {display: none;}
+div#admin-header-menu-main {display: none;}
+img.icon {display: none;}
+
+div#top {margin-top:-60px;}
+div.content-box{margin:0px;padding:0px;}
+div.history {page-break-after:always;}
+
+input.button {display: none;}

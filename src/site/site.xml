@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+	<version />
+	<body>
+		<links>
+			<item name="FR" href="/fr/index.html" />
+		</links>
+		<menu name="Overview">
+			<item name="Introduction" href="index.html" />
+			<item name="Installation" href="install.html" />
+		</menu>
+		<menu name="Manuals">
+			<item name="User documentation" href="/admin-plugin.html" />
+		</menu>
+		<menu name="Downloads" inherit="bottom">
+			<item name="Released versions" href="../../stable_builds/plugins/plugin-directory/" />
+			<item name="Nightly builds" href="../../nightly_builds/plugins/plugin-directory/" />
+		</menu>
+		<menu ref="reports" />
+	</body>
+</project>

@@ -1,0 +1,53 @@
+<#function getName code reference_list>
+	<#if reference_list?has_content>
+		<#list reference_list as reference_item>
+			<#if reference_item.code = code>
+  				<#return reference_item.name>
+  			</#if>
+  		</#list>
+	</#if>
+	<#return "">
+</#function>
+
+<#function getChecked code reference_list>
+	<#if reference_list?has_content>
+		<#list reference_list as reference_item>
+			<#if reference_item.code = code>
+				<#if reference_item.checked>
+  					<#return "checked='checked'">
+  				<#else>
+  					<#return "">
+  				</#if>
+  			</#if>
+  		</#list>
+	</#if>
+	<#return "">
+</#function>
+
+<script type="text/javascript">
+	function doDisplayAdvancedSettings(isChecked, optionalDiv)
+	{
+		if (isChecked)
+		{
+			displayId('advanced_settings');			
+			hideId('settings');
+			if( optionalDiv != null )
+			{
+				hideId(optionalDiv);
+			}			
+			displayId('button_back');
+			hideId('button_advanced_settings');
+		}
+		else
+		{
+			hideId('advanced_settings');
+			displayId('settings');
+			if( optionalDiv != null )
+			{
+				displayId(optionalDiv);
+			}	
+			hideId('button_back');
+			displayId('button_advanced_settings');					
+		}
+	}
+</script>

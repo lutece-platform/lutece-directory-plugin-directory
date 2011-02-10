@@ -1,0 +1,156 @@
+<#include "/admin/plugins/directory/commons.html" />
+
+<script language="JavaScript" type="text/javascript">
+
+	window.onload = function() 
+	{
+		doDisplayAdvancedSettings( false );
+	}
+	
+</script> 
+
+<div id="content-box-actions">	
+  	<form id="button_advanced_settings" method="post" action="javascript:doDisplayAdvancedSettings(true)" style="visibility:hidden;display:none;">
+		<input type="submit" value="#i18n{directory.manage_directory.button_manage_advanced_parameters}" class="button bt-toolbar" />
+  	</form>	
+  	<form id="button_back" method="post" action="javascript:doDisplayAdvancedSettings(false)" style="visibility:hidden;display:none;">
+		<input type="submit" value="#i18n{directory.manage_directory.button_back}" class="button bt-toolbar" />
+  	</form>	
+</div>
+
+<form action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id=""  >
+	<div class="content-box" id="settings">
+		 <h2>#i18n{directory.modify_entry.title_field} : '${entry.directory.title}'</h2>
+		
+		    <input name="id_entry" value="${entry.idEntry}" type="hidden" />
+			<p>
+		    	<label for="title">#i18n{directory.create_entry.label_title} * : </label>
+		    	<input type="text" name="title" id="title" size="80" value="${entry.title}"  maxlength="255" />
+		    	<br/>
+				<label>&nbsp;</label>#i18n{directory.create_entry.label_title_comment}
+		 	</p>
+		   <p>
+		     <label for="help_message">#i18n{directory.create_entry.label_help_message} : </label>
+		     
+		     	<textarea  name="help_message"  id="help_message"  cols="80" rows="5">${entry.helpMessage}</textarea>
+			
+			 <br/>
+			 <label>&nbsp;</label> #i18n{directory.create_entry.label_help_message_comment}
+			</p>
+			<p>
+			     <label for="help_message_search">#i18n{directory.create_entry.label_help_message_search} : </label>
+			   		<textarea  name="help_message_search"  id="help_message_search"  cols="80" rows="5">${entry.helpMessageSearch}</textarea>
+				<br/>
+				 <label>&nbsp;</label> #i18n{directory.create_entry.label_help_message_search_comment}
+			</p>
+		    <p>
+		     <label for="comment"> #i18n{directory.create_entry.label_comment} : </label>
+		
+		     <textarea name="comment" cols="80" rows="2">${entry.comment}</textarea>
+		     </p>
+		    <p>
+		     <label for="">#i18n{directory.create_entry.label_type} : </label>
+		                #i18n{${entry.entryType.titleI18nKey}}
+			</p>
+			 <p>
+		  		<label for="value">#i18n{directory.create_entry.label_value_default} : </label>
+				<textarea name="value" id="value" cols="80" rows="2"><#list entry.fields as field>${field.value}</#list></textarea>
+			</p>
+		  <p>
+		    	<label for="mandatory">#i18n{directory.create_entry.label_mandatory} : </label>
+		   		 <#if entry.mandatory>
+		   		 	<input name="mandatory" value="1" type="checkbox" checked="checked" >
+		   		 <#else>
+		   			<input name="mandatory" value="1" type="checkbox" >
+		   		 </#if>	
+		   </p>
+		     <p>
+			    <label for="width">#i18n{directory.create_entry.label_width} * : </label>
+			    	<#list entry.fields as field>
+			    		<input type="text" name="width" id="width" size="5" value="${field.width}" />
+			    	</#list>	
+		  	 </p>
+		  	<p>
+		    	<label for="height">#i18n{directory.create_entry.label_height} * : </label>
+		    	 <#list entry.fields as field>
+		    		<input type="text" name="height" id="height" size="5" value="${field.height}" />
+		    	</#list>	
+		   	</p>
+			
+		    <p>
+		  		<input type="submit" value="#i18n{directory.modify_entry.button_save}" class="button"  name="save" / >
+		  		<input type="submit" value="#i18n{directory.modify_entry.button_cancel}" class="button" name="cancel" />
+		   	</p>
+			<br/>
+ 		</div>
+ 		
+ 		<div id="advanced_settings" class="content-box">
+		 	<h2>
+				#i18n{directory.create_directory.label_advancedsettings}
+			</h2>		 	
+	 		<p>
+		    	<label for="indexed">#i18n{directory.create_entry.label_indexed} : </label>
+		   		 <#if entry.indexed>
+		   		 	<input name="indexed" value="1" type="checkbox" checked="checked" >
+		   		 <#else>
+		   			<input name="indexed" value="1" type="checkbox" >
+		   		 </#if>	
+		  	 </p>
+		  	  <p>
+		    	<label for="shown_in_advanced_search">#i18n{directory.create_entry.label_shown_in_advanced_search} :</label>
+		   		 <#if entry.shownInAdvancedSearch>
+		   		 	<input name="shown_in_advanced_search" value="1" type="checkbox" checked="checked">
+		   		 <#else>
+		   		 	<input name="shown_in_advanced_search" value="1" type="checkbox" >
+		   		 
+		   		 </#if>	
+		   		<br/>
+			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_advanced_search_comment}
+			 </p>
+			 <p>
+		    	<label for="shown_in_result_list">#i18n{directory.create_entry.label_shown_in_result_list} :</label>
+		   		  <#if entry.shownInResultList>
+		   		 	<input name="shown_in_result_list" value="1" type="checkbox" checked="checked">
+		   		  <#else>
+		   		 		<input name="shown_in_result_list" value="1" type="checkbox" >
+		   		  
+		   		  </#if>	
+		   		<br/>
+			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_list_comment}
+			 </p>	
+		   	 <p>
+		    	 <label for="shown_in_result_record">#i18n{directory.create_entry.label_shown_in_result_record} :</label>
+		   			<#if entry.shownInResultRecord>
+		   			 	<input name="shown_in_result_record" value="1" type="checkbox" checked="checked">
+		   			  <#else>
+		   			  	<input name="shown_in_result_record" value="1" type="checkbox">
+		   			  </#if>	
+		   		<br/>
+			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_record_comment}
+			 </p>	
+		   	<p>
+		    	 <label for="shown_in_history">#i18n{directory.create_entry.label_shown_in_history} :</label>
+		   			<#if entry.shownInHistory>
+		   			 	<input name="shown_in_history" value="1" type="checkbox" checked="checked">
+		   			  <#else>
+		   			  	<input name="shown_in_history" value="1" type="checkbox">
+		   			  </#if>	
+		   		<br/>
+			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_history_comment}
+			 </p>
+			 <p>
+		    	<label for="shown_in_export">#i18n{directory.create_entry.label_shown_in_export} :</label>
+		    	<#if entry.shownInExport>
+		   			<input name="shown_in_export" value="1" type="checkbox" checked="checked" />
+		   		<#else>
+		   			<input name="shown_in_export" value="1" type="checkbox" />
+		   		</#if>
+		   		<br/>
+			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_export_comment}
+			</p>
+			<div class="alert">
+				 #i18n{directory.message.warning.entry_advanced_parameters_save}
+			</div>
+	</div>
+		
+</form>

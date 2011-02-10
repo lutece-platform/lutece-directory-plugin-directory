@@ -1,0 +1,19 @@
+<div class="content-box">
+  <h2> #i18n{directory.mass_print.page_title}</h2>
+  <form method="post" action="jsp/admin/plugins/directory/DoMassPrint.jsp">
+   <div id="form-content">
+			<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+			 <#list state_list as state>
+			 	<p>
+					<label>${state.name}</label>
+		    		<input class="checkbox" type="checkbox" name="${state.id}" value="${state.id}" />
+				</p> 
+			 </#list>
+	</div>
+	<br/>
+	<p>
+		<input type="submit" name="print"  value="#i18n{directory.mass_print.print}" class="button"  />
+		<input class="button" type="button" onclick="javascript:window.location.href='jsp/admin/plugins/directory/ManageDirectoryRecord.jsp?id_directory=${directory.idDirectory!}'" value="#i18n{directory.mass_print.button_back}" />
+	</p>
+	</form>
+</div>

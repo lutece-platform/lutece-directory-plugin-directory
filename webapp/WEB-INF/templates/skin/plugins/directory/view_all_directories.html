@@ -1,0 +1,16 @@
+<div class="span-22 prepend-1 append-1 append-bottom last">
+	<div class="portlet -lutece-border-radius">
+		<div>#i18n{directory.view_all_directory.title}</div>
+		<#if directory_list?has_content>
+			<ul>	      
+				<#list directory_list as directory>
+					<li>
+						<a href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" >${directory.title}</a>       
+					</li>
+				</#list>
+			</ul>    
+		<#else>
+			<i>#i18n{directory.view_all_directory.list_empty}</i>		
+		</#if>
+	</div>
+</div>

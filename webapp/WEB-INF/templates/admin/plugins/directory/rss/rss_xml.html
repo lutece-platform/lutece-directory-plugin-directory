@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<rss version="2.0">
+    <channel>
+        <title>${site_name}</title>
+        <link>${site_url}</link>
+        <description>${site_description}</description>
+        <language>${file_language}</language>
+        <image>
+            <url>
+                ${site_url}/images/local/skin/valid-rss.png
+            </url>
+            <title>${site_name}</title>
+            <link>${site_url}</link>
+        </image>
+        
+        <#list itemList as item>
+        <item>
+            <title>${item.entry_title}</title>
+            <link><#if item.entry_link?exists && item.entry_link??>${item.entry_link}<#else>${site_url}/jsp/site/Portal.jsp?page=directory&amp;id_directory_record=${item.id_record}&amp;view_directory_record=${id_directory}</#if></link>
+            <description><#if item.entry_image?exists>&lt;img src=&quot;${site_url}/image?resource_type=directory_entry_img&amp;id=${item.entry_image}&quot; <#if item.entry_image_width?exists>width=&quot;${item.entry_image_width}&quot; </#if><#if item.entry_image_height?exists>height=&quot;${item.entry_image_height}&quot; </#if>/&gt;&lt;br/&gt;</#if>
+            ${item.entry_description}</description>
+            <guid isPermaLink="false"><#if item.entry_link?exists && item.entry_link??>${item.entry_link}<#else>${site_url}/jsp/site/Portal.jsp?page=directory&amp;id_directory_record=${item.id_record}&amp;view_directory_record=${id_directory}</#if></guid>
+           <#setting locale="en_US">
+        <pubDate>${item.date?string("EEE, d MMM yyyy HH:mm:ss Z")}</pubDate>
+        </item>
+        </#list>
+        
+        
+    </channel>
+</rss>

@@ -1,0 +1,10 @@
+<#if record_field.file?exists && entry?exists >
+		<img  src="image?resource_type=directory_entry_img&id=${record_field.file.idFile}"
+		<#if entry.displayWidth!=-1>
+		  width="${entry.displayWidth}"
+		 </#if> 
+		<#if entry.displayHeight!=-1>
+		 	height="${entry.displayHeight}"
+		 </#if> 
+		/>
+</#if>							

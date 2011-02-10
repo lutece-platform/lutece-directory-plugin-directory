@@ -1,0 +1,19 @@
+<div class="content-box">
+	<h2>#i18n{directory.viewing_mylutece_user.title}</h2>
+	<div id="form-content">
+		<p>
+			<label>#i18n{directory.viewing_mylutece_user.labelLogin} :</label>
+			${mylutece_user_login}
+		</p>
+		<#list mylutece_user_infos_list as user_info>
+			<p>
+				<label>#i18n{portal.security.${user_info.code}} :</label>
+				${user_info.name}
+			</p>
+		</#list>
+		<p>
+			<input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{directory.resource_history.buttonBack}" />
+		</p>
+		<br/>
+	</div>
+</div>

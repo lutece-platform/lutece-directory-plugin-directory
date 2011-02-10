@@ -1,0 +1,35 @@
+<#if default_values?exists && default_values?size &gt; 0>
+	<#list default_values as tmpField>
+		<#if tmpField.field.title == "address">
+			<#assign addressField = tmpField />
+		</#if>
+	</#list> 
+</#if>
+<div class="form-element">
+	
+	 <span class="form-label">
+		<label for="${entry.idEntry}">	
+			${entry.title}
+			<#if entry.mandatory>
+				*
+			</#if>
+			 : 
+		</label>
+	    </span>
+	    <span class="form-field-column">
+    				<span class="form-field-column"> 
+		    		<#if addressField?has_content && addressField?has_content>
+		    			<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${addressField.value}"/>
+		    		<#else>
+		    			<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value=""/>
+		    		</#if>
+		    		</span>
+		</span>
+		 <#if entry.helpMessage?exists&&entry.helpMessage!=''>
+			<span class="form-help">
+				<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
+					<span id="info-details" class="hide"><pre> ${entry.helpMessage}</pre></span>
+				</a>
+			</span>
+		</#if>
+</div>

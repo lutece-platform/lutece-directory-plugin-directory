@@ -1,0 +1,39 @@
+	<div class="content-box" >
+		<h2>#i18n{directory.manage_plugin_directory.title}</h2>
+		<table>
+        	<tr>
+	           	 <td>
+	                <a href="jsp/admin/plugins/directory/ManageDirectory.jsp?plugin_name=directory" class="bullet-link">#i18n{directory.manage_plugin_directory.label_manage_directory}</a>
+	            </td>
+	            <td>
+					#i18n{directory.manage_plugin_directory.label_manage_directory_comment}
+	            </td>
+	        </tr>
+	        <#if right_xsl?exists && right_xsl>
+        	 <tr>
+	             
+	            <td>
+	            	<a href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory" class="bullet-link">#i18n{directory.manage_plugin_directory.label_directory_xsl}</a>
+	            </td>       
+	              <td>    
+	             		#i18n{directory.manage_plugin_directory.label_directory_xsl_comment}
+	              </td>
+	        </tr>	
+	        </#if>
+	       <#if permission_index_all_directory?exists && permission_index_all_directory>
+			<tr>
+	             
+	            <td>
+	            	<a href="jsp/admin/plugins/directory/IndexAllDirectory.jsp?plugin_name=directory" class="bullet-link">#i18n{directory.manage_plugin_directory.index_all_directory}</a>
+	            </td>       
+	              <td>    
+	             		#i18n{directory.manage_plugin_directory.index_all_directory_coment}
+	              </td>
+	        </tr>	
+     	  </#if>
+       </table>
+	 </div>
+
+ 
+
+ 

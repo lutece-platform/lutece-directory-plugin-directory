@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Plugin Directory</title>
+	</properties>
+	<body>
+		<section name="Plugin details">
+			<subsection name="Introduction">
+				<p>The plugin is a generator of directory.
+					This tool allows the webmaster to take over
+					the design and management of directories.
+				Directories can be accessed by Internet or Intranet
+				from the search form dedicated to each directory.
+				</p>
+			</subsection>
+	   </section>
+	</body>
+</document>

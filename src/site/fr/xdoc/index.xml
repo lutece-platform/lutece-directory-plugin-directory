@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Plugin Directory</title>
+	</properties>
+	<body>
+		<section name="Plugin Directory">
+			<subsection name="Introduction">
+
+<p>Ce plugin est un gestionnaire de fiche. Ces fiches seront éditables depuis le backoffice et consultable depuis le front office de Lutece.</p>
+
+<p>La consultation se fait par critère ou via un moteur de recherche.</p>
+
+<p>Les éléments de ces fiches sont des champs texte, des dates, des fichiers, des listes ou encore des lieux géolocalisés (définit par une latitude et une longitude).</p>
+
+<p>Il est possible d'afficher ces fiches sur une carte (si celles si ont un champ géolocalisé).</p>
+
+<p>Il est possible d'associer un état à chacune des fiches via un gestionnaire d'états (plugin-workflow).</p>
+
+			</subsection>
+	   </section>
+	</body>
+</document>

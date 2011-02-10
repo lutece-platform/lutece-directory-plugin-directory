@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+ 	 <bean id="directoryDAO"  class="fr.paris.lutece.plugins.directory.business.DirectoryDAO" />
+ 	 <bean id="directoryXslDAO"  class="fr.paris.lutece.plugins.directory.business.DirectoryXslDAO" />
+ 	 <bean id="directoryEntryTypeDAO"  class="fr.paris.lutece.plugins.directory.business.EntryTypeDAO" />
+ 	 <bean id="directoryEntryDAO"  class="fr.paris.lutece.plugins.directory.business.EntryDAO" />
+ 	 <bean id="directoryFieldDAO"  class="fr.paris.lutece.plugins.directory.business.FieldDAO" />
+ 	 <bean id="directoryFileDAO"  class="fr.paris.lutece.plugins.directory.business.FileDAO" />
+ 	 <bean id="directoryPhysicalFileDAO"  class="fr.paris.lutece.plugins.directory.business.PhysicalFileDAO" />
+ 	 <bean id="directoryActionDAO"  class="fr.paris.lutece.plugins.directory.business.DirectoryActionDAO" />
+ 	 <bean id="directoryRecordFieldDAO"  class="fr.paris.lutece.plugins.directory.business.RecordFieldDAO" />
+ 	 <bean id="directoryRecordDAO"  class="fr.paris.lutece.plugins.directory.business.RecordDAO" />
+	 <bean id="directorySearchEngine" class="fr.paris.lutece.plugins.directory.service.directorysearch.DirectoryLuceneSearchEngine" />
+	 <bean id="directoryIndexer" class="fr.paris.lutece.plugins.directory.service.directorysearch.DirectoryIndexer" />
+	 <bean id="directoryCategoryDAO"  class="fr.paris.lutece.plugins.directory.business.CategoryDAO" />
+	 <bean id="directoryIndexerActionDAO"  class="fr.paris.lutece.plugins.directory.business.IndexerActionDAO" />
+	 <bean id="resourceRssDirectoryConfigDAO"  class="fr.paris.lutece.plugins.directory.business.rss.DirectoryResourceRssConfigDAO" />
+	 <bean id="directoryParameterDAO" class="fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterDAO" />
+	 <bean id="directoryEntryParameterDAO" class="fr.paris.lutece.plugins.directory.business.parameter.EntryParameterDAO" />
+	 
+	<!--                      Removal Services                            -->
+    <bean id="directoryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
+    <bean id="directoryXslRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
+    <bean id="directoryRecordRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
+    <bean id="directoryEntryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
+    
+    <!-- RSS -->
+    <bean id="ResourceRssTypeDirectory" class="fr.paris.lutece.portal.business.rss.ResourceRssType" >
+    	<property name="key" value="ResourceRssTypeDirectory" />
+		<property name="titleI18nKey" value="directory.resource_rss_type.label" />
+		<property name="className" value="fr.paris.lutece.plugins.directory.business.rss.DirectoryResourceRss"/>
+	</bean>
+</beans>
+ 	

@@ -1,0 +1,90 @@
+<div class="highlight-box">
+
+  		<p>
+	    	<label for="id_directory">#i18n{directory.resource_rss.label_directory} * :</label>
+		    <@combo name="id_directory" default_value=directory_list_default_item items=directory_list /><input type="submit" value="#i18n{directory.resource_rss.button_apply}" class="button" name="apply" />
+	 	<p>
+	 	<p>
+	   		<label for="id_entry_title">#i18n{directory.resource_rss.label_entry_title} * :</label>
+	    	<@combo name="id_entry_title" default_value=entry_list_title_default_item items=entry_list />
+		</p>
+		<p>
+	   		<label for="id_entry_description">#i18n{directory.resource_rss.label_entry_description} * :</label>
+	    	<@combo name="id_entry_description" default_value=entry_list_description_default_item items=entry_list />
+		</p>
+		<#if entry_list_image?exists>
+			<p>
+		   		<label for="id_entry_image">#i18n{directory.resource_rss.label_entry_image} : </label>
+		    	<@combo name="id_entry_image" default_value=entry_list_image_default_item items=entry_list_image />
+			</p>
+		</#if>
+		<#if entry_list_link?exists>
+			<p>
+		   		<label for="id_entry_link">#i18n{directory.resource_rss.label_entry_link} : </label>
+		    	<@combo name="id_entry_link" default_value=entry_list_link_default_item items=entry_list_link />
+			</p>
+		</#if>
+		<#if workflow_state_list?exists>
+			<p>
+		   		<label for="id_workflow_state">#i18n{directory.resource_rss.label_workflow} : </label>
+		    	<@combo name="id_workflow_state" default_value=workflow_state_list_default_item items=workflow_state_list />
+			</p>
+		</#if>
+		
+		<#if entry_list_filter?exists>
+		<div class="highlight-box">
+		<b>#i18n{directory.resource_rss.label_filter}<b/>&nbsp;&nbsp;<input type="submit" value="#i18n{directory.resource_rss.button_apply}" class="button" name="apply" />
+		<p>
+		<table>
+		<tr>
+			<td style="border-bottom:0px;">		
+				<p>
+			   		<label for="id_entry_filter_1">#i18n{directory.resource_rss.label_list_filter_1} : </label>
+			   		<#if entry_filter_1?exists>
+			    		<@combo name="id_entry_filter_1" default_value=entry_filter_1.idEntry items=entry_list_filter />
+			    	<#else>
+			    		<@combo name="id_entry_filter_1" default_value="-1" items=entry_list_filter />
+			    	</#if>
+				</p>
+			</td>
+			<td style="border-bottom:0px;">
+				<p>
+			   		<label for="id_entry_filter_2">#i18n{directory.resource_rss.label_list_filter_2} : </label>
+			   		<#if entry_filter_2?exists>
+			    		<@combo name="id_entry_filter_2" default_value=entry_filter_2.idEntry items=entry_list_filter />
+			    	<#else>
+			    		<@combo name="id_entry_filter_2" default_value="-1" items=entry_list_filter />
+			    	</#if>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="border-bottom:0px;">
+				<#if entry_filter_1?exists>
+					<label style="width:100%;text-align:left;" for="id_entry_filter_1">#i18n{directory.resource_rss.label_filter_1} : </label>
+					<p>
+						<#if recordField_filter_1?exists>
+				   			${entry_filter_1.getHtmlFormEntry( locale,recordField_filter_1,false )}	
+						<#else>
+							${entry_filter_1.getHtmlFormEntry( locale,false )}
+						</#if>
+					</p>	
+				</#if>
+			</td>
+			<#if entry_filter_2?exists>
+				<td style="border-bottom:0px;">
+					<label style="width:100%;text-align:left;" for="id_entry_filter_1">#i18n{directory.resource_rss.label_filter_2} : </label>
+					<p>
+				   		<#if recordField_filter_2?exists>
+				   			${entry_filter_2.getHtmlFormEntry( locale,recordField_filter_2,false )}	
+						<#else>
+							${entry_filter_2.getHtmlFormEntry( locale,false )}
+						</#if>
+					</p>
+				</td>
+			</#if>
+		</tr>
+	</table>
+	</div>
+</#if>
+</div>

@@ -1,0 +1,13 @@
+<div class="dashboard-item">
+    <img src="${icon}" width="24" height="24" align="middle"/>
+    <a href="${url}" >
+        #i18n{directory.dashboard.directoryList}
+    </a> : 
+    <#if permission_create>
+	    <a href="jsp/admin/plugins/directory/CreateDirectory.jsp">
+	    	<img src="images/admin/skin/plugins/directory/actions/add.png" title="#i18n{directory.dashboard.addDirectory}" alt="#i18n{directory.dashboard.addDirectory}" />
+	    </a>
+	</#if>
+    <br />
+    <#include "directory_dashboard.html" />
+</div>

@@ -1,0 +1,258 @@
+<#include "/admin/plugins/directory/commons.html" />
+
+<script language="JavaScript" type="text/javascript">
+
+	window.onload = function() 
+	{
+		doDisplayAdvancedSettings( false, 'regular_expression' );
+	}
+	
+</script> 
+
+<div id="content-box-actions">	
+  	<form id="button_advanced_settings" method="post" action="javascript:doDisplayAdvancedSettings(true,'regular_expression')" style="visibility:hidden;display:none;">
+		<input type="submit" value="#i18n{directory.manage_directory.button_manage_advanced_parameters}" class="button bt-toolbar" />
+  	</form>	
+  	<form id="button_back" method="post" action="javascript:doDisplayAdvancedSettings(false,'regular_expression')" style="visibility:hidden;display:none;">
+		<input type="submit" value="#i18n{directory.manage_directory.button_back}" class="button bt-toolbar" />
+  	</form>	
+</div>
+
+<form action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id=""  >
+	<div class="content-box" id="settings">
+	 <h2>#i18n{directory.modify_entry.title_field} : '${entry.directory.title}'</h2>
+	 
+	    <input name="id_entry" value="${entry.idEntry}" type="hidden" />
+		<p>
+	    	<label for="title">#i18n{directory.create_entry.label_title} *  : </label>
+	    	<input type="text" name="title" id="title" size="80" value="${entry.title}"  maxlength="255"/>
+	    	<br/>
+			<label>&nbsp;</label>#i18n{directory.create_entry.label_title_comment}
+	 	</p>
+	   <p>
+	     <label for="help_message">#i18n{directory.create_entry.label_help_message} : </label>
+	    
+	     	<textarea  name="help_message"  id="help_message" cols="80" rows="5">${entry.helpMessage}</textarea>
+	
+		 <br/>
+		 <label>&nbsp;</label> #i18n{directory.create_entry.label_help_message_comment}
+		</p>
+	    <p>
+	     <label for="comment"> #i18n{directory.create_entry.label_comment} : </label>
+	
+	     <textarea name="comment" cols="80" rows="2">${entry.comment}</textarea>
+	     </p>
+	    <p>
+	     <label for="">#i18n{directory.create_entry.label_type} : </label>
+	                  #i18n{${entry.entryType.titleI18nKey}}
+		</p>
+		<p>
+	    	<label for="mandatory">#i18n{directory.create_entry.label_mandatory} : </label>
+	   		 <#if entry.mandatory>
+	   		 	<input name="mandatory" value="1" type="checkbox" checked="checked" >
+	   		 <#else>
+	   			<input name="mandatory" value="1" type="checkbox" >
+	   		 </#if>	
+	   </p>
+	  	 <p>
+		    <label for="display_width">#i18n{directory.create_entry.label_width_display} : </label>
+		    		<#if entry.displayWidth!=-1>
+		    			<input type="text" name="display_width" id="display_width" size="5" value="${entry.displayWidth}" />
+		    		<#else>
+		    			<input type="text" name="display_width" id="display_width" size="5" value="" />
+		    		</#if>	
+		    		
+	  	</p>
+	   	<p>
+		    <label for="display_height">#i18n{directory.create_entry.label_height_display} : </label>
+		   		<#if entry.displayHeight!=-1>
+		    			<input type="text" name="display_height" id="display_height" size="5" value="${entry.displayHeight}" />
+		    		<#else>
+		    			<input type="text" name="display_height" id="display_height" size="5" value="" />
+		    		</#if>	
+		     		
+	  	</p>
+	  	<p>
+	    	<label>#i18n{directory.create_entry.label_image_full_size}  :</label>
+	    	 #i18n{directory.create_entry.label_shown_in_result_list} :
+	   		 <input name="image_shown_in_result_list" value="1" type="checkbox" <#if image_field?? && image_field.isShownInResultList()>checked="checked"</#if>>
+	   		
+		 	
+	    	 #i18n{directory.create_entry.label_shown_in_result_record} :
+	   		 <input name="image_shown_in_result_record" value="1" type="checkbox" <#if image_field?? && image_field.isShownInResultRecord()>checked="checked"</#if>>
+	   		
+	 	 </p>
+	  	 <p>
+	    	  <label for="create_thumbnail">#i18n{directory.create_entry.label_thumbnail}  :</label>
+	   		  <input name="create_thumbnail" value="1" type="checkbox" <#if has_thumbnail??>checked="checked"</#if>>
+	   		<br/>
+		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_thumbnail_comment}
+		</p>
+		<div id="thumbnail">
+			<p>
+		    	<label>&nbsp;</label>#i18n{directory.create_entry.label_shown_in_result_list} :
+		   		 <input name="thbnail_shown_in_result_list" value="1" type="checkbox" <#if thumbnail_field?? && thumbnail_field.isShownInResultList()>checked="checked"</#if> >
+		   		
+			 	
+		    	 #i18n{directory.create_entry.label_shown_in_result_record} :
+		   		 <input name="thbnail_shown_in_result_record" value="1" type="checkbox" <#if thumbnail_field?? && thumbnail_field.isShownInResultRecord()>checked="checked"</#if> >
+		   		
+		 	</p>
+			<p>
+		   		 <label for="thumbnail_width">#i18n{directory.create_entry.label_thumbnail_width} (*) : </label>
+		   		 <#if thumbnail_field?? & thumbnail_field.width?? >
+	    			<input type="text" name="thumbnail_width" id="thumbnail_width" size="5" value="${thumbnail_field.width}" />
+	    		 <#else>
+	    			<input type="text" name="thumbnail_width" id="thumbnail_width" size="5" value="" />
+	    		 </#if>	
+		    </p>
+			<p>
+				 <label for="thumbnail_height">#i18n{directory.create_entry.label_thumbnail_height} (*) : </label>
+				 <#if thumbnail_field?? & thumbnail_field.height??>
+	    			<input type="text" name="thumbnail_height" id="thumbnail_height" size="5" value="${thumbnail_field.height}" />
+	    		 <#else>
+	    			<input type="text" name="thumbnail_height" id="thumbnail_height" size="5" value="" />
+	    		 </#if>	
+			</p>
+		</div>
+		<p>
+		   	 <label for="create_big_thumbnail">#i18n{directory.create_entry.label_big_thumbnail} :</label>
+		  		 <input name="create_big_thumbnail" value="1" type="checkbox" <#if has_big_thumbnail??>checked="checked"</#if>>
+		  		<br/>
+		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_big_thumbnail_comment}
+		</p>
+		<div id="thumbnail_big">
+			<p>
+		    	<label>&nbsp;</label>#i18n{directory.create_entry.label_shown_in_result_list} :
+		   		 <input name="big_thbnail_shown_in_result_list" value="1" type="checkbox" <#if big_thumbnail_field?? && big_thumbnail_field.isShownInResultList()>checked="checked"</#if> >
+		   		
+			 	
+		    	 #i18n{directory.create_entry.label_shown_in_result_record} :
+		   		 <input name="big_thbnail_shown_in_result_record" value="1" type="checkbox" <#if big_thumbnail_field?? && big_thumbnail_field.isShownInResultRecord()>checked="checked"</#if> >
+		   		
+		 	</p>
+			<p>
+		   		 <label for="thumbnail_big_width">#i18n{directory.create_entry.label_thumbnail_width} (*) : </label>
+		   		<#if big_thumbnail_field?? & big_thumbnail_field.width??>
+	    			<input type="text" name="thumbnail_big_width" id="thumbnail_big_width" size="5" value="${big_thumbnail_field.width}" />
+	    		 <#else>
+	    			<input type="text" name="thumbnail_big_width" id="thumbnail_big_width" size="5" value="" />
+	    		 </#if>	
+		    </p>
+			<p>
+				 <label for="thumbnail_big_height">#i18n{directory.create_entry.label_thumbnail_height} (*) : </label>
+				 <#if big_thumbnail_field?? & big_thumbnail_field.height??>
+	    			<input type="text" name="thumbnail_big_height" id="thumbnail_big_height" size="5" value="${big_thumbnail_field.height}" />
+	    		 <#else>
+	    			<input type="text" name="thumbnail_big_height" id="thumbnail_big_height" size="5" value="" />
+	    		 </#if>	
+			</p>
+		</div>
+		
+	    <p>
+	  		<input type="submit" value="#i18n{directory.modify_entry.button_save}" class="button"  name="save" / >
+	  		<input type="submit" value="#i18n{directory.modify_entry.button_apply}" class="button"  name="apply"/ >
+	  		<input type="submit" value="#i18n{directory.modify_entry.button_cancel}" class="button" name="cancel" />
+		</p>
+		<br/>
+	 </div>
+ 	<div id="advanced_settings" class="content-box">
+		 	<h2>
+				#i18n{directory.create_directory.label_advancedsettings}
+			</h2>
+		 	
+		 		<p>
+			    	<label for="shown_in_result_list">#i18n{directory.create_entry.label_shown_in_result_list} :</label>
+			   		  <#if entry.shownInResultList>
+			   		 	<input name="shown_in_result_list" value="1" type="checkbox" checked="checked">
+			   		  <#else>
+			   		 		<input name="shown_in_result_list" value="1" type="checkbox" >
+			   		  
+			   		  </#if>	
+			   		<br/>
+				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_list_comment}
+				 </p>	
+			   	 <p>
+			    	 <label for="shown_in_result_record">#i18n{directory.create_entry.label_shown_in_result_record} :</label>
+			   			<#if entry.shownInResultRecord>
+			   			 	<input name="shown_in_result_record" value="1" type="checkbox" checked="checked">
+			   			  <#else>
+			   			  	<input name="shown_in_result_record" value="1" type="checkbox">
+			   			  </#if>	
+			   		<br/>
+				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_record_comment}
+				 </p>	
+			   	<p>
+			    	 <label for="shown_in_history">#i18n{directory.create_entry.label_shown_in_history} :</label>
+			   			<#if entry.shownInHistory>
+			   			 	<input name="shown_in_history" value="1" type="checkbox" checked="checked">
+			   			  <#else>
+			   			  	<input name="shown_in_history" value="1" type="checkbox">
+			   			  </#if>	
+			   		<br/>
+				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_history_comment}
+				 </p>				
+				<div class="alert">
+					 #i18n{directory.message.warning.entry_advanced_parameters_save}
+				</div>
+	</div>	
+ </form>
+ 
+<#if regular_expression_list?exists>
+	<#if entry.fields?? && entry.fields[0]??>
+		<#assign id_field=entry.fields[0].idField>
+	</#if>
+	<div class="content-box" id="regular_expression">
+	          <h2>#i18n{directory.create_entry.manage_regular_expression.title}</h2>
+				<div class="highlight-box">
+		            <p>
+		            <form  method="post"  action="jsp/admin/plugins/directory/DoInsertVerification.jsp#list"> 
+		              <input name="id_field" value="${id_field}" type="hidden" />
+						<label for="id_expression">
+		                	 #i18n{directory.create_entry.manage_regular_expression.label_insert} :
+		              	</label>
+		               	<@combo name="id_expression"  items=regular_expression_list default_value=-1 />
+						<input value="#i18n{directory.create_entry.manage_regular_expression.button_insert}" class="button"  type="submit">
+						 <br/>
+						 <br/>
+	 				
+	 					<label>&nbsp;</label> #i18n{directory.create_entry.manage_regular_expression.label_insert_comment}
+		            </form>
+		        </p>
+		        <p>&nbsp;</p>
+	        </div>
+		<@paginationAdmin paginator=paginator combo=1/>
+	    <a name="list" id="list"></a>
+        <table width="100%">
+          <tr> 
+            <th > #i18n{directory.create_entry.manage_regular_expression.row_title}
+            </th>
+            <th > #i18n{directory.create_entry.manage_regular_expression.row_information_message}
+            </th>
+            <th> #i18n{directory.create_entry.manage_regular_expression.row_valid_exemple}
+            </th>
+			<th> #i18n{directory.create_entry.manage_field.row_actions}
+            </th>
+          </tr>
+           <#list list as expression>
+          	<tr>
+            	<td >
+            		${expression.title}
+              	</td>
+	            <td>
+	           		${expression.informationMessage}
+	           </td>
+	            <td >
+	       			  ${expression.validExemple}  	
+	            </td >
+	            <td >
+	             	  <a href="jsp/admin/plugins/directory/DoRemoveVerification.jsp?id_expression=${expression.idExpression}&id_field=${id_field}#list">
+	                  <img src="images/admin/skin/plugins/directory/actions/delete.png" alt="#i18n{directory.create_entry.manage_field.title_delete}" title="#i18n{directory.create_entry.manage_field.title_delete}" />
+	                </a>
+	             </td>
+	          </tr>
+			</#list> 
+        </table>
+        <@paginationAdmin paginator=paginator />
+    </div>
+</#if>

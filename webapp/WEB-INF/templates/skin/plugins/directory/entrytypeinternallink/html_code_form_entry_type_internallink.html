@@ -1,0 +1,102 @@
+<div class="form-element">
+	
+	<span class="form-label">
+		<label for="entry_${entry.idEntry}">	
+			${entry.title}<#if entry.mandatory> * </#if> : 
+		</label>
+	</span>
+		
+    <span class="form-field-column">
+    	
+    	<#list entry.fields as field>
+		
+			<script type="text/javascript">
+				
+				function linkservice_${entry.idEntry}() {
+					
+					jQuery("#show_preview_${entry.idEntry}").html("&nbsp;");
+					var baseUrl = document.getElementsByTagName("base");
+					var fen = window.open(
+						baseUrl[0].href + "jsp/admin/insert/GetAvailableInsertServices.jsp?input=entry_${entry.idEntry}&selected_text=",
+						"#i18n{directory.form_entry.labelLinkService}",
+						"toolbar=no, scrollbars=yes, status=yes, location=no, directories=no, menubar=no, width=550, height=450"
+					);
+					
+					fen.focus();
+				}
+				
+				function linkservice_clear_${entry.idEntry}() {
+					
+					jQuery("#entry_${entry.idEntry}").val("");
+					jQuery("#show_preview_${entry.idEntry}").html("&nbsp;");
+				}
+				
+			</script>
+		
+			<#if field.value?exists && !default_values?has_content>
+				<#assign field_value = field.value/>			
+			<#elseif default_values?has_content>
+				<#assign field_value = default_values[0].entry.convertRecordFieldValueToString(default_values[0],locale,true,false)/>
+		 	<#else>
+				<#assign field_value = ""/>
+			</#if>
+		
+			<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" rows="5" cols="60" readonly="readonly">${field_value}</textarea>
+			
+			<img src="images/admin/skin/plugins/document/actions/linkservice.png"
+				id="img_linkservice_${entry.idEntry}"
+				style="border: none; display: none;"
+				alt="#i18n{directory.form_entry.labelLinkService}"
+				title="#i18n{directory.form_entry.labelLinkService}" />
+	
+			<img src="images/admin/skin/plugins/document/actions/delete.png"
+				id="img_linkservice_clear_${entry.idEntry}"
+				style="border: none; display: none; width:16px"
+				alt="#i18n{directory.form_entry.internallink.labelLinkServiceClear}"
+				title="#i18n{directory.form_entry.internallink.labelLinkServiceClear}" />
+				
+			<p id="show_preview_section_${entry.idEntry}" style="display: none;">
+				<label for="show_preview_${entry.idEntry}">
+					<input type="button" class="button" value="#i18n{directory.form_entry.buttonShowPreview}" />
+				</label>
+				<div id="show_preview_${entry.idEntry}">&nbsp;</div>
+			</p>
+			
+			<script type="text/javascript">
+
+				jQuery("#img_linkservice_${entry.idEntry}").css("display", "inline");			
+				jQuery("#img_linkservice_clear_${entry.idEntry}").css("display", "inline");
+				
+				jQuery("#img_linkservice_${entry.idEntry}").click(linkservice_${entry.idEntry});
+				jQuery("#img_linkservice_clear_${entry.idEntry}").click(linkservice_clear_${entry.idEntry});
+					
+				jQuery("#img_linkservice_${entry.idEntry}, #img_linkservice_clear_${entry.idEntry}").hover(function() {
+					$(this).css("cursor", "pointer");
+				}, function() {
+					$(this).css("cursor", "auto");
+				});
+				
+				jQuery("#show_preview_section_${entry.idEntry}").show();
+				
+				jQuery("#show_preview_section_${entry.idEntry} :button").click(function() {
+					
+					jQuery("#show_preview_${entry.idEntry}").html(
+						jQuery("#entry_${entry.idEntry}").val() + "&nbsp;"
+					);
+				});
+				
+			</script>
+			
+		 </#list>
+		 
+	</span>
+	
+	<#if entry.helpMessage?exists && entry.helpMessage!=''>
+		<span class="form-help">
+			<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
+				<span><pre>${entry.helpMessage}</pre></span>
+			</a>
+		</span>
+	</#if>	
+		
+</div>

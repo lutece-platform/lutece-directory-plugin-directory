@@ -1,0 +1,383 @@
+<style type="text/css">
+	
+.arrow-up {
+	border: 30px solid #fff;
+	border-bottom: 10px solid #86CC63;
+	border-top: 0;
+	height: 0;
+	width:0; 
+	margin:10px auto 10px auto;
+	cursor: pointer;
+}
+.arrow-up:hover {
+	border-bottom-color: #5F8F47;
+}
+
+.arrow-down {
+	border: 30px solid #fff;
+	border-top: 10px solid #86CC63;
+	border-bottom: 0;
+	height: 0;
+	width:0; 
+	margin:10px auto 10px auto;
+	cursor: pointer;
+}
+.arrow-down:hover {
+	border-top-color: #5F8F47;
+}
+
+.directory-elem {
+	background-color:#efefef;
+	border-top:1px solid #dddddd;
+	border-bottom:1px solid #dddddd;
+	cursor: pointer;
+	padding-left:10px;
+}
+.directory-elem:hover {
+	background-color:#fff;
+}
+.odd {
+	background-color:#dddddd;/* fonce */
+	border-bottom:1px solid #fff;
+	border-top:1px solid #fff;
+} 
+	
+</style>
+<script type="text/javascript">
+
+	$.fn.clearForm = function() 
+	{
+		return this.each(function() 
+		{
+			var type = this.type, tag = this.tagName.toLowerCase();
+			if (tag == 'form')
+				return $(':input',this).clearForm();
+
+			if (type == 'text' || type == 'password' || tag == 'textarea')
+				  this.value = '';
+			else if (type == 'checkbox' || type == 'radio')
+				this.checked = false;
+			else if (tag == 'select')
+				this.selectedIndex = 0;
+	  });
+	};
+	
+	$(document).ready(function () {
+		$("#complementary").hide(); 
+		$("#reset").click(function() { 
+			$("#searchForm").clearForm();
+		});
+	});
+		
+			
+	//for datepicker questions
+	 $(document).ready(function () 
+	 {
+	 	var locale = "en-US";
+	 	if(document.getElementById("locale") != null)
+	 	{
+	 		locale = document.getElementById("locale").innerHTML;
+	 	}
+
+	 	$.datepicker.setDefaults({
+	 		showOn: 'button', 
+	 		buttonImageOnly: true, 
+	 		buttonImage: 'js/jquery/plugins/ui/datepicker/calendar.png', 
+	 		buttonText: 'Calendar', 
+	 		showAnim: 'slideDown', 
+	 		speed: 'fast'
+	 	});
+
+	 	$( ".datepicker-element" ).each(function( i ){
+	 		//$(this).datepicker($.extend({showStatus: true}, $.datepicker.regional[locale]));
+	 		$(this).datepicker();
+	 	});
+	 });
+
+</script>
+<#function isEntryTypeDirectory entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_directory>
+</#function>
+<#function isEntryTypeGeolocation entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_geolocation>
+</#function>
+<#function isEntryTypeImage entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_image>
+</#function>
+<#function isEntryTypeMyLuteceUser entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_mylutece_user>
+</#function>
+<div id="content-box-actions">
+	<#if permission_create_record>
+	 	<form method="post" action="jsp/admin/plugins/directory/CreateDirectoryRecord.jsp">
+	    	<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+	      	<input type="submit" value="#i18n{directory.manage_directory_record.button_create}" class="button bt-toolbar" />
+	  	</form>
+  	</#if>
+</div>
+<div class="content-box">
+	<h2> #i18n{directory.manage_directory_record.title}: '${directory.title}'</h2>
+	<div class="content-box-content">
+	<div class="highlight-box">
+		<form action="jsp/admin/plugins/directory/DoSearchDirectoryRecord.jsp" method="post" id="searchForm" >
+		<input name="page" value="directory" type="hidden" />
+	    <input name="search_action" value="search_action" type="hidden" />
+	    <input name="id_directory" value="${directory.idDirectory}" type="hidden" />
+	    <#assign sort_search_attribute = "&session=session&search=search">
+		<#if entry_list_form_main_search?has_content>
+			<#list entry_list_form_main_search as entry>	
+				<#assign entryKey=""+entry.idEntry>	
+				<#if map_id_entry_list_record_field?exists && map_id_entry_list_record_field[entryKey]?exists>
+	      			${entry.getHtmlFormSearchEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+	      			<#if map_id_entry_list_record_field[entryKey]?has_content>
+		      			<#list map_id_entry_list_record_field[entryKey] as default_value>
+		      				<#if isEntryTypeMyLuteceUser(entry) || isEntryTypeDirectory(entry)>
+			   					<#assign sort_search_attribute = sort_search_attribute + "&" + entryKey + "=" + default_value.value>
+			   				<#else>
+		      					<#assign sort_search_attribute = sort_search_attribute + "&" + entryKey + "=" + default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+		      				</#if>
+		      			</#list>
+		      		</#if>
+	      		<#else>
+	      			${entry.getHtmlFormSearchEntry( locale , false)}	
+	      		</#if>
+      		</#list>
+      	</#if>
+      	<br/>
+      	<#if directory.isDateShownInSearch() & !( directory.isDateShownInAdvancedSearch() )>
+	     	<div class="form-element">
+				<span class="form-label">	
+					<label for="">	
+						 #i18n{directory.manage_directory_record.date_creation}: 
+					</label>	
+				  </span>
+				  
+				  <#if directory.isDateShownInMultiSearch()>
+					   
+					   <span class="form-field-column">	  
+						
+							#i18n{directory.html_code_form_search_entry_type_date.of}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_begin_creation" id="date_begin_creation" size="10" value="<#if date_creation_begin_search??>${date_creation_begin_search?date}</#if>" />
+							#i18n{directory.html_code_form_search_entry_type_date.to}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_end_creation" id="date_end_creation" size="10" value="<#if date_creation_end_search??>${date_creation_end_search?date}</#if>" />
+						
+					   </span>
+				  <#else> 
+					 <span class="form-field-column">
+						   	<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_creation" id="date_creation" size="10" value="<#if date_creation_search??>${date_creation_search?date}</#if>" />
+					 </span>
+			    </#if>	 
+			</div>
+      	</#if>
+  		<#if directory.displaySearchState>
+  			<label>#i18n{directory.manage_directory_record.label_state} : </label>
+  				<@combo name="search_state_workflow"  items=search_state_workflow default_value=search_state_workflow_default />
+  		</#if>
+		      	
+      	<#if entry_list_form_complementary_search?has_content>
+			<div class="highlight-box">
+				      
+		      	<div>
+							<a href="#"  onclick="displayId('complementary'); return false;">
+								<img    src="images/admin/skin/open_block.gif" alt="#i18n{directory.manage_directory_record.title_open_block}" title="#i18n{directory.manage_directory_record.title_open_block}" /></a>
+							<a href="#" onclick="hideId('complementary'); return false;"> 
+								<img    src="images/admin/skin/closed_block.gif" alt="#i18n{directory.manage_directory_record.title_close_block}" title="#i18n{directory.manage_directory_record.title_open_block}"/></a>
+								<span > #i18n{directory.manage_directory_record.label_complementary_search}
+							</span>
+				</div>
+			    <div id="complementary">
+				    	<#list entry_list_form_complementary_search as entry>	
+							<#assign entryKey=""+entry.idEntry>	
+							<#if map_id_entry_list_record_field?exists && map_id_entry_list_record_field[entryKey]?exists>
+			      				${entry.getHtmlFormSearchEntry( locale,map_id_entry_list_record_field[entryKey],false )}	
+			      			<#else>
+			      				${entry.getHtmlFormSearchEntry( locale, false )}	
+			      			</#if>
+		      			</#list>
+		      			<#if directory.displayComplementarySearchState>
+						 	<label>#i18n{directory.manage_directory_record.label_state} : </label>
+			      				<@combo name="search_state_workflow"  items=search_state_workflow default_value=search_state_workflow_default />
+      					</#if>
+			    </div>
+			    
+			</div> 
+					 
+		</#if>
+	  			<p>	
+	  			 	<input type="submit" value="#i18n{directory.manage_directory_record.button_search}" class="button" name="search" />
+	  			 	<input type="button" value="#i18n{directory.manage_directory_record.button_reset}" class="button" name="reset" id="reset"/>
+	  			</p>
+			</form>
+		</div>
+
+<#-- macro used for Geolocation AND actions column in record list -->
+<#macro display_actions resource_actions >
+   <#if resource_actions.workflow_action_list?exists>
+    <#list resource_actions.workflow_action_list as action>
+  	  	<a href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&id_record=${resource_actions.record.idRecord}">	
+  		<img  src="image?resource_type=workflow_icon_img&id=${action.icon.id}"
+					<#if action.icon.width!=-1>
+							  width="${action.icon.width}"
+ 					</#if> 
+					<#if action.icon.height!=-1>
+ 								height="${action.icon.height}"
+					</#if> 
+		title="${action.name}" alt="${action.name}"
+		/>
+	</a>
+  	</#list>
+     </#if>
+	<#list resource_actions.record.actions as action>
+		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
+	 	<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}">
+	  		<img src="${action.iconUrl}" alt="${action.name}" title="${action.description}">
+	  	</a>
+	</#if>
+</#list>
+</#macro>
+ 
+   <form method="post"  action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp">
+   		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+   		<input type="hidden" name="session" value="session" />
+   		
+        <@paginationAdmin paginator=paginator combo=1 form=0 />
+	<!-- Number of feeds per page selector -->
+<!--        #i18n{directory.manage_directory_record.label_items_per_page} :
+        <select name="items_per_page">
+            <#list [ "10" , "20" , "50" , "100" ] as nb>
+            	<#if nb_items_per_page = nb >
+             		<option selected="selected" value="${nb}">${nb}</option>
+            	<#else>
+             		<option value="${nb}">${nb}</option>
+            	</#if>
+            </#list>
+        </select>
+        <input type="submit" class="button" value="#i18n{directory.manage_directory_record.button_items_per_page}" />
+-->
+      </form>
+  <table name="results_list" id="results_list">
+    <tr>
+      <#list entry_list_search_result as entry>	
+      		<th>
+      			${entry.title}
+      			<#if entry.sortable>
+      				<@sort jsp_url="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" attribute="${entry.idEntry}&id_directory=${directory.idDirectory}${sort_search_attribute}" />
+      			</#if>
+       		</th>
+       </#list>
+       <#if show_date_creation_result>
+			<th>
+       			#i18n{directory.manage_directory_record.date_creation}
+       			<@sort jsp_url="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" attribute="dateCreation&id_directory=${directory.idDirectory}${sort_search_attribute}" />
+      	 	</th>
+      	</#if>
+       <#if is_workflow_enabled && directory.idWorkflow!=-1 >
+       	   <th>
+	       		#i18n{directory.manage_workflow_state}
+	       </th>
+	   </#if>
+	   
+       <th>
+       		#i18n{directory.manage_workflow_actions}
+       </th>
+       <!-- <th>
+       #i18n{directory.manage_export_format.row_actions}
+       </th>-->
+		
+     </tr>
+   <#list resource_actions_list as resource_actions>	
+   	<tr>
+   		<#assign first_entry = true />
+   		<#list entry_list_search_result as entry>
+      		<#assign entryKey=""+entry.idEntry>	
+	      	<#assign listRecordField=resource_actions.map_id_entry_list_record_field[entryKey]>	
+	      	<td>
+	      		<#if listRecordField?has_content>
+	      			<#assign first_record_field = true />
+	      			<#list listRecordField as record_field>
+			   			<#if isEntryTypeGeolocation(entry) && first_record_field>
+			   				<#assign first_record_field = false />
+			   				<input type="hidden" name="record_id" value="${resource_actions.record.idRecord}" />
+			   				<input type="hidden" name="title" value="" />
+			   				<#if resource_actions.workflow_state?has_content && resource_actions.workflow_state.icon.id?has_content && ( resource_actions.workflow_state.icon.id > 0)>
+			   				<input type="hidden" name="state_icon" value="image?resource_type=workflow_icon_img&id=${resource_actions.workflow_state.icon.id}" />
+			   				<#else>
+			   				<input type="hidden" name="state_icon" value="" />
+			   				</#if>
+			   				<span style="display:none;" id="${entry.idEntry}_span_actions">
+			   					<@display_actions resource_actions/>
+			   				</span>
+			   			</#if>
+			   			<#if isEntryTypeImage(entry)>
+			   				<#if record_field.field?? & record_field.field.isShownInResultList()>
+			   					${entry.getHtmlRecordFieldValue( locale,record_field,false)}
+			   				</#if>
+			   			<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>
+			   				${record_field.value}
+			   			<#else>
+	      					${entry.getHtmlRecordFieldValue( locale,record_field,false)}
+	      				</#if>
+	      				<#if  record_field_has_next>
+		    				<br/>
+		     			</#if>
+		     			<#if show_date_creation_result && record_field.record?? && record_field.record.dateCreation??>
+		     				<#assign date_creation = record_field.record.dateCreation>
+		     			<#else>
+		     				<#assign date_creation = "">
+		     			</#if>
+		     		</#list>
+		     		
+      			</#if>				
+      		 </td>
+      		 
+      	 </#list>	
+      	 <#if show_date_creation_result>
+      	 	<td>
+	     	 	<#if date_creation??>
+	     	 		${date_creation}
+	     	 	</#if>
+      	 	</td>
+      	 </#if>
+	 	 <#if resource_actions.workflow_state?exists>
+		   	   <td>
+			   		${resource_actions.workflow_state.name}
+			   </td>	
+			  </#if>
+		     <td>
+				<@display_actions resource_actions/>
+			   </td>
+		</tr>
+	</#list>
+   </table>
+
+ 	<#if entry_list_geolocation?has_content>
+		<#list entry_list_geolocation as entry>
+			<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
+				<#-- several results -->
+				<input type="button" class="button" value="#i18n{directory.show_on_map} &quot;${entry.title}&quot;" id="${entry.idEntry}_map-button" />
+				<#include entry.mapProvider.backListHtmlCode />
+			</#if>
+		</#list>
+	</#if>
+ 	
+  	<#if history_workflow && permission_mass_print>
+	  	<form method="post" action="jsp/admin/plugins/directory/MassPrint.jsp">
+		    	<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+		    	<p>
+		      		<input type="submit" value="#i18n{directory.manage_directory_record.button_mass_print}" class="button" />
+		    	</p>
+		</form>
+	</#if>
+	<@paginationAdmin paginator=paginator />
+	</div>
+</div>
+ 
+<div class="content-box">
+	<h2>#i18n{directory.manage_directory_record.title_export_result}</h2>
+	<form method="post" action="jsp/admin/plugins/directory/DoExportDirectoryRecord.jsp">
+		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+		
+		<label for="id_directory_xsl">#i18n{directory.manage_directory_record.label_export_result} : </label>
+		<@combo name="id_directory_xsl" default_value="" items=xsl_export_list />
+		<input type="submit" name="export_search_result"  value="#i18n{directory.manage_directory_record.button_export_search_result}" class="button" />
+		<input type="submit" name="export_all_result"  value="#i18n{directory.manage_directory_record.button_export_all_result}" class="button"  />
+	</form>
+</div>	

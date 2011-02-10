@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>
+             Gestion de l’indexation
+        </title>
+    </properties>
+    <body>
+		<section name="Gestion de l'indexation">
+			<p>
+				L’interface de gestion de l’indexation vous permet de lancer une indexation totale sur l’ensemble des annuaires.
+			</p>
+				<p>
+					<center>
+						<img src="images/manage_directory_index.png" />
+					</center>
+				</p>
+				<p>
+					Cette action n’est à effectuer que dans le cas où vous avez ajoutez des champs au formulaire de recherche alors que des fiches étaient présentes dans l’annuaire.
+				</p>
+				<p>
+						Pour lancer l’indexation il vous suffit de cliquer sur le bouton valider.
+    					  L’indexation peut prendre plusieurs minutes en fonction du volume de fiche à traiter 
+				</p>
+		 </section>
+   </body>
+</document>       

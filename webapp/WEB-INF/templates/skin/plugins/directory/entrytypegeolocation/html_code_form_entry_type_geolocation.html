@@ -1,0 +1,33 @@
+<div class="form-element">
+	
+	 <span class="form-label">
+		<label for="${entry.idEntry}">	
+			${entry.title}
+			<#if entry.mandatory>
+				*
+			</#if>
+			 : 
+		</label>
+	    </span>
+	    <span class="form-field-column">
+	    	<#if default_values?size &gt; 0>
+	    	<#assign addressField = default_values[4] />
+    			<label>
+    				<span class="form-field-column"> 
+		    		<#if addressField.value?has_content>
+		    			<input type="text" name="${entry.idEntry}_address" value="${addressField.value}"/>
+		    		<#else>
+		    			<input type="text" name="${entry.idEntry}_address" value=""/>
+		    		</#if>
+		    		</span>
+	    		</label>
+			</#if>
+		</span>
+		 <#if entry.helpMessage?exists&&entry.helpMessage!=''>
+			<span class="form-help">
+				<a class="info" href="javascript:void(0);"><img  src="images/admin/skin/plugins/directory/help.gif" />
+					<span id="info-details" class="hide"><pre> ${entry.helpMessage}</pre></span>
+				</a>
+			</span>
+		</#if>
+</div>

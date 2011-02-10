@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<directory-form-search>
+	<![CDATA[
+	<div id="form-content">
+				<form action="jsp/site/Portal.jsp" method="post" id="searchForm">
+				<input name="search_action" value="search_action" type="hidden" />
+				<input type="hidden" name="page" value="directory">
+				<input type="hidden" name="id_directory" value="${directory.idDirectory}">
+				<#if one_session_id?exists>
+					<input type="hidden" name="id_record" value="${one_session_id}">
+				</#if>
+				<#if entry_list_form_main_search?has_content>
+						<#list entry_list_form_main_search as entry>	
+							<#assign entryKey=""+entry.idEntry>	
+							<#if map_id_entry_list_record_field?exists && map_id_entry_list_record_field[entryKey]?exists>
+				      			${entry.getHtmlFormSearchEntry( locale,map_id_entry_list_record_field[entryKey],true )}	
+				      		<#elseif one_search_record?exists>
+				      			${entry.getHtmlFormSearchEntry( locale,one_search_record, true )}
+				      		<#else>
+				      			${entry.getHtmlFormSearchEntry( locale, true)}	
+				      		</#if>
+			      		</#list>
+			      	</#if>
+			      	<#if entry_list_form_complementary_search?has_content>
+						<div class="highlight-box">
+					      
+					      	<div id="compementary_check_box">
+										<a href="#"  onclick="displayId('complementary'); return false;">
+											<img    src="images/admin/skin/open_block.gif" alt="#i18n{directory.xml_form_search.title_open_block}" title="#i18n{directory.xml_form_search.title_open_block}" /></a>
+										<a href="#" onclick="hideId('complementary'); return false;"> 
+											<img    src="images/admin/skin/closed_block.gif" alt="#i18n{directory.xml_form_search.title_close_block}" title="#i18n{directory.xml_form_search.title_open_block}"/></a>
+											<span > #i18n{directory.xml_form_search.label_complementary_search}
+										</span>
+							</div>
+						    <div id="complementary">
+							    	<#list entry_list_form_complementary_search as entry>	
+										<#assign entryKey=""+entry.idEntry>	
+										<#if map_id_entry_list_record_field?exists && map_id_entry_list_record_field[entryKey]?exists>
+						      				${entry.getHtmlFormSearchEntry( locale,map_id_entry_list_record_field[entryKey],true )}	
+						      			<#elseif one_search_record?exists>
+				      						${entry.getHtmlFormSearchEntry( locale,one_search_record, true )}	
+						      			<#else>
+						      				${entry.getHtmlFormSearchEntry( locale, true )}	
+						      			</#if>
+					      			</#list>
+						    </div>
+						 </div> 	
+					   </#if>
+		  			<div  id="form-buttons">
+		  			 	<input type="submit" value="#i18n{directory.xml_form_search.button_search}" class="-lutece-input -lutece-border-radius-mini" name="search" />
+		  			 	<input type="button" value="#i18n{directory.xml_form_search.button_reset}" class="-lutece-input -lutece-border-radius-mini" name="reset" id="reset" />
+		  			 </div> 	
+		</form>
+	</div>
+	]]>
+</directory-form-search>

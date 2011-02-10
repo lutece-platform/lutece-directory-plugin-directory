@@ -1,0 +1,52 @@
+<div id="content-box-actions">
+	<#if right_create>
+		<form method="post"  action="jsp/admin/plugins/directory/CreateDirectoryXsl.jsp" >
+			<input type="submit" class="button bt-toolbar" value="#i18n{directory.manage_directory_xsl.button_create}" />
+		</form>
+	</#if>
+</div>
+<div class="content-box">
+        <h2>#i18n{directory.manage_directory_xsl.title}</h2>
+        <@paginationAdmin paginator=paginator combo=1 />
+
+          <table> 
+            <tr>
+              <th>
+               #i18n{directory.manage_directory_xsl.row_title}
+              </th>
+              <th>
+                #i18n{directory.manage_directory_xsl.row_description}
+              </th>
+              <th  >
+                #i18n{directory.manage_directory_xsl.row_extension}
+              </th>
+              <th  >
+               #i18n{directory.manage_directory_xsl.row_actions}
+              </th>
+            </tr>
+             <#list directory_xsl_list as directory_xsl>	
+	            <tr>
+	              <td  >
+	                ${directory_xsl.title}
+	              </td>
+	              <td >
+	               ${directory_xsl.description}
+	                </td>
+	                <td >
+	               ${directory_xsl.extension}
+	                </td>
+	                <td >
+	                			<#if directory_xsl.actions?exists>
+									<#list directory_xsl.actions as action>
+									 	<a href="${action.url}?id_directory_xsl=${directory_xsl.idDirectoryXsl}">
+									  		<img src="${action.iconUrl}" alt="${action.name}" title="${action.description}">
+									  	</a>
+									</#list>
+								</#if>	
+	       			 </a>
+	                </td>
+	            </tr>
+	         </#list>
+          </table> 
+         <@paginationAdmin paginator=paginator />
+      </div> 

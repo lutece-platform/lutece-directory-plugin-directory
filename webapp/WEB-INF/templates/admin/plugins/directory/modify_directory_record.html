@@ -1,0 +1,60 @@
+<#include "/admin/util/editor/editor.html" />
+
+<div class="content-box">
+	  <h2> #i18n{directory.modify_directory_record.title}: '${directory.title}' -  <#if directory_record.dateCreation??>#i18n{directory.viewing_directory_record.date_creation} ${directory_record.dateCreation}</#if> </h2>
+	  <div id="form-content">
+			<form action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data">
+			<input name="page" value="directory" type="hidden" />
+			 <input name="id_directory_record" value="${directory_record.idRecord}" type="hidden" />
+			 <#list entry_list as entry>	
+	      			<#if entry.entryType.group>	
+	      			  	<fieldset class="form-fieldset"> 
+	    					 <legend class="form-legend"> ${entry.title} </legend> 
+	      					<#if entry.children?has_content>
+	      						<#list entry.children as child >
+	      								<#assign entryKey=""+child.idEntry>	
+	      							${child.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+	      						</#list>
+	      					</#if>
+	      				</fieldset>		
+	      			<#else>
+	      				<#assign entryKey=""+entry.idEntry>	
+	      				${entry.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}	
+	      			</#if>	
+	      			
+	      		</#list>
+	 			 <p>
+	  				<input type="submit" value="#i18n{directory.create_directory_record.button_save}" class="button" name="save" />
+	  				<input type="submit" value="#i18n{directory.create_directory_record.button_cancel}" class="button" name="cancel" />
+	   			</p>
+			</form>
+		</div>
+</div>
+
+<@initEditor />
+
+<script language="JavaScript" type="text/javascript">
+//for datepicker questions
+$(document).ready(function () 
+{
+	var locale = "en-US";
+	if(document.getElementById("locale") != null)
+	{
+		locale = document.getElementById("locale").innerHTML;
+	}
+
+	$.datepicker.setDefaults({
+		showOn: 'button', 
+		buttonImageOnly: true, 
+		buttonImage: 'js/jquery/plugins/ui/datepicker/calendar.png', 
+		buttonText: 'Calendar', 
+		showAnim: 'slideDown', 
+		speed: 'fast'
+	});
+
+	$( ".datepicker-element" ).each(function( i ){
+		/*$(this).datepicker($.extend({showStatus: true}, $.datepicker.regional[locale]));*/
+		$(this).datepicker();
+	});
+});
+</script>

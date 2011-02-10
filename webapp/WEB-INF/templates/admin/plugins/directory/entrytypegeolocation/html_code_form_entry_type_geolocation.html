@@ -1,0 +1,64 @@
+<#if default_values?exists && default_values?size &gt; 0>
+	<#list default_values as tmpField>
+		<#if tmpField?has_content && tmpField.field?has_content && tmpField.field.title?has_content>
+			<#if tmpField.field.title == "X">
+				<#assign xField = tmpField />
+			<#elseif tmpField.field.title == "Y">
+				<#assign yField = tmpField />
+			<#elseif tmpField.field.title == "address">
+				<#assign addressField = tmpField />
+			</#if>
+		</#if>
+	</#list> 
+</#if>
+<div class="form-element">
+	
+	 <span class="form-label">
+		<label for="${entry.idEntry}">	
+			${entry.title}
+			<#if entry.mandatory>
+				*
+			</#if>
+			 : 
+		</label>
+	    </span>
+	    <#if xField?has_content && xField.value?has_content>
+   			<input type="hidden" id="${entry.idEntry}_x" name="${entry.idEntry}_x" value="${xField.value}" />
+   		<#else>
+   			<input type="hidden" id="${entry.idEntry}_x" name="${entry.idEntry}_x" value="" />
+   		</#if>
+		<#if yField?has_content && yField.value?has_content>
+   			<input type="hidden" id="${entry.idEntry}_y" name="${entry.idEntry}_y" value="${yField.value}" />
+   		<#else>
+   			<input type="hidden" id="${entry.idEntry}_y" name="${entry.idEntry}_y" value="" />
+   		</#if>
+   		<span class="form-field-column">
+			<#if addressField?has_content && addressField.value?has_content>
+    			<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${addressField.value}" size="50" maxlength="255" />
+    		<#else>
+    			<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="" size="50" maxlength="255" />
+    		</#if>
+		</span>
+		 <#if entry.helpMessage?exists&&entry.helpMessage!=''>
+			<span class="form-help">
+				<a class="info" href="javascript:void(0);"><img  src="images/admin/skin/plugins/directory/help.gif" />
+					<span id="info-details" class="hide"><pre> ${entry.helpMessage}</pre></span>
+				</a>
+			</span>
+		</#if>
+</div>
+<#if !xField?has_content || !xField.value?has_content || xField.value == '0'>
+<div class="form-element">
+	<span class="form-label">
+		<label for="">&nbsp;</label>
+	</span>
+	<span class="form-field-column" id="${entry.idEntry}_noGeolocation">
+		#i18n{directory.message.noGeolocation}
+	</span>
+</div>
+</#if>
+<#if entry.mapProvider?has_content>
+<div class="form-element">
+<#include entry.mapProvider.htmlCode />
+</div>
+</#if>

@@ -1,0 +1,324 @@
+<#include "/admin/plugins/directory/commons.html" />
+<script language="JavaScript" type="text/javascript">
+
+	window.onload = function() 
+	{
+		doDisplayAdvancedSettings( false );
+	}
+	
+</script> 
+
+<div id="content-box-actions">	
+  	<form id="button_advanced_settings" method="post" action="javascript:doDisplayAdvancedSettings(true)" style="visibility:hidden;display:none;">
+		<input type="submit" value="#i18n{directory.manage_directory.button_manage_advanced_parameters}" class="button bt-toolbar" />
+  	</form>	
+  	<form id="button_back" method="post" action="javascript:doDisplayAdvancedSettings(false)" style="visibility:hidden;display:none;">
+		<input type="submit" value="#i18n{directory.manage_directory.button_back}" class="button bt-toolbar" />
+  	</form>	
+</div>
+
+<form action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id="form"  >
+	<div id="settings" class="content-box">
+	 <h2>#i18n{directory.modify_entry.title_field} : '${entry.directory.title}'</h2>
+	 
+	    <input name="id_entry" value="${entry.idEntry}" type="hidden" />
+		<p>
+	    	<label for="title">#i18n{directory.create_entry.label_title} *  : </label>
+	    	<input type="text" name="title" id="title" size="80" value="${entry.title}"  maxlength="255" />
+	    	<br/>
+			<label>&nbsp;</label>#i18n{directory.create_entry.label_title_comment}
+	 	</p>
+	   <p>
+	     <label for="help_message">#i18n{directory.create_entry.label_help_message} : </label>
+	   
+	     	<textarea  name="help_message"  id="help_message" cols="80" rows="5">${entry.helpMessage}</textarea>
+		
+		 <br/>
+		 <label>&nbsp;</label> #i18n{directory.create_entry.label_help_message_comment}
+		</p>
+		<p>
+		     <label for="help_message_search">#i18n{directory.create_entry.label_help_message_search} : </label>
+		   		<textarea  name="help_message_search"  id="help_message_search" cols="80" rows="5">${entry.helpMessageSearch}</textarea>
+			<br/>
+			 <label>&nbsp;</label> #i18n{directory.create_entry.label_help_message_search_comment}
+		</p>
+	    <p>
+	     <label for="comment"> #i18n{directory.create_entry.label_comment} : </label>
+	
+	     <textarea name="comment" cols="80" rows="2">${entry.comment}</textarea>
+	     </p>
+	    <p>
+	     <label for="">#i18n{directory.create_entry.label_type} : </label>
+	                 #i18n{${entry.entryType.titleI18nKey}}
+		</p>
+	  	<p>
+			<label for="id_entry_associate">#i18n{directory.create_entry.label_entry} * : </label>
+		    <@combo name="id_entry_associate"  items=directory_entry_list_associate default_value=entry.entryAssociate/>
+		    <br />
+		 	<label>&nbsp;</label>#i18n{directory.create_entry.label_entry_comment}
+	  	</p>
+	  <p>
+	    	<label for="mandatory">#i18n{directory.create_entry.label_mandatory} : </label>
+	   		 <#if entry.mandatory>
+	   		 	<input name="mandatory" value="1" type="checkbox" checked="checked" >
+	   		 <#else>
+	   			<input name="mandatory" value="1" type="checkbox" >
+	   		 </#if>	
+	   </p>
+		
+	   <p>
+	  		<input type="submit" value="#i18n{directory.modify_entry.button_save}" class="button"  name="save" / >
+	  		<input type="submit" value="#i18n{directory.modify_entry.button_cancel}" class="button" name="cancel" />
+	   </p>
+	   <br/>
+	 </div>
+	 <div id="advanced_settings" class="content-box">
+		 	<h2>
+				#i18n{directory.create_directory.label_advancedsettings}
+			</h2>
+		 	
+		 		<p>
+			    	<label for="is_all_search">#i18n{directory.create_entry.label_is_all_search} : </label>
+			    	<#if entry.addValueAllSearch>
+			   		 	<input id="is_all_search" name="is_all_search" value="1" type="checkbox" checked="checked" onclick="javascript:addAllSearch();" >
+			   		 <#else>
+			   			<input id="is_all_search" name="is_all_search" value="1" type="checkbox" onclick="javascript:addAllSearch();" >
+			   		 </#if>
+			   		 <br/><label>&nbsp;</label>#i18n{directory.create_entry.label_is_all_search_comment}
+			   </p>
+			   <div id="label_value_all_search">
+				    <p>
+				    	<label for="label_all_search">#i18n{directory.create_entry.label_label_all_search} : </label>
+				    	<#if entry.labelValueAllSearch??>
+				   		 	<input type="text" name="label_all_search" id="label_all_search" size="80" value="${entry.labelValueAllSearch}"  maxlength="255"/>
+				   		 <#else>
+				   			<input type="text" name="label_all_search" id="label_all_search" size="80" value=""  maxlength="255" />
+				   		 </#if>	
+				   </p>
+			   </div>
+		 		<p>
+			    	<label for="indexed">#i18n{directory.create_entry.label_indexed} : </label>
+			   		 <#if entry.indexed>
+			   		 	<input name="indexed" value="1" type="checkbox" checked="checked" >
+			   		 <#else>
+			   			<input name="indexed" value="1" type="checkbox" >
+			   		 </#if>	
+			  	 </p>
+			  	  <p>
+			    	<label for="shown_in_advanced_search">#i18n{directory.create_entry.label_shown_in_advanced_search} :</label>
+			   		 <#if entry.shownInAdvancedSearch>
+			   		 	<input name="shown_in_advanced_search" value="1" type="checkbox" checked="checked">
+			   		 <#else>
+			   		 	<input name="shown_in_advanced_search" value="1" type="checkbox" >
+			   		 
+			   		 </#if>	
+			   		<br/>
+				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_advanced_search_comment}
+				 </p>
+				 <p>
+			    	<label for="shown_in_result_list">#i18n{directory.create_entry.label_shown_in_result_list} :</label>
+			   		  <#if entry.shownInResultList>
+			   		 	<input name="shown_in_result_list" value="1" type="checkbox" checked="checked">
+			   		  <#else>
+			   		 		<input name="shown_in_result_list" value="1" type="checkbox" >
+			   		  
+			   		  </#if>	
+			   		<br/>
+				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_list_comment}
+				 </p>	
+			   	 <p>
+			    	 <label for="shown_in_result_record">#i18n{directory.create_entry.label_shown_in_result_record} :</label>
+			   			<#if entry.shownInResultRecord>
+			   			 	<input name="shown_in_result_record" value="1" type="checkbox" checked="checked">
+			   			  <#else>
+			   			  	<input name="shown_in_result_record" value="1" type="checkbox">
+			   			  </#if>	
+			   		<br/>
+				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_record_comment}
+				 </p>
+				 <p>
+			    	 <label for="shown_in_history">#i18n{directory.create_entry.label_shown_in_history} :</label>
+			   			<#if entry.shownInHistory>
+			   			 	<input name="shown_in_history" value="1" type="checkbox" checked="checked">
+			   			  <#else>
+			   			  	<input name="shown_in_history" value="1" type="checkbox">
+			   			  </#if>	
+			   		<br/>
+				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_history_comment}
+				 </p>
+				 <p>
+			    	<label for="shown_in_export">#i18n{directory.create_entry.label_shown_in_export} :</label>
+			    	<#if entry.shownInExport>
+			   			<input name="shown_in_export" value="1" type="checkbox" checked="checked" />
+			   		<#else>
+			   			<input name="shown_in_export" value="1" type="checkbox" />
+			   		</#if>
+			   		<br/>
+				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_export_comment}
+				</p>
+				<div class="alert">
+					 #i18n{directory.message.warning.entry_advanced_parameters_save}
+				</div>
+		 	
+		
+	 </div>
+ </form>
+ <script>
+ function select_associate()
+ {
+	var form = document.getElementById("settings");
+	var entry = form.childNodes[13];
+	form.removeChild(entry);
+
+	var p = document.createElement("p");
+
+	var label = document.createElement("label");
+	label.innerHTML="#i18n{directory.create_entry.label_directory} * : ";
+	
+	var listDirectory = document.createElement("select");
+	var name = document.createAttribute("name");
+	name.nodeValue = "id_directory_associate";
+	listDirectory.setAttributeNode(name);
+
+	<#list directory_list_associate as directory>	
+	var option${directory.code} = document.createElement("option");
+	option${directory.code}.text="${directory.name}";
+	
+	var value${directory.code} = document.createAttribute("value");
+	value${directory.code}.nodeValue = "${directory.code}";
+
+	var onclick${directory.code} = document.createAttribute("onclick");
+	onclick${directory.code}.nodeValue = "refresh_list(${directory.code})";
+
+	<#if id_directory_associate?string=directory.code>
+		var selected${directory.code} = document.createAttribute("selected");
+		selected${directory.code}.nodeValue = "selected";
+		option${directory.code}.setAttributeNode(selected${directory.code});
+	</#if>
+	option${directory.code}.setAttributeNode(value${directory.code});
+	option${directory.code}.setAttributeNode(onclick${directory.code});
+
+	listDirectory.appendChild(option${directory.code});
+	</#list>
+	
+	p.appendChild(label);
+	p.appendChild(listDirectory);
+	
+	form.insertBefore(p,form.childNodes[12]);
+	
+ }
+
+ function refresh_list(id_directory)
+ {
+	 if(document.getElementById("id_entry_associate")!=null)
+	 {
+		 var parent = document.getElementById("id_entry_associate").parentNode;
+		 while (parent.firstChild) {
+			 parent.removeChild(parent.firstChild);
+		 }
+	 }
+	 
+		 var bool = false;
+		 var form = document.getElementById("settings");
+		 var listEntry = document.createElement("select");
+
+		 var name = document.createAttribute("name");
+		 name.nodeValue = "id_entry_associate";
+		 listEntry.setAttributeNode(name);
+
+		 var id = document.createAttribute("id");
+		 id.nodeValue = "id_entry_associate";
+		 listEntry.setAttributeNode(id);
+
+		 var p = document.createElement("p");
+
+		var label = document.createElement("label");
+		label.innerHTML="#i18n{directory.create_entry.label_entry} * : ";
+
+		var label2 = document.createElement("label");
+		label2.innerHTML="&nbsp;";
+
+		var text = document.createTextNode("#i18n{directory.create_entry.label_entry_comment}"); 
+		
+	 <#assign i=1>
+	<#list directory_list_associate as directory>
+		
+		if(id_directory==${directory.code})
+		{
+			add_entry_${i}(listEntry);
+		}
+		<#assign i=i+1>
+	</#list>
+
+	
+	p.appendChild(label);
+	p.appendChild(listEntry);
+	p.appendChild(document.createElement("br"));
+	p.appendChild(label2);
+	p.appendChild(text);
+
+	
+	form.insertBefore(p,form.childNodes[13]);
+ }
+	<#assign i=1>
+ <#list entry_list_associate as entry_list>
+
+	function add_entry_${i}(listEntry)
+	{
+		<#list entry_list as entryTmp>
+			var option${entryTmp.idEntry} = document.createElement("option");
+			option${entryTmp.idEntry}.text="${entryTmp.title}";
+
+			var value${entryTmp.idEntry} = document.createAttribute("value");
+			value${entryTmp.idEntry}.nodeValue = "${entryTmp.idEntry}";
+
+			option${entryTmp.idEntry}.setAttributeNode(value${entryTmp.idEntry});
+
+			if(${entry.entryAssociate}==${entryTmp.idEntry})
+			{
+				var selected${entryTmp.idEntry} = document.createAttribute("selected");
+				selected${entryTmp.idEntry}.nodeValue = "selected";
+				option${entryTmp.idEntry}.setAttributeNode(selected${entryTmp.idEntry});
+				
+			}
+			
+			listEntry.appendChild(option${entryTmp.idEntry});
+		</#list>
+	}
+	<#assign i=i+1>
+
+ </#list>
+
+ var agt=navigator.userAgent.toLowerCase();
+
+ var is_konq = (agt.indexOf('konqueror') != -1);
+ var is_safari = ((agt.indexOf('safari')!=-1)
+&&(agt.indexOf('mac')!=-1))?true:false;
+ var is_khtml  = (is_safari || is_konq);
+ var is_gecko = ((!is_khtml)&&(navigator.product)
+&&(navigator.product.toLowerCase()=="gecko"))?true:false;
+ 
+ var is_fx = ((agt.indexOf('mozilla/5')!=-1) && (agt.indexOf('spoofer')==-1) &&
+         (agt.indexOf('compatible')==-1) && (agt.indexOf('opera')==-1)  &&
+         (agt.indexOf('webtv')==-1) && (agt.indexOf('hotjava')==-1)     &&
+         (is_gecko) && ((navigator.vendor=="Firefox")||(agt.indexOf('firefox')!=-1)));
+ if(is_fx)
+ {
+	 select_associate();
+	 
+	 refresh_list(${id_directory_associate});
+ }
+ function addAllSearch()
+ {
+ 	var inputAllSearch = document.getElementById("is_all_search");
+ 	if(inputAllSearch.checked)
+ 	{
+ 		document.getElementById("label_value_all_search").style.display="block";
+ 	}
+ 	else
+ 	{
+ 		document.getElementById("label_value_all_search").style.display="none";
+ 	}
+  }
+ addAllSearch();
+ </script>

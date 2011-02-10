@@ -1,0 +1,80 @@
+<#function isEntryTypeImage entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_image>
+</#function>
+<div class="content-box">
+	  <h2> #i18n{directory.viewing_directory_record.title}: '${directory.title}' - <#if record.dateCreation?? && show_date_creation_record >#i18n{directory.viewing_directory_record.date_creation} ${record.dateCreation}</#if></h2>
+	  <div id="form-content">
+			<form action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data" DISABLE>
+			<input name="page" value="directory" type="hidden" />
+			
+			 <#list entry_list as entry>	
+	      			<#if entry.entryType.group>	
+	      			  	<fieldset class="form-fieldset"> 
+	    					 <legend class="form-legend"> ${entry.title} </legend> 
+	      					<#if entry.children?has_content>
+	      						<#list entry.children as child >
+	      							<#if child.title?exists>
+		      							<label for="">${child.title} : </label>
+		      						 </#if> 	
+		      							<#assign entryKey=""+child.idEntry>	
+		      							<#list map_id_entry_list_record_field[entryKey] as recordfield>
+		      							
+		      								${child.getHtmlRecordFieldValue( locale, recordfield, false )}
+		      								<br/>
+		      								<br/>
+		      						 		
+	      								</#list>
+	      						</#list>
+	      					</#if>
+	      				</fieldset>		
+	      			<#else>
+	      				<#assign entryKey=""+entry.idEntry>	
+	      				<#if entry.title?exists>
+	      					<label for="">${entry.title} : </label>
+	      				</#if>	
+	      				<#list map_id_entry_list_record_field[entryKey] as recordfield>	      						
+    						
+    						<#if isEntryTypeImage(entry)>    						
+				   				<#if recordfield.field?? & recordfield.field.isShownInResultRecord()>
+				   					${entry.getHtmlRecordFieldValue( locale,recordfield,false)}
+				   				</#if>
+				   			<#else>
+		      					${entry.getHtmlRecordFieldValue( locale,recordfield,false)}
+		      				</#if>
+    							<br/>
+    							<br/>
+    					</#list>	
+	      			</#if>	
+	      			
+	      		</#list>
+	 			 <p>
+	  				<input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{directory.resource_history.buttonBack}" />
+	   			</p>
+			</form>
+		</div>
+</div>
+<script language="JavaScript" type="text/javascript">
+//for datepicker questions
+$(document).ready(function () 
+{
+	var locale = "en-US";
+	if(document.getElementById("locale") != null)
+	{
+		locale = document.getElementById("locale").innerHTML;
+	}
+
+	$.datepicker.setDefaults({
+		showOn: 'button', 
+		buttonImageOnly: true, 
+		buttonImage: 'js/jquery/plugins/ui/datepicker/calendar.png', 
+		buttonText: 'Calendar', 
+		showAnim: 'slideDown', 
+		speed: 'fast'
+	});
+
+	$( ".datepicker-element" ).each(function( i ){
+		/*$(this).datepicker($.extend({showStatus: true}, $.datepicker.regional[locale]));*/
+		$(this).datepicker();
+	});
+});
+</script>

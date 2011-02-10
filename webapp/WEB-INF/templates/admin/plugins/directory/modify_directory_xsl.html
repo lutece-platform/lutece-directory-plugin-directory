@@ -1,0 +1,54 @@
+  <div class="content-box">
+    <h2> #i18n{directory.modify_directory_xsl.title}</h2>
+    <form method="post" action="jsp/admin/plugins/directory/DoModifyDirectoryXsl.jsp" enctype="multipart/form-data" >
+        <input name="id_directory_xsl" value="${directory_xsl.idDirectoryXsl}" type="hidden" />
+        <p>
+            <label for="title" >#i18n{directory.create_directory_xsl.label_title} * : </label>
+            <input type="text" size="20" id="title" name="title" maxlength="255" value="${directory_xsl.title}"/>
+        </p>  
+         <p>
+		    <label for="">#i18n{directory.create_directory_xsl.label_category}  : </label>
+		    
+		    <select name="id_category" id="id_category">
+				<#list category_list as category>
+					<#if directory_xsl.category?exists && directory_xsl.category.idCategory=category.idCategory>
+						<option value="${category.idCategory}" selected="selected">#i18n{${category.titleI18nKey}}</option>
+					<#else>	
+						<option value="${category.idCategory}">#i18n{${category.titleI18nKey}}</option>
+					</#if>
+				</#list>
+			</select>
+			<br/>
+			<label>&nbsp;</label>
+			#i18n{directory.create_directory_xsl.label_category_comment}
+	  </p>
+        <p>
+            <label for="description" >#i18n{directory.create_directory_xsl.label_description} * : </label>
+            <input type="text" size="60" id="description" name="description" maxlength="255" value="${directory_xsl.description}"/>
+        </p>	
+         <p>
+            <label for="extension" >#i18n{directory.create_directory_xsl.label_extension} (*) : </label>
+            <input type="text" size="10" id="extension" name="extension" maxlength="10" value="${directory_xsl.extension}"/>
+               <br/>
+			<label>&nbsp;</label>
+			#i18n{directory.create_directory_xsl.label_extension_comment}
+        </p>		
+        <p>
+            <label for="id_file" >#i18n{directory.create_directory_xsl.label_file} * : </label>
+           	<#if directory_xsl.file?exists >
+            	<a  href="jsp/site/plugins/directory/DoDownloadFile.jsp?id_file=${directory_xsl.file.idFile}"/>
+						${directory_xsl.file.title}(${directory_xsl.file.size} O)
+				 </a>
+			</#if>	 
+            <input type="file" id="id_file" name="id_file" size="60" maxlength="100"/>
+        </p>
+      			
+        
+        <p>
+            
+            <input type="submit" value="#i18n{directory.create_directory_xsl.button_save}" class="button" />
+            <input type="button" value="#i18n{directory.create_directory_xsl.button_cancel}" class="button" onclick="javascript:history.go(-1)" />
+        </p>
+
+    </directory>
+        </div>

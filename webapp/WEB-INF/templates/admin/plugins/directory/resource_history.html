@@ -1,0 +1,47 @@
+<div class="content-box">
+  <h2> #i18n{directory.resource_history.title} <#if date_creation?? > - #i18n{directory.resource_history.date_creation} ${date_creation}</#if></h2>
+   <div id="form-content">
+			
+			 <#list entry_list as entry>	
+	      			<#if entry.entryType.group>	
+	      			  	<fieldset class="form-fieldset"> 
+	    					 <legend class="form-legend"> ${entry.title} </legend> 
+	      					<#if entry.children?has_content>
+	      						<#list entry.children as child >
+	      							<#if child.title?exists>
+		      							<label for="">${child.title} : </label>
+		      						 </#if> 	
+		      							<#assign entryKey=""+child.idEntry>	
+		      							<#list map_id_entry_list_record_field[entryKey] as recordfield>
+		      							
+		      								${child.getHtmlRecordFieldValue( locale, recordfield, false )}
+		      								<br/>
+		      								<br/>
+		      						 		
+	      							</#list>
+	      						</#list>
+	      					</#if>
+	      				</fieldset>		
+	      			<#else>
+	      				<#assign entryKey=""+entry.idEntry>	
+	      				<#if entry.title?exists>
+	      					<label for="">${entry.title} : </label>
+	      				</#if>	
+	      				<#list map_id_entry_list_record_field[entryKey] as recordfield>
+	      						
+    						${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
+    							<br/>
+    							<br/>
+    					</#list>	
+	      			</#if>	
+	      			
+	      		</#list>
+	 			
+		</div>
+   <div class="highlight-box">
+   	 ${resource_history}
+   </div> 
+   <p>
+		<input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{directory.resource_history.buttonBack}" />
+	</p>
+</div>

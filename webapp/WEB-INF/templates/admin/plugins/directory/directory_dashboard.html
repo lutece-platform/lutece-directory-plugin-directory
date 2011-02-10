@@ -1,0 +1,47 @@
+<table>
+   	<tr>
+   		<th>#i18n{directory.dashboard.columnTitleLabel}</th>
+   		<th>#i18n{directory.dashboard.row_state}</th>  
+   		<th>#i18n{directory.dashboard.columnTitleActions}</th>  
+   		<th>#i18n{directory.dashboard.nb_records}</th>   	 		
+   	</tr>
+    <#list directory_list as directory>
+    	<tr>
+			<td>
+				<#if authorized_directory_modification_list?seq_contains(directory.idDirectory)>
+					<a href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${directory.idDirectory}&plugin_name=directory">
+						${directory.title} 
+					</a>
+				<#else>
+					${directory.title} 
+				</#if>
+			</td>
+			
+			<td>
+				<#if directory.enabled>
+					<img  src="images/admin/skin/plugins/directory/actions/enable.png" />
+				<#else>
+					<img src="images/admin/skin/plugins/directory/actions/disable.png" />
+				</#if>			     
+			</td>
+			
+            <td>  
+				<#if directory.actions?exists>
+					<#list directory.actions as action>
+						<#if action.permission='MANAGE_RECORD' || action.permission='DELETE' || action.permission='CHANGE_STATE'>
+						 	<a href="${action.url}?id_directory=${directory.idDirectory}&plugin_name=directory">
+						  		<img src="${action.iconUrl}" alt="${action.name}" title="${action.description}">
+						  	</a>
+					  	</#if>
+					</#list>
+				</#if>		     
+			  	
+			  	
+					
+            </td>        
+            <td>
+            	${record_count_list[directory.idDirectory?string]}
+            </td>   
+    	</tr>
+    </#list>
+</table>

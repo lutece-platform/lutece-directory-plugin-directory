@@ -1,0 +1,3 @@
+<#if record_field.field?exists>
+	${record_field.field.title} = <#if record_field.value?has_content>${record_field.value}<#else> - </#if> 
+</#if>	

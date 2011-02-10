@@ -1,0 +1,29 @@
+<div class="form-element">
+	 <span class="form-label">
+		 <label for="${entry.idEntry}">	
+				${entry.title}: 
+		</label>
+		
+	</span>
+	 <span class="form-field-column">	 
+		<#if default_values?has_content>	 
+			<#list default_values as default_value>
+				<#if default_value?exists && default_value.value?exists>
+		 			<@combo name=entry.idEntry items=entry.getSelectListRecordAssociate( true ) default_value=default_value.value />
+		 		<#else>
+		 			<@combo name=entry.idEntry items=entry.getSelectListRecordAssociate( true ) default_value=-1 />
+		 		</#if>
+		 	</#list>
+		 <#else>
+				<@combo name=entry.idEntry  items=entry.getSelectListRecordAssociate( true ) default_value=-1 />		
+		</#if>
+		</span>	
+		<#if entry.helpMessage?exists&&entry.helpMessageSearch!=''>
+			<span class="form-help">
+				<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
+					<span><pre> ${entry.helpMessageSearch}</pre></span>
+				</a>
+			</span>
+		</#if>	
+		
+</div>	
