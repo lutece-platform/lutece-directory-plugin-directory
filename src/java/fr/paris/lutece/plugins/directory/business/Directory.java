@@ -95,6 +95,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     private String _strSortEntryId;
     private boolean _bAscSort;
     private boolean _bRecordActivated;
+    private boolean _bIsIndexed;
 
     //creation date field
     private boolean _bDateShownInResultList;
@@ -582,4 +583,22 @@ public class Directory implements AdminWorkgroupResource, RBACResource
 
         return strXml;
     }
+
+    /**
+     * Set indexed
+     * @param bIsIndexed true if the directory is indexed, false otherwise
+     */
+	public void setIndexed( boolean bIsIndexed )
+	{
+		_bIsIndexed = bIsIndexed;
+	}
+
+	/**
+	 * Check if the directory is indexed
+	 * @return true if the directory is indexed, false otherwise
+	 */
+	public boolean isIndexed(  )
+	{
+		return _bIsIndexed;
+	}
 }

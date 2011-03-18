@@ -53,9 +53,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fr.paris.lutece.plugins.directory.business.Directory;
+import fr.paris.lutece.plugins.directory.business.DirectoryHome;
 import fr.paris.lutece.plugins.directory.business.IndexerAction;
 import fr.paris.lutece.plugins.directory.business.IndexerActionFilter;
 import fr.paris.lutece.plugins.directory.business.IndexerActionHome;
+import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
@@ -418,10 +420,16 @@ public class DirectorySearchService
      */
     public void addIndexerAction( int nIdRecord, int nIdTask, Plugin plugin )
     {
-        IndexerAction indexerAction = new IndexerAction(  );
-        indexerAction.setIdRecord( nIdRecord );
-        indexerAction.setIdTask( nIdTask );
-        IndexerActionHome.create( indexerAction, plugin );
+    	Record record = RecordHome.findByPrimaryKey( nIdRecord, plugin );
+    	int nDirectoryId = record.getDirectory(  ).getIdDirectory(  );
+    	Directory directory = DirectoryHome.findByPrimaryKey( nDirectoryId, plugin );
+    	if ( directory.isIndexed(  ) )
+    	{
+    		IndexerAction indexerAction = new IndexerAction(  );
+            indexerAction.setIdRecord( nIdRecord );
+            indexerAction.setIdTask( nIdTask );
+            IndexerActionHome.create( indexerAction, plugin );
+    	}
     }
 
     /**

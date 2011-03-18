@@ -109,6 +109,7 @@ INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUE
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_shown_in_export', '0');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('unavailability_message', 'Annuaire indisponible.');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('activate_directory_record', '1');
+INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('is_indexed', '1');
 
 /*==============================================================*/
 /*	Init  table directory_entry_parameter						*/

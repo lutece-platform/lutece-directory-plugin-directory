@@ -274,9 +274,12 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
         }
         else
         {
-            for ( Directory directory : DirectoryHome.getDirectoryList( new DirectoryFilter(  ), plugin ) )
+        	// Index only the directories that have the attribute is_indexed as true
+        	DirectoryFilter filter = new DirectoryFilter(  );
+        	filter.setIsIndexed( DirectoryFilter.FILTER_TRUE );
+            for ( Directory directory : DirectoryHome.getDirectoryList( filter, plugin ) )
             {
-                sbLogs.append( "Indexing Directory" );
+        		sbLogs.append( "Indexing Directory" );
                 sbLogs.append( "\r\n" );
                 recordFieldFilter.setIdDirectory( directory.getIdDirectory(  ) );
 

@@ -47,6 +47,7 @@ CREATE TABLE directory_directory (
   is_date_shown_in_export SMALLINT DEFAULT 0,
   is_ascending_sort SMALLINT DEFAULT 1,
   is_directory_record_activated SMALLINT DEFAULT 1,
+  is_indexed SMALLINT DEFAULT 1,
   id_sort_entry VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY  (id_directory)
   );

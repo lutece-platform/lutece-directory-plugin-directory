@@ -72,6 +72,12 @@
 		    <label>&nbsp;</label> #i18n{directory.create_directory_record.activate_directory_record_comment}
 		</p>
 		<p>
+		    <label for="is_indexed">#i18n{directory.create_directory.label.is_indexed} : </label>
+		    <input name="is_indexed" value="1" type="checkbox" ${getChecked('is_indexed',list_directory_param_default_values)} />
+	   		<br/>
+		    <label>&nbsp;</label> #i18n{directory.create_directory.label.is_indexed_comment}
+		</p>
+		<p>
 			<label for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} : </label>
 			<div class="editor" >
 			<textarea name="unavailability_message" id="unavailability_message" rows="20" cols="90" class="richtext"  style="width:100%">${getName('unavailability_message',list_directory_param_default_values)}</textarea>

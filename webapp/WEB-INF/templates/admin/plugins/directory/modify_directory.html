@@ -215,6 +215,12 @@
 			    <label>&nbsp;</label> #i18n{directory.create_directory_record.activate_directory_record_comment}
 			</p>
 			<p>
+				<label for="is_indexed">#i18n{directory.modify_directory.label.is_indexed} :</label>
+				<input name="is_indexed" value="1" type="checkbox" <#if directory.isIndexed(  )>checked="checked"</#if>/>
+				<br/>
+			    <label>&nbsp;</label> #i18n{directory.modify_directory.label.is_indexed_comment}
+			</p>
+			<p>
 				<label for="id_sort_entry">
                 	 #i18n{directory.modify_directory.label_sort_entry} : 
               	</label>

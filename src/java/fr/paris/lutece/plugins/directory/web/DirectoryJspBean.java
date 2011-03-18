@@ -390,6 +390,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_ID_SORT_ENTRY = "id_sort_entry";
     private static final String PARAMETER_ASC_SORT = "asc_sort";
     private static final String PARAMETER_ACTIVATE_DIRECTORY_RECORD = "activate_directory_record";
+    private static final String PARAMETER_IS_INDEXED = "is_indexed";
 
     //private static final String PARAMETER_EXPORT_ALL_RESULT = "export_all_result";
     private static final String PARAMETER_ID_DIRECTORY_XSL = "id_directory_xsl";
@@ -580,6 +581,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strIdSortEntry = request.getParameter( PARAMETER_ID_SORT_ENTRY );
         String strAscSort = request.getParameter( PARAMETER_ASC_SORT );
         String strRecordActivated = request.getParameter( PARAMETER_ACTIVATE_DIRECTORY_RECORD );
+        String strIsIndexed = request.getParameter( PARAMETER_IS_INDEXED );
 
         //creation date field
         String strShowDateInResultList = request.getParameter( PARAMETER_DATE_SHOWN_IN_RESULT_LIST );
@@ -712,6 +714,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         directory.setAscendingSort( strAscSort != null );
         directory.setRecordActivated( strRecordActivated != null );
+        directory.setIndexed( strIsIndexed != null );
 
         return null; // No error
     }
