@@ -68,7 +68,12 @@ public class EntryTypeNumbering extends Entry
     private final String _template_html_front_code_form_entry = "skin/plugins/directory/entrytypenumbering/html_code_form_entry_type_numbering.html";
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytypenumbering/html_code_form_search_entry_type_numbering.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypenumbering/html_code_entry_value_type_numbering.html";
+    
+    // MARKS
     private static final String MARK_MAX_NUMBER = "max_number";
+    
+    // SQL
+    private static final String SQL_ORDER_BY_RECORD_FIELD_VALUE = " ORDER BY 0 + drf.record_field_value ";
     
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
@@ -253,5 +258,12 @@ public class EntryTypeNumbering extends Entry
     public boolean isSortable(  )
     {
         return true;
+    }
+    
+    @Override
+    public String getSQLOrderBy(  )
+    {
+    	// Special query in order to sort numerically and not alphabetically (thus avoiding list like 1, 10, 11, 2, ... instead of 1, 2, ..., 10, 11)
+    	return SQL_ORDER_BY_RECORD_FIELD_VALUE;
     }
 }

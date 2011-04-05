@@ -82,10 +82,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     private static final String SQL_QUERY_COUNT_RECORD_FIELD_BY_FILTER = "SELECT COUNT(drf.id_record_field) " +
         "FROM directory_record_field drf,directory_entry ent,directory_entry_type type ";
     // Special query in order to sort numerically and not alphabetically (thus avoiding list like 1, 10, 11, 2, ... instead of 1, 2, ..., 10, 11)
-    private static final String SQL_QUERY_SELECT_MAX_NUMBER = " SELECT a.record_field_value FROM directory_record_field a " + 
-    	" INNER JOIN directory_record b ON a.id_record = b.id_record " +
-    	" INNER JOIN directory_entry c ON a.id_entry = c.id_entry " +
-    	" WHERE c.id_type = ? AND b.id_directory = ? ORDER BY 0 + a.record_field_value DESC LIMIT 1";
+    private static final String SQL_QUERY_SELECT_MAX_NUMBER = " SELECT drf.record_field_value FROM directory_record_field drf " + 
+    	" INNER JOIN directory_record dr ON drf.id_record = dr.id_record " +
+    	" INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry " +
+    	" WHERE ent.id_type = ? AND dr.id_directory = ? ORDER BY 0 + drf.record_field_value DESC LIMIT 1 ";
     private static final String SQL_FILTER_ID_RECORD = " drf.id_record = ? ";
     private static final String SQL_FILTER_ID_RECORD_IN = " drf.id_record IN ( ? ";
     private static final String SQL_FILTER_ID_FIELD = " drf.id_field = ? ";
