@@ -41,10 +41,14 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.util.html.HtmlTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -64,7 +68,8 @@ public class EntryTypeNumbering extends Entry
     private final String _template_html_front_code_form_entry = "skin/plugins/directory/entrytypenumbering/html_code_form_entry_type_numbering.html";
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytypenumbering/html_code_form_search_entry_type_numbering.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypenumbering/html_code_entry_value_type_numbering.html";
-
+    private static final String MARK_MAX_NUMBER = "max_number";
+    
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -102,6 +107,27 @@ public class EntryTypeNumbering extends Entry
         {
             return _template_html_code_form_search_entry;
         }
+    }
+    
+    @Override
+    public String getHtmlFormEntry( Locale locale, boolean isDisplayFront )
+    {
+        if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
+        {
+        	Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+            Map<String, Object> model = new HashMap<String, Object>(  );
+            model.put( MARK_ENTRY, this );
+            model.put( MARK_LOCALE, locale );
+            model.put( MARK_MAX_NUMBER, RecordFieldHome.findMaxNumber( getEntryType(  ).getIdType(  ), 
+            		getDirectory(  ).getIdDirectory(  ), pluginDirectory ) );
+
+            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale,
+                    model );
+
+            return template.getHtml(  );
+        }
+
+        return null;
     }
 
     @Override
@@ -202,9 +228,13 @@ public class EntryTypeNumbering extends Entry
         }
         else
         {
-            int numbering = DirectoryUtils.convertStringToInt( this.getFields(  ).get( 0 ).getValue(  ) );
+        	
+            //int numbering = DirectoryUtils.convertStringToInt( this.getFields(  ).get( 0 ).getValue(  ) );
+        	int numbering = RecordFieldHome.findMaxNumber( getEntryType(  ).getIdType(  ), 
+            		getDirectory(  ).getIdDirectory(  ), pluginDirectory );
             this.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
             FieldHome.update( this.getFields(  ).get( 0 ), pluginDirectory );
+        	
             recordField.setValue( String.valueOf( numbering ) );
         }
 

@@ -261,4 +261,16 @@ public final class RecordFieldHome
     {
         return _dao.getCountByFilter( filter, plugin );
     }
+    
+    /**
+     * Get the max number from a given id directory
+     * @param nIdEntryTypeNumbering the id of the entry type numbering
+     * @param nIdDirectory the id directory
+     * @param plugin {@link Plugin}
+     * @return the max number
+     */
+    public static int findMaxNumber( int nIdEntryTypeNumbering, int nIdDirectory, Plugin plugin )
+    {
+    	return _dao.getMaxNumber( nIdEntryTypeNumbering, nIdDirectory, plugin );
+    }
 }

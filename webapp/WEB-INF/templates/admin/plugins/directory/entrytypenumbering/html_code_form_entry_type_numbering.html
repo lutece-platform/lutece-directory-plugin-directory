@@ -10,20 +10,15 @@
 		</label>
 	    </span>
 	    <span class="form-field-column">	 
-			<#list entry.fields as field>
-			
-				<#if field.value?exists && !default_values?has_content>
-					<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" value="${field.value}" />${field.value}
-				
-				<#elseif default_values?has_content>
-						<#list default_values as default_value>
-							<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}" />${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}
-						</#list>	 	
-			 	<#else>
-				   	<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" />Numérotation Automatique
-				</#if>
-				
-			 </#list>
+			<#if max_number?exists && !default_values?has_content>
+				<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" value="${max_number}" />${max_number}
+			<#elseif default_values?has_content>
+				<#list default_values as default_value>
+					<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}" />${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}
+				</#list>	 	
+			<#else>
+				<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" />Numérotation Automatique
+			</#if>
 		</span>
 		 <#if entry.helpMessage?exists&&entry.helpMessage!=''>
 			<span class="form-help">
@@ -31,6 +26,5 @@
 					<span><pre> ${entry.helpMessage}</pre></span>
 				</a>
 			</span>
-		</#if>	
-		
+		</#if>
 </div>

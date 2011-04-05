@@ -119,4 +119,13 @@ public interface IRecordFieldDAO
      * @return the number of record field who verify the filter
      */
     int getCountByFilter( RecordFieldFilter filter, Plugin plugin );
+    
+    /**
+     * Get the max number from a given id directory
+     * @param nIdEntryTypeNumbering the id of the entry type numbering
+     * @param nIdDirectory the id directory
+     * @param plugin {@link Plugin}
+     * @return the max number
+     */
+    int getMaxNumber( int nIdEntryTypeNumbering, int nIdDirectory, Plugin plugin );
 }
