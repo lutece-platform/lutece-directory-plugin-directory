@@ -45,10 +45,9 @@ import fr.paris.lutece.plugins.directory.business.DirectoryAction;
 import fr.paris.lutece.plugins.directory.business.DirectoryActionHome;
 import fr.paris.lutece.plugins.directory.business.DirectoryFilter;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
-import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
+import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.portal.business.rbac.RBAC;
 import fr.paris.lutece.portal.business.right.Right;
 import fr.paris.lutece.portal.business.right.RightHome;
@@ -117,7 +116,6 @@ public class DirectoryDashboardComponent extends DashboardComponent
         listActionsForDirectoryDisable = DirectoryActionHome.selectActionsByFormState( Directory.STATE_DISABLE,
                 getPlugin(  ), user.getLocale(  ) );
 
-        RecordFieldFilter filter = new RecordFieldFilter(  );
         Map<String, Object> recordCountMap = new HashMap<String, Object>(  );
         List<Integer> nAuthorizedModificationList = new ArrayList<Integer>(  );
 
@@ -142,9 +140,8 @@ public class DirectoryDashboardComponent extends DashboardComponent
             }
 
             //count records
-            filter.setIdDirectory( directory.getIdDirectory(  ) );
             recordCountMap.put( Integer.toString( directory.getIdDirectory(  ) ),
-                RecordHome.getCountRecord( filter, plugin ) );
+                DirectoryService.getInstance(  ).getRecordsCount( directory, user ) );
         }
 
         model.put( MARK_DIRECTORY_LIST, directoryList );

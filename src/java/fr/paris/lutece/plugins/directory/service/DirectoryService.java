@@ -33,19 +33,27 @@
  */
 package fr.paris.lutece.plugins.directory.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryXsl;
+import fr.paris.lutece.plugins.directory.business.Record;
+import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
+import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterHome;
 import fr.paris.lutece.plugins.directory.business.parameter.EntryParameterHome;
+import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.rbac.RBAC;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
+import fr.paris.lutece.portal.service.workflow.WorkflowService;
+import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.ReferenceList;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -119,5 +127,39 @@ public class DirectoryService
         }
 
         return model;
+    }
+    
+    /**
+     * Get the records count
+     * @param directory the {@link Directory}
+     * @param user the {@link AdminUser}
+     * @return the record count
+     */
+    public int getRecordsCount( Directory directory, AdminUser user )
+    {
+    	Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+    	int nNbRecords = 0;
+    	boolean bWorkflowServiceEnable = WorkflowService.getInstance(  ).isAvailable(  );
+    	RecordFieldFilter filter = new RecordFieldFilter(  );
+    	filter.setIdDirectory( directory.getIdDirectory(  ) );
+        filter.setWorkgroupKeyList( AdminWorkgroupService.getUserWorkgroups( user, user.getLocale(  ) ) );
+    	
+    	if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
+                bWorkflowServiceEnable )
+        {
+    		List<Integer> listResultRecordIds = DirectorySearchService.getInstance(  ).
+    							getSearchResults( directory, null, null, null, null, filter, plugin );
+    		List<Integer> listTmpResultRecordIds = WorkflowService.getInstance(  )
+			            		.getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow(  ), 
+			            		DirectoryUtils.CONSTANT_ID_NULL, Integer.valueOf( directory.getIdDirectory(  ) ), user );
+			listResultRecordIds = DirectoryUtils.retainAllIdsKeepingFirstOrder( listResultRecordIds, listTmpResultRecordIds );
+			nNbRecords = listResultRecordIds.size(  );
+        }
+    	else
+    	{
+        	nNbRecords = RecordHome.getCountRecord( filter, plugin );
+    	}
+    	
+    	return nNbRecords;
     }
 }
