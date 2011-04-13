@@ -48,6 +48,12 @@ import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+import fr.paris.lutece.portal.business.rss.FeedResource;
+import fr.paris.lutece.portal.business.rss.FeedResourceImage;
+import fr.paris.lutece.portal.business.rss.FeedResourceItem;
+import fr.paris.lutece.portal.business.rss.IFeedResource;
+import fr.paris.lutece.portal.business.rss.IFeedResourceImage;
+import fr.paris.lutece.portal.business.rss.IFeedResourceItem;
 import fr.paris.lutece.portal.business.rss.ResourceRss;
 import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
@@ -61,6 +67,7 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import fr.paris.lutece.util.url.UrlItem;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,7 +88,7 @@ public class DirectoryResourceRss extends ResourceRss
     //templates
     private static final String TEMPLATE_TASK_EVALUATION_CREATE_CONFIG = "admin/plugins/directory/rss/resource_create_config.html";
     private static final String TEMPLATE_TASK_EVALUATION_MODIFY_CONFIG = "admin/plugins/directory/rss/resource_modify_config.html";
-
+    private static final String TEMPLATE_RSS_IMAGE = "admin/plugins/directory/rss/rss_image.html";
     //	Markers
     private static final String MARK_DIRECTORY_LIST = "directory_list";
     private static final String MARK_DIRECTORY_LIST_DEFAULT_ITEM = "directory_list_default_item";
@@ -119,6 +126,9 @@ public class DirectoryResourceRss extends ResourceRss
     private static final String PARAMETER_ID_ENTRY_LINK = "id_entry_link";
     private static final String PARAMETER_ID_ENTRY_FILTER_1 = "id_entry_filter_1";
     private static final String PARAMETER_ID_ENTRY_FILTER_2 = "id_entry_filter_2";
+    private static final String PARAMETER_PAGE = "page";
+    private static final String PARAMETER_ID_DIRECTORY_RECORD = "id_directory_record";
+    private static final String PARAMETER_VIEW_DIRECTORY_RECORD = "view_directory_record";
 
     //Properties
     private static final String FIELD_ID_DIRECTORY = "directory.resource_rss.label_directory";
@@ -142,8 +152,10 @@ public class DirectoryResourceRss extends ResourceRss
     private static final String PROPERTY_ACCEPT_DIRECTORY_TYPE = "directory.resource_rss.entry_accept";
     private static final String PROPERTY_ACCEPT_DIRECTORY_TYPE_FOR_LINK = "directory.resource_rss.entry_accept_for_link";
     private static final String PROPERTY_ENTRY_DIRECTORY_TYPE_IMAGE = "directory.resource_rss.entry_type_image";
+    private static final String CONSTANT_DIRECTORY = "directory";
     private static final String ID = "id";
     private static final String NAME = "name";
+    private static final String EMPTY_STRING = "";
 
     public boolean contentResourceRss(  )
     {
@@ -659,6 +671,7 @@ public class DirectoryResourceRss extends ResourceRss
     /* (non-Javadoc)
      * @see fr.paris.lutece.portal.business.rss.IResourceRss#createHtmlRss( )
      */
+    @Deprecated
     public String createHtmlRss(  )
     {
         HashMap<String, Object> model = new HashMap<String, Object>(  );
@@ -882,5 +895,223 @@ public class DirectoryResourceRss extends ResourceRss
         IEntry entryDescription = EntryHome.findByPrimaryKey( config.getIdEntryDescription(  ), pluginDirectory );
 
         return ( ( directory != null ) && ( entryDescription != null ) && ( entryTitle != null ) );
+    }
+    
+    /**
+     * 
+     *{@inheritDoc}
+     */
+    @Override
+    public IFeedResource getFeed()
+    {
+        // Update the head of the document
+        String strRssFileLanguage = AppPropertiesService.getProperty( PROPERTY_SITE_LANGUAGE );
+
+        String strWebAppUrl = AppPropertiesService.getProperty( PROPERTY_WEBAPP_PROD_URL );
+        String strSiteUrl = strWebAppUrl;
+
+        Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+        DirectoryResourceRssConfig config = DirectoryResourceRssConfigHome.findByPrimaryKey( this.getId(  ),
+                pluginDirectory );
+        Directory directory = DirectoryHome.findByPrimaryKey( config.getIdDirectory(  ), pluginDirectory );
+        
+        
+    	IFeedResource resource = new FeedResource();
+    	resource.setTitle( directory.getTitle() );
+    	resource.setDescription( directory.getDescription() );
+    	resource.setLink( strSiteUrl );
+    	resource.setLanguage( strRssFileLanguage );
+    	
+    	IFeedResourceImage image = new FeedResourceImage();
+    	image.setUrl( strSiteUrl + "/images/local/skin/valid-rss.png" );
+    	image.setLink( strSiteUrl );
+    	image.setTitle( directory.getTitle() );
+    	
+    	resource.setImage( image );
+    	
+    	Locale locale = new Locale( strRssFileLanguage );
+    	
+        RecordFieldFilter filter = new RecordFieldFilter(  );
+        filter.setIdDirectory( directory.getIdDirectory(  ) );
+        filter.setSortOrder( RecordFieldFilter.ORDER_DESC );
+
+        HashMap<String, List<RecordField>> mapSearchQuery = new HashMap<String, List<RecordField>>(  );
+
+        if ( config.getIdEntryFilter1(  ) != DirectoryUtils.CONSTANT_ID_NULL )
+        {
+            IEntry entry = EntryHome.findByPrimaryKey( config.getIdEntryFilter1(  ), pluginDirectory );
+            RecordField recordField = new RecordField(  );
+            recordField.setEntry( entry );
+
+            if ( DirectoryUtils.convertStringToInt( config.getValueFilter1(  ) ) != DirectoryUtils.CONSTANT_ID_NULL )
+            {
+                Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( config.getValueFilter1(  ) ),
+                        pluginDirectory );
+                recordField.setField( field );
+            }
+
+            recordField.setValue( config.getValueFilter1(  ) );
+
+            List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
+            recordFieldList.add( recordField );
+
+            mapSearchQuery.put( Integer.toString( config.getIdEntryFilter1(  ) ), recordFieldList );
+        }
+
+        if ( config.getIdEntryFilter2(  ) != DirectoryUtils.CONSTANT_ID_NULL )
+        {
+            IEntry entry = EntryHome.findByPrimaryKey( config.getIdEntryFilter2(  ), pluginDirectory );
+            RecordField recordField = new RecordField(  );
+            recordField.setEntry( entry );
+
+            if ( DirectoryUtils.convertStringToInt( config.getValueFilter2(  ) ) != DirectoryUtils.CONSTANT_ID_NULL )
+            {
+                Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( config.getValueFilter2(  ) ),
+                        pluginDirectory );
+                recordField.setField( field );
+            }
+
+            recordField.setValue( config.getValueFilter2(  ) );
+
+            List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
+            recordFieldList.add( recordField );
+
+            mapSearchQuery.put( Integer.toString( config.getIdEntryFilter2(  ) ), recordFieldList );
+        }
+
+        List<Integer> listResultRecordId = DirectorySearchService.getInstance(  )
+                                                                 .getSearchResults( directory, mapSearchQuery, null,
+                null, null, filter, pluginDirectory );
+
+        if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
+                ( config.getIdWorkflowState(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
+                WorkflowService.getInstance(  ).isAvailable(  ) )
+        {
+            List<Integer> listTmpResultRecordId = WorkflowService.getInstance(  )
+                                                                 .getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
+                    directory.getIdWorkflow(  ), config.getIdWorkflowState(  ),
+                    Integer.valueOf( directory.getIdDirectory(  ) ), null );
+
+            listResultRecordId = DirectoryUtils.retainAll( listResultRecordId, listTmpResultRecordId );
+        }
+
+        List<IFeedResourceItem> listItems = new ArrayList<IFeedResourceItem>();
+
+        for ( Integer idRecord : listResultRecordId )
+        {
+            Record record = RecordHome.findByPrimaryKey( idRecord, pluginDirectory );
+            RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+            recordFieldFilter.setIdDirectory( config.getIdDirectory(  ) );
+            recordFieldFilter.setIdRecord( idRecord );
+
+            recordFieldFilter.setIdEntry( config.getIdEntryTitle(  ) );
+
+            List<RecordField> recordFieldList = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
+            RecordField recordFieldTitle = recordFieldList.get( 0 );
+
+            recordFieldFilter.setIdEntry( config.getIdEntryDescription(  ) );
+
+            List<RecordField> recordFieldList2 = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
+            RecordField recordFieldDescription = recordFieldList2.get( 0 );
+
+            recordFieldFilter.setIdEntry( config.getIdEntryImage(  ) );
+
+            List<RecordField> recordFieldListImage = RecordFieldHome.getRecordFieldList( recordFieldFilter,
+                    pluginDirectory );
+            RecordField recordFieldImage = null;
+
+            if ( !recordFieldListImage.isEmpty(  ) )
+            {
+                recordFieldImage = recordFieldListImage.get( 0 );
+            }
+
+            recordFieldFilter.setIdEntry( config.getIdEntryLink(  ) );
+            
+            List<RecordField> recordFieldListLink = RecordFieldHome.getRecordFieldList( recordFieldFilter,
+                    pluginDirectory );
+            RecordField recordFieldLink = null;
+
+            if ( !recordFieldListLink.isEmpty(  ) )
+            {
+                recordFieldLink = recordFieldListLink.get( 0 );
+            }
+
+            if ( ( recordFieldTitle != null ) && ( recordFieldDescription != null ) )
+            {
+            	IFeedResourceItem item = new FeedResourceItem();
+            	
+            	// image handling
+            	// the image is put right before the description
+            	
+            	String strImageDescription;
+                if ( ( recordFieldImage != null ) && ( recordFieldImage.getFile(  ) != null ) )
+                {
+                	Map<String, Object> model = new HashMap<String, Object>();
+                	model.put( MARK_RSS_SITE_IMAGE_ITEM, recordFieldImage.getFile(  ).getIdFile(  ) );
+                	model.put( MARK_RSS_SITE_URL, strSiteUrl );
+
+                    if ( ( recordFieldImage.getEntry(  ) != null ) &&
+                            ( recordFieldImage.getEntry(  ).getDisplayHeight(  ) != -1 ) )
+                    {
+                    	model.put( MARK_RSS_SITE_IMAGE_HEIGHT_ITEM, recordFieldImage.getEntry(  ).getDisplayHeight(  ) );
+                    }
+
+                    if ( ( recordFieldImage.getEntry(  ) != null ) &&
+                            ( recordFieldImage.getEntry(  ).getDisplayWidth(  ) != -1 ) )
+                    {
+                        model.put( MARK_RSS_SITE_IMAGE_WIDTH_ITEM, recordFieldImage.getEntry(  ).getDisplayWidth(  ) );
+                    }
+                    
+                    HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_RSS_IMAGE, locale, model );
+                    strImageDescription = template.getHtml();
+                }
+                else
+                {
+                	strImageDescription = EMPTY_STRING;
+                }
+
+                if ( recordFieldTitle.getValue(  ) != null )
+                {
+                    item.setTitle( recordFieldTitle.getValue(  ) );
+                }
+                else
+                {
+                    item.setTitle( recordFieldTitle.getField(  ).getValue(  ) );
+                }
+
+                if ( recordFieldDescription.getValue(  ) != null )
+                {
+                    item.setDescription( strImageDescription + recordFieldDescription.getValue(  ) );
+                }
+                else
+                {
+                    item.setDescription( strImageDescription + recordFieldDescription.getField(  ).getValue(  ) );
+                }
+
+                if ( ( recordFieldLink != null ) && ( recordFieldLink.getValue(  ) != null ) )
+                {
+                    item.setLink( recordFieldLink.getValue(  ) );
+                }
+                else
+                {
+                	UrlItem urlItem = new UrlItem( strSiteUrl + "/jsp/site/Portal.jsp" );
+                	urlItem.addParameter( PARAMETER_PAGE, CONSTANT_DIRECTORY );
+                	urlItem.addParameter( PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord() );
+                	urlItem.addParameter( PARAMETER_VIEW_DIRECTORY_RECORD, directory.getIdDirectory() );
+                	
+                	item.setLink( urlItem.getUrl() );
+                }
+                
+                item.setGUID( item.getLink() );
+
+                item.setDate( record.getDateCreation(  ) );
+                
+                listItems.add( item );
+            }
+        }
+        
+        resource.setItems( listItems );
+        
+    	return resource;
     }
 }
