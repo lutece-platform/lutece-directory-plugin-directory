@@ -132,6 +132,8 @@ public class EntryTypeImg extends Entry
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
+        String strIndexedAsTitle = request.getParameter( PARAMETER_INDEXED_AS_TITLE );
+        String strIndexedAsSummary = request.getParameter( PARAMETER_INDEXED_AS_SUMMARY );
         String strCreateThumbnail = request.getParameter( PARAMETER_CREATE_THUMBNAIL );
         String strCreateBigThumbnail = request.getParameter( PARAMETER_CREATE_BIG_THUMBNAIL );
 
@@ -444,6 +446,8 @@ public class EntryTypeImg extends Entry
 
         this.setMandatory( strMandatory != null );
         this.setIndexed( strIndexed != null );
+        this.setIndexedAsTitle( strIndexedAsTitle != null );
+        this.setIndexedAsSummary( strIndexedAsSummary != null );
         this.setShownInAdvancedSearch( strShowInFormMainSearch != null );
         this.setShownInResultList( strShowInResultList != null );
         this.setShownInResultRecord( strShowInResultRecord != null );

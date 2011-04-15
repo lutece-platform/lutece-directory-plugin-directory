@@ -72,7 +72,16 @@
 		</daemon>
 	</daemons>	
 	
-	  <!-- Xpage configuration -->
+	<!-- Search Indexer Service -->
+    <search-indexers>
+        <search-indexer>
+            <search-indexer-class>
+                fr.paris.lutece.plugins.directory.service.search.DirectorySearchIndexer
+            </search-indexer-class>
+        </search-indexer>
+    </search-indexers>
+	
+    <!-- Xpage configuration -->
    <applications>
 	   <application>
 	     <application-id>directory</application-id>

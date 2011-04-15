@@ -103,6 +103,8 @@ public class EntryTypeFile extends Entry
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
+        String strIndexedAsTitle = request.getParameter( PARAMETER_INDEXED_AS_TITLE );
+        String strIndexedAsSummary = request.getParameter( PARAMETER_INDEXED_AS_SUMMARY);
         String strWidth = request.getParameter( PARAMETER_WIDTH );
         String strShowInFormMainSearch = request.getParameter( PARAMETER_SHOWN_IN_ADVANCED_SEARCH );
         String strShowInResultList = request.getParameter( PARAMETER_SHOWN_IN_RESULT_LIST );
@@ -157,6 +159,8 @@ public class EntryTypeFile extends Entry
         this.getFields(  ).get( 0 ).setWidth( nWidth );
         this.setMandatory( strMandatory != null );
         this.setIndexed( strIndexed != null );
+        this.setIndexedAsTitle( strIndexedAsTitle != null );
+        this.setIndexedAsSummary( strIndexedAsSummary != null );
         this.setShownInAdvancedSearch( strShowInFormMainSearch != null );
         this.setShownInResultList( strShowInResultList != null );
         this.setShownInResultRecord( strShowInResultRecord != null );
@@ -194,8 +198,8 @@ public class EntryTypeFile extends Entry
         boolean bTestDirectoryError, List<RecordField> listRecordField, Locale locale )
         throws DirectoryErrorException
     {
-        // création d'un fichier de type File avec les données du fichier pdf
-        // le fichier sera ensuite importé.
+        // crï¿½ation d'un fichier de type File avec les donnï¿½es du fichier pdf
+        // le fichier sera ensuite importï¿½.
         RecordField recordField = new RecordField(  );
         recordField.setEntry( this );
 

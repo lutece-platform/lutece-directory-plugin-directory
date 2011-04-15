@@ -133,6 +133,8 @@ public class EntryTypeMail extends Entry
         String strValue = request.getParameter( PARAMETER_VALUE );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
+        String strIndexedAsTitle = request.getParameter( PARAMETER_INDEXED_AS_TITLE );
+        String strIndexedAsSummary = request.getParameter( PARAMETER_INDEXED_AS_SUMMARY );
         String strShowInAdvancedSearch = request.getParameter( PARAMETER_SHOWN_IN_ADVANCED_SEARCH );
         String strShowInResultList = request.getParameter( PARAMETER_SHOWN_IN_RESULT_LIST );
         String strShowInResultRecord = request.getParameter( PARAMETER_SHOWN_IN_RESULT_RECORD );
@@ -200,6 +202,8 @@ public class EntryTypeMail extends Entry
         this.getFields(  ).get( 0 ).setMaxSizeEnter( nMaxSizeEnter );
         this.setMandatory( strMandatory != null );
         this.setIndexed( strIndexed != null );
+        this.setIndexedAsTitle( strIndexedAsTitle != null );
+        this.setIndexedAsSummary( strIndexedAsSummary != null );
         this.setShownInAdvancedSearch( strShowInAdvancedSearch != null );
         this.setShownInResultList( strShowInResultList != null );
         this.setShownInResultRecord( strShowInResultRecord != null );

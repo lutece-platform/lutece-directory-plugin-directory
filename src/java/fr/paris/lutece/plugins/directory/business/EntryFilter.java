@@ -52,6 +52,8 @@ public class EntryFilter
     private int _nIsComment = ALL_INT;
     private int _nIsMyLuteceUser = ALL_INT;
     private int _nIsIndexed = ALL_INT;
+    private int _nIsIndexedAsTitle = ALL_INT;
+    private int _nIsIndexedAsSummary = ALL_INT;
     private int _nIsShownInResultList = ALL_INT;
     private int _nIsWorkgroupAssociated = ALL_INT;
     private int _nIsRoleAssociated = ALL_INT;
@@ -421,6 +423,68 @@ public class EntryFilter
     {
         return ( _nIsIndexed != ALL_INT );
     }
+    
+    /**
+	 *
+	 * @return  1 if the entry should be (part of) the title of the document in 
+	 * the global index, 0 otherwise
+	 */
+    public int getIsIndexedAsTitle(  )
+    {
+        return _nIsIndexedAsTitle;
+    }
+
+    /**
+     * set  1 if the entry should be (part of) the title of the document in 
+     * the global index, 0 otherwise
+     * @param isIndexed 1 if the entry should be (part of) the title of the document in 
+     * the global index, 0 otherwise
+     */
+    public void setIsIndexedAsTitle( int isIndexedAsTitle )
+    {
+        _nIsIndexedAsTitle = isIndexedAsTitle;
+    }
+
+    /**
+     *
+     * @return true  if the entry should be (part of) the title of the document in 
+     * the global index, false otherwise
+     */
+    public boolean containsIsIndexedAsTitle(  )
+    {
+        return ( _nIsIndexedAsTitle != ALL_INT );
+    }
+    
+    /**
+	 *
+	 * @return  1 if the entry should be (part of) the summary of the document in 
+	 * the global index, 0 otherwise
+	 */
+   public int getIsIndexedAsSummary(  )
+   {
+       return _nIsIndexedAsSummary;
+   }
+
+   /**
+    * set  1 if the entry should be (part of) the summary of the document in 
+    * the global index, 0 otherwise
+    * @param isIndexed 1 if the entry should be (part of) the summary of the document in 
+    * the global index, 0 otherwise
+    */
+   public void setIsIndexedAsSummary( int isIndexedAsSummary )
+   {
+       _nIsIndexedAsSummary = isIndexedAsSummary;
+   }
+
+   /**
+    *
+    * @return true  if the entry should be (part of) the summary of the document in 
+    * the global index, false otherwise
+    */
+   public boolean containsIsIndexedAsSummary(  )
+   {
+       return ( _nIsIndexedAsSummary != ALL_INT );
+   }
 
     /**
     *

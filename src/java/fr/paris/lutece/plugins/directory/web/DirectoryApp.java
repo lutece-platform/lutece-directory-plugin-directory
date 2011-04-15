@@ -61,9 +61,12 @@ import fr.paris.lutece.portal.service.message.SiteMessage;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
 import fr.paris.lutece.portal.service.message.SiteMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.search.SearchEngine;
+import fr.paris.lutece.portal.service.search.SearchResult;
 import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -71,13 +74,16 @@ import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.web.xpages.XPageApplication;
 import fr.paris.lutece.util.UniqueIDGenerator;
+import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.html.Paginator;
+import fr.paris.lutece.util.http.SecurityUtil;
 import fr.paris.lutece.util.url.UrlItem;
 import fr.paris.lutece.util.xml.XmlUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -85,6 +91,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -116,10 +124,18 @@ public class DirectoryApp implements XPageApplication
     private static final String PARAMETER_ID_DIRECTORY_RECORD = "id_directory_record";
     private static final String PARAMETER_FILTER_PAGE_INDEX = "filter_page_index";
     private static final String INIT_MAP_QUERY = "init_map_query";
+    
+    private static final String PARAMETER_DATE_BEGIN = "date_after";
+	private static final String PARAMETER_DATE_END = "date_before";
+	private static final String PARAMETER_OPERATOR = "default_operator";
+	private static final String PARAMETER_QUERY = "query";
 
     //message
     private static final String MESSAGE_ERROR = "directory.message.Error";
     private static final String MESSAGE_ACCESS_DENIED = "directory.message.accessDenied";
+	private static final String MESSAGE_INVALID_SEARCH_TERMS = "directory.message.invalidSearchTerms";
+	private static final String MESSAGE_SEARCH_DATE_VALIDITY = "directory.message.dateValidity";
+	private static final String MESSAGE_SEARCH_OPERATOR_VALIDITY = "directory.message.operatorValidity";
 
     //Markers
     private static final String MARK_UNAVAILABILITY_MESSAGE = "unavailability_message";
@@ -137,6 +153,11 @@ public class DirectoryApp implements XPageApplication
     private static final String MARK_ONE_RESULT = "one_result";
     private static final String MARK_ONE_SESSION_ID = "one_session_id";
     private static final String MARK_NEW_SEARCH = "new_search";
+    private static final String MARK_DATE_BEGIN = "date_after";
+	private static final String MARK_DATE_END = "date_before";
+	private static final String MARK_OPERATOR = "operator";
+	private static final String MARK_QUERY = "query";
+	private static final String MARK_RESULT_LIST = "result_list";
 
     //Markers XSL
     private static final String MARK_TITLE_DESCRIPTIVE = "title-descriptive";
@@ -163,6 +184,11 @@ public class DirectoryApp implements XPageApplication
     // Properties
     private static final String XSL_UNIQUE_PREFIX_ID = UniqueIDGenerator.getNewId(  ) + "directory-";
 
+	private static final String OPERATOR_AND = "AND";
+	private static final String OPERATOR_OR = "OR";
+	
+	private static final String BEAN_SEARCH_ENGINE = "searchEngine";
+    
     //Tag
     private static final String TAG_DISPLAY = "display";
     private static final String TAG_YES = "yes";
@@ -200,37 +226,7 @@ public class DirectoryApp implements XPageApplication
 
         if ( ( strIdDirectory == null ) && ( strIdDirectoryRecord == null ) )
         {
-            //Display the list of all Directory
-            DirectoryFilter filter = new DirectoryFilter(  );
-            filter.setIsDisabled( DirectoryFilter.FILTER_TRUE );
-
-            List<Directory> listDirectory = DirectoryHome.getDirectoryList( filter, plugin );
-            List<Directory> listDirectoryAuthorized;
-
-            if ( SecurityService.isAuthenticationEnable(  ) )
-            {
-                listDirectoryAuthorized = new ArrayList<Directory>(  );
-
-                for ( Directory directory : listDirectory )
-                {
-                    if ( ( directory.getRoleKey(  ) == null ) ||
-                            directory.getRoleKey(  ).equals( Directory.ROLE_NONE ) ||
-                            SecurityService.getInstance(  ).isUserInRole( request, directory.getRoleKey(  ) ) )
-                    {
-                        listDirectoryAuthorized.add( directory );
-                    }
-                }
-            }
-            else
-            {
-                listDirectoryAuthorized = listDirectory;
-            }
-
-            model.put( MARK_DIRECTORY_LIST, listDirectoryAuthorized );
-
-            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_XPAGE_VIEW_ALL_DIRECTORIES,
-                    request.getLocale(  ), model );
-            page.setContent( template.getHtml(  ) );
+            page.setContent( getSearchPage( request, plugin ) );
         }
         else
         {
@@ -827,6 +823,123 @@ public class DirectoryApp implements XPageApplication
 
         return DirectoryUtils.EMPTY_STRING;
     }
+    
+    /**
+	 * Returns the html code of the search page
+	 * @param request the http request
+	 * @param plugin the plugin
+	 * @return the html page
+	 * @throws SiteMessageException a exception that triggers a site message
+	 */
+	public String getSearchPage( HttpServletRequest request, Plugin plugin )
+		throws SiteMessageException
+	{
+		String strQuery = request.getParameter( PARAMETER_QUERY );
+		
+		HashMap<String, Object> model = new HashMap<String, Object>(  );
+		
+		if( StringUtils.isNotBlank( strQuery ) )
+		{
+			Date dateBegin = null;
+			Date dateEnd = null;
+			LuteceUser user = null;
+			
+			String strOperator = request.getParameter( PARAMETER_OPERATOR );
+			String strDateBegin = request.getParameter( PARAMETER_DATE_BEGIN );
+			String strDateEnd = request.getParameter( PARAMETER_DATE_END );
+			
+			
+			//Mandatory fields
+			if( StringUtils.isBlank( strOperator ) )
+			{
+				Object[] tabRequiredFields = { PARAMETER_OPERATOR };
+				SiteMessageService.setMessage( request, MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, SiteMessage.TYPE_STOP );
+			}
+			
+			//Safety checks
+			if( StringUtils.isNotBlank( strDateBegin ) )
+			{
+				dateBegin = DateUtil.formatDate( strDateBegin, request.getLocale(  ) );
+				if( dateBegin == null )
+				{
+					SiteMessageService.setMessage( request, MESSAGE_SEARCH_DATE_VALIDITY, SiteMessage.TYPE_STOP );
+				}
+			}
+			
+			if( StringUtils.isNotBlank( strDateEnd ) )
+			{
+				dateEnd = DateUtil.formatDate( strDateEnd, request.getLocale(  ) );
+				if( dateEnd == null )
+				{
+					SiteMessageService.setMessage( request, MESSAGE_SEARCH_DATE_VALIDITY, SiteMessage.TYPE_STOP );
+				}
+			}
+			
+			if( !strOperator.equalsIgnoreCase( OPERATOR_AND ) && !strOperator.equalsIgnoreCase( OPERATOR_OR ) )
+			{
+				SiteMessageService.setMessage( request, MESSAGE_SEARCH_OPERATOR_VALIDITY, SiteMessage.TYPE_STOP );
+			}
+			
+			//Check XSS characters
+	        if ( SecurityUtil.containsXssCharacters( request, strQuery ) )
+	        {
+	        	SiteMessageService.setMessage( request, MESSAGE_INVALID_SEARCH_TERMS, SiteMessage.TYPE_STOP );
+	        }
+			
+			//User
+			if( SecurityService.isAuthenticationEnable(  ) )
+			{
+				user = SecurityService.getInstance(  ).getRegisteredUser( request );
+			}
+			
+			//Use LuceneSearchEngine
+			SearchEngine engine = (SearchEngine) SpringContextService.getBean( BEAN_SEARCH_ENGINE );
+	        List<SearchResult> listResults = engine.getSearchResults( strQuery, request );
+			
+			model.put( MARK_RESULT_LIST, listResults );
+			
+			//re-populate search parameters
+			model.put( MARK_QUERY, strQuery );
+			model.put( MARK_OPERATOR, strOperator );
+			model.put( MARK_DATE_BEGIN, strDateBegin );
+			model.put( MARK_DATE_END, strDateEnd );
+			
+		}
+				
+		//Display the list of all Directory
+        DirectoryFilter filter = new DirectoryFilter(  );
+        filter.setIsDisabled( DirectoryFilter.FILTER_TRUE );
+
+        List<Directory> listDirectory = DirectoryHome.getDirectoryList( filter, plugin );
+        List<Directory> listDirectoryAuthorized;
+
+        if ( SecurityService.isAuthenticationEnable(  ) )
+        {
+            listDirectoryAuthorized = new ArrayList<Directory>(  );
+
+            for ( Directory directory : listDirectory )
+            {
+                if ( ( directory.getRoleKey(  ) == null ) ||
+                        directory.getRoleKey(  ).equals( Directory.ROLE_NONE ) ||
+                        SecurityService.getInstance(  ).isUserInRole( request, directory.getRoleKey(  ) ) )
+                {
+                    listDirectoryAuthorized.add( directory );
+                }
+            }
+        }
+        else
+        {
+            listDirectoryAuthorized = listDirectory;
+        }
+
+        model.put( MARK_DIRECTORY_LIST, listDirectoryAuthorized );
+        
+        model.put( MARK_LOCALE, request.getLocale(  ) );
+		
+		HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_XPAGE_VIEW_ALL_DIRECTORIES, request.getLocale(  ), model );
+		
+		return template.getHtml(  );
+	}
 
     /**
      * Init the SESSION_FILTER_MAP_QUERY session attribute

@@ -208,6 +208,28 @@ public interface IEntry
     void setIndexed( boolean indexed );
 
     /**
+     * @return true if the field is (part of) the title of the document in the global index
+     */
+    boolean isIndexedAsTitle(  );
+
+    /**
+     *  set true if the field is (part of) the title of the document in the global index
+     * @param indexedAsTitle true if the field is (part of) the title of the document in the global index
+     */
+    void setIndexedAsTitle( boolean indexedAsTitle );
+    
+    /**
+     * @return true if the field is (part of) the summary of the document in the global index
+     */
+    boolean isIndexedAsSummary(  );
+    
+    /**
+     *  set true if the field is (part of) the summary of the document in the global index
+     * @param indexedAsSummary true if the field is (part of) the summary of the document in the global index
+     */
+    void setIndexedAsSummary( boolean indexedAsSummary );
+    
+    /**
     * @return position entry
     */
     int getPosition(  );

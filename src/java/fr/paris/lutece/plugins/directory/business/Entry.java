@@ -75,6 +75,8 @@ public class Entry implements IEntry
     protected static final String PARAMETER_COMMENT = "comment";
     protected static final String PARAMETER_MANDATORY = "mandatory";
     protected static final String PARAMETER_INDEXED = "indexed";
+    protected static final String PARAMETER_INDEXED_AS_TITLE = "indexed_as_title";
+    protected static final String PARAMETER_INDEXED_AS_SUMMARY = "indexed_as_summary";
     protected static final String PARAMETER_MULTIPLE_SEARCH_FIELDS = "multiple_search_fields";
     protected static final String PARAMETER_SHOWN_IN_ADVANCED_SEARCH = "shown_in_advanced_search";
     protected static final String PARAMETER_SHOWN_IN_RESULT_LIST = "shown_in_result_list";
@@ -155,6 +157,8 @@ public class Entry implements IEntry
     private boolean _bWorkgroupAssociated;
     private boolean _bRoleAssociated;
     private boolean _bIndexed;
+    private boolean _bIndexedAsTitle;
+    private boolean _bIndexedAsSummary;
     private int _nPosition;
     private boolean _bMultipleSearchFields;
     private EntryType _entryType;
@@ -1054,4 +1058,38 @@ public class Entry implements IEntry
 	{
 		return Collections.<Object>singletonList( Integer.valueOf( getIdEntry() ) );
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isIndexedAsTitle(  )
+	{
+		return _bIndexedAsTitle;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setIndexedAsTitle(  boolean indexedAsTitle  )
+	{
+		_bIndexedAsTitle = indexedAsTitle;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isIndexedAsSummary(  )
+	{
+		return _bIndexedAsSummary;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setIndexedAsSummary( boolean indexedAsSummary )
+	{
+		_bIndexedAsSummary = indexedAsSummary;
+		
+	}
+
 }

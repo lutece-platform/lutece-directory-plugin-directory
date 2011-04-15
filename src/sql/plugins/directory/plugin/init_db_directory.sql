@@ -117,6 +117,8 @@ INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUE
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('field_in_line', '1');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('mandatory', '0');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('indexed', '1');
+INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('indexed_as_title', '0');
+INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('indexed_as_summary', '0');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('multiple_search_fields', '0');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('shown_in_advanced_search', '0');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('shown_in_result_list', '1');

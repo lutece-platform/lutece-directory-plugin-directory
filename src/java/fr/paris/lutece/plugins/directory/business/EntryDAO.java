@@ -51,25 +51,25 @@ public final class EntryDAO implements IEntryDAO
     private static final String SQL_QUERY_NEW_PK = "SELECT MAX( id_entry ) FROM directory_entry";
     private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT ent.id_type,typ.title_key,typ.is_group," +
         "typ.is_comment,typ.is_mylutece_user,typ.class_name,ent.id_entry,ent.id_directory,directory.title,ent.id_entry_parent,ent.title," +
-        "ent.help_message,ent.help_message_search,ent.entry_comment,ent.is_mandatory,ent.is_indexed," +
+        "ent.help_message,ent.help_message_search,ent.entry_comment,ent.is_mandatory,ent.is_indexed,ent.is_indexed_as_title,ent.is_indexed_as_summary," +
         "ent.is_shown_in_search,ent.is_shown_in_result_list,ent.is_shown_in_result_record,ent.is_fields_in_line,ent.entry_position," +
         "ent.display_width,ent.display_height,ent.is_role_associated,ent.is_workgroup_associated,ent.is_multiple_search_fields,ent.is_shown_in_history,ent.id_entry_associate,ent.request_sql,ent.is_add_value_search_all,ent.label_value_search_all,ent.map_provider,ent.is_autocomplete_entry,ent.is_shown_in_export " +
         "FROM directory_entry ent,directory_entry_type typ,directory_directory directory WHERE ent.id_entry = ? and ent.id_type=typ.id_type and " +
         "ent.id_directory=directory.id_directory";
     private static final String SQL_QUERY_INSERT = "INSERT INTO directory_entry ( " +
         "id_entry,id_entry_parent,id_directory,id_type,title,help_message,help_message_search,entry_comment,is_mandatory," +
-        "is_indexed,is_shown_in_search,is_shown_in_result_list,is_shown_in_result_record,is_fields_in_line,entry_position,display_width,display_height " +
-        ",is_role_associated,is_workgroup_associated,is_multiple_search_fields,is_shown_in_history,id_entry_associate,request_sql,is_add_value_search_all,label_value_search_all,map_provider,is_autocomplete_entry,is_shown_in_export )VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        "is_indexed,is_indexed_as_title,is_indexed_as_summary,is_shown_in_search,is_shown_in_result_list,is_shown_in_result_record,is_fields_in_line,entry_position,display_width,display_height " +
+        ",is_role_associated,is_workgroup_associated,is_multiple_search_fields,is_shown_in_history,id_entry_associate,request_sql,is_add_value_search_all,label_value_search_all,map_provider,is_autocomplete_entry,is_shown_in_export )VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_entry WHERE id_entry = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE  directory_entry SET " +
         "id_entry=?,id_entry_parent=?,id_directory=?,id_type=?,title=?,help_message=?,help_message_search=?," +
-        "entry_comment=?,is_mandatory=?,is_indexed=?,is_shown_in_search=?,is_shown_in_result_list=?," +
+        "entry_comment=?,is_mandatory=?,is_indexed=?,is_indexed_as_title=?,is_indexed_as_summary=?,is_shown_in_search=?,is_shown_in_result_list=?," +
         "is_shown_in_result_record=?,is_fields_in_line=?,entry_position=? ,display_width=?,display_height=?," +
         "is_role_associated=?,is_workgroup_associated=?,is_multiple_search_fields=?,is_shown_in_history=?,id_entry_associate=?,request_sql=?,is_add_value_search_all=?,label_value_search_all=?, map_provider=?, is_autocomplete_entry=?, is_shown_in_export=? WHERE id_entry=?";
     private static final String SQL_QUERY_SELECT_ENTRY_BY_FILTER = "SELECT ent.id_type,typ.title_key,typ.is_group," +
         "typ.is_comment,typ.is_mylutece_user,typ.class_name,ent.id_entry,ent.id_directory," +
         "ent.id_entry_parent,ent.title,ent.help_message,ent.help_message_search," +
-        "ent.entry_comment,ent.is_mandatory,ent.is_indexed,ent.is_shown_in_search,ent.is_shown_in_result_list,ent.is_shown_in_result_record," +
+        "ent.entry_comment,ent.is_mandatory,ent.is_indexed,ent.is_indexed_as_title,ent.is_indexed_as_summary,ent.is_shown_in_search,ent.is_shown_in_result_list,ent.is_shown_in_result_record," +
         "ent.is_fields_in_line,ent.entry_position,ent.display_width,ent.display_height,ent.is_role_associated,ent.is_workgroup_associated, " +
         "ent.is_multiple_search_fields,ent.is_shown_in_history,ent.id_entry_associate ,ent.request_sql,ent.is_add_value_search_all,ent.label_value_search_all,ent.map_provider,ent.is_autocomplete_entry,ent.is_shown_in_export " +
         "FROM directory_entry ent,directory_entry_type typ  ";
@@ -88,6 +88,8 @@ public final class EntryDAO implements IEntryDAO
     private static final String SQL_FILTER_IS_SHOWN_IN_RESULT_RECORD = "  ent.is_shown_in_result_record=?";
     private static final String SQL_FILTER_IS_SHOWN_IN_HISTORY = "  ent.is_shown_in_history=?";
     private static final String SQL_FILTER_IS_INDEXED = "  ent.is_indexed=?";
+    private static final String SQL_FILTER_IS_INDEXED_AS_TITLE = "  ent.is_indexed_as_title=?";
+    private static final String SQL_FILTER_IS_INDEXED_AS_SUMMARY = "  ent.is_indexed_as_summary=?";
     private static final String SQL_FILTER_IS_ROLE_ASSOCIATED = "  ent.is_role_associated=?";
     private static final String SQL_FILTER_IS_WORKGROUP_ASSOCIATED = "  ent.is_workgroup_associated=?";
     private static final String SQL_FILTER_ASSOCIATION_ON_ID_TYPE = " ent.id_type=typ.id_type";
@@ -177,28 +179,30 @@ public final class EntryDAO implements IEntryDAO
         daoUtil.setString( 8, entry.getComment(  ) );
         daoUtil.setBoolean( 9, entry.isMandatory(  ) );
         daoUtil.setBoolean( 10, entry.isIndexed(  ) );
-        daoUtil.setBoolean( 11, entry.isShownInAdvancedSearch(  ) );
-        daoUtil.setBoolean( 12, entry.isShownInResultList(  ) );
-        daoUtil.setBoolean( 13, entry.isShownInResultRecord(  ) );
-        daoUtil.setBoolean( 14, entry.isFieldInLine(  ) );
-        daoUtil.setInt( 15, newPosition( entry.getDirectory(  ).getIdDirectory(  ), plugin ) );
-        daoUtil.setInt( 16, entry.getDisplayWidth(  ) );
-        daoUtil.setInt( 17, entry.getDisplayHeight(  ) );
-        daoUtil.setBoolean( 18, entry.isRoleAssociated(  ) );
-        daoUtil.setBoolean( 19, entry.isWorkgroupAssociated(  ) );
-        daoUtil.setBoolean( 20, entry.isMultipleSearchFields(  ) );
-        daoUtil.setBoolean( 21, entry.isShownInHistory(  ) );
-        daoUtil.setInt( 22, entry.getEntryAssociate(  ) );
-        daoUtil.setString( 23, entry.getRequestSQL(  ) );
-        daoUtil.setBoolean( 24, entry.isAddValueAllSearch(  ) );
-        daoUtil.setString( 25, entry.getLabelValueAllSearch(  ) );
+        daoUtil.setBoolean( 11, entry.isIndexedAsTitle(  ) );
+        daoUtil.setBoolean( 12, entry.isIndexedAsSummary(  ) );
+        daoUtil.setBoolean( 13, entry.isShownInAdvancedSearch(  ) );
+        daoUtil.setBoolean( 14, entry.isShownInResultList(  ) );
+        daoUtil.setBoolean( 15, entry.isShownInResultRecord(  ) );
+        daoUtil.setBoolean( 16, entry.isFieldInLine(  ) );
+        daoUtil.setInt( 17, newPosition( entry.getDirectory(  ).getIdDirectory(  ), plugin ) );
+        daoUtil.setInt( 18, entry.getDisplayWidth(  ) );
+        daoUtil.setInt( 19, entry.getDisplayHeight(  ) );
+        daoUtil.setBoolean( 20, entry.isRoleAssociated(  ) );
+        daoUtil.setBoolean( 21, entry.isWorkgroupAssociated(  ) );
+        daoUtil.setBoolean( 22, entry.isMultipleSearchFields(  ) );
+        daoUtil.setBoolean( 23, entry.isShownInHistory(  ) );
+        daoUtil.setInt( 24, entry.getEntryAssociate(  ) );
+        daoUtil.setString( 25, entry.getRequestSQL(  ) );
+        daoUtil.setBoolean( 26, entry.isAddValueAllSearch(  ) );
+        daoUtil.setString( 27, entry.getLabelValueAllSearch(  ) );
 
         // map provider
         String strMapProvider = ( entry.getMapProvider(  ) == null ) ? DirectoryUtils.EMPTY_STRING
                                                                      : entry.getMapProvider(  ).getKey(  );
-        daoUtil.setString( 26, strMapProvider );
-        daoUtil.setBoolean( 27, entry.isAutocompleteEntry(  ) );
-        daoUtil.setBoolean( 28, entry.isShownInExport(  ) );
+        daoUtil.setString( 28, strMapProvider );
+        daoUtil.setBoolean( 29, entry.isAutocompleteEntry(  ) );
+        daoUtil.setBoolean( 30, entry.isShownInExport(  ) );
 
         entry.setIdEntry( newPrimaryKey( plugin ) );
         daoUtil.setInt( 1, entry.getIdEntry(  ) );
@@ -289,24 +293,26 @@ public final class EntryDAO implements IEntryDAO
             entry.setComment( daoUtil.getString( 14 ) );
             entry.setMandatory( daoUtil.getBoolean( 15 ) );
             entry.setIndexed( daoUtil.getBoolean( 16 ) );
-            entry.setShownInAdvancedSearch( daoUtil.getBoolean( 17 ) );
-            entry.setShownInResultList( daoUtil.getBoolean( 18 ) );
-            entry.setShownInResultRecord( daoUtil.getBoolean( 19 ) );
-            entry.setFieldInLine( daoUtil.getBoolean( 20 ) );
-            entry.setPosition( daoUtil.getInt( 21 ) );
-            entry.setDisplayWidth( daoUtil.getInt( 22 ) );
-            entry.setDisplayHeight( daoUtil.getInt( 23 ) );
-            entry.setRoleAssociated( daoUtil.getBoolean( 24 ) );
-            entry.setWorkgroupAssociated( daoUtil.getBoolean( 25 ) );
-            entry.setMultipleSearchFields( daoUtil.getBoolean( 26 ) );
-            entry.setShownInHistory( daoUtil.getBoolean( 27 ) );
-            entry.setEntryAssociate( daoUtil.getInt( 28 ) );
-            entry.setRequestSQL( daoUtil.getString( 29 ) );
-            entry.setAddValueAllSearch( daoUtil.getBoolean( 30 ) );
-            entry.setLabelValueAllSearch( daoUtil.getString( 31 ) );
-            entry.setMapProvider( MapProviderManager.getMapProvider( daoUtil.getString( 32 ) ) );
-            entry.setAutocompleteEntry( daoUtil.getBoolean( 33 ) );
-            entry.setShownInExport( daoUtil.getBoolean( 34 ) );
+            entry.setIndexedAsTitle( daoUtil.getBoolean( 17 ) );
+            entry.setIndexedAsSummary( daoUtil.getBoolean( 18 ) );
+            entry.setShownInAdvancedSearch( daoUtil.getBoolean( 19 ) );
+            entry.setShownInResultList( daoUtil.getBoolean( 20 ) );
+            entry.setShownInResultRecord( daoUtil.getBoolean( 21 ) );
+            entry.setFieldInLine( daoUtil.getBoolean( 22 ) );
+            entry.setPosition( daoUtil.getInt( 23 ) );
+            entry.setDisplayWidth( daoUtil.getInt( 24 ) );
+            entry.setDisplayHeight( daoUtil.getInt( 25 ) );
+            entry.setRoleAssociated( daoUtil.getBoolean( 26 ) );
+            entry.setWorkgroupAssociated( daoUtil.getBoolean( 27 ) );
+            entry.setMultipleSearchFields( daoUtil.getBoolean( 28 ) );
+            entry.setShownInHistory( daoUtil.getBoolean( 29 ) );
+            entry.setEntryAssociate( daoUtil.getInt( 30 ) );
+            entry.setRequestSQL( daoUtil.getString( 31 ) );
+            entry.setAddValueAllSearch( daoUtil.getBoolean( 32 ) );
+            entry.setLabelValueAllSearch( daoUtil.getString( 33 ) );
+            entry.setMapProvider( MapProviderManager.getMapProvider( daoUtil.getString( 34 ) ) );
+            entry.setAutocompleteEntry( daoUtil.getBoolean( 35 ) );
+            entry.setShownInExport( daoUtil.getBoolean( 36 ) );
         }
 
         daoUtil.free(  );
@@ -357,31 +363,33 @@ public final class EntryDAO implements IEntryDAO
         daoUtil.setString( 8, entry.getComment(  ) );
         daoUtil.setBoolean( 9, entry.isMandatory(  ) );
         daoUtil.setBoolean( 10, entry.isIndexed(  ) );
-        daoUtil.setBoolean( 11, entry.isShownInAdvancedSearch(  ) );
-        daoUtil.setBoolean( 12, entry.isShownInResultList(  ) );
-        daoUtil.setBoolean( 13, entry.isShownInResultRecord(  ) );
-        daoUtil.setBoolean( 14, entry.isFieldInLine(  ) );
-        daoUtil.setInt( 15, entry.getPosition(  ) );
-        daoUtil.setInt( 16, entry.getDisplayWidth(  ) );
-        daoUtil.setInt( 17, entry.getDisplayHeight(  ) );
-        daoUtil.setBoolean( 18, entry.isRoleAssociated(  ) );
-        daoUtil.setBoolean( 19, entry.isWorkgroupAssociated(  ) );
-        daoUtil.setBoolean( 20, entry.isMultipleSearchFields(  ) );
-        daoUtil.setBoolean( 21, entry.isShownInHistory(  ) );
-        daoUtil.setInt( 22, entry.getEntryAssociate(  ) );
-        daoUtil.setString( 23, entry.getRequestSQL(  ) );
-        daoUtil.setBoolean( 24, entry.isAddValueAllSearch(  ) );
-        daoUtil.setString( 25, entry.getLabelValueAllSearch(  ) );
+        daoUtil.setBoolean( 11, entry.isIndexedAsTitle(  ) );
+        daoUtil.setBoolean( 12, entry.isIndexedAsSummary(  ) );
+        daoUtil.setBoolean( 13, entry.isShownInAdvancedSearch(  ) );
+        daoUtil.setBoolean( 14, entry.isShownInResultList(  ) );
+        daoUtil.setBoolean( 15, entry.isShownInResultRecord(  ) );
+        daoUtil.setBoolean( 16, entry.isFieldInLine(  ) );
+        daoUtil.setInt( 17, entry.getPosition(  ) );
+        daoUtil.setInt( 18, entry.getDisplayWidth(  ) );
+        daoUtil.setInt( 19, entry.getDisplayHeight(  ) );
+        daoUtil.setBoolean( 20, entry.isRoleAssociated(  ) );
+        daoUtil.setBoolean( 21, entry.isWorkgroupAssociated(  ) );
+        daoUtil.setBoolean( 22, entry.isMultipleSearchFields(  ) );
+        daoUtil.setBoolean( 23, entry.isShownInHistory(  ) );
+        daoUtil.setInt( 24, entry.getEntryAssociate(  ) );
+        daoUtil.setString( 25, entry.getRequestSQL(  ) );
+        daoUtil.setBoolean( 26, entry.isAddValueAllSearch(  ) );
+        daoUtil.setString( 27, entry.getLabelValueAllSearch(  ) );
 
         // map provider
         String strMapProvider = ( entry.getMapProvider(  ) == null ) ? DirectoryUtils.EMPTY_STRING
                                                                      : entry.getMapProvider(  ).getKey(  );
-        daoUtil.setString( 26, strMapProvider );
+        daoUtil.setString( 28, strMapProvider );
 
-        daoUtil.setBoolean( 27, entry.isAutocompleteEntry(  ) );
-        daoUtil.setBoolean( 28, entry.isShownInExport(  ) );
+        daoUtil.setBoolean( 29, entry.isAutocompleteEntry(  ) );
+        daoUtil.setBoolean( 30, entry.isShownInExport(  ) );
 
-        daoUtil.setInt( 29, entry.getIdEntry(  ) );
+        daoUtil.setInt( 31, entry.getIdEntry(  ) );
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -436,6 +444,16 @@ public final class EntryDAO implements IEntryDAO
         if ( filter.containsIsIndexed(  ) )
         {
             listStrFilter.add( SQL_FILTER_IS_INDEXED );
+        }
+
+        if ( filter.containsIsIndexedAsTitle(  ) )
+        {
+            listStrFilter.add( SQL_FILTER_IS_INDEXED_AS_TITLE );
+        }
+
+        if ( filter.containsIsIndexedAsSummary(  ) )
+        {
+            listStrFilter.add( SQL_FILTER_IS_INDEXED_AS_SUMMARY );
         }
 
         if ( filter.containsIsComment(  ) )
@@ -530,6 +548,18 @@ public final class EntryDAO implements IEntryDAO
         if ( filter.containsIsIndexed(  ) )
         {
             daoUtil.setBoolean( nIndex, filter.getIsIndexed(  ) == EntryFilter.FILTER_TRUE );
+            nIndex++;
+        }
+
+        if ( filter.containsIsIndexedAsTitle(  ) )
+        {
+            daoUtil.setBoolean( nIndex, filter.getIsIndexedAsTitle(  ) == EntryFilter.FILTER_TRUE );
+            nIndex++;
+        }
+
+        if ( filter.containsIsIndexedAsSummary(  ) )
+        {
+            daoUtil.setBoolean( nIndex, filter.getIsIndexedAsSummary(  ) == EntryFilter.FILTER_TRUE );
             nIndex++;
         }
 
@@ -650,24 +680,26 @@ public final class EntryDAO implements IEntryDAO
         entry.setComment( daoUtil.getString( 13 ) );
         entry.setMandatory( daoUtil.getBoolean( 14 ) );
         entry.setIndexed( daoUtil.getBoolean( 15 ) );
-        entry.setShownInAdvancedSearch( daoUtil.getBoolean( 16 ) );
-        entry.setShownInResultList( daoUtil.getBoolean( 17 ) );
-        entry.setShownInResultRecord( daoUtil.getBoolean( 18 ) );
-        entry.setFieldInLine( daoUtil.getBoolean( 19 ) );
-        entry.setPosition( daoUtil.getInt( 20 ) );
-        entry.setDisplayWidth( daoUtil.getInt( 21 ) );
-        entry.setDisplayHeight( daoUtil.getInt( 22 ) );
-        entry.setRoleAssociated( daoUtil.getBoolean( 23 ) );
-        entry.setWorkgroupAssociated( daoUtil.getBoolean( 24 ) );
-        entry.setMultipleSearchFields( daoUtil.getBoolean( 25 ) );
-        entry.setShownInHistory( daoUtil.getBoolean( 26 ) );
-        entry.setEntryAssociate( daoUtil.getInt( 27 ) );
-        entry.setRequestSQL( daoUtil.getString( 28 ) );
-        entry.setAddValueAllSearch( daoUtil.getBoolean( 29 ) );
-        entry.setLabelValueAllSearch( daoUtil.getString( 30 ) );
-        entry.setMapProvider( MapProviderManager.getMapProvider( daoUtil.getString( 31 ) ) );
-        entry.setAutocompleteEntry( daoUtil.getBoolean( 32 ) );
-        entry.setShownInExport( daoUtil.getBoolean( 33 ) );
+        entry.setIndexedAsTitle( daoUtil.getBoolean( 16 ) );
+        entry.setIndexedAsSummary( daoUtil.getBoolean( 17 ) );
+        entry.setShownInAdvancedSearch( daoUtil.getBoolean( 18 ) );
+        entry.setShownInResultList( daoUtil.getBoolean( 19 ) );
+        entry.setShownInResultRecord( daoUtil.getBoolean( 20 ) );
+        entry.setFieldInLine( daoUtil.getBoolean( 21 ) );
+        entry.setPosition( daoUtil.getInt( 22 ) );
+        entry.setDisplayWidth( daoUtil.getInt( 23 ) );
+        entry.setDisplayHeight( daoUtil.getInt( 24 ) );
+        entry.setRoleAssociated( daoUtil.getBoolean( 25 ) );
+        entry.setWorkgroupAssociated( daoUtil.getBoolean( 26 ) );
+        entry.setMultipleSearchFields( daoUtil.getBoolean( 27 ) );
+        entry.setShownInHistory( daoUtil.getBoolean( 28 ) );
+        entry.setEntryAssociate( daoUtil.getInt( 29 ) );
+        entry.setRequestSQL( daoUtil.getString( 30 ) );
+        entry.setAddValueAllSearch( daoUtil.getBoolean( 31 ) );
+        entry.setLabelValueAllSearch( daoUtil.getString( 32 ) );
+        entry.setMapProvider( MapProviderManager.getMapProvider( daoUtil.getString( 33 ) ) );
+        entry.setAutocompleteEntry( daoUtil.getBoolean( 34 ) );
+        entry.setShownInExport( daoUtil.getBoolean( 35 ) );
 
         return entry;
     }
@@ -752,6 +784,14 @@ public final class EntryDAO implements IEntryDAO
         {
             listStrFilter.add( SQL_FILTER_IS_INDEXED );
         }
+        if ( filter.containsIsIndexedAsTitle(  ) )
+        {
+            listStrFilter.add( SQL_FILTER_IS_INDEXED_AS_TITLE );
+        }
+        if ( filter.containsIsIndexedAsSummary(  ) )
+        {
+            listStrFilter.add( SQL_FILTER_IS_INDEXED_AS_SUMMARY );
+        }
 
         if ( filter.containsIsComment(  ) )
         {
@@ -828,7 +868,20 @@ public final class EntryDAO implements IEntryDAO
             daoUtil.setBoolean( nIndex, filter.getIsIndexed(  ) == EntryFilter.FILTER_TRUE );
             nIndex++;
         }
+        
 
+        if ( filter.containsIsIndexedAsTitle(  ) )
+        {
+            daoUtil.setBoolean( nIndex, filter.getIsIndexedAsTitle(  ) == EntryFilter.FILTER_TRUE );
+            nIndex++;
+        }
+
+        if ( filter.containsIsIndexedAsSummary(  ) )
+        {
+            daoUtil.setBoolean( nIndex, filter.getIsIndexedAsSummary(  ) == EntryFilter.FILTER_TRUE );
+            nIndex++;
+        }
+        
         if ( filter.containsIsComment(  ) )
         {
             daoUtil.setBoolean( nIndex, filter.getIsComment(  ) == EntryFilter.FILTER_TRUE );

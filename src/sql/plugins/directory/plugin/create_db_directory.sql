@@ -71,6 +71,8 @@ CREATE TABLE directory_entry (
   entry_comment LONG VARCHAR DEFAULT NULL,
   is_mandatory SMALLINT DEFAULT 0,
   is_indexed SMALLINT DEFAULT 0,
+  is_indexed_as_title SMALLINT DEFAULT 0,
+  is_indexed_as_summary SMALLINT DEFAULT 0,
   is_shown_in_search SMALLINT DEFAULT 0,
   is_shown_in_result_list SMALLINT DEFAULT 0,
   is_shown_in_result_record SMALLINT DEFAULT 0,

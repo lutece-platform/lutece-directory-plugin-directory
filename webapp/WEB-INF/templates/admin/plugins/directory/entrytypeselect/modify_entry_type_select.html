@@ -140,6 +140,14 @@
 		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_advanced_search_comment}
 		 </p>
 		 <p>
+            <label for="indexed_as_title">#i18n{directory.create_entry.label_indexed_as_title} : </label>
+            <input name="indexed_as_title" value="1" type="checkbox" <#if entry.indexedAsTitle>checked="checked"</#if> >
+         </p>
+         <p>
+            <label for="indexed_as_summary">#i18n{directory.create_entry.label_indexed_as_summary} : </label>
+            <input name="indexed_as_summary" value="1" type="checkbox" <#if entry.indexedAsSummary>checked="checked"</#if> >
+         </p>
+         <p>
 	    	<label for="shown_in_result_list">#i18n{directory.create_entry.label_shown_in_result_list} :</label>
 	   		  <#if entry.shownInResultList>
 	   		 	<input name="shown_in_result_list" value="1" type="checkbox" checked="checked">

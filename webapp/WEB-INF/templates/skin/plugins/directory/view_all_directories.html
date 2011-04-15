@@ -1,6 +1,67 @@
-<div class="span-22 prepend-1 append-1 append-bottom last">
+<#if directory_list?has_content >
+<div class="span-15 prepend-1 append-1 append-bottom">
+    <div class="portlet -lutece-border-radius">
+        <a name="top"></a>
+        <h2 class="page-title">#i18n{directory.view_all_directory.search.title}</h2>
+        <form class="default-form" name="form_search" method="post">
+            <fieldset>
+            <div class="hide">
+                <input type="hidden" name="page" value="directory" />
+                <input type="hidden" name="type" value="directory" />
+            </div>
+            <div>
+                <input type="text" name="query" size="20" value="${query!}" />
+                <input type="image"
+                       src="images/local/skin/buttons/b_search.png"
+                       title="#i18n{directory.view_all_directory.search.buttonSearch}"
+                       alt="#i18n{directory.view_all_directory.search.buttonSearch}" />
+            </div>
+            <div>
+                <#-- default_operator and/or -->
+                #i18n{directory.view_all_directory.search.operator} :
+                <select name="default_operator">
+                    <#list ["OR","AND"] as i_operator>
+                    <option value="${i_operator}" <#if i_operator == (operator!"OR")> selected="true"</#if> >
+                        #i18n{directory.view_all_directory.search.operator.${i_operator}}
+                    </option>
+                    </#list>
+                </select>
+            </div>
+            <div>
+                <#-- date_filter -->
+                #i18n{directory.view_all_directory.search.dateFilter}&nbsp;: 
+                #i18n{directory.view_all_directory.search.dateFilterAfter}&nbsp;:&nbsp;
+                <input type=text id="date_after" name="date_after" size="10" value="${date_after!}" />
+                #i18n{directory.view_all_directory.search.dateFilterBefore}&nbsp;:&nbsp;
+                <input type=text id="date_before" name="date_before" size="10" value="${date_before!}" />
+                <@getDatePickerRange idFieldFrom="date_after" idFieldTo="date_bafore" language="${locale.language}" />
+            </div>
+            </fieldset>
+        </form><br />
+        <#if result_list?has_content> 
+            <#list result_list as result>
+
+            <div>
+	            <a href="${result.url?xhtml}">${result.title}</a>
+	            <#if result.date?has_content>
+	                    ${result.date?date?string.short}
+	            </#if>
+	        </div>
+	        <#if result.summary?has_content>
+	           <div>${result.summary}</div>
+	        </#if>
+	        <div>&nbsp;</div>
+            </#list>
+        <#else>
+            <blockquote>#i18n{directory.message.search_nok}</blockquote>
+        </#if>
+    </div>
+</div>
+</#if>
+
+<div class="span-6 append-1 append-bottom last">
 	<div class="portlet -lutece-border-radius">
-		<div>#i18n{directory.view_all_directory.title}</div>
+		<h2>#i18n{directory.view_all_directory.list.title}</h2>
 		<#if directory_list?has_content>
 			<ul>	      
 				<#list directory_list as directory>
