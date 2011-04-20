@@ -171,12 +171,14 @@ public class DirectorySearchIndexer implements SearchIndexer
 		
 		List<IEntry> listIndexedEntry = EntryHome.getEntryList( entryFilter, plugin );
 		
-		entryFilter.setIsIndexed( EntryFilter.ALL_INT );
+		entryFilter = new EntryFilter(  );
+		entryFilter.setIdDirectory( nIdDirectory );
 		entryFilter.setIsIndexedAsTitle( EntryFilter.FILTER_TRUE );
 		
 		List<IEntry> listIndexedAsTitleEntry = EntryHome.getEntryList( entryFilter, plugin );
 		        		
-		entryFilter.setIsIndexedAsTitle( EntryFilter.ALL_INT );
+		entryFilter = new EntryFilter(  );
+		entryFilter.setIdDirectory( nIdDirectory );
 		entryFilter.setIsIndexedAsSummary( EntryFilter.FILTER_TRUE );
 		
 		List<IEntry> listIndexedAsSummaryEntry = EntryHome.getEntryList( entryFilter, plugin );
@@ -230,12 +232,14 @@ public class DirectorySearchIndexer implements SearchIndexer
         		
         		List<IEntry> listIndexedEntry = EntryHome.getEntryList( entryFilter, plugin );
         		
-        		entryFilter.setIsIndexed( EntryFilter.ALL_INT );
+        		entryFilter = new EntryFilter(  );
+        		entryFilter.setIdDirectory( nIdDirectory );
         		entryFilter.setIsIndexedAsTitle( EntryFilter.FILTER_TRUE );
         		
         		List<IEntry> listIndexedAsTitleEntry = EntryHome.getEntryList( entryFilter, plugin );
         		        		
-        		entryFilter.setIsIndexedAsTitle( EntryFilter.ALL_INT );
+        		entryFilter = new EntryFilter(  );
+        		entryFilter.setIdDirectory( nIdDirectory );
         		entryFilter.setIsIndexedAsSummary( EntryFilter.FILTER_TRUE );
         		
         		List<IEntry> listIndexedAsSummaryEntry = EntryHome.getEntryList( entryFilter, plugin );
