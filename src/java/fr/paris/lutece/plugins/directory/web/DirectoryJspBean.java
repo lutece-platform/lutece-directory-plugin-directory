@@ -72,7 +72,6 @@ import fr.paris.lutece.plugins.directory.business.Entry;
 import fr.paris.lutece.plugins.directory.business.EntryFilter;
 import fr.paris.lutece.plugins.directory.business.EntryHome;
 import fr.paris.lutece.plugins.directory.business.EntryRemovalListenerService;
-import fr.paris.lutece.plugins.directory.business.EntryType;
 import fr.paris.lutece.plugins.directory.business.EntryTypeHome;
 import fr.paris.lutece.plugins.directory.business.Field;
 import fr.paris.lutece.plugins.directory.business.FieldHome;
@@ -4074,6 +4073,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_DIRECTORY, directory );
         model.put( MARK_LOCALE, getLocale(  ) );
         model.put( MARK_ID_ENTRY_TYPE_IMAGE, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_IMAGE, 10 ) );
+        model.put( MARK_ID_ENTRY_TYPE_MYLUTECE_USER,
+                AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) );
+        model.put( MARK_PERMISSION_VISUALISATION_MYLUTECE_USER,
+                RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                    DirectoryResourceIdService.PERMISSION_VISUALISATION_MYLUTECE_USER, getUser(  ) ) );
         model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
             DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ) ) );
 
@@ -4548,41 +4552,15 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
 
-        LuteceUser user = null;
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-        recordFieldFilter.setIdRecord( nIdRecord );
-
-        List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( recordFieldFilter, getPlugin(  ) );
-        String strUserLogin = DirectoryUtils.EMPTY_STRING;
-
-        for ( RecordField recordField : listRecordFields )
-        {
-            EntryType entryType = EntryTypeHome.findByPrimaryKey( recordField.getEntry(  ).getEntryType(  ).getIdType(  ),
-                    getPlugin(  ) );
-
-            if ( entryType.getMyLuteceUser(  ) )
-            {
-                strUserLogin = recordField.getValue(  );
-                user = SecurityService.getInstance(  ).getUser( strUserLogin );
-
-                break;
-            }
-        }
-
-        ReferenceList listUserInfos = new ReferenceList(  );
-
+        LuteceUser user = DirectoryService.getInstance(  ).getUserFromIdDirectoryRecord( nIdRecord );
+        Map<String, Object> model = new HashMap<String, Object>(  );
         if ( user != null )
         {
-            for ( Map.Entry<String, String> userInfo : user.getUserInfos(  ).entrySet(  ) )
-            {
-                listUserInfos.addItem( userInfo.getKey(  ), userInfo.getValue(  ) );
-            }
+        	ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfo( user );
+
+            model.put( MARK_MYLUTECE_USER_LOGIN, user.getName(  ) );
+            model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
         }
-
-        Map<String, Object> model = new HashMap<String, Object>(  );
-
-        model.put( MARK_MYLUTECE_USER_LOGIN, strUserLogin );
-        model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
 
         HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_VIEW_MYLUTECE_USER, getLocale(  ), model );
 

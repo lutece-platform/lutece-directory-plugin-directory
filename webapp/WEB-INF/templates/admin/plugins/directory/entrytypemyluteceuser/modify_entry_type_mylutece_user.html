@@ -72,15 +72,31 @@
 		   		</#if>
 		   	</p>
 		</div>
-		  <p>
-	    	<label for="mandatory">#i18n{directory.create_entry.label_mandatory} : </label>
-	   		 <#if entry.mandatory>
-	   		 	<input name="mandatory" value="1" type="checkbox" checked="checked" >
-	   		 <#else>
-	   			<input name="mandatory" value="1" type="checkbox" >
-	   		 </#if>	
-	  	 </p>
-		
+		<p>
+			<label for="mandatory">#i18n{directory.create_entry.label_mandatory} : </label>
+	   		<#if entry.mandatory>
+				<input name="mandatory" value="1" type="checkbox" checked="checked" >
+			<#else>
+				<input name="mandatory" value="1" type="checkbox" >
+			</#if>	
+		</p>
+		<p>
+			<label for="show_all_info">#i18n{directory.create_entry.label_display_all_info} :</label>
+			<input type="checkbox" value="1" name="show_all_info"
+				<#if entry.fields??>
+					<#list entry.fields as field>
+		    			<#if field.isDefaultValue(  )>
+		    				checked="checked"
+		    				<#break>
+		    			</#if>
+		    		</#list>
+		    	</#if>	
+			/>
+			<br />
+			<label>&nbsp;</label>#i18n{directory.create_entry.label_display_all_info_comment}
+			<br />
+			<label>&nbsp;</label>#i18n{directory.create_entry.label_display_all_info_comment_2}
+		</p>
 		<p>
 	  		<input type="submit" value="#i18n{directory.modify_entry.button_save}" class="button"  name="save" / >
 	  		<input type="submit" value="#i18n{directory.modify_entry.button_cancel}" class="button" name="cancel" />

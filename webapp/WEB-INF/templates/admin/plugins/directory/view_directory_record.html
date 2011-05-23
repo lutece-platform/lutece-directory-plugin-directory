@@ -1,6 +1,9 @@
 <#function isEntryTypeImage entry>
 	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_image>
 </#function>
+<#function isEntryTypeMyLuteceUser entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_mylutece_user>
+</#function>
 <div class="content-box">
 	  <h2> #i18n{directory.viewing_directory_record.title}: '${directory.title}' - <#if record.dateCreation?? && show_date_creation_record >#i18n{directory.viewing_directory_record.date_creation} ${record.dateCreation}</#if></h2>
 	  <div id="form-content">
@@ -38,6 +41,8 @@
 				   				<#if recordfield.field?? & recordfield.field.isShownInResultRecord()>
 				   					${entry.getHtmlRecordFieldValue( locale,recordfield,false)}
 				   				</#if>
+				   			<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>
+			   					${record_field.value}
 				   			<#else>
 		      					${entry.getHtmlRecordFieldValue( locale,recordfield,false)}
 		      				</#if>

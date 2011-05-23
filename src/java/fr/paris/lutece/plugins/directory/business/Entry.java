@@ -103,6 +103,7 @@ public class Entry implements IEntry
     protected static final String PARAMETER_IS_ADD_VALUE_SEARCH_ALL = "is_all_search";
     protected static final String PARAMETER_LABEL_VALUE_SEARCH_ALL = "label_all_search";
     protected static final String PARAMETER_SHOWN_IN_EXPORT = "shown_in_export";
+    protected static final String PARAMETER_SHOW_ALL_INFO = "show_all_info";
 
     //	message
     protected static final String MESSAGE_MANDATORY_FIELD = "directory.message.mandatory.field";
@@ -136,6 +137,9 @@ public class Entry implements IEntry
     protected static final String MARK_LOCALE = "locale";
     protected static final String MARK_RECORD_FIELD = "record_field";
     protected static final String MARK_DEFAULT_VALUES = "default_values";
+    protected static final String MARK_SHOW_ALL_INFO = "show_all_info";
+    protected static final String MARK_MYLUTECE_USER_INFOS_LIST = "mylutece_user_infos_list";
+    protected static final String MARK_MYLUTECE_USER_LOGIN = "mylutece_user_login";
 
     //PROPERTIES
     protected static final String PROPERTY_IMPORT_MULTIPLE_VALUE_DELIMITER = "directory.import.multiple_value.delimiter";

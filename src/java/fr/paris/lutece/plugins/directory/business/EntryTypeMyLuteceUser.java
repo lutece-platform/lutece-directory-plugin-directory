@@ -33,7 +33,19 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
+import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -43,14 +55,10 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.security.SecurityService;
+import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
-import fr.paris.lutece.util.url.UrlItem;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
+import fr.paris.lutece.util.html.HtmlTemplate;
 
 
 /**
@@ -65,15 +73,13 @@ public class EntryTypeMyLuteceUser extends Entry
     private static final String SPACE = " ";
     private static final String OPEN_BRACKET = "(";
     private static final String CLOSED_BRACKET = ")";
-
-    // HTML constants
-    private static final String HTML_LINK_OPEN_BEGIN = "<a href=\"";
-    private static final String HTML_LINK_OPEN_END = "\">";
-    private static final String HTML_LINK_CLOSE = "</a>";
-
-    // JSP
-    private static final String JSP_DO_VISUALISATION_MYLUTECE_USER = "jsp/admin/plugins/directory/DoVisualisationMyLuteceUser.jsp";
-
+    private static final String TWO_POINTS = ":";
+    private static final String COMMA = ",";
+    
+    // PROPERTIES
+    private static final String PROPERTY_USER_LOGIN = "directory.viewing_mylutece_user.labelLogin";
+    private static final String PROPERTY_USER_INFO_PREFIX = "portal.security.";
+    
     // TEMPLATES
     private static final String TEMPLATE_CREATE = "admin/plugins/directory/entrytypemyluteceuser/create_entry_type_mylutece_user.html";
     private static final String TEMPLATE_MODIFY = "admin/plugins/directory/entrytypemyluteceuser/modify_entry_type_mylutece_user.html";
@@ -172,6 +178,8 @@ public class EntryTypeMyLuteceUser extends Entry
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );
         String strIsAllSearch = request.getParameter( PARAMETER_IS_ADD_VALUE_SEARCH_ALL );
         String strLabelValueAllSearch = request.getParameter( PARAMETER_LABEL_VALUE_SEARCH_ALL );
+        // Check if we have to show every information of the users or not
+        String strShowFullInfo = request.getParameter( PARAMETER_SHOW_ALL_INFO );
 
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
 
@@ -214,6 +222,18 @@ public class EntryTypeMyLuteceUser extends Entry
         {
             this.setLabelValueAllSearch( null );
         }
+        if ( this.getFields(  ) == null || this.getFields(  ).size(  ) == 0 )
+        {
+            List<Field> listFields = new ArrayList<Field>(  );
+            Field field = new Field(  );
+            field.setEntry( this );
+            listFields.add( field );
+            this.setFields( listFields );
+        }
+
+        // IMPORTANT !!!
+        // The flag to show every information is stored in the database directory_field.DEFAULT_value
+        this.getFields(  ).get( 0 ).setDefaultValue( strShowFullInfo != null );
 
         return null;
     }
@@ -273,6 +293,38 @@ public class EntryTypeMyLuteceUser extends Entry
 
         return listMyLuteceUsers;
     }
+    
+    /**
+	 * {@inheritDoc}
+	 */
+    public String getHtmlRecordFieldValue( Locale locale, RecordField recordField, boolean isDisplayFront )
+    {
+        if ( getTemplateHtmlRecordFieldValue( isDisplayFront ) != null )
+        {
+            Map<String, Object> model = new HashMap<String, Object>(  );
+            model.put( MARK_ENTRY, this );
+            model.put( MARK_RECORD_FIELD, recordField );
+            model.put( MARK_LOCALE, locale );
+            if ( showAllInfo(  ) )
+            {
+            	int nIdRecord = recordField.getRecord(  ).getIdRecord(  );
+            	LuteceUser user = DirectoryService.getInstance(  ).getUserFromIdDirectoryRecord( nIdRecord );
+            	if ( user != null )
+            	{
+            		ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfo( user );
+            		model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
+            		model.put( MARK_MYLUTECE_USER_LOGIN, user.getName(  ) );
+            	}
+            }
+
+            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlRecordFieldValue( isDisplayFront ),
+                    locale, model );
+
+            return template.getHtml(  );
+        }
+
+        return null;
+    }
 
     /**
      * Convert the record field value to string
@@ -284,54 +336,39 @@ public class EntryTypeMyLuteceUser extends Entry
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
         boolean bExportDirectory )
     {
-        String value = DirectoryUtils.EMPTY_STRING;
-        Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+        String strValue = StringUtils.EMPTY;
 
-        if ( recordField.getValue(  ) != null )
+        if ( recordField != null && StringUtils.isNotBlank( recordField.getValue(  ) ) && 
+        		recordField.getRecord(  ) != null )
         {
-            if ( !bExportDirectory && !bDisplayFront )
+            if ( bExportDirectory )
             {
-                RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-                IEntry entry = EntryHome.findByPrimaryKey( this.getIdEntry(  ), plugin );
-
-                recordFieldFilter.setIdEntry( entry.getIdEntry(  ) );
-                recordFieldFilter.setIdRecord( recordField.getRecord(  ).getIdRecord(  ) );
-
-                List<RecordField> listRecordField = RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
-
-                if ( ( listRecordField != null ) && !listRecordField.isEmpty(  ) )
-                {
-                    RecordField recordFieldResult = listRecordField.get( CONSTANT_POSITION_MYLUTECE_USER_LOGIN );
-
-                    if ( recordFieldResult != null )
-                    {
-                        value = recordFieldResult.getValue(  );
-                    }
-
-                    if ( !value.equals( DirectoryUtils.EMPTY_STRING ) )
-                    {
-                        UrlItem url = new UrlItem( JSP_DO_VISUALISATION_MYLUTECE_USER );
-                        url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, recordField.getRecord(  ).getIdRecord(  ) );
-
-                        return HTML_LINK_OPEN_BEGIN + url.getUrl(  ) + HTML_LINK_OPEN_END + value + HTML_LINK_CLOSE;
-                    }
-                }
-                else
-                {
-                    return recordField.getValue(  );
-                }
+            	int nIdRecord = recordField.getRecord(  ).getIdRecord(  );
+            	LuteceUser user = DirectoryService.getInstance(  ).getUserFromIdDirectoryRecord( nIdRecord );
+        		if ( showAllInfo(  ) && user != null )
+            	{
+            		ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfo( user );
+            		
+            		StringBuilder sbValue = new StringBuilder(  );
+            		sbValue.append( I18nService.getLocalizedString( PROPERTY_USER_LOGIN, locale ) + SPACE + 
+            				TWO_POINTS + SPACE + user.getName(  ) );
+            		for ( ReferenceItem userInfo : listUserInfos )
+            		{
+            			sbValue.append( COMMA );
+            			sbValue.append( I18nService.getLocalizedString( PROPERTY_USER_INFO_PREFIX + userInfo.getCode(  ), locale ) );
+            			sbValue.append( SPACE + TWO_POINTS + SPACE );
+            			sbValue.append( userInfo.getName(  ) );
+            		}
+            		strValue = sbValue.toString(  );
+            	}
             }
-            else
+            if ( StringUtils.isBlank( strValue ) )
             {
-                return recordField.getValue(  );
+            	strValue = recordField.getValue(  );
             }
         }
-        else
-        {
-            return DirectoryUtils.EMPTY_STRING;
-        }
-
-        return DirectoryUtils.EMPTY_STRING;
+        
+        return strValue;
     }
 
     /**
@@ -352,5 +389,29 @@ public class EntryTypeMyLuteceUser extends Entry
     public boolean isSortable(  )
     {
         return true;
+    }
+    
+    /**
+     * Check if it must show every information of the user or not
+     * @return true if it must show every information, false otherwise
+     */
+    private boolean showAllInfo(  )
+    {
+    	boolean bShow = false;
+    	List<Field> listFields = getFields(  );
+    	if ( listFields == null || listFields.size(  ) == 0 )
+    	{
+    		Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+    		listFields = FieldHome.getFieldListByIdEntry( getIdEntry(  ), plugin );
+    	}
+    	if ( listFields != null )
+    	{
+    		Field field = listFields.get( 0 );
+    		if ( field != null )
+    		{
+    			bShow = field.isDefaultValue(  );
+    		}
+    	}
+    	return bShow;
     }
 }

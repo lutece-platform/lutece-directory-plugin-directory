@@ -308,12 +308,19 @@
 			   			</#if>
 			   			<#if isEntryTypeImage(entry)>
 			   				<#if record_field.field?? & record_field.field.isShownInResultList()>
-			   					${entry.getHtmlRecordFieldValue( locale,record_field,false)}
+			   					${entry.getHtmlRecordFieldValue( locale,record_field,false )}
 			   				</#if>
-			   			<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>
-			   				${record_field.value}
+			   			<#elseif isEntryTypeMyLuteceUser(entry)>
+			   				<#if record_field?? && record_field.record?? && permission_visualisation_mylutece_user>
+			   					<#assign id_directory_record = record_field.record.idRecord>
+			   					<a href="jsp/admin/plugins/directory/DoVisualisationMyLuteceUser.jsp?id_directory_record=${id_directory_record}">
+			   						${record_field.value}
+			   					</a>
+			   				<#else>
+			   					${record_field.value}
+			   				</#if>
 			   			<#else>
-	      					${entry.getHtmlRecordFieldValue( locale,record_field,false)}
+	      					${entry.getHtmlRecordFieldValue( locale,record_field,false )}
 	      				</#if>
 	      				<#if  record_field_has_next>
 		    				<br/>

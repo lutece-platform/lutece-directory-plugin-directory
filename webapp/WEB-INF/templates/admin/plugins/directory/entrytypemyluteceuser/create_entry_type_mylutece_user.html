@@ -64,7 +64,14 @@
 	    	<label for="mandatory">#i18n{directory.create_entry.label_mandatory} :</label>
 	   		 <input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
 	   	</p>
-		
+		<p>
+			<label for="show_all_info">#i18n{directory.create_entry.label_display_all_info} :</label>
+			<input type="checkbox" value="1" name="show_all_info" />
+			<br />
+			<label>&nbsp;</label>#i18n{directory.create_entry.label_display_all_info_comment}
+			<br />
+			<label>&nbsp;</label>#i18n{directory.create_entry.label_display_all_info_comment_2}
+		</p>
 	   	<p>
 	  		<input type="submit" value="#i18n{directory.create_entry.button_save}" class="button" name="save" />
 	  		<input type="submit" value="#i18n{directory.create_entry.button_cancel}" class="button" name="cancel" />

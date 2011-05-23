@@ -39,8 +39,12 @@ import java.util.Map;
 
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryXsl;
+import fr.paris.lutece.plugins.directory.business.EntryType;
+import fr.paris.lutece.plugins.directory.business.EntryTypeHome;
 import fr.paris.lutece.plugins.directory.business.Record;
+import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
+import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
 import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterHome;
 import fr.paris.lutece.plugins.directory.business.parameter.EntryParameterHome;
@@ -51,6 +55,8 @@ import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
+import fr.paris.lutece.portal.service.security.LuteceUser;
+import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.ReferenceList;
@@ -162,4 +168,56 @@ public class DirectoryService
     	
     	return nNbRecords;
     }
+    
+    /**
+     * Get the user from the id directory record
+     * @param nIdDirectoryRecord the id directory record
+     * @return a {@link LuteceUser}, null if the directory record is not a MyLutece entry
+     */
+    public LuteceUser getUserFromIdDirectoryRecord( int nIdDirectoryRecord )
+    {
+    	LuteceUser user = null;
+        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+        recordFieldFilter.setIdRecord( nIdDirectoryRecord );
+        Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+
+        List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
+        String strUserLogin = DirectoryUtils.EMPTY_STRING;
+
+        for ( RecordField recordField : listRecordFields )
+        {
+            EntryType entryType = EntryTypeHome.findByPrimaryKey( recordField.getEntry(  ).getEntryType(  ).getIdType(  ),
+            		plugin );
+
+            if ( entryType.getMyLuteceUser(  ) )
+            {
+                strUserLogin = recordField.getValue(  );
+                user = SecurityService.getInstance(  ).getUser( strUserLogin );
+
+                break;
+            }
+        }
+    	return user;
+    }
+    
+    /**
+     * Get the user info
+     * @param user {@link LuteceUser}
+     * @return a list of info of the user
+     */
+    public ReferenceList getUserInfo( LuteceUser user )
+    {
+    	ReferenceList listUserInfos = new ReferenceList(  );
+
+        if ( user != null )
+        {
+            for ( Map.Entry<String, String> userInfo : user.getUserInfos(  ).entrySet(  ) )
+            {
+                listUserInfos.addItem( userInfo.getKey(  ), userInfo.getValue(  ) );
+            }
+        }
+        return listUserInfos;
+    }
+    
+    
 }

@@ -10,3 +10,14 @@ INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('
 --
 ALTER TABLE directory_entry ADD COLUMN is_indexed_as_summary SMALLINT DEFAULT 0 AFTER is_indexed;
 ALTER TABLE directory_entry ADD COLUMN is_indexed_as_title SMALLINT DEFAULT 0 AFTER is_indexed;
+
+--
+-- Add new lines for table directory_field for the EntryTypeMyLutece
+--
+
+-- First, the primary key is set to AUTO_INCREMENT, so that new records will automatically set a new id_field
+ALTER TABLE directory_field CHANGE id_field id_field INT NOT NULL AUTO_INCREMENT;
+-- Insert new lines by fetching the id_entry of the EntryTypeMyLutece (19 is the id_type of EntryTypeMyLutece) 
+INSERT INTO directory_field (id_entry) SELECT id_entry FROM directory_entry WHERE id_type = 19;
+-- Revert the attribute of the primary_key id_field
+ALTER TABLE directory_field CHANGE id_field id_field INT DEFAULT 0 NOT NULL;
