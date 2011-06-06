@@ -246,9 +246,18 @@ public class DirectorySearchIndexer implements SearchIndexer
         		
     			for( Record record : listRecord )
     			{
-    				Document recordDoc = getDocument( record, listIndexedEntry, 
-    						listIndexedAsTitleEntry, listIndexedAsSummaryEntry, 
-    						plugin );
+    				Document recordDoc = null;
+    				try
+    				{
+    					recordDoc = getDocument( record, listIndexedEntry, 
+        						listIndexedAsTitleEntry, listIndexedAsSummaryEntry, 
+        						plugin );
+    				}
+    				catch ( Exception e )
+    				{
+    					String strMessage = "Directory ID : " + directory.getIdDirectory(  ) + " - Record ID : " + record.getIdRecord(  );
+                    	IndexationService.error( this, e, strMessage );
+    				}
     				if( recordDoc != null )
     				{
     					IndexationService.write( recordDoc );
