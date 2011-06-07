@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
-<plug-in>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
 
     <!-- Plugin Informations -->
     <name>directory</name>
     <class>fr.paris.lutece.plugins.directory.service.DirectoryPlugin</class>
     <version>2.0.6</version>
     <description>directory.plugin.description</description>
-    <documentation />
-    <installation />
-    <changes />
-    <user-guide />
+    <documentation/>
+    <installation/>
+    <changes/>
+    <user-guide/>
     <description>directory.plugin.description</description>
     <provider>directory.plugin.provider</provider>
     <provider-url>http://lutece.paris.fr</provider-url>
@@ -17,7 +16,7 @@
     <copyright>Copyright 2001-2011 Mairie de Paris</copyright>
     <core-version-dependency>
         <min-core-version>2.4.0</min-core-version>
-        <max-core-version />
+        <max-core-version/>
     </core-version-dependency>
     <db-pool-required>1</db-pool-required>
 
