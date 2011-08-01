@@ -19,36 +19,43 @@
 
 <form action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
 <div class="content-box" id="settings">
- 	<h2>#i18n{directory.create_entry.title_field} : '${entry.directory.title}'</h2>
- 
-   <input name="id_type" value="${entry.entryType.idType}" type="hidden" />
-   <#if entry.fieldDepend?exists>
-   		<input name="id_field" value="${entry.fieldDepend.idField}" type="hidden" />
-   </#if>
+	<h2>#i18n{directory.create_entry.title_field} : '${entry.directory.title}'</h2>
+
+	<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
+	<#if entry.fieldDepend?exists>
+		<input name="id_field" value="${entry.fieldDepend.idField}" type="hidden" />
+	</#if>
 	<p>
     	<label for="title">#i18n{directory.create_entry.label_title} * : </label>
     	<input type="text" name="title" id="title" size="80" value=""  maxlength="255"/>
     	<br/>
 		<label>&nbsp;</label>#i18n{directory.create_entry.label_title_comment}
  	</p> 
-     <p>
-       <label  for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
-   		<textarea  name="help_message_search" id="help_message_search"  cols="80" rows="5"></textarea>
+	<p>
+		<label for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
+   		<textarea name="help_message_search" id="help_message_search"  cols="80" rows="5"></textarea>
       	<br/>
 	 	<label>&nbsp;</label> #i18n{directory.create_entry.label_help_message_search_comment}
 	</p>
-	  <p>
-     	<label for="comment"> #i18n{directory.create_entry.label_comment} : </label>
+	<p>
+		<label for="comment"> #i18n{directory.create_entry.label_comment} : </label>
 		<textarea name="comment" cols="80" rows="2"></textarea>
-     </p>
+	</p>
     <p>
-     <label for="">#i18n{directory.create_entry.label_type} :</label>
-                #i18n{${entry.entryType.titleI18nKey}}
+		<label for="">#i18n{directory.create_entry.label_type} :</label>
+		#i18n{${entry.entryType.titleI18nKey}}
+	</p>
+	<p>
+		<label for="prefix">#i18n{directory.create_entry.label_prefix} :</label>
+		<input type="text" name="prefix" value="" maxlength="255" size="80" />
+		<br />
+		<label>&nbps;</label>
+		#i18n{directory.create_entry.label_prefix_comment}
 	</p>
 	
    	<p>
   		<input type="submit" value="#i18n{directory.create_entry.button_save}" class="button" name="save" />
-  		<input type="submit" value="#i18n{directory.create_entry.button_cancel}" class="button" name="cancel" />   
+  		<input type="submit" value="#i18n{directory.create_entry.button_cancel}" class="button" name="cancel" />
   	</p>
 	<br/>
  </div>

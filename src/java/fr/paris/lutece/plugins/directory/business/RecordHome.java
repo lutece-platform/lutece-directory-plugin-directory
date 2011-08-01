@@ -33,14 +33,15 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import java.util.List;
+
+import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectoryIndexer;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
-
-import java.util.List;
 
 
 /**
@@ -105,7 +106,7 @@ public final class RecordHome
         {
         	recordField.setRecord( record );
         	//we don't copy numbering entry
-        	if( ! recordField.getEntry(  ).getEntryType(  ).getClassName(  ).equals( EntryTypeNumbering.class.getName(  ) ) )
+        	if( !recordField.getEntry(  ).getEntryType(  ).getClassName(  ).equals( EntryTypeNumbering.class.getName(  ) ) )
         	{        		 
         		RecordFieldHome.copy( recordField, plugin );
         	}
@@ -113,11 +114,14 @@ public final class RecordHome
         	{
         		//update the number
         		IEntry entryNumbering = EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), plugin);
-        		int numbering = DirectoryUtils.convertStringToInt( entryNumbering.getFields(  ).get( 0 ).getValue(  ) );
-        		entryNumbering.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
-                FieldHome.update( entryNumbering.getFields(  ).get( 0 ), plugin );
-                recordField.setValue( String.valueOf( numbering ) );
-        		RecordFieldHome.create( recordField, plugin );
+        		int numbering = DirectoryService.getInstance(  ).getMaxNumber( entryNumbering );
+        		if ( numbering != DirectoryUtils.CONSTANT_ID_NULL )
+        		{
+        			entryNumbering.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
+                    FieldHome.update( entryNumbering.getFields(  ).get( 0 ), plugin );
+                    recordField.setValue( String.valueOf( numbering ) );
+            		RecordFieldHome.create( recordField, plugin );
+        		}
         	}           
         }
         return record.getIdRecord(  );

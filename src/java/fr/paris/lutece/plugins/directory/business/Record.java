@@ -312,6 +312,7 @@ public class Record implements AdminWorkgroupResource
 
         Map<String, String> modelListRecordField = new HashMap<String, String>(  );
         boolean bIsEntryTypeGeolocation = ( entry instanceof EntryTypeGeolocation ) ? true : false;
+        boolean bIsEntryTypeNumbering = ( entry instanceof EntryTypeNumbering ) ? true : false;
         modelListRecordField.put( RecordField.ATTRIBUTE_GEOLOCATION, Boolean.toString( bIsEntryTypeGeolocation ) );
         XmlUtil.beginElement( strXml, TAG_LIST_RECORD_FIELD, modelListRecordField );
 
@@ -378,12 +379,12 @@ public class Record implements AdminWorkgroupResource
                     }
                     else
                     {
-                        if ( bDisplayTitleEntryTypeSelect )
+                        if ( bDisplayTitleEntryTypeSelect && !bIsEntryTypeNumbering)
                         {
-                            XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
-                                DirectoryUtils.substituteSpecialCaractersForExport( 
-                                    recordField.getEntry(  )
-                                               .convertRecordFieldTitleToString( recordField, locale, bDisplayFront ) ) );
+                        	XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
+                                    DirectoryUtils.substituteSpecialCaractersForExport( 
+                                        recordField.getEntry(  )
+                                                   .convertRecordFieldTitleToString( recordField, locale, bDisplayFront ) ) );
                         }
                         else
                         {

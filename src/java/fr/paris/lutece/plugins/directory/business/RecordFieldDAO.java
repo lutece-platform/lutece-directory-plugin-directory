@@ -86,6 +86,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     	" INNER JOIN directory_record dr ON drf.id_record = dr.id_record " +
     	" INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry " +
     	" WHERE ent.id_type = ? AND dr.id_directory = ? ORDER BY 0 + drf.record_field_value DESC LIMIT 1 ";
+    private static final String SQL_QUERY_SELECT_BY_RECORD_FIELD_VALUE = " SELECT drf.id_record_field FROM directory_record_field drf " + 
+		" INNER JOIN directory_record dr ON drf.id_record = dr.id_record " +
+		" INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry " +
+		" WHERE ent.id_type = ? AND dr.id_directory = ? AND drf.record_field_value = ? "; 
     private static final String SQL_FILTER_ID_RECORD = " drf.id_record = ? ";
     private static final String SQL_FILTER_ID_RECORD_IN = " drf.id_record IN ( ? ";
     private static final String SQL_FILTER_ID_FIELD = " drf.id_field = ? ";
@@ -879,6 +883,9 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         return nCount;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int getMaxNumber( int nIdEntryTypeNumbering, int nIdDirectory, Plugin plugin )
     {
     	int nIndex = 1;
@@ -897,5 +904,29 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         daoUtil.free(  );
 
         return nKey;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNumberOnARecordField( int nIdEntryTypeNumbering, int nIdDirectory, int nNumber, Plugin plugin )
+    {
+    	int nIndex = 1;
+    	DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_RECORD_FIELD_VALUE, plugin );
+    	daoUtil.setInt( nIndex++, nIdEntryTypeNumbering );
+    	daoUtil.setInt( nIndex++, nIdDirectory );
+    	daoUtil.setInt( nIndex++, nNumber );
+        daoUtil.executeQuery(  );
+        
+        boolean isOn = false;
+
+        if ( daoUtil.next(  ) )
+        {
+        	isOn = true;
+        }
+        
+        daoUtil.free(  );
+
+        return isOn;
     }
 }

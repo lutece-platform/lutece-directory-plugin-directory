@@ -37,10 +37,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryXsl;
 import fr.paris.lutece.plugins.directory.business.EntryType;
 import fr.paris.lutece.plugins.directory.business.EntryTypeHome;
+import fr.paris.lutece.plugins.directory.business.Field;
+import fr.paris.lutece.plugins.directory.business.IEntry;
 import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
@@ -49,6 +53,7 @@ import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterHome;
 import fr.paris.lutece.plugins.directory.business.parameter.EntryParameterHome;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.rbac.RBAC;
 import fr.paris.lutece.portal.business.user.AdminUser;
@@ -219,5 +224,96 @@ public class DirectoryService
         return listUserInfos;
     }
     
-    
+    /**
+     * Get the max number
+     * @param nIdEntryTypeNumbering the id entry type numbering
+     * @param nIdDirectory the id directory
+     * @return the max number
+     */
+    public int getMaxNumber( IEntry entry )
+    {
+    	int nMaxNumber = 1;
+    	if ( entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeNumbering && 
+    			entry != null && entry.getEntryType(  ) != null && entry.getDirectory(  ) != null )
+    	{
+    		Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+    		nMaxNumber = RecordFieldHome.findMaxNumber( entry.getEntryType(  ).getIdType(  ), 
+    				entry.getDirectory(  ).getIdDirectory(  ), pluginDirectory );
+    	}
+    	return nMaxNumber;
+    }
+
+    /**
+     * Get the number to insert to the entry type numbering. 
+     * @param entry the entry type numbering
+     * @param strNumber the number to insert
+     * @return the number
+     * @throws DirectoryErrorException exception if the number already exists on an another record field
+     */
+    public int getNumber( IEntry entry, String strNumber ) throws DirectoryErrorException
+    {
+    	int nNumber = DirectoryUtils.CONSTANT_ID_NULL;
+    	if ( entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeNumbering &&
+    			entry != null && entry.getFields(  ) != null && entry.getFields(  ).size(  ) > 0 && 
+    			entry.getEntryType(  ) != null && entry.getDirectory(  ) != null )
+    	{
+			nNumber = buildNumber( entry, strNumber );
+			if ( nNumber != DirectoryUtils.CONSTANT_ID_NULL )
+			{
+				Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+	    		if ( RecordFieldHome.isNumberOnARecordField( entry.getEntryType(  ).getIdType(  ), 
+	    				entry.getDirectory(  ).getIdDirectory(  ), nNumber, pluginDirectory ) )
+	    		{
+	    			throw new DirectoryErrorException( entry.getTitle(  ), "Directory Error - The number already exists in an " +
+	    					"another record field." );
+	    		}
+			}
+    	}
+    	
+    	return nNumber;
+    }
+
+    /**
+     * Build the number from a given number. This methods first checks if the number is not a type
+     * numerical (without the prefix of the entry), or checks if the number already exists on 
+     * an another record field or not.
+     * @param entry the entry numbering
+     * @param strNumber the number to build
+     * @return the number
+     * @throws DirectoryErrorException exception if the directory entry type numbering does not have the same prefix as the number
+     */
+    private int buildNumber( IEntry entry, String strNumber ) throws DirectoryErrorException
+    {
+    	int nNumber = DirectoryUtils.CONSTANT_ID_NULL;
+    	
+    	Field field = entry.getFields(  ).get( 0 );
+		String strPrefix = field.getTitle(  );
+		
+		String strNumberTmp = strNumber;
+		
+		if ( StringUtils.isNotBlank( strPrefix )  )
+		{
+			if ( StringUtils.isNotBlank( strNumber ) && strPrefix.length(  ) < strNumber.length(  ) )
+			{
+				strNumberTmp = strNumber.substring( strPrefix.length(  ), strNumber.length(  ) );
+			}
+			else
+			{
+				throw new DirectoryErrorException( entry.getTitle(  ), "Directory Error - The prefix of the entry type numbering to " +
+						"insert is not correct." );
+			}
+		}
+		
+		if ( StringUtils.isNotBlank( strNumberTmp ) && StringUtils.isNumeric( strNumberTmp ) )
+		{
+			nNumber = Integer.parseInt( strNumberTmp );
+		}
+		else
+		{
+			throw new DirectoryErrorException( entry.getTitle(  ), "Directory Error - The prefix of the entry type numbering to " +
+				"insert is not correct." );
+		}
+		
+		return nNumber;
+    }
 }
