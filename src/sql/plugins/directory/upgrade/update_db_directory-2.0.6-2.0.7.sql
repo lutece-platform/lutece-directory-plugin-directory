@@ -21,3 +21,8 @@ ALTER TABLE directory_field CHANGE id_field id_field INT NOT NULL AUTO_INCREMENT
 INSERT INTO directory_field (id_entry) SELECT id_entry FROM directory_entry WHERE id_type = 19;
 -- Revert the attribute of the primary_key id_field
 ALTER TABLE directory_field CHANGE id_field id_field INT DEFAULT 0 NOT NULL;
+
+--
+-- Add new entry type EntryTypeDownloadUrl
+--
+INSERT INTO directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) VALUES (20,'directory.entry_type_download_url.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl');
