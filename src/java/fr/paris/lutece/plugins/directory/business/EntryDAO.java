@@ -53,25 +53,25 @@ public final class EntryDAO implements IEntryDAO
         "typ.is_comment,typ.is_mylutece_user,typ.class_name,ent.id_entry,ent.id_directory,directory.title,ent.id_entry_parent,ent.title," +
         "ent.help_message,ent.help_message_search,ent.entry_comment,ent.is_mandatory,ent.is_indexed,ent.is_indexed_as_title,ent.is_indexed_as_summary," +
         "ent.is_shown_in_search,ent.is_shown_in_result_list,ent.is_shown_in_result_record,ent.is_fields_in_line,ent.entry_position," +
-        "ent.display_width,ent.display_height,ent.is_role_associated,ent.is_workgroup_associated,ent.is_multiple_search_fields,ent.is_shown_in_history,ent.id_entry_associate,ent.request_sql,ent.is_add_value_search_all,ent.label_value_search_all,ent.map_provider,ent.is_autocomplete_entry,ent.is_shown_in_export " +
+        "ent.display_width,ent.display_height,ent.is_role_associated,ent.is_workgroup_associated,ent.is_multiple_search_fields,ent.is_shown_in_history,ent.id_entry_associate,ent.request_sql,ent.is_add_value_search_all,ent.label_value_search_all,ent.map_provider,ent.is_autocomplete_entry,ent.is_shown_in_export,ent.is_shown_in_completeness " +
         "FROM directory_entry ent,directory_entry_type typ,directory_directory directory WHERE ent.id_entry = ? and ent.id_type=typ.id_type and " +
         "ent.id_directory=directory.id_directory";
     private static final String SQL_QUERY_INSERT = "INSERT INTO directory_entry ( " +
         "id_entry,id_entry_parent,id_directory,id_type,title,help_message,help_message_search,entry_comment,is_mandatory," +
         "is_indexed,is_indexed_as_title,is_indexed_as_summary,is_shown_in_search,is_shown_in_result_list,is_shown_in_result_record,is_fields_in_line,entry_position,display_width,display_height " +
-        ",is_role_associated,is_workgroup_associated,is_multiple_search_fields,is_shown_in_history,id_entry_associate,request_sql,is_add_value_search_all,label_value_search_all,map_provider,is_autocomplete_entry,is_shown_in_export )VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        ",is_role_associated,is_workgroup_associated,is_multiple_search_fields,is_shown_in_history,id_entry_associate,request_sql,is_add_value_search_all,label_value_search_all,map_provider,is_autocomplete_entry,is_shown_in_export,is_shown_in_completeness )VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_entry WHERE id_entry = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE  directory_entry SET " +
         "id_entry=?,id_entry_parent=?,id_directory=?,id_type=?,title=?,help_message=?,help_message_search=?," +
         "entry_comment=?,is_mandatory=?,is_indexed=?,is_indexed_as_title=?,is_indexed_as_summary=?,is_shown_in_search=?,is_shown_in_result_list=?," +
         "is_shown_in_result_record=?,is_fields_in_line=?,entry_position=? ,display_width=?,display_height=?," +
-        "is_role_associated=?,is_workgroup_associated=?,is_multiple_search_fields=?,is_shown_in_history=?,id_entry_associate=?,request_sql=?,is_add_value_search_all=?,label_value_search_all=?, map_provider=?, is_autocomplete_entry=?, is_shown_in_export=? WHERE id_entry=?";
+        "is_role_associated=?,is_workgroup_associated=?,is_multiple_search_fields=?,is_shown_in_history=?,id_entry_associate=?,request_sql=?,is_add_value_search_all=?,label_value_search_all=?, map_provider=?, is_autocomplete_entry=?, is_shown_in_export=?, is_shown_in_completeness=? WHERE id_entry=?";
     private static final String SQL_QUERY_SELECT_ENTRY_BY_FILTER = "SELECT ent.id_type,typ.title_key,typ.is_group," +
         "typ.is_comment,typ.is_mylutece_user,typ.class_name,ent.id_entry,ent.id_directory," +
         "ent.id_entry_parent,ent.title,ent.help_message,ent.help_message_search," +
         "ent.entry_comment,ent.is_mandatory,ent.is_indexed,ent.is_indexed_as_title,ent.is_indexed_as_summary,ent.is_shown_in_search,ent.is_shown_in_result_list,ent.is_shown_in_result_record," +
         "ent.is_fields_in_line,ent.entry_position,ent.display_width,ent.display_height,ent.is_role_associated,ent.is_workgroup_associated, " +
-        "ent.is_multiple_search_fields,ent.is_shown_in_history,ent.id_entry_associate ,ent.request_sql,ent.is_add_value_search_all,ent.label_value_search_all,ent.map_provider,ent.is_autocomplete_entry,ent.is_shown_in_export " +
+        "ent.is_multiple_search_fields,ent.is_shown_in_history,ent.id_entry_associate ,ent.request_sql,ent.is_add_value_search_all,ent.label_value_search_all,ent.map_provider,ent.is_autocomplete_entry,ent.is_shown_in_export,ent.is_shown_in_completeness " +
         "FROM directory_entry ent,directory_entry_type typ  ";
     private static final String SQL_QUERY_SELECT_NUMBER_ENTRY_BY_FILTER = "SELECT COUNT(ent.id_entry) " +
         "FROM directory_entry ent,directory_entry_type typ ";
@@ -98,6 +98,7 @@ public final class EntryDAO implements IEntryDAO
     private static final String SQL_FILTER_ID_ENTRY_ASSOCIATE = "  ent.id_entry_associate = ? ";
     private static final String SQL_FILTER_IS_AUTOCOMPLETE_ENTRY = "  ent.is_autocomplete_entry = ? ";
     private static final String SQL_FILTER_IS_SHOWN_IN_EXPORT = " ent.is_shown_in_export = ? ";
+    private static final String SQL_FILTER_IS_SHOWN_IN_COMPLETENESS = " ent.is_shown_in_completeness = ? ";
     private static final String CONSTANT_PARENTHESIS_LEFT = " ( ";
     private static final String CONSTANT_PARENTHESIS_RIGHT = " ) ";
 
@@ -203,6 +204,7 @@ public final class EntryDAO implements IEntryDAO
         daoUtil.setString( 28, strMapProvider );
         daoUtil.setBoolean( 29, entry.isAutocompleteEntry(  ) );
         daoUtil.setBoolean( 30, entry.isShownInExport(  ) );
+        daoUtil.setBoolean( 31, entry.isShownInCompleteness(  ) );
 
         entry.setIdEntry( newPrimaryKey( plugin ) );
         daoUtil.setInt( 1, entry.getIdEntry(  ) );
@@ -313,6 +315,7 @@ public final class EntryDAO implements IEntryDAO
             entry.setMapProvider( MapProviderManager.getMapProvider( daoUtil.getString( 34 ) ) );
             entry.setAutocompleteEntry( daoUtil.getBoolean( 35 ) );
             entry.setShownInExport( daoUtil.getBoolean( 36 ) );
+            entry.setShownInCompleteness( daoUtil.getBoolean( 37 ) );
         }
 
         daoUtil.free(  );
@@ -388,8 +391,9 @@ public final class EntryDAO implements IEntryDAO
 
         daoUtil.setBoolean( 29, entry.isAutocompleteEntry(  ) );
         daoUtil.setBoolean( 30, entry.isShownInExport(  ) );
+        daoUtil.setBoolean( 31, entry.isShownInCompleteness(  ) );
 
-        daoUtil.setInt( 31, entry.getIdEntry(  ) );
+        daoUtil.setInt( 32, entry.getIdEntry(  ) );
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -494,6 +498,11 @@ public final class EntryDAO implements IEntryDAO
         if ( filter.containsIsShownInExport(  ) )
         {
             listStrFilter.add( SQL_FILTER_IS_SHOWN_IN_EXPORT );
+        }
+        
+        if ( filter.containsIsShownInCompleteness(  ) )
+        {
+            listStrFilter.add( SQL_FILTER_IS_SHOWN_IN_COMPLETENESS );
         }
 
         return listStrFilter;
@@ -610,6 +619,12 @@ public final class EntryDAO implements IEntryDAO
             daoUtil.setBoolean( nIndex, filter.getIsShownInExport(  ) == EntryFilter.FILTER_TRUE );
             nIndex++;
         }
+        
+        if ( filter.containsIsShownInCompleteness(  ) )
+        {
+            daoUtil.setBoolean( nIndex, filter.getIsShownInCompleteness(  ) == EntryFilter.FILTER_TRUE );
+            nIndex++;
+        }
 
         return nIndex;
     }
@@ -700,6 +715,7 @@ public final class EntryDAO implements IEntryDAO
         entry.setMapProvider( MapProviderManager.getMapProvider( daoUtil.getString( 33 ) ) );
         entry.setAutocompleteEntry( daoUtil.getBoolean( 34 ) );
         entry.setShownInExport( daoUtil.getBoolean( 35 ) );
+        entry.setShownInCompleteness( daoUtil.getBoolean( 36 ) );
 
         return entry;
     }
@@ -832,6 +848,11 @@ public final class EntryDAO implements IEntryDAO
         {
             listStrFilter.add( SQL_FILTER_IS_SHOWN_IN_EXPORT );
         }
+        
+        if ( filter.containsIsShownInCompleteness(  ) )
+        {
+            listStrFilter.add( SQL_FILTER_IS_SHOWN_IN_COMPLETENESS );
+        }
 
         String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_SELECT_NUMBER_ENTRY_BY_FILTER, listStrFilter,
                 null );
@@ -927,6 +948,12 @@ public final class EntryDAO implements IEntryDAO
         if ( filter.containsIsShownInExport(  ) )
         {
             daoUtil.setBoolean( nIndex, filter.getIsShownInExport(  ) == EntryFilter.FILTER_TRUE );
+            nIndex++;
+        }
+        
+        if ( filter.containsIsShownInCompleteness(  ) )
+        {
+            daoUtil.setBoolean( nIndex, filter.getIsShownInCompleteness(  ) == EntryFilter.FILTER_TRUE );
             nIndex++;
         }
 

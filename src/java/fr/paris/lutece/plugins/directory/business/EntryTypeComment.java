@@ -88,6 +88,8 @@ public class EntryTypeComment extends Entry
         }
 
         this.setComment( strComment );
+        // This entry cannot be shown in completeness
+        this.setShownInCompleteness( false );
 
         return null;
     }

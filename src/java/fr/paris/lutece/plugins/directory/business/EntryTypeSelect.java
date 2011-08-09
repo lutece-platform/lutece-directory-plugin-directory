@@ -130,6 +130,7 @@ public class EntryTypeSelect extends Entry
         String strIsAllSearch = request.getParameter( PARAMETER_IS_ADD_VALUE_SEARCH_ALL );
         String strLabelValueAllSearch = request.getParameter( PARAMETER_LABEL_VALUE_SEARCH_ALL );
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
         if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
@@ -167,6 +168,7 @@ public class EntryTypeSelect extends Entry
         this.setRoleAssociated( strRoleAssociated != null );
         this.setShownInHistory( strShowInHistory != null );
         this.setShownInExport( strShowInExport != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
         this.setAddValueAllSearch( strIsAllSearch != null );
 
         if ( strIsAllSearch != null )

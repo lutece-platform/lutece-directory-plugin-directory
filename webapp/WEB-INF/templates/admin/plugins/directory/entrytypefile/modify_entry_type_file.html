@@ -114,6 +114,16 @@
 			   		<br/>
 				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_export_comment}
 				</p>
+				<p>
+			    	<label for="shown_in_completeness">#i18n{directory.create_entry.label_shown_in_completeness} :</label>
+			    	<#if entry.shownInCompleteness>
+			   			<input name="shown_in_completeness" value="1" type="checkbox" checked="checked" />
+			   		<#else>
+			   			<input name="shown_in_completeness" value="1" type="checkbox" />
+			   		</#if>
+			   		<br/>
+				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_completeness_comment}
+				</p>
 				<div class="alert">
 					 #i18n{directory.message.warning.entry_advanced_parameters_save}
 				</div>

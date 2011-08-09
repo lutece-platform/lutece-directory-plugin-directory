@@ -134,6 +134,7 @@ public class EntryTypeDate extends Entry
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );
         String strFieldError = DirectoryUtils.EMPTY_STRING;
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
 
         if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
@@ -184,6 +185,7 @@ public class EntryTypeDate extends Entry
         this.setMultipleSearchFields( strMultipleSearchFields != null );
         this.setShownInHistory( strShowInHistory != null );
         this.setShownInExport( strShowInExport != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
 
         return null;
     }

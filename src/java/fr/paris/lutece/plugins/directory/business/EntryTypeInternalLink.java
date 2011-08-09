@@ -123,6 +123,7 @@ public class EntryTypeInternalLink extends Entry
         String strShowInResultRecord = request.getParameter( PARAMETER_SHOWN_IN_RESULT_RECORD );
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
@@ -170,6 +171,7 @@ public class EntryTypeInternalLink extends Entry
         this.setShownInResultRecord( strShowInResultRecord != null );
         this.setShownInHistory( strShowInHistory != null );
         this.setShownInExport( strShowInExport != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
 
         return null;
     }

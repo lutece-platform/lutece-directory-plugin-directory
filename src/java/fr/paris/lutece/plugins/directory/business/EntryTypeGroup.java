@@ -73,6 +73,8 @@ public class EntryTypeGroup extends Entry
         }
 
         this.setTitle( strTitle );
+        // This entry cannot be shown in completeness
+        this.setShownInCompleteness( false );
 
         return null;
     }

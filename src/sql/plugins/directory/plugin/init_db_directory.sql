@@ -133,3 +133,4 @@ INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('max_size_enter', '50');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('autocomplete_entry', '0');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('shown_in_export', '1');
+INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('shown_in_completeness', '1');

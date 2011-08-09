@@ -182,6 +182,7 @@ public class EntryTypeMyLuteceUser extends Entry
         String strShowFullInfo = request.getParameter( PARAMETER_SHOW_ALL_INFO );
 
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
@@ -212,6 +213,7 @@ public class EntryTypeMyLuteceUser extends Entry
         this.setFieldInLine( false );
         this.setShownInHistory( strShowInHistory != null );
         this.setShownInExport( strShowInExport != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
         this.setAddValueAllSearch( strIsAllSearch != null );
 
         if ( strIsAllSearch != null )

@@ -127,6 +127,7 @@ public class EntryTypeRadioButton extends Entry
         String strRoleAssociated = request.getParameter( PARAMETER_ROLE_ASSOCIATED );
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
         if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
@@ -161,6 +162,7 @@ public class EntryTypeRadioButton extends Entry
         this.setRoleAssociated( strRoleAssociated != null );
         this.setShownInHistory( strShowInHistory != null );
         this.setShownInExport( strShowInExport != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
 
         return null;
     }

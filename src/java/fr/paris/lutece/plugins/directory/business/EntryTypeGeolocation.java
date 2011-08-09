@@ -165,6 +165,7 @@ public class EntryTypeGeolocation extends Entry
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );
         String strMapProvider = request.getParameter( PARAMETER_MAP_PROVIDER );
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
@@ -223,6 +224,7 @@ public class EntryTypeGeolocation extends Entry
         this.setShownInHistory( strShowInHistory != null );
         this.setMapProvider( MapProviderManager.getMapProvider( strMapProvider ) );
         this.setShownInExport( strShowInExport != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
 
         return null;
     }

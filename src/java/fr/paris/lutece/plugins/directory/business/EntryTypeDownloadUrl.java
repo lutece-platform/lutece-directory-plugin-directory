@@ -138,6 +138,7 @@ public class EntryTypeDownloadUrl extends Entry
         String strMaxSizeEnter = request.getParameter( PARAMETER_MAX_SIZE_ENTER );
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
 
         int nWidth = DirectoryUtils.convertStringToInt( strWidth );
         int nMaxSizeEnter = DirectoryUtils.convertStringToInt( strMaxSizeEnter );
@@ -205,6 +206,7 @@ public class EntryTypeDownloadUrl extends Entry
         this.setShownInResultRecord( strShowInResultRecord != null );
         this.setShownInHistory( strShowInHistory != null );
         this.setShownInExport( strShowInExport != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
 
         return null;
     }

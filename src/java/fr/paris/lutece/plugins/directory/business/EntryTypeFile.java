@@ -113,6 +113,7 @@ public class EntryTypeFile extends Entry
         String strFieldError = DirectoryUtils.EMPTY_STRING;
         int nWidth = DirectoryUtils.convertStringToInt( strWidth );
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
 
         if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
@@ -166,6 +167,7 @@ public class EntryTypeFile extends Entry
         this.setShownInResultRecord( strShowInResultRecord != null );
         this.setShownInHistory( strShowInHistory != null );
         this.setShownInExport( strShowInExport != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
 
         return null;
     }

@@ -91,6 +91,7 @@ CREATE TABLE directory_entry (
   map_provider VARCHAR(45) DEFAULT NULL,
   is_autocomplete_entry SMALLINT DEFAULT 0,
   is_shown_in_export SMALLINT DEFAULT 0,
+  is_shown_in_completeness SMALLINT DEFAULT 0,
   PRIMARY KEY  (id_entry)
   ) ;
 

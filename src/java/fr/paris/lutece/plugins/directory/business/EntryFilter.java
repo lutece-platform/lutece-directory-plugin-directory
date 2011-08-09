@@ -64,6 +64,7 @@ public class EntryFilter
     private int _nPosition = ALL_INT;
     private int _nIsShownInResultRecord = ALL_INT;
     private int _nIsShownInExport = ALL_INT;
+    private int _nIsShownInCompleteness = ALL_INT;
 
     /**
      *
@@ -568,6 +569,35 @@ public class EntryFilter
     {
         return ( _nIsShownInExport != ALL_INT );
     }
+    
+    /**
+    *
+    * @return 1 if the entry associate to the record field is shown in record completeness,
+    *         O if the entry associate to the record field is shown in record completeness
+    */
+   public int getIsShownInCompleteness(  )
+   {
+       return _nIsShownInCompleteness;
+   }
+
+   /**
+    * set 1 if the entry associate to the record field is shown in record completeness,
+    *     O if the entry associate to the record field is shown in record completeness
+    *  @param nIsShownInCompleteness 1 if the entry associate to the record field is shown in record completeness
+    */
+   public void setIsShownInCompleteness( int nIsShownInCompleteness )
+   {
+       _nIsShownInCompleteness = nIsShownInCompleteness;
+   }
+
+   /**
+    *
+    * @return true if the filter is initialized
+    */
+   public boolean containsIsShownInCompleteness(  )
+   {
+       return ( _nIsShownInCompleteness != ALL_INT );
+   }
 
     /**
     *

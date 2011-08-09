@@ -195,6 +195,17 @@ public interface IEntry
      * @param  shown true if the entry must be shown in data export
      */
     void setShownInExport( boolean shown );
+    
+    /**
+     * @return true if the field must be shown in record completeness
+     */
+    boolean isShownInCompleteness(  );
+
+    /**
+     * set true if the  field must be shown record completeness
+     * @param  shown true if the entry must be shown in record completeness
+     */
+    void setShownInCompleteness( boolean shown );
 
     /**
      * @return true if the field must be indexed

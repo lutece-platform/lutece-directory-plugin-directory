@@ -125,6 +125,7 @@ public class EntryTypeCheckBox extends Entry
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );
         String strFieldInLine = request.getParameter( PARAMETER_FIELD_IN_LINE );
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
         int nFieldInLine = DirectoryUtils.convertStringToInt( strFieldInLine );
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
@@ -159,6 +160,7 @@ public class EntryTypeCheckBox extends Entry
         this.setFieldInLine( nFieldInLine == 1 );
         this.setShownInHistory( strShowInHistory != null );
         this.setShownInExport( strShowInExport != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
 
         return null;
     }

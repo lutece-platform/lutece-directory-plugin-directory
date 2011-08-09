@@ -176,6 +176,7 @@ public class EntryTypeImg extends Entry
         String strShowInResultList = request.getParameter( PARAMETER_SHOWN_IN_RESULT_LIST );
         String strShowInResultRecord = request.getParameter( PARAMETER_SHOWN_IN_RESULT_RECORD );
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );      
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
         if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
@@ -452,6 +453,7 @@ public class EntryTypeImg extends Entry
         this.setShownInResultList( strShowInResultList != null );
         this.setShownInResultRecord( strShowInResultRecord != null );
         this.setShownInHistory( strShowInHistory != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
         //image can't be exported in csv
         this.setShownInExport( false );
 

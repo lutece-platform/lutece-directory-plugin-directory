@@ -148,6 +148,7 @@ public class EntryTypeDirectory extends Entry
         String strLabelValueAllSearch = request.getParameter( PARAMETER_LABEL_VALUE_SEARCH_ALL );
         String strIdEntryAssociate = request.getParameter( PARAMETER_ENTRY_ASSOCIATE );
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
+        String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
 
         int idEntryAssociate = DirectoryUtils.convertStringToInt( strIdEntryAssociate );
 
@@ -193,6 +194,7 @@ public class EntryTypeDirectory extends Entry
         this.setEntryAssociate( idEntryAssociate );
         this.setAddValueAllSearch( strIsAllSearch != null );
         this.setShownInExport( strShowInExport != null );
+        this.setShownInCompleteness( strShowInCompleteness != null );
 
         if ( strIsAllSearch != null )
         {

@@ -192,6 +192,8 @@ public class EntryTypeNumbering extends Entry
         this.setShownInResultRecord( strShowInResultRecord != null );
         this.setShownInHistory( strShowInHistory != null );
         this.setShownInExport( strShowInExport != null );
+        // This entry cannot be shown in completeness
+        this.setShownInCompleteness( false );
 
         return null;
     }

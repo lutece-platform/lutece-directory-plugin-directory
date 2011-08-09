@@ -103,6 +103,7 @@ public class Entry implements IEntry
     protected static final String PARAMETER_IS_ADD_VALUE_SEARCH_ALL = "is_all_search";
     protected static final String PARAMETER_LABEL_VALUE_SEARCH_ALL = "label_all_search";
     protected static final String PARAMETER_SHOWN_IN_EXPORT = "shown_in_export";
+    protected static final String PARAMETER_SHOWN_IN_COMPLETENESS = "shown_in_completeness";
     protected static final String PARAMETER_SHOW_ALL_INFO = "show_all_info";
 
     //	message
@@ -158,6 +159,7 @@ public class Entry implements IEntry
     private boolean _bShownInResultRecord;
     private boolean _bShownInHistory;
     private boolean _bShownInExport;
+    private boolean _bShownInCompleteness;
     private boolean _bWorkgroupAssociated;
     private boolean _bRoleAssociated;
     private boolean _bIndexed;
@@ -379,11 +381,27 @@ public class Entry implements IEntry
     }
 
     /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IEntry#setShownInResultRecord(boolean)
+     * @see fr.paris.lutece.plugins.directory.business.IEntry#setShownInExport(boolean)
      */
     public void setShownInExport( boolean shown )
     {
         _bShownInExport = shown;
+    }
+    
+    /* (non-Javadoc)
+     * @see fr.paris.lutece.plugins.directory.business.IEntry#isShownInCompleteness()
+     */
+    public boolean isShownInCompleteness(  )
+    {
+        return _bShownInCompleteness;
+    }
+
+    /* (non-Javadoc)
+     * @see fr.paris.lutece.plugins.directory.business.IEntry#setShownInCompleteness(boolean)
+     */
+    public void setShownInCompleteness( boolean shown )
+    {
+        _bShownInCompleteness = shown;
     }
 
     /* (non-Javadoc)

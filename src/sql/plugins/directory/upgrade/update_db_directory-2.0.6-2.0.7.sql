@@ -3,6 +3,7 @@
 --
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('indexed_as_title', '0');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('indexed_as_summary', '0');
+INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('shown_in_completeness', '1');
 
 
 --
@@ -10,6 +11,7 @@ INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('
 --
 ALTER TABLE directory_entry ADD COLUMN is_indexed_as_summary SMALLINT DEFAULT 0 AFTER is_indexed;
 ALTER TABLE directory_entry ADD COLUMN is_indexed_as_title SMALLINT DEFAULT 0 AFTER is_indexed;
+ALTER TABLE directory_entry ADD COLUMN is_shown_in_completeness SMALLINT DEFAULT 0;
 
 --
 -- Add new lines for table directory_field for the EntryTypeMyLutece
