@@ -65,16 +65,24 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
+import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
+import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.web.action.DirectoryAdminSearchFields;
 import fr.paris.lutece.portal.business.user.AdminUser;
+import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.fileupload.FileUploadService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.service.util.AppPathService;
+import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.string.StringUtil;
+import fr.paris.lutece.util.url.UrlItem;
 
 
 /**
@@ -102,6 +110,15 @@ public final class DirectoryUtils
     private static final String CONSTANT_CHARACTER_SIMPLE_QUOTE = "'";
     private static final String CONSTANTE_CHARACTERNEW_LINE = "\n";
     private static final String CONSTANTE_CHARACTER_RETURN = "\r";
+    
+    public static final String MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD = "directory.message.directory_error.mandatory.field";
+    public static final String MESSAGE_DIRECTORY_ERROR = "directory.message.directory_error";
+
+    public static final String PARAMETER_ID_DIRECTORY = "id_directory";
+    public static final String PARAMETER_SESSION = "session";
+    
+    public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
+
 
     // property
     private static final String REGEX_ID = "^[\\d]+$";
@@ -951,5 +968,98 @@ public final class DirectoryUtils
         {
             return null;
         }
+    }
+    
+    /**
+     * Get the result list according to queries
+     * @param request The {@link HttpServletRequest}
+     * @param directory The {@link Directory}
+     * @param bWorkflowServiceEnable true if the WorkflowService is enabled
+     * @return The list of id records
+     * @throws AccessDeniedException
+     */
+    public static List<Integer> getListResults( HttpServletRequest request, Directory directory,
+        boolean bWorkflowServiceEnable, boolean bUseFilterDirectory, IEntry sortEntry, int nSortOrder, DirectoryAdminSearchFields searchFields, AdminUser adminUser, Locale locale )
+        throws AccessDeniedException
+    {
+        //call search service
+        RecordFieldFilter filter = new RecordFieldFilter(  );
+        filter.setIdDirectory( directory.getIdDirectory(  ) );
+
+        List<Integer> listResultRecordId = null;
+
+        //filter by workgroup 
+        filter.setWorkgroupKeyList( AdminWorkgroupService.getUserWorkgroups( adminUser, locale ) );
+  
+        // sort filter
+        filter.setSortEntry( sortEntry );
+        filter.setSortOrder( nSortOrder );
+
+        // If workflow active, filter by workflow state
+        if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
+                bWorkflowServiceEnable /* &&
+            ( _nIdWorkflowSate != DirectoryUtils.CONSTANT_ID_NULL ) */ )
+        {
+            if ( bUseFilterDirectory )
+            {
+                listResultRecordId = DirectorySearchService.getInstance(  )
+                                                           .getSearchResults( directory, searchFields.getMapQuery(  ),
+                        searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ), searchFields.getDateCreationEndRecord(  ), filter, getPlugin(  ) );
+            }
+            else
+            {
+                listResultRecordId = DirectorySearchService.getInstance(  )
+                                                           .getSearchResults( directory, null, null, null, null,
+                        filter, getPlugin(  ) );
+            }
+
+            List<Integer> listTmpResultRecordId = WorkflowService.getInstance(  )
+                                                                 .getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
+                    directory.getIdWorkflow(  ), searchFields.get_nIdWorkflowSate(  ), Integer.valueOf( directory.getIdDirectory(  ) ),
+                    adminUser );
+
+            listResultRecordId = DirectoryUtils.retainAllIdsKeepingFirstOrder( listResultRecordId, listTmpResultRecordId );
+        }
+        else
+        {
+            if ( bUseFilterDirectory )
+            {
+                listResultRecordId = DirectorySearchService.getInstance(  )
+                                                           .getSearchResults( directory, searchFields.getMapQuery(  ),
+                        searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ), searchFields.getDateCreationEndRecord(  ), filter, getPlugin(  ) );
+            }
+            else
+            {
+                listResultRecordId = DirectorySearchService.getInstance(  )
+                                                           .getSearchResults( directory, null, null, null, null,
+                        filter, getPlugin(  ) );
+            }
+        }
+
+        return listResultRecordId;
+    }
+    
+    /**
+     * Gets the plugin
+     * @return the plugin
+     */
+    public static Plugin getPlugin(  )
+    {
+    	return PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+    }
+
+    /**
+     * return url of the jsp manage directory record
+     * @param request The HTTP request
+     * @param nIdDirectory the directory id
+     * @return url of the jsp manage directory record
+     */
+    public static String getJspManageDirectoryRecord( HttpServletRequest request, int nIdDirectory )
+    {
+    	UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MANAGE_DIRECTORY_RECORD );
+    	urlItem.addParameter( PARAMETER_ID_DIRECTORY, nIdDirectory );
+    	urlItem.addParameter( PARAMETER_SESSION, PARAMETER_SESSION );
+    	
+    	return urlItem.getUrl(  );
     }
 }

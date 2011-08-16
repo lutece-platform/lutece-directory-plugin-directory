@@ -32,5 +32,11 @@
 		<property name="titleI18nKey" value="directory.resource_rss_type.label" />
 		<property name="className" value="fr.paris.lutece.plugins.directory.business.rss.DirectoryResourceRss"/>
 	</bean>
+	
+	<!-- record actions -->
+	<bean id="directory.exportXSLAction" class="fr.paris.lutece.plugins.directory.web.action.ExportDirectoryAction" />
+	<bean id="directory.searchAction" class="fr.paris.lutece.plugins.directory.web.action.SearchRecordDirectoryAction" />
+	<bean id="directory.createAction" class="fr.paris.lutece.plugins.directory.web.action.CreateRecordDirectoryAction" />
+	<bean id="directory.massPrintAction" class="fr.paris.lutece.plugins.directory.web.action.MassPrintDirectoryAction" />
 </beans>
  	

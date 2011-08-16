@@ -107,19 +107,25 @@
 <#function isEntryTypeMyLuteceUser entry>
 	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_mylutece_user>
 </#function>
+<form action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="post" id="searchForm" >
+<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
 <div id="content-box-actions">
 	<#if permission_create_record>
-	 	<form method="post" action="jsp/admin/plugins/directory/CreateDirectoryRecord.jsp">
-	    	<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-	      	<input type="submit" value="#i18n{directory.manage_directory_record.button_create}" class="button bt-toolbar" />
-	  	</form>
+	      	<input type="submit" name="create_record" value="#i18n{directory.manage_directory_record.button_create}" class="button bt-toolbar" />
   	</#if>
+</div>
+<div class="content-box">
+&nbsp;
+<#list directory_actions as action>
+<#if action.buttonTemplate?has_content>
+ <#include action.buttonTemplate />
+</#if>
+</#list>
 </div>
 <div class="content-box">
 	<h2> #i18n{directory.manage_directory_record.title}: '${directory.title}'</h2>
 	<div class="content-box-content">
 	<div class="highlight-box">
-		<form action="jsp/admin/plugins/directory/DoSearchDirectoryRecord.jsp" method="post" id="searchForm" >
 		<input name="page" value="directory" type="hidden" />
 	    <input name="search_action" value="search_action" type="hidden" />
 	    <input name="id_directory" value="${directory.idDirectory}" type="hidden" />
@@ -239,19 +245,6 @@
    		<input type="hidden" name="session" value="session" />
    		
         <@paginationAdmin paginator=paginator combo=1 form=0 />
-	<!-- Number of feeds per page selector -->
-<!--        #i18n{directory.manage_directory_record.label_items_per_page} :
-        <select name="items_per_page">
-            <#list [ "10" , "20" , "50" , "100" ] as nb>
-            	<#if nb_items_per_page = nb >
-             		<option selected="selected" value="${nb}">${nb}</option>
-            	<#else>
-             		<option value="${nb}">${nb}</option>
-            	</#if>
-            </#list>
-        </select>
-        <input type="submit" class="button" value="#i18n{directory.manage_directory_record.button_items_per_page}" />
--->
       </form>
   <table name="results_list" id="results_list">
     <tr>
@@ -365,26 +358,7 @@
 		</#list>
 	</#if>
  	
-  	<#if history_workflow && permission_mass_print>
-	  	<form method="post" action="jsp/admin/plugins/directory/MassPrint.jsp">
-		    	<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-		    	<p>
-		      		<input type="submit" value="#i18n{directory.manage_directory_record.button_mass_print}" class="button" />
-		    	</p>
-		</form>
-	</#if>
 	<@paginationAdmin paginator=paginator />
 	</div>
 </div>
- 
-<div class="content-box">
-	<h2>#i18n{directory.manage_directory_record.title_export_result}</h2>
-	<form method="post" action="jsp/admin/plugins/directory/DoExportDirectoryRecord.jsp">
-		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-		
-		<label for="id_directory_xsl">#i18n{directory.manage_directory_record.label_export_result} : </label>
-		<@combo name="id_directory_xsl" default_value="" items=xsl_export_list />
-		<input type="submit" name="export_search_result"  value="#i18n{directory.manage_directory_record.button_export_search_result}" class="button" />
-		<input type="submit" name="export_all_result"  value="#i18n{directory.manage_directory_record.button_export_all_result}" class="button"  />
-	</form>
-</div>	
+</form>
