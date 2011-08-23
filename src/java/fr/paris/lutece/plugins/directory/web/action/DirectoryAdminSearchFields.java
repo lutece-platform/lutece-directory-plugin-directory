@@ -80,6 +80,25 @@ public final class DirectoryAdminSearchFields implements Serializable
     private Date _dateCreationBeginRecord;
     private Date _dateCreationEndRecord;
     private Date _dateCreationRecord;
+    private List<String> _listSelectedRecords;
+    
+    /**
+     * Gets the selected records
+     * @return the selected records
+     */
+    public List<String> getSelectedRecords(  )
+    {
+    	return _listSelectedRecords;
+    }
+    
+    /**
+     * Sets the selected records
+     * @param listSelectedRecords the selected records
+     */
+    public void setSelectedRecords( List<String> listSelectedRecords )
+    {
+    	_listSelectedRecords = listSelectedRecords;
+    }
     
     /**
      * Default items per page

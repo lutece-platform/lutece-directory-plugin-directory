@@ -58,7 +58,6 @@ import fr.paris.lutece.plugins.directory.business.DirectoryActionHome;
 import fr.paris.lutece.plugins.directory.business.DirectoryFilter;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
 import fr.paris.lutece.plugins.directory.business.DirectoryRemovalListenerService;
-import fr.paris.lutece.plugins.directory.business.DirectoryXsl;
 import fr.paris.lutece.plugins.directory.business.DirectoryXslFilter;
 import fr.paris.lutece.plugins.directory.business.DirectoryXslHome;
 import fr.paris.lutece.plugins.directory.business.Entry;
@@ -371,6 +370,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_ASC_SORT = "asc_sort";
     private static final String PARAMETER_ACTIVATE_DIRECTORY_RECORD = "activate_directory_record";
     private static final String PARAMETER_IS_INDEXED = "is_indexed";
+    private static final String PARAMETER_SELECTED_RECORD = "selected_record";
 
     //private static final String PARAMETER_NUMBER_LINES_IMPORTED = "number_lines_imported";
     //private static final String PARAMETER_NUMBER_LINES_ERROR = "number_lines_error";
@@ -2394,6 +2394,24 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     public DirectoryActionResult getManageDirectoryRecord( HttpServletRequest request, HttpServletResponse response )
         throws AccessDeniedException
     {	
+    	// fill the selected records
+    	String[] selectedRecords = request.getParameterValues( PARAMETER_SELECTED_RECORD );
+    	List<String> listSelectedRecords;
+    	if ( selectedRecords != null )
+    	{
+    		listSelectedRecords = Arrays.asList( selectedRecords );
+    		if ( AppLogService.isDebugEnabled(  ) )
+    		{
+    			AppLogService.debug( "List selected record : " + listSelectedRecords );
+    		}
+    	}
+    	else
+    	{
+    		listSelectedRecords = new ArrayList<String>(  );
+    	}
+    	_searchFields.setSelectedRecords( listSelectedRecords );
+    	
+    	
     	// first - see if there is an invoked action
     	IDirectoryAction action = DirectoryActionManager.getDirectoryAction( request );
     	if ( action !=  null )

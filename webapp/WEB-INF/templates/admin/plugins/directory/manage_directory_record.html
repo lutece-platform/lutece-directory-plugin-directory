@@ -248,6 +248,8 @@
       </form>
   <table name="results_list" id="results_list">
     <tr>
+    	<#-- selection column -->
+    	<th>&nbsp;</th>
       <#list entry_list_search_result as entry>	
       		<th>
       			${entry.title}
@@ -278,6 +280,7 @@
      </tr>
    <#list resource_actions_list as resource_actions>	
    	<tr>
+   		<td><input type="checkbox" name="selected_record" value="${resource_actions.record.idRecord}" /></td>
    		<#assign first_entry = true />
    		<#list entry_list_search_result as entry>
       		<#assign entryKey=""+entry.idEntry>	

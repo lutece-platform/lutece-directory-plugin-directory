@@ -59,6 +59,9 @@ public class CreateRecordDirectoryAction implements IDirectoryAction
 	
 	private static final String JSP_CREATE_DIRECTORY_RECORD  = "jsp/admin/plugins/directory/CreateDirectoryRecord.jsp";
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void fillModel(HttpServletRequest request, AdminUser adminUser,
 			Map<String, Object> model) {
 		// no additionnal data
