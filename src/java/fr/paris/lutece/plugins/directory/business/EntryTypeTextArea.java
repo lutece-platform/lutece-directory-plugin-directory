@@ -48,6 +48,8 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  *
@@ -235,7 +237,7 @@ public class EntryTypeTextArea extends Entry
             List<RecordField> recordFieldList = RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
 
             if ( ( recordFieldList != null ) && !recordFieldList.isEmpty(  ) &&
-                    !recordFieldList.get( 0 ).getValue(  ).equals( "" ) )
+                    StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue(  ) ) )
             {
                 strValueEntry = recordFieldList.get( 0 ).getValue(  ) + ", " + strValueEntry;
             }
