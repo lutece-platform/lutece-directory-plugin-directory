@@ -99,7 +99,9 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     private static final String SQL_FILTER_CLOSE_PARENTHESIS = " ) ";
     private static final String SQL_FILTER_IS_ENTRY_SHOWN_IN_RESULT_LIST = "  ent.is_shown_in_result_list=?";
     private static final String SQL_FILTER_IS_ENTRY_SHOWN_IN_RESULT_RECORD = "  ent.is_shown_in_result_record=?";
+    private static final String SQL_FILTER_COMMA = ",";
     private static final String SQL_ORDER_BY_ID_RECORD_FIELD = " ORDER BY ent.entry_position ";
+    private static final String SQL_ORDER_BY_FIELD_POSITION = " dfield.field_position ";
     private static final String SQL_FILTER_ASSOCIATION_ON_ID_ENTRY = " drf.id_entry =ent.id_entry ";
     private static final String SQL_FILTER_ASSOCIATION_ON_ID_TYPE = " ent.id_type=type.id_type ";
     private static final String SQL_WHERE = " WHERE ";
@@ -530,7 +532,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
             sbSQL.append( SQL_FILTER_CLOSE_PARENTHESIS );
         }
 
-        sbSQL.append( SQL_ORDER_BY_ID_RECORD_FIELD );
+        sbSQL.append( SQL_ORDER_BY_ID_RECORD_FIELD + SQL_FILTER_COMMA + SQL_ORDER_BY_FIELD_POSITION );
 
         DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
         daoUtil.setInt( 1, nIdRecord );

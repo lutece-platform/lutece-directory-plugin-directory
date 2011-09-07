@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -242,7 +243,7 @@ public class Record implements AdminWorkgroupResource
         boolean bDisplayExport, boolean bDisplayDateCreation )
     {
         StringBuffer strXml = new StringBuffer(  );
-        HashMap<String, String> model = new HashMap<String, String>(  );
+        Map<String, String> model = new HashMap<String, String>(  );
         model.put( ATTRIBUTE_RECORD_ID, String.valueOf( this.getIdRecord(  ) ) );
         XmlUtil.beginElement( strXml, TAG_RECORD, model );
 
@@ -305,9 +306,7 @@ public class Record implements AdminWorkgroupResource
         boolean bWithHtmlCode, List<RecordField> listRecordField, boolean bDisplayTitleEntryTypeSelect,
         boolean bDisplayFront, boolean bDisplayExport )
     {
-        HashMap<String, String> model = new HashMap<String, String>(  );
-        model.put( Entry.ATTRIBUTE_ENTRY_ID, String.valueOf( entry.getIdEntry(  ) ) );
-        model.put( Entry.ATTRIBUTE_TITLE, entry.getTitle(  ) );
+        Map<String, String> model = DirectoryService.getInstance(  ).getModelForEntryForXml( entry );
         XmlUtil.beginElement( strXml, Entry.TAG_ENTRY, model );
 
         Map<String, String> modelListRecordField = new HashMap<String, String>(  );
@@ -320,12 +319,6 @@ public class Record implements AdminWorkgroupResource
         {
             for ( RecordField recordField : listRecordField )
             {
-                if ( bIsEntryTypeGeolocation && bDisplayExport &&
-                        !recordField.getField(  ).getTitle(  ).equals( EntryTypeGeolocation.CONSTANT_ADDRESS ) )
-                {
-                    continue;
-                }
-
                 Map<String, String> modelRecordField = new HashMap<String, String>(  );
                 Field field = recordField.getField(  );
 
@@ -437,7 +430,7 @@ public class Record implements AdminWorkgroupResource
         boolean bDisplayExport, boolean bDisplayDateCreation )
     {
         StringBuffer strXml = new StringBuffer(  );
-        HashMap<String, String> model = new HashMap<String, String>(  );
+        Map<String, String> model = new HashMap<String, String>(  );
         model.put( ATTRIBUTE_RECORD_ID, String.valueOf( this.getIdRecord(  ) ) );
         XmlUtil.beginElement( strXml, TAG_RECORD, model );
 

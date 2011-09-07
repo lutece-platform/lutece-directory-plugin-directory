@@ -294,7 +294,7 @@ public class ExportDirectoryAction implements IDirectoryAction
 
         if ( bDisplayDateCreation && bIsCsvExport )
         {
-            HashMap<String, String> model = new HashMap<String, String>(  );
+            Map<String, String> model = new HashMap<String, String>(  );
             model.put( Entry.ATTRIBUTE_ENTRY_ID, "0" );
             XmlUtil.beginElement( strBufferListEntryXml, Entry.TAG_ENTRY, model );
 
@@ -308,7 +308,7 @@ public class ExportDirectoryAction implements IDirectoryAction
             entry.getXml( plugin, locale, strBufferListEntryXml );
         }
 
-        HashMap<String, String> model = new HashMap<String, String>(  );
+        Map<String, String> model = new HashMap<String, String>(  );
 
         if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) && bWorkflowServiceEnable )
         {

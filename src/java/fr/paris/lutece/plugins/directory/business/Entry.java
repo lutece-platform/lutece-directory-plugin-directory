@@ -67,6 +67,7 @@ public class Entry implements IEntry
     public static final String ATTRIBUTE_TITLE = "title";
     public static final String ATTRIBUTE_ENTRY_ID_TYPE = "id-type";
     public static final String TAG_LIST_ENTRY = "list-entry";
+    public static final String ATTRIBUTE_SHOWXY = "showxy";
 
     //	parameters Entry 
     protected static final String PARAMETER_TITLE = "title";
@@ -989,7 +990,7 @@ public class Entry implements IEntry
     {
         if ( !this.getEntryType(  ).getComment(  ) )
         {
-            HashMap<String, String> model = new HashMap<String, String>(  );
+            Map<String, String> model = new HashMap<String, String>(  );
             model.put( ATTRIBUTE_ENTRY_ID, String.valueOf( this.getIdEntry(  ) ) );
             model.put( ATTRIBUTE_ENTRY_ID_TYPE, String.valueOf( this.getEntryType(  ).getIdType(  ) ) );
             XmlUtil.beginElement( strXml, TAG_ENTRY, model );

@@ -41,9 +41,12 @@ import org.apache.commons.lang.StringUtils;
 
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryXsl;
+import fr.paris.lutece.plugins.directory.business.Entry;
 import fr.paris.lutece.plugins.directory.business.EntryType;
+import fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation;
 import fr.paris.lutece.plugins.directory.business.EntryTypeHome;
 import fr.paris.lutece.plugins.directory.business.Field;
+import fr.paris.lutece.plugins.directory.business.FieldHome;
 import fr.paris.lutece.plugins.directory.business.IEntry;
 import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
@@ -273,6 +276,59 @@ public class DirectoryService
     	return nNumber;
     }
 
+    /**
+     * Get the list of fields from a given id entry
+     * @param nIdEntry the id entry
+     * @return a list of fields
+     */
+    public List<Field> getFieldsListFromIdEntry( int nIdEntry )
+    {
+    	Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+		return FieldHome.getFieldListByIdEntry( nIdEntry, plugin );
+    }
+
+    /**
+     * Get the model for entry for xml
+     * @param entry the entry
+     * @return the model
+     */
+    public Map<String, String> getModelForEntryForXml( IEntry entry )
+    {
+    	Map<String, String> model = new HashMap<String, String>(  );
+        model.put( Entry.ATTRIBUTE_ENTRY_ID, String.valueOf( entry.getIdEntry(  ) ) );
+        model.put( Entry.ATTRIBUTE_TITLE, entry.getTitle(  ) );
+        if ( entry instanceof EntryTypeGeolocation )
+        {
+        	model.put( Entry.ATTRIBUTE_SHOWXY, Boolean.toString( showXY( entry ) ) );
+        }
+        return model;
+    }
+    
+    /**
+     * Check if the entry must show the X and Y or not
+     * @return true if it must show, false otherwise
+     */
+    public boolean showXY( IEntry entry )
+    {
+    	boolean bShowXY = false;
+    	if ( entry instanceof EntryTypeGeolocation )
+        {
+        	if ( entry.getFields(  ) == null || entry.getFields().size(  ) == 0 )
+        	{
+        		entry.setFields( getFieldsListFromIdEntry( entry.getIdEntry(  ) ) );
+        	}
+        	for ( Field field : entry.getFields(  ) )
+        	{
+        		if ( EntryTypeGeolocation.CONSTANT_SHOWXY.equals( field.getTitle(  ) ) )
+        		{
+        			bShowXY = Boolean.valueOf( field.getValue(  ) );
+        			break;
+        		}
+        	}
+        }
+    	return bShowXY;
+    }
+    
     /**
      * Build the number from a given number. This methods first checks if the number is not a type
      * numerical (without the prefix of the entry), or checks if the number already exists on 
