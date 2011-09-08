@@ -33,6 +33,16 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
@@ -46,14 +56,7 @@ import fr.paris.lutece.portal.service.regularexpression.RegularExpressionService
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.Paginator;
-
-import org.apache.commons.lang.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
+import fr.paris.lutece.util.xml.XmlUtil;
 
 
 /**
@@ -63,12 +66,23 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EntryTypeDownloadUrl extends Entry
 {
-    // HTML constants
-    private static final String HTML_LINK_OPEN_BEGIN = "<a href=\"";
-    private static final String HTML_LINK_OPEN_END = "\">";
-    private static final String HTML_LINK_CLOSE = "</a>";
+    // TAGS
+    private static final String TAG_A = "a";
+    private static final String TAG_IMG = "img";
+    
+    // ATTRIBUTES
+    private static final String ATTRIBUTE_HREF = "href";
+    private static final String ATTRIBUTE_SRC = "src";
+    private static final String ATTRIBUTE_TITLE = "title";
+    private static final String ATTRIBUTE_ALT = "alt";
+    
+    // URL
+    private static final String URL_IMG_DOWNLOAD = "images/local/skin/plugins/directory/download.png";
+    
+    // PROPERTIES
+    private static final String PROPERTY_LABEL_DOWNLOAD = "directory.viewing_directory_record.download";
 
-    // Templates
+    // TEMPLATES
     private final String _template_create = "admin/plugins/directory/entrytypedownloadurl/create_entry_type_download_url.html";
     private final String _template_modify = "admin/plugins/directory/entrytypedownloadurl/modify_entry_type_download_url.html";
     private final String _template_html_code_form_entry = "admin/plugins/directory/entrytypedownloadurl/html_code_form_entry_type_download_url.html";
@@ -317,7 +331,23 @@ public class EntryTypeDownloadUrl extends Entry
 
         if ( StringUtils.isNotBlank( strTitle ) && bDisplayFront )
         {
-            strTitle = HTML_LINK_OPEN_BEGIN + strTitle + HTML_LINK_OPEN_END + strTitle + HTML_LINK_CLOSE;
+        	// Display as an image
+        	StringBuffer sbHtml = new StringBuffer(  );
+        	
+        	Map<String, String> mapParamTagA = new HashMap<String, String>(  );
+        	mapParamTagA.put( ATTRIBUTE_HREF, strTitle );
+        	
+        	String strAlt = I18nService.getLocalizedString( PROPERTY_LABEL_DOWNLOAD, locale );
+        	Map<String, String> mapParamTagImg = new HashMap<String, String>(  );
+        	mapParamTagImg.put( ATTRIBUTE_SRC, URL_IMG_DOWNLOAD );
+        	mapParamTagImg.put( ATTRIBUTE_TITLE, strAlt );
+        	mapParamTagImg.put( ATTRIBUTE_ALT, strAlt );
+        	
+        	XmlUtil.beginElement( sbHtml, TAG_A, mapParamTagA );
+        	XmlUtil.addEmptyElement( sbHtml, TAG_IMG, mapParamTagImg );
+        	XmlUtil.endElement( sbHtml, TAG_A );
+        	
+            strTitle = sbHtml.toString(  );
         }
 
         return strTitle;
