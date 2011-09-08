@@ -1,7 +1,10 @@
 <#if default_values?exists && default_values?size &gt; 0>
-	<#list default_values as tmpField>
-		<#if tmpField.field.title == "address">
-			<#assign addressField = tmpField />
+	<#list default_values as default_value>
+		<#if default_value??>
+			<#if default_value.field?? && default_value.field.title?? && default_value.field.title == "address" && default_value.value??>
+				<#assign address = default_value.value>
+				<#break>
+			</#if>
 		</#if>
 	</#list> 
 </#if>
@@ -18,8 +21,8 @@
 	    </span>
 	    <span class="form-field-column">
     				<span class="form-field-column"> 
-		    		<#if addressField?has_content && addressField?has_content>
-		    			<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${addressField.value}"/>
+		    		<#if address??>
+		    			<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${address}"/>
 		    		<#else>
 		    			<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value=""/>
 		    		</#if>

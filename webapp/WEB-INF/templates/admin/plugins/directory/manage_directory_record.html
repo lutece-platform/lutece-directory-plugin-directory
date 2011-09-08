@@ -137,11 +137,17 @@
 	      			${entry.getHtmlFormSearchEntry( locale,map_id_entry_list_record_field[entryKey],false )}
 	      			<#if map_id_entry_list_record_field[entryKey]?has_content>
 		      			<#list map_id_entry_list_record_field[entryKey] as default_value>
-		      				<#if isEntryTypeMyLuteceUser(entry) || isEntryTypeDirectory(entry)>
-			   					<#assign sort_search_attribute = sort_search_attribute + "&" + entryKey + "=" + default_value.value>
-			   				<#else>
-		      					<#assign sort_search_attribute = sort_search_attribute + "&" + entryKey + "=" + default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)>
-		      				</#if>
+		      				<#if default_value??>
+			      				<#if isEntryTypeMyLuteceUser(entry) || isEntryTypeDirectory(entry)>
+				   					<#assign sort_search_attribute = sort_search_attribute + "&" + entryKey + "=" + default_value.value>
+				   				<#elseif isEntryTypeGeolocation(entry)>
+				   					<#if default_value.field?? && default_value.field.title?? && default_value.field.title = "address" && default_value.value??>
+				   						<#assign sort_search_attribute = sort_search_attribute + "&" + entryKey + "_address=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+				   					</#if>
+				   				<#else>
+			      					<#assign sort_search_attribute = sort_search_attribute + "&" + entryKey + "=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+			      				</#if>
+			      			</#if>
 		      			</#list>
 		      		</#if>
 	      		<#else>
