@@ -40,7 +40,10 @@
 	background-color:#dddddd;/* fonce */
 	border-bottom:1px solid #fff;
 	border-top:1px solid #fff;
-} 
+}
+.actions {
+	white-space: nowrap;
+}
 	
 </style>
 <script type="text/javascript">
@@ -276,7 +279,7 @@
 	       </th>
 	   </#if>
 	   
-       <th>
+       <th class="actions">
        		#i18n{directory.manage_workflow_actions}
        </th>
        <!-- <th>
@@ -350,7 +353,7 @@
 			   		${resource_actions.workflow_state.name}
 			   </td>	
 			  </#if>
-		     <td>
+		     <td class="actions">
 				<@display_actions resource_actions/>
 			   </td>
 		</tr>
