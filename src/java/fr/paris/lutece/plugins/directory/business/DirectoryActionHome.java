@@ -86,6 +86,36 @@ public final class DirectoryActionHome
     }
 
     /**
+     * Add a new action for directory record for module which uses plugin-directory
+     * @param directoryAction The action builded in module which uses plugin-directory
+     * @param plugin the plugin
+     */
+    public static void addNewActionInDirectoryRecordAction( DirectoryAction directoryAction, Plugin plugin )
+    {
+        _dao.addNewActionInDirectoryRecordAction( directoryAction, plugin );
+    }
+
+    /**
+     * Delete a directory record action
+     * @param plugin plugin
+     * @param directoryAction The action to delete
+     */
+    public static void deleteActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin )
+    {
+        _dao.deleteActionsDirectoryRecord( directoryAction, plugin );
+    }
+
+    /**
+     * This method add new actions for directory record
+     * @param plugin plugin
+     * @param directoryAction action to check
+     */
+    public static boolean checkActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin )
+    {
+        return _dao.checkActionsDirectoryRecord( directoryAction, plugin );
+    }
+
+    /**
      * Load the list of actions for directory Xsl
      * @param locale the locale
      * @param plugin the plugin

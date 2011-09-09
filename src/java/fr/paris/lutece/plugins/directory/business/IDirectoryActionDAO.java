@@ -61,6 +61,27 @@ public interface IDirectoryActionDAO
     List<DirectoryAction> selectActionsByDirectoryRecordState( int nState, Plugin plugin );
 
     /**
+     * Add a new action for directory record for module which uses plugin-directory
+     * @param directoryAction The action builded in module which uses plugin-directory
+     * @param plugin the plugin
+     */
+    void addNewActionInDirectoryRecordAction( DirectoryAction directoryAction, Plugin plugin );
+
+    /**
+     * Delete a directory record action
+     * @param plugin plugin
+     * @param directoryAction The action to delete
+     */
+    void deleteActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin );
+
+    /**
+     * This method checks if an directory record action exists
+     * @param plugin plugin
+     * @param directoryAction The action to check
+     */
+    boolean checkActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin );
+
+    /**
      * Load the list of actions for a all directory Xsl
      * @param plugin the plugin
      * @return The Collection of actions

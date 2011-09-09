@@ -51,6 +51,10 @@ public class DirectoryActionDAO implements IDirectoryActionDAO
         " FROM directory_record_action a  where a.directory_state=? ";
     private static final String SQL_QUERY_SELECT_ACTIONS_XSL = "SELECT a.name_key, a.description_key, a.action_url, a.icon_url, a.action_permission " +
         " FROM directory_xsl_action a ";
+    private static final String SQL_QUERY_SELECT_MAX_ACTION_RECORD = "SELECT max(id_action) FROM directory_record_action";
+    private static final String SQL_QUERY_ADD_ACTION_RECORD = "INSERT INTO directory_record_action (id_action,name_key,description_key,action_url,icon_url,action_permission,directory_state) VALUES ( ? , ? , ? , ? , ? , ? , ? );";
+    private static final String SQL_QUERY_CHECK_ACTION_RECORD = "SELECT id_action FROM directory_record_action WHERE name_key = ? AND description_key = ? AND action_url = ? AND icon_url = ? AND action_permission = ? AND directory_state = ? ;";
+    private static final String SQL_QUERY_DELETE_ACTION_RECORD = "DELETE FROM directory_record_action WHERE name_key = ? AND description_key = ? AND action_url = ? AND icon_url = ? AND action_permission = ? AND directory_state = ? ;";
 
     /**
      * Load the list of actions for a all directory by directory state
@@ -110,6 +114,71 @@ public class DirectoryActionDAO implements IDirectoryActionDAO
         daoUtil.free(  );
 
         return listActions;
+    }
+
+    /**
+     * Add a new action for directory record for module which uses plugin-directory
+     * @param directoryAction The action builded in module which uses plugin-directory
+     * @param plugin the plugin
+     */
+    public void addNewActionInDirectoryRecordAction( DirectoryAction directoryAction, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_MAX_ACTION_RECORD, plugin );
+        daoUtil.executeQuery(  );
+
+        int nId = 1;
+
+        while ( daoUtil.next(  ) )
+        {
+            nId = daoUtil.getInt( 1 ) + 1;
+        }
+
+        daoUtil = new DAOUtil( SQL_QUERY_ADD_ACTION_RECORD, plugin );
+        daoUtil.setInt( 1, nId );
+        daoUtil.setString( 2, directoryAction.getNameKey(  ) );
+        daoUtil.setString( 3, directoryAction.getDescriptionKey(  ) );
+        daoUtil.setString( 4, directoryAction.getUrl(  ) );
+        daoUtil.setString( 5, directoryAction.getIconUrl(  ) );
+        daoUtil.setString( 6, directoryAction.getPermission(  ) );
+        daoUtil.setInt( 7, directoryAction.getFormState(  ) );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean checkActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_CHECK_ACTION_RECORD, plugin );
+        daoUtil.setString( 1, directoryAction.getNameKey(  ) );
+        daoUtil.setString( 2, directoryAction.getDescriptionKey(  ) );
+        daoUtil.setString( 3, directoryAction.getUrl(  ) );
+        daoUtil.setString( 4, directoryAction.getIconUrl(  ) );
+        daoUtil.setString( 5, directoryAction.getPermission(  ) );
+        daoUtil.setInt( 6, directoryAction.getFormState(  ) );
+        daoUtil.executeQuery(  );
+
+        boolean bCheckAction = daoUtil.next(  );
+        daoUtil.free(  );
+
+        return bCheckAction;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void deleteActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_ACTION_RECORD, plugin );
+        daoUtil.setString( 1, directoryAction.getNameKey(  ) );
+        daoUtil.setString( 2, directoryAction.getDescriptionKey(  ) );
+        daoUtil.setString( 3, directoryAction.getUrl(  ) );
+        daoUtil.setString( 4, directoryAction.getIconUrl(  ) );
+        daoUtil.setString( 5, directoryAction.getPermission(  ) );
+        daoUtil.setInt( 6, directoryAction.getFormState(  ) );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
     }
 
     /**
