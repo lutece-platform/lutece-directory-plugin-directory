@@ -38,8 +38,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
@@ -53,9 +51,11 @@ import fr.paris.lutece.util.url.UrlItem;
  */
 public class CreateRecordDirectoryAction implements IDirectoryAction
 {
-	private static final String NAME = "Create record";
+	private static final String ACTION_NAME = "Create record";
+	private static final String TEMPLATE_BUTTON = "actions/create_directory_record.html";
 	
-	private static final String PARAMETER_CREATE_RECORD = "create_record";
+	/** the button is an image so the name is .x or .y */
+	private static final String PARAMETER_CREATE_RECORD_X = "create_record.x";
 	
 	private static final String JSP_CREATE_DIRECTORY_RECORD  = "jsp/admin/plugins/directory/CreateDirectoryRecord.jsp";
 
@@ -72,7 +72,7 @@ public class CreateRecordDirectoryAction implements IDirectoryAction
 	 */
 	public String getButtonTemplate(  )
 	{
-		return StringUtils.EMPTY;
+		return TEMPLATE_BUTTON;
 	}
 
 	/**
@@ -80,15 +80,15 @@ public class CreateRecordDirectoryAction implements IDirectoryAction
 	 */
 	public String getName(  )
 	{
-		return NAME;
+		return ACTION_NAME;
 	}
 
 	/**
-	 * @see #PARAMETER_CREATE_RECORD
+	 * @see #PARAMETER_CREATE_RECORD_X
 	 */
 	public boolean isInvoked(HttpServletRequest request) 
 	{
-		return request.getParameter( PARAMETER_CREATE_RECORD ) != null;
+		return request.getParameter( PARAMETER_CREATE_RECORD_X ) != null;
 	}
 
 	/**

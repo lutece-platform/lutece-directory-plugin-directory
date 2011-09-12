@@ -44,7 +44,6 @@
 .actions {
 	white-space: nowrap;
 }
-	
 </style>
 <script type="text/javascript">
 
@@ -112,18 +111,12 @@
 </#function>
 <form action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="post" id="searchForm" >
 <input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-<div id="content-box-actions">
-	<#if permission_create_record>
-	      	<input type="submit" name="create_record" value="#i18n{directory.manage_directory_record.button_create}" class="button bt-toolbar" />
-  	</#if>
-</div>
-<div class="content-box">
-&nbsp;
-<#list directory_actions as action>
-<#if action.buttonTemplate?has_content>
- <#include action.buttonTemplate />
-</#if>
-</#list>
+<div id="content-actions">
+	<#list directory_actions as action>
+		<#if action.buttonTemplate?has_content>
+			<#include action.buttonTemplate />
+		</#if>
+	</#list>
 </div>
 <div class="content-box">
 	<h2> #i18n{directory.manage_directory_record.title}: '${directory.title}'</h2>
