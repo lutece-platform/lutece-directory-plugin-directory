@@ -1,3 +1,13 @@
+<#function getOptionField entry>
+	<#if entry.fields?? && entry.fields?has_content>
+		<#list entry.fields as field>
+			<#if field?? && ( !field.title?? || ( field.title?? && ( field.title == "option" || field.title == "" ) ) )>
+				<#return field>
+			</#if>
+		</#list>
+	</#if>
+</#function>
+<#assign fieldOption = getOptionField( entry )>
 <div class="form-element">
 	<span class="form-label">
 		<label for="${entry.idEntry}">	
@@ -9,22 +19,20 @@
 		</label>
 	</span>
 	<span class="form-field-column">	 
-		<#list entry.fields as field>
-			<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" size="${field.width}" 
-				<#if field.value?exists && !default_values?has_content >
-					value="${field.value}" 
-			 	<#elseif default_values?has_content>
-					<#list default_values as default_value>
-						value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}"
-					</#list>
-			 	<#else>
-					 value="" 
-				</#if>
-				<#if field.maxSizeEnter!=-1>
-					maxlength="${field.maxSizeEnter}"
-				</#if>
-			/>
-		</#list>
+		<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" size="${fieldOption.width}" 
+			<#if fieldOption.value?exists && !default_values?has_content >
+				value="${fieldOption.value}" 
+		 	<#elseif default_values?has_content>
+				<#list default_values as default_value>
+					value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}"
+				</#list>
+		 	<#else>
+				 value="" 
+			</#if>
+			<#if fieldOption.maxSizeEnter!=-1>
+				maxlength="${fieldOption.maxSizeEnter}"
+			</#if>
+		/>
 	</span>	
 	<#if entry.helpMessage?exists&&entry.helpMessage!=''>
 		<span class="form-help">

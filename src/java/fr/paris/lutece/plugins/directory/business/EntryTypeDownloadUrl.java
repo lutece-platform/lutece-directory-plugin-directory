@@ -66,6 +66,15 @@ import fr.paris.lutece.util.xml.XmlUtil;
  */
 public class EntryTypeDownloadUrl extends Entry
 {
+	// PARAMETERS
+	public static final String PARAMETER_WS_REST_URL = "ws_rest_url";
+	public static final String PARAMETER_BLOBSTORE = "blobstore";
+	
+	// CONSTANTS
+	public static final String CONSTANT_OPTION = "option";
+	public static final String CONSTANT_WS_REST_URL = "ws_rest_url";
+	public static final String CONSTANT_BLOBSTORE = "blobstore";
+	
     // TAGS
     private static final String TAG_A = "a";
     private static final String TAG_IMG = "img";
@@ -92,6 +101,9 @@ public class EntryTypeDownloadUrl extends Entry
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytypedownloadurl/html_code_form_search_entry_type_download_url.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypedownloadurl/html_code_entry_value_type_download_url.html";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -105,6 +117,9 @@ public class EntryTypeDownloadUrl extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlRecordFieldValue( boolean isDisplayFront )
     {
@@ -118,6 +133,9 @@ public class EntryTypeDownloadUrl extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormSearchEntry( boolean isDisplayFront )
     {
@@ -131,6 +149,9 @@ public class EntryTypeDownloadUrl extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -153,6 +174,8 @@ public class EntryTypeDownloadUrl extends Entry
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
         String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
+        String strWSRestUrl = request.getParameter( PARAMETER_WS_REST_URL );
+        String strBlobStore = request.getParameter( PARAMETER_BLOBSTORE );
 
         int nWidth = DirectoryUtils.convertStringToInt( strWidth );
         int nMaxSizeEnter = DirectoryUtils.convertStringToInt( strMaxSizeEnter );
@@ -200,17 +223,45 @@ public class EntryTypeDownloadUrl extends Entry
         this.setHelpMessageSearch( strHelpMessageSearch );
         this.setComment( strComment );
 
-        if ( this.getFields(  ) == null )
+        // Field option
+        Field fieldOption = findFieldOption( getFields(  ) );
+        if ( fieldOption == null )
         {
-            ArrayList<Field> listFields = new ArrayList<Field>(  );
-            Field field = new Field(  );
-            listFields.add( field );
-            this.setFields( listFields );
+        	fieldOption = new Field(  );
         }
+        fieldOption.setEntry( this );
+        fieldOption.setTitle( CONSTANT_OPTION );
+        fieldOption.setValue( strValue );
+        fieldOption.setWidth( nWidth );
+        fieldOption.setMaxSizeEnter( nMaxSizeEnter );
+        
+        // Field WS Rest url
+        Field fieldWSRestUrl = findField( CONSTANT_WS_REST_URL, getFields(  ) );
+        if ( fieldWSRestUrl == null )
+        {
+        	fieldWSRestUrl = new Field(  );
+        }
+        fieldWSRestUrl.setEntry( this );
+        fieldWSRestUrl.setTitle( CONSTANT_WS_REST_URL );
+        fieldWSRestUrl.setValue( strWSRestUrl );
+        
+        // Field BlobStore
+        Field fieldBlobStore = findField( CONSTANT_BLOBSTORE, getFields(  ) );
+        if ( fieldBlobStore == null )
+        {
+        	fieldBlobStore = new Field(  );
+        }
+        fieldBlobStore.setEntry( this );
+        fieldBlobStore.setTitle( CONSTANT_BLOBSTORE );
+        fieldBlobStore.setValue( strBlobStore );
+        
+        List<Field> listFields = new ArrayList<Field>(  );
+        listFields.add( fieldOption );
+        listFields.add( fieldWSRestUrl );
+        listFields.add( fieldBlobStore );
+        
+        this.setFields( listFields );
 
-        this.getFields(  ).get( 0 ).setValue( strValue );
-        this.getFields(  ).get( 0 ).setWidth( nWidth );
-        this.getFields(  ).get( 0 ).setMaxSizeEnter( nMaxSizeEnter );
         this.setMandatory( strMandatory != null );
         this.setIndexed( strIndexed != null );
         this.setIndexedAsTitle( strDocumentTitle != null );
@@ -225,26 +276,38 @@ public class EntryTypeDownloadUrl extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate(  )
     {
         return _template_create;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify(  )
     {
         return _template_modify;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
+    public Paginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex )
     {
-        return new Paginator( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage, strBaseUrl,
+        return new Paginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage, strBaseUrl,
             strPageIndexParameterName, strPageIndex );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ReferenceList getReferenceListRegularExpression( IEntry entry, Plugin plugin )
     {
@@ -270,6 +333,9 @@ public class EntryTypeDownloadUrl extends Entry
         return refListRegularExpression;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
@@ -324,6 +390,9 @@ public class EntryTypeDownloadUrl extends Entry
         listRecordField.add( response );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String convertRecordFieldTitleToString( RecordField recordField, Locale locale, boolean bDisplayFront )
     {
@@ -362,11 +431,60 @@ public class EntryTypeDownloadUrl extends Entry
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
+    public LocalizedPaginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex, Locale locale )
     {
-        return new LocalizedPaginator( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage,
+        return new LocalizedPaginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage,
             strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
+    }
+    
+    /**
+     * Finds a field according to its title
+     * @param fieldName the title
+     * @param listFields the list
+     * @return the found field, <code>null</code> otherwise.
+     */
+    private Field findField( String strFieldName, List<Field> listFields )
+    {
+        if ( StringUtils.isBlank( strFieldName ) || listFields == null || listFields.size(  ) == 0 )
+        {
+            return null;
+        }
+
+        for ( Field field : listFields )
+        {
+            if ( strFieldName.equals( field.getTitle(  ) ) )
+            {
+                return field;
+            }
+        }
+
+        return null;
+    }
+    
+    /**
+     * Find option field
+     * @param listFields the list
+     * @return the found field, <code>null</code> otherwise.
+     */
+    private Field findFieldOption( List<Field> listFields )
+    {
+    	if ( listFields == null || listFields.size(  ) == 0 )
+        {
+            return null;
+        }
+    	
+    	for ( Field field : listFields )
+        {
+    		if ( StringUtils.isBlank( field.getTitle(  ) ) || CONSTANT_OPTION.equals( field.getTitle(  ) ) )
+    		{
+    			return field;
+    		}
+        }
+    	return null;
     }
 }
