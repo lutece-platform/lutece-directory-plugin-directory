@@ -33,21 +33,21 @@
 	</xsl:template>
 	
 	<xsl:template match="entry">
-		<xsl:choose>
-			<xsl:when test="@showxy = 'true'">
-				<xsl:text>"</xsl:text>
-				<xsl:value-of select="title"/>
-				<xsl:text>_X"</xsl:text>
-				<xsl:text>;"</xsl:text>
-				<xsl:value-of select="title"/>
-				<xsl:text>_Y"</xsl:text>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:text>"</xsl:text>
-				<xsl:value-of select="title"/>
-				<xsl:text>"</xsl:text>
-			</xsl:otherwise>
-		</xsl:choose>
+		<xsl:if test="@showxy = 'true'">
+			<xsl:text>"</xsl:text>
+			<xsl:value-of select="title"/>
+			<xsl:text>_X"</xsl:text>
+			<xsl:text>;</xsl:text>
+			<xsl:text>"</xsl:text>
+			<xsl:value-of select="title"/>
+			<xsl:text>_Y";</xsl:text>
+		</xsl:if>
+		<xsl:text>"</xsl:text>
+		<xsl:value-of select="title"/>
+		<xsl:if test="@showxy = 'true'">
+			<xsl:text>_address</xsl:text>
+		</xsl:if>
+		<xsl:text>"</xsl:text>
 		<xsl:if test="position()!=last()">
 			<xsl:text>;</xsl:text>
 		</xsl:if>
@@ -62,22 +62,19 @@
 	<xsl:template match="record-field">
 		<xsl:choose>
 			<xsl:when test="../@geolocation = 'true'">
-				<xsl:choose>
-					<xsl:when test="../../@showxy = 'true'">
-						<xsl:if test="@title = 'X'">
-							<xsl:value-of disable-output-escaping="yes" select="record-field-value"/>
-							<xsl:text>";"</xsl:text>
-						</xsl:if>
-						<xsl:if test="@title = 'Y'">
-							<xsl:value-of disable-output-escaping="yes" select="record-field-value"/>
-						</xsl:if>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:if test="@title = 'address'">
-							<xsl:value-of disable-output-escaping="yes" select="record-field-value"/>
-						</xsl:if>
-					</xsl:otherwise>
-				</xsl:choose>
+				<xsl:if test="../../@showxy = 'true'">
+					<xsl:if test="@title = 'X'">
+						<xsl:value-of disable-output-escaping="yes" select="record-field-value"/>
+						<xsl:text>";"</xsl:text>
+					</xsl:if>
+					<xsl:if test="@title = 'Y'">
+						<xsl:value-of disable-output-escaping="yes" select="record-field-value"/>
+						<xsl:text>";"</xsl:text>
+					</xsl:if>
+				</xsl:if>
+				<xsl:if test="@title = 'address'">
+					<xsl:value-of disable-output-escaping="yes" select="record-field-value"/>
+				</xsl:if>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of disable-output-escaping="yes" select="record-field-value"/>
