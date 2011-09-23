@@ -70,8 +70,11 @@
 			#i18n{${entry.entryType.titleI18nKey}}
 		</p>
 		<p>
-			<label for="value">#i18n{directory.create_entry.label_value_default} : </label>
+			<label for="value">#i18n{directory.create_entry.label_file_types} : </label>
 			<input type="text" name="value" id="value" size="80" value="${fieldOption.value}"/>
+			<br />
+			<label>&nbsp;</label>
+			#i18n{directory.create_entry.label_file_types_comment}
 		</p>
 		<p>
 			<label for="mandatory">#i18n{directory.create_entry.label_mandatory} : </label>
@@ -82,17 +85,17 @@
 			</#if>	
 		</p>
 		<p>
-			<label for="width">#i18n{directory.create_entry.label_width} * : </label>
+			<label for="width">#i18n{directory.create_entry.label_file_max_size} * : </label>
 			<input type="text" name="width" id="width" size="5" value="${fieldOption.width}" />
 		</p>
 		<p>
-			<label for="ws_rest_url">#i18n{directory.create_entry.label_ws_rest_url} :</label>
+			<label for="ws_rest_url">#i18n{directory.create_entry.label_ws_rest_url} * :</label>
 			<input name="ws_rest_url" type="text" size="80" value="${getFieldValue(entry, 'ws_rest_url')}" maxlength="255" />
 			<br />
 			<label>&nbsp;</label>#i18n{directory.create_entry.label_ws_rest_url_comment}
 		</p>
 		<p>
-			<label for="blobstore">#i18n{directory.create_entry.label_blobstore} :</label>
+			<label for="blobstore">#i18n{directory.create_entry.label_blobstore} * :</label>
 			<input name="blobstore" type="text" size="80" value="${getFieldValue(entry, 'blobstore')}" maxlength="255" />
 			<br />
 			<label>&nbsp;</label>#i18n{directory.create_entry.label_blobstore_comment}

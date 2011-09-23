@@ -52,25 +52,28 @@
 			#i18n{${entry.entryType.titleI18nKey}}
 		</p>
 		<p>
-		    <label for="value">#i18n{directory.create_entry.label_value_default} : </label>
+		    <label for="value">#i18n{directory.create_entry.label_file_types} : </label>
 			<input type="text" name="value" id="value" size="80" />
+			<br />
+			<label>&nbsp;</label>
+			#i18n{directory.create_entry.label_file_types_comment}
 		</p>
 	 	<p>
 	    	<label for="mandatory">#i18n{directory.create_entry.label_mandatory} : </label>
 			<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
 		</p>
 		<p>
-			<label for="width">#i18n{directory.create_entry.label_width} * : </label>
+			<label for="width">#i18n{directory.create_entry.label_file_max_size} * : </label>
 			<input type="text" name="width" id="width" size="5" value="${getName('width',list_param_default_values)}" />
 		</p>
 		<p>
-			<label for="ws_rest_url">#i18n{directory.create_entry.label_ws_rest_url} :</label>
+			<label for="ws_rest_url">#i18n{directory.create_entry.label_ws_rest_url} * :</label>
 			<input name="ws_rest_url" type="text" size="80" value="" maxlength="255" />
 			<br />
 			<label>&nbsp;</label>#i18n{directory.create_entry.label_ws_rest_url_comment}
 		</p>
 		<p>
-			<label for="blobstore">#i18n{directory.create_entry.label_blobstore} :</label>
+			<label for="blobstore">#i18n{directory.create_entry.label_blobstore} * :</label>
 			<input name="blobstore" type="text" size="80" value="" maxlength="255" />
 			<br />
 			<label>&nbsp;</label>#i18n{directory.create_entry.label_blobstore_comment}
