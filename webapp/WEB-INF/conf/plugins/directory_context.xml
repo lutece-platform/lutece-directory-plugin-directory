@@ -38,5 +38,9 @@
 	<bean id="directory.searchAction" class="fr.paris.lutece.plugins.directory.web.action.SearchRecordDirectoryAction" />
 	<bean id="directory.createAction" class="fr.paris.lutece.plugins.directory.web.action.CreateRecordDirectoryAction" />
 	<bean id="directory.massPrintAction" class="fr.paris.lutece.plugins.directory.web.action.MassPrintDirectoryAction" />
+	
+	<bean id="directory.asynchronousUploadHandler" class="fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler">
+		<property name="blobStoreClientWebService" ref="blobstoreclient.blobStoreClientWebService" />
+	</bean>
 </beans>
  	

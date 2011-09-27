@@ -43,6 +43,7 @@ import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryXsl;
 import fr.paris.lutece.plugins.directory.business.Entry;
 import fr.paris.lutece.plugins.directory.business.EntryType;
+import fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl;
 import fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation;
 import fr.paris.lutece.plugins.directory.business.EntryTypeHome;
 import fr.paris.lutece.plugins.directory.business.Field;
@@ -56,6 +57,7 @@ import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterHome;
 import fr.paris.lutece.plugins.directory.business.parameter.EntryParameterHome;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.rbac.RBAC;
@@ -65,6 +67,7 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
 import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.security.SecurityService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.ReferenceList;
@@ -327,6 +330,63 @@ public class DirectoryService
         	}
         }
     	return bShowXY;
+    }
+    
+    /**
+     * Remove asynchronous file
+     * @param recordField the record field
+     * @param plugin the plugin
+     */
+    public void removeAsynchronousFile( RecordField recordField, Plugin plugin )
+    {
+    	if ( recordField != null && recordField.getEntry(  ) != null )
+    	{
+    		IEntry entry = recordField.getEntry(  );
+    		String strWSRestUrl = getWSRestUrl( entry, plugin );
+    		if ( StringUtils.isNotBlank( strWSRestUrl ) )
+    		{
+    			try
+				{
+					DirectoryAsynchronousUploadHandler.getHandler(  ).doRemoveFile( 
+							recordField, entry, strWSRestUrl );
+				}
+				catch ( Exception e )
+				{
+					AppLogService.error( e );
+				}
+    		}
+    	}
+    }
+    
+    /**
+     * Get the WS rest url from a given entry
+     * @param entry the entry
+     * @param plugin the plugin
+     * @return the ws rest url
+     */
+    public String getWSRestUrl( IEntry entry, Plugin plugin )
+    {
+    	String strWSRestUrl = StringUtils.EMPTY;
+    	if ( entry != null && entry instanceof EntryTypeDownloadUrl )
+    	{
+    		if ( entry.getFields(  ) == null )
+    		{
+    			entry.setFields( FieldHome.getFieldListByIdEntry( entry.getIdEntry(  ), plugin ) );
+    		}
+    		
+    		if ( entry.getFields(  ) != null && !entry.getFields(  ).isEmpty(  ) )
+    		{
+    			for ( Field field : entry.getFields(  ) )
+    			{
+    				if ( EntryTypeDownloadUrl.CONSTANT_WS_REST_URL.equals( field.getTitle(  ) ) )
+    				{
+    					strWSRestUrl = field.getValue(  );
+    				}
+    			}
+    		}
+    	}
+		
+		return strWSRestUrl;
     }
     
     /**

@@ -33,10 +33,11 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import java.util.List;
+
+import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
-
-import java.util.List;
 
 
 /**
@@ -128,6 +129,8 @@ public final class RecordFieldHome
         {
             FileHome.remove( recordField.getFile(  ).getIdFile(  ), plugin );
         }
+        
+        DirectoryService.getInstance(  ).removeAsynchronousFile( recordField, plugin );
 
         _dao.delete( nIdRecordField, plugin );
     }

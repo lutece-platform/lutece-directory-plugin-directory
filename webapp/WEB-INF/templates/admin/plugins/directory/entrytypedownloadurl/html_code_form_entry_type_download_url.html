@@ -1,16 +1,24 @@
-<#function getOptionField entry>
-	<#if entry.fields?? && entry.fields?has_content>
-		<#list entry.fields as field>
-			<#if field?? && ( !field.title?? || ( field.title?? && ( field.title == "option" || field.title == "" ) ) )>
-				<#return field>
-			</#if>
-		</#list>
-	</#if>
-</#function>
-<#assign fieldOption = getOptionField( entry )>
+<#if entry.fields?? && entry.fields?has_content>
+	<#list entry.fields as field>
+		<#if field?? && ( !field.title?? || ( field.title?? && ( field.title == "option" || field.title == "" ) ) )>
+			<#assign fieldOption = field>
+			<#break>
+		</#if>
+	</#list>
+</#if>
+
+<#-- file removing -->
+<#if default_values?? && default_values?has_content>
+	<#list default_values as default_value>
+		<#if default_value?? && default_value.fileName??>
+			<#assign file = default_value>
+			<#break>
+		</#if>
+	</#list>
+</#if>
 <div class="form-element">
 	<span class="form-label">
-		<label for="${entry.idEntry}">	
+		<label for="${entry.idEntry}">
 			${entry.title}
 			<#if entry.mandatory>
 				*
@@ -18,27 +26,37 @@
 			 : 
 		</label>
 	</span>
-	<span class="form-field-column">	 
-		<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" size="${fieldOption.width}" 
-			<#if fieldOption.value?exists && !default_values?has_content >
-				value="${fieldOption.value}" 
-		 	<#elseif default_values?has_content>
-				<#list default_values as default_value>
-					value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}"
-				</#list>
-		 	<#else>
-				 value="" 
-			</#if>
-			<#if fieldOption.maxSizeEnter!=-1>
-				maxlength="${fieldOption.maxSizeEnter}"
-			</#if>
-		/>
-	</span>	
-	<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+	<span class="form-field-column">
+		<input type="file" name="${entry.idEntry}" id="${entry.idEntry}" class="asynchronouse_upload" value="" />
+		<#if file??>
+			<span id="update_entry_${entry.idEntry}">
+				#i18n{directory.html_code_form_entry_img.label_update_file} <input type="checkbox" name="update_entry_${entry.idEntry}" value="1" />
+			</span>
+		<#else>
+			<input type="hidden" name="update_entry_${entry.idEntry}" value="true" />
+		</#if>
+	</span>
+	<br />
+	<span class="form-label">
+		<label for="update_entry_${entry.idEntry}">&nbsp;</label>
+	</span>
+	<span class="form-field-column" id="_filename_${entry.idEntry}">
+		<#if file??>
+			<input name="_filename_value_${entry.idEntry}" type="hidden" value="${file.fileName}" />
+			<a href="${file.value}">
+				${file.fileName}
+			</a>
+		</#if>
+	</span>
+	<#if entry.helpMessage?exists&&entry.helpMessage != ''>
 		<span class="form-help">
 			<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
-				<span><pre> ${entry.helpMessage}</pre></span>
+				<span><pre>${entry.helpMessage}</pre></span>
 			</a>
 		</span>
-	</#if>	
+	</#if>
+	<#if fieldOption??>
+		<input type="hidden" name="_directory_upload_maxLength_${entry.idEntry}" id="_directory_upload_maxLength_${entry.idEntry}" value="${fieldOption.width}" />
+		<input type="hidden" name="_directory_upload_fileTypes_${entry.idEntry}" id="_directory_upload_fileTypes_${entry.idEntry}" value="${fieldOption.value}" />
+	</#if>
 </div>

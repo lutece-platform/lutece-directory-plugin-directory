@@ -50,11 +50,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
 
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.EntryFilter;
 import fr.paris.lutece.plugins.directory.business.EntryHome;
 import fr.paris.lutece.plugins.directory.business.EntryType;
+import fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl;
 import fr.paris.lutece.plugins.directory.business.EntryTypeHome;
 import fr.paris.lutece.plugins.directory.business.Field;
 import fr.paris.lutece.plugins.directory.business.FieldHome;
@@ -67,6 +69,7 @@ import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.web.action.DirectoryAdminSearchFields;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
@@ -81,6 +84,7 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
+import fr.paris.lutece.util.httpaccess.HttpAccessException;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
@@ -102,25 +106,35 @@ public final class DirectoryUtils
     public static final String CONSTANT_AMPERSAND = "&";
     public static final int CONSTANT_ID_NULL = -1;
     public static final int CONSTANT_ID_ZERO = 0;
+    public static final String EMPTY_STRING = "";
+    
+    // TEMPLATES
     public static final String TEMPLATE_FORM_DIRECTORY_RECORD = "admin/plugins/directory/html_code_form_directory_record.html";
     public static final String TEMPLATE_FORM_SEARCH_DIRECTORY_RECORD = "admin/plugins/directory/html_code_form_search_directory_record.html";
-    public static final String EMPTY_STRING = "";
+    
+    // MESSAGES
+    public static final String MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD = "directory.message.directory_error.mandatory.field";
+    public static final String MESSAGE_DIRECTORY_ERROR = "directory.message.directory_error";
+    public static final String MESSAGE_DIRECTORY_ERROR_MIME_TYPE = "directory.message.directory_error.mime_type";
+
+    // PARAMETERS
+    public static final String PARAMETER_ID_DIRECTORY = "id_directory";
+    public static final String PARAMETER_SESSION = "session";
+    public static final String PARAMETER_DELETE_PREFIX = "delete_";
+    public static final String PARAMETER_UPLOAD_SUBMIT = "_directory_upload_submit_";
+    
+    // JSP
+    public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
+
+    // Session
+    public static final String SESSION_ATTRIBUTE_PREFIX_FILE = "DIRECTORY_FILE_";
+    
+    // property
     private static final String PARAMETER_ID_ENTRY_TYPE = "id_type";
     private static final String CONSTANT_CHARACTER_DOUBLE_QUOTE = "\"";
     private static final String CONSTANT_CHARACTER_SIMPLE_QUOTE = "'";
     private static final String CONSTANTE_CHARACTERNEW_LINE = "\n";
     private static final String CONSTANTE_CHARACTER_RETURN = "\r";
-    
-    public static final String MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD = "directory.message.directory_error.mandatory.field";
-    public static final String MESSAGE_DIRECTORY_ERROR = "directory.message.directory_error";
-
-    public static final String PARAMETER_ID_DIRECTORY = "id_directory";
-    public static final String PARAMETER_SESSION = "session";
-    
-    public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
-
-
-    // property
     private static final String REGEX_ID = "^[\\d]+$";
 
     /**
@@ -384,15 +398,11 @@ public final class DirectoryUtils
             {
                 for ( IEntry child : entryFistLevel.getChildren(  ) )
                 {
-                    filter.setIdEntry( child.getIdEntry(  ) );
-                    map.put( Integer.toString( child.getIdEntry(  ) ),
-                        RecordFieldHome.getRecordFieldList( filter, plugin ) );
+                	buildMapIdEntryListRecordField( map, child, filter, plugin );
                 }
             }
 
-            filter.setIdEntry( entryFistLevel.getIdEntry(  ) );
-            map.put( Integer.toString( entryFistLevel.getIdEntry(  ) ),
-                RecordFieldHome.getRecordFieldList( filter, plugin ) );
+            buildMapIdEntryListRecordField( map, entryFistLevel, filter, plugin );
         }
 
         return map;
@@ -1061,5 +1071,44 @@ public final class DirectoryUtils
     	urlItem.addParameter( PARAMETER_SESSION, PARAMETER_SESSION );
     	
     	return urlItem.getUrl(  );
+    }
+    
+    /**
+     * Build the map id entry - list record field
+     * @param map the map
+     * @param entry the entry
+     * @param filter the filter
+     * @param plugin the plugin
+     */
+    private static void buildMapIdEntryListRecordField( Map<String, List<RecordField>> map, 
+    		IEntry entry, RecordFieldFilter filter, Plugin plugin )
+    {
+    	filter.setIdEntry( entry.getIdEntry(  ) );
+    	List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( filter, plugin );
+    	// If entry is type download url, then fetch the file name
+    	if ( entry instanceof EntryTypeDownloadUrl )
+    	{
+    		if ( listRecordFields != null && !listRecordFields.isEmpty(  ) )
+    		{
+    			// Only 1 record field per entry type download url
+    			RecordField recordField = listRecordFields.get( 0 );
+    			if ( recordField != null && StringUtils.isNotBlank( recordField.getValue(  ) ) )
+    			{
+    				DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+    				String strFileName = StringUtils.EMPTY;
+    				try
+    				{
+    					strFileName = handler.getFileName( recordField.getValue(  ) );
+    					recordField.setFileName( strFileName );
+    				}
+    				catch ( Exception e )
+    				{
+    					AppLogService.error( e );
+    					recordField.setFileName( StringUtils.EMPTY );
+    				}
+    			}
+    		}
+    	}
+    	map.put( Integer.toString( entry.getIdEntry(  ) ), listRecordFields );
     }
 }

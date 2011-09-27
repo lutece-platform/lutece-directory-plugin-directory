@@ -46,6 +46,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
@@ -79,6 +80,7 @@ import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
 import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.plugins.directory.service.RecordRemovalListenerService;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.plugins.directory.web.action.DirectoryActionManager;
@@ -446,10 +448,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         filter.setWorkGroup( _searchFields.getWorkGroup(  ) );
 
         List<Directory> listDirectory = DirectoryHome.getDirectoryList( filter, getPlugin(  ) );
-        listDirectory = (List) AdminWorkgroupService.getAuthorizedCollection( listDirectory, getUser(  ) );
+        listDirectory = (List<Directory>) AdminWorkgroupService.getAuthorizedCollection( listDirectory, getUser(  ) );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
-        LocalizedPaginator paginator = new LocalizedPaginator( listDirectory, _searchFields.getItemsPerPageDirectory(  ),
+        LocalizedPaginator<Directory> paginator = new LocalizedPaginator<Directory>( listDirectory, _searchFields.getItemsPerPageDirectory(  ),
                 getJspManageDirectory( request ), PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexDirectory(  ), getLocale(  ) );
 
         listActionsForDirectoryEnable = DirectoryActionHome.selectActionsByFormState( Directory.STATE_ENABLE,
@@ -833,7 +835,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         _searchFields.setItemsPerPageEntry(  Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE,
         		_searchFields.getItemsPerPageEntry(), _searchFields.getDefaultItemsPerPage(  ) ) );
 
-        LocalizedPaginator paginator = new LocalizedPaginator( listEntry, _searchFields.getItemsPerPageEntry(  ),
+        LocalizedPaginator<IEntry> paginator = new LocalizedPaginator<IEntry>( listEntry, _searchFields.getItemsPerPageEntry(  ),
                 AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY + "?id_directory=" + nIdDirectory,
                 PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexEntry(  ), getLocale(  ) );
 
@@ -1169,7 +1171,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String[] strTabAutorizeEntryType = strAutorizeEntryType.split( "," );
 
         ReferenceList listEntryAssociateWithoutJavascript = new ReferenceList(  );
-        List<List> listEntryWithJavascript = new ArrayList<List>(  );
+        List<List<IEntry>> listEntryWithJavascript = new ArrayList<List<IEntry>>(  );
 
         for ( ReferenceItem item : DirectoryHome.getDirectoryList( plugin ) )
         {
@@ -1408,7 +1410,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String[] strTabAutorizeEntryType = strAutorizeEntryType.split( "," );
 
         ReferenceList listEntryAssociateWithoutJavascript = new ReferenceList(  );
-        List<List> listEntryWithJavascript = new ArrayList<List>(  );
+        List<List<IEntry>> listEntryWithJavascript = new ArrayList<List<IEntry>>(  );
 
         for ( ReferenceItem item : DirectoryHome.getDirectoryList( plugin ) )
         {
@@ -1997,7 +1999,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         field.setEntry( entry );
 
-        HashMap model = new HashMap(  );
+        Map<String, Object> model = new HashMap<String, Object>(  );
         Locale locale = getLocale(  );
         model.put( MARK_FIELD, field );
         model.put( MARK_USER_WORKGROUP_REF_LIST, AdminWorkgroupService.getUserWorkgroups( getUser(  ), locale ) );
@@ -2739,7 +2741,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
 
-        HashMap model = new HashMap(  );
+        Map<String, Object> model = new HashMap<String, Object>(  );
 
         if ( request.getParameter( PARAMETER_SESSION ) != null )
         {
@@ -3007,7 +3009,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
 
-        Map<String, Object> model = new HashMap(  );
+        Map<String, Object> model = new HashMap<String, Object>(  );
 
         List<IEntry> listEntry = DirectoryUtils.getFormEntries( nIdDirectory, getPlugin(  ), getUser(  ) );
         model.put( MARK_ENTRY_LIST, listEntry );
@@ -3399,7 +3401,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
         int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
 
-        HashMap model = new HashMap(  );
+        Map<String, Object> model = new HashMap<String, Object>(  );
 
         model.put( MARK_TASKS_FORM,
             WorkflowService.getInstance(  )
@@ -3722,7 +3724,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
                 WorkflowService.getInstance(  ).isAvailable(  ) )
         {
-            int nIdWorkflow = directory.getIdWorkflow(  );
             Collection<State> listState = WorkflowService.getInstance(  )
                                                          .getAllStateByWorkflow( directory.getIdWorkflow(  ),
                     AdminUserService.getAdminUser( request ) );
@@ -3830,7 +3831,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         WorkflowService workflowService = WorkflowService.getInstance(  );
 
-        HashMap model = new HashMap(  );
+        Map<String, Object> model = new HashMap<String, Object>(  );
         List<Integer> recordList = new ArrayList<Integer>(  );
 
         List<String> listStrIdState = Arrays.asList( tabIdState );
@@ -3864,7 +3865,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         _searchFields.setItemsPerPagePrintMass( Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE,
                 _searchFields.getItemsPerPagePrintMass(  ), _searchFields.getDefaultItemsPerPage(  ) ) );
 
-        LocalizedPaginator paginator = new LocalizedPaginator( lListResult, _searchFields.getItemsPerPagePrintMass(  ),
+        LocalizedPaginator<Integer> paginator = new LocalizedPaginator<Integer>( lListResult, _searchFields.getItemsPerPagePrintMass(  ),
                 getJspPrintMass( request, nIdDirectory, strIdState ), PARAMETER_PAGE_INDEX,
                 _searchFields.getCurrentPageIndexPrintMass(  ), getLocale(  ) );
 
@@ -3877,11 +3878,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         List<IEntry> listEntry = EntryHome.getEntryList( filter, getPlugin(  ) );
 
-        List<HashMap> listRecordHistory = new ArrayList<HashMap>(  );
+        List<Map<String, Object>> listRecordHistory = new ArrayList<Map<String, Object>>(  );
 
         for ( Integer nIdRecord : recordList )
         {
-            HashMap resource = new HashMap(  );
+            Map<String, Object> resource = new HashMap<String, Object>(  );
             resource.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
                 DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ) ) );
 
@@ -4197,6 +4198,26 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	        	DirectoryUtils.CONSTANT_EQUAL + nIdDirectory + DirectoryUtils.CONSTANT_AMPERSAND + PARAMETER_ID_ENTRY + 
 	        	DirectoryUtils.CONSTANT_EQUAL + nIdEntry + DirectoryUtils.CONSTANT_AMPERSAND + PARAMETER_SESSION + "=" + PARAMETER_SESSION;
     }
+
+    /**
+     * Removes the uploaded fileItem
+     * @param request the request
+     */
+    public void doRemoveAsynchronousUploadedFile( HttpServletRequest request )
+    {
+    	String strSessionId = request.getSession(  ).getId(  );
+    	String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
+    	
+    	// file may be uploaded asynchronously...
+    	DirectoryAsynchronousUploadHandler.removeFileItem( strIdEntry, strSessionId );
+    	
+    	// ... or already in session
+    	HttpSession session = request.getSession( false );
+    	if ( session != null )
+    	{
+    		session.removeAttribute( DirectoryUtils.SESSION_ATTRIBUTE_PREFIX_FILE + strIdEntry );
+    	}
+    }
     
     /**
      * Get the request data and if there is no error insert the data in the field specified in parameter.
@@ -4210,8 +4231,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     {
         String strTitle = listImportValue[0];
         String strValue = listImportValue[1];
-
-        String strFieldError = DirectoryUtils.EMPTY_STRING;
 
         if ( ( strTitle == null ) || DirectoryUtils.EMPTY_STRING.equals( strTitle ) )
         {

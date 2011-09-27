@@ -241,8 +241,6 @@ public final class RecordFieldDAO implements IRecordFieldDAO
             entry.setDisplayWidth( daoUtil.getInt( 7 ) );
             entry.setDisplayHeight( daoUtil.getInt( 8 ) );
 
-            entry.setIdEntry( daoUtil.getInt( 7 ) );
-
             recordField.setEntry( entry );
 
             if ( daoUtil.getObject( 9 ) != null )

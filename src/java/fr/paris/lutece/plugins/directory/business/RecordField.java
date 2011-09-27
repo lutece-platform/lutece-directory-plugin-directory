@@ -50,6 +50,8 @@ public class RecordField
     private Field _field;
     private File _file;
     private Record _record;
+    private String _strFileName;
+    private String _strFileExtension;
 
     /**
      *
@@ -191,4 +193,40 @@ public class RecordField
     {
         return _strValue;
     }
+    
+    /**
+     * Get the file extensions
+     * @return the file extension if the response value is a file
+     */
+    public String getFileExtension(  )
+	{
+    	return _strFileExtension;
+	}
+
+	/**
+     * Set the file extension if the response value is a file
+     * @param fileExtension the file extension if the response value is a file
+     */
+    public void setFileExtension( String fileExtension )
+    {
+    	_strFileExtension = fileExtension;
+	}
+
+	/**
+	 * The file name if the response value is a file
+	 * @return the file name if the response value is a file
+	 */
+	public String getFileName(  )
+	{
+		return _strFileName;
+	}
+
+	/**
+	 * The file name if the response value is a file
+	 * @param fileName the file name if the response value is a file
+     */
+	public void setFileName( String fileName )
+	{
+		_strFileName = fileName;
+	}
 }
