@@ -132,7 +132,7 @@ public class DirectoryActionDAO implements IDirectoryActionDAO
         {
             nId = daoUtil.getInt( 1 ) + 1;
         }
-
+        daoUtil.free(  );
         daoUtil = new DAOUtil( SQL_QUERY_ADD_ACTION_RECORD, plugin );
         daoUtil.setInt( 1, nId );
         daoUtil.setString( 2, directoryAction.getNameKey(  ) );
