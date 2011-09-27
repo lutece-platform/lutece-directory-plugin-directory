@@ -116,12 +116,24 @@ public final class RecordFieldHome
     }
 
     /**
-     *Delete the record field whose identifier is specified in parameter
+     * Delete the record field whose identifier is specified in parameter
      *
      * @param nIdRecordField The identifier of the record field
      * @param plugin the Plugin
      */
     public static void remove( int nIdRecordField, Plugin plugin )
+    {
+    	remove( nIdRecordField, false, plugin );
+    }
+    
+    /**
+     * Delete the record field whose identifier is specified in parameter
+     *
+     * @param nIdRecordField The identifier of the record field
+     * @param bRemoveAsynchronousFiles true if it must remove the asynchronous files, false otherwise
+     * @param plugin the Plugin
+     */
+    public static void remove( int nIdRecordField, boolean bRemoveAsynchronousFiles, Plugin plugin )
     {
         RecordField recordField = findByPrimaryKey( nIdRecordField, plugin );
 
@@ -130,7 +142,10 @@ public final class RecordFieldHome
             FileHome.remove( recordField.getFile(  ).getIdFile(  ), plugin );
         }
         
-        DirectoryService.getInstance(  ).removeAsynchronousFile( recordField, plugin );
+        if ( bRemoveAsynchronousFiles )
+        {
+        	DirectoryService.getInstance(  ).removeAsynchronousFile( recordField, plugin );
+        }
 
         _dao.delete( nIdRecordField, plugin );
     }
@@ -170,11 +185,22 @@ public final class RecordFieldHome
      */
     public static void removeByFilter( RecordFieldFilter filter, Plugin plugin )
     {
+    	removeByFilter( filter, false, plugin );
+    }
+    
+    /**
+     * remove all record field  who verify the filter
+     * @param filter the filter
+     * @param plugin the plugin
+     *
+     */
+    public static void removeByFilter( RecordFieldFilter filter, boolean bRemoveByAsynchronouseFiles, Plugin plugin )
+    {
         List<RecordField> listRecordField = _dao.selectListByFilter( filter, plugin );
 
         for ( RecordField recordField : listRecordField )
         {
-            remove( recordField.getIdRecordField(  ), plugin );
+            remove( recordField.getIdRecordField(  ), bRemoveByAsynchronouseFiles, plugin );
         }
     }
 

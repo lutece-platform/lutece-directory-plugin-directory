@@ -183,7 +183,7 @@ public final class RecordHome
         //delete all record field in database associate
         RecordFieldFilter filter = new RecordFieldFilter(  );
         filter.setIdRecord( nIdRecord );
-        RecordFieldHome.removeByFilter( filter, plugin );
+        RecordFieldHome.removeByFilter( filter, true, plugin );
         _dao.delete( nIdRecord, plugin );
     }
 

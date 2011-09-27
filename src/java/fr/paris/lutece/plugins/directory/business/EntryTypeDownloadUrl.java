@@ -552,7 +552,6 @@ public class EntryTypeDownloadUrl extends Entry
     	if ( session != null )
     	{
     		// check the file in session - it might no be deleted
-    		fileSource = (FileItem) session.getAttribute( DirectoryUtils.SESSION_ATTRIBUTE_PREFIX_FILE + this.getIdEntry(  ) );
     		FileItem asynchronousFileItem = DirectoryAsynchronousUploadHandler.getFileItem( Integer.toString( getIdEntry(  ) ), 
     				session.getId(  ) );
     		// Try asynchronous uploaded files
@@ -560,8 +559,6 @@ public class EntryTypeDownloadUrl extends Entry
     		{
     			fileSource = asynchronousFileItem;
     		}
-    		
-    		session.setAttribute( DirectoryUtils.SESSION_ATTRIBUTE_PREFIX_FILE + this.getIdEntry(  ), fileSource );
     	}
     	
     	// Standard upload

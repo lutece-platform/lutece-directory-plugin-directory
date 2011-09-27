@@ -125,9 +125,6 @@ public final class DirectoryUtils
     
     // JSP
     public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
-
-    // Session
-    public static final String SESSION_ATTRIBUTE_PREFIX_FILE = "DIRECTORY_FILE_";
     
     // property
     private static final String PARAMETER_ID_ENTRY_TYPE = "id_type";

@@ -1606,7 +1606,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         //remove all recordField associated
         RecordFieldFilter filter = new RecordFieldFilter(  );
         filter.setIdEntry( nIdEntry );
-        RecordFieldHome.removeByFilter( filter, plugin );
+        RecordFieldHome.removeByFilter( filter, true, plugin );
         //remove entry
         EntryHome.remove( nIdEntry, plugin );
 
@@ -3008,6 +3008,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         {
             throw new AccessDeniedException(  );
         }
+        
+        // Remove asynchronous uploaded file from session
+        doRemoveAsynchronousUploadedFile( request );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
 
@@ -3118,6 +3121,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         {
             throw new AccessDeniedException(  );
         }
+        
+        // Remove asynchronous uploaded file from session
+        doRemoveAsynchronousUploadedFile( request );
 
         Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory(  ).getIdDirectory(  ), getPlugin(  ) );
 
@@ -4208,14 +4214,14 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     	String strSessionId = request.getSession(  ).getId(  );
     	String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
     	
-    	// file may be uploaded asynchronously...
-    	DirectoryAsynchronousUploadHandler.removeFileItem( strIdEntry, strSessionId );
-    	
-    	// ... or already in session
-    	HttpSession session = request.getSession( false );
-    	if ( session != null )
+    	if ( StringUtils.isNotBlank( strIdEntry ) )
     	{
-    		session.removeAttribute( DirectoryUtils.SESSION_ATTRIBUTE_PREFIX_FILE + strIdEntry );
+    		// file may be uploaded asynchronously...
+    		DirectoryAsynchronousUploadHandler.removeFileItem( strIdEntry, strSessionId );
+    	}
+    	else
+    	{
+    		DirectoryAsynchronousUploadHandler.removeSessionFiles( strSessionId );
     	}
     }
     
