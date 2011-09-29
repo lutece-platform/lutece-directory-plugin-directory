@@ -46,7 +46,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
@@ -111,6 +110,7 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.portal.web.admin.PluginAdminPageJspBean;
+import fr.paris.lutece.portal.web.constants.Messages;
 import fr.paris.lutece.portal.web.constants.Parameters;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
@@ -173,6 +173,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MESSAGE_CANNOT_REMOVE_RECORD = "directory.message.can_not_remove_record";
     private static final String MESSAGE_CANNOT_REMOVE_ENTRY = "directory.message.can_not_remove_entry";
     private static final String MESSAGE_WORKFLOW_CHANGE = "directory.message.workflow_change";
+    private static final String MESSAGE_CONFIRM_CHANGE_STATES_RECORD = "directory.message.confirm_change_states_record";
 
     //private static final String MESSAGE_CANNOT_CREATE_ENTRY_DIRECTORY_IS_NOT_EMPTY = "directory.message.can_not_create_entry_directory_is_not_empty";
     private static final String MESSAGE_CANNOT_REMOVE_ENTRY_DIRECTORY_IS_NOT_EMPTY = "directory.message.can_not_remove_entry_directory_is_not_empty";
@@ -337,6 +338,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String JSP_TASKS_FORM_WORKFLOW = "jsp/admin/plugins/directory/TasksFormWorkflow.jsp";
     private static final String JSP_DISPLAY_PRINT_HISTORY = "jsp/admin/plugins/directory/DisplayMassPrint.jsp";
     private static final String JSP_MANAGE_ADVANCED_PARAMETERS = "jsp/admin/plugins/directory/ManageAdvancedParameters.jsp";
+    private static final String JSP_DO_CHANGE_STATES_RECORD = "jsp/admin/plugins/directory/DoChangeStatesRecord.jsp";
 
     //Parameters
     private static final String PARAMETER_ID_DIRECTORY = DirectoryUtils.PARAMETER_ID_DIRECTORY;
@@ -3214,23 +3216,43 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     public String getConfirmRemoveDirectoryRecord( HttpServletRequest request )
         throws AccessDeniedException
     {
-        String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
-        int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
-
-        if ( ( record == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser(  ) ) )
+        String[] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
+        if ( listIdsDirectoryRecord != null && listIdsDirectoryRecord.length > 0 )
         {
-            throw new AccessDeniedException(  );
+        	String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+            // If the id directory is not in the parameter, then fetch it from the first record
+            // assuming all records are from the same directory 
+            if ( StringUtils.isBlank( strIdDirectory ) || !StringUtils.isNumeric( strIdDirectory ) )
+            {
+                String strIdDirectoryRecord = listIdsDirectoryRecord[0];
+                int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
+            }
+            int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+            
+        	UrlItem url = new UrlItem( JSP_DO_REMOVE_DIRECTORY_RECORD );
+        	url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, nIdDirectory );
+        	for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
+        	{
+        		int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+        		Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        		
+        		if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
+        				!RBACService.isAuthorized( Directory.RESOURCE_TYPE,
+        						Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
+        						DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser(  ) ) )
+        		{
+        			throw new AccessDeniedException(  );
+        		}
+        		
+        		url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, nIdDirectoryRecord );
+        	}
+        	
+        	return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_DIRECTORY_RECORD, url.getUrl(  ),
+        			AdminMessage.TYPE_CONFIRMATION );
         }
-
-        UrlItem url = new UrlItem( JSP_DO_REMOVE_DIRECTORY_RECORD );
-        url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, nIdDirectoryRecord );
-
-        return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_DIRECTORY_RECORD, url.getUrl(  ),
-            AdminMessage.TYPE_CONFIRMATION );
+        return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
     }
 
     /**
@@ -3242,33 +3264,42 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     public String doRemoveDirectoryRecord( HttpServletRequest request )
         throws AccessDeniedException
     {
-        String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
-        ArrayList<String> listErrors = new ArrayList<String>(  );
-        int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
-
-        if ( ( record == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser(  ) ) )
+        String[] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
+        if ( listIdsDirectoryRecord != null && listIdsDirectoryRecord.length > 0 )
         {
-            throw new AccessDeniedException(  );
+            String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
+            int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+        	List<String> listErrors = new ArrayList<String>(  );
+        	for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
+        	{
+        		int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+        		Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        		
+        		if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
+        				!RBACService.isAuthorized( Directory.RESOURCE_TYPE,
+        						Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
+        						DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser(  ) ) )
+        		{
+        			throw new AccessDeniedException(  );
+        		}
+        		
+        		if ( !RecordRemovalListenerService.getService(  )
+        				.checkForRemoval( strIdDirectoryRecord, listErrors, getLocale(  ) ) )
+        		{
+        			String strCause = AdminMessageService.getFormattedList( listErrors, getLocale(  ) );
+        			Object[] args = { strCause };
+        			
+        			return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_RECORD, args,
+        					AdminMessage.TYPE_STOP );
+        		}
+        		
+        		RecordHome.remove( nIdDirectoryRecord, getPlugin(  ) );
+        		WorkflowService.getInstance(  ).doRemoveWorkFlowResource( nIdDirectoryRecord, Record.WORKFLOW_RESOURCE_TYPE );
+        	}
+        	
+        	return getJspManageDirectoryRecord( request, nIdDirectory );
         }
-
-        if ( !RecordRemovalListenerService.getService(  )
-                                              .checkForRemoval( strIdDirectoryRecord, listErrors, getLocale(  ) ) )
-        {
-            String strCause = AdminMessageService.getFormattedList( listErrors, getLocale(  ) );
-            Object[] args = { strCause };
-
-            return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_RECORD, args,
-                AdminMessage.TYPE_STOP );
-        }
-
-        RecordHome.remove( nIdDirectoryRecord, getPlugin(  ) );
-        WorkflowService.getInstance(  ).doRemoveWorkFlowResource( nIdDirectoryRecord, Record.WORKFLOW_RESOURCE_TYPE );
-
-        return getJspManageDirectoryRecord( request, record.getDirectory(  ).getIdDirectory(  ) );
+        return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
     }
 
     /**
@@ -4223,6 +4254,91 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     	{
     		DirectoryAsynchronousUploadHandler.removeSessionFiles( strSessionId );
     	}
+    }
+    
+    /**
+     * Gets the confirmation page of changing the state of the records
+     * @param request The HTTP request
+     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * @return the confirmation page of changing the state of the records
+     */
+    public String getConfirmChangeStatesRecord( HttpServletRequest request )
+        throws AccessDeniedException
+    {
+        String[] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
+        if ( listIdsDirectoryRecord != null && listIdsDirectoryRecord.length > 0 )
+        {
+        	String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+            // If the id directory is not in the parameter, then fetch it from the first record
+            // assuming all records are from the same directory 
+            if ( StringUtils.isBlank( strIdDirectory ) || !StringUtils.isNumeric( strIdDirectory ) )
+            {
+                String strIdDirectoryRecord = listIdsDirectoryRecord[0];
+                int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
+            }
+            int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+            
+        	UrlItem url = new UrlItem( JSP_DO_CHANGE_STATES_RECORD );
+        	url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, nIdDirectory );
+        	for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
+        	{
+        		int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+        		Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        		
+        		if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
+        				!RBACService.isAuthorized( Directory.RESOURCE_TYPE,
+        						Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
+        						DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser(  ) ) )
+        		{
+        			throw new AccessDeniedException(  );
+        		}
+        		
+        		url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, nIdDirectoryRecord );
+        	}
+        	
+        	return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_CHANGE_STATES_RECORD, url.getUrl(  ),
+        			AdminMessage.TYPE_CONFIRMATION );
+        }
+        return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
+    }
+    
+    /**
+     * Perform the directory record supression
+     * @param request The HTTP request
+     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * @return The URL to go after performing the action
+     */
+    public String doChangeStatesRecord( HttpServletRequest request )
+        throws AccessDeniedException
+    {
+        String[] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
+        if ( listIdsDirectoryRecord != null && listIdsDirectoryRecord.length > 0 )
+        {
+            String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
+            int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+        	
+        	for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
+        	{
+        		int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+        		Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        		
+        		if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
+        				!RBACService.isAuthorized( Directory.RESOURCE_TYPE,
+        						Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
+        						DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser(  ) ) )
+        		{
+        			throw new AccessDeniedException(  );
+        		}
+        		
+        		record.setEnabled( !record.isEnabled(  ) );
+                RecordHome.update( record, getPlugin(  ) );
+        	}
+        	
+        	return getJspManageDirectoryRecord( request, nIdDirectory );
+        }
+        return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
     }
     
     /**

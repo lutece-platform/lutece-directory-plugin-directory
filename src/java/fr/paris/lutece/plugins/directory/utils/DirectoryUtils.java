@@ -84,7 +84,6 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
-import fr.paris.lutece.util.httpaccess.HttpAccessException;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
@@ -116,9 +115,11 @@ public final class DirectoryUtils
     public static final String MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD = "directory.message.directory_error.mandatory.field";
     public static final String MESSAGE_DIRECTORY_ERROR = "directory.message.directory_error";
     public static final String MESSAGE_DIRECTORY_ERROR_MIME_TYPE = "directory.message.directory_error.mime_type";
+    public static final String MESSAGE_SELECT_RECORDS = "directory.message.select_records";
 
     // PARAMETERS
     public static final String PARAMETER_ID_DIRECTORY = "id_directory";
+    public static final String PARAMETER_ID_DIRECTORY_RECORD = "id_directory_record";
     public static final String PARAMETER_SESSION = "session";
     public static final String PARAMETER_DELETE_PREFIX = "delete_";
     public static final String PARAMETER_UPLOAD_SUBMIT = "_directory_upload_submit_";

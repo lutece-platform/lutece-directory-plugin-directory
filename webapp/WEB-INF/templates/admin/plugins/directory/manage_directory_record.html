@@ -111,6 +111,7 @@
 </#function>
 <form action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="post" id="searchForm" >
 <input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+<input type="hidden" name="session" value="session" />
 <div id="content-actions">
 	<#list directory_actions as action>
 		<#if action.buttonTemplate?has_content>
@@ -235,20 +236,14 @@
      </#if>
 	<#list resource_actions.record.actions as action>
 		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
-	 	<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}">
+	 	<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${id_directory}">
 	  		<img src="${action.iconUrl}" alt="${action.name}" title="${action.description}">
 	  	</a>
 	</#if>
 </#list>
 </#macro>
- 
-   <form method="post"  action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp">
-   		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-   		<input type="hidden" name="session" value="session" />
-   		
-        <@paginationAdmin paginator=paginator combo=1 form=0 />
-      </form>
-  <table name="results_list" id="results_list">
+	<@paginationAdmin paginator=paginator combo=1 form=0 />
+	<table name="results_list" id="results_list">
     <tr>
     	<#-- selection column -->
     	<th>&nbsp;</th>
