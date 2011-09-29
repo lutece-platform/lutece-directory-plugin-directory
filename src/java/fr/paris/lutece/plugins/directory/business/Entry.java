@@ -128,7 +128,7 @@ public class Entry implements IEntry
     protected static final String FIELD_LABEL_ALL_SEARCH = "directory.create_entry.label_label_all_search";
 
     //  Jsp Definition
-    protected static final String JSP_DOWNLOAD_FILE = "jsp/admin/plugins/directory/DoDownloadFile.jsp";
+    protected static final String JSP_DOWNLOAD_FILE = "jsp/site/plugins/directory/DoDownloadFile.jsp";
     
     // SQL
     private static final String SQL_JOIN_DIRECTORY_RECORD_FIELD = " LEFT JOIN directory_record_field drf ON drf.id_record = dr.id_record AND drf.id_entry = ? ";

@@ -33,6 +33,14 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
@@ -43,15 +51,11 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.regularexpression.RegularExpressionService;
+import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.Paginator;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
+import fr.paris.lutece.util.url.UrlItem;
 
 
 /**
@@ -67,7 +71,10 @@ public class EntryTypeFile extends Entry
     private final String _template_html_code_entry_value = "admin/plugins/directory/entrytypefile/html_code_entry_value_type_file.html";
     private final String _template_html_front_code_form_entry = "skin/plugins/directory/entrytypefile/html_code_form_entry_type_file.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypefile/html_code_entry_value_type_file.html";
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -81,6 +88,9 @@ public class EntryTypeFile extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlRecordFieldValue( boolean isDisplayFront )
     {
@@ -94,6 +104,9 @@ public class EntryTypeFile extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -172,36 +185,47 @@ public class EntryTypeFile extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate(  )
     {
         return _template_create;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify(  )
     {
         return _template_modify;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
         throws DirectoryErrorException
     {
-        //add Empty recordField(Use for data import)
+        // Add Empty recordField(Use for data import)
         RecordField recordField = new RecordField(  );
         recordField.setEntry( this );
         listRecordField.add( recordField );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getImportRecordFieldData( Record record, byte[] strImportValue, String nomFile,
         boolean bTestDirectoryError, List<RecordField> listRecordField, Locale locale )
         throws DirectoryErrorException
     {
-        // cr�ation d'un fichier de type File avec les donn�es du fichier pdf
-        // le fichier sera ensuite import�.
+        // Create a file with the data of the pdf file, the file will then be imported
         RecordField recordField = new RecordField(  );
         recordField.setEntry( this );
 
@@ -218,6 +242,9 @@ public class EntryTypeFile extends Entry
         listRecordField.add( recordField );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
@@ -257,7 +284,7 @@ public class EntryTypeFile extends Entry
         }
         else if ( ( fileSource == null ) && ( strUpdateFile == null ) && ( strIdDirectoryRecord != null ) )
         {
-            //get the default file
+            // Get the default file
             RecordFieldFilter filter = new RecordFieldFilter(  );
             filter.setIdEntry( this.getIdEntry(  ) );
             filter.setIdRecord( DirectoryUtils.convertStringToInt( strIdDirectoryRecord ) );
@@ -278,18 +305,36 @@ public class EntryTypeFile extends Entry
                 }
             }
         }
+        
+        // Put the download url in the record field value
+        String strDownloadUrl = StringUtils.EMPTY;
+        if ( recordField.getFile(  ) != null )
+        {
+        	UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DOWNLOAD_FILE );
+        	url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD, strIdDirectoryRecord );
+        	url.addParameter( DirectoryUtils.PARAMETER_ID_ENTRY, getIdEntry(  ) );
+        	strDownloadUrl = url.getUrl(  );
+        }
+        
+        recordField.setValue( strDownloadUrl );
 
         listRecordField.add( recordField );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
+    public Paginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex )
     {
-        return new Paginator( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage, strBaseUrl,
+        return new Paginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage, strBaseUrl,
             strPageIndexParameterName, strPageIndex );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ReferenceList getReferenceListRegularExpression( IEntry entry, Plugin plugin )
     {
@@ -315,11 +360,14 @@ public class EntryTypeFile extends Entry
         return refListRegularExpression;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
+    public LocalizedPaginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex, Locale locale )
     {
-        return new LocalizedPaginator( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage,
+        return new LocalizedPaginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage,
             strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
     }
 }

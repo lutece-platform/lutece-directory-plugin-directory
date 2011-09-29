@@ -120,9 +120,11 @@ public final class DirectoryUtils
     // PARAMETERS
     public static final String PARAMETER_ID_DIRECTORY = "id_directory";
     public static final String PARAMETER_ID_DIRECTORY_RECORD = "id_directory_record";
+    public static final String PARAMETER_ID_ENTRY = "id_entry";
     public static final String PARAMETER_SESSION = "session";
     public static final String PARAMETER_DELETE_PREFIX = "delete_";
     public static final String PARAMETER_UPLOAD_SUBMIT = "_directory_upload_submit_";
+    public static final String PARAMETER_ID_FILE = "id_file";
     
     // JSP
     public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
