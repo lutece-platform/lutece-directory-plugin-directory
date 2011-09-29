@@ -118,7 +118,7 @@ INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUE
 /*==============================================================*/
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('field_in_line', '1');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('mandatory', '0');
-INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('indexed', '1');
+INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('indexed', '0');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('indexed_as_title', '0');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('indexed_as_summary', '0');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('multiple_search_fields', '0');
@@ -133,4 +133,4 @@ INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('max_size_enter', '50');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('autocomplete_entry', '0');
 INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('shown_in_export', '1');
-INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('shown_in_completeness', '1');
+INSERT INTO directory_entry_parameter (parameter_key, parameter_value) VALUES ('shown_in_completeness', '0');
