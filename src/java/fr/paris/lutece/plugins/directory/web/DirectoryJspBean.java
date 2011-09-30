@@ -150,6 +150,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String TEMPLATE_MANAGE_ADVANCED_PARAMETERS = "admin/plugins/directory/manage_advanced_parameters.html";
     private static final String TEMPLATE_VIEW_MYLUTECE_USER = "admin/plugins/directory/view_mylutece_user.html";
     private static final String TEMPLATE_IMPORT_FIELD = "admin/plugins/directory/import_field.html";
+    private static final String TEMPLATE_ACTION_RESULT = "admin/plugins/directory/action_result.html";
 
     // Messages (I18n keys)
     private static final String MESSAGE_CONFIRM_REMOVE_DIRECTORY = "directory.message.confirm_remove_directory";
@@ -320,6 +321,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_IMAGE_FIELD = "image_field";
     private static final String MARK_HAS_THUMBNAIL = "has_thumbnail";
     private static final String MARK_HAS_BIG_THUMBNAIL = "has_big_thumbnail";
+    private static final String MARK_SHOW_ACTION_RESULT = "show_action_result";
+    private static final String MARK_LIST_IDS_SUCCESS_RECORD = "list_ids_success_record";
+    private static final String MARK_LIST_IDS_FAIL_RECORD = "list_ids_fail_record";
 
     // JSP URL
     private static final String JSP_DO_DISABLE_DIRECTORY = "jsp/admin/plugins/directory/DoDisableDirectory.jsp";
@@ -341,6 +345,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String JSP_DISPLAY_PRINT_HISTORY = "jsp/admin/plugins/directory/DisplayMassPrint.jsp";
     private static final String JSP_MANAGE_ADVANCED_PARAMETERS = "jsp/admin/plugins/directory/ManageAdvancedParameters.jsp";
     private static final String JSP_DO_CHANGE_STATES_RECORD = "jsp/admin/plugins/directory/DoChangeStatesRecord.jsp";
+    private static final String JSP_ACTION_RESULT = "jsp/admin/plugins/directory/ActionResult.jsp";
 
     //Parameters
     private static final String PARAMETER_ID_DIRECTORY = DirectoryUtils.PARAMETER_ID_DIRECTORY;
@@ -3456,6 +3461,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         	model.put( MARK_TASKS_FORM, strHtmlTasksForm );
         	model.put( MARK_ID_ACTION, nIdAction );
         	model.put( MARK_LIST_IDS_DIRECTORY_RECORD, listIdsDirectoryRecord );
+        	model.put( MARK_SHOW_ACTION_RESULT, request.getParameter( DirectoryUtils.PARAMETER_SHOW_ACTION_RESULT ) );
         	
         	setPageTitleProperty( PROPERTY_TASKS_FORM_WORKFLOW_PAGE_TITLE );
         	
@@ -3476,7 +3482,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String[] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
         if ( listIdsDirectoryRecord != null && listIdsDirectoryRecord.length > 0 )
         {
-        	String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+        	String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
             // If the id directory is not in the parameter, then fetch it from the first record
             // assuming all records are from the same directory 
             if ( StringUtils.isBlank( strIdDirectory ) || !StringUtils.isNumeric( strIdDirectory ) )
@@ -3490,21 +3496,42 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             
             if ( request.getParameter( PARAMETER_CANCEL ) == null )
             {
-            	String strIdAction = request.getParameter( PARAMETER_ID_ACTION );
+            	String strShowActionResult = request.getParameter( DirectoryUtils.PARAMETER_SHOW_ACTION_RESULT );
+            	boolean bShowActionResult = StringUtils.isNotBlank( strShowActionResult );
+            	
+            	String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
             	int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
+            	
+            	List<Integer> listIdsSuccessRecord = new ArrayList<Integer>(  );
+                List<Integer> listIdFailRecord = new ArrayList<Integer>(  );
+            
             	for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
             	{
             		int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
             		
-            		String strError = WorkflowService.getInstance(  )
-            		.doSaveTasksForm( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
-            				nIdDirectory, request, getLocale(  ) );
+            		if ( WorkflowService.getInstance(  ).canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, 
+                			nIdAction, nIdDirectory, request, false ) )
+                	{
+            			String strError = WorkflowService.getInstance(  )
+            			.doSaveTasksForm( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
+            					nIdDirectory, request, getLocale(  ) );
+            			listIdsSuccessRecord.add( nIdRecord );
+            			if ( strError != null )
+            			{
+            				return strError;
+            			}
+                	}
+            		else
+                	{
+                		listIdFailRecord.add( nIdRecord );
+                	}
             		
-            		if ( strError != null )
-            		{
-            			return strError;
-            		}
             	}
+            	
+            	if ( bShowActionResult )
+                {
+                	return getJspActionResults( request, nIdDirectory, listIdsSuccessRecord, listIdFailRecord );
+                }
             }
             
             return getJspManageDirectoryRecord( request, nIdDirectory );
@@ -3622,6 +3649,28 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     }
 
     /**
+     * Get the html for action result
+     * @param request the HTTP request
+     * @return the html code
+     */
+    public String getActionResult( HttpServletRequest request )
+    {
+    	String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
+    	if ( StringUtils.isNotBlank( strIdDirectory ) && StringUtils.isNumeric( strIdDirectory ) )
+    	{
+    		Map<String, Object> model = new HashMap<String, Object>(  );
+    		model.put( MARK_LIST_IDS_SUCCESS_RECORD, request.getParameterValues( DirectoryUtils.PARAMETER_ID_SUCCESS_RECORD ) );
+    		model.put( MARK_LIST_IDS_FAIL_RECORD, request.getParameterValues( DirectoryUtils.PARAMETER_ID_FAIL_RECORD ) );
+    		model.put( MARK_ID_DIRECTORY, strIdDirectory );
+    		
+    		HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_ACTION_RESULT, getLocale(  ), model );
+    		
+    		return getAdminPage( templateList.getHtml(  ) );
+    	}
+    	return getManageDirectory( request );
+    }
+    
+    /**
      * return url of the jsp manage directory
      * @param request The HTTP request
      * @return url of the jsp manage directory
@@ -3712,6 +3761,30 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     }
 
     /**
+     * Return url of the jsp action results
+     * @param request the HTTP request
+     * @param nIdDirectory the id directory
+     * @param listIdsSuccessRecord the list of ids succes record
+     * @param listIdsFailRecord the list of ids fail record
+     * @return the JSP
+     */
+    private String getJspActionResults( HttpServletRequest request, int nIdDirectory, List<Integer> listIdsSuccessRecord, 
+    		List<Integer> listIdsFailRecord )
+    {
+    	UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_ACTION_RESULT );
+    	url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, nIdDirectory );
+    	for ( int nIdSuccessRecord : listIdsSuccessRecord )
+    	{
+    		url.addParameter( DirectoryUtils.PARAMETER_ID_SUCCESS_RECORD, nIdSuccessRecord );
+    	}
+    	for ( int nIdFailRecord : listIdsFailRecord )
+    	{
+    		url.addParameter( DirectoryUtils.PARAMETER_ID_FAIL_RECORD, nIdFailRecord );
+    	}
+    	return url.getUrl(  );
+    }
+    
+    /**
      * return a reference list wich contains the different state of directory
      * @param locale the locale
      * @return reference list of directory state
@@ -3750,7 +3823,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String[] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
         if ( listIdsDirectoryRecord != null && listIdsDirectoryRecord.length > 0 )
         {
-        	String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+        	String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
             // If the id directory is not in the parameter, then fetch it from the first record
             // assuming all records are from the same directory 
             if ( StringUtils.isBlank( strIdDirectory ) || !StringUtils.isNumeric( strIdDirectory ) )
@@ -3762,22 +3835,39 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
             int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
             
-            String strIdAction = request.getParameter( PARAMETER_ID_ACTION );
+            String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
             int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
             
+            String strShowActionResult = request.getParameter( DirectoryUtils.PARAMETER_SHOW_ACTION_RESULT );
+            boolean bShowActionResult = StringUtils.isNotBlank( strShowActionResult );
             
             if ( WorkflowService.getInstance(  ).isDisplayTasksForm( nIdAction, getLocale(  ) ) )
             {
-            	return getJspTasksFormTest( request, listIdsDirectoryRecord, nIdAction );
+            	return getJspTasksForm( request, listIdsDirectoryRecord, nIdAction, bShowActionResult );
             }
             
+            List<Integer> listIdsSuccessRecord = new ArrayList<Integer>(  );
+            List<Integer> listIdFailRecord = new ArrayList<Integer>(  );
             for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
             {
             	int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-            	
-            	WorkflowService.getInstance(  )
-            	.doProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
-            			nIdDirectory, request, getLocale(  ), false );
+            	if ( WorkflowService.getInstance(  ).canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, 
+            			nIdAction, nIdDirectory, request, false ) )
+            	{
+            		WorkflowService.getInstance(  )
+            		.doProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
+            				nIdDirectory, request, getLocale(  ), false );
+            		listIdsSuccessRecord.add( nIdRecord );
+            	}
+            	else
+            	{
+            		listIdFailRecord.add( nIdRecord );
+            	}
+            }
+            
+            if ( bShowActionResult )
+            {
+            	return getJspActionResults( request, nIdDirectory, listIdsSuccessRecord, listIdFailRecord );
             }
             return getJspManageDirectoryRecord( request, nIdDirectory );
         }
@@ -3791,10 +3881,14 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * @param nIdAction the id action
      * @return url of the jsp manage commentaire
      */
-    private String getJspTasksFormTest( HttpServletRequest request, String[] listIdsTestResource, int nIdAction )
+    private String getJspTasksForm( HttpServletRequest request, String[] listIdsTestResource, int nIdAction, boolean bShowActionResult )
     {
     	UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_TASKS_FORM_WORKFLOW );
-    	url.addParameter( PARAMETER_ID_ACTION, nIdAction );
+    	url.addParameter( DirectoryUtils.PARAMETER_ID_ACTION, nIdAction );
+    	if ( bShowActionResult )
+    	{
+    		url.addParameter( DirectoryUtils.PARAMETER_SHOW_ACTION_RESULT, DirectoryUtils.CONSTANT_TRUE );
+    	}
     	
     	if ( listIdsTestResource != null && listIdsTestResource.length > 0 )
     	{

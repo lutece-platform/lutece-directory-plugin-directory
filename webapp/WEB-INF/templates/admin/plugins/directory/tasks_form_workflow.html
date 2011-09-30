@@ -2,19 +2,22 @@
   <h2> #i18n{directory.tasks_form_workflow.title}</h2>
       <form action="jsp/admin/plugins/directory/DoSaveTasksFormWorkflow.jsp?plugin_name=directory" method="post" name="" id=""  enctype="multipart/form-data" >
 	   
-	   <input name="id_action" value="${id_action}" type="hidden" />
-	   <#if list_ids_directory_record?? && list_ids_directory_record?has_content>
+	   	<input name="id_action" value="${id_action}" type="hidden" />
+	   	<#if list_ids_directory_record?? && list_ids_directory_record?has_content>
 	   		<#list list_ids_directory_record as id_directory_record>
 	   			<input name="id_directory_record" value="${id_directory_record}" type="hidden" />
 	   		</#list>
-	   </#if>
+	   	</#if>
+	   	<#if show_action_result??>
+			<input type="hidden" name="show_action_result" value="1" />
+	   	</#if>
 	   	
 	   	${tasks_form}
 	   	
 	    <p>
 	  		<input type="submit" value="#i18n{workflow.tasks_form_test_workflow.button_save}" class="button" name="save" />
 	  		<input type="submit" value="#i18n{workflow.tasks_form_test_workflow.button_cancel}" class="button" name="cancel" />
-	   </p>
+	   	</p>
    		  
    	</form>	  
  </div>

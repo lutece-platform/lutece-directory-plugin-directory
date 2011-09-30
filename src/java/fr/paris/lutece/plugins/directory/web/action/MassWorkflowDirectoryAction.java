@@ -150,6 +150,7 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
             UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DO_PROCESS_ACTION_WORKFLOW );
             url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
             url.addParameter( DirectoryUtils.PARAMETER_ID_ACTION, strIdAction );
+            url.addParameter( DirectoryUtils.PARAMETER_SHOW_ACTION_RESULT, DirectoryUtils.CONSTANT_TRUE );
 
             for ( String strIdRecord : sessionFields.getSelectedRecords(  ) )
             {

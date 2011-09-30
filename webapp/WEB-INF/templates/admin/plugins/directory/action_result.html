@@ -1,0 +1,29 @@
+<div class="content-box">
+	<h2>#i18n{directory.action_result.title}</h2>
+  	<div class="highlight-box">
+		<#if list_ids_success_record?? && list_ids_success_record?has_content || list_ids_fail_record?? && list_ids_fail_record?has_content>
+			<ul>
+				<#if list_ids_success_record?? && list_ids_success_record?has_content>
+					<#list list_ids_success_record as id_success_record>
+						<li>
+							<img src="images/admin/skin/plugins/directory/actions/enable.png" title="#i18n{directory.action_result.success}" alt="#i18n{directory.action_result.success}" />
+							&nbsp;${id_success_record}
+						</li>
+					</#list>
+				</#if>
+				<#if list_ids_fail_record?? && list_ids_fail_record?has_content>
+					<#list list_ids_fail_record as id_fail_record>
+						<li>
+							<img src="images/admin/skin/plugins/directory/actions/disable.png" title="#i18n{directory.action_result.fail}" alt="#i18n{directory.action_result.fail}" />
+							&nbsp;${id_fail_record}
+						</li>
+					</#list>
+				</#if>
+			</ul>
+		</#if>
+		<form method="post" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp">
+			<input type="hidden" name="id_directory" value="${idDirectory}" />
+			<input type="submit" class="button" value="#i18n{portal.util.labelOk}" />
+		</form>
+  	</div>
+</div>

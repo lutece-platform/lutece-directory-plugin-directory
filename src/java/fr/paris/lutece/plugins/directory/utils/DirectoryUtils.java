@@ -108,6 +108,7 @@ public final class DirectoryUtils
     public static final String EMPTY_STRING = "";
     public static final String CONSTANT_ID = "id";
     public static final String CONSTANT_NAME = "name";
+    public static final String CONSTANT_TRUE = "true";
     
     // TEMPLATES
     public static final String TEMPLATE_FORM_DIRECTORY_RECORD = "admin/plugins/directory/html_code_form_directory_record.html";
@@ -128,6 +129,9 @@ public final class DirectoryUtils
     public static final String PARAMETER_UPLOAD_SUBMIT = "_directory_upload_submit_";
     public static final String PARAMETER_ID_FILE = "id_file";
     public static final String PARAMETER_ID_ACTION = "id_action";
+    public static final String PARAMETER_SHOW_ACTION_RESULT = "show_action_result";
+    public static final String PARAMETER_ID_SUCCESS_RECORD = "id_success_record";
+    public static final String PARAMETER_ID_FAIL_RECORD = "id_fail_record";
     
     // JSP
     public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
