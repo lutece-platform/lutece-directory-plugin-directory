@@ -81,6 +81,7 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
+import fr.paris.lutece.portal.web.pluginaction.AbstractPluginAction;
 import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.ReferenceList;
@@ -93,7 +94,7 @@ import fr.paris.lutece.util.xml.XmlUtil;
  * Exports records (search records or all records)
  *
  */
-public class ExportDirectoryAction implements IDirectoryAction
+public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
 {
 	private static final String ACTION_NAME = "Export Directory XSL";
 	private static final String TEMPLATE_BUTTON = "actions/export.html";

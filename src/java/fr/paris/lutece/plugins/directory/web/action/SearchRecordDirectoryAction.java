@@ -47,6 +47,7 @@ import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
+import fr.paris.lutece.portal.web.pluginaction.AbstractPluginAction;
 import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 
@@ -54,7 +55,7 @@ import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
  * Directory record search
  *
  */
-public class SearchRecordDirectoryAction implements IDirectoryAction 
+public class SearchRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction 
 {
 
 	private static final String PARAMETER_BUTTON_SEARCH = "search";

@@ -42,6 +42,7 @@ import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.util.AppPathService;
+import fr.paris.lutece.portal.web.pluginaction.AbstractPluginAction;
 import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.url.UrlItem;
@@ -51,7 +52,7 @@ import fr.paris.lutece.util.url.UrlItem;
  * No template is associated.
  *
  */
-public class CreateRecordDirectoryAction implements IDirectoryAction
+public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
 {
 	private static final String ACTION_NAME = "Create record";
 	private static final String TEMPLATE_BUTTON = "actions/create_directory_record.html";

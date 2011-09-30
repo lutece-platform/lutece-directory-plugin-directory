@@ -49,6 +49,7 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
 import fr.paris.lutece.portal.service.util.AppPathService;
+import fr.paris.lutece.portal.web.pluginaction.AbstractPluginAction;
 import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.url.UrlItem;
@@ -58,7 +59,7 @@ import fr.paris.lutece.util.url.UrlItem;
  * Redirects to jsp/admin/plugins/directory/ConfirmRemoveDirectoryRecord.jsp
  *
  */
-public class MassDeleteRecordsDirectoryAction implements IDirectoryAction
+public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
 {
 	// ACTIONS
 	private static final String ACTION_NAME = "Mass Remove Records";
