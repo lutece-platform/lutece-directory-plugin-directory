@@ -3,7 +3,11 @@
       <form action="jsp/admin/plugins/directory/DoSaveTasksFormWorkflow.jsp?plugin_name=directory" method="post" name="" id=""  enctype="multipart/form-data" >
 	   
 	   <input name="id_action" value="${id_action}" type="hidden" />
-	   <input name="id_record" value="${id_record}" type="hidden" />
+	   <#if list_ids_directory_record?? && list_ids_directory_record?has_content>
+	   		<#list list_ids_directory_record as id_directory_record>
+	   			<input name="id_directory_record" value="${id_directory_record}" type="hidden" />
+	   		</#list>
+	   </#if>
 	   	
 	   	${tasks_form}
 	   	

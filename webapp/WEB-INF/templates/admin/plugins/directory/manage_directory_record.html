@@ -69,6 +69,15 @@
 		$("#reset").click(function() { 
 			$("#searchForm").clearForm();
 		});
+
+		// For multi selection
+		$( 'input[type="checkbox"]#select-ids' ).click( function(  ) {
+			if ( $( this ).attr( 'checked' ) ) {
+				$( 'input[type="checkbox"].selected-id' ).attr( 'checked', true );
+			} else {
+				$( 'input[type="checkbox"].selected-id' ).attr( 'checked', false );
+			}
+		} );
 	});
 		
 			
@@ -112,7 +121,7 @@
 <form action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="post" id="searchForm" >
 <input type="hidden" name="id_directory" value="${directory.idDirectory}" />
 <input type="hidden" name="session" value="session" />
-<div id="content-actions">
+<div id="content-box-actions">
 	<#list directory_actions as action>
 		<#if action.buttonTemplate?has_content>
 			<#include action.buttonTemplate />
@@ -221,8 +230,8 @@
 <#macro display_actions resource_actions >
    <#if resource_actions.workflow_action_list?exists>
     <#list resource_actions.workflow_action_list as action>
-  	  	<a href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&id_record=${resource_actions.record.idRecord}">	
-  		<img  src="image?resource_type=workflow_icon_img&id=${action.icon.id}"
+  	  	<a href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
+  		<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}"
 					<#if action.icon.width!=-1>
 							  width="${action.icon.width}"
  					</#if> 
@@ -246,7 +255,7 @@
 	<table name="results_list" id="results_list">
     <tr>
     	<#-- selection column -->
-    	<th>&nbsp;</th>
+    	<th><input type="checkbox" id="select-ids" name="select-ids" value="" /></th>
       <#list entry_list_search_result as entry>	
       		<th>
       			${entry.title}
@@ -277,7 +286,7 @@
      </tr>
    <#list resource_actions_list as resource_actions>	
    	<tr>
-   		<td><input type="checkbox" name="selected_record" value="${resource_actions.record.idRecord}" /></td>
+   		<td><input class="selected-id" type="checkbox" name="selected_record" value="${resource_actions.record.idRecord}" /></td>
    		<#assign first_entry = true />
    		<#list entry_list_search_result as entry>
       		<#assign entryKey=""+entry.idEntry>	

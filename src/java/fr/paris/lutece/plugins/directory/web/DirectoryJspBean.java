@@ -296,7 +296,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_RESOURCE_ACTIONS_LIST = "resource_actions_list";
     private static final String MARK_TASKS_FORM = "tasks_form";
     private static final String MARK_ID_ACTION = "id_action";
-    private static final String MARK_ID_RECORD = "id_record";
+    private static final String MARK_LIST_IDS_DIRECTORY_RECORD = "list_ids_directory_record";
     private static final String MARK_RESOURCE_HISTORY = "resource_history";
     private static final String MARK_HISTORY_WORKFLOW_ENABLED = "history_workflow";
     private static final String MARK_PERMISSION_CREATE_RECORD = "permission_create_record";
@@ -384,7 +384,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_WORKFLOW = "id_workflow_list";
     private static final String PARAMETER_WORKFLOW_STATE_SEARCH = "workflow_state_filter_search";
     private static final String PARAMETER_ID_ACTION = "id_action";
-    private static final String PARAMETER_ID_RECORD = "id_record";
     private static final String PARAMETER_ID_STATE = "id_state";
     private static final String IS_DISPLAY_STATE_SEARCH = "1";
     private static final String IS_DISPLAY_STATE_SEARCH_COMPLEMENTARY = "2";
@@ -3435,25 +3434,36 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      */
     public String getTasksForm( HttpServletRequest request )
     {
-        String strIdRecord = request.getParameter( PARAMETER_ID_RECORD );
+        String[] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
         String strIdAction = request.getParameter( PARAMETER_ID_ACTION );
-        int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
-        int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
-
-        Map<String, Object> model = new HashMap<String, Object>(  );
-
-        model.put( MARK_TASKS_FORM,
-            WorkflowService.getInstance(  )
-                           .getDisplayTasksForm( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction, request,
-                getLocale(  ) ) );
-        model.put( MARK_ID_ACTION, nIdAction );
-        model.put( MARK_ID_RECORD, nIdRecord );
-
-        setPageTitleProperty( PROPERTY_TASKS_FORM_WORKFLOW_PAGE_TITLE );
-
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_TASKS_FORM_WORKFLOW, getLocale(  ), model );
-
-        return getAdminPage( templateList.getHtml(  ) );
+        if ( listIdsDirectoryRecord != null && listIdsDirectoryRecord.length > 0 && 
+        		StringUtils.isNotBlank( strIdAction ) && StringUtils.isNumeric( strIdAction ) )
+        {
+        	int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
+        	
+        	/* 
+        	 * DIRECTORY-126 : Add new direction action : Mass Workflow action
+        	 * Only the first record task form is displayed because the id resource is not
+        	 * relevant when displaying the task form. 
+        	 */
+        	String strIdDirectoryRecord = listIdsDirectoryRecord[0];
+    		int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+    		String strHtmlTasksForm = WorkflowService.getInstance(  ).getDisplayTasksForm( 
+    				nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction, request, getLocale(  ) );
+        	
+        	Map<String, Object> model = new HashMap<String, Object>(  );
+        	
+        	model.put( MARK_TASKS_FORM, strHtmlTasksForm );
+        	model.put( MARK_ID_ACTION, nIdAction );
+        	model.put( MARK_LIST_IDS_DIRECTORY_RECORD, listIdsDirectoryRecord );
+        	
+        	setPageTitleProperty( PROPERTY_TASKS_FORM_WORKFLOW_PAGE_TITLE );
+        	
+        	HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_TASKS_FORM_WORKFLOW, getLocale(  ), model );
+        	
+        	return getAdminPage( templateList.getHtml(  ) );
+        }
+        return getManageDirectory( request );
     }
 
     /**
@@ -3463,27 +3473,43 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      */
     public String doSaveTasksForm( HttpServletRequest request )
     {
-        String strIdRecord = request.getParameter( PARAMETER_ID_RECORD );
-        String strIdAction = request.getParameter( PARAMETER_ID_ACTION );
-        int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
-        int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
-
-        Record record = RecordHome.findByPrimaryKey( nIdRecord, getPlugin(  ) );
-        int nIdDirectory = record.getDirectory(  ).getIdDirectory(  );
-
-        if ( request.getParameter( PARAMETER_CANCEL ) == null )
+        String[] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
+        if ( listIdsDirectoryRecord != null && listIdsDirectoryRecord.length > 0 )
         {
-            String strError = WorkflowService.getInstance(  )
-                                             .doSaveTasksForm( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
-                    Integer.valueOf( nIdDirectory ), request, getLocale(  ) );
-
-            if ( strError != null )
+        	String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+            // If the id directory is not in the parameter, then fetch it from the first record
+            // assuming all records are from the same directory 
+            if ( StringUtils.isBlank( strIdDirectory ) || !StringUtils.isNumeric( strIdDirectory ) )
             {
-                return strError;
+                String strIdDirectoryRecord = listIdsDirectoryRecord[0];
+                int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
             }
+            int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+            
+            if ( request.getParameter( PARAMETER_CANCEL ) == null )
+            {
+            	String strIdAction = request.getParameter( PARAMETER_ID_ACTION );
+            	int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
+            	for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
+            	{
+            		int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+            		
+            		String strError = WorkflowService.getInstance(  )
+            		.doSaveTasksForm( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
+            				nIdDirectory, request, getLocale(  ) );
+            		
+            		if ( strError != null )
+            		{
+            			return strError;
+            		}
+            	}
+            }
+            
+            return getJspManageDirectoryRecord( request, nIdDirectory );
         }
-
-        return getJspManageDirectoryRecord( request, nIdDirectory );
+        return getJspManageDirectory( request );
     }
 
     /**
@@ -3714,37 +3740,71 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     	_searchFields.setMapQuery( null );
     }
 
+    /**
+     * Do process the workflow actions
+     * @param request the HTTP request
+     * @return the JSP return
+     */
     public String doProcessAction( HttpServletRequest request )
     {
-        String strIdRecord = request.getParameter( PARAMETER_ID_RECORD );
-        String strIdAction = request.getParameter( PARAMETER_ID_ACTION );
-        int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
-        int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
-
-        Record record = RecordHome.findByPrimaryKey( nIdRecord, getPlugin(  ) );
-        int nIdDirectory = record.getDirectory(  ).getIdDirectory(  );
-
-        if ( WorkflowService.getInstance(  ).isDisplayTasksForm( nIdAction, getLocale(  ) ) )
+        String[] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
+        if ( listIdsDirectoryRecord != null && listIdsDirectoryRecord.length > 0 )
         {
-            return getJspTasksFormTest( request, nIdRecord, nIdAction );
+        	String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+            // If the id directory is not in the parameter, then fetch it from the first record
+            // assuming all records are from the same directory 
+            if ( StringUtils.isBlank( strIdDirectory ) || !StringUtils.isNumeric( strIdDirectory ) )
+            {
+                String strIdDirectoryRecord = listIdsDirectoryRecord[0];
+                int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
+            }
+            int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+            
+            String strIdAction = request.getParameter( PARAMETER_ID_ACTION );
+            int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
+            
+            
+            if ( WorkflowService.getInstance(  ).isDisplayTasksForm( nIdAction, getLocale(  ) ) )
+            {
+            	return getJspTasksFormTest( request, listIdsDirectoryRecord, nIdAction );
+            }
+            
+            for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
+            {
+            	int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+            	
+            	WorkflowService.getInstance(  )
+            	.doProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
+            			nIdDirectory, request, getLocale(  ), false );
+            }
+            return getJspManageDirectoryRecord( request, nIdDirectory );
         }
-
-        WorkflowService.getInstance(  )
-                       .doProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
-            Integer.valueOf( nIdDirectory ), request, getLocale(  ), false );
-
-        return getJspManageDirectoryRecord( request, nIdDirectory );
+        return getJspManageDirectory( request );
     }
 
     /**
      * return url of the jsp manage commentaire
      * @param request The HTTP request
+     * @param listIdsTestResource the list if id resource
+     * @param nIdAction the id action
      * @return url of the jsp manage commentaire
      */
-    private String getJspTasksFormTest( HttpServletRequest request, int nIdTestResource, int nIdAction )
+    private String getJspTasksFormTest( HttpServletRequest request, String[] listIdsTestResource, int nIdAction )
     {
-        return AppPathService.getBaseUrl( request ) + JSP_TASKS_FORM_WORKFLOW + "?" + PARAMETER_ID_RECORD + "=" +
-        nIdTestResource + "&" + PARAMETER_ID_ACTION + "=" + nIdAction;
+    	UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_TASKS_FORM_WORKFLOW );
+    	url.addParameter( PARAMETER_ID_ACTION, nIdAction );
+    	
+    	if ( listIdsTestResource != null && listIdsTestResource.length > 0 )
+    	{
+    		for ( String strIdTestResource : listIdsTestResource )
+    		{
+    			url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD, strIdTestResource );
+    		}
+    	}
+    	
+        return url.getUrl(  );
     }
 
     /**
