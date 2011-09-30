@@ -49,6 +49,8 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
 import fr.paris.lutece.portal.service.util.AppPathService;
+import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
+import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.url.UrlItem;
 
 /**
@@ -112,12 +114,12 @@ public class MassDeleteRecordsDirectoryAction implements IDirectoryAction
 	/**
 	 * Redirects to {@link #JSP_DIRECTORY_MASS_REMOVE_RECORDS}
 	 */
-	public DirectoryActionResult process( HttpServletRequest request,
+	public IPluginActionResult process( HttpServletRequest request,
 			HttpServletResponse response, AdminUser adminUser,
 			DirectoryAdminSearchFields sessionFields )
 			throws AccessDeniedException 
 	{
-		DirectoryActionResult result = new DirectoryActionResult(  );
+		IPluginActionResult result = new DefaultPluginActionResult(  );
 
         String strRedirect = StringUtils.EMPTY;
 

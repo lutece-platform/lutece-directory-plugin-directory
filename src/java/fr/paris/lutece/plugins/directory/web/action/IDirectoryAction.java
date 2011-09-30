@@ -39,8 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.paris.lutece.portal.business.user.AdminUser;
-import fr.paris.lutece.portal.service.admin.AccessDeniedException;
-
+import fr.paris.lutece.portal.web.pluginaction.IPluginAction;
 /**
  * 
  * A directory action.
@@ -49,50 +48,11 @@ import fr.paris.lutece.portal.service.admin.AccessDeniedException;
  * <li>{@link #getButtonTemplate()} is used in manage directory record template to display buttons.
  * <li>{@link #isInvoked(HttpServletRequest)} is used by DirectoryJspBean to detect the invoked action.
  * <li>{@link #process(HttpServletRequest, HttpServletResponse, AdminUser, DirectoryAdminSearchFields)} is called by DirectoryJspBean.
- * The {@link DirectoryActionResult} may contain html content or a redirect url or a noop.
+ * The {@link DefaultPluginActionResult} may contain html content or a redirect url or a noop.
  * <li>{@link #getName()} is mainly for debbuging purpose
  * </ul>
  */
-public interface IDirectoryAction
+public interface IDirectoryAction extends IPluginAction<DirectoryAdminSearchFields>
 {
-	/**
-	 * Returns <code>true</code> if the action is invoked, <code>false</code> otherwise. <br>
-	 * Uses one or several button names to detect if the action is called or note.
-	 * @param request the request
-	 * @return <code>true</code> if the action is invoked, <code>false</code> otherwise.
-	 */
-	boolean isInvoked( HttpServletRequest request );
-	
-	/**
-	 * Processes the request
-	 * @param request the request
-	 * @param response the response
-	 * @param adminUser the user
-	 * @param sessionFields the session fields
-	 * @return the action result
-	 * @throws AccessDeniedException if the user can't access the feature
-	 */
-	DirectoryActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser, DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException;
-	
-	/**
-	 * Fills the model to provide necessary data to fill the button template
-	 * @param request the request
-	 * @param adminUser the admin user to filter features
-	 * @param model the model
-	 */
-	void fillModel( HttpServletRequest request, AdminUser adminUser, Map<String, Object> model );
-	
-	/**
-	 * Gets the template to display the action (typically a button - but also check box, select...)
-	 * Return an empty strict if no display is needed (for default directory actions : create, search...)
-	 * @return the template
-	 */
-	String getButtonTemplate(  );
-	
-	/**
-	 * The action name
-	 * @return the name
-	 */
-	String getName(  );
-
+	// only generic fix to be Spring compliant
 }

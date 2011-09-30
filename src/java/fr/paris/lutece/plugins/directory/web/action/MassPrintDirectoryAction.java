@@ -42,6 +42,8 @@ import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.util.AppPathService;
+import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
+import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.url.UrlItem;
 
 /**
@@ -94,12 +96,12 @@ public class MassPrintDirectoryAction implements IDirectoryAction
 	/**
 	 * Redirects to {@link #JSP_DIRECTORY_MASS_PRINT}
 	 */
-	public DirectoryActionResult process(HttpServletRequest request,
+	public IPluginActionResult process(HttpServletRequest request,
 			HttpServletResponse response, AdminUser adminUser,
 			DirectoryAdminSearchFields sessionFields)
 			throws AccessDeniedException 
 	{
-		DirectoryActionResult result = new DirectoryActionResult(  );
+		DefaultPluginActionResult result = new DefaultPluginActionResult(  );
 		
 		UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DIRECTORY_MASS_PRINT );
 		String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );

@@ -42,6 +42,8 @@ import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.util.AppPathService;
+import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
+import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.url.UrlItem;
 
 /**
@@ -94,12 +96,12 @@ public class CreateRecordDirectoryAction implements IDirectoryAction
 	/**
 	 * Sends a redirect
 	 */
-	public DirectoryActionResult process(HttpServletRequest request,
+	public IPluginActionResult process(HttpServletRequest request,
 			HttpServletResponse response, AdminUser adminUser,
 			DirectoryAdminSearchFields sessionFields)
 			throws AccessDeniedException 
 	{
-		DirectoryActionResult result = new DirectoryActionResult(  );
+		DefaultPluginActionResult result = new DefaultPluginActionResult(  );
 		String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
         
 		UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_CREATE_DIRECTORY_RECORD );

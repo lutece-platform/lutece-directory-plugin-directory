@@ -82,8 +82,6 @@ import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearch
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
-import fr.paris.lutece.plugins.directory.web.action.DirectoryActionManager;
-import fr.paris.lutece.plugins.directory.web.action.DirectoryActionResult;
 import fr.paris.lutece.plugins.directory.web.action.DirectoryAdminSearchFields;
 import fr.paris.lutece.plugins.directory.web.action.IDirectoryAction;
 import fr.paris.lutece.portal.business.rbac.RBAC;
@@ -112,6 +110,9 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.portal.web.admin.PluginAdminPageJspBean;
 import fr.paris.lutece.portal.web.constants.Messages;
 import fr.paris.lutece.portal.web.constants.Parameters;
+import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
+import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
+import fr.paris.lutece.portal.web.pluginaction.PluginActionManager;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceItem;
@@ -280,7 +281,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_DATE_CREATION_END_SEARCH = "date_creation_end_search";
     private static final String MARK_PERMISSION_MANAGE_ADVANCED_PARAMETERS = "permission_manage_advanced_parameters";
     private static final String MARK_LIST_PARAM_DEFAULT_VALUES = "list_param_default_values";
-
+    private static final String MARK_DIRECTORY_ACTIONS = "directory_actions";
+    
     //private static final String MARK_URL_ACTION = "url_action";
     private static final String MARK_STR_ERROR = "str_error";
     private static final String MARK_NUMBER_LINES_IMPORTED = "number_lines_imported";
@@ -2403,10 +2405,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * If no action found, then displays the record list.
      * @param request The Http request
      * @throws AccessDeniedException the {@link AccessDeniedException}
-     * @return DirectoryActionResult
+     * @return IPluginActionResult
      */
     @SuppressWarnings( "unchecked" )
-    public DirectoryActionResult getManageDirectoryRecord( HttpServletRequest request, HttpServletResponse response )
+    public IPluginActionResult getManageDirectoryRecord( HttpServletRequest request, HttpServletResponse response )
         throws AccessDeniedException
     {	
     	// fill the selected records
@@ -2428,7 +2430,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     	
     	
     	// first - see if there is an invoked action
-    	IDirectoryAction action = DirectoryActionManager.getDirectoryAction( request );
+    	IDirectoryAction action = PluginActionManager.getPluginAction( request, IDirectoryAction.class );
     	if ( action !=  null )
     	{
     		if ( AppLogService.isDebugEnabled(  ) )
@@ -2440,7 +2442,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     	else
     	{
     		// display could have been an action but it's the default one an will always be here...
-    		DirectoryActionResult result = new DirectoryActionResult(  );
+    		DefaultPluginActionResult result = new DefaultPluginActionResult(  );
 	        String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
 	        int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
 	        boolean bWorkflowServiceEnable = WorkflowService.getInstance(  ).isAvailable(  );
@@ -2694,7 +2696,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	            model.put( MARK_SEARCH_STATE_WORKFLOW, referenceList );
 	        }
 	        
-	        DirectoryActionManager.fillModel( request, adminUser, model );
+	        PluginActionManager.fillModel( request, adminUser, model, IDirectoryAction.class, MARK_DIRECTORY_ACTIONS );
 	
 	        setPageTitleProperty( PROPERTY_MANAGE_DIRECTORY_RECORD_PAGE_TITLE );
 	

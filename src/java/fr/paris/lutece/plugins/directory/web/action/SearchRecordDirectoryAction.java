@@ -47,6 +47,8 @@ import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
+import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
+import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 
 /**
  * Directory record search
@@ -99,12 +101,12 @@ public class SearchRecordDirectoryAction implements IDirectoryAction
 	/**
 	 * {@inheritDoc}
 	 */
-	public DirectoryActionResult process(HttpServletRequest request,
+	public IPluginActionResult process(HttpServletRequest request,
 			HttpServletResponse response, AdminUser adminUser,
 			DirectoryAdminSearchFields searchFields)
 			throws AccessDeniedException 
 	{
-		DirectoryActionResult result = new DirectoryActionResult(  );
+		DefaultPluginActionResult result = new DefaultPluginActionResult(  );
 		String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
         

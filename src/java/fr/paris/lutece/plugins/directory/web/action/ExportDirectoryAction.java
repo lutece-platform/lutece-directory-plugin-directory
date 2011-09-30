@@ -81,6 +81,8 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
+import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
+import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.UniqueIDGenerator;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
@@ -169,11 +171,11 @@ public class ExportDirectoryAction implements IDirectoryAction
 	/**
 	 * {@inheritDoc}
 	 */
-	public DirectoryActionResult process(HttpServletRequest request,
+	public IPluginActionResult process(HttpServletRequest request,
 			HttpServletResponse response, AdminUser adminUser,
 			DirectoryAdminSearchFields searchFields) throws AccessDeniedException
 	{
-		DirectoryActionResult result = new DirectoryActionResult(  );
+		DefaultPluginActionResult result = new DefaultPluginActionResult(  );
 		
 		String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
