@@ -57,14 +57,17 @@ function addAsynchronousUploadField(fieldId) {
 	    		$( '#_filename_' + fieldId).append( getImageRemoveFile( anchorId, fieldId ) );
 				$( '#' + anchorId).click( 
 						function( event ) {
-							var jsonData = { 'id_entry' : fieldId };
-							$.getJSON(baseUrl + 'jsp/admin/plugins/directory/DoRemoveFile.jsp', jsonData,
-								function(json) {
+							if ( confirm( 'Voulez-vous vraiment supprimer le fichier ?' ) ) {
+								var jsonData = { 'id_entry' : fieldId };
+								$.getJSON( baseUrl + 'jsp/admin/plugins/directory/DoRemoveFile.jsp', jsonData,
+									function( json ) {
 									$( '#_filename_' + fieldId).hide(  );
-								}
-							);				
-							event.preventDefault();
-							$( '#_filename_' + fieldId ).html( getUpdateEntryHiddenInput( fieldId ) );
+								} );
+								event.preventDefault();
+								$( '#_filename_' + fieldId ).html( getUpdateEntryHiddenInput( fieldId ) );
+							} else {
+								return false;
+							}
 						}
 				);
 	    	}
@@ -196,14 +199,18 @@ function displayFile( fileName, fieldId )
 	$("#_filename_" + fieldId).html( strContent );
 	$("#" + anchorId).click( 
 			function( event ) {
-				var jsonData = {"id_entry":fieldId };
-				$.getJSON(baseUrl + 'jsp/admin/plugins/directory/DoRemoveFile.jsp', jsonData,
-					function(json) {
-						$("#_filename_" + fieldId).hide(  );
+				if ( confirm( 'Voulez-vous vraiment supprimer le fichier ?' ) ) {
+					var jsonData = { "id_entry" : fieldId };
+					$.getJSON(baseUrl + 'jsp/admin/plugins/directory/DoRemoveFile.jsp', jsonData,
+							function(json) {
+						$( '#_filename_' + fieldId).hide(  );
 					}
-				);				
-				event.preventDefault();
-				$("#_filename_" + fieldId).html( "" );
+					);				
+					event.preventDefault();
+					$( '#_filename_' + fieldId).html( '' );
+				} else {
+					return false;
+				}
 			}
 	);
 }
