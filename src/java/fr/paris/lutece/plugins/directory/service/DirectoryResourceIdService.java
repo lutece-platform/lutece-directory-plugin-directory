@@ -145,11 +145,16 @@ public class DirectoryResourceIdService extends ResourceIdService
      */
     public void register(  )
     {
-        ResourceType rt = new ResourceType(  );
-        rt.setResourceIdServiceClass( DirectoryResourceIdService.class.getName(  ) );
-        rt.setPluginName( DirectoryPlugin.PLUGIN_NAME );
-        rt.setResourceTypeKey( Directory.RESOURCE_TYPE );
-        rt.setResourceTypeLabelKey( PROPERTY_LABEL_RESOURCE_TYPE );
+    	// Override the resource type DIRECTORY_DIRECTORY_TYPE
+    	ResourceType rt = ResourceTypeManager.getResourceType( Directory.RESOURCE_TYPE );
+    	if ( rt == null )
+    	{
+    		rt = new ResourceType(  );
+    		rt.setResourceIdServiceClass( DirectoryResourceIdService.class.getName(  ) );
+    		rt.setPluginName( DirectoryPlugin.PLUGIN_NAME );
+    		rt.setResourceTypeKey( Directory.RESOURCE_TYPE );
+    		rt.setResourceTypeLabelKey( PROPERTY_LABEL_RESOURCE_TYPE );
+    	}
 
         Permission p = new Permission(  );
         p.setPermissionKey( PERMISSION_CREATE );
