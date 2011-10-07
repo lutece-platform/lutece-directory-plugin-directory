@@ -112,7 +112,7 @@ public class DirectoryResourceIdService extends ResourceIdService
 
     /** Permission for mylutece user visualisation */
     public static final String PERMISSION_VISUALISATION_MYLUTECE_USER = "VISUALISATION_MYLUTECE_USER";
-    private static final String PROPERTY_LABEL_RESOURCE_TYPE = "directory.permission.label.resource_type_directory";
+    public static final String PROPERTY_LABEL_RESOURCE_TYPE = "directory.permission.label.resource_type_directory";
     private static final String PROPERTY_LABEL_CREATE = "directory.permission.label.create_directory";
     private static final String PROPERTY_LABEL_MANAGE_RECORD = "directory.permission.label.manage_directory_record";
     private static final String PROPERTY_LABEL_DELETE_ALL_RECORD = "directory.permission.label.delete_all_directory_record";
