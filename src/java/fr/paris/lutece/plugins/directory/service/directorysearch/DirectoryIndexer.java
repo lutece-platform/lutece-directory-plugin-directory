@@ -366,26 +366,29 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
     {
         // make a new, empty document
         org.apache.lucene.document.Document doc = new org.apache.lucene.document.Document(  );
-        doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY, Integer.toString( directory.getIdDirectory(  ) ),
-                Field.Store.YES, Field.Index.NOT_ANALYZED ) );
-
-        doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY_RECORD, Integer.toString( record.getIdRecord(  ) ),
-                Field.Store.YES, Field.Index.NOT_ANALYZED ) );
-
-        if ( record.getWorkgroup(  ) != null )
+        if ( directory != null && record != null )
         {
-            doc.add( new Field( DirectorySearchItem.FIELD_WORKGROUP_KEY, record.getWorkgroup(  ), Field.Store.YES,
-                    Field.Index.NOT_ANALYZED ) );
-        }
+        	doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY, Integer.toString( directory.getIdDirectory(  ) ),
+                    Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
-        if ( record.getRoleKey(  ) != null )
-        {
-            doc.add( new Field( DirectorySearchItem.FIELD_ROLE_KEY, record.getRoleKey(  ), Field.Store.YES,
-                    Field.Index.NOT_ANALYZED ) );
-        }
+            doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY_RECORD, Integer.toString( record.getIdRecord(  ) ),
+                    Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
-        String strDate = DateTools.dateToString( record.getDateCreation(  ), DateTools.Resolution.DAY );
-        doc.add( new Field( DirectorySearchItem.FIELD_DATE_CREATION, strDate, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
+            if ( record.getWorkgroup(  ) != null )
+            {
+                doc.add( new Field( DirectorySearchItem.FIELD_WORKGROUP_KEY, record.getWorkgroup(  ), Field.Store.YES,
+                        Field.Index.NOT_ANALYZED ) );
+            }
+
+            if ( record.getRoleKey(  ) != null )
+            {
+                doc.add( new Field( DirectorySearchItem.FIELD_ROLE_KEY, record.getRoleKey(  ), Field.Store.YES,
+                        Field.Index.NOT_ANALYZED ) );
+            }
+
+            String strDate = DateTools.dateToString( record.getDateCreation(  ), DateTools.Resolution.DAY );
+            doc.add( new Field( DirectorySearchItem.FIELD_DATE_CREATION, strDate, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
+        }
 
         // return the document
         return doc;
