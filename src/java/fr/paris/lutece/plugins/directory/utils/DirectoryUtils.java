@@ -394,6 +394,27 @@ public final class DirectoryUtils
     public static Map<String, List<RecordField>> getMapIdEntryListRecordField( List<IEntry> lisEntry, int nIdRecord,
         Plugin plugin )
     {
+        return getMapIdEntryListRecordField( lisEntry, nIdRecord, plugin, true );
+    }
+    
+    /**
+     * get a Map which contains for each entry the list of recordField object
+     * associated
+     *
+     * @param lisEntry
+     *            the list of entry associate to the record
+     * @param nIdRecord
+     *            the id of the record
+     * @param plugin
+     *            plugin
+     * @param bGetFileName true if it must get the file name, false otherwise
+     * 		<br />
+     * 		Warning : The file name is fetch by a webservice call. Beware of performance.
+     * @return a map
+     */
+    public static Map<String, List<RecordField>> getMapIdEntryListRecordField( List<IEntry> lisEntry, int nIdRecord,
+        Plugin plugin, boolean bGetFileName )
+    {
         Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>(  );
 
         RecordFieldFilter filter = new RecordFieldFilter(  );
@@ -405,11 +426,11 @@ public final class DirectoryUtils
             {
                 for ( IEntry child : entryFistLevel.getChildren(  ) )
                 {
-                	buildMapIdEntryListRecordField( map, child, filter, plugin );
+                	buildMapIdEntryListRecordField( map, child, filter, plugin, bGetFileName );
                 }
             }
 
-            buildMapIdEntryListRecordField( map, entryFistLevel, filter, plugin );
+            buildMapIdEntryListRecordField( map, entryFistLevel, filter, plugin, bGetFileName );
         }
 
         return map;
@@ -1086,9 +1107,12 @@ public final class DirectoryUtils
      * @param entry the entry
      * @param filter the filter
      * @param plugin the plugin
+     * @param bGetFileName true if it must get the file name, false otherwise
+     * 		<br />
+     * 		Warning : The file name is fetch by a webservice call. Beware of performance.
      */
     private static void buildMapIdEntryListRecordField( Map<String, List<RecordField>> map, 
-    		IEntry entry, RecordFieldFilter filter, Plugin plugin )
+    		IEntry entry, RecordFieldFilter filter, Plugin plugin, boolean bGetFileName )
     {
     	filter.setIdEntry( entry.getIdEntry(  ) );
     	List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( filter, plugin );
@@ -1099,7 +1123,7 @@ public final class DirectoryUtils
     		{
     			// Only 1 record field per entry type download url
     			RecordField recordField = listRecordFields.get( 0 );
-    			if ( recordField != null && StringUtils.isNotBlank( recordField.getValue(  ) ) )
+    			if ( recordField != null && StringUtils.isNotBlank( recordField.getValue(  ) ) && bGetFileName )
     			{
     				DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
     				String strFileName = StringUtils.EMPTY;

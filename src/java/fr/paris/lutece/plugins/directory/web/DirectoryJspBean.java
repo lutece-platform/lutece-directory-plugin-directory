@@ -2622,7 +2622,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	            resourceActions.put( MARK_RECORD, record );
 	            resourceActions.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
 	                DirectoryUtils.getMapIdEntryListRecordField( listEntryResultSearch, record.getIdRecord(  ),
-	                    getPlugin(  ) ) );
+	                    getPlugin(  ), false ) );
 	
 	            if ( bWorkflowServiceEnable )
 	            {
@@ -4077,7 +4077,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         {
             Map<String, Object> resource = new HashMap<String, Object>(  );
             resource.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
-                DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ) ) );
+                DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ), false ) );
 
             resource.put( MARK_RESOURCE_HISTORY,
                 WorkflowService.getInstance(  )
