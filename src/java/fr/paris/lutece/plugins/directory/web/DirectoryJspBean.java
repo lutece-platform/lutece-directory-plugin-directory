@@ -87,7 +87,6 @@ import fr.paris.lutece.plugins.directory.web.action.IDirectoryAction;
 import fr.paris.lutece.portal.business.rbac.RBAC;
 import fr.paris.lutece.portal.business.role.RoleHome;
 import fr.paris.lutece.portal.business.user.AdminUser;
-import fr.paris.lutece.portal.business.workflow.Action;
 import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
@@ -291,10 +290,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_FINISH_IMPORT = "finish_import";
     private static final String MARK_WORKFLOW_REF_LIST = "workflow_list";
     private static final String MARK_WORKFLOW_SELECTED = "workflow_selected";
-    private static final String MARK_WORKFLOW_ACTION_LIST = "workflow_action_list";
-    private static final String MARK_WORKFLOW_STATE = "workflow_state";
     private static final String MARK_RECORD = "record";
     private static final String MARK_RESOURCE_ACTIONS_LIST = "resource_actions_list";
+    private static final String MARK_RESOURCE_ACTIONS = "resource_actions";
     private static final String MARK_TASKS_FORM = "tasks_form";
     private static final String MARK_ID_ACTION = "id_action";
     private static final String MARK_LIST_IDS_DIRECTORY_RECORD = "list_ids_directory_record";
@@ -324,6 +322,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_SHOW_ACTION_RESULT = "show_action_result";
     private static final String MARK_LIST_IDS_SUCCESS_RECORD = "list_ids_success_record";
     private static final String MARK_LIST_IDS_FAIL_RECORD = "list_ids_fail_record";
+    private static final String MARK_ITEM_NAVIGATOR = "item_navigator";
 
     // JSP URL
     private static final String JSP_DO_DISABLE_DIRECTORY = "jsp/admin/plugins/directory/DoDisableDirectory.jsp";
@@ -346,6 +345,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String JSP_MANAGE_ADVANCED_PARAMETERS = "jsp/admin/plugins/directory/ManageAdvancedParameters.jsp";
     private static final String JSP_DO_CHANGE_STATES_RECORD = "jsp/admin/plugins/directory/DoChangeStatesRecord.jsp";
     private static final String JSP_ACTION_RESULT = "jsp/admin/plugins/directory/ActionResult.jsp";
+    private static final String JSP_DO_VISUALISATION_RECORD = "jsp/admin/plugins/directory/DoVisualisationRecord.jsp";
 
     //Parameters
     private static final String PARAMETER_ID_DIRECTORY = DirectoryUtils.PARAMETER_ID_DIRECTORY;
@@ -410,6 +410,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     //session fields    
     private DirectoryAdminSearchFields _searchFields = new DirectoryAdminSearchFields(  );
+    private List<Integer> _listIdsResultRecord = new ArrayList<Integer>(  );
 
     /*-------------------------------MANAGEMENT  DIRECTORY-----------------------------*/
 
@@ -2568,12 +2569,15 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	        
 	        List<Integer> listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, true, sortEntry, nSortOrder, _searchFields, getUser(  ), getLocale(  ) );
 	        
+	        // Store the list of id records in session
+	        _listIdsResultRecord = listResultRecordId;
+
 	        // HACK : We copy the list so workflow does not clear the paginator list.
 	        LocalizedPaginator<Integer> paginator = new LocalizedPaginator<Integer>( new ArrayList<Integer>( listResultRecordId ), _searchFields.getItemsPerPageDirectoryRecord(  ),
 	                url.getUrl(  ), PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexDirectoryRecord(  ), getLocale(  ) );
 	        
 	        // get only record for page items.
-	        lRecord = RecordHome.loadListByListId( paginator.getPageItems(), getPlugin(  ) );
+	        lRecord = RecordHome.loadListByListId( paginator.getPageItems(  ), getPlugin(  ) );
 	        
 	        boolean bHistoryEnabled = false;
 	        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
@@ -2582,19 +2586,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	        bWorkflowServiceEnable = ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
 	            bWorkflowServiceEnable;
 	
-	        WorkflowService workflowService = null;
-	        HashMap<Integer, List<Action>> lListActions = null;
-	
-	        if ( bWorkflowServiceEnable )
-	        {
-	            bHistoryEnabled = true;
-	            workflowService = WorkflowService.getInstance(  );
-	            lListActions = workflowService.getActions( (List<Integer>) listResultRecordId,
-	                    Record.WORKFLOW_RESOURCE_TYPE, Integer.valueOf( directory.getIdDirectory(  ) ),
-	                    directory.getIdWorkflow(  ), adminUser );
-	        }
-	
-	        List<HashMap> listResourceActions = new ArrayList<HashMap>( lRecord.size(  ) );
+	        List<Map<String, Object>> listResourceActions = new ArrayList<Map<String, Object>>( lRecord.size(  ) );
 	
 	        List<DirectoryAction> listActionsForDirectoryEnable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_ENABLE,
 	                getPlugin(  ), getLocale(  ) );
@@ -2608,41 +2600,13 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	
 	        for ( Record record : lRecord )
 	        {
-	            if ( record.isEnabled(  ) )
-	            {
-	                record.setActions( listActionsForDirectoryEnable );
-	            }
-	            else
-	            {
-	                record.setActions( listActionsForDirectoryDisable );
-	            }
-	
-	            //workflow service
-	            HashMap resourceActions = new HashMap(  );
-	            resourceActions.put( MARK_RECORD, record );
-	            resourceActions.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
-	                DirectoryUtils.getMapIdEntryListRecordField( listEntryResultSearch, record.getIdRecord(  ),
-	                    getPlugin(  ), false ) );
-	
-	            if ( bWorkflowServiceEnable )
-	            {
-	                State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-	                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ), adminUser );
-	                resourceActions.put( MARK_WORKFLOW_STATE, state );
-	
-	                if ( bHistoryEnabled )
-	                {
-	                    //State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-	                    //        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ), adminUser );
-	                    resourceActions.put( MARK_WORKFLOW_ACTION_LIST, lListActions.get( record.getIdRecord(  ) ) );
-	                }
-	            }
-	
-	            listResourceActions.add( resourceActions );
+	            listResourceActions.add( DirectoryService.getInstance().getResourceAction( record, directory, 
+	            		listEntryResultSearch, getLocale(  ), adminUser, listActionsForDirectoryEnable, 
+	            		listActionsForDirectoryDisable, getPlugin(  ) ) );
 	        }
-		
+
 	        Map<String, Object> model = new HashMap<String, Object>(  );
-	
+
 	        model.put( MARK_SHOW_DATE_CREATION_RESULT, directory.isDateShownInResultList(  ) );
 	        model.put( MARK_ID_ENTRY_TYPE_IMAGE, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_IMAGE, 10 ) );
 	        model.put( MARK_ID_ENTRY_TYPE_DIRECTORY,
@@ -3626,6 +3590,17 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = record.getDirectory(  ).getIdDirectory(  );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
 
+        // List directory actions
+        List<DirectoryAction> listActionsForDirectoryEnable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_ENABLE,
+                getPlugin(  ), getLocale(  ) );
+        List<DirectoryAction> listActionsForDirectoryDisable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_DISABLE,
+                getPlugin(  ), getLocale(  ) );
+
+        listActionsForDirectoryEnable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryEnable,
+                directory, getUser(  ) );
+        listActionsForDirectoryDisable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryDisable,
+                directory, getUser(  ) );
+
         Map<String, Object> model = new HashMap<String, Object>(  );
 
         model.put( MARK_RECORD, record );
@@ -3642,6 +3617,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ) ) );
 
         model.put( MARK_SHOW_DATE_CREATION_RECORD, directory.isDateShownInResultRecord(  ) );
+        model.put( MARK_RESOURCE_ACTIONS, DirectoryService.getInstance(  ).getResourceAction( record, directory, 
+        		listEntry, getLocale(  ), getUser(  ), listActionsForDirectoryEnable, listActionsForDirectoryDisable, getPlugin(  ) ) );
+        model.put( MARK_ITEM_NAVIGATOR, DirectoryService.getInstance(  ).getItemNavigator( nIdRecord, _listIdsResultRecord, 
+        		AppPathService.getBaseUrl( request ) + JSP_DO_VISUALISATION_RECORD ) );
 
         HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_VIEW_DIRECTORY_RECORD, getLocale(  ), model );
 

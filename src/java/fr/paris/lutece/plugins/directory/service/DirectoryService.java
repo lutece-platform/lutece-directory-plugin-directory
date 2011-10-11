@@ -33,13 +33,16 @@
  */
 package fr.paris.lutece.plugins.directory.service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
 import fr.paris.lutece.plugins.directory.business.Directory;
+import fr.paris.lutece.plugins.directory.business.DirectoryAction;
 import fr.paris.lutece.plugins.directory.business.DirectoryXsl;
 import fr.paris.lutece.plugins.directory.business.Entry;
 import fr.paris.lutece.plugins.directory.business.EntryType;
@@ -62,6 +65,8 @@ import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.rbac.RBAC;
 import fr.paris.lutece.portal.business.user.AdminUser;
+import fr.paris.lutece.portal.business.workflow.Action;
+import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
@@ -71,6 +76,7 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.ReferenceList;
+import fr.paris.lutece.util.html.ItemNavigator;
 
 
 /**
@@ -85,6 +91,10 @@ public class DirectoryService
     private static final String MARK_LIST_ENTRY_PARAM_DEFAULT_VALUES = "list_entry_param_default_values";
     private static final String MARK_PERMISSION_INDEX_ALL_DIRECTORY = "permission_index_all_directory";
     private static final String MARK_PERMISSION_XSL = "right_xsl";
+    private static final String MARK_RECORD = "record";
+    private static final String MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD = "map_id_entry_list_record_field";
+    private static final String MARK_WORKFLOW_STATE = "workflow_state";
+    private static final String MARK_WORKFLOW_ACTION_LIST = "workflow_action_list";
     private static DirectoryService _singleton;
 
     /**
@@ -387,6 +397,84 @@ public class DirectoryService
     	}
 		
 		return strWSRestUrl;
+    }
+
+    /**
+     * Get the resource action for a record
+     * @param record the record
+     * @param directory the directory
+     * @param listEntryResultSearch the list of entry
+     * @param locale the locale
+     * @param adminUser the AdminUser
+     * @param plugin the plugin
+     * @return a map of string - object
+     */
+    public Map<String, Object> getResourceAction( Record record, Directory directory, List<IEntry> listEntryResultSearch,
+    		Locale locale, AdminUser adminUser, List<DirectoryAction> listActionsForDirectoryEnable, 
+    		List<DirectoryAction> listActionsForDirectoryDisable, Plugin plugin )
+    {        
+        if ( record.isEnabled(  ) )
+        {
+            record.setActions( listActionsForDirectoryEnable );
+        }
+        else
+        {
+            record.setActions( listActionsForDirectoryDisable );
+        }
+        
+        //workflow service
+        Map<String, Object> resourceActions = new HashMap<String, Object>(  );
+        resourceActions.put( MARK_RECORD, record );
+        resourceActions.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
+            DirectoryUtils.getMapIdEntryListRecordField( listEntryResultSearch, record.getIdRecord(  ),
+                plugin, false ) );
+        
+        boolean bWorkflowServiceEnable = WorkflowService.getInstance(  ).isAvailable(  ) && 
+        	( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );
+
+        if ( bWorkflowServiceEnable )
+        {
+        	WorkflowService workflowService = WorkflowService.getInstance(  );
+        	Collection<Action> lListActions = workflowService.getActions( record.getIdRecord(  ),
+                    Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow(  ), adminUser );
+            State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
+                    directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ), adminUser );
+            resourceActions.put( MARK_WORKFLOW_STATE, state );
+            resourceActions.put( MARK_WORKFLOW_ACTION_LIST, lListActions );
+        }
+        
+        return resourceActions;
+    }
+
+    /**
+     * Get the item navigator
+     * @param nCurrentIdRecord the current id record
+     * @param listIdsResultRecord the list of id records
+     * @param strUrl the url
+     * @return the {@link ItemNavigator}
+     */
+    public ItemNavigator getItemNavigator( int nCurrentIdRecord, List<Integer> listIdsResultRecord, String strUrl )
+    {
+    	Map<Integer, String> listItem = new HashMap<Integer, String>(  );
+        int nMapKey = 1;
+        int nCurrentItemId = 1;
+
+        if ( listIdsResultRecord != null && !listIdsResultRecord.isEmpty(  ) )
+        {
+        	for ( int nIdRecord : listIdsResultRecord )
+        	{
+        		listItem.put( nMapKey, Integer.toString( nIdRecord ) );
+        		
+        		if ( nCurrentIdRecord == nIdRecord )
+        		{
+        			nCurrentItemId = nMapKey;
+        		}
+        		
+        		nMapKey++;
+        	}
+        }
+
+        return new ItemNavigator( listItem, nCurrentItemId, strUrl, DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
     }
     
     /**

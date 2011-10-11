@@ -4,8 +4,65 @@
 <#function isEntryTypeMyLuteceUser entry>
 	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_mylutece_user>
 </#function>
+
+<#macro display_actions resource_actions >
+	<#if resource_actions.workflow_action_list?exists>
+		<#list resource_actions.workflow_action_list as action>
+			<a href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
+				<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}"
+					<#if action.icon.width!=-1>
+						width="${action.icon.width}"
+ 					</#if> 
+					<#if action.icon.height!=-1>
+						height="${action.icon.height}"
+					</#if> 
+					title="${action.name}" alt="${action.name}"
+				/>
+			</a>
+		</#list>
+	</#if>
+	<#list resource_actions.record.actions as action>
+		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name")>
+	 		<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">
+	  			<img src="${action.iconUrl}" alt="${action.name}" title="${action.description}">
+	  		</a>
+		</#if>
+	</#list>
+</#macro>
+
+<div id="left">
+	<div class="content-box">
+		<h2>#i18n{directory.viewing_directory_record.labelRecord} ${record.idRecord}</h2>
+		<table>
+			<tr>
+				<th>#i18n{directory.viewing_directory_record.labelDirectory}</th>
+			</tr>
+			<tr>
+				<td>${directory.title}</td>
+			</tr>
+			<#if resource_actions.workflow_state?exists>
+				<tr>
+					<th>#i18n{directory.viewing_directory_record.labelState}</th>
+				</tr>
+				<tr>
+					<td>${resource_actions.workflow_state.name}</td>
+				</tr>
+			</#if>
+			<tr>
+				<th>#i18n{directory.viewing_directory_record.actions}</th>
+			</tr>
+			<tr>
+				<td>
+					<@item_navigation item_navigator=item_navigator />
+					<@display_actions resource_actions/>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div id="right">
 <div class="content-box">
-	  <h2> #i18n{directory.viewing_directory_record.title}: '${directory.title}' - <#if record.dateCreation?? && show_date_creation_record >#i18n{directory.viewing_directory_record.date_creation} ${record.dateCreation}</#if></h2>
+	  <h2>#i18n{directory.viewing_directory_record.title} : '${directory.title}' - <#if record.dateCreation?? && show_date_creation_record >#i18n{directory.viewing_directory_record.date_creation} ${record.dateCreation}</#if></h2>
 	  <div id="form-content">
 			<form action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data" DISABLE>
 			<input name="page" value="directory" type="hidden" />
@@ -58,6 +115,8 @@
 			</form>
 		</div>
 </div>
+</div>
+
 <script language="JavaScript" type="text/javascript">
 //for datepicker questions
 $(document).ready(function () 
