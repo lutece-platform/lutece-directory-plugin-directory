@@ -96,7 +96,7 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
 			int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
 			Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 			Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
-			if ( directory != null )
+			if ( directory != null && directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL )
 			{
 				List<Action> listMassActions = WorkflowService.getInstance(  ).getMassActions( directory.getIdWorkflow(  ) );
 				refMassActions = new ReferenceList(  );
