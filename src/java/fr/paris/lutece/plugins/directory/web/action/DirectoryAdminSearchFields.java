@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.directory.web.action;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +42,7 @@ import java.util.List;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
+import fr.paris.lutece.util.html.ItemNavigator;
 
 /**
  * Visualisation of all needed session values.
@@ -81,6 +83,8 @@ public final class DirectoryAdminSearchFields implements Serializable
     private Date _dateCreationEndRecord;
     private Date _dateCreationRecord;
     private List<String> _listSelectedRecords;
+    private List<Integer> _listIdsResultRecord;
+    private ItemNavigator _itemNavigatorRecords;
     
     /**
      * Gets the selected records
@@ -511,5 +515,71 @@ public final class DirectoryAdminSearchFields implements Serializable
 	public void setDateCreationRecord( Date dateCreationRecord )
 	{
 		_dateCreationRecord = dateCreationRecord;
+	}
+
+	/**
+	 * Set the list of ids result record
+	 * @param listIdsResultRecord the list of id result record
+	 */
+	public void setListIdsResultRecord( List<Integer> listIdsResultRecord )
+	{
+		_listIdsResultRecord = listIdsResultRecord;
+	}
+
+	/**
+	 * Get the list of ids result record
+	 * @return the list of ids result record
+	 */
+	public List<Integer> getListIdsResultRecord(  )
+	{
+		return _listIdsResultRecord;
+	}
+
+	/**
+	 * Set the item navigator for records
+	 * @param nCurrentIdRecord the current id record
+	 * @param strUrl the url
+	 * @param strParameterName the parameter name
+	 */
+	public void setItemNavigatorRecords( int nCurrentIdRecord, String strUrl, String strParameterName )
+	{
+		if ( _itemNavigatorRecords == null && _listIdsResultRecord != null && !_listIdsResultRecord.isEmpty(  ) )
+		{
+			List<String> listIds = new ArrayList<String>( _listIdsResultRecord.size(  ) );
+			int nCurrentItemId = 0;
+    		int nIndex = 0;
+			for ( int nIdRecord : _listIdsResultRecord )
+			{
+				listIds.add( Integer.toString( nIdRecord ) );
+				if ( nIdRecord == nCurrentIdRecord )
+				{
+					nCurrentItemId = nIndex;
+				}
+				nIndex++;
+			}
+			_itemNavigatorRecords = new ItemNavigator( listIds, nCurrentItemId, strUrl, strParameterName );
+		}
+		else
+		{
+			_itemNavigatorRecords.setCurrentItemId( Integer.toString( nCurrentIdRecord ) );
+		}
+	}
+
+	/**
+	 * Set the item navigator
+	 * @param itemNavigator the item navigator
+	 */
+	public void setItemNavigatorRecords( ItemNavigator itemNavigator )
+	{
+		_itemNavigatorRecords = itemNavigator;
+	}
+
+	/**
+	 * Get the item navigator
+	 * @return
+	 */
+	public ItemNavigator getItemNavigatorRecords(  )
+	{
+		return _itemNavigatorRecords;
 	}
 }

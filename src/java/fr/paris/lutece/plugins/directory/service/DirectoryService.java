@@ -76,7 +76,6 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.ReferenceList;
-import fr.paris.lutece.util.html.ItemNavigator;
 
 
 /**
@@ -446,37 +445,6 @@ public class DirectoryService
         return resourceActions;
     }
 
-    /**
-     * Get the item navigator
-     * @param nCurrentIdRecord the current id record
-     * @param listIdsResultRecord the list of id records
-     * @param strUrl the url
-     * @return the {@link ItemNavigator}
-     */
-    public ItemNavigator getItemNavigator( int nCurrentIdRecord, List<Integer> listIdsResultRecord, String strUrl )
-    {
-    	Map<Integer, String> listItem = new HashMap<Integer, String>(  );
-        int nMapKey = 1;
-        int nCurrentItemId = 1;
-
-        if ( listIdsResultRecord != null && !listIdsResultRecord.isEmpty(  ) )
-        {
-        	for ( int nIdRecord : listIdsResultRecord )
-        	{
-        		listItem.put( nMapKey, Integer.toString( nIdRecord ) );
-        		
-        		if ( nCurrentIdRecord == nIdRecord )
-        		{
-        			nCurrentItemId = nMapKey;
-        		}
-        		
-        		nMapKey++;
-        	}
-        }
-
-        return new ItemNavigator( listItem, nCurrentItemId, strUrl, DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
-    }
-    
     /**
      * Build the number from a given number. This methods first checks if the number is not a type
      * numerical (without the prefix of the entry), or checks if the number already exists on 

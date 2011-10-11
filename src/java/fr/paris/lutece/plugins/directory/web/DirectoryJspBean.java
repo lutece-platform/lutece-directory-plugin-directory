@@ -410,7 +410,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     //session fields    
     private DirectoryAdminSearchFields _searchFields = new DirectoryAdminSearchFields(  );
-    private List<Integer> _listIdsResultRecord = new ArrayList<Integer>(  );
 
     /*-------------------------------MANAGEMENT  DIRECTORY-----------------------------*/
 
@@ -2460,7 +2459,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	        {
 	            throw new AccessDeniedException(  );
 	        }
-	
+
 	        if ( request.getParameter( PARAMETER_SESSION ) == null )
 	        {
 	            reInitDirectoryRecordFilter(  );
@@ -2570,7 +2569,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	        List<Integer> listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, true, sortEntry, nSortOrder, _searchFields, getUser(  ), getLocale(  ) );
 	        
 	        // Store the list of id records in session
-	        _listIdsResultRecord = listResultRecordId;
+	        _searchFields.setListIdsResultRecord( listResultRecordId );
 
 	        // HACK : We copy the list so workflow does not clear the paginator list.
 	        LocalizedPaginator<Integer> paginator = new LocalizedPaginator<Integer>( new ArrayList<Integer>( listResultRecordId ), _searchFields.getItemsPerPageDirectoryRecord(  ),
@@ -3601,6 +3600,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         listActionsForDirectoryDisable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryDisable,
                 directory, getUser(  ) );
 
+        _searchFields.setItemNavigatorRecords( nIdRecord, AppPathService.getBaseUrl( request ) + JSP_DO_VISUALISATION_RECORD, 
+        		DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
+
         Map<String, Object> model = new HashMap<String, Object>(  );
 
         model.put( MARK_RECORD, record );
@@ -3619,8 +3621,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_SHOW_DATE_CREATION_RECORD, directory.isDateShownInResultRecord(  ) );
         model.put( MARK_RESOURCE_ACTIONS, DirectoryService.getInstance(  ).getResourceAction( record, directory, 
         		listEntry, getLocale(  ), getUser(  ), listActionsForDirectoryEnable, listActionsForDirectoryDisable, getPlugin(  ) ) );
-        model.put( MARK_ITEM_NAVIGATOR, DirectoryService.getInstance(  ).getItemNavigator( nIdRecord, _listIdsResultRecord, 
-        		AppPathService.getBaseUrl( request ) + JSP_DO_VISUALISATION_RECORD ) );
+        model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorRecords(  ) );
 
         HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_VIEW_DIRECTORY_RECORD, getLocale(  ), model );
 
@@ -3790,6 +3791,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     	_searchFields.setItemsPerPageDirectoryRecord( 0 );
     	_searchFields.setCurrentPageIndexDirectory( null );
     	_searchFields.setMapQuery( null );
+    	_searchFields.setItemNavigatorRecords( null );
     }
 
     /**
