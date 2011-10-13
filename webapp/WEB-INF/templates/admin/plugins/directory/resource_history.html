@@ -1,47 +1,101 @@
-<div class="content-box">
-  <h2> #i18n{directory.resource_history.title} <#if date_creation?? > - #i18n{directory.resource_history.date_creation} ${date_creation}</#if></h2>
-   <div id="form-content">
-			
-			 <#list entry_list as entry>	
-	      			<#if entry.entryType.group>	
-	      			  	<fieldset class="form-fieldset"> 
-	    					 <legend class="form-legend"> ${entry.title} </legend> 
-	      					<#if entry.children?has_content>
-	      						<#list entry.children as child >
-	      							<#if child.title?exists>
-		      							<label for="">${child.title} : </label>
-		      						 </#if> 	
-		      							<#assign entryKey=""+child.idEntry>	
-		      							<#list map_id_entry_list_record_field[entryKey] as recordfield>
-		      							
-		      								${child.getHtmlRecordFieldValue( locale, recordfield, false )}
-		      								<br/>
-		      								<br/>
-		      						 		
-	      							</#list>
-	      						</#list>
-	      					</#if>
-	      				</fieldset>		
-	      			<#else>
-	      				<#assign entryKey=""+entry.idEntry>	
-	      				<#if entry.title?exists>
-	      					<label for="">${entry.title} : </label>
-	      				</#if>	
-	      				<#list map_id_entry_list_record_field[entryKey] as recordfield>
-	      						
-    						${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
-    							<br/>
-    							<br/>
-    					</#list>	
-	      			</#if>	
-	      			
-	      		</#list>
-	 			
+<#macro display_actions resource_actions >
+	<#if resource_actions.workflow_action_list?exists>
+		<#list resource_actions.workflow_action_list as action>
+			<a href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
+				<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}"
+					<#if action.icon.width!=-1>
+						width="${action.icon.width}"
+ 					</#if> 
+					<#if action.icon.height!=-1>
+						height="${action.icon.height}"
+					</#if> 
+					title="${action.name}" alt="${action.name}"
+				/>
+			</a>
+		</#list>
+	</#if>
+	<#list resource_actions.record.actions as action>
+		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
+	 		<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">
+	  			<img src="${action.iconUrl}" alt="${action.name}" title="${action.description}">
+	  		</a>
+		</#if>
+	</#list>
+</#macro>
+
+<div id="left">
+	<div class="content-box">
+		<h2>#i18n{directory.resource_history.labelRecord} ${record.idRecord}</h2>
+		<table>
+			<tr>
+				<th>#i18n{directory.resource_history.labelDirectory}</th>
+			</tr>
+			<tr>
+				<td>${directory.title}</td>
+			</tr>
+			<#if resource_actions.workflow_state?exists>
+				<tr>
+					<th>#i18n{directory.resource_history.labelState}</th>
+				</tr>
+				<tr>
+					<td>${resource_actions.workflow_state.name}</td>
+				</tr>
+			</#if>
+			<tr>
+				<th>#i18n{directory.resource_history.actions}</th>
+			</tr>
+			<tr>
+				<td>
+					<#if item_navigator??>
+						<@item_navigation item_navigator=item_navigator />
+					</#if>
+					<@display_actions resource_actions/>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div id="right">
+	<div class="content-box">
+		<h2> #i18n{directory.resource_history.title} <#if date_creation?? > - #i18n{directory.resource_history.date_creation} ${date_creation}</#if></h2>
+		<div id="form-content">
+			<#list entry_list as entry>	
+		      	<#if entry.entryType.group>	
+		      	  	<fieldset class="form-fieldset"> 
+		    			<legend class="form-legend"> ${entry.title} </legend> 
+						<#if entry.children?has_content>
+							<#list entry.children as child >
+								<#if child.title?exists>
+	 								<label for="">${child.title} : </label>
+	 						 	</#if>
+	 							<#assign entryKey=""+child.idEntry>	
+	 							<#list map_id_entry_list_record_field[entryKey] as recordfield>
+	 								${child.getHtmlRecordFieldValue( locale, recordfield, false )}
+	 								<br/>
+	 								<br/>
+								</#list>
+							</#list>
+						</#if>
+					</fieldset>		
+				<#else>
+					<#assign entryKey=""+entry.idEntry>	
+					<#if entry.title?exists>
+						<label for="">${entry.title} : </label>
+					</#if>
+					<#list map_id_entry_list_record_field[entryKey] as recordfield>
+						${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
+						<br/>
+						<br/>
+					</#list>	
+				</#if>
+			</#list>
 		</div>
-   <div class="highlight-box">
-   	 ${resource_history}
-   </div> 
-   <p>
-		<input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{directory.resource_history.buttonBack}" />
-	</p>
+	   	<div class="highlight-box">
+			${resource_history}
+	   	</div> 
+	  	<form action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="get">
+	  		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+			<input class="button" type="submit" value="#i18n{directory.resource_history.buttonBack}" />
+	  	</form>
+	</div>
 </div>

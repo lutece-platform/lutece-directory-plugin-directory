@@ -346,6 +346,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String JSP_DO_CHANGE_STATES_RECORD = "jsp/admin/plugins/directory/DoChangeStatesRecord.jsp";
     private static final String JSP_ACTION_RESULT = "jsp/admin/plugins/directory/ActionResult.jsp";
     private static final String JSP_DO_VISUALISATION_RECORD = "jsp/admin/plugins/directory/DoVisualisationRecord.jsp";
+    private static final String JSP_RESOURCE_HISTORY = "jsp/admin/plugins/directory/ResourceHistory.jsp";
 
     //Parameters
     private static final String PARAMETER_ID_DIRECTORY = DirectoryUtils.PARAMETER_ID_DIRECTORY;
@@ -2430,6 +2431,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     		listSelectedRecords = new ArrayList<String>(  );
     	}
     	_searchFields.setSelectedRecords( listSelectedRecords );
+    	_searchFields.setRedirectUrl( request );
     	
     	
     	// first - see if there is an invoked action
@@ -3176,7 +3178,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             RecordHome.updateWidthRecordField( record, getPlugin(  ) );
         }
 
-        return getJspManageDirectoryRecord( request, record.getDirectory(  ).getIdDirectory(  ) );
+        return getRedirectUrl( request );
     }
 
     /**
@@ -3311,7 +3313,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
         }
 
-        return getJspManageDirectoryRecord( request, record.getDirectory(  ).getIdDirectory(  ) );
+        return getRedirectUrl( request );
     }
 
     /**
@@ -3368,7 +3370,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         record.setEnabled( false );
         RecordHome.update( record, getPlugin(  ) );
 
-        return getJspManageDirectoryRecord( request, record.getDirectory(  ).getIdDirectory(  ) );
+        return getRedirectUrl( request );
     }
 
     /**
@@ -3395,7 +3397,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         record.setEnabled( true );
         RecordHome.update( record, getPlugin(  ) );
 
-        return getJspManageDirectoryRecord( request, record.getDirectory(  ).getIdDirectory(  ) );
+        return getRedirectUrl( request );
     }
 
     /**
@@ -3524,8 +3526,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         // Get asynchronous file names
         boolean bGetFileName = true;
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
-
         if ( ( record == null ) ||
                 !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
                     Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
@@ -3543,12 +3543,34 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
 
+        // List directory actions
+        List<DirectoryAction> listActionsForDirectoryEnable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_ENABLE,
+                getPlugin(  ), getLocale(  ) );
+        List<DirectoryAction> listActionsForDirectoryDisable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_DISABLE,
+                getPlugin(  ), getLocale(  ) );
+
+        listActionsForDirectoryEnable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryEnable,
+        		record.getDirectory(  ), getUser(  ) );
+        listActionsForDirectoryDisable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryDisable,
+        		record.getDirectory(  ), getUser(  ) );
+
+        _searchFields.setRedirectUrl( request );
+        _searchFields.setItemNavigatorHistory( nIdRecord, AppPathService.getBaseUrl( request ) + JSP_RESOURCE_HISTORY, 
+        		DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
+
+        boolean bHistoryEnabled = WorkflowService.getInstance(  ).isAvailable(  ) && 
+				( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );
+
+        Map<String, Object> model = new HashMap<String, Object>(  );
+        
         if ( ( directory != null ) && ( directory.isDateShownInHistory(  ) ) )
         {
             model.put( MARK_RECORD_DATE_CREATION, record.getDateCreation(  ) );
         }
 
+        model.put( MARK_RECORD, record );
         model.put( MARK_ENTRY_LIST, listEntry );
+        model.put( MARK_DIRECTORY, directory );
         model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
             DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ), bGetFileName ) );
 
@@ -3556,6 +3578,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             WorkflowService.getInstance(  )
                            .getDisplayDocumentHistory( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdWorkflow, request,
                 getLocale(  ) ) );
+        model.put( MARK_RESOURCE_ACTIONS, DirectoryService.getInstance(  ).getResourceAction( record, directory, listEntry, 
+        		getLocale(  ), getUser(  ), listActionsForDirectoryEnable, listActionsForDirectoryDisable, bGetFileName, getPlugin(  ) ) );
+        model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorHistory(  ) );
+        model.put( MARK_HISTORY_WORKFLOW_ENABLED, bHistoryEnabled );
 
         setPageTitleProperty( PROPERTY_RESOURCE_HISTORY_PAGE_TITLE );
 
@@ -3607,7 +3633,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         listActionsForDirectoryDisable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryDisable,
                 directory, getUser(  ) );
 
-        _searchFields.setItemNavigatorRecords( nIdRecord, AppPathService.getBaseUrl( request ) + JSP_DO_VISUALISATION_RECORD, 
+        _searchFields.setRedirectUrl( request );
+        _searchFields.setItemNavigatorViewRecords( nIdRecord, AppPathService.getBaseUrl( request ) + JSP_DO_VISUALISATION_RECORD, 
         		DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
 
         boolean bHistoryEnabled = WorkflowService.getInstance(  ).isAvailable(  ) && 
@@ -3633,7 +3660,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_SHOW_DATE_CREATION_RECORD, directory.isDateShownInResultRecord(  ) );
         model.put( MARK_RESOURCE_ACTIONS, DirectoryService.getInstance(  ).getResourceAction( record, directory, listEntry, 
         		getLocale(  ), getUser(  ), listActionsForDirectoryEnable, listActionsForDirectoryDisable, bGetFileName, getPlugin(  ) ) );
-        model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorRecords(  ) );
+        model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorViewRecords(  ) );
         model.put( MARK_HISTORY_WORKFLOW_ENABLED, bHistoryEnabled );
 
         HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_VIEW_DIRECTORY_RECORD, getLocale(  ), model );
@@ -3804,7 +3831,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     	_searchFields.setItemsPerPageDirectoryRecord( 0 );
     	_searchFields.setCurrentPageIndexDirectory( null );
     	_searchFields.setMapQuery( null );
-    	_searchFields.setItemNavigatorRecords( null );
+    	_searchFields.setItemNavigatorViewRecords( null );
+    	_searchFields.setItemNavigatorHistory( null );
     }
 
     /**
@@ -3863,9 +3891,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             {
             	return getJspActionResults( request, nIdDirectory, listIdsSuccessRecord, listIdFailRecord );
             }
-            return getJspManageDirectoryRecord( request, nIdDirectory );
+            return getRedirectUrl( request );
         }
-        return getJspManageDirectory( request );
+        return getRedirectUrl( request );
     }
 
     /**
@@ -4521,5 +4549,19 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         field.setTitle( strTitle );
         field.setValue( strValue );
         field.setDefaultValue( false );
+    }
+
+    /**
+     * Get the redirect url
+     * @param request the http servlet request
+     * @return the redirect url
+     */
+    private String getRedirectUrl( HttpServletRequest request )
+    {
+    	if ( StringUtils.isNotBlank( _searchFields.getRedirectUrl(  ) ) )
+    	{
+    		return _searchFields.getRedirectUrl(  );
+    	}
+    	return getJspManageDirectory( request );
     }
 }

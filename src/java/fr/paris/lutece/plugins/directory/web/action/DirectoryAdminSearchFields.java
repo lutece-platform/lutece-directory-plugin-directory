@@ -36,13 +36,17 @@ package fr.paris.lutece.plugins.directory.web.action;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.html.ItemNavigator;
+import fr.paris.lutece.util.url.UrlItem;
 
 /**
  * Visualisation of all needed session values.
@@ -84,7 +88,9 @@ public final class DirectoryAdminSearchFields implements Serializable
     private Date _dateCreationRecord;
     private List<String> _listSelectedRecords;
     private List<Integer> _listIdsResultRecord;
-    private ItemNavigator _itemNavigatorRecords;
+    private ItemNavigator _itemNavigatorViewRecords;
+    private ItemNavigator _itemNavigatorHistory;
+    private String _strRedirectUrl;
     
     /**
      * Gets the selected records
@@ -541,27 +547,30 @@ public final class DirectoryAdminSearchFields implements Serializable
 	 * @param strUrl the url
 	 * @param strParameterName the parameter name
 	 */
-	public void setItemNavigatorRecords( int nCurrentIdRecord, String strUrl, String strParameterName )
+	public void setItemNavigatorViewRecords( int nCurrentIdRecord, String strUrl, String strParameterName )
 	{
-		if ( _itemNavigatorRecords == null && _listIdsResultRecord != null && !_listIdsResultRecord.isEmpty(  ) )
+		if ( _itemNavigatorViewRecords == null  )
 		{
-			List<String> listIds = new ArrayList<String>( _listIdsResultRecord.size(  ) );
-			int nCurrentItemId = 0;
-    		int nIndex = 0;
-			for ( int nIdRecord : _listIdsResultRecord )
+			if ( _listIdsResultRecord != null && !_listIdsResultRecord.isEmpty(  ) )
 			{
-				listIds.add( Integer.toString( nIdRecord ) );
-				if ( nIdRecord == nCurrentIdRecord )
+				List<String> listIds = new ArrayList<String>( _listIdsResultRecord.size(  ) );
+				int nCurrentItemId = 0;
+				int nIndex = 0;
+				for ( int nIdRecord : _listIdsResultRecord )
 				{
-					nCurrentItemId = nIndex;
+					listIds.add( Integer.toString( nIdRecord ) );
+					if ( nIdRecord == nCurrentIdRecord )
+					{
+						nCurrentItemId = nIndex;
+					}
+					nIndex++;
 				}
-				nIndex++;
+				_itemNavigatorViewRecords = new ItemNavigator( listIds, nCurrentItemId, strUrl, strParameterName );
 			}
-			_itemNavigatorRecords = new ItemNavigator( listIds, nCurrentItemId, strUrl, strParameterName );
 		}
 		else
 		{
-			_itemNavigatorRecords.setCurrentItemId( Integer.toString( nCurrentIdRecord ) );
+			_itemNavigatorViewRecords.setCurrentItemId( Integer.toString( nCurrentIdRecord ) );
 		}
 	}
 
@@ -569,17 +578,96 @@ public final class DirectoryAdminSearchFields implements Serializable
 	 * Set the item navigator
 	 * @param itemNavigator the item navigator
 	 */
-	public void setItemNavigatorRecords( ItemNavigator itemNavigator )
+	public void setItemNavigatorViewRecords( ItemNavigator itemNavigator )
 	{
-		_itemNavigatorRecords = itemNavigator;
+		_itemNavigatorViewRecords = itemNavigator;
 	}
 
 	/**
 	 * Get the item navigator
 	 * @return
 	 */
-	public ItemNavigator getItemNavigatorRecords(  )
+	public ItemNavigator getItemNavigatorViewRecords(  )
 	{
-		return _itemNavigatorRecords;
+		return _itemNavigatorViewRecords;
+	}
+
+	/**
+	 * Set the item navigator for records
+	 * @param nCurrentIdRecord the current id record
+	 * @param strUrl the url
+	 * @param strParameterName the parameter name
+	 */
+	public void setItemNavigatorHistory( int nCurrentIdRecord, String strUrl, String strParameterName )
+	{
+		if ( _itemNavigatorHistory == null  )
+		{
+			if ( _listIdsResultRecord != null && !_listIdsResultRecord.isEmpty(  ) )
+			{
+				List<String> listIds = new ArrayList<String>( _listIdsResultRecord.size(  ) );
+				int nCurrentItemId = 0;
+				int nIndex = 0;
+				for ( int nIdRecord : _listIdsResultRecord )
+				{
+					listIds.add( Integer.toString( nIdRecord ) );
+					if ( nIdRecord == nCurrentIdRecord )
+					{
+						nCurrentItemId = nIndex;
+					}
+					nIndex++;
+				}
+				_itemNavigatorHistory = new ItemNavigator( listIds, nCurrentItemId, strUrl, strParameterName );
+			}
+		}
+		else
+		{
+			_itemNavigatorHistory.setCurrentItemId( Integer.toString( nCurrentIdRecord ) );
+		}
+	}
+
+	/**
+	 * Set the item navigator
+	 * @param itemNavigator the item navigator
+	 */
+	public void setItemNavigatorHistory( ItemNavigator itemNavigator )
+	{
+		_itemNavigatorHistory = itemNavigator;
+	}
+
+	/**
+	 * Get the item navigator
+	 * @return
+	 */
+	public ItemNavigator getItemNavigatorHistory(  )
+	{
+		return _itemNavigatorHistory;
+	}
+
+	/**
+	 * Set the redirect url
+	 * @param _strRedirectUrl
+	 */
+	public void setRedirectUrl( HttpServletRequest request )
+	{
+		String strNextUrl = request.getRequestURI(  );
+        UrlItem url = new UrlItem( strNextUrl );
+        Enumeration enumParams = request.getParameterNames(  );
+
+        while ( enumParams.hasMoreElements(  ) )
+        {
+            String strParamName = (String) enumParams.nextElement(  );
+            url.addParameter( strParamName, request.getParameter( strParamName ) );
+        }
+        
+        _strRedirectUrl = url.getUrl(  );
+	}
+
+	/**
+	 * Get the redirect url
+	 * @return the redirect url
+	 */
+	public String getRedirectUrl(  )
+	{
+		return _strRedirectUrl;
 	}
 }

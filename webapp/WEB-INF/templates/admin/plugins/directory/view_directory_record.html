@@ -53,7 +53,9 @@
 			</tr>
 			<tr>
 				<td>
-					<@item_navigation item_navigator=item_navigator />
+					<#if item_navigator??>
+						<@item_navigation item_navigator=item_navigator />
+					</#if>
 					<@display_actions resource_actions/>
 				</td>
 			</tr>
