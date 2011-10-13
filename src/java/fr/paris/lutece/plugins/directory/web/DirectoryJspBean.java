@@ -4556,7 +4556,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * @param request the http servlet request
      * @return the redirect url
      */
-    private String getRedirectUrl( HttpServletRequest request )
+    public String getRedirectUrl( HttpServletRequest request )
     {
     	if ( StringUtils.isNotBlank( _searchFields.getRedirectUrl(  ) ) )
     	{
