@@ -1,6 +1,10 @@
 <#assign link=record_field.entry.convertRecordFieldValueToString(record_field,locale,false,false) />
 <#if link?has_content>
-<a href="${link}">
-	<img src="images/admin/skin/plugins/directory/download.png" alt="#i18n{directory.viewing_directory_record.download}" title="#i18n{directory.viewing_directory_record.download}" />
-</a>
+	<a href="${link}">
+		<#if record_field.fileName?? && record_field.fileName != ''>
+			${record_field.fileName}
+		<#else>
+			<img src="images/admin/skin/plugins/directory/download.png" alt="#i18n{directory.viewing_directory_record.download}" title="#i18n{directory.viewing_directory_record.download}" />
+		</#if>
+	</a>
 </#if>

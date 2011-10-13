@@ -410,7 +410,7 @@ public class DirectoryService
      */
     public Map<String, Object> getResourceAction( Record record, Directory directory, List<IEntry> listEntryResultSearch,
     		Locale locale, AdminUser adminUser, List<DirectoryAction> listActionsForDirectoryEnable, 
-    		List<DirectoryAction> listActionsForDirectoryDisable, Plugin plugin )
+    		List<DirectoryAction> listActionsForDirectoryDisable, boolean bGetFileName, Plugin plugin )
     {        
         if ( record.isEnabled(  ) )
         {
@@ -426,7 +426,7 @@ public class DirectoryService
         resourceActions.put( MARK_RECORD, record );
         resourceActions.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
             DirectoryUtils.getMapIdEntryListRecordField( listEntryResultSearch, record.getIdRecord(  ),
-                plugin, false ) );
+                plugin, bGetFileName ) );
         
         boolean bWorkflowServiceEnable = WorkflowService.getInstance(  ).isAvailable(  ) && 
         	( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );

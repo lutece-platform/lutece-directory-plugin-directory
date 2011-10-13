@@ -78,8 +78,15 @@
 		      						 </#if> 	
 		      							<#assign entryKey=""+child.idEntry>	
 		      							<#list map_id_entry_list_record_field[entryKey] as recordfield>
-		      							
-		      								${child.getHtmlRecordFieldValue( locale, recordfield, false )}
+		      								<#if isEntryTypeImage(child)>    						
+								   				<#if recordfield.field?? & recordfield.field.isShownInResultRecord()>
+								   					${child.getHtmlRecordFieldValue( locale,recordfield,false)}
+								   				</#if>
+								   			<#elseif isEntryTypeMyLuteceUser(child) && !permission_visualisation_mylutece_user>
+							   					${record_field.value}
+								   			<#else>
+						      					${child.getHtmlRecordFieldValue( locale,recordfield,false)}
+						      				</#if>
 		      								<br/>
 		      								<br/>
 		      						 		

@@ -2596,12 +2596,15 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	                directory, getUser(  ) );
 	        listActionsForDirectoryDisable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryDisable,
 	                directory, getUser(  ) );
-	
+
+	        // Get asynchronous file names put at false for better performance
+	        // since it must call a webservice to get the file name
+	        boolean bGetFileName = false;
 	        for ( Record record : lRecord )
 	        {
 	            listResourceActions.add( DirectoryService.getInstance(  ).getResourceAction( record, directory, 
 	            		listEntryResultSearch, getLocale(  ), adminUser, listActionsForDirectoryEnable, 
-	            		listActionsForDirectoryDisable, getPlugin(  ) ) );
+	            		listActionsForDirectoryDisable, bGetFileName, getPlugin(  ) ) );
 	        }
 
 	        Map<String, Object> model = new HashMap<String, Object>(  );
@@ -3517,6 +3520,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         Record record = RecordHome.findByPrimaryKey( nIdRecord, getPlugin(  ) );
         int nIdDirectory = record.getDirectory(  ).getIdDirectory(  );
         int nIdWorkflow = ( DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) ) ).getIdWorkflow(  );
+
+        // Get asynchronous file names
+        boolean bGetFileName = true;
+
         Map<String, Object> model = new HashMap<String, Object>(  );
 
         if ( ( record == null ) ||
@@ -3543,7 +3550,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         model.put( MARK_ENTRY_LIST, listEntry );
         model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
-            DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ) ) );
+            DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ), bGetFileName ) );
 
         model.put( MARK_RESOURCE_HISTORY,
             WorkflowService.getInstance(  )
@@ -3605,6 +3612,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         boolean bHistoryEnabled = WorkflowService.getInstance(  ).isAvailable(  ) && 
 				( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );
+        // Get asynchronous file names
+        boolean bGetFileName = true;
 
         Map<String, Object> model = new HashMap<String, Object>(  );
 
@@ -3622,8 +3631,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ) ) );
 
         model.put( MARK_SHOW_DATE_CREATION_RECORD, directory.isDateShownInResultRecord(  ) );
-        model.put( MARK_RESOURCE_ACTIONS, DirectoryService.getInstance(  ).getResourceAction( record, directory, 
-        		listEntry, getLocale(  ), getUser(  ), listActionsForDirectoryEnable, listActionsForDirectoryDisable, getPlugin(  ) ) );
+        model.put( MARK_RESOURCE_ACTIONS, DirectoryService.getInstance(  ).getResourceAction( record, directory, listEntry, 
+        		getLocale(  ), getUser(  ), listActionsForDirectoryEnable, listActionsForDirectoryDisable, bGetFileName, getPlugin(  ) ) );
         model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorRecords(  ) );
         model.put( MARK_HISTORY_WORKFLOW_ENABLED, bHistoryEnabled );
 
