@@ -208,6 +208,7 @@ public final class RecordFieldHome
      * Remove list of record field by list of record id
      * @param lListRecordId the list of record id
      * @param plugin the plugin
+     * @deprecated This function does not remove the associated files
      */
     public static void removeByListRecordId( List<Integer> lListRecordId, Plugin plugin )
     {
@@ -218,7 +219,7 @@ public final class RecordFieldHome
      * Load the data of all the record field who verify the filter and returns them in a list
      * @param filter the filter
      * @param plugin the plugin
-     * @return  the list of record field
+     * @return the list of record fields
      */
     public static List<RecordField> getRecordFieldList( RecordFieldFilter filter, Plugin plugin )
     {

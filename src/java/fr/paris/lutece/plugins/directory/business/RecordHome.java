@@ -191,6 +191,7 @@ public final class RecordHome
      * Remove directory and workflow record by directory Id
      * @param nIdDirectory The directory id
      * @param plugin The plugin
+     * @deprecated This function does not remove the associated files
      */
     public static void removeByIdDirectory( Integer nIdDirectory, Plugin plugin )
     {

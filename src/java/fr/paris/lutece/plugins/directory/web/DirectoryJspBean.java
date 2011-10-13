@@ -1085,17 +1085,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
 
-        /*
         RecordFieldFilter recordFilter = new RecordFieldFilter(  );
         recordFilter.setIdDirectory( nIdDirectory );
-        
         
         for ( Integer nRecordId : RecordHome.getListRecordId( recordFilter, plugin ) )
         {
             RecordHome.remove( nRecordId, plugin );
         }
-        */
-        RecordHome.removeByIdDirectory( nIdDirectory, plugin );
+
+        /* Depreciated, this function does not remove the associated files*/
+        /* RecordHome.removeByIdDirectory( nIdDirectory, plugin ); */
 
         return getJspManageDirectory( request );
     }
