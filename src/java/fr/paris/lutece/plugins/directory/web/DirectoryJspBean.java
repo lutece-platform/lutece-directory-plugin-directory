@@ -2577,7 +2577,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	        // get only record for page items.
 	        lRecord = RecordHome.loadListByListId( paginator.getPageItems(  ), getPlugin(  ) );
 	        
-	        boolean bHistoryEnabled = false;
+	        boolean bHistoryEnabled = WorkflowService.getInstance(  ).isAvailable(  ) && 
+        			( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );
 	        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
 	        recordFieldFilter.setIsEntryShownInResultList( RecordFieldFilter.FILTER_TRUE );
 	
@@ -2598,7 +2599,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	
 	        for ( Record record : lRecord )
 	        {
-	            listResourceActions.add( DirectoryService.getInstance().getResourceAction( record, directory, 
+	            listResourceActions.add( DirectoryService.getInstance(  ).getResourceAction( record, directory, 
 	            		listEntryResultSearch, getLocale(  ), adminUser, listActionsForDirectoryEnable, 
 	            		listActionsForDirectoryDisable, getPlugin(  ) ) );
 	        }
@@ -3602,6 +3603,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         _searchFields.setItemNavigatorRecords( nIdRecord, AppPathService.getBaseUrl( request ) + JSP_DO_VISUALISATION_RECORD, 
         		DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
 
+        boolean bHistoryEnabled = WorkflowService.getInstance(  ).isAvailable(  ) && 
+				( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );
+
         Map<String, Object> model = new HashMap<String, Object>(  );
 
         model.put( MARK_RECORD, record );
@@ -3621,6 +3625,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_RESOURCE_ACTIONS, DirectoryService.getInstance(  ).getResourceAction( record, directory, 
         		listEntry, getLocale(  ), getUser(  ), listActionsForDirectoryEnable, listActionsForDirectoryDisable, getPlugin(  ) ) );
         model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorRecords(  ) );
+        model.put( MARK_HISTORY_WORKFLOW_ENABLED, bHistoryEnabled );
 
         HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_VIEW_DIRECTORY_RECORD, getLocale(  ), model );
 
