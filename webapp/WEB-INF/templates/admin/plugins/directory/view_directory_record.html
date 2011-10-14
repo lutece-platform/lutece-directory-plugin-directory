@@ -63,7 +63,7 @@
 	</div>
 </div>
 <div id="right">
-<div class="content-box">
+	<div class="content-box">
 	  <h2>#i18n{directory.viewing_directory_record.title} : '${directory.title}' - <#if record.dateCreation?? && show_date_creation_record >#i18n{directory.viewing_directory_record.date_creation} ${record.dateCreation}</#if></h2>
 	  <div id="form-content">
 			<form action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data" DISABLE>
@@ -72,14 +72,19 @@
 			 <#list entry_list as entry>	
 	      			<#if entry.entryType.group>	
 	      			  	<fieldset class="form-fieldset"> 
-	    					 <legend class="form-legend"> ${entry.title} </legend> 
+	    					<legend class="form-legend"> ${entry.title} </legend>
 	      					<#if entry.children?has_content>
 	      						<#list entry.children as child >
-	      							<#if child.title?exists>
-		      							<label for="">${child.title} : </label>
-		      						 </#if> 	
+									<div class="clear">
+		      							<#if child.title?exists>
+			      							<label for="">${child.title} : </label>
+			      						 </#if> 	
 		      							<#assign entryKey=""+child.idEntry>	
+		      							<#assign first = true>
 		      							<#list map_id_entry_list_record_field[entryKey] as recordfield>
+		      								<#if !first>
+		      									<label>&nbsp;</label>
+		      								</#if>
 		      								<#if isEntryTypeImage(child)>    						
 								   				<#if recordfield.field?? & recordfield.field.isShownInResultRecord()>
 								   					${child.getHtmlRecordFieldValue( locale,recordfield,false)}
@@ -91,40 +96,47 @@
 						      				</#if>
 		      								<br/>
 		      								<br/>
-		      						 		
+		      						 		<#assign first = false>
 	      								</#list>
+		      						</div>
 	      						</#list>
 	      					</#if>
 	      				</fieldset>		
 	      			<#else>
-	      				<#assign entryKey=""+entry.idEntry>	
-	      				<#if entry.title?exists>
-	      					<label for="">${entry.title} : </label>
-	      				</#if>	
-	      				<#list map_id_entry_list_record_field[entryKey] as recordfield>	      						
-    						
-    						<#if isEntryTypeImage(entry)>    						
-				   				<#if recordfield.field?? & recordfield.field.isShownInResultRecord()>
-				   					${entry.getHtmlRecordFieldValue( locale,recordfield,false)}
-				   				</#if>
-				   			<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>
-			   					${record_field.value}
-				   			<#else>
-		      					${entry.getHtmlRecordFieldValue( locale,recordfield,false)}
-		      				</#if>
-    							<br/>
-    							<br/>
-    					</#list>	
-	      			</#if>	
-	      			
+	      				<div class="clear">
+		      				<#assign entryKey=""+entry.idEntry>	
+	    					<#assign first = true>
+		      				<#if entry.title?exists>
+		      					<label for="">${entry.title} : </label>
+		      				</#if>	
+		      				<#list map_id_entry_list_record_field[entryKey] as recordfield>	      						
+	    						<#if !first>
+									<label>&nbsp;</label>
+								</#if>
+	    						<#if isEntryTypeImage(entry)>    						
+					   				<#if recordfield.field?? & recordfield.field.isShownInResultRecord()>
+					   					${entry.getHtmlRecordFieldValue( locale,recordfield,false)}
+					   				</#if>
+					   			<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>
+				   					${record_field.value}
+					   			<#else>
+			      					${entry.getHtmlRecordFieldValue( locale,recordfield,false)}
+			      				</#if>
+	   							<br/>
+	   							<br/>
+	   							<#assign first = false>
+	    					</#list>
+    					</div>
+	      			</#if>
 	      		</#list>
 	 			 <p>
 	  				<input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{directory.resource_history.buttonBack}" />
 	   			</p>
 			</form>
 		</div>
+	</div>
 </div>
-</div>
+<div class="clear">&nbsp;</div>
 
 <script language="JavaScript" type="text/javascript">
 //for datepicker questions
