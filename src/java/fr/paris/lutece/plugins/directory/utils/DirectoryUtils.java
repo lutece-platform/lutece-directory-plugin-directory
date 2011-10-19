@@ -82,6 +82,7 @@ import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
+import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.string.StringUtil;
@@ -1099,6 +1100,25 @@ public final class DirectoryUtils
     	urlItem.addParameter( PARAMETER_SESSION, PARAMETER_SESSION );
     	
     	return urlItem.getUrl(  );
+    }
+
+    /**
+     * Convert a map of ( String, String ) into a {@link ReferenceList}
+     * @param map the map to convert
+     * @return a {@link ReferenceList}
+     */
+    public static ReferenceList convertMapToReferenceList( Map<String, String> map )
+    {
+    	ReferenceList ref = new ReferenceList(  );
+    	if ( map != null )
+    	{
+    		for ( Entry<String, String> userInfo : map.entrySet(  ) )
+    		{
+    			ref.addItem( userInfo.getKey(  ), userInfo.getValue(  ) );
+    		}
+    	}
+    	
+    	return ref;
     }
     
     /**

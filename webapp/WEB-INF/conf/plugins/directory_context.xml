@@ -45,5 +45,9 @@
 	<bean id="directory.asynchronousUploadHandler" class="fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler">
 		<property name="blobStoreClientWebService" ref="blobstoreclient.blobStoreClientWebService" />
 	</bean>
+	
+	<!-- User Attributes -->
+	<bean id="directory.userAttributesManager" class="fr.paris.lutece.plugins.directory.service.security.DirectoryUserAttributesManager">
+		<!--<property name="userAttributesService" ref="userws.userAttributesWebService" />-->
+	</bean>
 </beans>
- 	

@@ -116,7 +116,7 @@
 	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_image>
 </#function>
 <#function isEntryTypeMyLuteceUser entry>
-	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_mylutece_user>
+	<#return entry.entryType?has_content && entry.entryType.myLuteceUser>
 </#function>
 <form action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="post" id="searchForm" >
 <input type="hidden" name="id_directory" value="${directory.idDirectory}" />
@@ -315,7 +315,7 @@
 			   			<#elseif isEntryTypeMyLuteceUser(entry)>
 			   				<#if record_field?? && record_field.record?? && permission_visualisation_mylutece_user>
 			   					<#assign id_directory_record = record_field.record.idRecord>
-			   					<a href="jsp/admin/plugins/directory/DoVisualisationMyLuteceUser.jsp?id_directory_record=${id_directory_record}">
+			   					<a href="jsp/admin/plugins/directory/DoVisualisationMyLuteceUser.jsp?id_directory_record=${id_directory_record}&amp;id_entry=${record_field.entry.idEntry}">
 			   						${record_field.value}
 			   					</a>
 			   				<#else>

@@ -79,6 +79,7 @@ import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
 import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.plugins.directory.service.RecordRemovalListenerService;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.service.security.DirectoryUserAttributesManager;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
@@ -98,7 +99,6 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
-import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppLogService;
@@ -228,6 +228,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PROPERTY_ENTRY_TYPE_GEOLOCATION = "directory.entry_type.geolocation";
     private static final String PROPERTY_ENTRY_TYPE_IMAGE = "directory.resource_rss.entry_type_image";
     private static final String PROPERTY_ENTRY_TYPE_MYLUTECE_USER = "directory.entry_type.mylutece_user";
+    private static final String PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER = "directory.entry_type.remote_mylutece_user";
     private static final String PROPERTY_IMPORT_FIELD_PAGE_TITLE = "directory.import_field.page_title";
 
     //Markers
@@ -251,6 +252,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_IS_ACTIVE_MYLUTECE_AUTHENTIFICATION = "is_active_mylutece_authentification";
     private static final String MARK_MYLUTECE_USER_INFOS_LIST = "mylutece_user_infos_list";
     private static final String MARK_MYLUTECE_USER_LOGIN = "mylutece_user_login";
+    private static final String MARK_IS_USER_ATTRIBUTES_SERVICE_ENABLE = "is_user_attributes_service_enable";
 
     //private static final String MARK_DIRECTORY_RECORD_LIST = "directory_record_list";
     private static final String MARK_DIRECTORY = "directory";
@@ -273,6 +275,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_ID_ENTRY_TYPE_GEOLOCATION = "id_entry_type_geolocation";
     private static final String MARK_ID_ENTRY_TYPE_IMAGE = "id_entry_type_image";
     private static final String MARK_ID_ENTRY_TYPE_MYLUTECE_USER = "id_entry_type_mylutece_user";
+    private static final String MARK_ID_ENTRY_TYPE_REMOTE_MYLUTECE_USER = "id_entry_type_remote_mylutece_user";
     private static final String MARK_SHOW_DATE_CREATION_RECORD = "show_date_creation_record";
     private static final String MARK_SHOW_DATE_CREATION_RESULT = "show_date_creation_result";
     private static final String MARK_RECORD_DATE_CREATION = "date_creation";
@@ -923,6 +926,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage(  ) );
         model.put( MARK_IS_ACTIVE_MYLUTECE_AUTHENTIFICATION, PluginService.isPluginEnable( MYLUTECE_PLUGIN ) );
+        model.put( MARK_IS_USER_ATTRIBUTES_SERVICE_ENABLE, DirectoryUserAttributesManager.getManager(  ).isEnabled(  ) );
+        model.put( MARK_ID_ENTRY_TYPE_MYLUTECE_USER,
+	            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) );
+        model.put( MARK_ID_ENTRY_TYPE_REMOTE_MYLUTECE_USER,
+	            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER, 21 ) );
         setPageTitleProperty( PROPERTY_MODIFY_DIRECTORY_TITLE );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_DIRECTORY, locale, model );
@@ -2431,8 +2439,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     		listSelectedRecords = new ArrayList<String>(  );
     	}
     	_searchFields.setSelectedRecords( listSelectedRecords );
-    	_searchFields.setRedirectUrl( request );
-    	
     	
     	// first - see if there is an invoked action
     	IDirectoryAction action = PluginActionManager.getPluginAction( request, IDirectoryAction.class );
@@ -2466,6 +2472,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	            reInitDirectoryRecordFilter(  );
 	        }
 	
+	        _searchFields.setRedirectUrl( request );
 	        _searchFields.setCurrentPageIndexDirectoryRecord( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
 	                _searchFields.getCurrentPageIndexDirectoryRecord(  ) ) );
 	        _searchFields.setItemsPerPageDirectoryRecord( Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE,
@@ -4223,7 +4230,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         throws AccessDeniedException
     {
         String strIdRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
+        String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
+        int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
         Record record = RecordHome.findByPrimaryKey( nIdRecord, getPlugin(  ) );
 
         if ( ( record == null ) ||
@@ -4234,15 +4243,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
 
-        LuteceUser user = DirectoryService.getInstance(  ).getUserFromIdDirectoryRecord( nIdRecord );
+        String strUserGuid = DirectoryService.getInstance(  ).getUserGuid( nIdRecord, nIdEntry );
+    	ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfos( strUserGuid, nIdEntry );
+    	
         Map<String, Object> model = new HashMap<String, Object>(  );
-        if ( user != null )
-        {
-        	ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfo( user );
-
-            model.put( MARK_MYLUTECE_USER_LOGIN, user.getName(  ) );
-            model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
-        }
+        model.put( MARK_MYLUTECE_USER_LOGIN, strUserGuid );
+        model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
 
         HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_VIEW_MYLUTECE_USER, getLocale(  ), model );
 

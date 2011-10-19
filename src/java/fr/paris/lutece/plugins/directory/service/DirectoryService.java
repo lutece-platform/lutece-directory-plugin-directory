@@ -45,10 +45,9 @@ import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryAction;
 import fr.paris.lutece.plugins.directory.business.DirectoryXsl;
 import fr.paris.lutece.plugins.directory.business.Entry;
-import fr.paris.lutece.plugins.directory.business.EntryType;
+import fr.paris.lutece.plugins.directory.business.EntryHome;
 import fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl;
 import fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation;
-import fr.paris.lutece.plugins.directory.business.EntryTypeHome;
 import fr.paris.lutece.plugins.directory.business.Field;
 import fr.paris.lutece.plugins.directory.business.FieldHome;
 import fr.paris.lutece.plugins.directory.business.IEntry;
@@ -60,6 +59,7 @@ import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterHome;
 import fr.paris.lutece.plugins.directory.business.parameter.EntryParameterHome;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.service.security.DirectoryUserAttributesManager;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
@@ -73,6 +73,7 @@ import fr.paris.lutece.portal.service.rbac.RBACService;
 import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.ReferenceList;
@@ -85,6 +86,10 @@ import fr.paris.lutece.util.ReferenceList;
  */
 public class DirectoryService
 {
+	// PROPERTIES
+	private static final String PROPERTY_ENTRY_TYPE_MYLUTECE_USER = "directory.entry_type.mylutece_user";
+	private static final String PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER = "directory.entry_type.remote_mylutece_user";
+	
     // MARKS
     private static final String MARK_LIST_DIRECTORY_PARAM_DEFAULT_VALUES = "list_directory_param_default_values";
     private static final String MARK_LIST_ENTRY_PARAM_DEFAULT_VALUES = "list_entry_param_default_values";
@@ -188,57 +193,85 @@ public class DirectoryService
     	
     	return nNbRecords;
     }
-    
+
     /**
-     * Get the user from the id directory record
-     * @param nIdDirectoryRecord the id directory record
-     * @return a {@link LuteceUser}, null if the directory record is not a MyLutece entry
+     * Get the user infos from a given id record and id entry.
+     * <br />
+     * The retrieval of the user infos depends on the entry type :
+     * <br />
+     * <ul>
+     * 		<li>If it is an {@link EntryTypeMyLutece}, then it will use the {@link SecurityService} API</li>
+     * 		<li>If it is an {@link EntryTypeRemoteMyLutece}, then it will use the {@link UserAttributeService} API</li>
+     * </ul>
+     * @param strUserGuid the user guid
+     * @param nIdEntry the id entry
+     * @return a {@link ReferenceList}
      */
-    public LuteceUser getUserFromIdDirectoryRecord( int nIdDirectoryRecord )
+    public ReferenceList getUserInfos( String strUserGuid, int nIdEntry )
     {
-    	LuteceUser user = null;
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-        recordFieldFilter.setIdRecord( nIdDirectoryRecord );
-        Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-
-        List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
-        String strUserLogin = DirectoryUtils.EMPTY_STRING;
-
-        for ( RecordField recordField : listRecordFields )
-        {
-            EntryType entryType = EntryTypeHome.findByPrimaryKey( recordField.getEntry(  ).getEntryType(  ).getIdType(  ),
-            		plugin );
-
-            if ( entryType.getMyLuteceUser(  ) )
-            {
-                strUserLogin = recordField.getValue(  );
-                user = SecurityService.getInstance(  ).getUser( strUserLogin );
-
-                break;
-            }
-        }
-    	return user;
+    	ReferenceList userInfos = null;
+    	if ( StringUtils.isNotBlank( strUserGuid ) )
+    	{
+    		Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+    		IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
+    		if ( entry != null && entry.getEntryType(  ) != null )
+    		{
+    			if ( entry.getEntryType(  ).getIdType(  ) == AppPropertiesService.getPropertyInt( 
+    					PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER, 21 ) && DirectoryUserAttributesManager.getManager(  ).isEnabled(  ) )
+    			{
+    				userInfos = DirectoryUtils.convertMapToReferenceList( DirectoryUserAttributesManager.getManager(  ).
+    						getAttributes( strUserGuid ) );
+    			}
+    			else if ( entry.getEntryType(  ).getIdType(  ) == AppPropertiesService.getPropertyInt( 
+    					PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) )
+    			{
+    				LuteceUser user = SecurityService.getInstance(  ).getUser( strUserGuid );
+    				if ( user != null )
+    				{
+    					userInfos = DirectoryUtils.convertMapToReferenceList( user.getUserInfos(  ) );
+    				}
+    			}
+    				
+    		}
+    	}
+    	
+    	return userInfos;
     }
-    
+
     /**
-     * Get the user info
-     * @param user {@link LuteceUser}
-     * @return a list of info of the user
+     * Get the user guid from a given id record and id entry.
+     * <br />
+     * Return an empty string if the entry is not an EntryTypeMyLuteceUser nor EntryTypeRemoteMyLuteceUser
+     * @param nIdRecord the id record
+     * @param nIdEntry the id entry
+     * @return the user GUID
      */
-    public ReferenceList getUserInfo( LuteceUser user )
+    public String getUserGuid( int nIdRecord, int nIdEntry )
     {
-    	ReferenceList listUserInfos = new ReferenceList(  );
-
-        if ( user != null )
-        {
-            for ( Map.Entry<String, String> userInfo : user.getUserInfos(  ).entrySet(  ) )
-            {
-                listUserInfos.addItem( userInfo.getKey(  ), userInfo.getValue(  ) );
-            }
-        }
-        return listUserInfos;
+    	String strUserGuid = StringUtils.EMPTY;
+    	Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+    	IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
+		if ( entry != null && entry.getEntryType(  ) != null )
+		{
+			if ( entry.getEntryType(  ).getIdType(  ) == AppPropertiesService.getPropertyInt( 
+					PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER, 21 ) && DirectoryUserAttributesManager.getManager(  ).isEnabled(  ) || 
+					entry.getEntryType(  ).getIdType(  ) == AppPropertiesService.getPropertyInt( 
+	    					PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) )
+			{
+				RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+				recordFieldFilter.setIdRecord( nIdRecord );
+				recordFieldFilter.setIdEntry( nIdEntry );
+				List<RecordField> listRecordFields = DirectoryService.getInstance(  ).getRecordFieldByFilter( recordFieldFilter );
+				if ( listRecordFields != null && !listRecordFields.isEmpty(  ) && listRecordFields.get( 0 ) != null )
+		    	{
+		    		strUserGuid = listRecordFields.get( 0 ).getValue(  );
+		    	}
+			}
+		}
+    	
+    	return strUserGuid;
     }
-    
+
     /**
      * Get the max number
      * @param nIdEntryTypeNumbering the id entry type numbering
@@ -445,6 +478,17 @@ public class DirectoryService
         return resourceActions;
     }
 
+    /**
+     * Get the list of record fields from a given Filter
+     * @param recordFieldFilter the filter
+     * @return a map of (user attribute name, user attribute value)
+     */
+    public List<RecordField> getRecordFieldByFilter( RecordFieldFilter recordFieldFilter )
+    {
+		Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+		return RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
+    }
+    
     /**
      * Build the number from a given number. This methods first checks if the number is not a type
      * numerical (without the prefix of the entry), or checks if the number already exists on 

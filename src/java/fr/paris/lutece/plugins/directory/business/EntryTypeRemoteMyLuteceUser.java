@@ -34,7 +34,6 @@
 package fr.paris.lutece.plugins.directory.business;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -53,8 +52,6 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
-import fr.paris.lutece.portal.service.security.LuteceUser;
-import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
@@ -63,16 +60,14 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 
 /**
  *
- * class EntryTypeMyLuteceUser
+ * class EntryTypeRemoteMyLuteceUser
  *
  */
-public class EntryTypeMyLuteceUser extends Entry
+public class EntryTypeRemoteMyLuteceUser extends Entry
 {
     // CONSTANTS
     private static final int CONSTANT_POSITION_MYLUTECE_USER_LOGIN = 0;
     private static final String SPACE = " ";
-    private static final String OPEN_BRACKET = "(";
-    private static final String CLOSED_BRACKET = ")";
     private static final String TWO_POINTS = ":";
     private static final String COMMA = ",";
     
@@ -81,19 +76,18 @@ public class EntryTypeMyLuteceUser extends Entry
     private static final String PROPERTY_USER_INFO_PREFIX = "portal.security.";
     
     // TEMPLATES
-    private static final String TEMPLATE_CREATE = "admin/plugins/directory/entrytypemyluteceuser/create_entry_type_mylutece_user.html";
-    private static final String TEMPLATE_MODIFY = "admin/plugins/directory/entrytypemyluteceuser/modify_entry_type_mylutece_user.html";
-    private static final String TEMPLATE_HTML_FRONT_CODE_FORM_ENTRY = "skin/plugins/directory/entrytypemyluteceuser/html_code_form_entry_type_mylutece_user.html";
-    private static final String TEMPLATE_HTML_FRONT_CODE_ENTRY_VALUE = "skin/plugins/directory/entrytypemyluteceuser/html_code_entry_value_type_mylutece_user.html";
-    private static final String TEMPLATE_HTML_FRONT_CODE_FORM_SEARCH_ENTRY = "skin/plugins/directory/entrytypemyluteceuser/html_code_form_search_entry_type_mylutece_user.html";
-    private static final String TEMPLATE_HTML_CODE_FORM_ENTRY = "admin/plugins/directory/entrytypemyluteceuser/html_code_form_entry_type_mylutece_user.html";
-    private static final String TEMPLATE_HTML_CODE_ENTRY_VALUE = "admin/plugins/directory/entrytypemyluteceuser/html_code_entry_value_type_mylutece_user.html";
-    private static final String TEMPLATE_HTML_CODE_FORM_SEARCH_ENTRY = "admin/plugins/directory/entrytypemyluteceuser/html_code_form_search_entry_type_mylutece_user.html";
+    private static final String TEMPLATE_CREATE = "admin/plugins/directory/entrytyperemotemyluteceuser/create_entry_type_remote_mylutece_user.html";
+    private static final String TEMPLATE_MODIFY = "admin/plugins/directory/entrytyperemotemyluteceuser/modify_entry_type_remote_mylutece_user.html";
+    private static final String TEMPLATE_HTML_FRONT_CODE_FORM_ENTRY = "skin/plugins/directory/entrytyperemotemyluteceuser/html_code_form_entry_type_remote_mylutece_user.html";
+    private static final String TEMPLATE_HTML_FRONT_CODE_ENTRY_VALUE = "skin/plugins/directory/entrytyperemotemyluteceuser/html_code_entry_value_type_remote_mylutece_user.html";
+    private static final String TEMPLATE_HTML_FRONT_CODE_FORM_SEARCH_ENTRY = "skin/plugins/directory/entrytyperemotemyluteceuser/html_code_form_search_entry_type_remote_mylutece_user.html";
+    private static final String TEMPLATE_HTML_CODE_FORM_ENTRY = "admin/plugins/directory/entrytyperemotemyluteceuser/html_code_form_entry_type_remote_mylutece_user.html";
+    private static final String TEMPLATE_HTML_CODE_ENTRY_VALUE = "admin/plugins/directory/entrytyperemotemyluteceuser/html_code_entry_value_type_remote_mylutece_user.html";
+    private static final String TEMPLATE_HTML_CODE_FORM_SEARCH_ENTRY = "admin/plugins/directory/entrytyperemotemyluteceuser/html_code_form_search_entry_type_remote_mylutece_user.html";
 
     /**
-    *
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate(  )
     {
@@ -101,7 +95,6 @@ public class EntryTypeMyLuteceUser extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
     @Override
@@ -111,7 +104,6 @@ public class EntryTypeMyLuteceUser extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
     @Override
@@ -126,7 +118,6 @@ public class EntryTypeMyLuteceUser extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
     @Override
@@ -141,7 +132,6 @@ public class EntryTypeMyLuteceUser extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
     @Override
@@ -156,9 +146,8 @@ public class EntryTypeMyLuteceUser extends Entry
     }
 
     /**
-    *
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -241,7 +230,6 @@ public class EntryTypeMyLuteceUser extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
     @Override
@@ -252,56 +240,21 @@ public class EntryTypeMyLuteceUser extends Entry
         if ( ( lstValue != null ) && ( lstValue.size(  ) > 0 ) )
         {
             String strUserLogin = lstValue.get( CONSTANT_POSITION_MYLUTECE_USER_LOGIN );
-            LuteceUser user = SecurityService.getInstance(  ).getUser( strUserLogin );
 
-            if ( user != null )
-            {
-                RecordField recordField = new RecordField(  );
-                recordField.setEntry( this );
-                recordField.setValue( strUserLogin );
-                listRecordField.add( recordField );
-            }
+            RecordField recordField = new RecordField(  );
+            recordField.setEntry( this );
+            recordField.setValue( strUserLogin );
+            listRecordField.add( recordField );
         }
-    }
-
-    /**
-     * Get all mylutece users
-     * @return mylutece users
-     */
-    public ReferenceList getMyLuteceUsers(  )
-    {
-        ReferenceList listMyLuteceUsers = new ReferenceList(  );
-        Collection<LuteceUser> listUsers = SecurityService.getInstance(  ).getUsers(  );
-
-        for ( LuteceUser user : listUsers )
-        {
-            StringBuilder sbUser = new StringBuilder(  );
-            String strFamilyName = user.getUserInfo( LuteceUser.NAME_FAMILY );
-            String strGivenName = user.getUserInfo( LuteceUser.NAME_GIVEN );
-
-            if ( ( strFamilyName != null ) && !strFamilyName.equals( DirectoryUtils.EMPTY_STRING ) )
-            {
-                sbUser.append( strFamilyName + SPACE );
-            }
-
-            if ( ( strGivenName != null ) && !strGivenName.equals( DirectoryUtils.EMPTY_STRING ) )
-            {
-                sbUser.append( strGivenName + SPACE );
-            }
-
-            sbUser.append( OPEN_BRACKET + user.getName(  ) + CLOSED_BRACKET );
-            listMyLuteceUsers.addItem( user.getName(  ), sbUser.toString(  ) );
-        }
-
-        return listMyLuteceUsers;
     }
     
     /**
 	 * {@inheritDoc}
 	 */
+    @Override
     public String getHtmlRecordFieldValue( Locale locale, RecordField recordField, boolean isDisplayFront )
     {
-        if ( getTemplateHtmlRecordFieldValue( isDisplayFront ) != null )
+    	if ( getTemplateHtmlRecordFieldValue( isDisplayFront ) != null )
         {
             Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_ENTRY, this );
@@ -312,8 +265,8 @@ public class EntryTypeMyLuteceUser extends Entry
             	int nIdRecord = recordField.getRecord(  ).getIdRecord(  );
         		String strUserGuid = DirectoryService.getInstance(  ).getUserGuid( nIdRecord, getIdEntry(  ) );
             	ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfos( strUserGuid, getIdEntry(  ) );
-
-    			model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
+    			
+            	model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
     			model.put( MARK_MYLUTECE_USER_LOGIN, strUserGuid );
             }
 
@@ -327,16 +280,13 @@ public class EntryTypeMyLuteceUser extends Entry
     }
 
     /**
-     * Convert the record field value to string
-     * @param recordField the record field
-     * @param locale Locale
-     * @param bDisplayFront true if it is displayed in front
-     * @param bExportDirectory true if it is exported
+     * {@inheritDoc}
      */
+    @Override
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
         boolean bExportDirectory )
     {
-        String strValue = StringUtils.EMPTY;
+    	String strValue = StringUtils.EMPTY;
 
         if ( recordField != null && StringUtils.isNotBlank( recordField.getValue(  ) ) && 
         		recordField.getRecord(  ) != null )
@@ -371,11 +321,9 @@ public class EntryTypeMyLuteceUser extends Entry
     }
 
     /**
-     * Convert the record field value to string
-     * @param recordField the record field
-     * @param locale Locale
-     * @param bDisplayFront true if it is displayed in front
+     * {@inheritDocs}
      */
+    @Override
     public String convertRecordFieldTitleToString( RecordField recordField, Locale locale, boolean bDisplayFront )
     {
         return convertRecordFieldValueToString( recordField, locale, bDisplayFront, false );
@@ -385,6 +333,7 @@ public class EntryTypeMyLuteceUser extends Entry
      *
      * {@inheritDoc}
      */
+    @Override
     public boolean isSortable(  )
     {
         return true;
@@ -398,7 +347,7 @@ public class EntryTypeMyLuteceUser extends Entry
     {
     	boolean bShow = false;
     	List<Field> listFields = getFields(  );
-    	if ( listFields == null || listFields.size(  ) == 0 )
+    	if ( listFields == null || listFields.isEmpty(  ) )
     	{
     		Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
     		listFields = FieldHome.getFieldListByIdEntry( getIdEntry(  ), plugin );

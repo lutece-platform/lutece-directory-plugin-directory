@@ -276,11 +276,11 @@
 			              	<select name="id_type" id="id_type">
 							   <option value="-1"></option>
 								<#list entry_type_list as entryType>
-									<#if !entryType.group && !entryType.myLuteceUser>
+									<#if !entryType.group && ( !entryType.myLuteceUser || entryType.myLuteceUser && 
+									( entryType.idType = id_entry_type_mylutece_user && is_active_mylutece_authentification || 
+									 entryType.idType = id_entry_type_remote_mylutece_user && is_user_attributes_service_enable ) ) >
 										<option value="${entryType.idType}">#i18n{${entryType.titleI18nKey}}</option>
-									<#elseif !entryType.group && entryType.myLuteceUser && is_active_mylutece_authentification>
-										<option value="${entryType.idType}">#i18n{${entryType.titleI18nKey}}</option>
-									</#if>	
+									</#if>
 								</#list>
 							</select>
 			               	<input value="#i18n{directory.modify_directory.manage_entry.button_insert_entry} " class="button"  type="submit">
