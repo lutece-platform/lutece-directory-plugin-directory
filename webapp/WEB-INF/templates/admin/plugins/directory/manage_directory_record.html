@@ -244,7 +244,7 @@
   	</#list>
      </#if>
 	<#list resource_actions.record.actions as action>
-		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name")>
+		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
 	 	<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">
 	  		<img src="${action.iconUrl}" alt="${action.name}" title="${action.description}">
 	  	</a>
