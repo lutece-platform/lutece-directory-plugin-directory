@@ -3508,8 +3508,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 	return getJspActionResults( request, nIdDirectory, listIdsSuccessRecord, listIdFailRecord );
                 }
             }
-            
-            return getJspManageDirectoryRecord( request, nIdDirectory );
+
+            return getRedirectUrl( request );
         }
         return getJspManageDirectory( request );
     }
