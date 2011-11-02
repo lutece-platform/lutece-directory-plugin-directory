@@ -42,16 +42,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import fr.paris.lutece.plugins.directory.business.IEntry;
 import fr.paris.lutece.plugins.directory.business.RecordField;
+import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.html.ItemNavigator;
 import fr.paris.lutece.util.url.UrlItem;
 
 /**
- * Visualisation of all needed session values.
+ * Visualization of all needed session values.
  * Many features depends on search result or paginator.
- * Thoses fields may be required for actions.
+ * Those fields may be required for actions.
  *
  */
 public final class DirectoryAdminSearchFields implements Serializable
@@ -91,6 +93,8 @@ public final class DirectoryAdminSearchFields implements Serializable
     private ItemNavigator _itemNavigatorViewRecords;
     private ItemNavigator _itemNavigatorHistory;
     private String _strRedirectUrl;
+    private IEntry _sortEntry;
+    private int _nSortOrder = RecordFieldFilter.ORDER_NONE;
     
     /**
      * Gets the selected records
@@ -669,5 +673,41 @@ public final class DirectoryAdminSearchFields implements Serializable
 	public String getRedirectUrl(  )
 	{
 		return _strRedirectUrl;
+	}
+
+	/**
+	 * Set the sort entry
+	 * @param sortEntry the sort entry
+	 */
+	public void setSortEntry( IEntry sortEntry )
+	{
+		_sortEntry = sortEntry;
+	}
+
+	/**
+	 * Get the sort entry
+	 * @return the sort entry
+	 */
+	public IEntry getSortEntry(  )
+	{
+		return _sortEntry;
+	}
+
+	/**
+	 * Set the sort order
+	 * @param nSortOrder the sort order
+	 */
+	public void setSortOrder( int nSortOrder )
+	{
+		_nSortOrder = nSortOrder;
+	}
+
+	/**
+	 * Get the sort order
+	 * @return the sort order
+	 */
+	public int getSortOrder(  )
+	{
+		return _nSortOrder;
 	}
 }

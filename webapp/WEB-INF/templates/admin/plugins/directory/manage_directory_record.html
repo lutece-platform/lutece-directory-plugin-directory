@@ -135,7 +135,7 @@
 		<input name="page" value="directory" type="hidden" />
 	    <input name="search_action" value="search_action" type="hidden" />
 	    <input name="id_directory" value="${directory.idDirectory}" type="hidden" />
-	    <#assign sort_search_attribute = "&session=session&search=search">
+	    <#assign sort_search_attribute = "&amp;session=session&amp;search=search">
 		<#if entry_list_form_main_search?has_content>
 			<#list entry_list_form_main_search as entry>	
 				<#assign entryKey=""+entry.idEntry>	
@@ -145,19 +145,24 @@
 		      			<#list map_id_entry_list_record_field[entryKey] as default_value>
 		      				<#if default_value??>
 			      				<#if isEntryTypeMyLuteceUser(entry) || isEntryTypeDirectory(entry)>
-				   					<#assign sort_search_attribute = sort_search_attribute + "&" + entryKey + "=" + default_value.value>
+				   					<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "=" + default_value.value>
 				   				<#elseif isEntryTypeGeolocation(entry)>
 				   					<#if default_value.field?? && default_value.field.title?? && default_value.field.title = "address" && default_value.value??>
-				   						<#assign sort_search_attribute = sort_search_attribute + "&" + entryKey + "_address=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+				   						<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "_address=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
 				   					</#if>
 				   				<#else>
-			      					<#assign sort_search_attribute = sort_search_attribute + "&" + entryKey + "=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+			      					<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
 			      				</#if>
 			      			</#if>
 		      			</#list>
 		      		</#if>
 	      		<#else>
-	      			${entry.getHtmlFormSearchEntry( locale , false)}	
+	      			${entry.getHtmlFormSearchEntry( locale , false)}
+	      			<#if isEntryTypeGeolocation(entry)>
+	      				<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "_address=">
+	      			<#else>
+	      				<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "=">
+	      			</#if>
 	      		</#if>
       		</#list>
       	</#if>
@@ -260,14 +265,14 @@
       		<th>
       			${entry.title}
       			<#if entry.sortable>
-      				<@sort jsp_url="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" attribute="${entry.idEntry}&id_directory=${directory.idDirectory}${sort_search_attribute}" />
+      				<@sort jsp_url="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" attribute="${entry.idEntry}&amp;id_directory=${directory.idDirectory}${sort_search_attribute}" />
       			</#if>
        		</th>
        </#list>
        <#if show_date_creation_result>
 			<th>
        			#i18n{directory.manage_directory_record.date_creation}
-       			<@sort jsp_url="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" attribute="dateCreation&id_directory=${directory.idDirectory}${sort_search_attribute}" />
+       			<@sort jsp_url="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" attribute="dateCreation&amp;id_directory=${directory.idDirectory}${sort_search_attribute}" />
       	 	</th>
       	</#if>
        <#if is_workflow_enabled && directory.idWorkflow!=-1 >

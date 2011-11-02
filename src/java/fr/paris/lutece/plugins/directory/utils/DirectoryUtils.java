@@ -53,6 +53,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
 
 import fr.paris.lutece.plugins.directory.business.Directory;
+import fr.paris.lutece.plugins.directory.business.DirectoryHome;
 import fr.paris.lutece.plugins.directory.business.EntryFilter;
 import fr.paris.lutece.plugins.directory.business.EntryHome;
 import fr.paris.lutece.plugins.directory.business.EntryType;
@@ -81,6 +82,7 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
+import fr.paris.lutece.portal.web.constants.Parameters;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.date.DateUtil;
@@ -133,6 +135,7 @@ public final class DirectoryUtils
     public static final String PARAMETER_SHOW_ACTION_RESULT = "show_action_result";
     public static final String PARAMETER_ID_SUCCESS_RECORD = "id_success_record";
     public static final String PARAMETER_ID_FAIL_RECORD = "id_fail_record";
+    public static final String PARAMETER_DATECREATION = "dateCreation";
     
     // JSP
     public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
@@ -1008,6 +1011,21 @@ public final class DirectoryUtils
             return null;
         }
     }
+
+    /**
+     * Get the result list according to queries
+     * @param request The {@link HttpServletRequest}
+     * @param directory The {@link Directory}
+     * @param bWorkflowServiceEnable true if the WorkflowService is enabled
+     * @return The list of id records
+     * @throws AccessDeniedException
+     */
+    public static List<Integer> getListResults( HttpServletRequest request, Directory directory,
+        boolean bWorkflowServiceEnable, boolean bUseFilterDirectory, DirectoryAdminSearchFields searchFields, AdminUser adminUser, Locale locale )
+        throws AccessDeniedException
+    {
+    	return getListResults( request, directory, bWorkflowServiceEnable, bUseFilterDirectory, null, RecordFieldFilter.ORDER_NONE, searchFields, adminUser, locale );
+    }
     
     /**
      * Get the result list according to queries
@@ -1031,8 +1049,22 @@ public final class DirectoryUtils
         filter.setWorkgroupKeyList( AdminWorkgroupService.getUserWorkgroups( adminUser, locale ) );
   
         // sort filter
-        filter.setSortEntry( sortEntry );
-        filter.setSortOrder( nSortOrder );
+        if ( sortEntry == null )
+        {
+        	filter.setSortEntry( searchFields.getSortEntry(  ) );
+        }
+        else
+        {
+        	filter.setSortEntry( sortEntry );
+        }
+        if ( nSortOrder == RecordFieldFilter.ORDER_NONE )
+        {
+        	filter.setSortOrder( searchFields.getSortOrder(  ) );
+        }
+        else
+        {
+        	filter.setSortOrder( nSortOrder );
+        }
 
         // If workflow active, filter by workflow state
         if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
@@ -1098,6 +1130,23 @@ public final class DirectoryUtils
     	UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MANAGE_DIRECTORY_RECORD );
     	urlItem.addParameter( PARAMETER_ID_DIRECTORY, nIdDirectory );
     	urlItem.addParameter( PARAMETER_SESSION, PARAMETER_SESSION );
+    	
+    	String strSortedAttributeName = request.getParameter( Parameters.SORTED_ATTRIBUTE_NAME );
+        String strAscSort = null;
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        
+        if ( ( directory != null ) && ( ( strSortedAttributeName != null ) || ( directory.getIdSortEntry(  ) != null ) ) )
+        {
+            if ( strSortedAttributeName == null )
+            {
+                strSortedAttributeName = directory.getIdSortEntry(  );
+            }
+
+            strAscSort = request.getParameter( Parameters.SORTED_ASC );
+
+            urlItem.addParameter( Parameters.SORTED_ATTRIBUTE_NAME, strSortedAttributeName );
+            urlItem.addParameter( Parameters.SORTED_ASC, strAscSort );
+        }
     	
     	return urlItem.getUrl(  );
     }

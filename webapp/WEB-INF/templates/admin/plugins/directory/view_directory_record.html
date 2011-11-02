@@ -130,7 +130,9 @@
 	      			</#if>
 	      		</#list>
 	 			 <p>
-	  				<input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{directory.resource_history.buttonBack}" />
+					<a href="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp?id_directory=${directory.idDirectory}&amp;session=session">
+	  					<input class="button" type="button" value="#i18n{directory.resource_history.buttonBack}" />
+	  				</a>
 	   			</p>
 			</form>
 		</div>

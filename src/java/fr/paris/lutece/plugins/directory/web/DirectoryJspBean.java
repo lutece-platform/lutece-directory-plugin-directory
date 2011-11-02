@@ -380,7 +380,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_DATE_SHOWN_IN_ADVANCED_SEARCH = "date_shown_in_advanced_search";
     private static final String PARAMETER_DATE_SHOWN_IN_MULTI_SEARCH = "date_shown_in_multi_search";
     private static final String PARAMETER_DATE_SHOWN_IN_EXPORT = "date_shown_in_export";
-    private static final String PARAMETER_DATECREATION = "dateCreation";
     private static final String PARAMETER_ID_SORT_ENTRY = "id_sort_entry";
     private static final String PARAMETER_ASC_SORT = "asc_sort";
     private static final String PARAMETER_ACTIVATE_DIRECTORY_RECORD = "activate_directory_record";
@@ -2523,7 +2522,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	            }
 	        }
 	
-	        UrlItem url = new UrlItem( getJspManageDirectoryRecord( request, nIdDirectory ) );
 	        String strSortedAttributeName = request.getParameter( Parameters.SORTED_ATTRIBUTE_NAME );
 	        String strAscSort = null;
 	        List<Record> lRecord = null;
@@ -2538,7 +2536,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	                strSortedAttributeName = directory.getIdSortEntry(  );
 	            }
 	
-	            if ( strSortedAttributeName.equals( PARAMETER_DATECREATION ) )
+	            if ( DirectoryUtils.PARAMETER_DATECREATION.equals( strSortedAttributeName ) )
 	            {
 	            	// IMPORTANT : date creation is default filter
 	            }
@@ -2546,6 +2544,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	            {
 	                int nSortedEntryId = Integer.parseInt( strSortedAttributeName );
 	                sortEntry = EntryHome.findByPrimaryKey( nSortedEntryId, getPlugin(  ) );
+	                _searchFields.setSortEntry( sortEntry );
 	            }
 	
 	            strAscSort = request.getParameter( Parameters.SORTED_ASC );
@@ -2569,19 +2568,17 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	            {
 	            	nSortOrder = RecordFieldFilter.ORDER_DESC;
 	            }
-	
-	            url.addParameter( Parameters.SORTED_ATTRIBUTE_NAME, strSortedAttributeName );
-	            url.addParameter( Parameters.SORTED_ASC, strAscSort );
+	            _searchFields.setSortOrder( nSortOrder );
 	        }
 	        
-	        List<Integer> listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, true, sortEntry, nSortOrder, _searchFields, getUser(  ), getLocale(  ) );
+	        List<Integer> listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, true, _searchFields, getUser(  ), getLocale(  ) );
 	        
 	        // Store the list of id records in session
 	        _searchFields.setListIdsResultRecord( listResultRecordId );
 
 	        // HACK : We copy the list so workflow does not clear the paginator list.
 	        LocalizedPaginator<Integer> paginator = new LocalizedPaginator<Integer>( new ArrayList<Integer>( listResultRecordId ), _searchFields.getItemsPerPageDirectoryRecord(  ),
-	                url.getUrl(  ), PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexDirectoryRecord(  ), getLocale(  ) );
+	                DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory ), PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexDirectoryRecord(  ), getLocale(  ) );
 	        
 	        // get only record for page items.
 	        lRecord = RecordHome.loadListByListId( paginator.getPageItems(  ), getPlugin(  ) );
@@ -3081,7 +3078,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
         }
 
-        return getJspManageDirectoryRecord( request, nIdDirectory );
+        return DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory );
     }
 
     /**
@@ -3278,7 +3275,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         		WorkflowService.getInstance(  ).doRemoveWorkFlowResource( nIdDirectoryRecord, Record.WORKFLOW_RESOURCE_TYPE );
         	}
         	
-        	return getJspManageDirectoryRecord( request, nIdDirectory );
+        	return DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory );
         }
         return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
     }
@@ -3742,18 +3739,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     }
 
     /**
-     * return url of the jsp manage directory record
-     * @param request The HTTP request
-     * @param nIdDirectory the directory id
-     * @return url of the jsp manage directory record
-     */
-    private String getJspManageDirectoryRecord( HttpServletRequest request, int nIdDirectory )
-    {
-        return AppPathService.getBaseUrl( request ) + JSP_MANAGE_DIRECTORY_RECORD + "?" + PARAMETER_ID_DIRECTORY + "=" +
-        nIdDirectory + "&" + PARAMETER_SESSION + "=" + PARAMETER_SESSION;
-    }
-
-    /**
      * return url of the jsp print mass
      * @param request The HTTP request
      * @param nIdDirectory the directory id
@@ -3840,6 +3825,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     	_searchFields.setMapQuery( null );
     	_searchFields.setItemNavigatorViewRecords( null );
     	_searchFields.setItemNavigatorHistory( null );
+    	_searchFields.setSortEntry( null );
+    	_searchFields.setSortOrder( RecordFieldFilter.ORDER_NONE );
     }
 
     /**
@@ -4520,7 +4507,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 RecordHome.update( record, getPlugin(  ) );
         	}
         	
-        	return getJspManageDirectoryRecord( request, nIdDirectory );
+        	return DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory );
         }
         return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
     }
