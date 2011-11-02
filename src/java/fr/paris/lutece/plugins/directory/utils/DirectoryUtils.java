@@ -1046,7 +1046,10 @@ public final class DirectoryUtils
         List<Integer> listResultRecordId = null;
 
         //filter by workgroup 
-        filter.setWorkgroupKeyList( AdminWorkgroupService.getUserWorkgroups( adminUser, locale ) );
+        if ( adminUser != null )
+        {
+        	filter.setWorkgroupKeyList( AdminWorkgroupService.getUserWorkgroups( adminUser, locale ) );
+        }
   
         // sort filter
         if ( sortEntry == null )

@@ -108,7 +108,6 @@ import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.portal.web.admin.PluginAdminPageJspBean;
 import fr.paris.lutece.portal.web.constants.Messages;
-import fr.paris.lutece.portal.web.constants.Parameters;
 import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.PluginActionManager;
@@ -2521,55 +2520,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	                }
 	            }
 	        }
-	
-	        String strSortedAttributeName = request.getParameter( Parameters.SORTED_ATTRIBUTE_NAME );
-	        String strAscSort = null;
-	        List<Record> lRecord = null;
 	        
-	        IEntry sortEntry = null;
-	        int nSortOrder = RecordFieldFilter.ORDER_NONE;
-	
-	        if ( ( strSortedAttributeName != null ) || ( directory.getIdSortEntry(  ) != null ) )
-	        {
-	            if ( strSortedAttributeName == null )
-	            {
-	                strSortedAttributeName = directory.getIdSortEntry(  );
-	            }
-	
-	            if ( DirectoryUtils.PARAMETER_DATECREATION.equals( strSortedAttributeName ) )
-	            {
-	            	// IMPORTANT : date creation is default filter
-	            }
-	            else
-	            {
-	                int nSortedEntryId = Integer.parseInt( strSortedAttributeName );
-	                sortEntry = EntryHome.findByPrimaryKey( nSortedEntryId, getPlugin(  ) );
-	                _searchFields.setSortEntry( sortEntry );
-	            }
-	
-	            strAscSort = request.getParameter( Parameters.SORTED_ASC );
-		
-	            boolean bIsAscSort;
-	
-	            if ( strAscSort != null )
-	            {
-	                bIsAscSort = Boolean.parseBoolean( strAscSort );
-	            }
-	            else
-	            {
-	                bIsAscSort = directory.isAscendingSort(  );
-	            }
-	            
-	            if ( bIsAscSort )
-	            {
-	            	nSortOrder = RecordFieldFilter.ORDER_ASC;
-	            }
-	            else
-	            {
-	            	nSortOrder = RecordFieldFilter.ORDER_DESC;
-	            }
-	            _searchFields.setSortOrder( nSortOrder );
-	        }
+	        _searchFields.setSortParameters( request, directory, getPlugin(  ) );
 	        
 	        List<Integer> listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, true, _searchFields, getUser(  ), getLocale(  ) );
 	        
@@ -2581,7 +2533,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	                DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory ), PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexDirectoryRecord(  ), getLocale(  ) );
 	        
 	        // get only record for page items.
-	        lRecord = RecordHome.loadListByListId( paginator.getPageItems(  ), getPlugin(  ) );
+	        List<Record> lRecord = RecordHome.loadListByListId( paginator.getPageItems(  ), getPlugin(  ) );
 	        
 	        boolean bHistoryEnabled = WorkflowService.getInstance(  ).isAvailable(  ) && 
         			( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );

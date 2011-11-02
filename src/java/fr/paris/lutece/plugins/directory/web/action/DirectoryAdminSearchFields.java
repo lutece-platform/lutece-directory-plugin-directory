@@ -42,11 +42,16 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import fr.paris.lutece.plugins.directory.business.Directory;
+import fr.paris.lutece.plugins.directory.business.EntryHome;
 import fr.paris.lutece.plugins.directory.business.IEntry;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
+import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
+import fr.paris.lutece.portal.web.constants.Parameters;
 import fr.paris.lutece.util.html.ItemNavigator;
 import fr.paris.lutece.util.url.UrlItem;
 
@@ -709,5 +714,57 @@ public final class DirectoryAdminSearchFields implements Serializable
 	public int getSortOrder(  )
 	{
 		return _nSortOrder;
+	}
+	
+	/**
+	 * Set the sort parameters
+	 * @param request the HTTP request
+	 * @param directory the directory
+	 * @param plugin the plugin
+	 */
+	public void setSortParameters( HttpServletRequest request, Directory directory, Plugin plugin )
+	{
+		String strSortedAttributeName = request.getParameter( Parameters.SORTED_ATTRIBUTE_NAME );
+        String strAscSort = null;
+
+        if ( ( strSortedAttributeName != null ) || ( directory.getIdSortEntry(  ) != null ) )
+        {
+            if ( strSortedAttributeName == null )
+            {
+                strSortedAttributeName = directory.getIdSortEntry(  );
+            }
+
+            if ( DirectoryUtils.PARAMETER_DATECREATION.equals( strSortedAttributeName ) )
+            {
+            	// IMPORTANT : date creation is default filter
+            }
+            else
+            {
+                int nSortedEntryId = Integer.parseInt( strSortedAttributeName );
+                _sortEntry = EntryHome.findByPrimaryKey( nSortedEntryId, plugin );
+            }
+
+            strAscSort = request.getParameter( Parameters.SORTED_ASC );
+	
+            boolean bIsAscSort;
+
+            if ( strAscSort != null )
+            {
+                bIsAscSort = Boolean.parseBoolean( strAscSort );
+            }
+            else
+            {
+                bIsAscSort = directory.isAscendingSort(  );
+            }
+            
+            if ( bIsAscSort )
+            {
+            	_nSortOrder = RecordFieldFilter.ORDER_ASC;
+            }
+            else
+            {
+            	_nSortOrder = RecordFieldFilter.ORDER_DESC;
+            }
+        }
 	}
 }
