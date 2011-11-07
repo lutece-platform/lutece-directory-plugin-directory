@@ -175,7 +175,8 @@ public class DirectoryService
     	filter.setIdDirectory( directory.getIdDirectory(  ) );
         filter.setWorkgroupKeyList( AdminWorkgroupService.getUserWorkgroups( user, user.getLocale(  ) ) );
     	
-    	if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
+    	if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) && 
+    			( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_ZERO ) && 
                 bWorkflowServiceEnable )
         {
     		List<Integer> listResultRecordIds = DirectorySearchService.getInstance(  ).

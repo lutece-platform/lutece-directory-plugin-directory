@@ -215,6 +215,14 @@ public class EntryTypeNumbering extends Entry
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
         throws DirectoryErrorException
     {
+    	/*
+    	 * This method is called from several operations :
+    	 * 1) Creating a record
+    	 * 2) Updating a record
+    	 * 3) Search from BO
+    	 * 4) Search from FO
+    	 */
+    	
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         RecordField recordField = new RecordField(  );
         recordField.setEntry( this );
@@ -223,6 +231,10 @@ public class EntryTypeNumbering extends Entry
 
         if ( record != null )
         {
+        	/*
+        	 * CASES 1 AND 2 :
+        	 * (The record is not null for cases 1) and 2))
+        	 */
             recordOld = RecordHome.findByPrimaryKey( record.getIdRecord(  ), pluginDirectory );
         }
 
@@ -230,22 +242,34 @@ public class EntryTypeNumbering extends Entry
 
         if ( recordOld != null )
         {
-        	// Edit record field
+        	/*
+        	 * CASE 2 :
+        	 * (The record old is not null for case 2))
+        	 */
             recordField.setValue( strValueEntry );
         }
-        else if ( ( strValueEntry != null ) && ( record == null ) )
+        else if ( record == null )
         {
-        	// Search in FO
-            if ( bTestDirectoryError && this.isMandatory(  ) && strValueEntry.equals( DirectoryUtils.EMPTY_STRING ) )
+        	/*
+        	 * CASES 3 AND 4 :
+        	 * (The record is null for cases 3) and 4))
+        	 */
+            if ( bTestDirectoryError && this.isMandatory(  ) && StringUtils.isBlank( strValueEntry ) )
             {
                 throw new DirectoryErrorException( this.getTitle(  ) );
             }
 
-            recordField.setValue( strValueEntry );
+            if ( strValueEntry != null )
+            {
+            	recordField.setValue( strValueEntry );
+            }
         }
         else
         {
-        	// Create record field
+        	/*
+        	 * CASE 1 :
+        	 * (Create the record, thus fetch the max number)
+        	 */
         	int numbering = DirectoryService.getInstance(  ).getMaxNumber( this );
             this.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
             FieldHome.update( this.getFields(  ).get( 0 ), pluginDirectory );
@@ -253,12 +277,15 @@ public class EntryTypeNumbering extends Entry
             recordField.setValue( String.valueOf( numbering ) );
         }
 
-        if ( bTestDirectoryError && this.isMandatory(  ) )
+        if ( recordField.getValue(  ) != null )
         {
-            throw new DirectoryErrorException( this.getTitle(  ) );
+        	/*
+        	 * In cases 3 and 4, if the strValueEntry is null, then that means that the user
+        	 * did not use the search function and the user only wants to display every records or
+        	 * did not want to filter his/her search for this entry.
+        	 */
+        	listRecordField.add( recordField );
         }
-
-        listRecordField.add( recordField );
     }
     
     @Override

@@ -158,11 +158,6 @@
 		      		</#if>
 	      		<#else>
 	      			${entry.getHtmlFormSearchEntry( locale , false)}
-	      			<#if isEntryTypeGeolocation(entry)>
-	      				<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "_address=">
-	      			<#else>
-	      				<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "=">
-	      			</#if>
 	      		</#if>
       		</#list>
       	</#if>
