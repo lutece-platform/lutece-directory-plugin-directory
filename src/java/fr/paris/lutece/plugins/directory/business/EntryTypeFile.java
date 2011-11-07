@@ -51,7 +51,6 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.regularexpression.RegularExpressionService;
-import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.Paginator;
@@ -305,18 +304,6 @@ public class EntryTypeFile extends Entry
                 }
             }
         }
-        
-        // Put the download url in the record field value
-        String strDownloadUrl = StringUtils.EMPTY;
-        if ( recordField.getFile(  ) != null )
-        {
-        	UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DOWNLOAD_FILE );
-        	url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD, strIdDirectoryRecord );
-        	url.addParameter( DirectoryUtils.PARAMETER_ID_ENTRY, getIdEntry(  ) );
-        	strDownloadUrl = url.getUrl(  );
-        }
-        
-        recordField.setValue( strDownloadUrl );
 
         listRecordField.add( recordField );
     }
@@ -369,5 +356,27 @@ public class EntryTypeFile extends Entry
     {
         return new LocalizedPaginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage,
             strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
+            boolean bExportDirectory )
+    {
+        if ( recordField.getFile(  ) != null )
+        {
+        	UrlItem url = new UrlItem( DirectoryUtils.getBaseUrl( null ) + JSP_DOWNLOAD_FILE );
+        	url.addParameter( DirectoryUtils.PARAMETER_ID_FILE, recordField.getFile(  ).getIdFile(  ) );
+        	return url.getUrl(  );
+        }
+        
+        if ( StringUtils.isNotBlank( recordField.getValue(  ) ) )
+        {
+        	return recordField.getValue(  );
+        }
+        
+        return StringUtils.EMPTY;
     }
 }

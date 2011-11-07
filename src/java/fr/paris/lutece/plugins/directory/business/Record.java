@@ -365,7 +365,8 @@ public class Record implements AdminWorkgroupResource
                     {
                         IEntry entryFile = EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), plugin );
 
-                        XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE, recordField.getValue(  ) );
+                        XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE, entry.convertRecordFieldValueToString( 
+                        		recordField, locale, bDisplayFront, bDisplayExport ) );
                         strXml.append( recordField.getFile(  )
                                                   .getXml( plugin, locale, entry.getEntryType(  ).getIdType(  ),
                                 entryFile.getDisplayWidth(  ), entryFile.getDisplayHeight(  ) ) );

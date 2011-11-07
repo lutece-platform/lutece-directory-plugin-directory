@@ -80,6 +80,7 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.portal.web.constants.Parameters;
@@ -139,8 +140,10 @@ public final class DirectoryUtils
     
     // JSP
     public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
-    
-    // property
+
+    // PROPERTIES
+    public static final String PROPERTY_LUTECE_BASE_URL = "lutece.base.url";
+    public static final String PROPERTY_LUTECE_PROD_URL = "lutece.prod.url";
     private static final String PARAMETER_ID_ENTRY_TYPE = "id_type";
     private static final String CONSTANT_CHARACTER_DOUBLE_QUOTE = "\"";
     private static final String CONSTANT_CHARACTER_SIMPLE_QUOTE = "'";
@@ -1213,5 +1216,31 @@ public final class DirectoryUtils
     		}
     	}
     	map.put( Integer.toString( entry.getIdEntry(  ) ), listRecordFields );
+    }
+
+    /**
+     * Get the base url
+     * @param request the HTTP request
+     * @return the base url
+     */
+    public static String getBaseUrl( HttpServletRequest request )
+    {
+        String strBaseUrl = StringUtils.EMPTY;
+
+        if ( request != null )
+        {
+            strBaseUrl = AppPathService.getBaseUrl( request );
+        }
+        else
+        {
+            strBaseUrl = AppPropertiesService.getProperty( PROPERTY_LUTECE_BASE_URL );
+
+            if ( StringUtils.isBlank( strBaseUrl ) )
+            {
+                strBaseUrl = AppPropertiesService.getProperty( PROPERTY_LUTECE_PROD_URL );
+            }
+        }
+
+        return strBaseUrl;
     }
 }
