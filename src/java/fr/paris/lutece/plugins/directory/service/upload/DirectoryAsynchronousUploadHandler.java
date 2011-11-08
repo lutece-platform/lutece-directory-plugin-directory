@@ -45,7 +45,8 @@ import net.sf.json.JSONObject;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
 
-import fr.paris.lutece.plugins.blobstoreclient.service.BlobStoreClientWebService;
+import fr.paris.lutece.plugins.blobstoreclient.service.IBlobStoreClientService;
+import fr.paris.lutece.plugins.blobstoreclient.util.BlobStoreClientException;
 import fr.paris.lutece.plugins.directory.business.IEntry;
 import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
@@ -60,7 +61,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.web.upload.IAsynchronousUploadHandler;
-import fr.paris.lutece.util.httpaccess.HttpAccessException;
 
 
 /**
@@ -92,7 +92,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     /** contains uploaded file items */
     public static Map<String, Map<String, FileItem>> _mapAsynchronousUpload = new ConcurrentHashMap<String, Map<String,FileItem>>(  );
 
-    private BlobStoreClientWebService _blobStoreClientWS;
+    private IBlobStoreClientService _blobStoreClientService;
     
     /**
      * Private constructor
@@ -112,12 +112,12 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     }
     
     /**
-     * Set the blobstore client web service
-     * @param blobStoreClientWebService the blob store client web service
+     * Set the blobstore client service
+     * @param blobStoreClientService the blob store client service
      */
-    public void setBlobStoreClientWebService( BlobStoreClientWebService blobStoreClientWebService )
+    public void setBlobStoreClientService( IBlobStoreClientService blobStoreClientService )
     {
-        _blobStoreClientWS = blobStoreClientWebService;
+        _blobStoreClientService = blobStoreClientService;
     }
     
     /**
@@ -189,12 +189,12 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param fileItem the file
      * @param strBlobStore the blobstore service name
      * @return the blob key of the uploaded file
-     * @throws HttpAccessException Exception if there is an HTTP issue
+     * @throws BlobStoreClientException Exception if there is an issue
      */
     public String doUploadFile( String strBaseUrl, FileItem fileItem, String strBlobStore )
-        throws HttpAccessException
+        throws BlobStoreClientException
     {
-        return _blobStoreClientWS.doUploadFile( strBaseUrl, fileItem, strBlobStore );
+        return _blobStoreClientService.doUploadFile( strBaseUrl, fileItem, strBlobStore );
     }
     
     /**
@@ -202,10 +202,10 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param record the record
      * @param entry the entry
      * @param strWSRestUrl the url of the WS rest
-     * @throws HttpAccessException Exception if there is an HTTP issue
+     * @throws BlobStoreClientException Exception if there is an issue
      */
     public void doRemoveFile( Record record, IEntry entry, String strWSRestUrl )
-        throws HttpAccessException
+        throws BlobStoreClientException
     {
     	Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
@@ -226,10 +226,10 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param recordField the record field
      * @param entry the entry
      * @param strWSRestUrl the url of the WS rest
-     * @throws HttpAccessException Exception if there is an HTTP issue
+     * @throws BlobStoreClientException Exception if there is an issue
      */
     public void doRemoveFile( RecordField recordField, IEntry entry, String strWSRestUrl )
-    	throws HttpAccessException
+    	throws BlobStoreClientException
     {
     	if ( recordField != null )
     	{
@@ -248,7 +248,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
                 {
                     String strBlobKey = parameterBlobKey.get( 0 );
                     String strBlobStore = parameterBlobStore.get( 0 );
-                    _blobStoreClientWS.doDeleteFile( strWSRestUrl, strBlobStore, strBlobKey );
+                    _blobStoreClientService.doDeleteFile( strWSRestUrl, strBlobStore, strBlobKey );
                 }
             }
     	}
@@ -260,23 +260,23 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param strBlobKey the blob key
      * @param strBlobStore the blobstore service name
      * @return the file url
-     * @throws HttpAccessException Exception if there is an HTTP issue
+     * @throws BlobStoreClientException Exception if there is an issue
      */
     public String getFileUrl( String strBaseUrl, String strBlobKey, String strBlobStore )
-        throws HttpAccessException
+        throws BlobStoreClientException
     {
-        return _blobStoreClientWS.getFileUrl( strBaseUrl, strBlobKey, strBlobStore );
+        return _blobStoreClientService.getFileUrl( strBaseUrl, strBlobKey, strBlobStore );
     }
     
     /**
      * Get the file name from a given url
      * @param strUrl the url
      * @return the file name
-     * @throws HttpAccessException Exception if there is an HTTP issue
+     * @throws BlobStoreClientException Exception if there is an issue
      */
-    public String getFileName( String strUrl ) throws HttpAccessException
+    public String getFileName( String strUrl ) throws BlobStoreClientException
     {
-        return _blobStoreClientWS.getFileName( strUrl );
+        return _blobStoreClientService.getFileName( strUrl );
     }
     
     /**
