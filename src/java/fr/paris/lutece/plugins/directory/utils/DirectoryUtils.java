@@ -52,6 +52,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
 
+import fr.paris.lutece.plugins.blobstoreclient.util.BlobStoreClientException;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
 import fr.paris.lutece.plugins.directory.business.EntryFilter;
@@ -1177,6 +1178,44 @@ public final class DirectoryUtils
     }
     
     /**
+     * Get the file name of a file from the url
+     * @param strUrl the url of the file
+     * @return the file name
+     */
+    public static String getFileName( String strUrl )
+    {
+    	String strFileName = StringUtils.EMPTY;
+    	DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+    	try
+		{
+    		strFileName = handler.getFileName( strUrl );
+		}
+		catch ( BlobStoreClientException e )
+		{
+			AppLogService.error( e );
+		}
+		return strFileName;
+    }
+    
+    /**
+     * Do download a file
+     * @param strUrl the url of the file to download
+     * @param strFilePath the file path to download the file
+     */
+    public static void doDownloadFile( String strUrl, String strFilePath )
+    {
+    	DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+    	try
+		{
+			handler.doDownloadFile( strUrl, strFilePath );
+		}
+		catch ( BlobStoreClientException e )
+		{
+			AppLogService.error( e );
+		}
+    }
+    
+    /**
      * Build the map id entry - list record field
      * @param map the map
      * @param entry the entry
@@ -1200,18 +1239,7 @@ public final class DirectoryUtils
     			RecordField recordField = listRecordFields.get( 0 );
     			if ( recordField != null && StringUtils.isNotBlank( recordField.getValue(  ) ) && bGetFileName )
     			{
-    				DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
-    				String strFileName = StringUtils.EMPTY;
-    				try
-    				{
-    					strFileName = handler.getFileName( recordField.getValue(  ) );
-    					recordField.setFileName( strFileName );
-    				}
-    				catch ( Exception e )
-    				{
-    					AppLogService.error( e );
-    					recordField.setFileName( StringUtils.EMPTY );
-    				}
+    				recordField.setFileName( getFileName( recordField.getValue(  ) ) );
     			}
     		}
     	}
