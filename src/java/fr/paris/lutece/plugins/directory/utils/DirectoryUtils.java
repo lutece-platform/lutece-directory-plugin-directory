@@ -114,6 +114,7 @@ public final class DirectoryUtils
     public static final String CONSTANT_ID = "id";
     public static final String CONSTANT_NAME = "name";
     public static final String CONSTANT_TRUE = "true";
+    public static final String CONSTANT_DOT = ".";
     
     // TEMPLATES
     public static final String TEMPLATE_FORM_DIRECTORY_RECORD = "admin/plugins/directory/html_code_form_directory_record.html";
@@ -1213,6 +1214,60 @@ public final class DirectoryUtils
 		{
 			AppLogService.error( e );
 		}
+    }
+    
+    /**
+     * Do download a file
+     * @param strUrl the url of the file to download
+     * @return a {@link FileItem}
+     */
+    public static File doDownloadFile( String strUrl )
+    {
+    	FileItem fileItem = null;
+    	File file = null;
+    	DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+    	try
+		{
+    		fileItem = handler.doDownloadFile( strUrl );
+		}
+		catch ( BlobStoreClientException e )
+		{
+			AppLogService.error( e );
+		}
+		
+		if ( fileItem != null )
+		{
+			if ( fileItem.getSize(  ) < Integer.MAX_VALUE )
+			{
+				PhysicalFile physicalFile = new PhysicalFile(  );
+				physicalFile.setValue( fileItem.get(  ) );
+				
+				String strFileName = fileItem.getName(  );
+				if ( StringUtils.isNotBlank(strFileName) )
+				{
+					String strExtension = StringUtils.EMPTY;
+					int nLastIndexOfDot = strFileName.lastIndexOf( CONSTANT_DOT );
+					if ( nLastIndexOfDot != DirectoryUtils.CONSTANT_ID_NULL )
+					{
+						strExtension = strFileName.substring( nLastIndexOfDot + 1 );
+					}
+					
+					file = new File(  );
+					file.setPhysicalFile( physicalFile );
+					file.setSize( (int) fileItem.getSize(  ) );
+					file.setTitle( strFileName );
+					file.setMimeType( FileSystemUtil.getMIMEType( strFileName ) );
+					file.setExtension( strExtension );
+				}
+			}
+			else
+			{
+				AppLogService.error( "DirectoryUtils : File too big ! fr.paris.lutece.plugins.directory.business.File.setSize " +
+						"must have Integer parameter, in other words a size lower than '" + Integer.MAX_VALUE + "'" );
+			}
+		}
+		
+		return file;
     }
     
     /**

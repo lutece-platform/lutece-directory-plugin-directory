@@ -292,6 +292,18 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     }
     
     /**
+     * Do download the file
+     * @param strUrl the file of the file to download
+     * @return a {@link FileItem}
+     * @throws BlobStoreClientException exception if there is an error
+     */
+    public FileItem doDownloadFile( String strUrl )
+    	throws BlobStoreClientException
+    {
+    	return _blobStoreClientService.doDownloadFile( strUrl );
+    }
+    
+    /**
 	 * Gets the fileItem for the entry and the given session.
 	 * @param strIdEntry the entry
 	 * @param strSessionId the session id
