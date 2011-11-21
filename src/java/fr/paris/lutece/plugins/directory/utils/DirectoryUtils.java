@@ -1256,7 +1256,14 @@ public final class DirectoryUtils
 					file.setPhysicalFile( physicalFile );
 					file.setSize( (int) fileItem.getSize(  ) );
 					file.setTitle( strFileName );
-					file.setMimeType( FileSystemUtil.getMIMEType( strFileName ) );
+					if ( StringUtils.isNotBlank( fileItem.getContentType(  ) ) )
+					{
+						file.setMimeType( fileItem.getContentType(  ) );
+					}
+					else
+					{
+						file.setMimeType( FileSystemUtil.getMIMEType( strFileName ) );
+					}
 					file.setExtension( strExtension );
 				}
 			}
