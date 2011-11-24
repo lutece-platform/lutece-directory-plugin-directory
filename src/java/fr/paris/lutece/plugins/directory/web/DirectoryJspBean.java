@@ -160,7 +160,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MESSAGE_CONFIRM_REMOVE_ENTRY = "directory.message.confirm_remove_entry";
     private static final String MESSAGE_CONFIRM_REMOVE_FIELD = "directory.message.confirm_remove_field";
     private static final String MESSAGE_CONFIRM_REMOVE_GROUP_WITH_ANY_ENTRY = "directory.message.confirm_remove_group_with_any_entry";
-    private static final String MESSAGE_CONFIRM_REMOVE_GROUP_WITH_ENTRY = "directory.message.confirm_remove_group_whith_entry";
+    private static final String MESSAGE_CONFIRM_REMOVE_GROUP_WITH_ENTRY = "directory.message.confirm_remove_group_with_entry";
     private static final String MESSAGE_MANDATORY_FIELD = "directory.message.mandatory.field";
     private static final String MESSAGE_FIELD_VALUE_FIELD = "directory.message.field_value_field";
     private static final String MESSAGE_DIRECTORY_ERROR = DirectoryUtils.MESSAGE_DIRECTORY_ERROR;
