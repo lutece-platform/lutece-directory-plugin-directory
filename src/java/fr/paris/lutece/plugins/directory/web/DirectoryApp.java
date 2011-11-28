@@ -33,6 +33,19 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryFilter;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
@@ -81,19 +94,6 @@ import fr.paris.lutece.util.http.SecurityUtil;
 import fr.paris.lutece.util.url.UrlItem;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-import org.apache.commons.lang.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 
 /**
  * This class manages DirectoryApp page.
@@ -114,6 +114,8 @@ public class DirectoryApp implements XPageApplication
     private static final String PROPERTY_DIRECTORY_FRAME_LABEL_BACK_SEARCH = "directory.directory_frame.label_back_search";
     private static final String PROPERTY_DIRECTORY_FRAME_TITLE_BACK_RECORD = "directory.directory_frame.title_back_record";
     private static final String PROPERTY_DIRECTORY_FRAME_LABEL_BACK_RECORD = "directory.directory_frame.label_back_record";
+    private static final String PROPERTY_DIRECTORY_RESULT_TITLE_SORT_ASC = "directory.directory_result_list.tiltle_sort_asc";
+    private static final String PROPERTY_DIRECTORY_RESULT_TITLE_SORT_DESC = "directory.directory_result_list.tiltle_sort_desc";
     private static final String PROPERTY_ENTRY_TYPE_GEOLOCATION = "directory.entry_type.geolocation";
     private static final String PROPERTY_DISPLAY_ONE_RESULT_DIRECTLY = "directory.display_one_result_directly";
 
@@ -166,6 +168,8 @@ public class DirectoryApp implements XPageApplication
     private static final String MARK_LABEL_BACK_RECORD = "label-back-record";
     private static final String MARK_ID_LAST_RECORD = "id-last-record";
     private static final String MARK_ID_LAST_DIRECTORY = "id-last-directory";
+    private static final String MARK_TITLE_SORT_ASC = "title-sort-asc";
+    private static final String MARK_TITLE_SORT_DESC = "title-sort-desc";
 
     // session filter
     private static final String SESSION_ONE_RECORD_ID = "one_record_id";
@@ -237,8 +241,8 @@ public class DirectoryApp implements XPageApplication
 
             DirectorySiteSearchFields searchFields = ( session.getAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS ) != null )
                 ? (DirectorySiteSearchFields) session.getAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS )
-                : getInitDirectorySearchField( directory );
-
+                : getInitDirectorySearchField( );
+             
             model.put( MARK_DIRECTORY, directory );
 
             int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
@@ -328,7 +332,7 @@ public class DirectoryApp implements XPageApplication
                 {
                     searchFields.setCurrentPageIndex( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
                             searchFields.getCurrentPageIndex(  ) ) );
-
+                    searchFields.setItemsPerPage( directory.getNumberRecordPerPage(  ) );
                     // Init Map query if requested
                     initMapQuery( request, searchFields, directory );
 
@@ -702,7 +706,13 @@ public class DirectoryApp implements XPageApplication
             HashMap<String, String> params = new HashMap<String, String>(  );
             String strParamTitleDescriptive = I18nService.getLocalizedString( PROPERTY_DIRECTORY_FRAME_TITLE_DESCRIPTIVE,
                     locale );
+             String strParamTitleSortAsc = I18nService.getLocalizedString( PROPERTY_DIRECTORY_RESULT_TITLE_SORT_ASC,
+                    locale );
+            String strParamTitleSortDesc= I18nService.getLocalizedString( PROPERTY_DIRECTORY_RESULT_TITLE_SORT_DESC,
+                    locale );
 
+            params.put( MARK_TITLE_SORT_ASC, strParamTitleSortAsc );
+            params.put( MARK_TITLE_SORT_DESC, strParamTitleSortDesc );
             params.put( MARK_TITLE_DESCRIPTIVE, strParamTitleDescriptive );
 
             XmlTransformerService xmlTransformerService = new XmlTransformerService(  );
@@ -972,15 +982,9 @@ public class DirectoryApp implements XPageApplication
      * @param directory the directory
      * @return the DirectorySiteSearchFields
      */
-    private DirectorySiteSearchFields getInitDirectorySearchField( Directory directory )
+    private DirectorySiteSearchFields getInitDirectorySearchField( )
     {
         DirectorySiteSearchFields searchFields = new DirectorySiteSearchFields(  );
-
-        if ( directory != null )
-        {
-            searchFields.setItemsPerPage( directory.getNumberRecordPerPage(  ) );
-        }
-
         return searchFields;
     }
 }

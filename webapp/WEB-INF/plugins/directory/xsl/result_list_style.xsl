@@ -2,7 +2,9 @@
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	
-	 <xsl:param name="title-descriptive" />
+	<xsl:param name="title-descriptive" />
+	<xsl:param name="title-sort-asc" />
+	<xsl:param name="title-sort-desc" />
 	
 	<xsl:output method="html" indent="yes" />
 
@@ -64,14 +66,14 @@
 		<xsl:variable name="id-directory" select="../../@id" />
 		<th>
 			<xsl:if test="@is-sortable = 'true'">
-				<a id="sort" href="jsp/site/Portal.jsp?page=directory&amp;id_directory={$id-directory}&amp;sorted_attribute_name={@id}&amp;asc_sort=true#sort" >
-					<img src="images/admin/skin/actions/sort_asc.gif" style="vertical-align: text-bottom;" alt="asc" title="asc" />
+				<a class="sort" id="sort" href="jsp/site/Portal.jsp?page=directory&amp;id_directory={$id-directory}&amp;sorted_attribute_name={@id}&amp;asc_sort=true#sort" >
+					<img src="images/admin/skin/actions/sort_asc.gif" style="vertical-align: text-bottom;" alt="{$title-sort-asc}" title="{$title-sort-asc}" />
 				</a>
-				<a href="jsp/site/Portal.jsp?page=directory&amp;id_directory={$id-directory}&amp;sorted_attribute_name={@id}&amp;asc_sort=false#sort" >
-	    			<img src="images/admin/skin/actions/sort_desc.gif" style="vertical-align: text-bottom;" alt="desc" title="desc" />
+				<a class="sort" href="jsp/site/Portal.jsp?page=directory&amp;id_directory={$id-directory}&amp;sorted_attribute_name={@id}&amp;asc_sort=false#sort" >
+	    			<img src="images/admin/skin/actions/sort_desc.gif" style="vertical-align: text-bottom;" alt="{$title-sort-desc}" title="{$title-sort-desc}" />
 	    		</a>
 	    	 </xsl:if>
-			<xsl:value-of select="title" />
+	    	 <span><xsl:value-of select="title" /></span>
 		</th>
 	</xsl:template>
 
