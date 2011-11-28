@@ -241,6 +241,27 @@
 				<label>&nbsp;</label><input name="asc_sort" value="1" type="checkbox" <#if directory.isAscendingSort()>checked="checked"</#if>/>
 				#i18n{directory.modify_directory.label_asc_sort}
 			</p>
+			<p>
+				<label for="id_sort_entry">
+                	 #i18n{directory.modify_directory.label_sort_entry_front} : 
+              	</label>
+				<select name="id_sort_entry_front" id="id_sort_entry_front">
+					<option value=""></option>
+					<option value="dateCreation" <#if directory.idSortEntryFront?? && directory.idSortEntryFront = 'dateCreation' >selected="selected"</#if> >
+						#i18n{directory.entry_type_date_creation.title}
+					</option>
+					<#list entry_list as entry>
+						<#if entry.sortable>
+							<option value="${entry.idEntry}" <#if directory.idSortEntryFront?? && entry.idEntry?string = directory.idSortEntryFront>selected="selected"</#if>>${entry.title}</option>
+						</#if>
+					</#list>
+						
+				</select>
+				
+				<br />
+				<label>&nbsp;</label><input name="asc_sort_front" value="1" type="checkbox" <#if directory.isAscendingSortFront()>checked="checked"</#if>/>
+				#i18n{directory.modify_directory.label_asc_sort_front}
+			</p>
 			
 			<br />
 			<p>

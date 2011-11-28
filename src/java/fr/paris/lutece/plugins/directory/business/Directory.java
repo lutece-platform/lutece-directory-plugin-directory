@@ -94,6 +94,8 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     private boolean _bDisplaySearchComplementaryState;
     private String _strSortEntryId;
     private boolean _bAscSort;
+    private String _strSortEntryIdFront;
+    private boolean _bAscSortFront;
     private boolean _bRecordActivated;
     private boolean _bIsIndexed;
 
@@ -546,15 +548,48 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     {
         _strSortEntryId = strIdSortEntry;
     }
-    
+    /**
+     * return true if the record must be sorted by ascending sort
+     * @return true if the record must be sorted by ascending sort
+     */
+    public boolean isAscendingSortFront(  )
+    {
+        return _bAscSortFront;
+    }
+    /**
+     * set true if the record must be sorted by ascending sort in front office
+     * @param bAscendingSort return true if the record must be sorted by ascending sort
+     */
+    public void setAscendingSortFront( boolean bAscendingSort )
+    {
+        _bAscSortFront = bAscendingSort;
+    }
+    /**
+     * return the id  of the entry used for sorted
+     * @return the id  of the entry used for sorted
+     */ 
+    public String getIdSortEntryFront(  )
+    {
+        return _strSortEntryIdFront;
+    }
+
+    /**
+     * 	set the id  of the entry used for sorted
+     * @param strIdSortEntry the id  of the entry used for sorted
+     */
+    public void setIdSortEntryFront( String strIdSortEntry )
+    {
+        _strSortEntryIdFront = strIdSortEntry;
+    }
+
     public boolean isRecordActivated(  )
     {
-    	return _bRecordActivated;
+        return _bRecordActivated;
     }
-    
+
     public void setRecordActivated( boolean bRecordActivated )
     {
-    	_bRecordActivated = bRecordActivated;
+        _bRecordActivated = bRecordActivated;
     }
 
     /**
@@ -588,17 +623,17 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * Set indexed
      * @param bIsIndexed true if the directory is indexed, false otherwise
      */
-	public void setIndexed( boolean bIsIndexed )
-	{
-		_bIsIndexed = bIsIndexed;
-	}
+    public void setIndexed( boolean bIsIndexed )
+    {
+        _bIsIndexed = bIsIndexed;
+    }
 
-	/**
-	 * Check if the directory is indexed
-	 * @return true if the directory is indexed, false otherwise
-	 */
-	public boolean isIndexed(  )
-	{
-		return _bIsIndexed;
-	}
+    /**
+     * Check if the directory is indexed
+     * @return true if the directory is indexed, false otherwise
+     */
+    public boolean isIndexed(  )
+    {
+        return _bIsIndexed;
+    }
 }

@@ -50,9 +50,9 @@ import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
 import fr.paris.lutece.plugins.directory.business.RecordHome;
-import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+import fr.paris.lutece.plugins.directory.web.action.DirectorySiteSearchFields;
 import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.content.XPageAppService;
 import fr.paris.lutece.portal.service.html.XmlTransformerService;
@@ -81,6 +81,8 @@ import fr.paris.lutece.util.http.SecurityUtil;
 import fr.paris.lutece.util.url.UrlItem;
 import fr.paris.lutece.util.xml.XmlUtil;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -91,8 +93,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -122,22 +122,20 @@ public class DirectoryApp implements XPageApplication
     private static final String PARAMETER_ID_DIRECTORY = "id_directory";
     private static final String PARAMETER_SEARCH = "search";
     private static final String PARAMETER_ID_DIRECTORY_RECORD = "id_directory_record";
-    private static final String PARAMETER_FILTER_PAGE_INDEX = "filter_page_index";
     private static final String INIT_MAP_QUERY = "init_map_query";
-    
     private static final String PARAMETER_DATE_BEGIN = "date_after";
-	private static final String PARAMETER_DATE_END = "date_before";
-	private static final String PARAMETER_OPERATOR = "default_operator";
-	private static final String PARAMETER_QUERY = "query";
+    private static final String PARAMETER_DATE_END = "date_before";
+    private static final String PARAMETER_OPERATOR = "default_operator";
+    private static final String PARAMETER_QUERY = "query";
 
-    //message
+    // message
     private static final String MESSAGE_ERROR = "directory.message.Error";
     private static final String MESSAGE_ACCESS_DENIED = "directory.message.accessDenied";
-	private static final String MESSAGE_INVALID_SEARCH_TERMS = "directory.message.invalidSearchTerms";
-	private static final String MESSAGE_SEARCH_DATE_VALIDITY = "directory.message.dateValidity";
-	private static final String MESSAGE_SEARCH_OPERATOR_VALIDITY = "directory.message.operatorValidity";
+    private static final String MESSAGE_INVALID_SEARCH_TERMS = "directory.message.invalidSearchTerms";
+    private static final String MESSAGE_SEARCH_DATE_VALIDITY = "directory.message.dateValidity";
+    private static final String MESSAGE_SEARCH_OPERATOR_VALIDITY = "directory.message.operatorValidity";
 
-    //Markers
+    // Markers
     private static final String MARK_UNAVAILABILITY_MESSAGE = "unavailability_message";
     private static final String MARK_ENTRY_LIST_GEOLOCATION = "entry_list_geolocation";
     private static final String MARK_ENTRY_LIST_FORM_MAIN_SEARCH = "entry_list_form_main_search";
@@ -154,12 +152,12 @@ public class DirectoryApp implements XPageApplication
     private static final String MARK_ONE_SESSION_ID = "one_session_id";
     private static final String MARK_NEW_SEARCH = "new_search";
     private static final String MARK_DATE_BEGIN = "date_after";
-	private static final String MARK_DATE_END = "date_before";
-	private static final String MARK_OPERATOR = "operator";
-	private static final String MARK_QUERY = "query";
-	private static final String MARK_RESULT_LIST = "result_list";
+    private static final String MARK_DATE_END = "date_before";
+    private static final String MARK_OPERATOR = "operator";
+    private static final String MARK_QUERY = "query";
+    private static final String MARK_RESULT_LIST = "result_list";
 
-    //Markers XSL
+    // Markers XSL
     private static final String MARK_TITLE_DESCRIPTIVE = "title-descriptive";
     private static final String MARK_TITLE_BACK_SEARCH = "title-back-search";
     private static final String MARK_LABEL_BACK_SEARCH = "label-back-search";
@@ -169,41 +167,43 @@ public class DirectoryApp implements XPageApplication
     private static final String MARK_ID_LAST_RECORD = "id-last-record";
     private static final String MARK_ID_LAST_DIRECTORY = "id-last-directory";
 
-    //session filter
-    private static final String SESSION_FILTER_PAGE_INDEX = "directory_filter_page_index";
-    private static final String SESSION_FILTER_MAP_QUERY = "directory_map_query";
-    private static final String SESSION_FILTER_ID_DIRECTORY = "directory_id_directory";
+    // session filter
     private static final String SESSION_ONE_RECORD_ID = "one_record_id";
     private static final String SESSION_ID_LAST_RECORD = "id_last_record";
     private static final String SESSION_ID_LAST_DIRECTORY = "id_last_directory";
+    private static final String SESSION_DIRECTORY_SITE_SEARCH_FIELDS = "search_fields";
 
-    //message
+    // message
     private static final String MESSAGE_DIRECTORY_ERROR = "directory.message.directory_error";
     private static final String MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD = "directory.message.directory_error.mandatory.field";
 
     // Properties
     private static final String XSL_UNIQUE_PREFIX_ID = UniqueIDGenerator.getNewId(  ) + "directory-";
+    private static final String OPERATOR_AND = "AND";
+    private static final String OPERATOR_OR = "OR";
+    private static final String BEAN_SEARCH_ENGINE = "searchEngine";
 
-	private static final String OPERATOR_AND = "AND";
-	private static final String OPERATOR_OR = "OR";
-	
-	private static final String BEAN_SEARCH_ENGINE = "searchEngine";
-    
-    //Tag
+    // Tag
     private static final String TAG_DISPLAY = "display";
     private static final String TAG_YES = "yes";
     private static final String TAG_NO = "no";
     private static final String TAG_STATUS = "status";
 
     /**
-     * Returns the Directory XPage result content depending on the request parameters and the current mode.
+     * Returns the Directory XPage result content depending on the request
+     * parameters and the current mode.
      *
-     * @param request The HTTP request.
-     * @param nMode The current mode.
-     * @param plugin The Plugin.
+     * @param request
+     *            The HTTP request.
+     * @param nMode
+     *            The current mode.
+     * @param plugin
+     *            The Plugin.
      * @return The page content.
-     * @throws SiteMessageException the SiteMessageException
-     * @throws UserNotSignedException the UserNotSignedException
+     * @throws SiteMessageException
+     *             the SiteMessageException
+     * @throws UserNotSignedException
+     *             the UserNotSignedException
      */
     @SuppressWarnings( "unchecked" )
     public XPage getPage( HttpServletRequest request, int nMode, Plugin plugin )
@@ -231,8 +231,13 @@ public class DirectoryApp implements XPageApplication
         else
         {
             Directory directory;
+            HttpSession session = request.getSession(  );
             int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
             directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
+
+            DirectorySiteSearchFields searchFields = ( session.getAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS ) != null )
+                ? (DirectorySiteSearchFields) session.getAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS )
+                : getInitDirectorySearchField( directory );
 
             model.put( MARK_DIRECTORY, directory );
 
@@ -246,8 +251,6 @@ public class DirectoryApp implements XPageApplication
                 if ( ( record != null ) && ( record.getDirectory(  ) != null ) )
                 {
                     directory = DirectoryHome.findByPrimaryKey( record.getDirectory(  ).getIdDirectory(  ), plugin );
-
-                    HttpSession session = request.getSession(  );
 
                     listRecord = (List<Record>) session.getAttribute( SESSION_ID_LAST_RECORD );
 
@@ -313,7 +316,6 @@ public class DirectoryApp implements XPageApplication
                         SiteMessageService.setMessage( request, MESSAGE_ACCESS_DENIED, SiteMessage.TYPE_STOP );
                     }
 
-                    HttpSession session = request.getSession(  );
                     record.setDirectory( directory );
 
                     bSingleResult = true;
@@ -324,40 +326,22 @@ public class DirectoryApp implements XPageApplication
                 }
                 else
                 {
-                    HttpSession session = request.getSession(  );
-                    String strFilterPageIndex = request.getParameter( PARAMETER_FILTER_PAGE_INDEX );
-
-                    if ( ( strFilterPageIndex == null ) && ( session.getAttribute( SESSION_FILTER_PAGE_INDEX ) != null ) )
-                    {
-                        strFilterPageIndex = (String) session.getAttribute( SESSION_FILTER_PAGE_INDEX );
-                    }
-                    else
-                    {
-                        session.setAttribute( SESSION_FILTER_PAGE_INDEX, strFilterPageIndex );
-                    }
+                    searchFields.setCurrentPageIndex( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
+                            searchFields.getCurrentPageIndex(  ) ) );
 
                     // Init Map query if requested
-                    initMapQuery( request );
+                    initMapQuery( request, searchFields, directory );
 
-                    HashMap<String, List<RecordField>> mapQuery = null;
-
-                    if ( ( request.getParameter( PARAMETER_SEARCH ) == null ) &&
-                            ( session.getAttribute( SESSION_FILTER_MAP_QUERY ) != null ) &&
-                            ( session.getAttribute( SESSION_FILTER_ID_DIRECTORY ) != null ) &&
-                            ( (Integer) session.getAttribute( SESSION_FILTER_ID_DIRECTORY ) == directory.getIdDirectory(  ) ) )
+                    if ( request.getParameter( PARAMETER_SEARCH ) != null )
                     {
-                        mapQuery = (HashMap<String, List<RecordField>>) session.getAttribute( SESSION_FILTER_MAP_QUERY );
-                    }
-                    else if ( request.getParameter( PARAMETER_SEARCH ) != null )
-                    {
-                        //get search filter
+                        // get search filter
                         try
                         {
-                            mapQuery = DirectoryUtils.getSearchRecordData( request, directory.getIdDirectory(  ),
-                                    plugin, request.getLocale(  ) );
+                            HashMap<String, List<RecordField>> mapQuery = DirectoryUtils.getSearchRecordData( request,
+                                    directory.getIdDirectory(  ), plugin, request.getLocale(  ) );
 
-                            session.setAttribute( SESSION_FILTER_MAP_QUERY, mapQuery );
-                            session.setAttribute( SESSION_FILTER_ID_DIRECTORY, directory.getIdDirectory(  ) );
+                            searchFields.setMapQuery( mapQuery );
+                            searchFields.setIdDirectory( directory.getIdDirectory(  ) );
                         }
                         catch ( DirectoryErrorException error )
                         {
@@ -376,12 +360,10 @@ public class DirectoryApp implements XPageApplication
                         }
                     }
 
-                    if ( mapQuery != null )
+                    if ( searchFields.getMapQuery(  ) != null )
                     {
-                        //call search service
-                        RecordFieldFilter filter = new RecordFieldFilter(  );
-                        filter.setIdDirectory( directory.getIdDirectory(  ) );
-                        filter.setIsDisabled( RecordFieldFilter.FILTER_TRUE );
+                        // call search service
+                        searchFields.setIsDisabled( RecordFieldFilter.FILTER_TRUE );
 
                         List<Integer> listResultRecordId = new ArrayList<Integer>(  );
 
@@ -397,12 +379,16 @@ public class DirectoryApp implements XPageApplication
                                 roleKeyList = new ArrayList<String>( Arrays.asList( lRoles ) );
                             }
 
-                            filter.setRoleKeyList( roleKeyList, true, true );
+                            searchFields.setRoleKeyList( roleKeyList );
+                            searchFields.setIncludeRoleNone( true );
+                            searchFields.setIncludeRoleNull( true );
                         }
 
-                        listResultRecordId = DirectorySearchService.getInstance(  )
-                                                                   .getSearchResults( directory, mapQuery, null, null,
-                                null, filter, plugin );
+                        //sort parameters
+                        searchFields.setSortParameters( request, directory, plugin );
+
+                        listResultRecordId = DirectoryUtils.getListResults( request, directory, false, true,
+                                searchFields, null, request.getLocale(  ) );
 
                         boolean bIsDisplayedDirectly = Boolean.parseBoolean( AppPropertiesService.getProperty( 
                                     PROPERTY_DISPLAY_ONE_RESULT_DIRECTLY ) );
@@ -477,9 +463,9 @@ public class DirectoryApp implements XPageApplication
                         {
                             bSingleResult = false;
 
-                            Paginator paginator = new Paginator( listResultRecordId,
-                                    directory.getNumberRecordPerPage(  ), urlDirectoryXpage.getUrl(  ),
-                                    PARAMETER_FILTER_PAGE_INDEX, strFilterPageIndex );
+                            Paginator paginator = new Paginator( listResultRecordId, searchFields.getItemsPerPage(  ),
+                                    urlDirectoryXpage.getUrl(  ), Paginator.PARAMETER_PAGE_INDEX,
+                                    searchFields.getCurrentPageIndex(  ) );
 
                             model.put( MARK_PAGINATOR, paginator );
 
@@ -500,7 +486,7 @@ public class DirectoryApp implements XPageApplication
                         model.put( MARK_NEW_SEARCH, Integer.valueOf( 1 ) );
                     }
 
-                    String strFormSearch = getHtmlFormSearch( directory, mapQuery, request, plugin );
+                    String strFormSearch = getHtmlFormSearch( directory, searchFields.getMapQuery(  ), request, plugin );
                     model.put( MARK_STR_FORM_SEARCH, strFormSearch );
                 }
 
@@ -533,6 +519,7 @@ public class DirectoryApp implements XPageApplication
             HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_XPAGE_FRAME_DIRECTORY,
                     request.getLocale(  ), model );
             page.setContent( template.getHtml(  ) );
+            session.setAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS, searchFields );
         }
 
         return page;
@@ -540,16 +527,21 @@ public class DirectoryApp implements XPageApplication
 
     /**
      * return the HTML form search
-     * @param directory the directory
-     * @param mapQuery the mapQuerySearch
-     * @param request the HttpServletRequesr
-     * @param plugin  the plugin
+     *
+     * @param directory
+     *            the directory
+     * @param mapQuery
+     *            the mapQuerySearch
+     * @param request
+     *            the HttpServletRequesr
+     * @param plugin
+     *            the plugin
      * @return the html form search
      */
     private String getHtmlFormSearch( Directory directory, HashMap<String, List<RecordField>> mapQuery,
         HttpServletRequest request, Plugin plugin )
     {
-        //build entryFilter
+        // build entryFilter
         EntryFilter entryFilter = new EntryFilter(  );
         entryFilter.setIdDirectory( directory.getIdDirectory(  ) );
         entryFilter.setIsGroup( EntryFilter.FILTER_FALSE );
@@ -623,11 +615,17 @@ public class DirectoryApp implements XPageApplication
 
     /**
      * return the HTML result list
-     * @param directory the directory
-     * @param listRecord the list of record
-     * @param listEntry the list of entry
-     * @param locale the locale
-     * @param plugin the plugin
+     *
+     * @param directory
+     *            the directory
+     * @param listRecord
+     *            the list of record
+     * @param listEntry
+     *            the list of entry
+     * @param locale
+     *            the locale
+     * @param plugin
+     *            the plugin
      * @return the HTML result list
      */
     private String getHtmlResultList( Directory directory, List<Record> listRecord, Locale locale, Plugin plugin )
@@ -635,7 +633,7 @@ public class DirectoryApp implements XPageApplication
         StringBuffer strBufferListRecordXml = new StringBuffer(  );
         StringBuffer strBufferListEntryXml = new StringBuffer(  );
 
-        //get directory Entry
+        // get directory Entry
         EntryFilter entryFilter = new EntryFilter(  );
         entryFilter.setIdDirectory( directory.getIdDirectory(  ) );
         entryFilter.setIsGroup( EntryFilter.FILTER_FALSE );
@@ -721,10 +719,15 @@ public class DirectoryApp implements XPageApplication
 
     /**
      * return the HTML result lrcord
-     * @param directory the directory
-     * @param record the record
-     * @param locale the locale
-     * @param plugin the plugin
+     *
+     * @param directory
+     *            the directory
+     * @param record
+     *            the record
+     * @param locale
+     *            the locale
+     * @param plugin
+     *            the plugin
      * @return the Html result record
      */
     private String getHtmlResultRecord( Directory directory, Record record, Locale locale, Plugin plugin,
@@ -739,7 +742,7 @@ public class DirectoryApp implements XPageApplication
 
         StringBuffer strBufferListEntryXml = new StringBuffer(  );
 
-        //get directory Entry
+        // get directory Entry
         EntryFilter entryFilter = new EntryFilter(  );
         entryFilter.setIdDirectory( record.getDirectory(  ).getIdDirectory(  ) );
         entryFilter.setIsComment( EntryFilter.FILTER_FALSE );
@@ -783,7 +786,7 @@ public class DirectoryApp implements XPageApplication
             params.put( MARK_LABEL_BACK_SEARCH, strParamLabelBackSearch );
             params.put( MARK_ID_DIRECTORY, Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ) );
 
-            //Params linked with last record
+            // Params linked with last record
             if ( session.getAttribute( SESSION_ID_LAST_RECORD ) != null )
             {
                 List<Record> listRecord = (List<Record>) session.getAttribute( SESSION_ID_LAST_RECORD );
@@ -823,90 +826,95 @@ public class DirectoryApp implements XPageApplication
 
         return DirectoryUtils.EMPTY_STRING;
     }
-    
+
     /**
-	 * Returns the html code of the search page
-	 * @param request the http request
-	 * @param plugin the plugin
-	 * @return the html page
-	 * @throws SiteMessageException a exception that triggers a site message
-	 */
-	public String getSearchPage( HttpServletRequest request, Plugin plugin )
-		throws SiteMessageException
-	{
-		String strQuery = request.getParameter( PARAMETER_QUERY );
-		
-		HashMap<String, Object> model = new HashMap<String, Object>(  );
-		
-		if( StringUtils.isNotBlank( strQuery ) )
-		{
-			Date dateBegin = null;
-			Date dateEnd = null;
-			LuteceUser user = null;
-			
-			String strOperator = request.getParameter( PARAMETER_OPERATOR );
-			String strDateBegin = request.getParameter( PARAMETER_DATE_BEGIN );
-			String strDateEnd = request.getParameter( PARAMETER_DATE_END );
-			
-			
-			//Mandatory fields
-			if( StringUtils.isBlank( strOperator ) )
-			{
-				Object[] tabRequiredFields = { PARAMETER_OPERATOR };
-				SiteMessageService.setMessage( request, MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, SiteMessage.TYPE_STOP );
-			}
-			
-			//Safety checks
-			if( StringUtils.isNotBlank( strDateBegin ) )
-			{
-				dateBegin = DateUtil.formatDate( strDateBegin, request.getLocale(  ) );
-				if( dateBegin == null )
-				{
-					SiteMessageService.setMessage( request, MESSAGE_SEARCH_DATE_VALIDITY, SiteMessage.TYPE_STOP );
-				}
-			}
-			
-			if( StringUtils.isNotBlank( strDateEnd ) )
-			{
-				dateEnd = DateUtil.formatDate( strDateEnd, request.getLocale(  ) );
-				if( dateEnd == null )
-				{
-					SiteMessageService.setMessage( request, MESSAGE_SEARCH_DATE_VALIDITY, SiteMessage.TYPE_STOP );
-				}
-			}
-			
-			if( !strOperator.equalsIgnoreCase( OPERATOR_AND ) && !strOperator.equalsIgnoreCase( OPERATOR_OR ) )
-			{
-				SiteMessageService.setMessage( request, MESSAGE_SEARCH_OPERATOR_VALIDITY, SiteMessage.TYPE_STOP );
-			}
-			
-			//Check XSS characters
-	        if ( SecurityUtil.containsXssCharacters( request, strQuery ) )
-	        {
-	        	SiteMessageService.setMessage( request, MESSAGE_INVALID_SEARCH_TERMS, SiteMessage.TYPE_STOP );
-	        }
-			
-			//User
-			if( SecurityService.isAuthenticationEnable(  ) )
-			{
-				user = SecurityService.getInstance(  ).getRegisteredUser( request );
-			}
-			
-			//Use LuceneSearchEngine
-			SearchEngine engine = (SearchEngine) SpringContextService.getBean( BEAN_SEARCH_ENGINE );
-	        List<SearchResult> listResults = engine.getSearchResults( strQuery, request );
-			
-			model.put( MARK_RESULT_LIST, listResults );
-			
-			//re-populate search parameters
-			model.put( MARK_QUERY, strQuery );
-			model.put( MARK_OPERATOR, strOperator );
-			model.put( MARK_DATE_BEGIN, strDateBegin );
-			model.put( MARK_DATE_END, strDateEnd );
-			
-		}
-				
-		//Display the list of all Directory
+     * Returns the html code of the search page
+     *
+     * @param request
+     *            the http request
+     * @param plugin
+     *            the plugin
+     * @return the html page
+     * @throws SiteMessageException
+     *             a exception that triggers a site message
+     */
+    public String getSearchPage( HttpServletRequest request, Plugin plugin )
+        throws SiteMessageException
+    {
+        String strQuery = request.getParameter( PARAMETER_QUERY );
+
+        HashMap<String, Object> model = new HashMap<String, Object>(  );
+
+        if ( StringUtils.isNotBlank( strQuery ) )
+        {
+            Date dateBegin = null;
+            Date dateEnd = null;
+            LuteceUser user = null;
+
+            String strOperator = request.getParameter( PARAMETER_OPERATOR );
+            String strDateBegin = request.getParameter( PARAMETER_DATE_BEGIN );
+            String strDateEnd = request.getParameter( PARAMETER_DATE_END );
+
+            // Mandatory fields
+            if ( StringUtils.isBlank( strOperator ) )
+            {
+                Object[] tabRequiredFields = { PARAMETER_OPERATOR };
+                SiteMessageService.setMessage( request, MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields,
+                    SiteMessage.TYPE_STOP );
+            }
+
+            // Safety checks
+            if ( StringUtils.isNotBlank( strDateBegin ) )
+            {
+                dateBegin = DateUtil.formatDate( strDateBegin, request.getLocale(  ) );
+
+                if ( dateBegin == null )
+                {
+                    SiteMessageService.setMessage( request, MESSAGE_SEARCH_DATE_VALIDITY, SiteMessage.TYPE_STOP );
+                }
+            }
+
+            if ( StringUtils.isNotBlank( strDateEnd ) )
+            {
+                dateEnd = DateUtil.formatDate( strDateEnd, request.getLocale(  ) );
+
+                if ( dateEnd == null )
+                {
+                    SiteMessageService.setMessage( request, MESSAGE_SEARCH_DATE_VALIDITY, SiteMessage.TYPE_STOP );
+                }
+            }
+
+            if ( !strOperator.equalsIgnoreCase( OPERATOR_AND ) && !strOperator.equalsIgnoreCase( OPERATOR_OR ) )
+            {
+                SiteMessageService.setMessage( request, MESSAGE_SEARCH_OPERATOR_VALIDITY, SiteMessage.TYPE_STOP );
+            }
+
+            // Check XSS characters
+            if ( SecurityUtil.containsXssCharacters( request, strQuery ) )
+            {
+                SiteMessageService.setMessage( request, MESSAGE_INVALID_SEARCH_TERMS, SiteMessage.TYPE_STOP );
+            }
+
+            // User
+            if ( SecurityService.isAuthenticationEnable(  ) )
+            {
+                user = SecurityService.getInstance(  ).getRegisteredUser( request );
+            }
+
+            // Use LuceneSearchEngine
+            SearchEngine engine = (SearchEngine) SpringContextService.getBean( BEAN_SEARCH_ENGINE );
+            List<SearchResult> listResults = engine.getSearchResults( strQuery, request );
+
+            model.put( MARK_RESULT_LIST, listResults );
+
+            // re-populate search parameters
+            model.put( MARK_QUERY, strQuery );
+            model.put( MARK_OPERATOR, strOperator );
+            model.put( MARK_DATE_BEGIN, strDateBegin );
+            model.put( MARK_DATE_END, strDateEnd );
+        }
+
+        // Display the list of all Directory
         DirectoryFilter filter = new DirectoryFilter(  );
         filter.setIsDisabled( DirectoryFilter.FILTER_TRUE );
 
@@ -919,8 +927,7 @@ public class DirectoryApp implements XPageApplication
 
             for ( Directory directory : listDirectory )
             {
-                if ( ( directory.getRoleKey(  ) == null ) ||
-                        directory.getRoleKey(  ).equals( Directory.ROLE_NONE ) ||
+                if ( ( directory.getRoleKey(  ) == null ) || directory.getRoleKey(  ).equals( Directory.ROLE_NONE ) ||
                         SecurityService.getInstance(  ).isUserInRole( request, directory.getRoleKey(  ) ) )
                 {
                     listDirectoryAuthorized.add( directory );
@@ -933,23 +940,47 @@ public class DirectoryApp implements XPageApplication
         }
 
         model.put( MARK_DIRECTORY_LIST, listDirectoryAuthorized );
-        
-        model.put( MARK_LOCALE, request.getLocale(  ) );
-		
-		HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_XPAGE_VIEW_ALL_DIRECTORIES, request.getLocale(  ), model );
-		
-		return template.getHtml(  );
-	}
 
+        model.put( MARK_LOCALE, request.getLocale(  ) );
+
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_XPAGE_VIEW_ALL_DIRECTORIES,
+                request.getLocale(  ), model );
+
+        return template.getHtml(  );
+    }
+
+  
     /**
-     * Init the SESSION_FILTER_MAP_QUERY session attribute
-     * @param request HttpServletRequest
+     * re init the map query used for searching
+     * @param request the HttpServletRequest 
+     * @param searchFields the searchFields
+     * @param directory the directory
      */
-    private static void initMapQuery( HttpServletRequest request )
+    private static void initMapQuery( HttpServletRequest request, DirectorySiteSearchFields searchFields,
+        Directory directory )
     {
-        if ( request.getParameter( INIT_MAP_QUERY ) != null )
+        if ( ( request.getParameter( INIT_MAP_QUERY ) != null ) ||
+                ( ( request.getParameter( PARAMETER_SEARCH ) == null ) &&
+                ( searchFields.getIdDirectory(  ) != directory.getIdDirectory(  ) ) ) )
         {
-            request.getSession(  ).removeAttribute( SESSION_FILTER_MAP_QUERY );
+           searchFields.setMapQuery( null );
         }
+    }
+    	
+    /**
+     * return a init searchField
+     * @param directory the directory
+     * @return the DirectorySiteSearchFields
+     */
+    private DirectorySiteSearchFields getInitDirectorySearchField( Directory directory )
+    {
+        DirectorySiteSearchFields searchFields = new DirectorySiteSearchFields(  );
+
+        if ( directory != null )
+        {
+            searchFields.setItemsPerPage( directory.getNumberRecordPerPage(  ) );
+        }
+
+        return searchFields;
     }
 }

@@ -7,6 +7,7 @@
 	<xsl:output method="html" indent="yes" />
 
 	<xsl:template match="directory">
+	
 		<table width="100%" name="results_list" id="results_list">
 			<tr>
 				<th>&#160;</th>
@@ -14,10 +15,7 @@
 				<xsl:apply-templates select="list-entry/status" />
 			</tr>
 			
-			<xsl:apply-templates select="list-record/record">
-				<xsl:sort
-					select="list-entry/entry[position()=1]/list-record-field/record-field[position()=1]/record-field-value" />
-			</xsl:apply-templates>
+			<xsl:apply-templates select="list-record/record"/>
 		</table>
 	</xsl:template>
 
@@ -63,7 +61,16 @@
 	</xsl:template>
 
 	<xsl:template match="entry">
+		<xsl:variable name="id-directory" select="../../@id" />
 		<th>
+			<xsl:if test="@is-sortable = 'true'">
+				<a id="sort" href="jsp/site/Portal.jsp?page=directory&amp;id_directory={$id-directory}&amp;sorted_attribute_name={@id}&amp;asc_sort=true#sort" >
+					<img src="images/admin/skin/actions/sort_asc.gif" style="vertical-align: text-bottom;" alt="asc" title="asc" />
+				</a>
+				<a href="jsp/site/Portal.jsp?page=directory&amp;id_directory={$id-directory}&amp;sorted_attribute_name={@id}&amp;asc_sort=false#sort" >
+	    			<img src="images/admin/skin/actions/sort_desc.gif" style="vertical-align: text-bottom;" alt="desc" title="desc" />
+	    		</a>
+	    	 </xsl:if>
 			<xsl:value-of select="title" />
 		</th>
 	</xsl:template>

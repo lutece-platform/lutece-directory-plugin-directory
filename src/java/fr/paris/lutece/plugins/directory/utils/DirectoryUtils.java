@@ -33,25 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.utils;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.blobstoreclient.util.BlobStoreClientException;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
@@ -73,8 +54,9 @@ import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.web.action.DirectoryAdminSearchFields;
+import fr.paris.lutece.plugins.directory.web.action.DirectorySiteSearchFields;
+import fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields;
 import fr.paris.lutece.portal.business.user.AdminUser;
-import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.fileupload.FileUploadService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -91,6 +73,26 @@ import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
+import java.sql.Timestamp;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -115,11 +117,11 @@ public final class DirectoryUtils
     public static final String CONSTANT_NAME = "name";
     public static final String CONSTANT_TRUE = "true";
     public static final String CONSTANT_DOT = ".";
-    
+
     // TEMPLATES
     public static final String TEMPLATE_FORM_DIRECTORY_RECORD = "admin/plugins/directory/html_code_form_directory_record.html";
     public static final String TEMPLATE_FORM_SEARCH_DIRECTORY_RECORD = "admin/plugins/directory/html_code_form_search_directory_record.html";
-    
+
     // MESSAGES
     public static final String MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD = "directory.message.directory_error.mandatory.field";
     public static final String MESSAGE_DIRECTORY_ERROR = "directory.message.directory_error";
@@ -139,7 +141,7 @@ public final class DirectoryUtils
     public static final String PARAMETER_ID_SUCCESS_RECORD = "id_success_record";
     public static final String PARAMETER_ID_FAIL_RECORD = "id_fail_record";
     public static final String PARAMETER_DATECREATION = "dateCreation";
-    
+
     // JSP
     public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
 
@@ -191,7 +193,8 @@ public final class DirectoryUtils
     /**
      * return an instance of IEntry function of type entry
      *
-     * @param nIdType the type id
+     * @param nIdType
+     *            the type id
      * @param plugin
      *            the plugin
      * @return an instance of IEntry function of type entry
@@ -292,8 +295,9 @@ public final class DirectoryUtils
      * @param nIdDirectory
      *            the id of the directory
      * @param plugin
-     *                 the plugin
-     * @param user the AdminUser
+     *            the plugin
+     * @param user
+     *            the AdminUser
      * @return list of entry
      */
     public static List<IEntry> getFormEntries( int nIdDirectory, Plugin plugin, AdminUser user )
@@ -348,10 +352,12 @@ public final class DirectoryUtils
     /**
      * return all entry associate to the directory
      *
-     * @param filter entry filter
+     * @param filter
+     *            entry filter
      * @param plugin
-     *                 the plugin
-     * @param user the AdminUser
+     *            the plugin
+     * @param user
+     *            the AdminUser
      * @return list of entry
      */
     public static List<IEntry> getFormEntriesByFilter( EntryFilter filter, Plugin plugin )
@@ -405,7 +411,7 @@ public final class DirectoryUtils
     {
         return getMapIdEntryListRecordField( lisEntry, nIdRecord, plugin, true );
     }
-    
+
     /**
      * get a Map which contains for each entry the list of recordField object
      * associated
@@ -416,9 +422,10 @@ public final class DirectoryUtils
      *            the id of the record
      * @param plugin
      *            plugin
-     * @param bGetFileName true if it must get the file name, false otherwise
-     * 		<br />
-     * 		Warning : The file name is fetch by a webservice call. Beware of performance.
+     * @param bGetFileName
+     *            true if it must get the file name, false otherwise <br />
+     *            Warning : The file name is fetch by a webservice call. Beware
+     *            of performance.
      * @return a map
      */
     public static Map<String, List<RecordField>> getMapIdEntryListRecordField( List<IEntry> lisEntry, int nIdRecord,
@@ -435,7 +442,7 @@ public final class DirectoryUtils
             {
                 for ( IEntry child : entryFistLevel.getChildren(  ) )
                 {
-                	buildMapIdEntryListRecordField( map, child, filter, plugin, bGetFileName );
+                    buildMapIdEntryListRecordField( map, child, filter, plugin, bGetFileName );
                 }
             }
 
@@ -447,9 +454,13 @@ public final class DirectoryUtils
 
     /**
      * Gets all {@link RecordField} for the entry
-     * @param entry the entry
-     * @param nIdRecord the record id
-     * @param plugin the plugin
+     *
+     * @param entry
+     *            the entry
+     * @param nIdRecord
+     *            the record id
+     * @param plugin
+     *            the plugin
      * @return the list
      */
     public static List<RecordField> getListRecordField( IEntry entry, int nIdRecord, Plugin plugin )
@@ -611,8 +622,8 @@ public final class DirectoryUtils
      *            the key of the entry
      * @param bTestDirectoryError
      *            true if we must test the validity of user input
-     * @param  listRecordFieldResult
-     *                          the list of record field result
+     * @param listRecordFieldResult
+     *            the list of record field result
      * @param plugin
      *            the plugin
      * @param locale
@@ -818,23 +829,31 @@ public final class DirectoryUtils
     }
 
     /**
-     * Builds a query with filters placed in parameters.
-     * Consider using {@link #buildQueryWithFilter(StringBuilder, List, String)} instead.
-     * @param strSelect the select of the  query
-     * @param listStrFilter the list of filter to add in the query
-     * @param strOrder the order by of the query
+     * Builds a query with filters placed in parameters. Consider using
+     * {@link #buildQueryWithFilter(StringBuilder, List, String)} instead.
+     *
+     * @param strSelect
+     *            the select of the query
+     * @param listStrFilter
+     *            the list of filter to add in the query
+     * @param strOrder
+     *            the order by of the query
      * @return a query
      */
     public static String buildRequetteWithFilter( String strSelect, List<String> listStrFilter, String strOrder )
     {
         return buildQueryWithFilter( new StringBuilder( strSelect ), listStrFilter, strOrder );
     }
-    
+
     /**
      * Builds a query with filters placed in parameters
-     * @param sbSQL the beginning of the  query
-     * @param listFilter the list of filter to add in the query
-     * @param strOrder the order by of the query
+     *
+     * @param sbSQL
+     *            the beginning of the query
+     * @param listFilter
+     *            the list of filter to add in the query
+     * @param strOrder
+     *            the order by of the query
      * @return a query
      */
     public static String buildQueryWithFilter( StringBuilder sbSQL, List<String> listFilter, String strOrder )
@@ -845,20 +864,20 @@ public final class DirectoryUtils
         {
             if ( ++nCount == 1 )
             {
-            	sbSQL.append( CONSTANT_WHERE );
+                sbSQL.append( CONSTANT_WHERE );
             }
 
             sbSQL.append( strFilter );
 
             if ( nCount != listFilter.size(  ) )
             {
-            	sbSQL.append( CONSTANT_AND );
+                sbSQL.append( CONSTANT_AND );
             }
         }
 
         if ( strOrder != null )
         {
-        	sbSQL.append( strOrder );
+            sbSQL.append( strOrder );
         }
 
         return sbSQL.toString(  );
@@ -866,8 +885,10 @@ public final class DirectoryUtils
 
     /**
      * replace special characters in the string passed as a parameter
-     * @param strSource the string
-     * @return  substitute special in the string passed as a parameter
+     *
+     * @param strSource
+     *            the string
+     * @return substitute special in the string passed as a parameter
      */
     public static String substituteSpecialCaractersForExport( String strSource )
     {
@@ -886,9 +907,12 @@ public final class DirectoryUtils
     }
 
     /**
-     * Filter a list of field  for a given user
-     * @param listField a list of field
-     * @param user an adminUser
+     * Filter a list of field for a given user
+     *
+     * @param listField
+     *            a list of field
+     * @param user
+     *            an adminUser
      * @return a field list
      */
     public static List<Field> getAuthorizedFieldsByWorkgroup( List<Field> listField, AdminUser user )
@@ -897,7 +921,7 @@ public final class DirectoryUtils
 
         for ( Field field : listField )
         {
-            //filter by workgroup
+            // filter by workgroup
             if ( AdminWorkgroupService.isAuthorized( field, user ) )
             {
                 listFieldAuthorized.add( field );
@@ -908,9 +932,12 @@ public final class DirectoryUtils
     }
 
     /**
-     * Filter a list of field  for a given user
-     * @param listField a list of field
-     * @param user a luteceUser
+     * Filter a list of field for a given user
+     *
+     * @param listField
+     *            a list of field
+     * @param user
+     *            a luteceUser
      * @return a field list
      */
     public static List<Field> getAuthorizedFieldsByRole( HttpServletRequest request, List<Field> listField )
@@ -919,7 +946,7 @@ public final class DirectoryUtils
 
         for ( Field field : listField )
         {
-            //filter by workgroup
+            // filter by workgroup
             if ( ( !SecurityService.isAuthenticationEnable(  ) ) || ( field.getRoleKey(  ) == null ) ||
                     field.getRoleKey(  ).equals( Directory.ROLE_NONE ) ||
                     SecurityService.getInstance(  ).isUserInRole( request, field.getRoleKey(  ) ) )
@@ -932,10 +959,13 @@ public final class DirectoryUtils
     }
 
     /**
-     * Removes from list all the elements that are not contained in the other list
-     * Faster than classic "List.retainAll" because each id is unique
-     * @param list1 input list 1
-     * @param list2 input list 2
+     * Removes from list all the elements that are not contained in the other
+     * list Faster than classic "List.retainAll" because each id is unique
+     *
+     * @param list1
+     *            input list 1
+     * @param list2
+     *            input list 2
      * @return the result list
      */
     public static List<Integer> retainAll( List<Integer> list1, List<Integer> list2 )
@@ -979,18 +1009,22 @@ public final class DirectoryUtils
     }
 
     /**
-     * Like {@link List#retainAll(java.util.Collection)}, keeping first list order.
-     * This method is based on the fact that list1 and list2 have unique elements.
-     * @param list1 the first list
-     * @param list2 the other list
+     * Like {@link List#retainAll(java.util.Collection)}, keeping first list
+     * order. This method is based on the fact that list1 and list2 have unique
+     * elements.
+     *
+     * @param list1
+     *            the first list
+     * @param list2
+     *            the other list
      * @return first list
      */
     public static List<Integer> retainAllIdsKeepingFirstOrder( List<Integer> list1, List<Integer> list2 )
     {
-    	Iterator<Integer> it = list1.iterator(  );
-    	
-    	// makes contains quicker
-    	TreeSet<Integer> ts = new TreeSet<Integer>( list2 );
+        Iterator<Integer> it = list1.iterator(  );
+
+        // makes contains quicker
+        TreeSet<Integer> ts = new TreeSet<Integer>( list2 );
 
         while ( it.hasNext(  ) )
         {
@@ -999,9 +1033,10 @@ public final class DirectoryUtils
                 it.remove(  );
             }
         }
-        
-    	return list1;
+
+        return list1;
     }
+
     public static Date getSearchRecordDateCreationFromRequest( HttpServletRequest request, String dateTypeParameter,
         Locale locale )
     {
@@ -1019,71 +1054,94 @@ public final class DirectoryUtils
 
     /**
      * Get the result list according to queries
-     * @param request The {@link HttpServletRequest}
-     * @param directory The {@link Directory}
-     * @param bWorkflowServiceEnable true if the WorkflowService is enabled
+     *
+     * @param request
+     *            The {@link HttpServletRequest}
+     * @param directory
+     *            The {@link Directory}
+     * @param bWorkflowServiceEnable
+     *            true if the WorkflowService is enabled
      * @return The list of id records
-     * @throws AccessDeniedException
      */
     public static List<Integer> getListResults( HttpServletRequest request, Directory directory,
-        boolean bWorkflowServiceEnable, boolean bUseFilterDirectory, DirectoryAdminSearchFields searchFields, AdminUser adminUser, Locale locale )
-        throws AccessDeniedException
+        boolean bWorkflowServiceEnable, boolean bUseFilterDirectory, IDirectorySearchFields searchFields,
+        AdminUser adminUser, Locale locale )
     {
-    	return getListResults( request, directory, bWorkflowServiceEnable, bUseFilterDirectory, null, RecordFieldFilter.ORDER_NONE, searchFields, adminUser, locale );
+        return getListResults( request, directory, bWorkflowServiceEnable, bUseFilterDirectory, null,
+            RecordFieldFilter.ORDER_NONE, searchFields, adminUser, locale );
     }
-    
+
     /**
      * Get the result list according to queries
-     * @param request The {@link HttpServletRequest}
-     * @param directory The {@link Directory}
-     * @param bWorkflowServiceEnable true if the WorkflowService is enabled
+     *
+     * @param request
+     *            The {@link HttpServletRequest}
+     * @param directory
+     *            The {@link Directory}
+     * @param bWorkflowServiceEnable
+     *            true if the WorkflowService is enabled
      * @return The list of id records
-     * @throws AccessDeniedException
      */
     public static List<Integer> getListResults( HttpServletRequest request, Directory directory,
-        boolean bWorkflowServiceEnable, boolean bUseFilterDirectory, IEntry sortEntry, int nSortOrder, DirectoryAdminSearchFields searchFields, AdminUser adminUser, Locale locale )
-        throws AccessDeniedException
+        boolean bWorkflowServiceEnable, boolean bUseFilterDirectory, IEntry sortEntry, int nSortOrder,
+        IDirectorySearchFields searchFields, AdminUser adminUser, Locale locale )
     {
-        //call search service
+        // call search service
         RecordFieldFilter filter = new RecordFieldFilter(  );
         filter.setIdDirectory( directory.getIdDirectory(  ) );
 
         List<Integer> listResultRecordId = null;
 
-        //filter by workgroup 
+        // filter by record state
+        filter.setIsDisabled( searchFields.getIsDisabled(  ) );
+
+        // filter by role
+        if ( searchFields instanceof DirectorySiteSearchFields &&
+                ( ( (DirectorySiteSearchFields) searchFields ).getRoleKeyList(  ) != null ) )
+        {
+            filter.setRoleKeyList( ( (DirectorySiteSearchFields) searchFields ).getRoleKeyList(  ),
+                ( (DirectorySiteSearchFields) searchFields ).isIncludeRoleNone(  ),
+                ( (DirectorySiteSearchFields) searchFields ).isIncludeRoleNull(  ) );
+        }
+
+        // filter by workgroup
         if ( adminUser != null )
         {
-        	filter.setWorkgroupKeyList( AdminWorkgroupService.getUserWorkgroups( adminUser, locale ) );
+            filter.setWorkgroupKeyList( AdminWorkgroupService.getUserWorkgroups( adminUser, locale ) );
         }
-  
+
         // sort filter
         if ( sortEntry == null )
         {
-        	filter.setSortEntry( searchFields.getSortEntry(  ) );
+            filter.setSortEntry( searchFields.getSortEntry(  ) );
         }
         else
         {
-        	filter.setSortEntry( sortEntry );
+            filter.setSortEntry( sortEntry );
         }
+
         if ( nSortOrder == RecordFieldFilter.ORDER_NONE )
         {
-        	filter.setSortOrder( searchFields.getSortOrder(  ) );
+            filter.setSortOrder( searchFields.getSortOrder(  ) );
         }
         else
         {
-        	filter.setSortOrder( nSortOrder );
+            filter.setSortOrder( nSortOrder );
         }
 
         // If workflow active, filter by workflow state
         if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                bWorkflowServiceEnable /* &&
-            ( _nIdWorkflowSate != DirectoryUtils.CONSTANT_ID_NULL ) */ )
+                bWorkflowServiceEnable /*
+            * && ( _nIdWorkflowSate !=
+            * DirectoryUtils.CONSTANT_ID_NULL )
+            */ )
         {
             if ( bUseFilterDirectory )
             {
                 listResultRecordId = DirectorySearchService.getInstance(  )
                                                            .getSearchResults( directory, searchFields.getMapQuery(  ),
-                        searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ), searchFields.getDateCreationEndRecord(  ), filter, getPlugin(  ) );
+                        searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ),
+                        searchFields.getDateCreationEndRecord(  ), filter, getPlugin(  ) );
             }
             else
             {
@@ -1094,8 +1152,8 @@ public final class DirectoryUtils
 
             List<Integer> listTmpResultRecordId = WorkflowService.getInstance(  )
                                                                  .getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), searchFields.get_nIdWorkflowSate(  ), Integer.valueOf( directory.getIdDirectory(  ) ),
-                    adminUser );
+                    directory.getIdWorkflow(  ), ( (DirectoryAdminSearchFields) searchFields ).get_nIdWorkflowSate(  ),
+                    Integer.valueOf( directory.getIdDirectory(  ) ), adminUser );
 
             listResultRecordId = DirectoryUtils.retainAllIdsKeepingFirstOrder( listResultRecordId, listTmpResultRecordId );
         }
@@ -1105,7 +1163,8 @@ public final class DirectoryUtils
             {
                 listResultRecordId = DirectorySearchService.getInstance(  )
                                                            .getSearchResults( directory, searchFields.getMapQuery(  ),
-                        searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ), searchFields.getDateCreationEndRecord(  ), filter, getPlugin(  ) );
+                        searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ),
+                        searchFields.getDateCreationEndRecord(  ), filter, getPlugin(  ) );
             }
             else
             {
@@ -1117,32 +1176,36 @@ public final class DirectoryUtils
 
         return listResultRecordId;
     }
-    
+
     /**
      * Gets the plugin
+     *
      * @return the plugin
      */
     public static Plugin getPlugin(  )
     {
-    	return PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+        return PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
     }
 
     /**
      * return url of the jsp manage directory record
-     * @param request The HTTP request
-     * @param nIdDirectory the directory id
+     *
+     * @param request
+     *            The HTTP request
+     * @param nIdDirectory
+     *            the directory id
      * @return url of the jsp manage directory record
      */
     public static String getJspManageDirectoryRecord( HttpServletRequest request, int nIdDirectory )
     {
-    	UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MANAGE_DIRECTORY_RECORD );
-    	urlItem.addParameter( PARAMETER_ID_DIRECTORY, nIdDirectory );
-    	urlItem.addParameter( PARAMETER_SESSION, PARAMETER_SESSION );
-    	
-    	String strSortedAttributeName = request.getParameter( Parameters.SORTED_ATTRIBUTE_NAME );
+        UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MANAGE_DIRECTORY_RECORD );
+        urlItem.addParameter( PARAMETER_ID_DIRECTORY, nIdDirectory );
+        urlItem.addParameter( PARAMETER_SESSION, PARAMETER_SESSION );
+
+        String strSortedAttributeName = request.getParameter( Parameters.SORTED_ATTRIBUTE_NAME );
         String strAscSort = null;
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
-        
+
         if ( ( directory != null ) && ( ( strSortedAttributeName != null ) || ( directory.getIdSortEntry(  ) != null ) ) )
         {
             if ( strSortedAttributeName == null )
@@ -1155,162 +1218,193 @@ public final class DirectoryUtils
             urlItem.addParameter( Parameters.SORTED_ATTRIBUTE_NAME, strSortedAttributeName );
             urlItem.addParameter( Parameters.SORTED_ASC, strAscSort );
         }
-    	
-    	return urlItem.getUrl(  );
+
+        return urlItem.getUrl(  );
     }
 
     /**
      * Convert a map of ( String, String ) into a {@link ReferenceList}
-     * @param map the map to convert
+     *
+     * @param map
+     *            the map to convert
      * @return a {@link ReferenceList}
      */
     public static ReferenceList convertMapToReferenceList( Map<String, String> map )
     {
-    	ReferenceList ref = new ReferenceList(  );
-    	if ( map != null )
-    	{
-    		for ( Entry<String, String> userInfo : map.entrySet(  ) )
-    		{
-    			ref.addItem( userInfo.getKey(  ), userInfo.getValue(  ) );
-    		}
-    	}
-    	
-    	return ref;
+        ReferenceList ref = new ReferenceList(  );
+
+        if ( map != null )
+        {
+            for ( Entry<String, String> userInfo : map.entrySet(  ) )
+            {
+                ref.addItem( userInfo.getKey(  ), userInfo.getValue(  ) );
+            }
+        }
+
+        return ref;
     }
-    
+
     /**
      * Get the file name of a file from the url
-     * @param strUrl the url of the file
+     *
+     * @param strUrl
+     *            the url of the file
      * @return the file name
      */
     public static String getFileName( String strUrl )
     {
-    	String strFileName = StringUtils.EMPTY;
-    	DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
-    	try
-		{
-    		strFileName = handler.getFileName( strUrl );
-		}
-		catch ( BlobStoreClientException e )
-		{
-			AppLogService.error( e );
-		}
-		return strFileName;
+        String strFileName = StringUtils.EMPTY;
+        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+
+        try
+        {
+            strFileName = handler.getFileName( strUrl );
+        }
+        catch ( BlobStoreClientException e )
+        {
+            AppLogService.error( e );
+        }
+
+        return strFileName;
     }
-    
+
     /**
      * Do download a file
-     * @param strUrl the url of the file to download
-     * @param strFilePath the file path to download the file
+     *
+     * @param strUrl
+     *            the url of the file to download
+     * @param strFilePath
+     *            the file path to download the file
      */
     public static void doDownloadFile( String strUrl, String strFilePath )
     {
-    	DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
-    	try
-		{
-			handler.doDownloadFile( strUrl, strFilePath );
-		}
-		catch ( BlobStoreClientException e )
-		{
-			AppLogService.error( e );
-		}
+        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+
+        try
+        {
+            handler.doDownloadFile( strUrl, strFilePath );
+        }
+        catch ( BlobStoreClientException e )
+        {
+            AppLogService.error( e );
+        }
     }
-    
+
     /**
      * Do download a file
-     * @param strUrl the url of the file to download
+     *
+     * @param strUrl
+     *            the url of the file to download
      * @return a {@link FileItem}
      */
     public static File doDownloadFile( String strUrl )
     {
-    	FileItem fileItem = null;
-    	File file = null;
-    	DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
-    	try
-		{
-    		fileItem = handler.doDownloadFile( strUrl );
-		}
-		catch ( BlobStoreClientException e )
-		{
-			AppLogService.error( e );
-		}
-		
-		if ( fileItem != null )
-		{
-			if ( fileItem.getSize(  ) < Integer.MAX_VALUE )
-			{
-				PhysicalFile physicalFile = new PhysicalFile(  );
-				physicalFile.setValue( fileItem.get(  ) );
-				
-				String strFileName = fileItem.getName(  );
-				if ( StringUtils.isNotBlank(strFileName) )
-				{
-					String strExtension = StringUtils.EMPTY;
-					int nLastIndexOfDot = strFileName.lastIndexOf( CONSTANT_DOT );
-					if ( nLastIndexOfDot != DirectoryUtils.CONSTANT_ID_NULL )
-					{
-						strExtension = strFileName.substring( nLastIndexOfDot + 1 );
-					}
-					
-					file = new File(  );
-					file.setPhysicalFile( physicalFile );
-					file.setSize( (int) fileItem.getSize(  ) );
-					file.setTitle( strFileName );
-					if ( StringUtils.isNotBlank( fileItem.getContentType(  ) ) )
-					{
-						file.setMimeType( fileItem.getContentType(  ) );
-					}
-					else
-					{
-						file.setMimeType( FileSystemUtil.getMIMEType( strFileName ) );
-					}
-					file.setExtension( strExtension );
-				}
-			}
-			else
-			{
-				AppLogService.error( "DirectoryUtils : File too big ! fr.paris.lutece.plugins.directory.business.File.setSize " +
-						"must have Integer parameter, in other words a size lower than '" + Integer.MAX_VALUE + "'" );
-			}
-		}
-		
-		return file;
+        FileItem fileItem = null;
+        File file = null;
+        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+
+        try
+        {
+            fileItem = handler.doDownloadFile( strUrl );
+        }
+        catch ( BlobStoreClientException e )
+        {
+            AppLogService.error( e );
+        }
+
+        if ( fileItem != null )
+        {
+            if ( fileItem.getSize(  ) < Integer.MAX_VALUE )
+            {
+                PhysicalFile physicalFile = new PhysicalFile(  );
+                physicalFile.setValue( fileItem.get(  ) );
+
+                String strFileName = fileItem.getName(  );
+
+                if ( StringUtils.isNotBlank( strFileName ) )
+                {
+                    String strExtension = StringUtils.EMPTY;
+                    int nLastIndexOfDot = strFileName.lastIndexOf( CONSTANT_DOT );
+
+                    if ( nLastIndexOfDot != DirectoryUtils.CONSTANT_ID_NULL )
+                    {
+                        strExtension = strFileName.substring( nLastIndexOfDot + 1 );
+                    }
+
+                    file = new File(  );
+                    file.setPhysicalFile( physicalFile );
+                    file.setSize( (int) fileItem.getSize(  ) );
+                    file.setTitle( strFileName );
+
+                    if ( StringUtils.isNotBlank( fileItem.getContentType(  ) ) )
+                    {
+                        file.setMimeType( fileItem.getContentType(  ) );
+                    }
+                    else
+                    {
+                        file.setMimeType( FileSystemUtil.getMIMEType( strFileName ) );
+                    }
+
+                    file.setExtension( strExtension );
+                }
+            }
+            else
+            {
+                AppLogService.error( 
+                    "DirectoryUtils : File too big ! fr.paris.lutece.plugins.directory.business.File.setSize " +
+                    "must have Integer parameter, in other words a size lower than '" + Integer.MAX_VALUE + "'" );
+            }
+        }
+
+        return file;
     }
-    
+
     /**
      * Build the map id entry - list record field
-     * @param map the map
-     * @param entry the entry
-     * @param filter the filter
-     * @param plugin the plugin
-     * @param bGetFileName true if it must get the file name, false otherwise
-     * 		<br />
-     * 		Warning : The file name is fetch by a webservice call. Beware of performance.
+     *
+     * @param map
+     *            the map
+     * @param entry
+     *            the entry
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @param bGetFileName
+     *            true if it must get the file name, false otherwise <br />
+     *            Warning : The file name is fetch by a webservice call. Beware
+     *            of performance.
      */
-    private static void buildMapIdEntryListRecordField( Map<String, List<RecordField>> map, 
-    		IEntry entry, RecordFieldFilter filter, Plugin plugin, boolean bGetFileName )
+    private static void buildMapIdEntryListRecordField( Map<String, List<RecordField>> map, IEntry entry,
+        RecordFieldFilter filter, Plugin plugin, boolean bGetFileName )
     {
-    	filter.setIdEntry( entry.getIdEntry(  ) );
-    	List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( filter, plugin );
-    	// If entry is type download url, then fetch the file name
-    	if ( entry instanceof EntryTypeDownloadUrl )
-    	{
-    		if ( listRecordFields != null && !listRecordFields.isEmpty(  ) )
-    		{
-    			// Only 1 record field per entry type download url
-    			RecordField recordField = listRecordFields.get( 0 );
-    			if ( recordField != null && StringUtils.isNotBlank( recordField.getValue(  ) ) && bGetFileName )
-    			{
-    				recordField.setFileName( getFileName( recordField.getValue(  ) ) );
-    			}
-    		}
-    	}
-    	map.put( Integer.toString( entry.getIdEntry(  ) ), listRecordFields );
+        filter.setIdEntry( entry.getIdEntry(  ) );
+
+        List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( filter, plugin );
+
+        // If entry is type download url, then fetch the file name
+        if ( entry instanceof EntryTypeDownloadUrl )
+        {
+            if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) )
+            {
+                // Only 1 record field per entry type download url
+                RecordField recordField = listRecordFields.get( 0 );
+
+                if ( ( recordField != null ) && StringUtils.isNotBlank( recordField.getValue(  ) ) && bGetFileName )
+                {
+                    recordField.setFileName( getFileName( recordField.getValue(  ) ) );
+                }
+            }
+        }
+
+        map.put( Integer.toString( entry.getIdEntry(  ) ), listRecordFields );
     }
 
     /**
      * Get the base url
-     * @param request the HTTP request
+     *
+     * @param request
+     *            the HTTP request
      * @return the base url
      */
     public static String getBaseUrl( HttpServletRequest request )

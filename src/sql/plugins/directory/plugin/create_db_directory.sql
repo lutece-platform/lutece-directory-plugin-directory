@@ -49,6 +49,8 @@ CREATE TABLE directory_directory (
   is_directory_record_activated SMALLINT DEFAULT 1,
   is_indexed SMALLINT DEFAULT 1,
   id_sort_entry VARCHAR(50) DEFAULT NULL,
+  id_sort_entry_front VARCHAR(50) DEFAULT NULL,
+  is_ascending_sort_front SMALLINT DEFAULT 1,
   PRIMARY KEY  (id_directory)
   );
 
