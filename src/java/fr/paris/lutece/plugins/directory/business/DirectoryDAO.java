@@ -61,8 +61,8 @@ public final class DirectoryDAO implements IDirectoryDAO
         " is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page," +
         " id_workflow, is_search_wf_state, is_search_comp_wf_state, is_date_shown_in_result_list, is_date_shown_in_result_record," +
         " is_date_shown_in_history, is_date_shown_in_search, is_date_shown_in_advanced_search, is_date_shown_in_multi_search, is_date_shown_in_export, " +
-        "is_directory_record_activated, is_indexed,id_sort_entry_front,is_ascending_sort_front) " +
-        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        "is_directory_record_activated, is_indexed) " +
+        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_directory  WHERE id_directory = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE directory_directory  SET id_directory=?,title=?,description=?," +
         "unavailability_message=?,workgroup_key=?,role_key=?," +
