@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.directory.web;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -79,6 +80,8 @@ import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
 import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.plugins.directory.service.RecordRemovalListenerService;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterService;
+import fr.paris.lutece.plugins.directory.service.parameter.EntryParameterService;
 import fr.paris.lutece.plugins.directory.service.security.DirectoryUserAttributesManager;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
@@ -181,6 +184,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MESSAGE_CONFIRM_INDEX_ALL_DIRECTORY = "directory.message.confirm_index_all_directory";
     private static final String MESSAGE_ERROR_NOT_SELECTED_STATE = "directory.message.not_selected_state";
     private static final String MESSAGE_ERROR_NO_RECORD = "directory.message.no_record";
+    private static final String MESSAGE_ERROR_EXPORT_ENCODING_NOT_SUPPORTED = "directory.message.error.export.encoding.not_supported";
     private static final String FIELD_TITLE = "directory.create_directory.label_title";
     private static final String FIELD_DESCRIPTION = "directory.create_directory.label_description";
     private static final String FIELD_TITLE_FIELD = "directory.create_field.label_title";
@@ -719,7 +723,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         // Default Values
-        ReferenceList listParamDefaultValues = DirectoryParameterHome.findAll( getPlugin(  ) );
+        ReferenceList listParamDefaultValues = DirectoryParameterService.getService(  ).findDefaultValueParameters(  );
 
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage(  ) );
@@ -1220,7 +1224,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         // Default Values
-        ReferenceList listParamDefaultValues = EntryParameterHome.findAll( getPlugin(  ) );
+        ReferenceList listParamDefaultValues = EntryParameterService.getService(  ).findAll(  );
 
         model.put( MARK_DIRECTORY_ENTRY_LIST_ASSOCIATE, listEntryAssociateWithoutJavascript );
         model.put( MARK_DIRECTORY_LIST_ASSOCIATE, DirectoryHome.getDirectoryList( plugin ) );
@@ -4108,7 +4112,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
 
-        ReferenceList listParams = DirectoryParameterHome.findAll( getPlugin(  ) );
+        ReferenceList listParams = DirectoryParameterService.getService(  ).findDefaultValueParameters(  );
 
         for ( ReferenceItem param : listParams )
         {
@@ -4120,7 +4124,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
 
             param.setName( strParamValue );
-            DirectoryParameterHome.update( param, getPlugin(  ) );
+            DirectoryParameterService.getService(  ).update( param );
         }
 
         return getJspManageAdvancedParameters( request );
@@ -4141,7 +4145,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
 
-        ReferenceList listParams = EntryParameterHome.findAll( getPlugin(  ) );
+        ReferenceList listParams = EntryParameterService.getService(  ).findAll(  );
 
         for ( ReferenceItem param : listParams )
         {
@@ -4153,12 +4157,57 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
 
             param.setName( strParamValue );
-            EntryParameterHome.update( param, getPlugin(  ) );
+            EntryParameterService.getService(  ).update( param );
         }
 
         return getJspManageAdvancedParameters( request );
     }
 
+    /**
+     * Modify directory parameter default values
+     * @param request HttpServletRequest
+     * @return JSP return
+     * @throws AccessDeniedException
+     */
+    public String doModifyExportEncodingParameters( HttpServletRequest request )
+        throws AccessDeniedException
+    {
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
+                    DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, getUser(  ) ) )
+        {
+            throw new AccessDeniedException(  );
+        }
+
+        ReferenceList listParams = DirectoryParameterService.getService(  ).findExportEncodingParameters(  );
+
+        for ( ReferenceItem param : listParams )
+        {
+            String strParamValue = request.getParameter( param.getCode(  ) );
+            if ( StringUtils.isNotBlank( strParamValue ) )
+            {
+            	// Test if the encoding is supported
+            	try
+				{
+					strParamValue.getBytes( strParamValue );
+				}
+				catch ( UnsupportedEncodingException e )
+				{
+					Object[] tabRequiredFields = { strParamValue };
+					return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_EXPORT_ENCODING_NOT_SUPPORTED, 
+							tabRequiredFields, AdminMessage.TYPE_STOP );
+				} 
+            }
+            else
+            {
+            	return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
+            }
+            param.setName( strParamValue );
+            DirectoryParameterService.getService(  ).update( param );
+        }
+
+        return getJspManageAdvancedParameters( request );
+    }
+    
     /**
      * return the record visualisation
      * @param request

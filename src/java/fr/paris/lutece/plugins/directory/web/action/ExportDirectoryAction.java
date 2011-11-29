@@ -37,6 +37,7 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
@@ -68,6 +69,7 @@ import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
+import fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.business.workflow.State;
@@ -488,10 +490,12 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 
         if ( bIsCsvExport )
         {
+        	response.setCharacterEncoding( DirectoryParameterService.getService(  ).getExportCSVEncoding(  ) );
             response.setContentType( CONSTANT_MIME_TYPE_CSV );
         }
         else
         {
+        	response.setCharacterEncoding( DirectoryParameterService.getService(  ).getExportXMLEncoding(  ) );
             String strMimeType = FileSystemUtil.getMIMEType( strFileName );
 
             if ( strMimeType != null )
@@ -539,18 +543,24 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
         }
         else
         {
-            byte[] bResult = strShotExportFinalOutPut.getBytes(  );
-
-            try
-            {
-                response.setContentLength( bResult.length );
-                response.getOutputStream(  ).write( bResult );
-                response.getOutputStream(  ).close(  );
-            }
-            catch ( IOException e )
-            {
-                AppLogService.error( e );
-            }
+        	PrintWriter out = null;
+			try
+			{
+				out = response.getWriter(  );
+				out.print( strShotExportFinalOutPut );
+			}
+			catch ( IOException e )
+			{
+				AppLogService.error( e.getMessage(  ), e );
+			}
+			finally
+			{
+				if ( out != null )
+				{
+					out.flush(  );
+					out.close(  );
+				}
+			}
         }
         
         result.setNoop( true );
@@ -566,7 +576,6 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 	{
 		return PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 	}
-	
 	
     /**
      * Append partial export result to temporary file if need
@@ -614,6 +623,4 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 
         return strBufferListRecordXml;
     }
-
-
 }

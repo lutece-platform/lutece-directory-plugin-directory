@@ -49,17 +49,26 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
     private static final String TRUE = "1";
     private static final String SQL_QUERY_SELECT = " SELECT parameter_value FROM directory_directory_parameter WHERE parameter_key = ? ";
     private static final String SQL_QUERY_UPDATE = " UPDATE directory_directory_parameter SET parameter_value = ? WHERE parameter_key = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT parameter_key, parameter_value FROM directory_directory_parameter ORDER BY parameter_key ASC ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT parameter_key, parameter_value FROM directory_directory_parameter ";
+    private static final String SQL_ORDER_BY = " ORDER BY ";
+    private static final String SQL_ASC = " ASC ";
+    private static final String SQL_PARAMETER_KEY = " parameter_key ";
+    private static final String SQL_WHERE = " WHERE ";
+    private static final String SQL_IN = " IN ";
+    private static final String SQL_NOT = " NOT ";
+    private static final String OPEN_BRACKET = " ( ";
+    private static final String CLOSED_BRACKET = " ) ";
+    private static final String SIMPLE_QUOTE = "'";
+    private static final String COMMA = ",";
 
     /**
-     * Load all the default values
-     * @param plugin Plugin
-     * @return a list of ReferenceItem
+     * {@inheritDoc}
      */
     public ReferenceList selectAll( Plugin plugin )
     {
         ReferenceList listParams = new ReferenceList(  );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ALL, plugin );
+        String strSQL = SQL_QUERY_SELECT_ALL + SQL_ORDER_BY + SQL_PARAMETER_KEY + SQL_ASC;
+        DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )
@@ -67,7 +76,7 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
             ReferenceItem param = new ReferenceItem(  );
             param.setCode( daoUtil.getString( 1 ) );
             param.setName( daoUtil.getString( 2 ) );
-            param.setChecked( param.getName(  ).equals( TRUE ) ? true : false );
+            param.setChecked( TRUE.equals( param.getName(  ) ) ? true : false );
             listParams.add( param );
         }
 
@@ -77,10 +86,7 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
     }
 
     /**
-     * Load the parameter value
-     * @param strParameterKey the parameter key
-     * @param plugin
-     * @return The parameter value
+     * {@inheritDoc}
      */
     public ReferenceItem load( String strParameterKey, Plugin plugin )
     {
@@ -94,6 +100,7 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
             param = new ReferenceItem(  );
             param.setCode( strParameterKey );
             param.setName( daoUtil.getString( 1 ) );
+            param.setChecked( TRUE.equals( param.getName(  ) ) ? true : false );
         }
 
         daoUtil.free(  );
@@ -102,10 +109,7 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
     }
 
     /**
-     * Update the parameter value
-     * @param strParameterValue The parameter value
-     * @param strParameterKey The parameter key
-     * @param plugin
+     * {@inheritDoc}
      */
     public void store( ReferenceItem param, Plugin plugin )
     {
@@ -117,4 +121,53 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
     }
+
+    /**
+     * {@inheritDoc}
+     */
+	public ReferenceList selectByFilter( DirectoryParameterFilter filter, Plugin plugin )
+	{
+		// Build SQL query
+		StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
+		if ( filter.containsListParameterKeys(  ) )
+		{
+			sbSQL.append( SQL_WHERE + SQL_PARAMETER_KEY );
+			if ( filter.excludeParameterKeys(  ) )
+			{
+				sbSQL.append( SQL_NOT );
+			}
+			sbSQL.append( SQL_IN );
+			sbSQL.append( OPEN_BRACKET );
+			for ( int i = 0; i < filter.getListParameterKeys(  ).size(  ); i++ )
+			{
+				String strParameterKey = filter.getListParameterKeys(  ).get( i );
+				sbSQL.append( SIMPLE_QUOTE );
+				sbSQL.append( strParameterKey );
+				sbSQL.append( SIMPLE_QUOTE );
+				if ( i < filter.getListParameterKeys(  ).size(  ) - 1 )
+				{
+					sbSQL.append( COMMA );
+				}
+			}
+			sbSQL.append( CLOSED_BRACKET );
+		}
+		
+		// Execute SQL query
+		ReferenceList listParams = new ReferenceList(  );
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+        daoUtil.executeQuery(  );
+
+        while ( daoUtil.next(  ) )
+        {
+            ReferenceItem param = new ReferenceItem(  );
+            param.setCode( daoUtil.getString( 1 ) );
+            param.setName( daoUtil.getString( 2 ) );
+            param.setChecked( TRUE.equals( param.getName(  ) ) ? true : false );
+            listParams.add( param );
+        }
+
+        daoUtil.free(  );
+
+        return listParams;
+	}
 }

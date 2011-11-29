@@ -152,12 +152,12 @@
 		</p>
 		<p>
 		    <label for="width">#i18n{directory.create_entry.label_width}/#i18n{directory.create_entry.label_width_display} : </label>
-		    <input type="text" name="width" id="width" size="5" value="${getName('width',list_entry_param_default_values)}" />
+		    <input type="text" name="width" id="width" size="5" maxlength="100" value="${getName('width',list_entry_param_default_values)}" />
 		</p>
 		<br/>
 		<p>
 		    <label for="height">#i18n{directory.create_entry.label_height}/#i18n{directory.create_entry.label_height_display} : </label>
-		    <input type="text" name="height" id="height" size="5" value="${getName('height',list_entry_param_default_values)}" />
+		    <input type="text" name="height" id="height" size="5" maxlength="100" value="${getName('height',list_entry_param_default_values)}" />
 		</p>
 		<br/>
 		<p>
@@ -174,7 +174,7 @@
 		</p>
 		<p>
 			<label for="max_size_enter">#i18n{directory.create_entry.label_max_size_enter}  : </label>
-			<input type="text" name="max_size_enter" id="max_size_enter" size="5" value="${getName('max_size_enter',list_entry_param_default_values)}" />
+			<input type="text" name="max_size_enter" id="max_size_enter" size="5" maxlength="100" value="${getName('max_size_enter',list_entry_param_default_values)}" />
 		</p>
 		<p>
 	    	<label for="autocomplete_entry">#i18n{directory.create_entry.label_autocomplete_entry} :</label>
@@ -199,6 +199,25 @@
 		</p>
 	</form>
 </div>
+
+<#if list_export_encoding_param?? && list_export_encoding_param?has_content>
+	<div class="highlight-box">
+		<p>#i18n{directory.manage_advanced_parameters.label_export_encoding_parameters}</p>
+		<form method="post" action="jsp/admin/plugins/directory/DoModifyExportEncodingParameters.jsp">
+			<p>
+				<label for="export_csv_encoding">#i18n{directory.manage_advanced_parameters.label_export_csv_encoding} * : </label>
+				<input type="text" name="export_csv_encoding" id="export_csv_encoding" size="20" maxlength="100" value="${getName('export_csv_encoding',list_export_encoding_param)}" />
+			</p>
+			<p>
+				<label for="export_xml_encoding">#i18n{directory.manage_advanced_parameters.label_export_xml_encoding} * : </label>
+				<input type="text" name="export_xml_encoding" id="export_xml_encoding" size="20" maxlength="100" value="${getName('export_xml_encoding',list_export_encoding_param)}" />
+			</p>
+			<p>
+				<input type="submit" class="button" value="#i18n{directory.manage_advanced_parameters.buttonModify}" />
+			</p>
+		</form>
+	</div>
+</#if>
 
 <#if (right_xsl?exists && right_xsl) || (permission_index_all_directory?exists && permission_index_all_directory)>
 	<div class="highlight-box">

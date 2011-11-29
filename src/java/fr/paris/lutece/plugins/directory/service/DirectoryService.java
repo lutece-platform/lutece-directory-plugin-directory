@@ -59,6 +59,8 @@ import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterHome;
 import fr.paris.lutece.plugins.directory.business.parameter.EntryParameterHome;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterService;
+import fr.paris.lutece.plugins.directory.service.parameter.EntryParameterService;
 import fr.paris.lutece.plugins.directory.service.security.DirectoryUserAttributesManager;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
@@ -93,6 +95,7 @@ public class DirectoryService
     // MARKS
     private static final String MARK_LIST_DIRECTORY_PARAM_DEFAULT_VALUES = "list_directory_param_default_values";
     private static final String MARK_LIST_ENTRY_PARAM_DEFAULT_VALUES = "list_entry_param_default_values";
+    private static final String MARK_LIST_EXPORT_ENCODING_PARAM = "list_export_encoding_param";
     private static final String MARK_PERMISSION_INDEX_ALL_DIRECTORY = "permission_index_all_directory";
     private static final String MARK_PERMISSION_XSL = "right_xsl";
     private static final String MARK_RECORD = "record";
@@ -138,11 +141,13 @@ public class DirectoryService
         if ( RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
                     DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, user ) )
         {
-            ReferenceList listDirectoryParamDefaultValues = DirectoryParameterHome.findAll( plugin );
-            ReferenceList listEntryParamDefaultValues = EntryParameterHome.findAll( plugin );
+            ReferenceList listDirectoryParamDefaultValues = DirectoryParameterService.getService(  ).findDefaultValueParameters(  );
+            ReferenceList listEntryParamDefaultValues = EntryParameterService.getService(  ).findAll(  );
+            ReferenceList listExportEncodingParam = DirectoryParameterService.getService(  ).findExportEncodingParameters(  );
 
             model.put( MARK_LIST_DIRECTORY_PARAM_DEFAULT_VALUES, listDirectoryParamDefaultValues );
             model.put( MARK_LIST_ENTRY_PARAM_DEFAULT_VALUES, listEntryParamDefaultValues );
+            model.put( MARK_LIST_EXPORT_ENCODING_PARAM, listExportEncodingParam );
         }
 
         if ( RBACService.isAuthorized( DirectoryXsl.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,

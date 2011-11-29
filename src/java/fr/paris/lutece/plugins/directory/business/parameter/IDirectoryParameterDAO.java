@@ -66,4 +66,12 @@ public interface IDirectoryParameterDAO
      * @param plugin Plugin
      */
     void store( ReferenceItem param, Plugin plugin );
+
+    /**
+     * Load by filter
+     * @param filter the filter
+     * @param plugin the plugin
+     * @return a {@link ReferenceList}
+     */
+    ReferenceList selectByFilter( DirectoryParameterFilter filter, Plugin plugin );
 }

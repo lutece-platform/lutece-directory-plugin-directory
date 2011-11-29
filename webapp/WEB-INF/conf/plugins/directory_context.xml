@@ -26,6 +26,10 @@
     <bean id="directoryRecordRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
     <bean id="directoryEntryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
     
+    <!-- Services -->
+    <bean id="directory.directoryParameterService" class="fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterService" />
+    <bean id="directory.entryParameterService" class="fr.paris.lutece.plugins.directory.service.parameter.EntryParameterService" />
+
     <!-- RSS -->
     <bean id="ResourceRssTypeDirectory" class="fr.paris.lutece.portal.business.rss.ResourceRssType" >
     	<property name="key" value="ResourceRssTypeDirectory" />
