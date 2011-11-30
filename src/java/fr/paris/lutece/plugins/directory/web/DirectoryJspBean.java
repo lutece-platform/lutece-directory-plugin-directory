@@ -385,6 +385,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_DATE_SHOWN_IN_EXPORT = "date_shown_in_export";
     private static final String PARAMETER_ID_SORT_ENTRY = "id_sort_entry";
     private static final String PARAMETER_ASC_SORT = "asc_sort";
+    private static final String PARAMETER_ID_SORT_ENTRY_FRONT = "id_sort_entry_front";
+    private static final String PARAMETER_ASC_SORT_FRONT = "asc_sort_front";
     private static final String PARAMETER_ACTIVATE_DIRECTORY_RECORD = "activate_directory_record";
     private static final String PARAMETER_IS_INDEXED = "is_indexed";
     private static final String PARAMETER_SELECTED_RECORD = "selected_record";
@@ -537,6 +539,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         String strIdSortEntry = request.getParameter( PARAMETER_ID_SORT_ENTRY );
         String strAscSort = request.getParameter( PARAMETER_ASC_SORT );
+        String strIdSortEntryFront = request.getParameter( PARAMETER_ID_SORT_ENTRY_FRONT );
+        String strAscSortFront = request.getParameter( PARAMETER_ASC_SORT_FRONT );
         String strRecordActivated = request.getParameter( PARAMETER_ACTIVATE_DIRECTORY_RECORD );
         String strIsIndexed = request.getParameter( PARAMETER_IS_INDEXED );
 
@@ -668,8 +672,18 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         {
             directory.setIdSortEntry( null );
         }
+       
+        if ( ( strIdSortEntryFront != null ) && ( !strIdSortEntryFront.equals( DirectoryUtils.EMPTY_STRING ) ) )
+        {
+            directory.setIdSortEntryFront( strIdSortEntryFront );
+        }
+        else
+        {
+            directory.setIdSortEntryFront( null );
+        }
 
         directory.setAscendingSort( strAscSort != null );
+        directory.setAscendingSortFront( strAscSortFront != null );
         directory.setRecordActivated( strRecordActivated != null );
         directory.setIndexed( strIsIndexed != null );
 
