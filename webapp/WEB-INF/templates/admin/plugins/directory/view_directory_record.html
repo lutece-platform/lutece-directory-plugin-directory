@@ -66,7 +66,6 @@
 	<div class="content-box">
 	  <h2>#i18n{directory.viewing_directory_record.title} : '${directory.title}' - <#if record.dateCreation?? && show_date_creation_record >#i18n{directory.viewing_directory_record.date_creation} ${record.dateCreation}</#if></h2>
 	  <div id="form-content">
-			<form action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data" DISABLE>
 			<input name="page" value="directory" type="hidden" />
 			
 			 <#list entry_list as entry>	
@@ -129,12 +128,12 @@
     					</div>
 	      			</#if>
 	      		</#list>
-	 			 <p>
-					<a href="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp?id_directory=${directory.idDirectory}&amp;session=session">
-	  					<input class="button" type="button" value="#i18n{directory.resource_history.buttonBack}" />
-	  				</a>
-	   			</p>
-			</form>
+	      		<br />
+	      		<form action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="get">
+			  		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+			  		<input type="hidden" name="session" value="session" />
+					<input class="button" type="submit" value="#i18n{directory.resource_history.buttonBack}" />
+			  	</form>
 		</div>
 	</div>
 </div>
