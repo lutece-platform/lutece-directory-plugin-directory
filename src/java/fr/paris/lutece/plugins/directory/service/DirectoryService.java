@@ -348,6 +348,7 @@ public class DirectoryService
     	Map<String, String> model = new HashMap<String, String>(  );
         model.put( Entry.ATTRIBUTE_ENTRY_ID, String.valueOf( entry.getIdEntry(  ) ) );
         model.put( Entry.ATTRIBUTE_TITLE, entry.getTitle(  ) );
+        model.put( Entry.ATTRIBUTE_IS_SORTABLE, Boolean.toString( entry.isSortable(  ) ) );
         if ( entry instanceof EntryTypeGeolocation )
         {
         	model.put( Entry.ATTRIBUTE_SHOWXY, Boolean.toString( showXY( entry ) ) );
