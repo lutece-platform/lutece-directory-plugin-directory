@@ -223,7 +223,6 @@
 	  			 	<input type="submit" value="#i18n{directory.manage_directory_record.button_search}" class="button" name="search" />
 	  			 	<input type="button" value="#i18n{directory.manage_directory_record.button_reset}" class="button" name="reset" id="reset"/>
 	  			</p>
-			</form>
 		</div>
 
 <#-- macro used for Geolocation AND actions column in record list -->
@@ -367,7 +366,7 @@
 		</#list>
 	</#if>
  	
-	<@paginationAdmin paginator=paginator />
+	<@paginationAdmin paginator=paginator form=0 />
 	</div>
 </div>
 </form>
