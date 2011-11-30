@@ -68,6 +68,7 @@ public class Entry implements IEntry
     public static final String ATTRIBUTE_ENTRY_ID_TYPE = "id-type";
     public static final String TAG_LIST_ENTRY = "list-entry";
     public static final String ATTRIBUTE_SHOWXY = "showxy";
+    public static final String ATTRIBUTE_IS_SORTABLE = "is-sortable";
 
     //	parameters Entry 
     protected static final String PARAMETER_TITLE = "title";
@@ -129,7 +130,7 @@ public class Entry implements IEntry
 
     //  Jsp Definition
     protected static final String JSP_DOWNLOAD_FILE = "jsp/site/plugins/directory/DoDownloadFile.jsp";
-    
+
     // SQL
     private static final String SQL_JOIN_DIRECTORY_RECORD_FIELD = " LEFT JOIN directory_record_field drf ON drf.id_record = dr.id_record AND drf.id_entry = ? ";
     private static final String SQL_ORDER_BY_RECORD_FIELD_VALUE = " ORDER BY drf.record_field_value ";
@@ -388,7 +389,7 @@ public class Entry implements IEntry
     {
         _bShownInExport = shown;
     }
-    
+
     /* (non-Javadoc)
      * @see fr.paris.lutece.plugins.directory.business.IEntry#isShownInCompleteness()
      */
@@ -993,6 +994,8 @@ public class Entry implements IEntry
             Map<String, String> model = new HashMap<String, String>(  );
             model.put( ATTRIBUTE_ENTRY_ID, String.valueOf( this.getIdEntry(  ) ) );
             model.put( ATTRIBUTE_ENTRY_ID_TYPE, String.valueOf( this.getEntryType(  ).getIdType(  ) ) );
+            model.put( Entry.ATTRIBUTE_IS_SORTABLE, Boolean.toString( this.isSortable(  ) ) );
+
             XmlUtil.beginElement( strXml, TAG_ENTRY, model );
             XmlUtil.addElementHtml( strXml, TAG_TITLE, this.getTitle(  ) );
 
@@ -1056,63 +1059,61 @@ public class Entry implements IEntry
     }
 
     /**
-     * 
+     *
      * Provide default join on directory_record_field
      */
-	public String getSQLJoin()
-	{
-		return SQL_JOIN_DIRECTORY_RECORD_FIELD;
-	}
+    public String getSQLJoin(  )
+    {
+        return SQL_JOIN_DIRECTORY_RECORD_FIELD;
+    }
 
-	/**
-     * 
-     * Provides default order by on directory_record_field.record_field_value
+    /**
+    *
+    * Provides default order by on directory_record_field.record_field_value
+    */
+    public String getSQLOrderBy(  )
+    {
+        return SQL_ORDER_BY_RECORD_FIELD_VALUE;
+    }
+
+    /**
+     *
+     * Returns the entry id
      */
-	public String getSQLOrderBy()
-	{
-		return SQL_ORDER_BY_RECORD_FIELD_VALUE;
-	}
-	
-	/**
-	 * 
-	 * Returns the entry id
-	 */
-	public List<Object> getSQLParametersValues()
-	{
-		return Collections.<Object>singletonList( Integer.valueOf( getIdEntry() ) );
-	}
+    public List<Object> getSQLParametersValues(  )
+    {
+        return Collections.<Object>singletonList( Integer.valueOf( getIdEntry(  ) ) );
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isIndexedAsTitle(  )
-	{
-		return _bIndexedAsTitle;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setIndexedAsTitle(  boolean indexedAsTitle  )
-	{
-		_bIndexedAsTitle = indexedAsTitle;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isIndexedAsTitle(  )
+    {
+        return _bIndexedAsTitle;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isIndexedAsSummary(  )
-	{
-		return _bIndexedAsSummary;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void setIndexedAsTitle( boolean indexedAsTitle )
+    {
+        _bIndexedAsTitle = indexedAsTitle;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setIndexedAsSummary( boolean indexedAsSummary )
-	{
-		_bIndexedAsSummary = indexedAsSummary;
-		
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isIndexedAsSummary(  )
+    {
+        return _bIndexedAsSummary;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void setIndexedAsSummary( boolean indexedAsSummary )
+    {
+        _bIndexedAsSummary = indexedAsSummary;
+    }
 }
