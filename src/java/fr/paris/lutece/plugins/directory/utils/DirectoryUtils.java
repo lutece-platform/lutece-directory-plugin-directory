@@ -33,6 +33,26 @@
  */
 package fr.paris.lutece.plugins.directory.utils;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.util.ReflectionUtils;
+
 import fr.paris.lutece.plugins.blobstoreclient.util.BlobStoreClientException;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
@@ -50,6 +70,7 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
+import fr.paris.lutece.plugins.directory.business.attribute.DirectoryAttribute;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
@@ -73,26 +94,6 @@ import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-
-import java.sql.Timestamp;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -1426,5 +1427,34 @@ public final class DirectoryUtils
         }
 
         return strBaseUrl;
+    }
+
+    /**
+     * Depopulate the directory into a map of key - value
+     * @param directory the directory
+     * @return a map of key - value
+     */
+    public static Map<String, Object> depopulate( Directory directory )
+    {
+    	Map<String, Object> mapAttributes = new HashMap<String, Object>(  );
+    	for ( java.lang.reflect.Field field : Directory.class.getDeclaredFields(  ) )
+    	{
+    		DirectoryAttribute attribute = field.getAnnotation( DirectoryAttribute.class );
+    		if ( attribute != null )
+    		{
+    			String strAttributeKey = attribute.value(  );
+    			try
+				{
+					field.setAccessible( true );
+					Object attributeValue = ReflectionUtils.getField( field, directory );
+					mapAttributes.put( strAttributeKey, attributeValue );
+				}
+				catch ( SecurityException e )
+				{
+					AppLogService.error( e );
+				}
+    		}
+    	}
+    	return mapAttributes;
     }
 }

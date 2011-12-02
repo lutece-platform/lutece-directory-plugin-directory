@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS directory_directory_parameter;
 DROP TABLE IF EXISTS directory_entry_parameter;
 DROP TABLE IF EXISTS directory_xsl_action;
 DROP TABLE IF EXISTS directory_rss_cf;
-
+DROP TABLE IF EXISTS directory_directory_attribute;
 
 /*==============================================================*/
 /* Table structure for table directory_directory				*/
@@ -165,6 +165,7 @@ CREATE TABLE directory_xsl (
 CREATE TABLE directory_record (
   id_record INT DEFAULT 0 NOT NULL,
   date_creation timestamp DEFAULT NULL NULL,
+  date_modification timestamp DEFAULT NULL NULL,
   id_directory INT DEFAULT NULL,
   is_enabled SMALLINT DEFAULT 0,
   role_key VARCHAR(50) DEFAULT NULL,
@@ -314,6 +315,16 @@ CREATE TABLE directory_entry_parameter (
 );
 
 CREATE INDEX  id_indexer_task ON directory_indexer_action (id_task);
+
+/*==============================================================*/
+/*Table structure for table directory_directory_attribute		*/
+/*==============================================================*/
+CREATE TABLE directory_directory_attribute (
+	id_directory INT DEFAULT 0 NOT NULL,
+	attribute_key varchar(255) NOT NULL,
+	attribute_value varchar(255) NOT NULL,
+	PRIMARY KEY (id_directory, parameter_key)
+);
 
 ALTER TABLE directory_directory ADD CONSTRAINT fk_id_result_list_template FOREIGN KEY (id_result_list_template)
      REFERENCES directory_xsl (id_directory_xsl)  ON DELETE RESTRICT ON UPDATE RESTRICT ;

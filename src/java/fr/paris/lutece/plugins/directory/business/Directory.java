@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import fr.paris.lutece.plugins.directory.business.attribute.DirectoryAttribute;
 import fr.paris.lutece.plugins.directory.business.rss.DirectoryResourceRssConfigRemovalListener;
 import fr.paris.lutece.plugins.directory.service.DirectoryXslRemovalListenerService;
 import fr.paris.lutece.plugins.directory.service.FileImgService;
@@ -51,6 +52,8 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import org.springframework.core.annotation.AnnotationUtils;
 
 
 /**
@@ -99,7 +102,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     private boolean _bRecordActivated;
     private boolean _bIsIndexed;
 
-    //creation date field
+    // Creation date field
     private boolean _bDateShownInResultList;
     private boolean _bDateShownInResultRecord;
     private boolean _bDateShownInHistory;
@@ -107,6 +110,22 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     private boolean _bDateShownInAdvancedSearch;
     private boolean _bDateShownInMultiSearch;
     private boolean _bDateShownInExport;
+    
+    // Modification date field
+    @DirectoryAttribute( "dateModificationShownInResultList" ) 
+    private boolean _bDateModificationShownInResultList;
+    @DirectoryAttribute( "dateModificationShownInResultRecord" ) 
+    private boolean _bDateModificationShownInResultRecord;
+    @DirectoryAttribute( "dateModificationShownInHistory" ) 
+    private boolean _bDateModificationShownInHistory;
+    @DirectoryAttribute( "dateModificationShownInSearch" ) 
+    private boolean _bDateModificationShownInSearch;
+    @DirectoryAttribute( "dateModificationShownInAdvancedSearch" ) 
+    private boolean _bDateModificationShownInAdvancedSearch;
+    @DirectoryAttribute( "dateModificationShownInMultiSearch" ) 
+    private boolean _bDateModificationShownInMultiSearch;
+    @DirectoryAttribute( "dateModificationShownInExport" ) 
+    private boolean _bDateModificationShownInExport;
 
     /**
      * Initialize the Directory
@@ -527,6 +546,76 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     public void setDateShownInExport( boolean bDateShownInExport )
     {
         _bDateShownInExport = bDateShownInExport;
+    }
+    
+    public boolean isDateModificationShownInResultList(  )
+    {
+        return _bDateModificationShownInResultList;
+    }
+
+    public void setDateModificationShownInResultList( boolean bDateModificationShownInResultList )
+    {
+        _bDateModificationShownInResultList = bDateModificationShownInResultList;
+    }
+
+    public boolean isDateModificationShownInResultRecord(  )
+    {
+        return _bDateModificationShownInResultRecord;
+    }
+
+    public void setDateModificationShownInResultRecord( boolean bDateModificationShownInResultRecord )
+    {
+        _bDateModificationShownInResultRecord = bDateModificationShownInResultRecord;
+    }
+
+    public boolean isDateModificationShownInHistory(  )
+    {
+        return _bDateModificationShownInHistory;
+    }
+
+    public void setDateModificationShownInHistory( boolean bDateModificationShownInHistory )
+    {
+        _bDateModificationShownInHistory = bDateModificationShownInHistory;
+    }
+
+    public boolean isDateModificationShownInSearch(  )
+    {
+        return _bDateModificationShownInSearch;
+    }
+
+    public void setDateModificationShownInSearch( boolean bDateModificationShownInSearch )
+    {
+        _bDateModificationShownInSearch = bDateModificationShownInSearch;
+    }
+
+    public boolean isDateModificationShownInAdvancedSearch(  )
+    {
+        return _bDateModificationShownInAdvancedSearch;
+    }
+
+    public void setDateModificationShownInAdvancedSearch( boolean bDateModificationShownInAdvancedSearch )
+    {
+        _bDateModificationShownInAdvancedSearch = bDateModificationShownInAdvancedSearch;
+    }
+
+    public boolean isDateModificationShownInMultiSearch(  )
+    {
+        return _bDateModificationShownInMultiSearch;
+    }
+
+    public void setDateModificationShownInMultiSearch( boolean bDateModificationShownInMultiSearch )
+    {
+        _bDateModificationShownInMultiSearch = bDateModificationShownInMultiSearch;
+    }
+
+    public boolean isDateModificationShownInExport(  )
+    {
+        return _bDateModificationShownInExport;
+    }
+
+    public void setDateModificationShownInExport( boolean bDateModificationShownInExport )
+    {
+        _bDateModificationShownInExport = bDateModificationShownInExport;
     }
 
     public boolean isAscendingSort(  )

@@ -19,6 +19,7 @@
 	 <bean id="resourceRssDirectoryConfigDAO"  class="fr.paris.lutece.plugins.directory.business.rss.DirectoryResourceRssConfigDAO" />
 	 <bean id="directoryParameterDAO" class="fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterDAO" />
 	 <bean id="directoryEntryParameterDAO" class="fr.paris.lutece.plugins.directory.business.parameter.EntryParameterDAO" />
+	 <bean id="directory.directoryAttributeDAO" class="fr.paris.lutece.plugins.directory.business.attribute.DirectoryAttributeDAO" />
 	 
 	<!--                      Removal Services                            -->
     <bean id="directoryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />

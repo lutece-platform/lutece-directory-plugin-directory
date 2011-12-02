@@ -53,17 +53,17 @@ public final class RecordDAO implements IRecordDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT MAX( id_record ) FROM directory_record";
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key " +
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key,date_modification " +
         "FROM directory_record WHERE id_record=? ";
-    private static final String SQL_QUERY_FIND_BY_LIST_PRIMARY_KEY = "SELECT id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key " +
+    private static final String SQL_QUERY_FIND_BY_LIST_PRIMARY_KEY = "SELECT id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key,date_modification " +
         "FROM directory_record WHERE id_record IN ( ?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO directory_record ( " +
-        "id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key ) VALUES(?,?,?,?,?,?)";
+        "id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key,date_modification ) VALUES(?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_record WHERE id_record = ? ";
     private static final String SQL_QUERY_DELETE_BY_ID_DIRECTORY = "DELETE FROM directory_record WHERE id_directory = ?";
     private static final String SQL_QUERY_UPDATE = "UPDATE directory_record SET " +
-        "id_record=?,date_creation=?,id_directory=?,is_enabled=?,role_key=?,workgroup_key=? WHERE id_record=?";
-    private static final String SQL_QUERY_SELECT_RECORD_BY_FILTER = "SELECT dr.id_record,dr.date_creation,dr.id_directory,dr.is_enabled,dr.role_key,dr.workgroup_key " +
+        "id_record=?,date_creation=?,id_directory=?,is_enabled=?,role_key=?,workgroup_key=?,date_modification=? WHERE id_record=?";
+    private static final String SQL_QUERY_SELECT_RECORD_BY_FILTER = "SELECT dr.id_record,dr.date_creation,dr.id_directory,dr.is_enabled,dr.role_key,dr.workgroup_key,dr.date_modification " +
         "FROM directory_record dr ";
     private static final String SQL_QUERY_SELECT_RECORD_ID_BY_FILTER = "SELECT dr.id_record FROM directory_record dr ";
     private static final String SQL_QUERY_SELECT_COUNT_BY_FILTER = "SELECT COUNT(dr.id_record) " +
@@ -125,6 +125,7 @@ public final class RecordDAO implements IRecordDAO
         daoUtil.setBoolean( 4, record.isEnabled(  ) );
         daoUtil.setString( 5, record.getRoleKey(  ) );
         daoUtil.setString( 6, record.getWorkgroup(  ) );
+        daoUtil.setTimestamp( 7, record.getDateModification(  ) );
 
         record.setIdRecord( newPrimaryKey( plugin ) );
         daoUtil.setInt( 1, record.getIdRecord(  ) );
@@ -161,6 +162,7 @@ public final class RecordDAO implements IRecordDAO
             record.setEnabled( daoUtil.getBoolean( 4 ) );
             record.setRoleKey( daoUtil.getString( 5 ) );
             record.setWorkgroup( daoUtil.getString( 6 ) );
+            record.setDateModification( daoUtil.getTimestamp( 7 ) );
         }
 
         daoUtil.free(  );
@@ -256,6 +258,15 @@ public final class RecordDAO implements IRecordDAO
                 record.setEnabled( daoUtil.getBoolean( 4 ) );
                 record.setRoleKey( daoUtil.getString( 5 ) );
                 record.setWorkgroup( daoUtil.getString( 6 ) );
+                
+                if ( daoUtil.getTimestamp( 7 ) == null )
+                {
+                    record.setDateModification( new Timestamp( 0 ) );
+                }
+                else
+                {
+                    record.setDateModification( daoUtil.getTimestamp( 7 ) );
+                }
 
                 // keep id order
                 tabRecords[listId.indexOf( record.getIdRecord() )] = record;
@@ -314,7 +325,9 @@ public final class RecordDAO implements IRecordDAO
         daoUtil.setBoolean( 4, record.isEnabled(  ) );
         daoUtil.setString( 5, record.getRoleKey(  ) );
         daoUtil.setString( 6, record.getWorkgroup(  ) );
-        daoUtil.setInt( 7, record.getIdRecord(  ) );
+        daoUtil.setTimestamp( 7, record.getDateModification(  ) );
+        
+        daoUtil.setInt( 8, record.getIdRecord(  ) );
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
     }
@@ -353,6 +366,7 @@ public final class RecordDAO implements IRecordDAO
             record.setEnabled( daoUtil.getBoolean( 4 ) );
             record.setRoleKey( daoUtil.getString( 5 ) );
             record.setWorkgroup( daoUtil.getString( 6 ) );
+            record.setDateModification( daoUtil.getTimestamp( 7 ) );
 
             recordList.add( record );
         }

@@ -48,6 +48,17 @@
 			
 		}
 	}
+	function doDisplayDateModificationMultipleSearchFields()
+	{
+		if(document.getElementById('date_modification_indexed').checked)
+		{
+			displayId('date_modification_show_multiple_search_fields');
+		} 
+		else 
+		{
+			hideId('date_modification_show_multiple_search_fields');			
+		}
+	}
 	
 	window.onload = function() 
 	{
@@ -205,6 +216,35 @@
 					<label>&nbsp;</label><input name="date_shown_in_multi_search" value="1" type="checkbox" <#if directory.isDateShownInMultiSearch()>checked="checked"</#if>>
 					#i18n{directory.create_entry.label_multiple_search_fields}
 					<input name="date_shown_in_advanced_search" value="1" type="checkbox" <#if directory.isDateShownInAdvancedSearch()>checked="checked"</#if>/>						
+					#i18n{directory.create_entry.label_shown_in_advanced_search}
+				</span>
+			</p>
+			<p>
+				<label for="">#i18n{directory.create_directory.label_show_date_modification} :</label>
+				<input name="date_modification_shown_in_result_list" value="1" type="checkbox" <#if directory.isDateModificationShownInResultList()>checked="checked"</#if>/>
+				#i18n{directory.create_entry.label_shown_in_result_list}
+
+				<br />
+				<label>&nbsp;</label><input name="date_modification_shown_in_result_record" value="1" type="checkbox" <#if directory.isDateModificationShownInResultRecord()>checked="checked"</#if>/>
+				#i18n{directory.create_entry.label_shown_in_result_record}
+				
+				<br />
+				<label>&nbsp;</label><input name="date_modification_shown_in_history" value="1" type="checkbox" <#if directory.isDateModificationShownInHistory()>checked="checked"</#if>/>
+				#i18n{directory.create_entry.label_shown_in_history}
+				
+				<br />
+				<label>&nbsp;</label><input name="date_modification_shown_in_export" value="1" type="checkbox" <#if directory.isDateModificationShownInExport()>checked="checked"</#if>/>
+				#i18n{directory.create_entry.label_shown_in_export}
+				
+				<br />
+				<label>&nbsp;</label><input id="date_modification_indexed" name="date_modification_shown_in_search" value="1" type="checkbox"  <#if directory.isDateModificationShownInSearch()>checked="checked"</#if> onclick="doDisplayDateModificationMultipleSearchFields();" />
+				#i18n{directory.create_entry.label_indexed}
+				
+				<br />
+				<span id="date_modification_show_multiple_search_fields" <#if !directory.isDateModificationShownInSearch()>style="visibility:hidden;display:none;"</#if>>
+					<label>&nbsp;</label><input name="date_modification_shown_in_multi_search" value="1" type="checkbox" <#if directory.isDateModificationShownInMultiSearch()>checked="checked"</#if>>
+					#i18n{directory.create_entry.label_multiple_search_fields}
+					<input name="date_modification_shown_in_advanced_search" value="1" type="checkbox" <#if directory.isDateModificationShownInAdvancedSearch()>checked="checked"</#if>/>						
 					#i18n{directory.create_entry.label_shown_in_advanced_search}
 				</span>
 			</p>

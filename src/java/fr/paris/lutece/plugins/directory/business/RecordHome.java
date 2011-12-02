@@ -70,6 +70,7 @@ public final class RecordHome
      */
     public static int create( Record record, Plugin plugin )
     {
+    	record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
         record.setIdRecord( _dao.insert( record, plugin ) );
 
         DirectorySearchService.getInstance(  )
@@ -94,6 +95,7 @@ public final class RecordHome
      */
     public static int copy( Record record, Plugin plugin )
     {
+    	record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
         RecordFieldFilter filter = new RecordFieldFilter(  );
         filter.setIdRecord( record.getIdRecord(  ) );
         record.setListRecordField( RecordFieldHome.getRecordFieldList( filter, plugin ) );
@@ -136,6 +138,7 @@ public final class RecordHome
      */
     public static void updateWidthRecordField( Record record, Plugin plugin )
     {
+    	record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
         DirectorySearchService.getInstance(  )
                               .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_MODIFY, plugin );
 
@@ -163,6 +166,7 @@ public final class RecordHome
      */
     public static void update( Record record, Plugin plugin )
     {
+    	record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
         DirectorySearchService.getInstance(  )
                               .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_MODIFY, plugin );
 

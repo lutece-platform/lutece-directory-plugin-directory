@@ -383,6 +383,13 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_DATE_SHOWN_IN_ADVANCED_SEARCH = "date_shown_in_advanced_search";
     private static final String PARAMETER_DATE_SHOWN_IN_MULTI_SEARCH = "date_shown_in_multi_search";
     private static final String PARAMETER_DATE_SHOWN_IN_EXPORT = "date_shown_in_export";
+    private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_RESULT_LIST = "date_modification_shown_in_result_list";
+    private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_RESULT_RECORD = "date_modification_shown_in_result_record";
+    private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_HISTORY = "date_modification_shown_in_history";
+    private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_SEARCH = "date_modification_shown_in_search";
+    private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_ADVANCED_SEARCH = "date_modification_shown_in_advanced_search";
+    private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_MULTI_SEARCH = "date_modification_shown_in_multi_search";
+    private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_EXPORT = "date_shown_in_export";
     private static final String PARAMETER_ID_SORT_ENTRY = "id_sort_entry";
     private static final String PARAMETER_ASC_SORT = "asc_sort";
     private static final String PARAMETER_ID_SORT_ENTRY_FRONT = "id_sort_entry_front";
@@ -553,6 +560,15 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strShowDateInMultiSearch = request.getParameter( PARAMETER_DATE_SHOWN_IN_MULTI_SEARCH );
         String strShowDateInExport = request.getParameter( PARAMETER_DATE_SHOWN_IN_EXPORT );
 
+        //creation date field
+        String strShowDateModificationInResultList = request.getParameter( PARAMETER_DATE_MODIFICATION_SHOWN_IN_RESULT_LIST );
+        String strShowDateModificationInResultRecord = request.getParameter( PARAMETER_DATE_MODIFICATION_SHOWN_IN_RESULT_RECORD );
+        String strShowDateModificationInHistory = request.getParameter( PARAMETER_DATE_MODIFICATION_SHOWN_IN_HISTORY );
+        String strShowDateModificationInSearch = request.getParameter( PARAMETER_DATE_MODIFICATION_SHOWN_IN_SEARCH );
+        String strShowDateModificationInAdvancedSearch = request.getParameter( PARAMETER_DATE_MODIFICATION_SHOWN_IN_ADVANCED_SEARCH );
+        String strShowDateModificationInMultiSearch = request.getParameter( PARAMETER_DATE_MODIFICATION_SHOWN_IN_MULTI_SEARCH );
+        String strShowDateModificationInExport = request.getParameter( PARAMETER_DATE_MODIFICATION_SHOWN_IN_EXPORT );
+
         int nIdResultListTemplate = DirectoryUtils.convertStringToInt( strIdResultListTemplate );
         int nIdResultRecordTemplate = DirectoryUtils.convertStringToInt( strIdResultRecordTemplate );
         int nIdFormSearchTemplate = DirectoryUtils.convertStringToInt( strIdFormSearchTemplate );
@@ -663,6 +679,14 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         directory.setDateShownInAdvancedSearch( strShowDateInAdvancedSearch != null );
         directory.setDateShownInMultiSearch( strShowDateInMultiSearch != null );
         directory.setDateShownInExport( strShowDateInExport != null );
+        
+        directory.setDateModificationShownInResultList( strShowDateModificationInResultList != null );
+        directory.setDateModificationShownInResultRecord( strShowDateModificationInResultRecord != null );
+        directory.setDateModificationShownInHistory( strShowDateModificationInHistory != null );
+        directory.setDateModificationShownInSearch( strShowDateModificationInSearch != null );
+        directory.setDateModificationShownInAdvancedSearch( strShowDateModificationInAdvancedSearch != null );
+        directory.setDateModificationShownInMultiSearch( strShowDateModificationInMultiSearch != null );
+        directory.setDateModificationShownInExport( strShowDateModificationInExport != null );
 
         if ( ( strIdSortEntry != null ) && ( !strIdSortEntry.equals( DirectoryUtils.EMPTY_STRING ) ) )
         {
@@ -3844,6 +3868,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             		.doProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
             				nIdDirectory, request, getLocale(  ), false );
             		listIdsSuccessRecord.add( nIdRecord );
+            		
+            		// Update record modification date
+            		Record record = RecordHome.findByPrimaryKey( nIdRecord, getPlugin(  ) );
+            		RecordHome.update( record, getPlugin(  ) );
             	}
             	else
             	{

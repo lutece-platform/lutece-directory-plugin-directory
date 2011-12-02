@@ -73,6 +73,7 @@ public class Record implements AdminWorkgroupResource
     public static final String ATTRIBUTE_ICON = "icon";
     private int _nIdRecord;
     private Timestamp _tDateCreation;
+    private Timestamp _tDateModification;
     private Directory _directory;
     private List<RecordField> _listRecordField;
     private List<DirectoryAction> _listAction;
@@ -133,6 +134,24 @@ public class Record implements AdminWorkgroupResource
     public void setDateCreation( Timestamp dateCreation )
     {
         _tDateCreation = dateCreation;
+    }
+    
+    /**
+     *  return the date Modification
+     * @return the date Modification
+     */
+    public Timestamp getDateModification(  )
+    {
+        return _tDateModification;
+    }
+
+    /**
+     * set the date Modification
+     * @param dateModification date Modification
+     */
+    public void setDateModification( Timestamp dateModification )
+    {
+        _tDateModification = dateModification;
     }
 
     /**

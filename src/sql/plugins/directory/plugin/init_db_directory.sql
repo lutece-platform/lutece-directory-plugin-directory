@@ -115,6 +115,13 @@ INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUE
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('is_indexed', '1');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('export_csv_encoding', 'UTF-8');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('export_xml_encoding', 'UTF-8');
+INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_result_list', '0');
+INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_result_record', '0');
+INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_history', '0');
+INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_search', '0');
+INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_advanced_search', '0');
+INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_multi_search', '0');
+INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_export', '0');
 
 /*==============================================================*/
 /*	Init  table directory_entry_parameter						*/
