@@ -323,7 +323,7 @@ CREATE TABLE directory_directory_attribute (
 	id_directory INT DEFAULT 0 NOT NULL,
 	attribute_key varchar(255) NOT NULL,
 	attribute_value varchar(255) NOT NULL,
-	PRIMARY KEY (id_directory, parameter_key)
+	PRIMARY KEY (id_directory, attribute_key)
 );
 
 ALTER TABLE directory_directory ADD CONSTRAINT fk_id_result_list_template FOREIGN KEY (id_result_list_template)
