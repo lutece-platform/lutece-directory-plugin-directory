@@ -249,4 +249,52 @@ public interface IDirectorySearchFields
     * @param nIsDisabled true if the records displayed must be disabled
     */
     public void setIsDisabled( int nIsDisabled );
+    
+    /**
+     * Date modification begin record
+     * @return date modification begin record
+     */
+    Date getDateModificationBeginRecord(  );
+
+    /**
+     * Date modification begin record
+     * @param dateModificationBeginRecord date modification begin record
+     */
+    void setDateModificationBeginRecord( Date dateModificationBeginRecord );
+
+    /**
+     * Date modification end record
+     * @return date modification end record
+     */
+    Date getDateModificationEndRecord(  );
+
+    /**
+     * Date modification end record
+     * @param dateModificationEndRecord date modification end record
+     */
+    void setDateModificationEndRecord( Date dateModificationEndRecord );
+
+    /**
+     * Date modification record
+     * @return date modification record
+     */
+    Date getDateModificationRecord(  );
+
+    /**
+     * Date modification record
+     * @param dateModificationRecord date modification record
+     */
+    void setDateModificationRecord( Date dateModificationRecord );
+    
+    /**
+     * Set true if it must be sort by date modification
+     * @param bSortByDateModification true if it must be sort by date modification
+     */
+	public void setSortByDateModification( boolean bSortByDateModification );
+	
+	/**
+	 * Check if it must be sort by date modification
+	 * @return true if it must be sort by date modification, false otherwise
+	 */
+	boolean isSortByDateModification();
 }

@@ -69,6 +69,10 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
     private Date _dateCreationBeginRecord;
     private Date _dateCreationEndRecord;
     private Date _dateCreationRecord;
+    private Date _dateModificationBeginRecord;
+    private Date _dateModificationEndRecord;
+    private Date _dateModificationRecord;
+    private boolean _bIsSortByDateModification;
     private IEntry _sortEntry;
     private int _nSortOrder = RecordFieldFilter.ORDER_NONE;
     private String _strCurrentPageIndex;
@@ -253,6 +257,10 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
             {
                 // IMPORTANT : date creation is default filter
             }
+            else if ( DirectoryUtils.PARAMETER_DATEMODIFICATION.equals( strSortedAttributeName ) )
+            {
+            	_bIsSortByDateModification = true;
+            }
             else
             {
                 int nSortedEntryId = Integer.parseInt( strSortedAttributeName );
@@ -328,4 +336,68 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#isDefaultAscendingSort(fr.paris.lutece.plugins.directory.business.Directory)
      */
     abstract public boolean isDefaultAscendingSort( Directory directory );
+	
+    /**
+     * {@inheritDoc}
+     */
+    public void setDateModificationBeginRecord( Date dateModificationBeginRecord )
+	{
+		_dateModificationBeginRecord = dateModificationBeginRecord;
+	}
+    
+    /**
+     * {@inheritDoc}
+     */
+	public Date getDateModificationBeginRecord(  )
+	{
+		return _dateModificationBeginRecord;
+	}
+	
+	/**
+     * {@inheritDoc}
+     */
+	public void setDateModificationEndRecord( Date dateModificationEndRecord )
+	{
+		_dateModificationEndRecord = dateModificationEndRecord;
+	}
+	
+	/**
+     * {@inheritDoc}
+     */
+	public Date getDateModificationEndRecord(  )
+	{
+		return _dateModificationEndRecord;
+	}
+	
+	/**
+     * {@inheritDoc}
+     */
+	public void setDateModificationRecord( Date dateModificationRecord )
+	{
+		_dateModificationRecord = dateModificationRecord;
+	}
+	
+	/**
+     * {@inheritDoc}
+     */
+	public Date getDateModificationRecord(  )
+	{
+		return _dateModificationRecord;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setSortByDateModification( boolean bIsSortByDateModification )
+	{
+		_bIsSortByDateModification = bIsSortByDateModification;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isSortByDateModification(  )
+	{
+		return _bIsSortByDateModification;
+	}
 }

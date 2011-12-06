@@ -45,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  * This class provides Data Access methods for record objects
@@ -81,6 +83,7 @@ public final class RecordDAO implements IRecordDAO
     private static final String SQL_FILTER_WORKGROUP_IS_NULL = " dr.workgroup_key IS NULL ";
     private static final String SQL_FILTER_ROLE_IS_NULL = " dr.role_key IS NULL ";
     private static final String SQL_ORDER_BY_DEFAULT = " ORDER BY dr.date_creation ";
+    private static final String SQL_ORDER_BY_DATE_MODIFICATION = " ORDER BY dr.date_modification ";
     private static final String SQL_ORDER_ASC = " ASC";
     private static final String SQL_ORDER_DESC = " DESC ";
     private static final String SQL_ORDER_BY_DEFAULT_ASC = SQL_ORDER_BY_DEFAULT + SQL_ORDER_ASC;
@@ -445,7 +448,15 @@ public final class RecordDAO implements IRecordDAO
         	sbSQL.append( filter.getSortEntry().getSQLJoin() );
         }
         
-        String strOrderBy = getOrderByQuery( filter, SQL_ORDER_BY_DEFAULT );
+        String strOrderBy = StringUtils.EMPTY;
+        if ( filter.isOrderByDateModification(  ) )
+        {
+        	strOrderBy = getOrderByQuery( filter, SQL_ORDER_BY_DATE_MODIFICATION );
+        }
+        else
+        {
+        	strOrderBy = getOrderByQuery( filter, SQL_ORDER_BY_DEFAULT );
+        }
         
         String strSQL = DirectoryUtils.buildQueryWithFilter( sbSQL, listFilter,
         		strOrderBy );

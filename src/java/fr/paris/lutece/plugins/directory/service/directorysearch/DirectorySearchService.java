@@ -161,12 +161,38 @@ public class DirectorySearchService
      * Return a list of record key return by the search
      * @param directory the directory
      * @param mapSearch a map which contains for each entry the list of recorField(value of field search) associate
+     * @param dateCreation the creation date
+     * @param dateCreationBegin the date begin to search for the creation date
+     * @param dateCreationEnd the date end to search for the creation date
      * @param filter the filter
      * @param plugin the plugin
      * @return a list of record key return by the search
      */
     public List<Integer> getSearchResults( Directory directory, HashMap<String, List<RecordField>> mapSearch,
         Date dateCreation, Date dateCreationBegin, Date dateCreationEnd, RecordFieldFilter filter, Plugin plugin )
+    {
+    	return getSearchResults( directory, mapSearch, dateCreationEnd, dateCreationBegin, dateCreationEnd, 
+    			null, null, null, filter, plugin );
+    }
+
+    /**
+     * Return a list of record key return by the search
+     * @param directory the directory
+     * @param mapSearch a map which contains for each entry the list of recorField(value of field search) associate
+     * @param dateCreation the creation date
+     * @param dateCreationBegin the date begin to search for the creation date
+     * @param dateCreationEnd the date end to search for the creation date
+     * @param dateModification the modification date
+     * @param dateModificationBegin the date begin to search for the modification date
+     * @param dateModificationEnd the date end to search for the modification date
+     * @param filter the filter
+     * @param plugin the plugin
+     * @return a list of record key return by the search
+     */
+    public List<Integer> getSearchResults( Directory directory, HashMap<String, List<RecordField>> mapSearch,
+        Date dateCreation, Date dateCreationBegin, Date dateCreationEnd, 
+        Date dateModification, Date dateModificationBegin, Date dateModificationEnd,
+        RecordFieldFilter filter, Plugin plugin )
     {
         List<Integer> listRecordResult = new ArrayList<Integer>(  );
 
@@ -247,6 +273,36 @@ public class DirectorySearchService
                     mapSearchItemEntry.put( DirectorySearchItem.FIELD_ID_DIRECTORY, directory.getIdDirectory(  ) );
                     mapSearchItemEntry.put( DirectorySearchItem.FIELD_DATE_CREATION_BEGIN, dateCreationBegin );
                     mapSearchItemEntry.put( DirectorySearchItem.FIELD_DATE_CREATION_END, dateCreationEnd );
+                    listRecordResultTmp.addAll( engine.getSearchResults( mapSearchItemEntry ) );
+
+                    // keeping order is important for display
+                    listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult, listRecordResultTmp );
+                }
+                
+                //date modification of a record
+                if ( dateModification != null )
+                {
+                    listRecordResultTmp = new ArrayList<Integer>(  );
+                    mapSearchItemEntry = new HashMap<String, Object>(  );
+                    mapSearchItemEntry.put( DirectorySearchItem.FIELD_ID_DIRECTORY, directory.getIdDirectory(  ) );
+                    dateModification.setTime( dateModification.getTime(  ) + CONSTANT_TIME_CORRECTION );
+
+                    mapSearchItemEntry.put( DirectorySearchItem.FIELD_DATE_MODIFICATION, dateModification );
+                    listRecordResultTmp.addAll( engine.getSearchResults( mapSearchItemEntry ) );
+
+                    // keeping order is important for display
+                    listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult, listRecordResultTmp );
+                }
+                else if ( ( dateModificationBegin != null ) && ( dateModificationEnd != null ) )
+                {
+                    dateModificationBegin.setTime( dateModificationBegin.getTime(  ) + CONSTANT_TIME_CORRECTION );
+                    dateModificationEnd.setTime( dateModificationEnd.getTime(  ) + CONSTANT_TIME_CORRECTION );
+
+                    listRecordResultTmp = new ArrayList<Integer>(  );
+                    mapSearchItemEntry = new HashMap<String, Object>(  );
+                    mapSearchItemEntry.put( DirectorySearchItem.FIELD_ID_DIRECTORY, directory.getIdDirectory(  ) );
+                    mapSearchItemEntry.put( DirectorySearchItem.FIELD_DATE_MODIFICATION_BEGIN, dateModificationBegin );
+                    mapSearchItemEntry.put( DirectorySearchItem.FIELD_DATE_MODIFICATION_END, dateModificationEnd );
                     listRecordResultTmp.addAll( engine.getSearchResults( mapSearchItemEntry ) );
 
                     // keeping order is important for display

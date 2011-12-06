@@ -69,6 +69,7 @@ public class Record implements AdminWorkgroupResource
     public static final String TAG_RECORD_FIELD = "record-field";
     public static final String TAG_RECORD_FIELD_VALUE = "record-field-value";
     public static final String TAG_CREATION_DATE = "creation-date";
+    public static final String TAG_MODIFICATION_DATE = "modification-date";
     public static final String TAG_STATUS = "status";
     public static final String ATTRIBUTE_ICON = "icon";
     private int _nIdRecord;
@@ -245,6 +246,28 @@ public class Record implements AdminWorkgroupResource
     {
         _strWorkgroupKey = workGroup;
     }
+    
+    /**
+     * The Xml of the record
+     * @param record the record
+     * @param plugin the plugin
+     * @param locale the locale
+     * @param bWithHtmlCode true if the xml must contain html code like <img src ="">
+     * @param state the state of the record
+     * @param listEntryResultSearch the list of entry to display
+     * @param bDisplayTitleEntryTypeSelect true if template front or false if template back
+     * @param bDisplayFront true if template front or false if template back
+     * @param bDisplayExport true if it must be displayed in export
+     * @param bDisplayDateCreation true if the date creation must be displayed
+     * @return xml
+     */
+    public StringBuffer getXml( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
+        List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
+        boolean bDisplayExport, boolean bDisplayDateCreation )
+    {
+    	return getXml( plugin, locale, bWithHtmlCode, state, listEntryResultSearch, bDisplayTitleEntryTypeSelect, 
+    			bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
+    }
 
     /**
      * The Xml of the record
@@ -254,12 +277,16 @@ public class Record implements AdminWorkgroupResource
      * @param bWithHtmlCode true if the xml must contain html code like <img src ="">
      * @param state the state of the record
      * @param listEntryResultSearch the list of entry to display
-     * @param true if template front or false if template back
+     * @param bDisplayTitleEntryTypeSelect true if template front or false if template back
+     * @param bDisplayFront true if template front or false if template back
+     * @param bDisplayExport true if it must be displayed in export
+     * @param bDisplayDateCreation true if the date creation must be displayed
+     * @param bDisplayDateModification true if the modification date must be displayed, false otherwise
      * @return xml
      */
     public StringBuffer getXml( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
         List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
-        boolean bDisplayExport, boolean bDisplayDateCreation )
+        boolean bDisplayExport, boolean bDisplayDateCreation, boolean bDisplayDateModification )
     {
         StringBuffer strXml = new StringBuffer(  );
         Map<String, String> model = new HashMap<String, String>(  );
@@ -269,6 +296,11 @@ public class Record implements AdminWorkgroupResource
         if ( bDisplayDateCreation )
         {
             XmlUtil.addElement( strXml, TAG_CREATION_DATE, DateUtil.getDateString( this.getDateCreation(  ), locale ) );
+        }
+        
+        if ( bDisplayDateModification )
+        {
+            XmlUtil.addElement( strXml, TAG_MODIFICATION_DATE, DateUtil.getDateString( this.getDateModification(  ), locale ) );
         }
 
         if ( state != null )
@@ -436,18 +468,42 @@ public class Record implements AdminWorkgroupResource
 
     /**
      * The Xml of the record
-     * @param record the record
      * @param plugin the plugin
      * @param locale the locale
      * @param bWithHtmlCode true if the xml must contain html code like <img src ="">
      * @param state the state of the record
      * @param listEntryResultSearch the list of entry to display
-     * @param true if template front or false if template back
+     * @param bDisplayTitleEntryTypeSelect true if the title must be display for entry type select
+     * @param bDisplayFront true if template front or false if template back
+     * @param bDisplayExport true if it must be displayed in export
+     * @param bDisplayDateCreation true if the date creation must be displayed
      * @return xml
      */
     public StringBuffer getXmlForCsvExport( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
         List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
         boolean bDisplayExport, boolean bDisplayDateCreation )
+    {
+    	return getXmlForCsvExport( plugin, locale, bWithHtmlCode, state, listEntryResultSearch, bDisplayTitleEntryTypeSelect, 
+    			bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
+    }
+
+    /**
+     * The Xml of the record
+     * @param plugin the plugin
+     * @param locale the locale
+     * @param bWithHtmlCode true if the xml must contain html code like <img src ="">
+     * @param state the state of the record
+     * @param listEntryResultSearch the list of entry to display
+     * @param bDisplayTitleEntryTypeSelect true if the title must be display for entry type select
+     * @param bDisplayFront true if template front or false if template back
+     * @param bDisplayExport true if it must be displayed in export
+     * @param bDisplayDateCreation true if the date creation must be displayed
+     * @param bDisplayDateModification true if the modification date must be displayed, false otherwise
+     * @return xml
+     */
+    public StringBuffer getXmlForCsvExport( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
+        List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
+        boolean bDisplayExport, boolean bDisplayDateCreation, boolean bDisplayDateModification )
     {
         StringBuffer strXml = new StringBuffer(  );
         Map<String, String> model = new HashMap<String, String>(  );
@@ -475,6 +531,20 @@ public class Record implements AdminWorkgroupResource
             XmlUtil.beginElement( strXml, TAG_RECORD_FIELD );
             XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
                 DateUtil.getDateString( this.getDateCreation(  ), locale ) );
+            XmlUtil.endElement( strXml, TAG_RECORD_FIELD );
+            XmlUtil.endElement( strXml, TAG_LIST_RECORD_FIELD );
+            XmlUtil.endElement( strXml, Entry.TAG_ENTRY );
+        }
+        
+        if ( bDisplayDateModification )
+        {
+            HashMap<String, String> modelModificationDate = new HashMap<String, String>(  );
+            modelModificationDate.put( Entry.ATTRIBUTE_ENTRY_ID, "0" );
+            XmlUtil.beginElement( strXml, Entry.TAG_ENTRY, modelModificationDate );
+            XmlUtil.beginElement( strXml, TAG_LIST_RECORD_FIELD );
+            XmlUtil.beginElement( strXml, TAG_RECORD_FIELD );
+            XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
+                DateUtil.getDateString( this.getDateModification(  ), locale ) );
             XmlUtil.endElement( strXml, TAG_RECORD_FIELD );
             XmlUtil.endElement( strXml, TAG_LIST_RECORD_FIELD );
             XmlUtil.endElement( strXml, Entry.TAG_ENTRY );

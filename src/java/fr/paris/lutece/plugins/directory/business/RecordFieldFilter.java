@@ -67,6 +67,7 @@ public class RecordFieldFilter
     private boolean _bIncludeRoleNull;
     private IEntry _sortEntry;
     private int _nSortOrder = ORDER_NONE;
+    private boolean _bOrderByDateModification = false;
 
     /**
      * Gets the entry that should be used to sort the results
@@ -450,4 +451,22 @@ public class RecordFieldFilter
     {
         return ( ( _workgroupKeyList != null ) && ( _workgroupKeyList.size(  ) != 0 ) );
     }
+
+    /**
+     * Set order by date modification
+     * @param bOrderByDateModification true if filter by date modification
+     */
+	public void setOrderByDateModification( boolean bOrderByDateModification )
+	{
+		_bOrderByDateModification = bOrderByDateModification;
+	}
+
+	/**
+	 * Order by date modification
+	 * @return order by date modification
+	 */
+	public boolean isOrderByDateModification()
+	{
+		return _bOrderByDateModification;
+	}
 }

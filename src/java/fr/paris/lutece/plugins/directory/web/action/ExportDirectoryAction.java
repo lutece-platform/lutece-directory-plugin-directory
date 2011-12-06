@@ -104,6 +104,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 	
     private static final String PROPERTY_PATH_TMP = "path.tmp";
     private static final String PROPERTY_ENTRY_TYPE_DATE_CREATION_TITLE = "directory.entry_type_date_creation.title";
+    private static final String PROPERTY_ENTRY_TYPE_DATE_MODIFICATION_TITLE = "directory.entry_type_date_modification.title";
 
 	
 	private static final String PARAMETER_BUTTON_EXPORT_ALL = "export_search_all.x";
@@ -197,6 +198,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 
         boolean bIsCsvExport = strFileExtension.equals( EXPORT_CSV_EXT );
         boolean bDisplayDateCreation = directory.isDateShownInExport(  );
+        boolean bDisplayDateModification = directory.isDateModificationShownInExport(  );
 
         if ( ( directory == null ) || ( directoryXsl == null ) ||
                 !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
@@ -307,6 +309,17 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
             XmlUtil.addElementHtml( strBufferListEntryXml, Entry.TAG_TITLE, strDateCreation );
             XmlUtil.endElement( strBufferListEntryXml, Entry.TAG_ENTRY );
         }
+        
+        if ( bDisplayDateModification && bIsCsvExport )
+        {
+            Map<String, String> model = new HashMap<String, String>(  );
+            model.put( Entry.ATTRIBUTE_ENTRY_ID, "0" );
+            XmlUtil.beginElement( strBufferListEntryXml, Entry.TAG_ENTRY, model );
+
+            String strDateModification = I18nService.getLocalizedString( PROPERTY_ENTRY_TYPE_DATE_MODIFICATION_TITLE, locale );
+            XmlUtil.addElementHtml( strBufferListEntryXml, Entry.TAG_TITLE, strDateModification );
+            XmlUtil.endElement( strBufferListEntryXml, Entry.TAG_ENTRY );
+        }
 
         for ( IEntry entry : listEntryResultSearch )
         {
@@ -394,7 +407,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                     State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
                             idWorflow, Integer.valueOf( directory.getIdDirectory(  ) ), null );
                     strBufferListRecordXml.append( record.getXml( plugin, locale, false, state, listEntryResultSearch,
-                            false, false, true, bDisplayDateCreation ) );
+                            false, false, true, bDisplayDateCreation, bDisplayDateModification ) );
                 }
 
                 strBufferListRecordXml = this.appendPartialContent( strBufferListRecordXml, bufferedWriter,
@@ -420,12 +433,12 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                 if ( bIsCsvExport )
                 {
                     strBufferListRecordXml.append( record.getXmlForCsvExport( plugin, locale, false, state,
-                            listEntryResultSearch, false, false, true, bDisplayDateCreation ) );
+                            listEntryResultSearch, false, false, true, bDisplayDateCreation, bDisplayDateModification ) );
                 }
                 else
                 {
                     strBufferListRecordXml.append( record.getXml( plugin, locale, false, state, listEntryResultSearch,
-                            false, false, true, bDisplayDateCreation ) );
+                            false, false, true, bDisplayDateCreation, bDisplayDateModification ) );
                 }
             }
 
@@ -470,12 +483,12 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                 if ( bIsCsvExport )
                 {
                     strBufferListRecordXml.append( record.getXmlForCsvExport( plugin, locale, false, state,
-                            listEntryResultSearch, false, false, true, bDisplayDateCreation ) );
+                            listEntryResultSearch, false, false, true, bDisplayDateCreation, bDisplayDateModification ) );
                 }
                 else
                 {
                     strBufferListRecordXml.append( record.getXml( plugin, locale, false, state, listEntryResultSearch,
-                            false, false, true, bDisplayDateCreation ) );
+                            false, false, true, bDisplayDateCreation, bDisplayDateModification ) );
                 }
             }
 

@@ -1,0 +1,132 @@
+<@paginationAdmin paginator=paginator combo=1 form=0 />
+<table name="results_list" id="results_list">
+    <tr>
+    	<#-- selection column -->
+		<th>
+			<input type="checkbox" id="select-ids" name="select-ids" value="" />
+		</th>
+		<#list entry_list_search_result as entry>	
+			<th>
+      			${entry.title}
+      			<#if entry.sortable>
+      				<@sort jsp_url="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" attribute="${entry.idEntry}&amp;id_directory=${directory.idDirectory}${sort_search_attribute}" />
+      			</#if>
+       		</th>
+		</#list>
+		<#if show_date_creation_result>
+			<th>
+       			#i18n{directory.manage_directory_record.date_creation}
+       			<@sort jsp_url="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" attribute="dateCreation&amp;id_directory=${directory.idDirectory}${sort_search_attribute}" />
+      	 	</th>
+      	</#if>
+      	<#if show_date_modification_result>
+			<th>
+       			#i18n{directory.manage_directory_record.date_modification}
+       			<@sort jsp_url="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" attribute="dateModification&amp;id_directory=${directory.idDirectory}${sort_search_attribute}" />
+      	 	</th>
+      	</#if>
+		<#if is_workflow_enabled && directory.idWorkflow!=-1 >
+       	   <th>
+	       		#i18n{directory.manage_workflow_state}
+	       </th>
+		</#if>
+		<th class="actions">
+       		#i18n{directory.manage_workflow_actions}
+		</th>
+	</tr>
+	<#list resource_actions_list as resource_actions>	
+		<tr>
+			<td>
+   				<input class="selected-id" type="checkbox" name="selected_record" value="${resource_actions.record.idRecord}" />
+   			</td>
+			<#assign first_entry = true />
+			<#list entry_list_search_result as entry>
+				<#assign entryKey = "" + entry.idEntry>	
+		      	<#assign listRecordField = resource_actions.map_id_entry_list_record_field[entryKey]>	
+		      	<td>
+		      		<#if listRecordField?has_content>
+		      			<#assign first_record_field = true />
+		      			<#list listRecordField as record_field>
+				   			<#if isEntryTypeGeolocation(entry) && first_record_field>
+				   				<#assign first_record_field = false />
+				   				<input type="hidden" name="record_id" value="${resource_actions.record.idRecord}" />
+				   				<input type="hidden" name="title" value="" />
+				   				<#if resource_actions.workflow_state?has_content && resource_actions.workflow_state.icon.id?has_content && ( resource_actions.workflow_state.icon.id > 0)>
+				   				<input type="hidden" name="state_icon" value="image?resource_type=workflow_icon_img&id=${resource_actions.workflow_state.icon.id}" />
+				   				<#else>
+				   				<input type="hidden" name="state_icon" value="" />
+				   				</#if>
+				   				<span style="display:none;" id="${entry.idEntry}_span_actions">
+				   					<@display_actions resource_actions/>
+				   				</span>
+				   			</#if>
+				   			<#if isEntryTypeImage(entry)>
+				   				<#if record_field.field?? & record_field.field.isShownInResultList()>
+				   					${entry.getHtmlRecordFieldValue( locale,record_field,false )}
+				   				</#if>
+				   			<#elseif isEntryTypeMyLuteceUser(entry)>
+				   				<#if record_field?? && record_field.record?? && permission_visualisation_mylutece_user>
+				   					<#assign id_directory_record = record_field.record.idRecord>
+				   					<a href="jsp/admin/plugins/directory/DoVisualisationMyLuteceUser.jsp?id_directory_record=${id_directory_record}&amp;id_entry=${record_field.entry.idEntry}">
+				   						${record_field.value}
+				   					</a>
+				   				<#else>
+				   					${record_field.value}
+				   				</#if>
+				   			<#else>
+		      					${entry.getHtmlRecordFieldValue( locale,record_field,false )}
+		      				</#if>
+		      				<#if  record_field_has_next>
+			    				<br/>
+			     			</#if>
+			     			<#if show_date_creation_result && record_field.record?? && record_field.record.dateCreation??>
+			     				<#assign date_creation = record_field.record.dateCreation>
+			     			<#else>
+			     				<#assign date_creation = "">
+			     			</#if>
+			     			<#if show_date_modification_result && record_field.record?? && record_field.record.dateModification??>
+			     				<#assign date_modification = record_field.record.dateModification>
+			     			<#else>
+			     				<#assign date_modification = "">
+			     			</#if>
+			     		</#list>
+	      			</#if>
+	      		 </td>
+      		</#list>
+	      	<#if show_date_creation_result>
+	      	 	<td>
+		     	 	<#if date_creation??>
+		     	 		${date_creation}
+		     	 	</#if>
+	      	 	</td>
+	      	</#if>
+	      	<#if show_date_modification_result>
+	      	 	<td>
+		     	 	<#if date_modification??>
+		     	 		${date_modification}
+		     	 	</#if>
+	      	 	</td>
+	      	</#if>
+			<#if resource_actions.workflow_state?exists>
+				<td>
+				   	${resource_actions.workflow_state.name}
+				</td>
+			</#if>
+			<td class="actions">
+				<@display_actions resource_actions/>
+			</td>
+		</tr>
+	</#list>
+</table>
+
+<#if entry_list_geolocation?has_content>
+	<#list entry_list_geolocation as entry>
+		<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
+			<#-- several results -->
+			<input type="button" class="button" value="#i18n{directory.show_on_map} &quot;${entry.title}&quot;" id="${entry.idEntry}_map-button" />
+			<#include entry.mapProvider.backListHtmlCode />
+		</#if>
+	</#list>
+</#if>
+<@paginationAdmin paginator=paginator form=0 />
+<br />

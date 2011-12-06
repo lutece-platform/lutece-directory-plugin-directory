@@ -1,0 +1,151 @@
+<style type="text/css">
+	
+.arrow-up {
+	border: 30px solid #fff;
+	border-bottom: 10px solid #86CC63;
+	border-top: 0;
+	height: 0;
+	width:0; 
+	margin:10px auto 10px auto;
+	cursor: pointer;
+}
+.arrow-up:hover {
+	border-bottom-color: #5F8F47;
+}
+
+.arrow-down {
+	border: 30px solid #fff;
+	border-top: 10px solid #86CC63;
+	border-bottom: 0;
+	height: 0;
+	width:0; 
+	margin:10px auto 10px auto;
+	cursor: pointer;
+}
+.arrow-down:hover {
+	border-top-color: #5F8F47;
+}
+
+.directory-elem {
+	background-color:#efefef;
+	border-top:1px solid #dddddd;
+	border-bottom:1px solid #dddddd;
+	cursor: pointer;
+	padding-left:10px;
+}
+.directory-elem:hover {
+	background-color:#fff;
+}
+.odd {
+	background-color:#dddddd;/* fonce */
+	border-bottom:1px solid #fff;
+	border-top:1px solid #fff;
+}
+.actions {
+	white-space: nowrap;
+}
+</style>
+<script type="text/javascript">
+
+	$.fn.clearForm = function() 
+	{
+		return this.each(function() 
+		{
+			var type = this.type, tag = this.tagName.toLowerCase();
+			if (tag == 'form')
+				return $(':input',this).clearForm();
+
+			if (type == 'text' || type == 'password' || tag == 'textarea')
+				  this.value = '';
+			else if (type == 'checkbox' || type == 'radio')
+				this.checked = false;
+			else if (tag == 'select')
+				this.selectedIndex = 0;
+	  });
+	};
+	
+	$(document).ready(function () {
+		$("#complementary").hide(); 
+		$("#reset").click(function() { 
+			$("#searchForm").clearForm();
+		});
+
+		// For multi selection
+		$( 'input[type="checkbox"]#select-ids' ).click( function(  ) {
+			if ( $( this ).attr( 'checked' ) ) {
+				$( 'input[type="checkbox"].selected-id' ).attr( 'checked', true );
+			} else {
+				$( 'input[type="checkbox"].selected-id' ).attr( 'checked', false );
+			}
+		} );
+	});
+		
+			
+	//for datepicker questions
+	 $(document).ready(function () 
+	 {
+	 	var locale = "en-US";
+	 	if(document.getElementById("locale") != null)
+	 	{
+	 		locale = document.getElementById("locale").innerHTML;
+	 	}
+
+	 	$.datepicker.setDefaults({
+	 		showOn: 'button', 
+	 		buttonImageOnly: true, 
+	 		buttonImage: 'js/jquery/plugins/ui/datepicker/calendar.png', 
+	 		buttonText: 'Calendar', 
+	 		showAnim: 'slideDown', 
+	 		speed: 'fast'
+	 	});
+
+	 	$( ".datepicker-element" ).each(function( i ){
+	 		//$(this).datepicker($.extend({showStatus: true}, $.datepicker.regional[locale]));
+	 		$(this).datepicker();
+	 	});
+	 });
+
+</script>
+
+<#-- Functions -->
+<#function isEntryTypeDirectory entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_directory>
+</#function>
+<#function isEntryTypeGeolocation entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_geolocation>
+</#function>
+<#function isEntryTypeImage entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_image>
+</#function>
+<#function isEntryTypeMyLuteceUser entry>
+	<#return entry.entryType?has_content && entry.entryType.myLuteceUser>
+</#function>
+<#function isEntryTypeNumbering entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_numbering>
+</#function>
+
+<#-- macro used for Geolocation AND actions column in record list -->
+<#macro display_actions resource_actions >
+   <#if resource_actions.workflow_action_list?exists>
+    <#list resource_actions.workflow_action_list as action>
+  	  	<a href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
+  		<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}"
+					<#if action.icon.width!=-1>
+							  width="${action.icon.width}"
+ 					</#if> 
+					<#if action.icon.height!=-1>
+ 								height="${action.icon.height}"
+					</#if> 
+		title="${action.name}" alt="${action.name}"
+		/>
+	</a>
+  	</#list>
+     </#if>
+	<#list resource_actions.record.actions as action>
+		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
+	 	<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">
+	  		<img src="${action.iconUrl}" alt="${action.name}" title="${action.description}">
+	  	</a>
+	</#if>
+</#list>
+</#macro>

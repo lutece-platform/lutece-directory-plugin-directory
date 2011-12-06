@@ -388,6 +388,9 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
 
             String strDate = DateTools.dateToString( record.getDateCreation(  ), DateTools.Resolution.DAY );
             doc.add( new Field( DirectorySearchItem.FIELD_DATE_CREATION, strDate, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
+            
+            String strDateModification = DateTools.dateToString( record.getDateModification(  ), DateTools.Resolution.DAY );
+            doc.add( new Field( DirectorySearchItem.FIELD_DATE_MODIFICATION, strDateModification, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
         }
 
         // return the document

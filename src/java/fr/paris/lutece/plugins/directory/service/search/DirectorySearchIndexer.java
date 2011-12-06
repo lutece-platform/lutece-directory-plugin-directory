@@ -337,6 +337,9 @@ public class DirectorySearchIndexer implements SearchIndexer
 		String strDate = DateTools.dateToString( record.getDateCreation(  ), DateTools.Resolution.DAY );
 		doc.add( new Field( SearchItem.FIELD_DATE , strDate, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 		
+		String strDateModification = DateTools.dateToString( record.getDateModification(  ), DateTools.Resolution.DAY );
+		doc.add( new Field( SearchItem.FIELD_DATE , strDateModification, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
+		
 		doc.add( new Field( SearchItem.FIELD_TYPE, DIRECTORY, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 		
 		UrlItem url = new UrlItem( AppPathService.getPortalUrl(  ) );

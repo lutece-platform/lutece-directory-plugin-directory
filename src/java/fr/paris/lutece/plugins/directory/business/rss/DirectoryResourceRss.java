@@ -111,6 +111,7 @@ public class DirectoryResourceRss extends ResourceRss
     private static final String MARK_RSS_SITE_LINK_ITEM = "entry_link";
     private static final String MARK_RSS_SITE_IMAGE_ITEM = "entry_image";
     private static final String MARK_RSS_SITE_DATE = "date";
+    private static final String MARK_RSS_SITE_DATE_MODIFICATION = "date_modification";
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_RECORD_FIELD_FILTER_1 = "recordField_filter_1";
     private static final String MARK_RECORD_FIELD_FILTER_2 = "recordField_filter_2";
@@ -842,6 +843,7 @@ public class DirectoryResourceRss extends ResourceRss
                 }
 
                 item.put( MARK_RSS_SITE_DATE, record.getDateCreation(  ) );
+                item.put( MARK_RSS_SITE_DATE_MODIFICATION, record.getDateModification(  ) );
                 listItem.add( item );
             }
         }

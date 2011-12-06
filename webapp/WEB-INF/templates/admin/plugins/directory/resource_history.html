@@ -57,7 +57,11 @@
 </div>
 <div id="right">
 	<div class="content-box">
-		<h2> #i18n{directory.resource_history.title} <#if date_creation?? > - #i18n{directory.resource_history.date_creation} ${date_creation}</#if></h2>
+		<h2>
+			#i18n{directory.resource_history.title}
+			<#if date_creation?? > - #i18n{directory.resource_history.date_creation} ${date_creation}</#if>
+			<#if date_modification?? > - #i18n{directory.resource_history.date_modification} ${date_modification}</#if>
+		</h2>
 		<div id="form-content">
 			<#list entry_list as entry>	
 		      	<#if entry.entryType.group>	

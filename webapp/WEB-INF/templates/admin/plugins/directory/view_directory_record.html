@@ -64,7 +64,11 @@
 </div>
 <div id="right">
 	<div class="content-box">
-	  <h2>#i18n{directory.viewing_directory_record.title} : '${directory.title}' - <#if record.dateCreation?? && show_date_creation_record >#i18n{directory.viewing_directory_record.date_creation} ${record.dateCreation}</#if></h2>
+		<h2>
+			#i18n{directory.viewing_directory_record.title} : '${directory.title}'
+	  		<#if record.dateCreation?? && show_date_creation_record > - #i18n{directory.viewing_directory_record.date_creation} ${record.dateCreation}</#if>
+	  		<#if record.dateModification?? && show_date_modification_record > - #i18n{directory.viewing_directory_record.date_modification} ${record.dateModification}</#if>
+		</h2>
 	  <div id="form-content">
 			<input name="page" value="directory" type="hidden" />
 			

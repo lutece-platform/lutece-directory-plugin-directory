@@ -73,7 +73,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     private static final String SQL_QUERY_SELECT_FULL_RECORD_FIELD_LIST_WITH_RECORD = "SELECT drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,ent.id_entry,ent.title,ent.display_width,ent.display_height," +
         " fil.id_file,fil.title,fil.id_physical_file,fil.file_size,fil.mime_type," +
         " dfield.id_field,dfield.id_entry,dfield.title,dfield.default_value,dfield.height,dfield.width,dfield.is_default_value,dfield.max_size_enter,dfield.field_position,dfield.value_type_date,dfield.role_key,dfield.workgroup_key," +
-        " dr.date_creation, dr.id_directory, dr.is_enabled, dr.role_key, dr.workgroup_key " +
+        " dr.date_creation, dr.id_directory, dr.is_enabled, dr.role_key, dr.workgroup_key, dr.date_modification " +
         " FROM directory_record_field drf " + " INNER JOIN directory_entry ent ON (drf.id_entry=ent.id_entry)" +
         " INNER JOIN directory_entry_type type ON (ent.id_type=type.id_type) " +
         " INNER JOIN directory_record dr ON (dr.id_record = drf.id_record) " +
@@ -403,6 +403,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
                 record.setEnabled( daoUtil.getBoolean( 28 ) ); // dr.is_enabled
                 record.setRoleKey( daoUtil.getString( 29 ) ); // dr.role_key
                 record.setWorkgroup( daoUtil.getString( 30 ) ); // dr.workgroup_key
+                record.setDateModification( daoUtil.getTimestamp( 31 ) );
 
                 recordField.setRecord( record );
                 recordField.setValue( daoUtil.getString( 3 ) ); // drf.record_field_value

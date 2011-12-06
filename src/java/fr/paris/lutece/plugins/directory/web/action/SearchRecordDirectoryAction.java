@@ -64,6 +64,9 @@ public class SearchRecordDirectoryAction extends AbstractPluginAction<DirectoryA
     private static final String PARAMETER_DATE_BEGIN_CREATION = "date_begin_creation";
     private static final String PARAMETER_DATE_CREATION = "date_creation";
     private static final String PARAMETER_DATE_END_CREATION = "date_end_creation";
+    private static final String PARAMETER_DATE_BEGIN_MODIFICATION = "date_begin_modification";
+    private static final String PARAMETER_DATE_MODIFICATION = "date_modification";
+    private static final String PARAMETER_DATE_END_MODIFICATION = "date_end_modification";
     private static final String PARAMETER_WORKFLOW_STATE_SELECTED = "search_state_workflow";
 
     /**
@@ -124,6 +127,12 @@ public class SearchRecordDirectoryAction extends AbstractPluginAction<DirectoryA
                     PARAMETER_DATE_END_CREATION, locale ) );
             searchFields.setDateCreationRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request,
                     PARAMETER_DATE_CREATION, locale ) );
+            searchFields.setDateModificationBeginRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request,
+                    PARAMETER_DATE_BEGIN_MODIFICATION, locale ) );
+            searchFields.setDateModificationEndRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request,
+                    PARAMETER_DATE_END_MODIFICATION, locale ) );
+            searchFields.setDateModificationRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request,
+                    PARAMETER_DATE_MODIFICATION, locale ) );
             
             // build redirect url
             result.setRedirect( DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory ) ); // + "&" + PARAMETER_SEARCH + "=" + PARAMETER_SEARCH );

@@ -269,6 +269,9 @@
 					<option value="dateCreation" <#if directory.idSortEntry?? && directory.idSortEntry = 'dateCreation' >selected="selected"</#if> >
 						#i18n{directory.entry_type_date_creation.title}
 					</option>
+					<option value="dateModification" <#if directory.idSortEntry?? && directory.idSortEntry = 'dateModification' >selected="selected"</#if> >
+						#i18n{directory.entry_type_date_modification.title}
+					</option>
 					<#list entry_list as entry>
 						<#if entry.sortable>
 							<option value="${entry.idEntry}" <#if directory.idSortEntry?? && entry.idEntry?string = directory.idSortEntry>selected="selected"</#if>>${entry.title}</option>
@@ -289,6 +292,9 @@
 					<option value=""></option>
 					<option value="dateCreation" <#if directory.idSortEntryFront?? && directory.idSortEntryFront = 'dateCreation' >selected="selected"</#if> >
 						#i18n{directory.entry_type_date_creation.title}
+					</option>
+					<option value="dateModification" <#if directory.idSortEntryFront?? && directory.idSortEntryFront = 'dateModification' >selected="selected"</#if> >
+						#i18n{directory.entry_type_date_modification.title}
 					</option>
 					<#list entry_list as entry>
 						<#if entry.sortable>

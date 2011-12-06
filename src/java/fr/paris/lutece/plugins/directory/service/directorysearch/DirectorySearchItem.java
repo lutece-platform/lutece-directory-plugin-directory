@@ -56,6 +56,9 @@ public class DirectorySearchItem
     public static final String FIELD_DATE_CREATION = "date_creation";
     public static final String FIELD_DATE_CREATION_BEGIN = "date_creation_begin";
     public static final String FIELD_DATE_CREATION_END = "date_creation_end";
+    public static final String FIELD_DATE_MODIFICATION = "date_modification";
+    public static final String FIELD_DATE_MODIFICATION_BEGIN = "date_modification_begin";
+    public static final String FIELD_DATE_MODIFICATION_END = "date_modification_end";
 
     // Variables declarations
     private int _nIdDirectoryRecord;

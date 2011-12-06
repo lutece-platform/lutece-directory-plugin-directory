@@ -1,0 +1,156 @@
+<div class="highlight-box">
+	<input name="page" value="directory" type="hidden" />
+    <input name="search_action" value="search_action" type="hidden" />
+    <input name="id_directory" value="${directory.idDirectory}" type="hidden" />
+    
+    <#-- DIRECTORY ENTRY FIELD FOR SEARCH FORM -->
+    <#assign sort_search_attribute = "&amp;session=session&amp;search=search">
+	<#if entry_list_form_main_search?has_content>
+		<#list entry_list_form_main_search as entry>	
+			<#assign entryKey=""+entry.idEntry>	
+			<#if map_id_entry_list_record_field?exists && map_id_entry_list_record_field[entryKey]?exists>
+      			${entry.getHtmlFormSearchEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+      			<#if map_id_entry_list_record_field[entryKey]?has_content>
+	      			<#list map_id_entry_list_record_field[entryKey] as default_value>
+	      				<#if default_value?? && default_value.value??>
+		      				<#if isEntryTypeMyLuteceUser(entry) || isEntryTypeDirectory(entry) || isEntryTypeNumbering(entry)>
+			   					<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "=" + default_value.value>
+			   				<#elseif isEntryTypeGeolocation(entry)>
+			   					<#if default_value.field?? && default_value.field.title?? && default_value.field.title = "address" && default_value.value??>
+			   						<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "_address=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+			   					</#if>
+			   				<#else>
+		      					<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+		      				</#if>
+		      			</#if>
+	      			</#list>
+	      		</#if>
+      		<#else>
+      			${entry.getHtmlFormSearchEntry( locale , false)}
+      		</#if>
+    	</#list>
+    </#if>
+    
+    <br />
+    
+    <#-- RECORD CREATION DATE FOR SEARCH FORM -->
+	<#if directory.isDateShownInSearch() & !( directory.isDateShownInAdvancedSearch() )>
+     	<div class="form-element">
+			<span class="form-label">
+				<label>#i18n{directory.manage_directory_record.date_creation} :</label>	
+			</span>
+			<#if directory.isDateShownInMultiSearch()>
+				<span class="form-field-column">
+					#i18n{directory.html_code_form_search_entry_type_date.of}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_begin_creation" id="date_begin_creation" size="10" value="<#if date_creation_begin_search??>${date_creation_begin_search?date}</#if>" />
+					#i18n{directory.html_code_form_search_entry_type_date.to}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_end_creation" id="date_end_creation" size="10" value="<#if date_creation_end_search??>${date_creation_end_search?date}</#if>" />
+				</span>
+			<#else>
+				<span class="form-field-column">
+				   	<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_creation" id="date_creation" size="10" value="<#if date_creation_search??>${date_creation_search?date}</#if>" />
+				</span>
+		    </#if>	 
+		</div>
+	</#if>
+	
+	<#-- RECORD MODIFICATION DATE FOR SEARCH FORM -->
+    <#if directory.isDateModificationShownInSearch() & !( directory.isDateModificationShownInAdvancedSearch() )>
+     	<div class="form-element">
+			<span class="form-label">
+				<label>#i18n{directory.manage_directory_record.date_modification} :</label>	
+			</span>
+			<#if directory.isDateModificationShownInMultiSearch()>
+				<span class="form-field-column">
+					#i18n{directory.html_code_form_search_entry_type_date.of}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_begin_modification" id="date_begin_modification" size="10" value="<#if date_modification_begin_search??>${date_modification_begin_search?date}</#if>" />
+					#i18n{directory.html_code_form_search_entry_type_date.to}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_end_modification" id="date_end_modification" size="10" value="<#if date_modification_end_search??>${date_modification_end_search?date}</#if>" />
+				</span>
+			<#else>
+				<span class="form-field-column">
+					<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_modification" id="date_modification" size="10" value="<#if date_modification_search??>${date_modification_search?date}</#if>" />
+				</span>
+		    </#if>	 
+		</div>
+	</#if>
+	
+	<#-- RECORD WORKLFOW STATE FOR SEARCH FORM -->
+ 	<#if directory.displaySearchState>
+ 		<div class="form-element">
+			<span class="form-label">
+				<label>#i18n{directory.manage_directory_record.label_state} : </label>
+			</span>
+			<span class="form-field-column">
+				<@combo name="search_state_workflow"  items=search_state_workflow default_value=search_state_workflow_default />
+			</span>
+		</div>
+	</#if>
+
+	<#-- ADVANCED SEARCH -->
+	<#if entry_list_form_complementary_search?has_content || directory.isDateShownInAdvancedSearch() || directory.isDateModificationShownInAdvancedSearch() >
+		<div class="highlight-box">
+			<div>
+				<a href="#" onclick="displayId('complementary'); return false;">
+					<img src="images/admin/skin/open_block.gif" alt="#i18n{directory.manage_directory_record.title_open_block}" title="#i18n{directory.manage_directory_record.title_open_block}" />
+				</a>
+				<a href="#" onclick="hideId('complementary'); return false;"> 
+					<img src="images/admin/skin/closed_block.gif" alt="#i18n{directory.manage_directory_record.title_close_block}" title="#i18n{directory.manage_directory_record.title_open_block}"/>
+				</a>
+				<span>#i18n{directory.manage_directory_record.label_complementary_search}</span>
+			</div>
+		    <div id="complementary">
+				<#list entry_list_form_complementary_search as entry>	
+					<#assign entryKey=""+entry.idEntry>	
+					<#if map_id_entry_list_record_field?exists && map_id_entry_list_record_field[entryKey]?exists>
+		      			${entry.getHtmlFormSearchEntry( locale,map_id_entry_list_record_field[entryKey],false )}	
+		      		<#else>
+		      			${entry.getHtmlFormSearchEntry( locale, false )}	
+		      		</#if>
+	      		</#list>
+	      		<#if directory.displayComplementarySearchState>
+				 	<label>#i18n{directory.manage_directory_record.label_state} : </label>
+		      		<@combo name="search_state_workflow"  items=search_state_workflow default_value=search_state_workflow_default />
+				</#if>
+     				
+    				<#-- RECORD CREATION DATE FOR ADVANCED SEARCH FORM -->
+				<#if directory.isDateShownInSearch() & directory.isDateShownInAdvancedSearch()>
+			     	<div class="form-element">
+						<span class="form-label">
+							<label>#i18n{directory.manage_directory_record.date_creation} :</label>	
+						</span>
+						<#if directory.isDateShownInMultiSearch()>
+							<span class="form-field-column">
+								#i18n{directory.html_code_form_search_entry_type_date.of}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_begin_creation" id="date_begin_creation" size="10" value="<#if date_creation_begin_search??>${date_creation_begin_search?date}</#if>" />
+								#i18n{directory.html_code_form_search_entry_type_date.to}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_end_creation" id="date_end_creation" size="10" value="<#if date_creation_end_search??>${date_creation_end_search?date}</#if>" />
+							</span>
+						<#else>
+							<span class="form-field-column">
+							   	<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_creation" id="date_creation" size="10" value="<#if date_creation_search??>${date_creation_search?date}</#if>" />
+							</span>
+					    </#if>	 
+					</div>
+				</#if>
+				
+				<#-- RECORD MODIFICATION DATE FOR ADVANCED SEARCH FORM -->
+			    <#if directory.isDateModificationShownInSearch() & directory.isDateModificationShownInAdvancedSearch()>
+			     	<div class="form-element">
+						<span class="form-label">
+							<label>#i18n{directory.manage_directory_record.date_modification} :</label>	
+						</span>
+						<#if directory.isDateModificationShownInMultiSearch()>
+							<span class="form-field-column">
+								#i18n{directory.html_code_form_search_entry_type_date.of}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_begin_modification" id="date_begin_modification" size="10" value="<#if date_modification_begin_search??>${date_modification_begin_search?date}</#if>" />
+								#i18n{directory.html_code_form_search_entry_type_date.to}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_end_modification" id="date_end_modification" size="10" value="<#if date_modification_end_search??>${date_modification_end_search?date}</#if>" />
+							</span>
+						<#else>
+							<span class="form-field-column">
+								<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_modification" id="date_modification" size="10" value="<#if date_modification_search??>${date_modification_search?date}</#if>" />
+							</span>
+					    </#if>	 
+					</div>
+				</#if>
+			</div>
+		</div>
+	</#if>
+	<p>	
+  	 	<input type="submit" value="#i18n{directory.manage_directory_record.button_search}" class="button" name="search" />
+  	 	<input type="button" value="#i18n{directory.manage_directory_record.button_reset}" class="button" name="reset" id="reset"/>
+  	</p>
+</div>

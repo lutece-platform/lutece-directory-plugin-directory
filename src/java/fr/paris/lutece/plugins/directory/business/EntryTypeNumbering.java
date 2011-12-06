@@ -259,7 +259,7 @@ public class EntryTypeNumbering extends Entry
                 throw new DirectoryErrorException( this.getTitle(  ) );
             }
 
-            if ( strValueEntry != null )
+            if ( StringUtils.isNotBlank( strValueEntry ) )
             {
             	recordField.setValue( strValueEntry );
             }

@@ -232,6 +232,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PROPERTY_ENTRY_TYPE_IMAGE = "directory.resource_rss.entry_type_image";
     private static final String PROPERTY_ENTRY_TYPE_MYLUTECE_USER = "directory.entry_type.mylutece_user";
     private static final String PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER = "directory.entry_type.remote_mylutece_user";
+    private static final String PROPERTY_ENTRY_TYPE_NUMBERING = "directory.entry_type.numbering";
     private static final String PROPERTY_IMPORT_FIELD_PAGE_TITLE = "directory.import_field.page_title";
 
     //Markers
@@ -279,6 +280,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_ID_ENTRY_TYPE_IMAGE = "id_entry_type_image";
     private static final String MARK_ID_ENTRY_TYPE_MYLUTECE_USER = "id_entry_type_mylutece_user";
     private static final String MARK_ID_ENTRY_TYPE_REMOTE_MYLUTECE_USER = "id_entry_type_remote_mylutece_user";
+    private static final String MARK_ID_ENTRY_TYPE_NUMBERING = "id_entry_type_numbering";
     private static final String MARK_SHOW_DATE_CREATION_RECORD = "show_date_creation_record";
     private static final String MARK_SHOW_DATE_CREATION_RESULT = "show_date_creation_result";
     private static final String MARK_RECORD_DATE_CREATION = "date_creation";
@@ -288,6 +290,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_PERMISSION_MANAGE_ADVANCED_PARAMETERS = "permission_manage_advanced_parameters";
     private static final String MARK_LIST_PARAM_DEFAULT_VALUES = "list_param_default_values";
     private static final String MARK_DIRECTORY_ACTIONS = "directory_actions";
+    private static final String MARK_SHOW_DATE_MODIFICATION_RECORD = "show_date_modification_record";
+    private static final String MARK_SHOW_DATE_MODIFICATION_RESULT = "show_date_modification_result";
+    private static final String MARK_RECORD_DATE_MODIFICATION = "date_modification";
+    private static final String MARK_DATE_MODIFICATION_SEARCH = "date_modification_search";
+    private static final String MARK_DATE_MODIFICATION_BEGIN_SEARCH = "date_modification_begin_search";
+    private static final String MARK_DATE_MODIFICATION_END_SEARCH = "date_modification_end_search";
     
     //private static final String MARK_URL_ACTION = "url_action";
     private static final String MARK_STR_ERROR = "str_error";
@@ -340,7 +348,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String JSP_DO_REMOVE_FIELD = "jsp/admin/plugins/directory/DoRemoveField.jsp";
     private static final String JSP_DO_REMOVE_ENTRY = "jsp/admin/plugins/directory/DoRemoveEntry.jsp";
     private static final String JSP_MANAGE_DIRECTORY = "jsp/admin/plugins/directory/ManageDirectory.jsp";
-    private static final String JSP_MANAGE_DIRECTORY_RECORD = DirectoryUtils.JSP_MANAGE_DIRECTORY_RECORD;
     private static final String JSP_IMPORT_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ImportDirectoryRecord.jsp";
     private static final String JSP_IMPORT_FIELD = "jsp/admin/plugins/directory/ImportField.jsp";
     private static final String JSP_MODIFY_DIRECTORY = "jsp/admin/plugins/directory/ModifyDirectory.jsp";
@@ -389,7 +396,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_SEARCH = "date_modification_shown_in_search";
     private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_ADVANCED_SEARCH = "date_modification_shown_in_advanced_search";
     private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_MULTI_SEARCH = "date_modification_shown_in_multi_search";
-    private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_EXPORT = "date_shown_in_export";
+    private static final String PARAMETER_DATE_MODIFICATION_SHOWN_IN_EXPORT = "date_modification_shown_in_export";
     private static final String PARAMETER_ID_SORT_ENTRY = "id_sort_entry";
     private static final String PARAMETER_ASC_SORT = "asc_sort";
     private static final String PARAMETER_ID_SORT_ENTRY_FRONT = "id_sort_entry_front";
@@ -2610,6 +2617,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	        Map<String, Object> model = new HashMap<String, Object>(  );
 
 	        model.put( MARK_SHOW_DATE_CREATION_RESULT, directory.isDateShownInResultList(  ) );
+	        model.put( MARK_SHOW_DATE_MODIFICATION_RESULT, directory.isDateModificationShownInResultList(  ) );
 	        model.put( MARK_ID_ENTRY_TYPE_IMAGE, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_IMAGE, 10 ) );
 	        model.put( MARK_ID_ENTRY_TYPE_DIRECTORY,
 	            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_DIRECTORY, 12 ) );
@@ -2617,6 +2625,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_GEOLOCATION, 16 ) );
 	        model.put( MARK_ID_ENTRY_TYPE_MYLUTECE_USER,
 	            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) );
+	        model.put( MARK_ID_ENTRY_TYPE_NUMBERING,
+		            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_NUMBERING, 11 ) );
 	        model.put( MARK_ENTRY_LIST_GEOLOCATION, listEntryGeolocation );
 	        model.put( MARK_WORKFLOW_STATE_SEARCH_DEFAULT, _searchFields.get_nIdWorkflowSate(  ) );
 	        model.put( MARK_PAGINATOR, paginator );
@@ -2629,6 +2639,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 	        model.put( MARK_DATE_CREATION_SEARCH, _searchFields.getDateCreationRecord(  ) );
 	        model.put( MARK_DATE_CREATION_BEGIN_SEARCH, _searchFields.getDateCreationBeginRecord(  ) );
 	        model.put( MARK_DATE_CREATION_END_SEARCH, _searchFields.getDateCreationEndRecord(  ) );
+	        model.put( MARK_DATE_MODIFICATION_SEARCH, _searchFields.getDateModificationRecord(  ) );
+	        model.put( MARK_DATE_MODIFICATION_BEGIN_SEARCH, _searchFields.getDateModificationBeginRecord(  ) );
+	        model.put( MARK_DATE_MODIFICATION_END_SEARCH, _searchFields.getDateModificationEndRecord(  ) );
 	
 	        model.put( MARK_DIRECTORY, directory );
 	        //model.put( MARK_DIRECTORY_RECORD_LIST, listRecordResult );
@@ -3561,9 +3574,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         Map<String, Object> model = new HashMap<String, Object>(  );
         
-        if ( ( directory != null ) && ( directory.isDateShownInHistory(  ) ) )
+        if ( directory != null )
         {
-            model.put( MARK_RECORD_DATE_CREATION, record.getDateCreation(  ) );
+        	if ( directory.isDateShownInHistory(  ) )
+        	{
+        		model.put( MARK_RECORD_DATE_CREATION, record.getDateCreation(  ) );
+        	}
+        	if ( directory.isDateModificationShownInHistory(  ) )
+        	{
+        		model.put( MARK_RECORD_DATE_MODIFICATION, record.getDateModification(  ) );
+        	}
         }
 
         model.put( MARK_RECORD, record );
@@ -3656,6 +3676,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ) ) );
 
         model.put( MARK_SHOW_DATE_CREATION_RECORD, directory.isDateShownInResultRecord(  ) );
+        model.put( MARK_SHOW_DATE_MODIFICATION_RECORD, directory.isDateModificationShownInResultRecord(  ) );
         model.put( MARK_RESOURCE_ACTIONS, DirectoryService.getInstance(  ).getResourceAction( record, directory, listEntry, 
         		getLocale(  ), getUser(  ), listActionsForDirectoryEnable, listActionsForDirectoryDisable, bGetFileName, getPlugin(  ) ) );
         model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorViewRecords(  ) );
@@ -4061,7 +4082,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         List<Integer> listResultRecordId = DirectorySearchService.getInstance(  )
                                                                  .getSearchResults( directory, _searchFields.getMapQuery(  ),
-                _searchFields.getDateCreationRecord(  ), _searchFields.getDateCreationBeginRecord(  ), _searchFields.getDateCreationEndRecord(  ), recordFieldFilter, getPlugin(  ) );
+                _searchFields.getDateCreationRecord(  ), _searchFields.getDateCreationBeginRecord(  ), 
+                _searchFields.getDateCreationEndRecord(  ), _searchFields.getDateModificationRecord(  ), 
+                _searchFields.getDateModificationBeginRecord(  ), _searchFields.getDateModificationEndRecord(  ), 
+                recordFieldFilter, getPlugin(  ) );
 
         List<Integer> listTmpResultRecordId = workflowService.getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
                 directory.getIdWorkflow(  ), listIdState, Integer.valueOf( directory.getIdDirectory(  ) ), getUser(  ) );

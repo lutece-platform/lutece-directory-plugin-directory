@@ -1,8 +1,12 @@
 <#include "/admin/util/editor/editor.html" />
 
 <div class="content-box">
-	  <h2> #i18n{directory.modify_directory_record.title}: '${directory.title}' -  <#if directory_record.dateCreation??>#i18n{directory.viewing_directory_record.date_creation} ${directory_record.dateCreation}</#if> </h2>
-	  <div id="form-content">
+	<h2>
+	  	#i18n{directory.modify_directory_record.title}: '${directory.title}'
+	  	<#if directory_record.dateCreation??>- #i18n{directory.viewing_directory_record.date_creation} ${directory_record.dateCreation}</#if>
+	  	<#if directory_record.dateModification??>- #i18n{directory.viewing_directory_record.date_modification} ${directory_record.dateModification}</#if>
+	</h2>
+	<div id="form-content">
 			<form action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data">
 			<input name="page" value="directory" type="hidden" />
 			 <input name="id_directory_record" value="${directory_record.idRecord}" type="hidden" />

@@ -142,6 +142,7 @@ public final class DirectoryUtils
     public static final String PARAMETER_ID_SUCCESS_RECORD = "id_success_record";
     public static final String PARAMETER_ID_FAIL_RECORD = "id_fail_record";
     public static final String PARAMETER_DATECREATION = "dateCreation";
+    public static final String PARAMETER_DATEMODIFICATION = "dateModification";
 
     // JSP
     public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
@@ -1129,6 +1130,8 @@ public final class DirectoryUtils
         {
             filter.setSortOrder( nSortOrder );
         }
+        
+        filter.setOrderByDateModification( searchFields.isSortByDateModification(  ) );
 
         // If workflow active, filter by workflow state
         if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
@@ -1142,7 +1145,9 @@ public final class DirectoryUtils
                 listResultRecordId = DirectorySearchService.getInstance(  )
                                                            .getSearchResults( directory, searchFields.getMapQuery(  ),
                         searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ),
-                        searchFields.getDateCreationEndRecord(  ), filter, getPlugin(  ) );
+                        searchFields.getDateCreationEndRecord(  ), searchFields.getDateModificationRecord(  ), 
+                        searchFields.getDateModificationBeginRecord(  ), searchFields.getDateModificationEndRecord(  ), 
+                        filter, getPlugin(  ) );
             }
             else
             {
@@ -1165,7 +1170,9 @@ public final class DirectoryUtils
                 listResultRecordId = DirectorySearchService.getInstance(  )
                                                            .getSearchResults( directory, searchFields.getMapQuery(  ),
                         searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ),
-                        searchFields.getDateCreationEndRecord(  ), filter, getPlugin(  ) );
+                        searchFields.getDateCreationEndRecord(  ), searchFields.getDateModificationRecord(  ), 
+                        searchFields.getDateModificationBeginRecord(  ), searchFields.getDateModificationEndRecord(  ), 
+                        filter, getPlugin(  ) );
             }
             else
             {
