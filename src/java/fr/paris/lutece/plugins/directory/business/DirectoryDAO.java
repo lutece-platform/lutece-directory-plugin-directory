@@ -50,32 +50,28 @@ public final class DirectoryDAO implements IDirectoryDAO
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_directory ) FROM directory_directory";
     private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_directory,title,description," +
-        "unavailability_message,workgroup_key,role_key," +
-        "is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page," +
-        " id_workflow, is_search_wf_state, is_search_comp_wf_state, is_date_shown_in_result_list, is_date_shown_in_result_record," +
-        " is_date_shown_in_history, is_date_shown_in_search, is_date_shown_in_advanced_search, is_date_shown_in_multi_search, is_date_shown_in_export," +
+        " unavailability_message,workgroup_key,role_key," +
+        " is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page," +
+        " id_workflow, is_search_wf_state, is_search_comp_wf_state, " +
         " is_ascending_sort, is_directory_record_activated, id_sort_entry, is_indexed,id_sort_entry_front,is_ascending_sort_front " +
         " FROM directory_directory WHERE id_directory = ?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO directory_directory (id_directory,title,description," +
-        "unavailability_message,workgroup_key,role_key," +
+        " unavailability_message,workgroup_key,role_key," +
         " is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page," +
-        " id_workflow, is_search_wf_state, is_search_comp_wf_state, is_date_shown_in_result_list, is_date_shown_in_result_record," +
-        " is_date_shown_in_history, is_date_shown_in_search, is_date_shown_in_advanced_search, is_date_shown_in_multi_search, is_date_shown_in_export, " +
-        "is_directory_record_activated, is_indexed) " +
-        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        " id_workflow, is_search_wf_state, is_search_comp_wf_state, " +
+        " is_directory_record_activated, is_indexed) " +
+        " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_directory  WHERE id_directory = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE directory_directory  SET id_directory=?,title=?,description=?," +
         "unavailability_message=?,workgroup_key=?,role_key=?," +
         "is_enabled=?,id_result_list_template=?,id_result_record_template=? ,id_form_search_template=? ,number_record_per_page=?," +
-        "id_workflow=?, is_search_wf_state=?, is_search_comp_wf_state=?, is_date_shown_in_result_list=?, is_date_shown_in_result_record=?," +
-        "is_date_shown_in_history=?, is_date_shown_in_search=?, is_date_shown_in_advanced_search=?, is_date_shown_in_multi_search=?, is_date_shown_in_export=?," +
+        "id_workflow=?, is_search_wf_state=?, is_search_comp_wf_state=?, " +
         "is_ascending_sort=?, is_directory_record_activated=?, id_sort_entry=?, is_indexed=?,id_sort_entry_front=?,is_ascending_sort_front=? " +
         "WHERE id_directory=?";
     private static final String SQL_QUERY_SELECT_FORM_BY_FILTER = "SELECT id_directory,title,description," +
         "unavailability_message,workgroup_key,role_key," +
         "is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page" +
-        ",id_workflow,is_search_wf_state, is_search_comp_wf_state, is_date_shown_in_result_list, is_date_shown_in_result_record, " +
-        " is_date_shown_in_history, is_date_shown_in_search, is_date_shown_in_advanced_search, is_date_shown_in_multi_search, is_date_shown_in_export," +
+        ",id_workflow,is_search_wf_state, is_search_comp_wf_state, " +
         " is_ascending_sort, is_directory_record_activated, id_sort_entry, is_indexed,id_sort_entry_front,is_ascending_sort_front " +
         "FROM directory_directory ";
     private static final String SQL_FILTER_WORKGROUP = " workgroup_key = ? ";
@@ -167,15 +163,8 @@ public final class DirectoryDAO implements IDirectoryDAO
 
         daoUtil.setBoolean( 14, directory.isDisplaySearchState(  ) );
         daoUtil.setBoolean( 15, directory.isDisplayComplementarySearchState(  ) );
-        daoUtil.setBoolean( 16, directory.isDateShownInResultList(  ) );
-        daoUtil.setBoolean( 17, directory.isDateShownInResultRecord(  ) );
-        daoUtil.setBoolean( 18, directory.isDateShownInHistory(  ) );
-        daoUtil.setBoolean( 19, directory.isDateShownInSearch(  ) );
-        daoUtil.setBoolean( 20, directory.isDateShownInAdvancedSearch(  ) );
-        daoUtil.setBoolean( 21, directory.isDateShownInMultiSearch(  ) );
-        daoUtil.setBoolean( 22, directory.isDateShownInExport(  ) );
-        daoUtil.setBoolean( 23, directory.isRecordActivated(  ) );
-        daoUtil.setBoolean( 24, directory.isIndexed(  ) );
+        daoUtil.setBoolean( 16, directory.isRecordActivated(  ) );
+        daoUtil.setBoolean( 17, directory.isIndexed(  ) );
 
         directory.setIdDirectory( newPrimaryKey( plugin ) );
         daoUtil.setInt( 1, directory.getIdDirectory(  ) );
@@ -238,19 +227,12 @@ public final class DirectoryDAO implements IDirectoryDAO
             directory.setDisplaySearchState( daoUtil.getBoolean( 14 ) );
             directory.setDisplayComplementarySearchState( daoUtil.getBoolean( 15 ) );
 
-            directory.setDateShownInResultList( daoUtil.getBoolean( 16 ) );
-            directory.setDateShownInResultRecord( daoUtil.getBoolean( 17 ) );
-            directory.setDateShownInHistory( daoUtil.getBoolean( 18 ) );
-            directory.setDateShownInSearch( daoUtil.getBoolean( 19 ) );
-            directory.setDateShownInAdvancedSearch( daoUtil.getBoolean( 20 ) );
-            directory.setDateShownInMultiSearch( daoUtil.getBoolean( 21 ) );
-            directory.setDateShownInExport( daoUtil.getBoolean( 22 ) );
-            directory.setAscendingSort( daoUtil.getBoolean( 23 ) );
-            directory.setRecordActivated( daoUtil.getBoolean( 24 ) );
-            directory.setIdSortEntry( daoUtil.getString( 25 ) );
-            directory.setIndexed( daoUtil.getBoolean( 26 ) );
-            directory.setIdSortEntryFront( daoUtil.getString( 27 ) );
-            directory.setAscendingSortFront( daoUtil.getBoolean( 28 ) );
+            directory.setAscendingSort( daoUtil.getBoolean( 16 ) );
+            directory.setRecordActivated( daoUtil.getBoolean( 17 ) );
+            directory.setIdSortEntry( daoUtil.getString( 18 ) );
+            directory.setIndexed( daoUtil.getBoolean( 19 ) );
+            directory.setIdSortEntryFront( daoUtil.getString( 20 ) );
+            directory.setAscendingSortFront( daoUtil.getBoolean( 21 ) );
         }
 
         daoUtil.free(  );
@@ -331,22 +313,14 @@ public final class DirectoryDAO implements IDirectoryDAO
         daoUtil.setBoolean( 13, directory.isDisplaySearchState(  ) );
         daoUtil.setBoolean( 14, directory.isDisplayComplementarySearchState(  ) );
 
-        daoUtil.setBoolean( 15, directory.isDateShownInResultList(  ) );
-        daoUtil.setBoolean( 16, directory.isDateShownInResultRecord(  ) );
-        daoUtil.setBoolean( 17, directory.isDateShownInHistory(  ) );
-        daoUtil.setBoolean( 18, directory.isDateShownInSearch(  ) );
-        daoUtil.setBoolean( 19, directory.isDateShownInAdvancedSearch(  ) );
-        daoUtil.setBoolean( 20, directory.isDateShownInMultiSearch(  ) );
-        daoUtil.setBoolean( 21, directory.isDateShownInExport(  ) );
+        daoUtil.setBoolean( 15, directory.isAscendingSort(  ) );
+        daoUtil.setBoolean( 16, directory.isRecordActivated(  ) );
+        daoUtil.setString( 17, directory.getIdSortEntry(  ) );
+        daoUtil.setBoolean( 18, directory.isIndexed(  ) );
+        daoUtil.setString( 19, directory.getIdSortEntryFront(  ) );
+        daoUtil.setBoolean( 20, directory.isAscendingSortFront(  ) );
 
-        daoUtil.setBoolean( 22, directory.isAscendingSort(  ) );
-        daoUtil.setBoolean( 23, directory.isRecordActivated(  ) );
-        daoUtil.setString( 24, directory.getIdSortEntry(  ) );
-        daoUtil.setBoolean( 25, directory.isIndexed(  ) );
-        daoUtil.setString( 26, directory.getIdSortEntryFront(  ) );
-        daoUtil.setBoolean( 27, directory.isAscendingSortFront(  ) );
-
-        daoUtil.setInt( 28, directory.getIdDirectory(  ) );
+        daoUtil.setInt( 21, directory.getIdDirectory(  ) );
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -446,19 +420,12 @@ public final class DirectoryDAO implements IDirectoryDAO
             directory.setIdWorkflow( daoUtil.getInt( 13 ) );
             directory.setDisplaySearchState( daoUtil.getBoolean( 14 ) );
             directory.setDisplayComplementarySearchState( daoUtil.getBoolean( 15 ) );
-            directory.setDateShownInResultList( daoUtil.getBoolean( 16 ) );
-            directory.setDateShownInResultRecord( daoUtil.getBoolean( 17 ) );
-            directory.setDateShownInHistory( daoUtil.getBoolean( 18 ) );
-            directory.setDateShownInSearch( daoUtil.getBoolean( 19 ) );
-            directory.setDateShownInAdvancedSearch( daoUtil.getBoolean( 20 ) );
-            directory.setDateShownInMultiSearch( daoUtil.getBoolean( 21 ) );
-            directory.setDateShownInExport( daoUtil.getBoolean( 22 ) );
-            directory.setAscendingSort( daoUtil.getBoolean( 23 ) );
-            directory.setRecordActivated( daoUtil.getBoolean( 24 ) );
-            directory.setIdSortEntry( daoUtil.getString( 25 ) );
-            directory.setIndexed( daoUtil.getBoolean( 26 ) );
-            directory.setIdSortEntryFront( daoUtil.getString( 27 ) );
-            directory.setAscendingSortFront( daoUtil.getBoolean( 28 ) );
+            directory.setAscendingSort( daoUtil.getBoolean( 16 ) );
+            directory.setRecordActivated( daoUtil.getBoolean( 17 ) );
+            directory.setIdSortEntry( daoUtil.getString( 18 ) );
+            directory.setIndexed( daoUtil.getBoolean( 19 ) );
+            directory.setIdSortEntryFront( daoUtil.getString( 20 ) );
+            directory.setAscendingSortFront( daoUtil.getBoolean( 21 ) );
 
             directoryList.add( directory );
         }

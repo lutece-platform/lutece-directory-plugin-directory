@@ -35,3 +35,42 @@ INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUE
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_advanced_search', '0');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_multi_search', '0');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_export', '0');
+
+-- Transfer creation date data to new table
+INSERT INTO directory_directory_attribute (id_directory, attribute_key, attribute_value)
+	SELECT id_directory, 'dateShownInResultList', IF(is_date_shown_in_result_list, 'true', 'false')
+	FROM directory_directory
+	ORDER BY id_directory ASC;
+INSERT INTO directory_directory_attribute (id_directory, attribute_key, attribute_value)
+	SELECT id_directory, 'dateShownInResultRecord', IF(is_date_shown_in_result_record, 'true', 'false')
+	FROM directory_directory
+	ORDER BY id_directory ASC;
+INSERT INTO directory_directory_attribute (id_directory, attribute_key, attribute_value)
+	SELECT id_directory, 'dateShownInHistory', IF(is_date_shown_in_history, 'true', 'false')
+	FROM directory_directory
+	ORDER BY id_directory ASC;
+INSERT INTO directory_directory_attribute (id_directory, attribute_key, attribute_value)
+	SELECT id_directory, 'dateShownInSearch', IF(is_date_shown_in_search, 'true', 'false')
+	FROM directory_directory
+	ORDER BY id_directory ASC;
+INSERT INTO directory_directory_attribute (id_directory, attribute_key, attribute_value)
+	SELECT id_directory, 'dateShownInAdvancedSearch', IF(is_date_shown_in_advanced_search, 'true', 'false')
+	FROM directory_directory
+	ORDER BY id_directory ASC;
+INSERT INTO directory_directory_attribute (id_directory, attribute_key, attribute_value)
+	SELECT id_directory, 'dateShownInMultiSearch', IF(is_date_shown_in_multi_search, 'true', 'false')
+	FROM directory_directory
+	ORDER BY id_directory ASC;
+INSERT INTO directory_directory_attribute (id_directory, attribute_key, attribute_value)
+	SELECT id_directory, 'dateShownInExport', IF(is_date_shown_in_export, 'true', 'false')
+	FROM directory_directory
+	ORDER BY id_directory ASC;
+
+-- Drop columns
+ALTER TABLE directory_directory DROP COLUMN is_date_shown_in_result_list;
+ALTER TABLE directory_directory DROP COLUMN is_date_shown_in_result_record;
+ALTER TABLE directory_directory DROP COLUMN is_date_shown_in_history;
+ALTER TABLE directory_directory DROP COLUMN is_date_shown_in_search;
+ALTER TABLE directory_directory DROP COLUMN is_date_shown_in_advanced_search;
+ALTER TABLE directory_directory DROP COLUMN is_date_shown_in_multi_search;
+ALTER TABLE directory_directory DROP COLUMN is_date_shown_in_export;

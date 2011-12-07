@@ -33,6 +33,11 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 import fr.paris.lutece.plugins.directory.business.attribute.DirectoryAttribute;
 import fr.paris.lutece.plugins.directory.business.rss.DirectoryResourceRssConfigRemovalListener;
 import fr.paris.lutece.plugins.directory.service.DirectoryXslRemovalListenerService;
@@ -46,14 +51,6 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupResource;
 import fr.paris.lutece.portal.service.workgroup.WorkgroupRemovalListenerService;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
-
-import java.sql.Timestamp;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
-import org.springframework.core.annotation.AnnotationUtils;
 
 
 /**
@@ -103,12 +100,19 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     private boolean _bIsIndexed;
 
     // Creation date field
+    @DirectoryAttribute( "dateShownInResultList" ) 
     private boolean _bDateShownInResultList;
+    @DirectoryAttribute( "dateShownInResultRecord" ) 
     private boolean _bDateShownInResultRecord;
+    @DirectoryAttribute( "dateShownInHistory" ) 
     private boolean _bDateShownInHistory;
+    @DirectoryAttribute( "dateShownInSearch" ) 
     private boolean _bDateShownInSearch;
+    @DirectoryAttribute( "dateShownInAdvancedSearch" ) 
     private boolean _bDateShownInAdvancedSearch;
+    @DirectoryAttribute( "dateShownInMultiSearch" ) 
     private boolean _bDateShownInMultiSearch;
+    @DirectoryAttribute( "dateShownInExport" ) 
     private boolean _bDateShownInExport;
     
     // Modification date field
