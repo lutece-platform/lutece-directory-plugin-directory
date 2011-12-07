@@ -1,29 +1,141 @@
+<#macro listRecords list_map_records list_entries directory locale map_fail_record_causes show_error=false>
+	<table>
+		<tr>
+			<th>
+				#i18n{directory.action_result.id_record}
+			</th>
+			<#list list_entries as entry>	
+				<th>
+	      			${entry.title}
+	       		</th>
+			</#list>
+			<#if directory.dateShownInResultList>
+				<th>
+	       			#i18n{directory.manage_directory_record.date_creation}
+	      	 	</th>
+	      	</#if>
+	      	<#if directory.dateModificationShownInResultList>
+				<th>
+	       			#i18n{directory.manage_directory_record.date_modification}
+	      	 	</th>
+	      	</#if>
+			<th>
+				#i18n{directory.manage_workflow_state}
+			</th>
+			<#if show_error>
+				<th>
+					#i18n{directory.action_result.error_message}
+				</th>
+			</#if>
+		</tr>
+		<#list list_map_records as map_records>
+			<#assign record = map_records.record>
+			<tr>
+				<td>
+					<#if record??>
+						${record.idRecord}
+					</#if>
+				</td>
+				<#list list_entries as entry>
+					<#assign entryKey = "" + entry.idEntry>	
+			      	<#assign listRecordField = map_records.map_id_entry_list_record_field[entryKey]>
+			      	<td>
+			      		<#if listRecordField?has_content>
+			      			<#assign first_record_field = true />
+			      			<#list listRecordField as record_field>
+					   			<#if entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == 10>
+					   				<#-- ENTRY TYPE IMAGE -->
+					   				<#if record_field.field?? & record_field.field.isShownInResultList()>
+					   					${entry.getHtmlRecordFieldValue( locale,record_field,false )}
+					   				</#if>
+					   			<#elseif entry.entryType?has_content && entry.entryType.myLuteceUser>
+					   				<#-- ENTRY TYPE MYLUTECE -->
+					   				<#if record_field??>
+					   					${record_field.value}
+					   				</#if>
+					   			<#else>
+			      					${entry.getHtmlRecordFieldValue( locale,record_field,false )}
+			      				</#if>
+			      				<#if record_field_has_next>
+				    				<br/>
+				     			</#if>
+				     			<#if directory.dateShownInResultList && record_field.record?? && record_field.record.dateCreation??>
+				     				<#assign date_creation = record_field.record.dateCreation>
+				     			<#else>
+				     				<#assign date_creation = "">
+				     			</#if>
+				     			<#if directory.dateModificationShownInResultList && record_field.record?? && record_field.record.dateModification??>
+				     				<#assign date_modification = record_field.record.dateModification>
+				     			<#else>
+				     				<#assign date_modification = "">
+				     			</#if>
+				     		</#list>
+		      			</#if>
+		      		 </td>
+	      		</#list>
+		      	<#if directory.dateShownInResultList>
+		      	 	<td>
+			     	 	<#if date_creation??>
+			     	 		${date_creation}
+			     	 	</#if>
+		      	 	</td>
+		      	</#if>
+		      	<#if directory.dateModificationShownInResultList>
+		      	 	<td>
+			     	 	<#if date_modification??>
+			     	 		${date_modification}
+			     	 	</#if>
+		      	 	</td>
+		      	</#if>
+				<td>
+					<#if map_records.workflow_state?exists>
+					   	${map_records.workflow_state.name}
+					</#if>
+				</td>
+				<#if show_error && map_fail_record_causes??>
+					<td>
+						<#if record??>
+							<#assign error_message = map_fail_record_causes["" + record.idRecord]>
+							<a href="javascript:void;" class="info">
+								<img src="images/admin/skin/documentation.png" alt="#i18n{directory.action_result.error_message}" title="#i18n{directory.action_result.error_message}" />
+								<span>
+									<br />
+									<pre>${error_message}</pre>
+								</span>
+							</a>
+						</#if>
+					</td>
+				</#if>
+			</tr>
+		</#list>
+	</table>
+</#macro>
+
 <div class="content-box">
-	<h2>#i18n{directory.action_result.title}</h2>
-  	<div class="highlight-box">
-		<#if list_ids_success_record?? && list_ids_success_record?has_content || list_ids_fail_record?? && list_ids_fail_record?has_content>
-			<ul>
-				<#if list_ids_success_record?? && list_ids_success_record?has_content>
-					<#list list_ids_success_record as id_success_record>
-						<li>
-							<img src="images/admin/skin/plugins/directory/actions/enable.png" title="#i18n{directory.action_result.success}" alt="#i18n{directory.action_result.success}" />
-							&nbsp;${id_success_record}
-						</li>
-					</#list>
-				</#if>
-				<#if list_ids_fail_record?? && list_ids_fail_record?has_content>
-					<#list list_ids_fail_record as id_fail_record>
-						<li>
-							<img src="images/admin/skin/plugins/directory/actions/disable.png" title="#i18n{directory.action_result.fail}" alt="#i18n{directory.action_result.fail}" />
-							&nbsp;${id_fail_record}
-						</li>
-					</#list>
-				</#if>
-			</ul>
-		</#if>
-		<form method="post" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp">
-			<input type="hidden" name="id_directory" value="${idDirectory}" />
-			<input type="submit" class="button" value="#i18n{portal.util.labelOk}" />
-		</form>
-  	</div>
+	<h2>#i18n{directory.action_result.title} : ${action.name}</h2>
+	
+ 	<#if list_success_records?? && list_success_records?has_content>
+		<h3>
+			<img src="images/admin/skin/plugins/directory/actions/enable.png" title="#i18n{directory.action_result.success}" alt="#i18n{directory.action_result.success}" />
+			&nbsp;#i18n{directory.action_result.label_success_records} :
+	 	</h3>
+	 	<br />
+ 		<@listRecords list_map_records=list_success_records list_entries=entry_list directory=directory locale=locale map_fail_record_causes=map_fail_record_causes />
+	 	<br />
+ 	</#if>
+ 	
+ 	<#if list_fail_records?? && list_fail_records?has_content>
+	 	<h3>
+	 		<img src="images/admin/skin/plugins/directory/actions/disable.png" title="#i18n{directory.action_result.fail}" alt="#i18n{directory.action_result.fail}" />
+	 		&nbsp;#i18n{directory.action_result.label_fail_records} :
+	 	</h3>
+	 	<br />
+		<@listRecords list_map_records=list_fail_records list_entries=entry_list directory=directory locale=locale map_fail_record_causes=map_fail_record_causes show_error=true />
+	  	<br />
+	</#if>
+  	
+	<form method="post" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp">
+		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+		<input type="submit" class="button" value="#i18n{portal.util.labelOk}" />
+	</form>
 </div>

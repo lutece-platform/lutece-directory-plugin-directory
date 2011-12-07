@@ -128,6 +128,7 @@ public final class DirectoryUtils
     public static final String MESSAGE_DIRECTORY_ERROR = "directory.message.directory_error";
     public static final String MESSAGE_DIRECTORY_ERROR_MIME_TYPE = "directory.message.directory_error.mime_type";
     public static final String MESSAGE_SELECT_RECORDS = "directory.message.select_records";
+    public static final String MESSAGE_RECORD_INVALID_STATE = "directory.message.record.invalid_state";
 
     // PARAMETERS
     public static final String PARAMETER_ID_DIRECTORY = "id_directory";
@@ -139,8 +140,6 @@ public final class DirectoryUtils
     public static final String PARAMETER_ID_FILE = "id_file";
     public static final String PARAMETER_ID_ACTION = "id_action";
     public static final String PARAMETER_SHOW_ACTION_RESULT = "show_action_result";
-    public static final String PARAMETER_ID_SUCCESS_RECORD = "id_success_record";
-    public static final String PARAMETER_ID_FAIL_RECORD = "id_fail_record";
     public static final String PARAMETER_DATECREATION = "dateCreation";
     public static final String PARAMETER_DATEMODIFICATION = "dateModification";
 

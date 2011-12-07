@@ -74,8 +74,6 @@ import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
 import fr.paris.lutece.plugins.directory.business.RecordHome;
-import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterHome;
-import fr.paris.lutece.plugins.directory.business.parameter.EntryParameterHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
 import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.plugins.directory.service.RecordRemovalListenerService;
@@ -86,11 +84,13 @@ import fr.paris.lutece.plugins.directory.service.security.DirectoryUserAttribute
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+import fr.paris.lutece.plugins.directory.web.action.DirectoryActionResult;
 import fr.paris.lutece.plugins.directory.web.action.DirectoryAdminSearchFields;
 import fr.paris.lutece.plugins.directory.web.action.IDirectoryAction;
 import fr.paris.lutece.portal.business.rbac.RBAC;
 import fr.paris.lutece.portal.business.role.RoleHome;
 import fr.paris.lutece.portal.business.user.AdminUser;
+import fr.paris.lutece.portal.business.workflow.Action;
 import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
@@ -334,9 +334,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_HAS_THUMBNAIL = "has_thumbnail";
     private static final String MARK_HAS_BIG_THUMBNAIL = "has_big_thumbnail";
     private static final String MARK_SHOW_ACTION_RESULT = "show_action_result";
-    private static final String MARK_LIST_IDS_SUCCESS_RECORD = "list_ids_success_record";
-    private static final String MARK_LIST_IDS_FAIL_RECORD = "list_ids_fail_record";
     private static final String MARK_ITEM_NAVIGATOR = "item_navigator";
+    private static final String MARK_ACTION = "action";
 
     // JSP URL
     private static final String JSP_DO_DISABLE_DIRECTORY = "jsp/admin/plugins/directory/DoDisableDirectory.jsp";
@@ -432,6 +431,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     //session fields    
     private DirectoryAdminSearchFields _searchFields = new DirectoryAdminSearchFields(  );
+    private DirectoryActionResult _directoryActionResult = new DirectoryActionResult(  );
 
     /*-------------------------------MANAGEMENT  DIRECTORY-----------------------------*/
 
@@ -3481,35 +3481,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             	String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
             	int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
             	
-            	List<Integer> listIdsSuccessRecord = new ArrayList<Integer>(  );
-                List<Integer> listIdFailRecord = new ArrayList<Integer>(  );
-            
-            	for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
+            	String strError = _directoryActionResult.doSaveTaskForm( nIdDirectory, nIdAction, 
+            			listIdsDirectoryRecord, getPlugin(  ), getLocale(  ), request );
+            	if ( StringUtils.isNotBlank( strError ) )
             	{
-            		int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-            		
-            		if ( WorkflowService.getInstance(  ).canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, 
-                			nIdAction, nIdDirectory, request, false ) )
-                	{
-            			String strError = WorkflowService.getInstance(  )
-            			.doSaveTasksForm( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
-            					nIdDirectory, request, getLocale(  ) );
-            			listIdsSuccessRecord.add( nIdRecord );
-            			if ( strError != null )
-            			{
-            				return strError;
-            			}
-                	}
-            		else
-                	{
-                		listIdFailRecord.add( nIdRecord );
-                	}
-            		
+            		return strError;
             	}
             	
             	if ( bShowActionResult )
                 {
-                	return getJspActionResults( request, nIdDirectory, listIdsSuccessRecord, listIdFailRecord );
+                	return getJspActionResults( request, nIdDirectory, nIdAction );
                 }
             }
 
@@ -3695,12 +3676,44 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     public String getActionResult( HttpServletRequest request )
     {
     	String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
-    	if ( StringUtils.isNotBlank( strIdDirectory ) && StringUtils.isNumeric( strIdDirectory ) )
+    	String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
+    	if ( StringUtils.isNotBlank( strIdDirectory ) && StringUtils.isNumeric( strIdDirectory ) && 
+    			StringUtils.isNotBlank( strIdAction ) && StringUtils.isNumeric( strIdAction ) )
     	{
+    		int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
+    		int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
     		Map<String, Object> model = new HashMap<String, Object>(  );
-    		model.put( MARK_LIST_IDS_SUCCESS_RECORD, request.getParameterValues( DirectoryUtils.PARAMETER_ID_SUCCESS_RECORD ) );
-    		model.put( MARK_LIST_IDS_FAIL_RECORD, request.getParameterValues( DirectoryUtils.PARAMETER_ID_FAIL_RECORD ) );
-    		model.put( MARK_ID_DIRECTORY, strIdDirectory );
+    		
+    		// Add directory to the model
+    		Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+    		if ( directory == null )
+    		{
+    			return getManageDirectory( request );
+    		}
+    		model.put( MARK_DIRECTORY, directory );
+    		
+    		// Add the action to the model
+    		for ( Action action : WorkflowService.getInstance(  ).getMassActions( directory.getIdWorkflow(  ) ) )
+    		{
+    			if ( action.getId(  ) == nIdAction )
+    			{
+    				model.put( MARK_ACTION, action );
+    				break;
+    			}
+    		}
+    		
+    		// Add the entries list to show in the model
+    		EntryFilter entryFilter = new EntryFilter(  );
+	        entryFilter.setIdDirectory( nIdDirectory );
+	        entryFilter.setIsGroup( EntryFilter.FILTER_FALSE );
+	        entryFilter.setIsComment( EntryFilter.FILTER_FALSE );
+	        entryFilter.setIsShownInResultList( EntryFilter.FILTER_TRUE );
+	        List<IEntry> listEntries = EntryHome.getEntryList( entryFilter, getPlugin(  ) );
+	        model.put( MARK_ENTRY_LIST, listEntries );
+	        
+	        _directoryActionResult.fillModel( model, listEntries, getPlugin(  ), getUser(  ), directory );
+	        
+    		model.put( MARK_LOCALE, request.getLocale(  ) );
     		
     		HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_ACTION_RESULT, getLocale(  ), model );
     		
@@ -3791,23 +3804,14 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * Return url of the jsp action results
      * @param request the HTTP request
      * @param nIdDirectory the id directory
-     * @param listIdsSuccessRecord the list of ids succes record
-     * @param listIdsFailRecord the list of ids fail record
+     * @param nIdAction the id action
      * @return the JSP
      */
-    private String getJspActionResults( HttpServletRequest request, int nIdDirectory, List<Integer> listIdsSuccessRecord, 
-    		List<Integer> listIdsFailRecord )
+    private String getJspActionResults( HttpServletRequest request, int nIdDirectory, int nIdAction )
     {
     	UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_ACTION_RESULT );
     	url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, nIdDirectory );
-    	for ( int nIdSuccessRecord : listIdsSuccessRecord )
-    	{
-    		url.addParameter( DirectoryUtils.PARAMETER_ID_SUCCESS_RECORD, nIdSuccessRecord );
-    	}
-    	for ( int nIdFailRecord : listIdsFailRecord )
-    	{
-    		url.addParameter( DirectoryUtils.PARAMETER_ID_FAIL_RECORD, nIdFailRecord );
-    	}
+    	url.addParameter( PARAMETER_ID_ACTION, nIdAction );
     	return url.getUrl(  );
     }
     
@@ -3854,6 +3858,17 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String[] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
         if ( listIdsDirectoryRecord != null && listIdsDirectoryRecord.length > 0 )
         {
+        	String strShowActionResult = request.getParameter( DirectoryUtils.PARAMETER_SHOW_ACTION_RESULT );
+            boolean bShowActionResult = StringUtils.isNotBlank( strShowActionResult );
+            
+        	String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
+            int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
+            
+        	if ( WorkflowService.getInstance(  ).isDisplayTasksForm( nIdAction, getLocale(  ) ) )
+            {
+            	return getJspTasksForm( request, listIdsDirectoryRecord, nIdAction, bShowActionResult );
+            }
+        	
         	String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
             // If the id directory is not in the parameter, then fetch it from the first record
             // assuming all records are from the same directory 
@@ -3865,44 +3880,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
             }
             int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-            
-            String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
-            int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
-            
-            String strShowActionResult = request.getParameter( DirectoryUtils.PARAMETER_SHOW_ACTION_RESULT );
-            boolean bShowActionResult = StringUtils.isNotBlank( strShowActionResult );
-            
-            if ( WorkflowService.getInstance(  ).isDisplayTasksForm( nIdAction, getLocale(  ) ) )
-            {
-            	return getJspTasksForm( request, listIdsDirectoryRecord, nIdAction, bShowActionResult );
-            }
-            
-            List<Integer> listIdsSuccessRecord = new ArrayList<Integer>(  );
-            List<Integer> listIdFailRecord = new ArrayList<Integer>(  );
-            for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
-            {
-            	int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-            	if ( WorkflowService.getInstance(  ).canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, 
-            			nIdAction, nIdDirectory, request, false ) )
-            	{
-            		WorkflowService.getInstance(  )
-            		.doProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
-            				nIdDirectory, request, getLocale(  ), false );
-            		listIdsSuccessRecord.add( nIdRecord );
-            		
-            		// Update record modification date
-            		Record record = RecordHome.findByPrimaryKey( nIdRecord, getPlugin(  ) );
-            		RecordHome.update( record, getPlugin(  ) );
-            	}
-            	else
-            	{
-            		listIdFailRecord.add( nIdRecord );
-            	}
-            }
+
+        	_directoryActionResult.doProcessAction( nIdDirectory, nIdAction, listIdsDirectoryRecord, getPlugin(  ), getLocale(  ), request );
             
             if ( bShowActionResult )
             {
-            	return getJspActionResults( request, nIdDirectory, listIdsSuccessRecord, listIdFailRecord );
+            	return getJspActionResults( request, nIdDirectory, nIdAction );
             }
             return getRedirectUrl( request );
         }
