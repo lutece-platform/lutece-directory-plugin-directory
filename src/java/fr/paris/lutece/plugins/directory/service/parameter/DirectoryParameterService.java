@@ -36,8 +36,7 @@ package fr.paris.lutece.plugins.directory.service.parameter;
 import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterFilter;
 import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
-import fr.paris.lutece.portal.service.plugin.Plugin;
-import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.ReferenceItem;
@@ -59,8 +58,6 @@ public final class DirectoryParameterService
 	// PROPERTIES
 	private static final String PROPERTY_DEFAULT_EXPORT_ENCODING = "directory.export.encoding.default";
 	
-	private Plugin _plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-
 	/**
 	 * Get the instance of the service
 	 * @return the instance of the service
@@ -77,7 +74,7 @@ public final class DirectoryParameterService
 	 */
 	public ReferenceList findAll(  )
 	{
-		return DirectoryParameterHome.findAll( _plugin );
+		return DirectoryParameterHome.findAll( DirectoryUtils.getPlugin(  ) );
 	}
 	
 	/**
@@ -90,7 +87,7 @@ public final class DirectoryParameterService
 		filter.setExcludeParameterKeys( true );
 		filter.addParameterKey( PARAMETER_EXPORT_CSV_ENCODING );
 		filter.addParameterKey( PARAMETER_EXPORT_XML_ENCODING );
-		return DirectoryParameterHome.findByFilter( filter, _plugin );
+		return DirectoryParameterHome.findByFilter( filter, DirectoryUtils.getPlugin(  ) );
 	}
 	
 	/**
@@ -103,7 +100,7 @@ public final class DirectoryParameterService
 		filter.setExcludeParameterKeys( false );
 		filter.addParameterKey( PARAMETER_EXPORT_CSV_ENCODING );
 		filter.addParameterKey( PARAMETER_EXPORT_XML_ENCODING );
-		return DirectoryParameterHome.findByFilter( filter, _plugin );
+		return DirectoryParameterHome.findByFilter( filter, DirectoryUtils.getPlugin(  ) );
 	}
 	
 	/**
@@ -113,7 +110,7 @@ public final class DirectoryParameterService
      */
     public ReferenceItem findByKey( String strParameterKey )
     {
-        return DirectoryParameterHome.findByKey( strParameterKey, _plugin );
+        return DirectoryParameterHome.findByKey( strParameterKey, DirectoryUtils.getPlugin(  ) );
     }
 
     /**
@@ -123,7 +120,7 @@ public final class DirectoryParameterService
      */
     public void update( ReferenceItem param )
     {
-    	DirectoryParameterHome.update( param, _plugin );
+    	DirectoryParameterHome.update( param, DirectoryUtils.getPlugin(  ) );
     }
     
     /**

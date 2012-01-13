@@ -136,7 +136,6 @@ public class DirectoryService
     public Map<String, Object> getManageAdvancedParameters( AdminUser user )
     {
         Map<String, Object> model = new HashMap<String, Object>(  );
-        Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
         if ( RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
                     DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, user ) )

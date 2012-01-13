@@ -35,8 +35,7 @@ package fr.paris.lutece.plugins.directory.service.parameter;
 
 import fr.paris.lutece.plugins.directory.business.parameter.EntryParameterHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
-import fr.paris.lutece.portal.service.plugin.Plugin;
-import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
@@ -50,8 +49,6 @@ public final class EntryParameterService
 {
 	private static final String BEAN_ENTRY_PARAMETER_SERVICE = "directory.entryParameterService";
 	
-	private Plugin _plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-
 	/**
 	 * Get the instance of the service
 	 * @return the instance of the service
@@ -68,7 +65,7 @@ public final class EntryParameterService
 	 */
 	public ReferenceList findAll(  )
 	{
-		return EntryParameterHome.findAll( _plugin );
+		return EntryParameterHome.findAll( DirectoryUtils.getPlugin(  ) );
 	}
 	
 	/**
@@ -78,7 +75,7 @@ public final class EntryParameterService
      */
     public ReferenceItem findByKey( String strParameterKey )
     {
-        return EntryParameterHome.findByKey( strParameterKey, _plugin );
+        return EntryParameterHome.findByKey( strParameterKey, DirectoryUtils.getPlugin(  ) );
     }
 
     /**
@@ -88,6 +85,6 @@ public final class EntryParameterService
      */
     public void update( ReferenceItem param )
     {
-    	EntryParameterHome.update( param, _plugin );
+    	EntryParameterHome.update( param, DirectoryUtils.getPlugin(  ) );
     }
 }
