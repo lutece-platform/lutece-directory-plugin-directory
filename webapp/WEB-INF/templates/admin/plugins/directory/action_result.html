@@ -95,7 +95,7 @@
 				<#if show_error && map_fail_record_causes??>
 					<td>
 						<#if record??>
-							<#assign error_message = map_fail_record_causes["" + record.idRecord]>
+							<#assign error_message = map_fail_record_causes["" + record.idRecord]!>
 							<a href="javascript:void;" class="info">
 								<img src="images/admin/skin/documentation.png" alt="#i18n{directory.action_result.error_message}" title="#i18n{directory.action_result.error_message}" />
 								<span>

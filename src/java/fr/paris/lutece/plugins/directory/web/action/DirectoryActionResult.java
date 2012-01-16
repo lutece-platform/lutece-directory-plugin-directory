@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.IEntry;
 import fr.paris.lutece.plugins.directory.business.Record;
@@ -126,9 +128,10 @@ public class DirectoryActionResult
     			}
     			catch ( Exception e )
     			{
+    				String strExceptionError = buildErrorMessage( e );
     				AppLogService.error( "Error processing action for id record '" + nIdRecord + "' - cause : " + 
-    						e.getMessage(  ), e );
-    				_mapFailRecords.put( strIdDirectoryRecord, e.getMessage(  ) );
+    						strExceptionError, e );
+    				_mapFailRecords.put( strIdDirectoryRecord, strExceptionError );
     			}
     			if ( bHasSucceed )
     			{
@@ -204,5 +207,26 @@ public class DirectoryActionResult
 			model.put( MARK_LIST_FAIL_RECORDS, listMapRecords );
 		}
 		model.put( MARK_MAP_FAIL_RECORD_CAUSES, _mapFailRecords );
+	}
+
+	/**
+	 * Build the error message for action results
+	 * @param e the exception
+	 * @return the error message
+	 */
+	private String buildErrorMessage( Exception e )
+	{
+		String strError = e.getMessage(  );
+		if ( StringUtils.isBlank( strError ) && e.getStackTrace(  ) != null && e.getStackTrace(  ).length > 0 )
+		{
+			StringBuilder sbError = new StringBuilder(  );
+			for ( StackTraceElement ele : e.getStackTrace(  ) )
+			{
+				sbError.append( ele.toString(  ) );
+				sbError.append( "\n" );
+			}
+			strError = sbError.toString(  );
+		}
+		return strError;
 	}
 }

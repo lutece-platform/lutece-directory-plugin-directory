@@ -53,14 +53,25 @@
 	   		 <#else>
 	   			<input name="mandatory" value="1" type="checkbox" >
 	   		 </#if>	
-	   </p>
-	    <p>
-		    <label for="width">#i18n{directory.create_entry.label_width} * : </label>
-		    	<#list entry.fields as field>
+	   	</p>
+	   	<p>
+			<label for="width">#i18n{directory.create_entry.label_width} * : </label>
+	    	<#list entry.fields as field>
+	    		<#if !field.title??>
 		    		<input type="text" name="width" id="width" size="5" value="${field.width}" />
-		    		<#assign id_field=field.idField> 
-		    	</#list>	
-	  	 </p>
+		    		<#assign id_field=field.idField>
+		    		<#break>
+		    	</#if> 
+	    	</#list>	
+		</p>
+		<p>
+			<label for="file_max_size">#i18n{directory.create_entry.label_file_max_size} * : </label>
+			<input type="text" name="file_max_size" id="file_max_size" size="10" value="${getFileMaxSize(entry)}" />
+		</p>
+		<p>
+			<label for="max_files">#i18n{directory.create_entry.label_max_files} * :</label>
+			<input name="max_files" type="text" size="2" value="${getMaxFiles(entry)}" maxlength="2" />
+		</p>
 		
 	    <p>
 	  		<input type="submit" value="#i18n{directory.modify_entry.button_save}" class="button"  name="save" / >

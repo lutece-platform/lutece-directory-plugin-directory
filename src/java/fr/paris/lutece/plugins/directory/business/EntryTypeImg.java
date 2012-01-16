@@ -33,10 +33,23 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.regularexpression.RegularExpression;
+import fr.paris.lutece.portal.service.fileupload.FileUploadService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
@@ -44,21 +57,12 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.regularexpression.RegularExpressionService;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.image.ImageUtil;
-
-import java.io.ByteArrayInputStream;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.imageio.ImageIO;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -66,7 +70,7 @@ import javax.servlet.http.HttpServletRequest;
  * class EntryTypeImg
  *
  */
-public class EntryTypeImg extends Entry
+public class EntryTypeImg extends AbstractEntryTypeUpload
 {
     private static final String PARAMETER_THUMBNAIL_HEIGHT = "thumbnail_height";
     private static final String PARAMETER_THUMBNAIL_WIDTH = "thumbnail_width";
@@ -86,6 +90,7 @@ public class EntryTypeImg extends Entry
     protected static final String FIELD_BIG_THUMBNAIL_HEIGHT = "directory.create_entry.label_width";
     protected static final String ERROR_FIELD_THUMBNAIL = "directory.create_entry.label_error_thumbnail";
     protected static final String ERROR_FIELD_BIG_THUMBNAIL = "directory.create_entry.label_error_big_thumbnail";
+    private static final String MESSAGE_ERROR_NOT_AN_IMAGE = "directory.message.error.notAnImage";
     private static final String FIELD_IMAGE = "image_full_size";
     private static final String FIELD_THUMBNAIL = "little_thumbnail";
     private static final String FIELD_BIG_THUMBNAIL = "big_thumbnail";
@@ -97,6 +102,9 @@ public class EntryTypeImg extends Entry
     private final String _template_html_front_code_form_entry = "skin/plugins/directory/entrytypeimg/html_code_form_entry_type_img.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypeimg/html_code_entry_value_type_img.html";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -110,6 +118,9 @@ public class EntryTypeImg extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlRecordFieldValue( boolean isDisplayFront )
     {
@@ -123,6 +134,9 @@ public class EntryTypeImg extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -134,313 +148,31 @@ public class EntryTypeImg extends Entry
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
         String strIndexedAsTitle = request.getParameter( PARAMETER_INDEXED_AS_TITLE );
         String strIndexedAsSummary = request.getParameter( PARAMETER_INDEXED_AS_SUMMARY );
-        String strCreateThumbnail = request.getParameter( PARAMETER_CREATE_THUMBNAIL );
-        String strCreateBigThumbnail = request.getParameter( PARAMETER_CREATE_BIG_THUMBNAIL );
 
         String strDisplayWidth = request.getParameter( PARAMETER_DISPLAY_WIDTH );
         String strDisplayHeight = request.getParameter( PARAMETER_DISPLAY_HEIGHT );
-        String strThumbnailWidth = request.getParameter( PARAMETER_THUMBNAIL_WIDTH );
-        String strThumbnailHeight = request.getParameter( PARAMETER_THUMBNAIL_HEIGHT );
-        String strBigThumbnailWidth = request.getParameter( PARAMETER_BIG_THUMBNAIL_WIDTH );
-        String strBigThumbnailHeight = request.getParameter( PARAMETER_BIG_THUMBNAIL_HEIGHT );
 
         //used for display image       
         int nDisplayWidth = DirectoryUtils.convertStringToInt( strDisplayWidth );
         int nDisplayHeight = DirectoryUtils.convertStringToInt( strDisplayHeight );
-        int nThumbnailWidth = -1;
-        int nThumbnailHeight = -1;
-        int nBigThumbnailHeight = -1;
-        int nBigThumbnailWidth = -1;
-
-        if ( strThumbnailWidth != null )
-        {
-            nThumbnailWidth = DirectoryUtils.convertStringToInt( strThumbnailWidth );
-        }
-
-        if ( strThumbnailHeight != null )
-        {
-            nThumbnailHeight = DirectoryUtils.convertStringToInt( strThumbnailHeight );
-        }
-
-        if ( strBigThumbnailWidth != null )
-        {
-            nBigThumbnailWidth = DirectoryUtils.convertStringToInt( strBigThumbnailWidth );
-        }
-
-        if ( strBigThumbnailHeight != null )
-        {
-            nBigThumbnailHeight = DirectoryUtils.convertStringToInt( strBigThumbnailHeight );
-        }
 
         String strShowInFormMainSearch = request.getParameter( PARAMETER_SHOWN_IN_ADVANCED_SEARCH );
         String strShowInResultList = request.getParameter( PARAMETER_SHOWN_IN_RESULT_LIST );
         String strShowInResultRecord = request.getParameter( PARAMETER_SHOWN_IN_RESULT_RECORD );
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );      
         String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
-        String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        String strError = this.checkEntryData( request, locale );
+        if ( StringUtils.isNotBlank( strError ) )
         {
-            strFieldError = FIELD_TITLE;
+        	return strError;
         }
-        else if ( ( strCreateThumbnail != null ) && ( strThumbnailWidth == null ) )
-        {
-            strFieldError = FIELD_THUMBNAIL_WIDTH;
-        }
-        else if ( ( strCreateThumbnail != null ) && ( strThumbnailHeight == null ) )
-        {
-            strFieldError = FIELD_THUMBNAIL_HEIGHT;
-        }
-        else if ( ( strCreateBigThumbnail != null ) && ( strThumbnailHeight == null ) )
-        {
-            strFieldError = FIELD_BIG_THUMBNAIL_HEIGHT;
-        }
-        else if ( ( strCreateBigThumbnail != null ) && ( strThumbnailWidth == null ) )
-        {
-            strFieldError = FIELD_BIG_THUMBNAIL_WIDTH;
-        }
-
-        if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
-        {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
-
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
-        }
-
-        if ( ( strDisplayWidth != null ) && ( !strDisplayWidth.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) ) &&
-                ( nDisplayWidth == -1 ) )
-        {
-            strFieldError = FIELD_WIDTH_DISPLAY;
-        }
-        else if ( ( strDisplayHeight != null ) && ( !strDisplayHeight.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) ) &&
-                ( nDisplayHeight == -1 ) )
-        {
-            strFieldError = FIELD_HEIGHT_DISPLAY;
-        }
-
-        if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
-        {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
-
-            return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
-        }
-
-        if ( ( strCreateThumbnail != null ) && ( ( nThumbnailWidth <= 0 ) || ( nThumbnailHeight <= 0 ) ) )
-        {
-            return AdminMessageService.getMessageUrl( request, ERROR_FIELD_THUMBNAIL, AdminMessage.TYPE_STOP );
-        }
-
-        if ( ( strCreateBigThumbnail != null ) && ( ( nBigThumbnailWidth <= 0 ) || ( nBigThumbnailHeight <= 0 ) ) )
-        {
-            return AdminMessageService.getMessageUrl( request, ERROR_FIELD_BIG_THUMBNAIL, AdminMessage.TYPE_STOP );
-        }
-
+        
         this.setTitle( strTitle );
         this.setHelpMessage( strHelpMessage );
         this.setComment( strComment );
 
-        if ( this.getFields(  ) == null )
-        {
-            ArrayList<Field> listFields = new ArrayList<Field>(  );
-            Field field = new Field(  );
-
-            if ( request.getParameter( PARAMETER_IMAGE_SHOWN_IN_RESULT_LIST ) != null )
-            {
-                field.setShownInResultList( true );
-            }
-
-            if ( request.getParameter( PARAMETER_IMAGE_SHOWN_IN_RESULT_RECORD ) != null )
-            {
-                field.setShownInResultRecord( true );
-            }
-
-            field.setEntry( this );
-            field.setValue( FIELD_IMAGE );
-            listFields.add( field );
-
-            if ( strCreateThumbnail != null )
-            {
-                Field thumbnailField = new Field(  );
-                thumbnailField.setWidth( nThumbnailWidth );
-                thumbnailField.setHeight( nThumbnailHeight );
-                thumbnailField.setValue( FIELD_THUMBNAIL );
-                thumbnailField.setEntry( this );
-
-                if ( request.getParameter( PARAMETER_THUMBNAIL_SHOWN_IN_RESULT_LIST ) != null )
-                {
-                    thumbnailField.setShownInResultList( true );
-                }
-
-                if ( request.getParameter( PARAMETER_THUMBNAIL_SHOWN_IN_RESULT_RECORD ) != null )
-                {
-                    thumbnailField.setShownInResultRecord( true );
-                }
-
-                listFields.add( thumbnailField );
-            }
-
-            if ( strCreateBigThumbnail != null )
-            {
-                Field bigThumbnailField = new Field(  );
-                bigThumbnailField.setWidth( nBigThumbnailWidth );
-                bigThumbnailField.setHeight( nBigThumbnailHeight );
-                bigThumbnailField.setValue( FIELD_BIG_THUMBNAIL );
-                bigThumbnailField.setEntry( this );
-
-                if ( request.getParameter( PARAMETER_BIG_THUMBNAIL_SHOWN_IN_RESULT_LIST ) != null )
-                {
-                    bigThumbnailField.setShownInResultList( true );
-                }
-
-                if ( request.getParameter( PARAMETER_BIG_THUMBNAIL_SHOWN_IN_RESULT_RECORD ) != null )
-                {
-                    bigThumbnailField.setShownInResultRecord( true );
-                }
-
-                listFields.add( bigThumbnailField );
-            }
-
-            this.setFields( listFields );
-        }
-
-        boolean hasThumbnail = false;
-        boolean hasBigThumbnail = false;
-
-        for ( Field field : this.getFields(  ) )
-        {
-            RecordFieldFilter filter = new RecordFieldFilter(  );
-            filter.setIdField( field.getIdField(  ) );
-
-            if ( ( field.getValue(  ) != null ) && ( field.getValue(  ).equals( FIELD_THUMBNAIL ) ) )
-            {
-                field.setWidth( nThumbnailWidth );
-                field.setHeight( nThumbnailHeight );
-
-                if ( request.getParameter( PARAMETER_THUMBNAIL_SHOWN_IN_RESULT_LIST ) != null )
-                {
-                    field.setShownInResultList( true );
-                }
-                else
-                {
-                    field.setShownInResultList( false );
-                }
-
-                if ( request.getParameter( PARAMETER_THUMBNAIL_SHOWN_IN_RESULT_RECORD ) != null )
-                {
-                    field.setShownInResultRecord( true );
-                }
-                else
-                {
-                    field.setShownInResultRecord( false );
-                }
-
-                if ( strCreateThumbnail == null )
-                {
-                    FieldHome.remove( field.getIdField(  ), PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-
-                    RecordFieldHome.removeByFilter( filter, PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-                }
-
-                hasThumbnail = true;
-            }
-
-            else if ( ( field.getValue(  ) != null ) && ( field.getValue(  ).equals( FIELD_BIG_THUMBNAIL ) ) )
-            {
-                field.setWidth( nBigThumbnailWidth );
-                field.setHeight( nBigThumbnailHeight );
-
-                if ( request.getParameter( PARAMETER_BIG_THUMBNAIL_SHOWN_IN_RESULT_LIST ) != null )
-                {
-                    field.setShownInResultList( true );
-                }
-                else
-                {
-                    field.setShownInResultList( false );
-                }
-
-                if ( request.getParameter( PARAMETER_BIG_THUMBNAIL_SHOWN_IN_RESULT_RECORD ) != null )
-                {
-                    field.setShownInResultRecord( true );
-                }
-                else
-                {
-                    field.setShownInResultRecord( false );
-                }
-
-                if ( strCreateBigThumbnail == null )
-                {
-                    FieldHome.remove( field.getIdField(  ), PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-
-                    RecordFieldHome.removeByFilter( filter, PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-                }
-
-                hasBigThumbnail = true;
-            }
-            else if ( ( field.getValue(  ) != null ) && ( field.getValue(  ).equals( FIELD_IMAGE ) ) )
-            {
-                if ( request.getParameter( PARAMETER_IMAGE_SHOWN_IN_RESULT_LIST ) != null )
-                {
-                    field.setShownInResultList( true );
-                }
-                else
-                {
-                    field.setShownInResultList( false );
-                }
-
-                if ( request.getParameter( PARAMETER_IMAGE_SHOWN_IN_RESULT_RECORD ) != null )
-                {
-                    field.setShownInResultRecord( true );
-                }
-                else
-                {
-                    field.setShownInResultRecord( false );
-                }
-            }
-        }
-
-        if ( ( ( strCreateThumbnail ) != null ) && ( !hasThumbnail ) )
-        {
-            Field thumbnailField = new Field(  );
-            thumbnailField.setWidth( nThumbnailWidth );
-            thumbnailField.setHeight( nThumbnailHeight );
-            thumbnailField.setValue( FIELD_THUMBNAIL );
-            thumbnailField.setEntry( this );
-
-            if ( request.getParameter( PARAMETER_THUMBNAIL_SHOWN_IN_RESULT_LIST ) != null )
-            {
-                thumbnailField.setShownInResultList( true );
-            }
-
-            if ( request.getParameter( PARAMETER_THUMBNAIL_SHOWN_IN_RESULT_RECORD ) != null )
-            {
-                thumbnailField.setShownInResultRecord( true );
-            }
-
-            FieldHome.create( thumbnailField, PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-        }
-
-        if ( ( strCreateBigThumbnail != null ) && ( !hasBigThumbnail ) )
-        {
-            Field bigThumbnailField = new Field(  );
-            bigThumbnailField.setWidth( nBigThumbnailWidth );
-            bigThumbnailField.setHeight( nBigThumbnailHeight );
-            bigThumbnailField.setValue( FIELD_BIG_THUMBNAIL );
-            bigThumbnailField.setEntry( this );
-
-            if ( request.getParameter( PARAMETER_BIG_THUMBNAIL_SHOWN_IN_RESULT_LIST ) != null )
-            {
-                bigThumbnailField.setShownInResultList( true );
-            }
-
-            if ( request.getParameter( PARAMETER_BIG_THUMBNAIL_SHOWN_IN_RESULT_RECORD ) != null )
-            {
-                bigThumbnailField.setShownInResultRecord( true );
-            }
-
-            FieldHome.create( bigThumbnailField, PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-        }
+        this.setFields( request );
 
         this.setDisplayWidth( nDisplayWidth );
         this.setDisplayHeight( nDisplayHeight );
@@ -460,18 +192,27 @@ public class EntryTypeImg extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate(  )
     {
         return _template_create;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify(  )
     {
         return _template_modify;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
@@ -483,6 +224,9 @@ public class EntryTypeImg extends Entry
         listRecordField.add( recordField );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
         List<RecordField> listRecordField, Locale locale )
@@ -494,162 +238,152 @@ public class EntryTypeImg extends Entry
         listRecordField.add( recordField );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
         throws DirectoryErrorException
     {
-        String strUpdateFile = request.getParameter( PARAMETER_UPDATE_ENTRY + "_" + this.getIdEntry(  ) );
-        String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
-
-        File fileSource = DirectoryUtils.getFileData( DirectoryUtils.EMPTY_STRING + this.getIdEntry(  ), request );
-        List<RegularExpression> listRegularExpression = this.getFields(  ).get( 0 ).getRegularExpressionList(  );
-
-        RecordField recordField = new RecordField(  );
-        recordField.setEntry( this );
-        recordField.setValue( FIELD_IMAGE );
-
-        if ( this.isMandatory(  ) && ( fileSource == null ) &&
-                ( ( strIdDirectoryRecord == null ) || ( ( strIdDirectoryRecord != null ) && ( strUpdateFile != null ) ) ) )
-        {
-            throw new DirectoryErrorException( this.getTitle(  ) );
-        }
-
-        if ( ( fileSource != null ) && ( listRegularExpression != null ) && ( listRegularExpression.size(  ) != 0 ) &&
-                RegularExpressionService.getInstance(  ).isAvailable(  ) )
-        {
-            for ( RegularExpression regularExpression : listRegularExpression )
+    	if ( request instanceof MultipartHttpServletRequest )
+    	{
+			List<FileItem> asynchronousFileItem = getFileSources( request );
+    		
+    		if ( asynchronousFileItem != null && !asynchronousFileItem.isEmpty(  ) )
             {
-                if ( !RegularExpressionService.getInstance(  ).isMatches( fileSource.getMimeType(  ), regularExpression ) )
-                {
-                    throw new DirectoryErrorException( this.getTitle(  ), regularExpression.getErrorMessage(  ) );
-                }
+    			// Checks
+				if ( bTestDirectoryError )
+				{
+					this.checkRecordFieldData( asynchronousFileItem, locale );
+				}
+				// The index is used to distinguish the thumbnails of one image from another
+				int nIndex = 0;
+            	for ( FileItem fileItem : asynchronousFileItem )
+            	{
+            		String strFilename = fileItem != null ? FileUploadService.getFileNameOnly( fileItem ) : StringUtils.EMPTY;
+            		
+            		if ( fileItem != null && fileItem.get(  ) != null && fileItem.getSize(  ) < Integer.MAX_VALUE )
+            		{
+            			PhysicalFile physicalFile = new PhysicalFile(  );
+            			physicalFile.setValue( fileItem.get(  ) );
+            			
+            			File file = new File(  );
+            			file.setPhysicalFile( physicalFile );
+            			file.setTitle( strFilename );
+            			file.setSize( (int) fileItem.getSize(  ) );
+            			file.setMimeType( FileSystemUtil.getMIMEType( strFilename ) );
+            			
+            			//Add the image to the record fields list
+            			RecordField recordField = new RecordField(  );
+            	        recordField.setEntry( this );
+            	        recordField.setValue( FIELD_IMAGE + DirectoryUtils.CONSTANT_UNDERSCORE + nIndex );
+            	        recordField.setFile( file );
+            	        
+        	            Field fullsizedField = FieldHome.findByValue( this.getIdEntry(  ), FIELD_IMAGE,
+        	                    PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+
+        	            if ( fullsizedField != null )
+        	            {
+        	                recordField.setField( fullsizedField );
+        	            }
+
+        	            listRecordField.add( recordField );
+
+        	            //Create thumbnails records
+        	            File imageFile = recordField.getFile(  );
+        	            Field thumbnailField = FieldHome.findByValue( this.getIdEntry(  ), FIELD_THUMBNAIL,
+        	                    PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+
+        	            if ( thumbnailField != null )
+        	            {
+        	                byte[] resizedImage = ImageUtil.resizeImage( imageFile.getPhysicalFile(  ).getValue(  ),
+        	                        String.valueOf( thumbnailField.getWidth(  ) ), String.valueOf( thumbnailField.getHeight(  ) ),
+        	                        INTEGER_QUALITY_MAXIMUM );
+
+        	                RecordField thbnailRecordField = new RecordField(  );
+        	                thbnailRecordField.setEntry( this );
+
+        	                PhysicalFile thbnailPhysicalFile = new PhysicalFile(  );
+        	                thbnailPhysicalFile.setValue( resizedImage );
+
+        	                File thbnailFile = new File(  );
+        	                thbnailFile.setTitle( imageFile.getTitle(  ) );
+        	                thbnailFile.setExtension( imageFile.getExtension(  ) );
+
+        	                if ( ( imageFile.getExtension(  ) != null ) && ( imageFile.getTitle(  ) != null ) )
+        	                {
+        	                    thbnailFile.setMimeType( FileSystemUtil.getMIMEType( imageFile.getTitle(  ) ) );
+        	                }
+
+        	                thbnailFile.setPhysicalFile( thbnailPhysicalFile );
+        	                thbnailFile.setSize( resizedImage.length );
+
+        	                thbnailRecordField.setFile( thbnailFile );
+
+        	                thbnailRecordField.setRecord( record );
+        	                thbnailRecordField.setValue( FIELD_THUMBNAIL +  DirectoryUtils.CONSTANT_UNDERSCORE + nIndex );
+        	                thbnailRecordField.setField( thumbnailField );
+        	                listRecordField.add( thbnailRecordField );
+        	            }
+
+        	            Field bigThumbnailField = FieldHome.findByValue( this.getIdEntry(  ), FIELD_BIG_THUMBNAIL,
+        	                    PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+
+        	            if ( bigThumbnailField != null )
+        	            {
+        	                byte[] resizedImage = ImageUtil.resizeImage( imageFile.getPhysicalFile(  ).getValue(  ),
+        	                        String.valueOf( bigThumbnailField.getWidth(  ) ),
+        	                        String.valueOf( bigThumbnailField.getHeight(  ) ), INTEGER_QUALITY_MAXIMUM );
+
+        	                RecordField bigThbnailRecordField = new RecordField(  );
+        	                bigThbnailRecordField.setEntry( this );
+
+        	                PhysicalFile thbnailPhysicalFile = new PhysicalFile(  );
+        	                thbnailPhysicalFile.setValue( resizedImage );
+
+        	                File thbnailFile = new File(  );
+        	                thbnailFile.setTitle( imageFile.getTitle(  ) );
+        	                thbnailFile.setExtension( imageFile.getExtension(  ) );
+
+        	                if ( ( imageFile.getExtension(  ) != null ) && ( imageFile.getTitle(  ) != null ) )
+        	                {
+        	                    thbnailFile.setMimeType( FileSystemUtil.getMIMEType( imageFile.getTitle(  ) ) );
+        	                }
+
+        	                thbnailFile.setPhysicalFile( thbnailPhysicalFile );
+        	                thbnailFile.setSize( resizedImage.length );
+
+        	                bigThbnailRecordField.setFile( thbnailFile );
+
+        	                bigThbnailRecordField.setRecord( record );
+        	                bigThbnailRecordField.setValue( FIELD_BIG_THUMBNAIL + DirectoryUtils.CONSTANT_UNDERSCORE + nIndex );
+        	                bigThbnailRecordField.setField( bigThumbnailField );
+        	                listRecordField.add( bigThbnailRecordField );
+        	            }
+            		}
+            		nIndex++;
+            	}
             }
-        }
-
-        try
-        {
-            if ( ( fileSource != null ) &&
-                    ( ( strIdDirectoryRecord == null ) ||
-                    ( ( strIdDirectoryRecord != null ) && ( strUpdateFile != null ) ) ) )
-            {
-                //verify that the file is an image
-                ImageIO.read( new ByteArrayInputStream( fileSource.getPhysicalFile(  ).getValue(  ) ) );
-
-                recordField.setFile( fileSource );
-            }
-            else if ( ( fileSource == null ) && ( strUpdateFile == null ) )
-            {
-                //get the default file
-                RecordFieldFilter filter = new RecordFieldFilter(  );
-                filter.setIdEntry( this.getIdEntry(  ) );
-                filter.setIdRecord( DirectoryUtils.convertStringToInt( strIdDirectoryRecord ) );
-
-                List<RecordField> listRecordFieldStore = RecordFieldHome.getRecordFieldList( filter,
-                        PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-
-                for ( RecordField recordFieldBase : listRecordFieldStore )
-                {
-                    recordField = recordFieldBase;
-
-                    if ( recordField.getFile(  ) != null )
-                    {
-                        recordField.getFile(  )
-                                   .setPhysicalFile( PhysicalFileHome.findByPrimaryKey( 
-                                recordField.getFile(  ).getPhysicalFile(  ).getIdPhysicalFile(  ),
-                                PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) ) );
-                    }
-                }
-            }
-
-            Field fullsizedField = FieldHome.findByValue( this.getIdEntry(  ), FIELD_IMAGE,
-                    PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-
-            if ( fullsizedField != null )
-            {
-                recordField.setField( fullsizedField );
-            }
-
-            listRecordField.add( recordField );
-
-            //Create thumbnails records           	
-            File imageFile = recordField.getFile(  );
-            Field thumbnailField = FieldHome.findByValue( this.getIdEntry(  ), FIELD_THUMBNAIL,
-                    PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-
-            if ( thumbnailField != null )
-            {
-                byte[] resizedImage = ImageUtil.resizeImage( imageFile.getPhysicalFile(  ).getValue(  ),
-                        String.valueOf( thumbnailField.getWidth(  ) ), String.valueOf( thumbnailField.getHeight(  ) ),
-                        INTEGER_QUALITY_MAXIMUM );
-
-                RecordField thbnailRecordField = new RecordField(  );
-                thbnailRecordField.setEntry( this );
-
-                PhysicalFile thbnailPhysicalFile = new PhysicalFile(  );
-                thbnailPhysicalFile.setValue( resizedImage );
-
-                File thbnailFile = new File(  );
-                thbnailFile.setTitle( imageFile.getTitle(  ) );
-                thbnailFile.setExtension( imageFile.getExtension(  ) );
-
-                if ( ( imageFile.getExtension(  ) != null ) && ( imageFile.getTitle(  ) != null ) )
-                {
-                    thbnailFile.setMimeType( FileSystemUtil.getMIMEType( imageFile.getTitle(  ) ) );
-                }
-
-                thbnailFile.setPhysicalFile( thbnailPhysicalFile );
-                thbnailFile.setSize( resizedImage.length );
-
-                thbnailRecordField.setFile( thbnailFile );
-
-                thbnailRecordField.setRecord( record );
-                thbnailRecordField.setValue( FIELD_THUMBNAIL );
-                thbnailRecordField.setField( thumbnailField );
-                listRecordField.add( thbnailRecordField );
-            }
-
-            Field bigThumbnailField = FieldHome.findByValue( this.getIdEntry(  ), FIELD_BIG_THUMBNAIL,
-                    PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-
-            if ( bigThumbnailField != null )
-            {
-                byte[] resizedImage = ImageUtil.resizeImage( imageFile.getPhysicalFile(  ).getValue(  ),
-                        String.valueOf( bigThumbnailField.getWidth(  ) ),
-                        String.valueOf( bigThumbnailField.getHeight(  ) ), INTEGER_QUALITY_MAXIMUM );
-
-                RecordField bigThbnailRecordField = new RecordField(  );
-                bigThbnailRecordField.setEntry( this );
-
-                PhysicalFile thbnailPhysicalFile = new PhysicalFile(  );
-                thbnailPhysicalFile.setValue( resizedImage );
-
-                File thbnailFile = new File(  );
-                thbnailFile.setTitle( imageFile.getTitle(  ) );
-                thbnailFile.setExtension( imageFile.getExtension(  ) );
-
-                if ( ( imageFile.getExtension(  ) != null ) && ( imageFile.getTitle(  ) != null ) )
-                {
-                    thbnailFile.setMimeType( FileSystemUtil.getMIMEType( imageFile.getTitle(  ) ) );
-                }
-
-                thbnailFile.setPhysicalFile( thbnailPhysicalFile );
-                thbnailFile.setSize( resizedImage.length );
-
-                bigThbnailRecordField.setFile( thbnailFile );
-
-                bigThbnailRecordField.setRecord( record );
-                bigThbnailRecordField.setValue( FIELD_BIG_THUMBNAIL );
-                bigThbnailRecordField.setField( bigThumbnailField );
-                listRecordField.add( bigThbnailRecordField );
-            }
-        }
-        catch ( Exception e )
-        {
-            AppLogService.error( e );
-        }
+    		if ( bTestDirectoryError && this.isMandatory(  ) && ( asynchronousFileItem == null || asynchronousFileItem.isEmpty(  ) ) )
+    		{
+    			RecordField recordField = new RecordField(  );
+    	        recordField.setEntry( this );
+    	        recordField.setValue( FIELD_IMAGE );
+    	        listRecordField.add( recordField );
+                
+                throw new DirectoryErrorException( this.getTitle(  ) );
+    		}
+    	}
+    	else if ( bTestDirectoryError )
+    	{
+    		throw new DirectoryErrorException( this.getTitle(  ) );
+    	}
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex )
@@ -658,6 +392,9 @@ public class EntryTypeImg extends Entry
             strPageIndexParameterName, strPageIndex );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ReferenceList getReferenceListRegularExpression( IEntry entry, Plugin plugin )
     {
@@ -683,6 +420,9 @@ public class EntryTypeImg extends Entry
         return refListRegularExpression;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex, Locale locale )
@@ -690,4 +430,303 @@ public class EntryTypeImg extends Entry
         return new LocalizedPaginator( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage,
             strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
     }
+
+    // PROTECTED METHODS
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String checkEntryData( HttpServletRequest request, Locale locale )
+	{
+    	String strError = super.checkEntryData( request, locale );
+    	if ( StringUtils.isBlank( strError ) )
+    	{
+    		String strFieldError = StringUtils.EMPTY;
+    		String strTitle = request.getParameter( PARAMETER_TITLE );
+    		String strCreateThumbnail = request.getParameter( PARAMETER_CREATE_THUMBNAIL );
+    		String strCreateBigThumbnail = request.getParameter( PARAMETER_CREATE_BIG_THUMBNAIL );
+    		
+    		String strDisplayWidth = request.getParameter( PARAMETER_DISPLAY_WIDTH );
+    		String strDisplayHeight = request.getParameter( PARAMETER_DISPLAY_HEIGHT );
+    		String strThumbnailWidth = request.getParameter( PARAMETER_THUMBNAIL_WIDTH );
+    		String strThumbnailHeight = request.getParameter( PARAMETER_THUMBNAIL_HEIGHT );
+    		String strBigThumbnailWidth = request.getParameter( PARAMETER_BIG_THUMBNAIL_WIDTH );
+    		String strBigThumbnailHeight = request.getParameter( PARAMETER_BIG_THUMBNAIL_HEIGHT );
+    		
+    		int nDisplayWidth = DirectoryUtils.convertStringToInt( strDisplayWidth );
+    		int nDisplayHeight = DirectoryUtils.convertStringToInt( strDisplayHeight );
+    		int nThumbnailWidth = DirectoryUtils.CONSTANT_ID_NULL;
+    		int nThumbnailHeight = DirectoryUtils.CONSTANT_ID_NULL;
+    		int nBigThumbnailHeight = DirectoryUtils.CONSTANT_ID_NULL;
+    		int nBigThumbnailWidth = DirectoryUtils.CONSTANT_ID_NULL;
+    		
+    		if ( strThumbnailWidth != null )
+    		{
+    			nThumbnailWidth = DirectoryUtils.convertStringToInt( strThumbnailWidth );
+    		}
+    		
+    		if ( strThumbnailHeight != null )
+    		{
+    			nThumbnailHeight = DirectoryUtils.convertStringToInt( strThumbnailHeight );
+    		}
+    		
+    		if ( strBigThumbnailWidth != null )
+    		{
+    			nBigThumbnailWidth = DirectoryUtils.convertStringToInt( strBigThumbnailWidth );
+    		}
+    		
+    		if ( strBigThumbnailHeight != null )
+    		{
+    			nBigThumbnailHeight = DirectoryUtils.convertStringToInt( strBigThumbnailHeight );
+    		}
+    		
+    		if ( StringUtils.isBlank( strTitle ) )
+    		{
+    			strFieldError = FIELD_TITLE;
+    		}
+    		else if ( ( strCreateThumbnail != null ) && ( strThumbnailWidth == null ) )
+    		{
+    			strFieldError = FIELD_THUMBNAIL_WIDTH;
+    		}
+    		else if ( ( strCreateThumbnail != null ) && ( strThumbnailHeight == null ) )
+    		{
+    			strFieldError = FIELD_THUMBNAIL_HEIGHT;
+    		}
+    		else if ( ( strCreateBigThumbnail != null ) && ( strThumbnailHeight == null ) )
+    		{
+    			strFieldError = FIELD_BIG_THUMBNAIL_HEIGHT;
+    		}
+    		else if ( ( strCreateBigThumbnail != null ) && ( strThumbnailWidth == null ) )
+    		{
+    			strFieldError = FIELD_BIG_THUMBNAIL_WIDTH;
+    		}
+    		
+    		if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
+    		{
+    			Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+    			
+    			return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
+    					AdminMessage.TYPE_STOP );
+    		}
+    		
+    		if ( ( strDisplayWidth != null ) && ( !strDisplayWidth.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) ) &&
+    				( nDisplayWidth == DirectoryUtils.CONSTANT_ID_NULL ) )
+    		{
+    			strFieldError = FIELD_WIDTH_DISPLAY;
+    		}
+    		else if ( ( strDisplayHeight != null ) && ( !strDisplayHeight.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) ) &&
+    				( nDisplayHeight == DirectoryUtils.CONSTANT_ID_NULL ) )
+    		{
+    			strFieldError = FIELD_HEIGHT_DISPLAY;
+    		}
+    		
+    		if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
+    		{
+    			Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+    			
+    			return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields,
+    					AdminMessage.TYPE_STOP );
+    		}
+    		
+    		if ( ( strCreateThumbnail != null ) && ( ( nThumbnailWidth <= 0 ) || ( nThumbnailHeight <= 0 ) ) )
+    		{
+    			strError = AdminMessageService.getMessageUrl( request, ERROR_FIELD_THUMBNAIL, AdminMessage.TYPE_STOP );
+    		}
+    		
+    		if ( ( strCreateBigThumbnail != null ) && ( ( nBigThumbnailWidth <= 0 ) || ( nBigThumbnailHeight <= 0 ) ) )
+    		{
+    			strError = AdminMessageService.getMessageUrl( request, ERROR_FIELD_BIG_THUMBNAIL, AdminMessage.TYPE_STOP );
+    		}
+    		
+    		if ( StringUtils.isNotBlank( strFieldError ) )
+    		{
+    			Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+    			
+    			return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
+    					AdminMessage.TYPE_STOP );
+    		}
+    	}
+    	return strError;
+	}
+
+    /**
+     * {@inheritDoc}
+     */
+	@Override
+	protected void setFields( HttpServletRequest request, List<Field> listFields )
+	{
+		String strCreateThumbnail = request.getParameter( PARAMETER_CREATE_THUMBNAIL );
+		String strCreateBigThumbnail = request.getParameter( PARAMETER_CREATE_BIG_THUMBNAIL );
+        listFields.add( buildFieldFullSize( request ) );
+
+        if ( strCreateThumbnail != null )
+        {
+        	// If the checkbox to create a thumbnail is checked, then add the associated field
+        	listFields.add( buildFieldThumbnail( request ) );
+        }
+        else
+        {
+        	// Otherwise, remove from db
+        	Field fieldThumbnail = DirectoryUtils.findFieldByValueInTheList( FIELD_THUMBNAIL, getFields(  ) );
+    		if ( fieldThumbnail != null )
+    		{
+    			RecordFieldFilter filter = new RecordFieldFilter(  );
+                filter.setIdField( fieldThumbnail.getIdField(  ) );
+    			FieldHome.remove( fieldThumbnail.getIdField(  ), DirectoryUtils.getPlugin(  ) );
+                RecordFieldHome.removeByFilter( filter, DirectoryUtils.getPlugin(  ) );
+    		}
+        }
+
+        if ( strCreateBigThumbnail != null )
+        {
+        	// If the checkbox to create a big thumbnail is checked, then add the associated field
+            listFields.add( buildFieldBigThumbnail( request ) );
+        }
+        else
+        {
+        	// Otherwise, remove from db
+        	Field fieldBigThumbnail = DirectoryUtils.findFieldByValueInTheList( FIELD_BIG_THUMBNAIL, getFields(  ) );
+    		if ( fieldBigThumbnail != null )
+    		{
+    			RecordFieldFilter filter = new RecordFieldFilter(  );
+                filter.setIdField( fieldBigThumbnail.getIdField(  ) );
+    			FieldHome.remove( fieldBigThumbnail.getIdField(  ), DirectoryUtils.getPlugin(  ) );
+                RecordFieldHome.removeByFilter( filter, DirectoryUtils.getPlugin(  ) );
+    		}
+        }
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void checkRecordFieldData( FileItem fileItem, Locale locale )
+		throws DirectoryErrorException
+	{
+		String strFilename = fileItem != null ? FileUploadService.getFileNameOnly( fileItem ) : StringUtils.EMPTY;
+		BufferedImage image = null;
+		try
+		{
+			if( fileItem != null && fileItem.get(  ) != null )
+			{
+				image = ImageIO.read( new ByteArrayInputStream( fileItem.get(  ) ) );
+			}
+		} 
+		catch ( IOException e )
+		{			
+			AppLogService.error( e );
+		}
+		
+		if ( ( image == null ) &&  StringUtils.isNotBlank( strFilename ) )
+		{
+			String strErrorMessage = I18nService.getLocalizedString( MESSAGE_ERROR_NOT_AN_IMAGE, locale );
+			throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
+		}
+	}
+
+	// PRIVATE METHODS
+	
+	/**
+	 * Build the field full size
+	 * @param request the HTTP request
+	 * @return the field
+	 */
+	private Field buildFieldFullSize( HttpServletRequest request )
+	{
+        Field fieldFullImage = DirectoryUtils.findFieldByValueInTheList( FIELD_IMAGE, getFields(  ) );
+        if ( fieldFullImage == null )
+        {
+        	fieldFullImage = new Field(  );
+        }
+
+        if ( request.getParameter( PARAMETER_IMAGE_SHOWN_IN_RESULT_LIST ) != null )
+        {
+        	fieldFullImage.setShownInResultList( true );
+        }
+
+        if ( request.getParameter( PARAMETER_IMAGE_SHOWN_IN_RESULT_RECORD ) != null )
+        {
+        	fieldFullImage.setShownInResultRecord( true );
+        }
+
+        fieldFullImage.setEntry( this );
+        fieldFullImage.setValue( FIELD_IMAGE );
+        
+        return fieldFullImage;
+	}
+	
+	/**
+	 * Build the field thumbnail
+	 * @param request the HTTP request
+	 * @return the field
+	 */
+	private Field buildFieldThumbnail( HttpServletRequest request )
+	{
+		String strThumbnailWidth = request.getParameter( PARAMETER_THUMBNAIL_WIDTH );
+		String strThumbnailHeight = request.getParameter( PARAMETER_THUMBNAIL_HEIGHT );
+		int nThumbnailWidth = DirectoryUtils.CONSTANT_ID_NULL;
+		int nThumbnailHeight = DirectoryUtils.CONSTANT_ID_NULL;
+		if ( strThumbnailWidth != null )
+        {
+            nThumbnailWidth = DirectoryUtils.convertStringToInt( strThumbnailWidth );
+        }
+
+        if ( strThumbnailHeight != null )
+        {
+            nThumbnailHeight = DirectoryUtils.convertStringToInt( strThumbnailHeight );
+        }
+		
+		Field fieldThumbnail = DirectoryUtils.findFieldByValueInTheList( FIELD_THUMBNAIL, getFields(  ) );
+		if ( fieldThumbnail == null )
+		{
+			fieldThumbnail = new Field(  );
+		}
+		fieldThumbnail.setWidth( nThumbnailWidth );
+		fieldThumbnail.setHeight( nThumbnailHeight );
+		fieldThumbnail.setValue( FIELD_THUMBNAIL );
+		fieldThumbnail.setEntry( this );
+    	fieldThumbnail.setShownInResultList( request.getParameter( PARAMETER_THUMBNAIL_SHOWN_IN_RESULT_LIST ) != null );
+    	fieldThumbnail.setShownInResultRecord( request.getParameter( PARAMETER_THUMBNAIL_SHOWN_IN_RESULT_RECORD ) != null );
+        
+        return fieldThumbnail;
+	}
+	
+	/**
+	 * Build the field for big thumbnail
+	 * @param request the HTTP request
+	 * @return the field
+	 */
+	private Field buildFieldBigThumbnail( HttpServletRequest request )
+	{
+		String strBigThumbnailWidth = request.getParameter( PARAMETER_BIG_THUMBNAIL_WIDTH );
+		String strBigThumbnailHeight = request.getParameter( PARAMETER_BIG_THUMBNAIL_HEIGHT );
+		
+		int nBigThumbnailHeight = DirectoryUtils.CONSTANT_ID_NULL;
+		int nBigThumbnailWidth = DirectoryUtils.CONSTANT_ID_NULL;
+
+        if ( strBigThumbnailWidth != null )
+        {
+            nBigThumbnailWidth = DirectoryUtils.convertStringToInt( strBigThumbnailWidth );
+        }
+
+        if ( strBigThumbnailHeight != null )
+        {
+            nBigThumbnailHeight = DirectoryUtils.convertStringToInt( strBigThumbnailHeight );
+        }
+        
+		Field bigThumbnailField = DirectoryUtils.findFieldByValueInTheList( FIELD_BIG_THUMBNAIL, getFields(  ) );
+		if ( bigThumbnailField == null )
+		{
+			bigThumbnailField = new Field(  );
+		}
+        bigThumbnailField.setWidth( nBigThumbnailWidth );
+        bigThumbnailField.setHeight( nBigThumbnailHeight );
+        bigThumbnailField.setValue( FIELD_BIG_THUMBNAIL );
+        bigThumbnailField.setEntry( this );
+        bigThumbnailField.setShownInResultList( request.getParameter( PARAMETER_BIG_THUMBNAIL_SHOWN_IN_RESULT_LIST ) != null );
+        bigThumbnailField.setShownInResultRecord( request.getParameter( PARAMETER_BIG_THUMBNAIL_SHOWN_IN_RESULT_RECORD ) != null );
+        
+        return bigThumbnailField;
+	}
 }

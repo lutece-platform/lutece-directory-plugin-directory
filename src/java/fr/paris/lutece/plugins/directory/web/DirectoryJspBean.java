@@ -47,6 +47,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
@@ -359,6 +360,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String JSP_ACTION_RESULT = "jsp/admin/plugins/directory/ActionResult.jsp";
     private static final String JSP_DO_VISUALISATION_RECORD = "jsp/admin/plugins/directory/DoVisualisationRecord.jsp";
     private static final String JSP_RESOURCE_HISTORY = "jsp/admin/plugins/directory/ResourceHistory.jsp";
+    private static final String JSP_MODIFY_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ModifyDirectoryRecord.jsp";
+    private static final String JSP_CREATE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/CreateDirectoryRecord.jsp";
 
     //Parameters
     private static final String PARAMETER_ID_DIRECTORY = DirectoryUtils.PARAMETER_ID_DIRECTORY;
@@ -2996,10 +2999,39 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
         
-        // Remove asynchronous uploaded file from session
-        doRemoveAsynchronousUploadedFile( request );
-
         Map<String, Object> model = new HashMap<String, Object>(  );
+        
+        /** 
+         * Map of <idEntry, RecordFields>
+         * 	1) The user has uploaded/deleted a file
+         * 		- The updated map is stored in the session
+         *  2) The user has not uploaded/delete a file
+         *  	- The map is filled with the data from the database
+         *  	- The asynchronous uploaded files map is reinitialized
+         */
+        Map<String, List<RecordField>> map = null;
+        
+        // Get the map of <idEntry, RecordFields from session if it exists : 
+        /** 1) Case when the user has uploaded a file, the the map is stored in the session */
+        HttpSession session = request.getSession( false );
+        if ( session != null )
+        {
+        	map = (Map<String, List<RecordField>>) session.getAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
+        	if ( map != null )
+        	{
+        		model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, map );
+        		// IMPORTANT : Remove the map from the session
+        		session.removeAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
+        	}
+        }
+        
+        // Get the map <idEntry, RecordFields> classically from the database
+        /** 2) The user has not uploaded/delete a file */
+        if ( map == null )
+        {
+        	// Remove asynchronous uploaded file from session
+            DirectoryAsynchronousUploadHandler.getHandler(  ).removeSessionFiles( request.getSession(  ).getId(  ) );
+        }
 
         List<IEntry> listEntry = DirectoryUtils.getFormEntries( nIdDirectory, getPlugin(  ), getUser(  ) );
         model.put( MARK_ENTRY_LIST, listEntry );
@@ -3044,28 +3076,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             Record record = new Record(  );
             record.setDirectory( directory );
 
-            try
+            String strRedirectUrl = getDirectoryRecordData( record, request );
+            if ( StringUtils.isNotBlank( strRedirectUrl ) )
             {
-                DirectoryUtils.getDirectoryRecordData( request, record, getPlugin(  ), getLocale(  ) );
-            }
-            catch ( DirectoryErrorException error )
-            {
-                String strErrorMessage = DirectoryUtils.EMPTY_STRING;
-
-                if ( error.isMandatoryError(  ) )
-                {
-                    Object[] tabRequiredFields = { error.getTitleField(  ) };
-                    strErrorMessage = AdminMessageService.getMessageUrl( request,
-                            MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
-                }
-                else
-                {
-                    Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
-                    strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR,
-                            tabRequiredFields, AdminMessage.TYPE_STOP );
-                }
-
-                return strErrorMessage;
+            	return strRedirectUrl;
             }
 
             record.setDateCreation( DirectoryUtils.getCurrentTimestamp(  ) );
@@ -3109,19 +3123,45 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
         
-        // Remove asynchronous uploaded file from session
-        doRemoveAsynchronousUploadedFile( request );
+        // List of entries to display
+        List<IEntry> listEntry = DirectoryUtils.getFormEntries( record.getDirectory(  ).getIdDirectory(  ),
+                getPlugin(  ), getUser(  ) );
+        
+        /** 
+         * Map of <idEntry, RecordFields>
+         * 	1) The user has uploaded/deleted a file
+         * 		- The updated map is stored in the session
+         *  2) The user has not uploaded/delete a file
+         *  	- The map is filled with the data from the database
+         *  	- The asynchronous uploaded files map is reinitialized
+         */
+        Map<String, List<RecordField>> map = null;
+        
+        // Get the map of <idEntry, RecordFields from session if it exists : 
+        /** 1) Case when the user has uploaded a file, the the map is stored in the session */
+        HttpSession session = request.getSession( false );
+        if ( session != null )
+        {
+        	map = (Map<String, List<RecordField>>) session.getAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
+    		// IMPORTANT : Remove the map from the session
+        	session.removeAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
+        }
+        
+        // Get the map <idEntry, RecordFields> classically from the database
+        /** 2) The user has not uploaded/delete a file */
+        if ( map == null )
+        {
+        	map = DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdDirectoryRecord, getPlugin(  ) );
+        	// Reinit the asynchronous uploaded file map
+        	DirectoryAsynchronousUploadHandler.getHandler(  ).reinitMap( request, map, getPlugin(  ) );
+        }
 
         Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory(  ).getIdDirectory(  ), getPlugin(  ) );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
 
-        List<IEntry> listEntry = DirectoryUtils.getFormEntries( record.getDirectory(  ).getIdDirectory(  ),
-                getPlugin(  ), getUser(  ) );
-
         model.put( MARK_ENTRY_LIST, listEntry );
-        model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
-            DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdDirectoryRecord, getPlugin(  ) ) );
+        model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, map );
         model.put( MARK_DIRECTORY, directory );
 
         if ( SecurityService.isAuthenticationEnable(  ) )
@@ -3162,28 +3202,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         if ( request.getParameter( PARAMETER_CANCEL ) == null )
         {
-            try
+            String strRedirectUrl = getDirectoryRecordData( record, request );
+            if ( StringUtils.isNotBlank( strRedirectUrl ) )
             {
-                DirectoryUtils.getDirectoryRecordData( request, record, getPlugin(  ), getLocale(  ) );
-            }
-            catch ( DirectoryErrorException error )
-            {
-                String strErrorMessage = DirectoryUtils.EMPTY_STRING;
-
-                if ( error.isMandatoryError(  ) )
-                {
-                    Object[] tabRequiredFields = { error.getTitleField(  ) };
-                    strErrorMessage = AdminMessageService.getMessageUrl( request,
-                            MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
-                }
-                else
-                {
-                    Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
-                    strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR,
-                            tabRequiredFields, AdminMessage.TYPE_STOP );
-                }
-
-                return strErrorMessage;
+            	return strRedirectUrl;
             }
 
             RecordHome.updateWidthRecordField( record, getPlugin(  ) );
@@ -3477,6 +3499,57 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             {
             	String strShowActionResult = request.getParameter( DirectoryUtils.PARAMETER_SHOW_ACTION_RESULT );
             	boolean bShowActionResult = StringUtils.isNotBlank( strShowActionResult );
+            	
+        		// Case when the user is uploading a file
+            	String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+            	if ( StringUtils.isNotBlank( strUploadAction ) )
+            	{
+            		Map<String, List<RecordField>> mapRecordFields = null;
+                	
+                	/** 1) Case when the user has uploaded a file, the the map is stored in the session */
+                	HttpSession session = request.getSession(  );
+            		mapRecordFields = (Map<String, List<RecordField>>) session.getAttribute( 
+            				DirectoryUtils.SESSION_DIRECTORY_TASKS_SUBMITTED_RECORD_FIELDS );
+            		
+            		/** 2) The user has not uploaded/delete a file */
+            		if ( mapRecordFields == null )
+            		{
+            			mapRecordFields = new HashMap<String, List<RecordField>>(  );
+            		}
+            		
+            		String strIdAction = request.getParameter( PARAMETER_ID_ACTION );
+            		int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
+            		
+            		try
+					{
+						DirectoryAsynchronousUploadHandler.getHandler(  ).doUploadAction( request, strUploadAction, 
+								mapRecordFields, null, getPlugin(  ) );
+					}
+					catch ( DirectoryErrorException error )
+					{
+						String strErrorMessage = DirectoryUtils.EMPTY_STRING;
+		        		
+		        		if ( error.isMandatoryError(  ) )
+		        		{
+		        			Object[] tabRequiredFields = { error.getTitleField(  ) };
+		        			strErrorMessage = AdminMessageService.getMessageUrl( request,
+		        					MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
+		        		}
+		        		else
+		        		{
+		        			Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
+		        			strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR,
+		        					tabRequiredFields, AdminMessage.TYPE_STOP );
+		        		}
+		        		
+		        		return strErrorMessage;
+					}
+					
+					// Store the map in the session
+					session.setAttribute( DirectoryUtils.SESSION_DIRECTORY_TASKS_SUBMITTED_RECORD_FIELDS, mapRecordFields );
+            		
+            		return getJspTasksForm( request, listIdsDirectoryRecord, nIdAction, bShowActionResult );
+            	}
             	
             	String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
             	int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
@@ -3816,6 +3889,31 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     }
     
     /**
+     * return url of the jsp create directory record
+     * @param request The HTTP request
+     * @param nIdDirectory the key of directory
+     * @return return url of the jsp create directory record
+     */
+    private String getJspCreateDirectoryRecord( HttpServletRequest request, int nIdDirectory )
+    {
+        return AppPathService.getBaseUrl( request ) + JSP_CREATE_DIRECTORY_RECORD + "?" + PARAMETER_ID_DIRECTORY + "=" +
+        nIdDirectory;
+    }
+    
+    /**
+     * return url of the jsp modify directory record
+     * @param request The HTTP request
+     * @param nIdDirectory the key of directory
+     * @param nIdDirectoryRecord the key of directory record to modify  
+     * @return return url of the jsp modify directory record
+     */
+    private String getJspModifyDirectoryRecord( HttpServletRequest request, int nIdDirectory, int nIdDirectoryRecord )
+    {
+        return AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY_RECORD + "?" + PARAMETER_ID_DIRECTORY + "=" +
+        nIdDirectory + "&" + PARAMETER_ID_DIRECTORY_RECORD + "=" + nIdDirectoryRecord;
+    }
+    
+    /**
      * return a reference list wich contains the different state of directory
      * @param locale the locale
      * @return reference list of directory state
@@ -3897,9 +3995,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * @param request The HTTP request
      * @param listIdsTestResource the list if id resource
      * @param nIdAction the id action
+     * @param bShowActionResult true if it must show the action result, false otherwise
      * @return url of the jsp manage commentaire
      */
-    private String getJspTasksForm( HttpServletRequest request, String[] listIdsTestResource, int nIdAction, boolean bShowActionResult )
+    private String getJspTasksForm( HttpServletRequest request, String[] listIdsTestResource, int nIdAction, 
+    		boolean bShowActionResult )
     {
     	UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_TASKS_FORM_WORKFLOW );
     	url.addParameter( DirectoryUtils.PARAMETER_ID_ACTION, nIdAction );
@@ -3915,6 +4015,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     			url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD, strIdTestResource );
     		}
     	}
+    	
+		String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+		if ( StringUtils.isNotBlank( strUploadAction ) )
+		{
+			url.addParameter( strUploadAction, strUploadAction );
+		}
     	
         return url.getUrl(  );
     }
@@ -4458,26 +4564,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     }
 
     /**
-     * Removes the uploaded fileItem
-     * @param request the request
-     */
-    public void doRemoveAsynchronousUploadedFile( HttpServletRequest request )
-    {
-    	String strSessionId = request.getSession(  ).getId(  );
-    	String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
-    	
-    	if ( StringUtils.isNotBlank( strIdEntry ) )
-    	{
-    		// file may be uploaded asynchronously...
-    		DirectoryAsynchronousUploadHandler.removeFileItem( strIdEntry, strSessionId );
-    	}
-    	else
-    	{
-    		DirectoryAsynchronousUploadHandler.removeSessionFiles( strSessionId );
-    	}
-    }
-    
-    /**
      * Gets the confirmation page of changing the state of the records
      * @param request The HTTP request
      * @throws AccessDeniedException the {@link AccessDeniedException}
@@ -4606,5 +4692,88 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     		return _searchFields.getRedirectUrl(  );
     	}
     	return getJspManageDirectory( request );
+    }
+
+    /**
+     * Fill the directory record with data
+     * @param record the record to fill
+     * @param request the HTTP request
+     * @return empty string if there is no redirect (in error cases or upload file cases), an url to redirect otherwise
+     */
+    private String getDirectoryRecordData( Record record, HttpServletRequest request )
+    {
+    	String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+        
+        try
+        {
+            DirectoryUtils.getDirectoryRecordData( request, record, getPlugin(  ), getLocale(  ) );
+        }
+        catch ( DirectoryErrorException error )
+        {
+        	// Case if the user does not upload a file, then throw the error message
+        	if ( StringUtils.isBlank( strUploadAction ) )
+            {
+        		String strErrorMessage = DirectoryUtils.EMPTY_STRING;
+        		
+        		if ( error.isMandatoryError(  ) )
+        		{
+        			Object[] tabRequiredFields = { error.getTitleField(  ) };
+        			strErrorMessage = AdminMessageService.getMessageUrl( request,
+        					MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
+        		}
+        		else
+        		{
+        			Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
+        			strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR,
+        					tabRequiredFields, AdminMessage.TYPE_STOP );
+        		}
+        		
+        		return strErrorMessage;
+            }
+        }
+        
+        // Special case for upload fields : if no action is specified, a submit
+        // button associated with an upload might have been pressed :
+        if ( StringUtils.isNotBlank( strUploadAction ) )
+        {
+        	Map<String, List<RecordField>> mapListRecordFields = DirectoryUtils.buildMapIdEntryListRecordField( record );
+        	// Upload the file
+        	try
+			{
+				DirectoryAsynchronousUploadHandler.getHandler(  ).doUploadAction( request, strUploadAction, 
+						mapListRecordFields, record, getPlugin(  ) );
+			}
+			catch ( DirectoryErrorException error )
+			{
+				String strErrorMessage = DirectoryUtils.EMPTY_STRING;
+        		
+        		if ( error.isMandatoryError(  ) )
+        		{
+        			Object[] tabRequiredFields = { error.getTitleField(  ) };
+        			strErrorMessage = AdminMessageService.getMessageUrl( request,
+        					MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
+        		}
+        		else
+        		{
+        			Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
+        			strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR,
+        					tabRequiredFields, AdminMessage.TYPE_STOP );
+        		}
+        		
+        		return strErrorMessage;
+			}
+        	
+        	// Put the map <idEntry, RecordFields> in the session
+        	request.getSession(  ).setAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS, mapListRecordFields );
+        	
+        	// Check whether it is an update or a creation
+        	if ( record.getIdRecord(  ) != DirectoryUtils.CONSTANT_ID_NULL && record.getIdRecord(  ) != DirectoryUtils.CONSTANT_ID_ZERO )
+        	{
+        		return getJspModifyDirectoryRecord( request, record.getDirectory(  ).getIdDirectory(  ), record.getIdRecord(  ) );
+        	}
+        	return getJspCreateDirectoryRecord( request, record.getDirectory(  ).getIdDirectory(  ) );
+        }
+        
+        return StringUtils.EMPTY;
     }
 }

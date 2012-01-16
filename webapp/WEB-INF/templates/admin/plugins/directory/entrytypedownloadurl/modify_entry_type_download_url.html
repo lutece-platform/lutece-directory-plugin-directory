@@ -1,26 +1,6 @@
 <#include "/admin/plugins/directory/commons.html" />
 
-<#function getFieldValue entry fieldTitle>
-	<#if entry.fields?? && entry.fields?has_content>
-		<#list entry.fields as field>
-			<#if field?? && field.title?? && field.title == fieldTitle>
-				<#return field.value>
-			</#if>
-		</#list>
-	</#if>
-	<#return "">
-</#function>
-
-<#function getOptionField entry>
-	<#if entry.fields?? && entry.fields?has_content>
-		<#list entry.fields as field>
-			<#if field?? && ( !field.title?? || ( field.title?? && ( field.title == "option" || field.title == "" ) ) )>
-				<#return field>
-			</#if>
-		</#list>
-	</#if>
-</#function>
-<#assign fieldOption = getOptionField( entry )>
+<#assign fieldOption = getField( entry, "option" )>
 <#assign id_field = fieldOption.idField>
 <script language="JavaScript" type="text/javascript">
 	window.onload = function() 
@@ -85,8 +65,12 @@
 			</#if>	
 		</p>
 		<p>
-			<label for="width">#i18n{directory.create_entry.label_file_max_size} * : </label>
-			<input type="text" name="width" id="width" size="5" value="${fieldOption.width}" />
+			<label for="file_max_size">#i18n{directory.create_entry.label_file_max_size} * : </label>
+			<input type="text" name="file_max_size" id="file_max_size" size="10" value="${getFileMaxSize(entry)}" />
+		</p>
+		<p>
+			<label for="max_files">#i18n{directory.create_entry.label_max_files} * :</label>
+			<input name="max_files" type="text" size="2" value="${getMaxFiles(entry)}" maxlength="2" />
 		</p>
 		<p>
 			<label for="ws_rest_url">#i18n{directory.create_entry.label_ws_rest_url} * :</label>
@@ -110,14 +94,6 @@
 	<div id="advanced_settings" class="content-box">
 		<h2>#i18n{directory.create_directory.label_advancedsettings}
 		</h2>
- 		<p>
-		    <label for="max_size_enter">#i18n{directory.create_entry.label_max_size_enter} : </label>
-    		<#if fieldOption.maxSizeEnter!=-1>
-    			<input type="text" name="max_size_enter" id="max_size_enter" size="5" value="${fieldOption.width}" />
-    		<#else>
-    			<input type="text" name="max_size_enter" id="max_size_enter" size="5" value="" />
-    		</#if>
-	  	 </p>
 	  	 <p>
 	    	<label for="indexed">#i18n{directory.create_entry.label_indexed} : </label>
 	   		 <#if entry.indexed>

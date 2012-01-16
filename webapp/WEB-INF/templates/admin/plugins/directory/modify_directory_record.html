@@ -7,32 +7,39 @@
 	  	<#if directory_record.dateModification??>- #i18n{directory.viewing_directory_record.date_modification} ${directory_record.dateModification}</#if>
 	</h2>
 	<div id="form-content">
-			<form action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data">
+		<form action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data">
 			<input name="page" value="directory" type="hidden" />
-			 <input name="id_directory_record" value="${directory_record.idRecord}" type="hidden" />
-			 <#list entry_list as entry>	
-	      			<#if entry.entryType.group>	
-	      			  	<fieldset class="form-fieldset"> 
-	    					 <legend class="form-legend"> ${entry.title} </legend> 
-	      					<#if entry.children?has_content>
-	      						<#list entry.children as child >
-	      								<#assign entryKey=""+child.idEntry>	
-	      							${child.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
-	      						</#list>
-	      					</#if>
-	      				</fieldset>		
-	      			<#else>
-	      				<#assign entryKey=""+entry.idEntry>	
-	      				${entry.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}	
-	      			</#if>	
-	      			
-	      		</#list>
-	 			 <p>
-	  				<input type="submit" value="#i18n{directory.create_directory_record.button_save}" class="button" name="save" />
-	  				<input type="submit" value="#i18n{directory.create_directory_record.button_cancel}" class="button" name="cancel" />
-	   			</p>
-			</form>
-		</div>
+			<input name="id_directory_record" value="${directory_record.idRecord}" type="hidden" />
+			<#list entry_list as entry>	
+	      		<#if entry.entryType.group>	
+	      		  	<fieldset class="form-fieldset"> 
+						<legend class="form-legend"> ${entry.title} </legend> 
+	      				<#if entry.children?has_content>
+	      					<#list entry.children as child >
+	      						<#assign entryKey=""+child.idEntry>
+	      						<#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
+									${child.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+								<#else>
+	      							${child.getHtmlFormEntry( locale,false )}
+	      						</#if>
+	      					</#list>
+	      				</#if>
+	      			</fieldset>		
+	      		<#else>
+	      			<#assign entryKey=""+entry.idEntry>
+	      			<#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
+	      				${entry.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+					<#else>
+	      				${entry.getHtmlFormEntry( locale,false )}
+	      			</#if>
+	      		</#if>
+	      	</#list>
+	 		<p>
+	  			<input type="submit" value="#i18n{directory.create_directory_record.button_save}" class="button" name="save" />
+	  			<input type="submit" value="#i18n{directory.create_directory_record.button_cancel}" class="button" name="cancel" />
+	   		</p>
+		</form>
+	</div>
 </div>
 
 <@initEditor />

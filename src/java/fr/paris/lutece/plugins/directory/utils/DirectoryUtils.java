@@ -118,6 +118,7 @@ public final class DirectoryUtils
     public static final String CONSTANT_NAME = "name";
     public static final String CONSTANT_TRUE = "true";
     public static final String CONSTANT_DOT = ".";
+    public static final String CONSTANT_UNDERSCORE = "_";
 
     // TEMPLATES
     public static final String TEMPLATE_FORM_DIRECTORY_RECORD = "admin/plugins/directory/html_code_form_directory_record.html";
@@ -145,6 +146,10 @@ public final class DirectoryUtils
 
     // JSP
     public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
+    
+    // SESSION
+    public static final String SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS = "directory_list_submitted_record_fields";
+    public static final String SESSION_DIRECTORY_TASKS_SUBMITTED_RECORD_FIELDS = "directory_tasks_submitted_record_fields";
 
     // PROPERTIES
     public static final String PROPERTY_LUTECE_BASE_URL = "lutece.base.url";
@@ -452,6 +457,34 @@ public final class DirectoryUtils
 
         return map;
     }
+    
+    /**
+     * Build the map of <idEntry, RecordFields> from a given record
+     * @param record the record
+     * @return the map of <idEntry, RecordFields>
+     */
+    public static Map<String, List<RecordField>> buildMapIdEntryListRecordField( Record record )
+    {
+    	Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>(  );
+    	
+    	for ( RecordField recordField : record.getListRecordField(  ) )
+    	{
+    		if ( recordField != null && recordField.getEntry(  ) != null )
+    		{
+    			recordField.setRecord( record );
+    			String strIdEntry = Integer.toString( recordField.getEntry(  ).getIdEntry(  ) );
+    			List<RecordField> listRecordFields = map.get( strIdEntry );
+    			if ( listRecordFields == null )
+    			{
+    				listRecordFields = new ArrayList<RecordField>(  );
+    			}
+    			listRecordFields.add( recordField );
+    			map.put( strIdEntry, listRecordFields );
+    		}
+    	}
+
+        return map;
+    }
 
     /**
      * Gets all {@link RecordField} for the entry
@@ -556,6 +589,13 @@ public final class DirectoryUtils
     public static void getDirectoryRecordData( HttpServletRequest request, Record record, Plugin plugin, Locale locale )
         throws DirectoryErrorException
     {
+    	boolean bTestDirectoryError = true;
+		String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+		if ( StringUtils.isNotBlank( strUploadAction ) )
+		{
+			bTestDirectoryError = false;
+		}
+    	
         List<RecordField> listRecordFieldResult = new ArrayList<RecordField>(  );
         EntryFilter filter = new EntryFilter(  );
         filter.setIdDirectory( record.getDirectory(  ).getIdDirectory(  ) );
@@ -566,8 +606,8 @@ public final class DirectoryUtils
 
         for ( IEntry entry : listEntryFirstLevel )
         {
-            DirectoryUtils.getDirectoryRecordFieldData( record, request, entry.getIdEntry(  ), true,
-                listRecordFieldResult, plugin, locale );
+    		DirectoryUtils.getDirectoryRecordFieldData( record, request, entry.getIdEntry(  ), bTestDirectoryError,
+    				listRecordFieldResult, plugin, locale );
         }
 
         record.setListRecordField( listRecordFieldResult );
@@ -674,13 +714,16 @@ public final class DirectoryUtils
      */
     public static Field findFieldByIdInTheList( int nIdField, List<Field> listField )
     {
-        for ( Field field : listField )
-        {
-            if ( field.getIdField(  ) == nIdField )
-            {
-                return field;
-            }
-        }
+    	if ( listField != null && !listField.isEmpty(  ) )
+    	{
+    		for ( Field field : listField )
+    		{
+    			if ( field.getIdField(  ) == nIdField )
+    			{
+    				return field;
+    			}
+    		}
+    	}
 
         return null;
     }
@@ -696,7 +739,7 @@ public final class DirectoryUtils
      */
     public static Field findFieldByValueInTheList( String strFieldValue, List<Field> listField )
     {
-        if ( strFieldValue != null )
+        if ( strFieldValue != null && listField != null && !listField.isEmpty(  ) )
         {
             for ( Field field : listField )
             {
@@ -705,6 +748,37 @@ public final class DirectoryUtils
                     return field;
                 }
             }
+        }
+
+        return null;
+    }
+    
+    /**
+     * Return the field which title is specified in parameter
+     * @param strTitle the title
+     * @param listFields the list of fields
+     * @return the field which title is specified in parameter
+     */
+    public static Field findFieldByTitleInTheList( String strTitle, List<Field> listFields )
+    {
+    	if ( listFields == null || listFields.isEmpty(  ) )
+    	{
+    		return null;
+    	}
+    	
+    	for ( Field field : listFields )
+        {
+        	if ( StringUtils.isNotBlank( strTitle ) )
+        	{
+        		if ( trim( strTitle ).equals( trim( field.getTitle(  ) ) ) )
+        		{
+        			return field;
+        		}
+        	}
+        	else if ( StringUtils.isBlank( field.getTitle(  ) ) )
+        	{
+        		return field;
+        	}
         }
 
         return null;
@@ -1390,17 +1464,17 @@ public final class DirectoryUtils
         List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( filter, plugin );
 
         // If entry is type download url, then fetch the file name
-        if ( entry instanceof EntryTypeDownloadUrl )
+        if ( entry instanceof EntryTypeDownloadUrl && bGetFileName )
         {
             if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) )
             {
-                // Only 1 record field per entry type download url
-                RecordField recordField = listRecordFields.get( 0 );
-
-                if ( ( recordField != null ) && StringUtils.isNotBlank( recordField.getValue(  ) ) && bGetFileName )
-                {
-                    recordField.setFileName( getFileName( recordField.getValue(  ) ) );
-                }
+            	for ( RecordField recordField : listRecordFields )
+            	{
+            		if ( ( recordField != null ) && StringUtils.isNotBlank( recordField.getValue(  ) ) )
+            		{
+            			recordField.setFileName( getFileName( recordField.getValue(  ) ) );
+            		}
+            	}
             }
         }
 

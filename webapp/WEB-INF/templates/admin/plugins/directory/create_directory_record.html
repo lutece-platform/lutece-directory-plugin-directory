@@ -1,26 +1,35 @@
 <#include "/admin/util/editor/editor.html" />
 
 <div class="content-box">
-	  <h2> #i18n{directory.create_directory_record.title}: '${directory.title}'</h2>
-	  <div id="form-content">
-			<form action="jsp/admin/plugins/directory/DoCreateDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data">
+	<h2> #i18n{directory.create_directory_record.title}: '${directory.title}'</h2>
+	<div id="form-content">
+		<form action="jsp/admin/plugins/directory/DoCreateDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data">
 			<input name="page" value="directory" type="hidden" />
-			 <input name="id_directory" value="${directory.idDirectory}" type="hidden" />
-			<#list entry_list as entry>	
-	      			<#if entry.entryType.group>	
-	      			  	<fieldset class="form-fieldset"> 
-	    					 <legend class="form-legend"> ${entry.title} </legend> 
-	      					<#if entry.children?has_content>
-	      						<#list entry.children as children >
-	      							${children.getHtmlFormEntry( locale,false )}
-	      						</#list>
-	      					</#if>
-	      				</fieldset>
-	      			<#else>
-	      				${entry.getHtmlFormEntry( locale,false )}	
-	      			</#if>	
-	      			
-	      		</#list>
+			<input name="id_directory" value="${directory.idDirectory}" type="hidden" />
+			<#list entry_list as entry>
+				<#if entry.entryType.group>	
+					<fieldset class="form-fieldset"> 
+						<legend class="form-legend"> ${entry.title} </legend> 
+						<#if entry.children?has_content>
+	      					<#list entry.children as child >
+      							<#assign entryKey=""+child.idEntry>
+	      						<#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
+									${child.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+								<#else>
+	      							${child.getHtmlFormEntry( locale,false )}
+	      						</#if>
+	      					</#list>
+	      				</#if>
+	      			</fieldset>
+	      		<#else>
+					<#assign entryKey=""+entry.idEntry>
+	      			<#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
+	      				${entry.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+					<#else>
+	      				${entry.getHtmlFormEntry( locale,false )}
+	      			</#if>
+	      		</#if>
+			</#list>
 	 			
 	 			 <p>
 	  				<input type="submit" value="#i18n{directory.create_directory_record.button_save}" class="button" name="save" />

@@ -51,7 +51,15 @@
  	<p>
     	<label for="mandatory">#i18n{directory.create_entry.label_mandatory} : </label>
    		 <input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
-   </p>
+	</p>
+	<p>
+		<label for="file_max_size">#i18n{directory.create_entry.label_file_max_size} * : </label>
+		<input type="text" name="file_max_size" id="file_max_size" size="10" value="${getName('file_max_size',list_param_default_values)}" />
+	</p>
+	<p>
+		<label for="max_files">#i18n{directory.create_entry.label_max_files} * :</label>
+		<input name="max_files" type="text" size="2" value="${getName('max_files',list_param_default_values)}" maxlength="2" />
+	</p>
     <p>
    		 <label for="display_width">#i18n{directory.create_entry.label_width_display}  : </label>
    		 <input type="text" name="display_width" id="display_width" size="5" value="${getName('width',list_param_default_values)}" />

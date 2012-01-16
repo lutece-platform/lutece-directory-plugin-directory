@@ -56,8 +56,6 @@ import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
 import fr.paris.lutece.plugins.directory.business.RecordHome;
-import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterHome;
-import fr.paris.lutece.plugins.directory.business.parameter.EntryParameterHome;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
 import fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterService;
 import fr.paris.lutece.plugins.directory.service.parameter.EntryParameterService;
@@ -364,18 +362,19 @@ public class DirectoryService
     	boolean bShowXY = false;
     	if ( entry instanceof EntryTypeGeolocation )
         {
-        	if ( entry.getFields(  ) == null || entry.getFields().size(  ) == 0 )
+        	if ( entry.getFields(  ) == null || entry.getFields(  ).size(  ) == 0 )
         	{
         		entry.setFields( getFieldsListFromIdEntry( entry.getIdEntry(  ) ) );
         	}
-        	for ( Field field : entry.getFields(  ) )
-        	{
-        		if ( EntryTypeGeolocation.CONSTANT_SHOWXY.equals( field.getTitle(  ) ) )
-        		{
-        			bShowXY = Boolean.valueOf( field.getValue(  ) );
-        			break;
-        		}
-        	}
+        	if ( entry.getFields(  ) != null && !entry.getFields(  ).isEmpty(  ) )
+    		{
+    			Field fieldShowXY = DirectoryUtils.findFieldByTitleInTheList( 
+    					EntryTypeGeolocation.CONSTANT_SHOWXY, entry.getFields(  ) );
+    			if ( fieldShowXY != null )
+    			{
+    				bShowXY = Boolean.valueOf( fieldShowXY.getValue(  ) );
+    			}
+    		}
         }
     	return bShowXY;
     }
@@ -419,17 +418,16 @@ public class DirectoryService
     	{
     		if ( entry.getFields(  ) == null )
     		{
-    			entry.setFields( FieldHome.getFieldListByIdEntry( entry.getIdEntry(  ), plugin ) );
+    			entry.setFields( getFieldsListFromIdEntry( entry.getIdEntry(  ) ) );
     		}
     		
     		if ( entry.getFields(  ) != null && !entry.getFields(  ).isEmpty(  ) )
     		{
-    			for ( Field field : entry.getFields(  ) )
+    			Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( 
+    					EntryTypeDownloadUrl.CONSTANT_WS_REST_URL, entry.getFields(  ) );
+    			if ( fieldWSRestUrl != null )
     			{
-    				if ( EntryTypeDownloadUrl.CONSTANT_WS_REST_URL.equals( field.getTitle(  ) ) )
-    				{
-    					strWSRestUrl = field.getValue(  );
-    				}
+    				strWSRestUrl = fieldWSRestUrl.getValue(  );
     			}
     		}
     	}

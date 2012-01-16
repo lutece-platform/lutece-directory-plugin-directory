@@ -47,28 +47,14 @@ function addAsynchronousUploadField(fieldId) {
 			}
 	    });
 	    
-	    $( '#update_entry_' + fieldId ).hide(  );
-    	var fileName = $( '#_filename_' + fieldId + ' input[type="hidden"]' ).val(  );
-    	if ( fileName )
-    	{
-    		var anchorId = '_img_remove_file_' + fieldId;
-    		$( '#_filename_' + fieldId).append( getImageRemoveFile( anchorId, fieldId ) );
-			$( '#' + anchorId).click( 
-					function( event ) {
-						if ( confirm( 'Voulez-vous vraiment supprimer le fichier ?' ) ) {
-							var jsonData = { 'id_entry' : fieldId };
-							$.getJSON( baseUrl + 'jsp/admin/plugins/directory/DoRemoveFile.jsp', jsonData,
-								function( json ) {
-								$( '#_filename_' + fieldId).hide(  );
-							} );
-							event.preventDefault();
-							$( '#_filename_' + fieldId ).html( getUpdateEntryHiddenInput( fieldId ) );
-						} else {
-							return false;
-						}
-					}
-			);
-    	}
+	    $( '#_directory_upload_submit_' + fieldId ).hide(  );
+	    if ( !$( '#_directory_upload_checkbox_' + fieldId + '0' ).length )
+		{
+			// no file uploaded, hiding content
+			$("#_file_deletion_" + fieldId ).hide(  );
+			$("#_file_deletion_label_" + fieldId ).hide(  );
+			$("#_file_deletion_button_" + fieldId ).hide(  );
+		}
 	}
 }
 
@@ -150,9 +136,9 @@ function directoryOnUploadComplete(event,ID,fileObj,data)
 	}
 	
 	
-	if ( jsonData.error != null )
+	if ( jsonData.directory_error != null )
 	{
-		alert( jsonData.error );
+		alert( jsonData.directory_error );
 	}
 	
 	directoryDisplayUploadedFiles( jsonData );
@@ -169,12 +155,48 @@ function directoryDisplayUploadedFiles( jsonData )
 	
 	if ( fieldName != null )
 	{
-		displayFile( jsonData.files[0].fileName, fieldName );
+		if ( jsonData.fileCount == 0 )
+		{
+			// no file uploaded, hiding content
+			$("#_file_deletion_" + fieldName ).hide(  );
+			$("#_file_deletion_label_" + fieldName ).hide(  );
+			$("#_file_deletion_button_" + fieldName ).hide(  );
+		}
+		else
+		{
+			// show the hidden div (if not already)
+			$("#_file_deletion_" + fieldName ).show(  );
+			$("#_file_deletion_label_" + fieldName ).show(  );
+			$("#_file_deletion_button_" + fieldName ).show(  );
+
+			var strContent = "";
+			var checkboxPrefix = '_directory_upload_checkbox_' + fieldName;
+			
+			// jsonData.uploadedFiles.length is str length when file count is 1 so using fileCount instead.
+			// so if jsonData.fileCount == 1, the index should not be used
+			for ( var index = 0; index < jsonData.fileCount; index++ ) {
+					strContent = strContent + "<div class=\"form-element\"> \
+						<span class=\"form-label\"><label>&nbsp;</label></span>  \
+						<span class=\"form-field\" >  \
+								<input type=\"checkbox\"  \
+									name=\"" + checkboxPrefix + index + "\"  \
+									id=\"" + checkboxPrefix + index + "\"  \
+								/>  \
+								&#160;" + ( (jsonData.fileCount == 1) ? jsonData.uploadedFiles : jsonData.uploadedFiles[index] ) +
+								"&#160;(" + ( (jsonData.fileCount == 1) ? jsonData.uploadedFilesSize : jsonData.uploadedFilesSize[index] ) + " O)" +
+						"</span>  \
+					</div> ";
+			}
+			
+			$("#_file_deletion_" + fieldName ).html(
+					strContent
+			);
+		}
 	}
 }
 
 // add asynchronous behaviour to inputs type=file
-$('input[type=file].asynchronouse_upload').each(function(index) {
+$('input[type=file]').each(function(index) {
 	addAsynchronousUploadField(this.id);
 });
 
@@ -186,41 +208,13 @@ $('input[type=submit]').each(function() {
 			event.preventDefault();
 			alert('Merci de patienter pendant l\'envoi du fichier');
 		}
+		else if ( this.name.match("_directory_upload_delete_"  ) )
+		{
+			event.preventDefault(); 
+			removeFile(this.name);;
+		}
 	});
 });
-
-function displayFile( fileName, fieldId )
-{
-	var anchorId = '_img_remove_file_' + fieldId;
-	var strContent =  fileName + "&nbsp;" + getImageRemoveFile( anchorId, fieldId ) + getUpdateEntryHiddenInput( fieldId );
-	$("#_filename_" + fieldId).html( strContent );
-	$("#" + anchorId).click( 
-			function( event ) {
-				if ( confirm( 'Voulez-vous vraiment supprimer le fichier ?' ) ) {
-					var jsonData = { "id_entry" : fieldId };
-					$.getJSON(baseUrl + 'jsp/admin/plugins/directory/DoRemoveFile.jsp', jsonData,
-							function(json) {
-						$( '#_filename_' + fieldId).hide(  );
-					}
-					);				
-					event.preventDefault();
-					$( '#_filename_' + fieldId).html( '' );
-				} else {
-					return false;
-				}
-			}
-	);
-}
-
-function getImageRemoveFile( anchorId, fieldId )
-{
-	return '<a href="#" id="'+ anchorId + '"><img src="images/local/skin/plugins/directory/cancel.png" title="Supprimer" alt="Supprimer" /></a>';
-}
-
-function getUpdateEntryHiddenInput( fieldId )
-{
-	return '<input type="hidden" name="update_entry_' + fieldId + '" value="true" />';
-}
 
 /**
  * Gets the max size value for the file
@@ -266,6 +260,44 @@ function getInputValue( inputId ) {
 	}
 	
 	return null;
+}
+
+/**
+ * Removes a file
+ * @param form the form
+ * @param subform the subform
+ * @param action the action button name
+ */
+function removeFile( action ) {
+	var fieldName = action.match("_directory_upload_delete_directory_(.*)")[1];
+	
+	// build indexes to remove
+	var indexes = new Array();
+	
+	var indexesCount = 0;
+	var checkboxPrefix = '_directory_upload_checkbox_directory_' + fieldName;
+	$('[name^="' + checkboxPrefix + '"]:checked' ).each( function() {
+		if (this.checked)
+		{
+			indexesCount++;
+			var index = this.name.match( checkboxPrefix + "(\\d+)")[1] ;
+			indexes.push(index);
+		}
+	});
+	
+	if ( !indexesCount )
+	{
+		return;
+	}
+	
+	strIndexes = "[" + indexes + "]";
+	var jsonData = {"id_entry":fieldName, "field_index": strIndexes};
+	
+	$.getJSON(baseUrl + 'jsp/site/plugins/directory/DoRemoveFile.jsp', jsonData,
+		function(json) {
+			directoryDisplayUploadedFiles(json);
+		}
+	);
 }
 
 function keepAlive(  ) {

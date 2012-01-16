@@ -33,17 +33,19 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
-import fr.paris.lutece.portal.service.plugin.Plugin;
-import fr.paris.lutece.portal.web.util.LocalizedPaginator;
-import fr.paris.lutece.util.ReferenceList;
-import fr.paris.lutece.util.html.Paginator;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+
+import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
+import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.web.util.LocalizedPaginator;
+import fr.paris.lutece.util.ReferenceList;
+import fr.paris.lutece.util.html.Paginator;
 
 
 /**
@@ -660,4 +662,16 @@ public interface IEntry
      * @return an empty list if no parameter needed, parameters values otherwise.
      */
     List<Object> getSQLParametersValues();
+
+    /**
+     * Check if the file can be uploaded or not.
+     * This method will check the size of each file and the number max of files
+     * that can be uploaded.
+     * @param listUploadedFileItems the list of uploaded files
+     * @param listFileItemsToUpload the list of files to upload
+     * @param locale the locale
+     * @throws DirectoryErrorException exception if there is an error
+     */
+    void canUploadFiles( List<FileItem> listUploadedFileItems, 
+    		List<FileItem> listFileItemsToUpload, Locale locale ) throws DirectoryErrorException;
 }

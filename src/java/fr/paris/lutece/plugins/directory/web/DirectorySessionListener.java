@@ -65,7 +65,7 @@ public class DirectorySessionListener implements HttpSessionListener
             AppLogService.debug( "DirectorySessionListener removing " + strSessionId );
         }
         
-        DirectoryAsynchronousUploadHandler.removeSessionFiles( strSessionId );
+        DirectoryAsynchronousUploadHandler.getHandler(  ).removeSessionFiles( strSessionId );
     }
 
 }

@@ -1,62 +1,86 @@
-<#if entry.fields?? && entry.fields?has_content>
-	<#list entry.fields as field>
-		<#if field?? && ( !field.title?? || ( field.title?? && ( field.title == "option" || field.title == "" ) ) )>
-			<#assign fieldOption = field>
-			<#break>
-		</#if>
-	</#list>
-</#if>
+<#include "/admin/plugins/directory/commons.html" />
 
-<#-- file removing -->
-<#if default_values?? && default_values?has_content>
-	<#list default_values as default_value>
-		<#if default_value?? && default_value.fileName??>
-			<#assign file = default_value>
-			<#break>
-		</#if>
-	</#list>
-</#if>
 <div class="form-element">
-	<span class="form-label">
-		<label for="${entry.idEntry}">
-			${entry.title}
-			<#if entry.mandatory>
-				*
-			</#if>
-			 : 
+	 <span class="form-label">
+		 <label for="${entry.idEntry}">	
+				${entry.title}
+				<#if entry.mandatory>
+					*
+				</#if>
+				 : 
 		</label>
 	</span>
-	<span class="form-field-column">
-		<input type="file" name="${entry.idEntry}" id="${entry.idEntry}" class="asynchronouse_upload" value="" />
-		<#if file??>
-			<span id="update_entry_${entry.idEntry}">
-				#i18n{directory.html_code_form_entry_img.label_update_file} <input type="checkbox" name="update_entry_${entry.idEntry}" value="1" />
-			</span>
-		<#else>
-			<input type="hidden" name="update_entry_${entry.idEntry}" value="true" />
-		</#if>
+	<span class="form-field-column">	 
+		<input type="file" name="directory_${entry.idEntry}" id="directory_${entry.idEntry}" />
+		<input type="hidden" name="_directory_upload_maxLength_directory_${entry.idEntry}" id="_directory_upload_maxLength_directory_${entry.idEntry}" value="${getFileMaxSize( entry )}" />
+		<input type="hidden" name="_directory_upload_fileTypes_directory_${entry.idEntry}" id="_directory_upload_fileTypes_directory_${entry.idEntry}" value="${getFileTypes( entry )}" />
 	</span>
-	<br />
-	<span class="form-label">
-		<label for="update_entry_${entry.idEntry}">&nbsp;</label>
-	</span>
-	<span class="form-field-column" id="_filename_${entry.idEntry}">
-		<#if file??>
-			<input name="_filename_value_${entry.idEntry}" type="hidden" value="${file.fileName}" />
-			<a href="${file.value}">
-				${file.fileName}
-			</a>
-		</#if>
-	</span>
-	<#if entry.helpMessage?exists&&entry.helpMessage != ''>
+	<#if entry.helpMessage?exists&&entry.helpMessage!=''>
 		<span class="form-help">
 			<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
-				<span><pre>${entry.helpMessage}</pre></span>
+				<span><pre> ${entry.helpMessage}</pre></span>
 			</a>
 		</span>
 	</#if>
-	<#if fieldOption??>
-		<input type="hidden" name="_directory_upload_maxLength_${entry.idEntry}" id="_directory_upload_maxLength_${entry.idEntry}" value="${fieldOption.width}" />
-		<input type="hidden" name="_directory_upload_fileTypes_${entry.idEntry}" id="_directory_upload_fileTypes_${entry.idEntry}" value="${fieldOption.value}" />
+</div>
+
+<div class="form-element">
+	<span class="form-label">
+		<label for="${entry.idEntry}">&nbsp;</label>
+	</span>
+	<span class="form-field-column">
+		<input type="submit" class="button" id="_directory_upload_submit_directory_${entry.idEntry}" name="_directory_upload_submit_directory_${entry.idEntry}" value="#i18n{directory.action.send.name}" />
+	</span>
+</div>
+
+<#-- file removing -->
+<#assign has_files = false>
+<#if default_values?? && default_values?has_content>
+	<#assign record_field_error = default_values[0]>
+	<#if record_field_error.entry.idEntry == entry.idEntry>
+		<#assign has_files = true>
 	</#if>
+</#if>
+
+<div class="form-element" id="_file_deletion_label_directory_${entry.idEntry}">
+	<span class="form-label">
+		<label for="delete_${entry.idEntry}">#i18n{directory.create_directory_record.file.uploadedFile} :</label>
+	</span>
+	<span class="form-field-column" id="_filename_directory_${entry.idEntry}">
+		&nbsp;
+	</span>
+</div>
+
+<#assign file_index = 0>
+<div id="_file_deletion_directory_${entry.idEntry}">
+	<#if has_files>
+		<#list default_values as default_value>
+			<#if default_value.fileName?? && default_value.fileName != ''>
+				<div class="form-element">
+					<span class="form-label" id="_file_deletion_${entry.idEntry}"><label>&nbsp;</label></span>
+					<span class="form-field-column" id="_filename_directory_${entry.idEntry}">
+						<input type="checkbox" id="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" name="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" value="1" />
+						
+						<#-- Case when the user uploads without JS -->
+						<#if default_value.value?? && default_value.value != ''>
+							<a href="${default_value.value}">
+								${default_value.fileName}
+							</a>
+						<#else>
+							${default_value.fileName}
+						</#if>
+					</span>
+				</div>
+			</#if>
+			<#assign file_index = file_index + 1>
+		</#list>
+	</#if>
+</div>
+<div class="form-element" id="_file_deletion_button_directory_${entry.idEntry}">
+	<span class="form-label">
+		<label for="${entry.idEntry}">&nbsp;</label>
+	</span>
+	<span class="form-field-column">
+		<input type="submit" class="button" name="_directory_upload_delete_directory_${entry.idEntry}" value="#i18n{directory.action.delete.name}" />
+	</span>
 </div>

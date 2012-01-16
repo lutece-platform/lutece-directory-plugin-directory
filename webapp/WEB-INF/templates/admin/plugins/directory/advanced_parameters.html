@@ -236,6 +236,14 @@
 		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_completeness_comment}
 		</p>
 		<p>
+			<label for="file_max_size">#i18n{directory.create_entry.label_file_max_size} :</label>
+			<input type="text" name="file_max_size" size="10" maxlength="255" value="${getName('file_max_size',list_entry_param_default_values)}" />
+		</p>
+		<p>
+			<label for="max_files">#i18n{directory.create_entry.label_max_files} :</label>
+			<input type="text" name="max_files" size="2" maxlength="255" value="${getName('max_files',list_entry_param_default_values)}" />
+		</p>
+		<p>
 			<input type="submit" class="button" value="#i18n{directory.manage_advanced_parameters.buttonModify}" />
 		</p>
 	</form>

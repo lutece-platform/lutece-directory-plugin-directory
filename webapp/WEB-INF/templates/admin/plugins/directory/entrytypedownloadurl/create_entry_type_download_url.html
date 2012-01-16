@@ -63,8 +63,12 @@
 			<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
 		</p>
 		<p>
-			<label for="width">#i18n{directory.create_entry.label_file_max_size} * : </label>
-			<input type="text" name="width" id="width" size="5" value="${getName('width',list_param_default_values)}" />
+			<label for="file_max_size">#i18n{directory.create_entry.label_file_max_size} * : </label>
+			<input type="text" name="file_max_size" id="file_max_size" size="10" value="${getName('file_max_size',list_param_default_values)}" />
+		</p>
+		<p>
+			<label for="max_files">#i18n{directory.create_entry.label_max_files} * :</label>
+			<input name="max_files" type="text" size="2" value="${getName('max_files',list_param_default_values)}" maxlength="2" />
 		</p>
 		<p>
 			<label for="ws_rest_url">#i18n{directory.create_entry.label_ws_rest_url} * :</label>
@@ -90,10 +94,6 @@
 			#i18n{directory.create_directory.label_advancedsettings}
 		</h2>
 	 	
- 		<p>
-			<label for="max_size_enter">#i18n{directory.create_entry.label_max_size_enter}  : </label>
-			<input type="text" name="max_size_enter" id="max_size_enter" size="5" value="${getName('max_size_enter',list_param_default_values)}" />
-		</p>
 		<p>
 			<label for="indexed">#i18n{directory.create_entry.label_indexed} :</label>
 			<input name="indexed" value="1" type="checkbox" ${getChecked('indexed',list_param_default_values)} />

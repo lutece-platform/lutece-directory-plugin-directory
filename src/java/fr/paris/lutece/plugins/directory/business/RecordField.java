@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  *
@@ -50,7 +52,15 @@ public class RecordField
     private Field _field;
     private File _file;
     private Record _record;
+    /**
+     * This attribute is used for EntryTypeDownloadURL
+     * @see {@link EntryTypeDownloadUrl}
+     */
     private String _strFileName;
+    /**
+     * This attribute is used for EntryTypeDownloadURL
+     * @see {@link EntryTypeDownloadUrl}
+     */
     private String _strFileExtension;
 
     /**
@@ -163,7 +173,7 @@ public class RecordField
 
     public boolean isLittleThumbnail(  )
     {
-        if ( ( _strValue != null ) && ( _strValue.equals( CONSTANT_LITTLE_THUMBNAIL ) ) )
+        if ( StringUtils.isNotBlank( _strValue ) && ( _strValue.startsWith( CONSTANT_LITTLE_THUMBNAIL ) ) )
         {
             return true;
         }
@@ -175,7 +185,7 @@ public class RecordField
 
     public boolean isBigThumbnail(  )
     {
-        if ( ( _strValue != null ) && ( _strValue.equals( CONSTANT_BIG_THUMBNAIL ) ) )
+        if ( StringUtils.isNotBlank( _strValue ) && ( _strValue.startsWith( CONSTANT_BIG_THUMBNAIL ) ) )
         {
             return true;
         }
@@ -196,6 +206,8 @@ public class RecordField
     
     /**
      * Get the file extensions
+     * This attribute is used for EntryTypeDownloadURL
+     * @see {@link EntryTypeDownloadUrl}
      * @return the file extension if the response value is a file
      */
     public String getFileExtension(  )
@@ -205,6 +217,8 @@ public class RecordField
 
 	/**
      * Set the file extension if the response value is a file
+     * This attribute is used for EntryTypeDownloadURL
+     * @see {@link EntryTypeDownloadUrl}
      * @param fileExtension the file extension if the response value is a file
      */
     public void setFileExtension( String fileExtension )
@@ -214,6 +228,8 @@ public class RecordField
 
 	/**
 	 * The file name if the response value is a file
+	 * This attribute is used for EntryTypeDownloadURL
+     * @see {@link EntryTypeDownloadUrl}
 	 * @return the file name if the response value is a file
 	 */
 	public String getFileName(  )
@@ -223,6 +239,8 @@ public class RecordField
 
 	/**
 	 * The file name if the response value is a file
+	 * This attribute is used for EntryTypeDownloadURL
+     * @see {@link EntryTypeDownloadUrl}
 	 * @param fileName the file name if the response value is a file
      */
 	public void setFileName( String fileName )
