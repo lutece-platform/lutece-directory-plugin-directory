@@ -33,13 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryAction;
 import fr.paris.lutece.plugins.directory.business.DirectoryActionHome;
@@ -62,6 +55,13 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.url.UrlItem;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * Calendar Dashboard Component
@@ -69,18 +69,18 @@ import fr.paris.lutece.util.url.UrlItem;
  */
 public class DirectoryDashboardComponent extends DashboardComponent
 {
-	// MARKS
+    // MARKS
     public static final String MARK_URL = "url";
     public static final String MARK_ICON = "icon";
     public static final String MARK_DIRECTORY_LIST = "directory_list";
     public static final String MARK_RECORD_COUNT_LIST = "record_count_list";
     public static final String MARK_AUTHORIZED_DIRECTORY_MODIFICATION_LIST = "authorized_directory_modification_list";
     public static final String MARK_PERMISSION_CREATE = "permission_create";
-    
+
     // CONSTANTS
     private static final int ZONE_1 = 1;
     private static final String EMPTY_STRING = "";
-    
+
     // TEMPALTES
     private static final String TEMPLATE_DASHBOARD_ZONE_1 = "/admin/plugins/directory/directory_dashboard_zone_1.html";
     private static final String TEMPLATE_DASHBOARD_OTHER_ZONE = "/admin/plugins/directory/directory_dashboard_other_zone.html";
@@ -88,7 +88,7 @@ public class DirectoryDashboardComponent extends DashboardComponent
     /**
      * The HTML code of the component
      * @param user The Admin User
-	 * @param request HttpServletRequest
+         * @param request HttpServletRequest
      * @return The dashboard component
      */
     public String getDashboardData( AdminUser user, HttpServletRequest request )
@@ -150,7 +150,8 @@ public class DirectoryDashboardComponent extends DashboardComponent
 
         model.put( MARK_URL, url.getUrl(  ) );
         model.put( MARK_ICON, plugin.getIconUrl(  ) );
-        model.put( MARK_PERMISSION_CREATE, RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
+        model.put( MARK_PERMISSION_CREATE,
+            RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
                 DirectoryResourceIdService.PERMISSION_CREATE, user ) );
 
         HtmlTemplate t = AppTemplateService.getTemplate( getTemplateDashboard(  ), user.getLocale(  ), model );

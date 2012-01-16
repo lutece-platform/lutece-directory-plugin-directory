@@ -40,39 +40,40 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 
+
 /**
- * 
+ *
  * DirectoryParameterService
  *
  */
 public final class EntryParameterService
 {
-	private static final String BEAN_ENTRY_PARAMETER_SERVICE = "directory.entryParameterService";
-	
-	/**
-	 * Get the instance of the service
-	 * @return the instance of the service
-	 */
-	public static EntryParameterService getService(  )
-	{
-		return (EntryParameterService) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME, 
-				BEAN_ENTRY_PARAMETER_SERVICE );
-	}
-	
-	/**
-	 * Find all directory parameters
-	 * @return a {@link ReferenceList}
-	 */
-	public ReferenceList findAll(  )
-	{
-		return EntryParameterHome.findAll( DirectoryUtils.getPlugin(  ) );
-	}
-	
-	/**
-     * Load the parameter value
-     * @param strParameterKey the parameter key
-     * @return The parameter value
+    private static final String BEAN_ENTRY_PARAMETER_SERVICE = "directory.entryParameterService";
+
+    /**
+     * Get the instance of the service
+     * @return the instance of the service
      */
+    public static EntryParameterService getService(  )
+    {
+        return (EntryParameterService) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
+            BEAN_ENTRY_PARAMETER_SERVICE );
+    }
+
+    /**
+     * Find all directory parameters
+     * @return a {@link ReferenceList}
+     */
+    public ReferenceList findAll(  )
+    {
+        return EntryParameterHome.findAll( DirectoryUtils.getPlugin(  ) );
+    }
+
+    /**
+    * Load the parameter value
+    * @param strParameterKey the parameter key
+    * @return The parameter value
+    */
     public ReferenceItem findByKey( String strParameterKey )
     {
         return EntryParameterHome.findByKey( strParameterKey, DirectoryUtils.getPlugin(  ) );
@@ -85,6 +86,6 @@ public final class EntryParameterService
      */
     public void update( ReferenceItem param )
     {
-    	EntryParameterHome.update( param, DirectoryUtils.getPlugin(  ) );
+        EntryParameterHome.update( param, DirectoryUtils.getPlugin(  ) );
     }
 }

@@ -81,9 +81,9 @@ public class DirectoryFilter
     }
 
     /**
-	 *
-	 * @return the workgroup of the search forms
-	 */
+         *
+         * @return the workgroup of the search forms
+         */
     public String getWorkgroup(  )
     {
         return _strWorkgroup;
@@ -136,34 +136,34 @@ public class DirectoryFilter
     {
         return ( _nIdWorkflow != ALL_INT );
     }
-    
-	/**
-	 *
-     * @return 1 if the directories return must be Indexed
-     *                    0 if the forms return must not be Indexed
-     */
-	public int getIsIndexed(  )
-	{
-		return _nIsIndexed;
-	}
 
-   /**
-    * Set 1 if the directories return must be indexed
-    *            0 if the directories return must be indexed
-    * @param idState  1 if the directories return must be indexed
-    *                                      0 if the forms return must not be indexed
+    /**
+     *
+    * @return 1 if the directories return must be Indexed
+    *                    0 if the forms return must not be Indexed
     */
-	public void setIsIndexed( int idState )
-	{
-		_nIsIndexed = idState;
-	}
+    public int getIsIndexed(  )
+    {
+        return _nIsIndexed;
+    }
 
-	/**
-     * Check if the filter contains isIndexed state
-     * @return true if the filter contains isIndexed state
+    /**
+     * Set 1 if the directories return must be indexed
+     *            0 if the directories return must be indexed
+     * @param idState  1 if the directories return must be indexed
+     *                                      0 if the forms return must not be indexed
      */
-	public boolean containsIsIndexed(  )
-	{
-		return ( _nIsIndexed != ALL_INT );
-	}
+    public void setIsIndexed( int idState )
+    {
+        _nIsIndexed = idState;
+    }
+
+    /**
+    * Check if the filter contains isIndexed state
+    * @return true if the filter contains isIndexed state
+    */
+    public boolean containsIsIndexed(  )
+    {
+        return ( _nIsIndexed != ALL_INT );
+    }
 }

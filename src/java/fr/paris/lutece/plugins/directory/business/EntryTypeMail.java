@@ -282,7 +282,7 @@ public class EntryTypeMail extends Entry
             List<RecordField> recordFieldList = RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
 
             if ( ( recordFieldList != null ) && !recordFieldList.isEmpty(  ) &&
-            		StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue(  ) ) )
+                    StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue(  ) ) )
             {
                 strValueEntry = recordFieldList.get( 0 ).getValue(  ) + ", " + strValueEntry;
             }

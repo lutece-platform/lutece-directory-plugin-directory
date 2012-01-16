@@ -42,13 +42,13 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -211,7 +211,7 @@ public class EntryTypeInternalLink extends Entry
             List<RecordField> recordFieldList = RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
 
             if ( ( recordFieldList != null ) && !recordFieldList.isEmpty(  ) &&
-            		StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue(  ) ) )
+                    StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue(  ) ) )
             {
                 strValueEntry = recordFieldList.get( 0 ).getValue(  ) + ", " + strValueEntry;
             }

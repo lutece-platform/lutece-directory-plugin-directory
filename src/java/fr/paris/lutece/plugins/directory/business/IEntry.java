@@ -33,19 +33,19 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.fileupload.FileItem;
-
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.Paginator;
+
+import org.apache.commons.fileupload.FileItem;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -197,7 +197,7 @@ public interface IEntry
      * @param  shown true if the entry must be shown in data export
      */
     void setShownInExport( boolean shown );
-    
+
     /**
      * @return true if the field must be shown in record completeness
      */
@@ -230,18 +230,18 @@ public interface IEntry
      * @param indexedAsTitle true if the field is (part of) the title of the document in the global index
      */
     void setIndexedAsTitle( boolean indexedAsTitle );
-    
+
     /**
      * @return true if the field is (part of) the summary of the document in the global index
      */
     boolean isIndexedAsSummary(  );
-    
+
     /**
      *  set true if the field is (part of) the summary of the document in the global index
      * @param indexedAsSummary true if the field is (part of) the summary of the document in the global index
      */
     void setIndexedAsSummary( boolean indexedAsSummary );
-    
+
     /**
     * @return position entry
     */
@@ -635,7 +635,7 @@ public interface IEntry
      */
     LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex, Locale locale );
-    
+
     // SQL PART
     // ADDED TO SORT LIST WITH BETTER PERFORMANCES
     /**
@@ -645,8 +645,8 @@ public interface IEntry
      * @return join clause (i.e <code>" JOIN some_table ON col1=col2 "</code>)
      * @see #isSortable
      */
-    String getSQLJoin();
-    
+    String getSQLJoin(  );
+
     /**
      * Gets the order by clause in case of query order.
      * Does not contain ASC or DESC clause (provided by DAO).
@@ -655,13 +655,13 @@ public interface IEntry
      * @return order by clause (i.e. <code>" ORDER BY some_column "</code>)
      * @see #isSortable
      */
-    String getSQLOrderBy();
-    
+    String getSQLOrderBy(  );
+
     /**
-     * Use with {@link #getSQLJoin()} and {@link #getSQLOrderBy()} to add parameters values 
+     * Use with {@link #getSQLJoin()} and {@link #getSQLOrderBy()} to add parameters values
      * @return an empty list if no parameter needed, parameters values otherwise.
      */
-    List<Object> getSQLParametersValues();
+    List<Object> getSQLParametersValues(  );
 
     /**
      * Check if the file can be uploaded or not.
@@ -672,6 +672,6 @@ public interface IEntry
      * @param locale the locale
      * @throws DirectoryErrorException exception if there is an error
      */
-    void canUploadFiles( List<FileItem> listUploadedFileItems, 
-    		List<FileItem> listFileItemsToUpload, Locale locale ) throws DirectoryErrorException;
+    void canUploadFiles( List<FileItem> listUploadedFileItems, List<FileItem> listFileItemsToUpload, Locale locale )
+        throws DirectoryErrorException;
 }

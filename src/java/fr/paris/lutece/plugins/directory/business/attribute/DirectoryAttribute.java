@@ -50,9 +50,9 @@ import java.lang.annotation.Target;
 @Target( ElementType.FIELD )
 public @interface DirectoryAttribute
 {
-	/**
-	 * Get the key of the attribute
-	 * @return the key of the attribute
-	 */
-	String value(  );
+    /**
+     * Get the key of the attribute
+     * @return the key of the attribute
+     */
+    String value(  );
 }

@@ -33,14 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web.action;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
@@ -60,93 +52,104 @@ import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.url.UrlItem;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 /**
- * 
+ *
  * Redirects to jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp
  *
  */
-public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
+public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
+    implements IDirectoryAction
 {
-	// ACTIONS
-	private static final String ACTION_NAME = "Mass Workflow Actions";
-	
-	// TEMPLATES
-	private static final String TEMPLATE_BUTTON = "actions/mass_workflow_action.html";
+    // ACTIONS
+    private static final String ACTION_NAME = "Mass Workflow Actions";
 
-	// PARAMETERS
-	/** the button is an image so the name is .x or .y */
-	private static final String PARAMETER_BUTTON_MASS_WORKFLOW_ACTION_X = "mass_workflow_action.x";
-	
-	// MARKS
-	private static final String MARK_LIST_MASS_WORKFLOW_ACTIONS = "list_mass_workflow_actions";
-	
-	// JSP
-	private static final String JSP_DO_PROCESS_ACTION_WORKFLOW = "jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp";
+    // TEMPLATES
+    private static final String TEMPLATE_BUTTON = "actions/mass_workflow_action.html";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void fillModel( HttpServletRequest request, AdminUser adminUser,
-			Map<String, Object> model ) 
-	{
-		ReferenceList refMassActions = null;
-		String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
-		if ( StringUtils.isNotBlank( strIdDirectory ) && StringUtils.isNumeric( strIdDirectory ) )
-		{
-			int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-			Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-			Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
-			if ( directory != null && directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL )
-			{
-				List<Action> listMassActions = WorkflowService.getInstance(  ).getMassActions( directory.getIdWorkflow(  ) );
-				refMassActions = new ReferenceList(  );
-				refMassActions.addAll( ReferenceList.convert( listMassActions, DirectoryUtils.CONSTANT_ID, 
-						DirectoryUtils.CONSTANT_NAME, true ) );
-			}
-		}
-		model.put( MARK_LIST_MASS_WORKFLOW_ACTIONS, refMassActions );
-	}
+    // PARAMETERS
+    /** the button is an image so the name is .x or .y */
+    private static final String PARAMETER_BUTTON_MASS_WORKFLOW_ACTION_X = "mass_workflow_action.x";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getButtonTemplate(  )
-	{
-		return TEMPLATE_BUTTON;
-	}
+    // MARKS
+    private static final String MARK_LIST_MASS_WORKFLOW_ACTIONS = "list_mass_workflow_actions";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getName(  )
-	{
-		return ACTION_NAME;
-	}
+    // JSP
+    private static final String JSP_DO_PROCESS_ACTION_WORKFLOW = "jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp";
 
-	/**
-	 * @see #PARAMETER_BUTTON_MASS_WORKFLOW_ACTION_X
-	 */
-	public boolean isInvoked( HttpServletRequest request ) 
-	{
-		return request.getParameter( PARAMETER_BUTTON_MASS_WORKFLOW_ACTION_X ) != null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void fillModel( HttpServletRequest request, AdminUser adminUser, Map<String, Object> model )
+    {
+        ReferenceList refMassActions = null;
+        String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
 
-	/**
-	 * Redirects to {@link #JSP_DO_PROCESS_ACTION_WORKFLOW}
-	 */
-	public IPluginActionResult process( HttpServletRequest request,
-			HttpServletResponse response, AdminUser adminUser,
-			DirectoryAdminSearchFields sessionFields )
-			throws AccessDeniedException 
-	{
-		DefaultPluginActionResult result = new DefaultPluginActionResult(  );
+        if ( StringUtils.isNotBlank( strIdDirectory ) && StringUtils.isNumeric( strIdDirectory ) )
+        {
+            int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+            Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+            Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
+
+            if ( ( directory != null ) && ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
+            {
+                List<Action> listMassActions = WorkflowService.getInstance(  )
+                                                              .getMassActions( directory.getIdWorkflow(  ) );
+                refMassActions = new ReferenceList(  );
+                refMassActions.addAll( ReferenceList.convert( listMassActions, DirectoryUtils.CONSTANT_ID,
+                        DirectoryUtils.CONSTANT_NAME, true ) );
+            }
+        }
+
+        model.put( MARK_LIST_MASS_WORKFLOW_ACTIONS, refMassActions );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getButtonTemplate(  )
+    {
+        return TEMPLATE_BUTTON;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getName(  )
+    {
+        return ACTION_NAME;
+    }
+
+    /**
+     * @see #PARAMETER_BUTTON_MASS_WORKFLOW_ACTION_X
+     */
+    public boolean isInvoked( HttpServletRequest request )
+    {
+        return request.getParameter( PARAMETER_BUTTON_MASS_WORKFLOW_ACTION_X ) != null;
+    }
+
+    /**
+     * Redirects to {@link #JSP_DO_PROCESS_ACTION_WORKFLOW}
+     */
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
+        DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException
+    {
+        DefaultPluginActionResult result = new DefaultPluginActionResult(  );
 
         String strRedirect = StringUtils.EMPTY;
 
         if ( ( sessionFields.getSelectedRecords(  ) != null ) && !sessionFields.getSelectedRecords(  ).isEmpty(  ) )
         {
-        	String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
-        	String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
+            String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
+            String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
             UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DO_PROCESS_ACTION_WORKFLOW );
             url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
             url.addParameter( DirectoryUtils.PARAMETER_ID_ACTION, strIdAction );
@@ -164,12 +167,12 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
         }
         else
         {
-            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS, AdminMessage.TYPE_INFO );
+            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS,
+                    AdminMessage.TYPE_INFO );
         }
 
         result.setRedirect( strRedirect );
 
         return result;
-	}
-
+    }
 }

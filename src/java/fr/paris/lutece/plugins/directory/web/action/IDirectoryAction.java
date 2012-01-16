@@ -33,18 +33,20 @@
  */
 package fr.paris.lutece.plugins.directory.web.action;
 
+import fr.paris.lutece.portal.business.user.AdminUser;
+import fr.paris.lutece.portal.web.pluginaction.IPluginAction;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.paris.lutece.portal.business.user.AdminUser;
-import fr.paris.lutece.portal.web.pluginaction.IPluginAction;
+
 /**
- * 
+ *
  * A directory action.
  * <ul>
- * <li>{@link #fillModel(HttpServletRequest, AdminUser, Map)} is called by DirectoryJspBean to add additionnal data in the main model 
+ * <li>{@link #fillModel(HttpServletRequest, AdminUser, Map)} is called by DirectoryJspBean to add additionnal data in the main model
  * <li>{@link #getButtonTemplate()} is used in manage directory record template to display buttons.
  * <li>{@link #isInvoked(HttpServletRequest)} is used by DirectoryJspBean to detect the invoked action.
  * <li>{@link #process(HttpServletRequest, HttpServletResponse, AdminUser, DirectoryAdminSearchFields)} is called by DirectoryJspBean.
@@ -54,5 +56,5 @@ import fr.paris.lutece.portal.web.pluginaction.IPluginAction;
  */
 public interface IDirectoryAction extends IPluginAction<DirectoryAdminSearchFields>
 {
-	// only generic fix to be Spring compliant
+    // only generic fix to be Spring compliant
 }

@@ -33,8 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import java.util.List;
-
 import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectoryIndexer;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
@@ -42,6 +40,8 @@ import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
+
+import java.util.List;
 
 
 /**
@@ -70,7 +70,7 @@ public final class RecordHome
      */
     public static int create( Record record, Plugin plugin )
     {
-    	record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
+        record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
         record.setIdRecord( _dao.insert( record, plugin ) );
 
         DirectorySearchService.getInstance(  )
@@ -95,7 +95,8 @@ public final class RecordHome
      */
     public static int copy( Record record, Plugin plugin )
     {
-    	record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
+        record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
+
         RecordFieldFilter filter = new RecordFieldFilter(  );
         filter.setIdRecord( record.getIdRecord(  ) );
         record.setListRecordField( RecordFieldHome.getRecordFieldList( filter, plugin ) );
@@ -106,26 +107,29 @@ public final class RecordHome
 
         for ( RecordField recordField : record.getListRecordField(  ) )
         {
-        	recordField.setRecord( record );
-        	//we don't copy numbering entry
-        	if( !recordField.getEntry(  ).getEntryType(  ).getClassName(  ).equals( EntryTypeNumbering.class.getName(  ) ) )
-        	{        		 
-        		RecordFieldHome.copy( recordField, plugin );
-        	}
-        	else
-        	{
-        		//update the number
-        		IEntry entryNumbering = EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), plugin);
-        		int numbering = DirectoryService.getInstance(  ).getMaxNumber( entryNumbering );
-        		if ( numbering != DirectoryUtils.CONSTANT_ID_NULL )
-        		{
-        			entryNumbering.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
+            recordField.setRecord( record );
+
+            //we don't copy numbering entry
+            if ( !recordField.getEntry(  ).getEntryType(  ).getClassName(  ).equals( EntryTypeNumbering.class.getName(  ) ) )
+            {
+                RecordFieldHome.copy( recordField, plugin );
+            }
+            else
+            {
+                //update the number
+                IEntry entryNumbering = EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), plugin );
+                int numbering = DirectoryService.getInstance(  ).getMaxNumber( entryNumbering );
+
+                if ( numbering != DirectoryUtils.CONSTANT_ID_NULL )
+                {
+                    entryNumbering.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
                     FieldHome.update( entryNumbering.getFields(  ).get( 0 ), plugin );
                     recordField.setValue( String.valueOf( numbering ) );
-            		RecordFieldHome.create( recordField, plugin );
-        		}
-        	}           
+                    RecordFieldHome.create( recordField, plugin );
+                }
+            }
         }
+
         return record.getIdRecord(  );
     }
 
@@ -138,7 +142,7 @@ public final class RecordHome
      */
     public static void updateWidthRecordField( Record record, Plugin plugin )
     {
-    	record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
+        record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
         DirectorySearchService.getInstance(  )
                               .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_MODIFY, plugin );
 
@@ -166,7 +170,7 @@ public final class RecordHome
      */
     public static void update( Record record, Plugin plugin )
     {
-    	record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
+        record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
         DirectorySearchService.getInstance(  )
                               .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_MODIFY, plugin );
 

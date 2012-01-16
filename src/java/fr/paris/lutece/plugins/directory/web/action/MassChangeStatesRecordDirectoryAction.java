@@ -33,13 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web.action;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
@@ -54,78 +47,85 @@ import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.url.UrlItem;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 /**
  * Redirects to jsp/admin/plugins/directory/ConfirmChangeStatesRecord.jsp
  *
  */
-public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
+public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
+    implements IDirectoryAction
 {
-	// ACTIONS
-	private static final String ACTION_NAME = "Mass Change States record";
-	
-	// TEMPLATES
-	private static final String TEMPLATE_BUTTON = "actions/mass_change_states_record.html";
+    // ACTIONS
+    private static final String ACTION_NAME = "Mass Change States record";
 
-	// PARAMETERS
-	/** the button is an image so the name is .x or .y */
-	private static final String PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS_X = "mass_change_states_record.x";
-	
-	// MARKS
-	private static final String MARK_PERMISSION_CHANGE_STATE_RECORD = "permission_change_state_record";
-	
-	// JSP
-	private static final String JSP_DIRECTORY_MASS_CHANGE_STATES_RECORD = "jsp/admin/plugins/directory/ConfirmChangeStatesRecord.jsp";
+    // TEMPLATES
+    private static final String TEMPLATE_BUTTON = "actions/mass_change_states_record.html";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void fillModel( HttpServletRequest request, AdminUser adminUser,
-			Map<String, Object> model ) 
-	{
-		String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
-		model.put( MARK_PERMISSION_CHANGE_STATE_RECORD, RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-				DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, adminUser ) );
-	}
+    // PARAMETERS
+    /** the button is an image so the name is .x or .y */
+    private static final String PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS_X = "mass_change_states_record.x";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getButtonTemplate(  )
-	{
-		return TEMPLATE_BUTTON;
-	}
+    // MARKS
+    private static final String MARK_PERMISSION_CHANGE_STATE_RECORD = "permission_change_state_record";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getName(  )
-	{
-		return ACTION_NAME;
-	}
+    // JSP
+    private static final String JSP_DIRECTORY_MASS_CHANGE_STATES_RECORD = "jsp/admin/plugins/directory/ConfirmChangeStatesRecord.jsp";
 
-	/**
-	 * @see #PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS_X
-	 */
-	public boolean isInvoked( HttpServletRequest request ) 
-	{
-		return request.getParameter( PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS_X ) != null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void fillModel( HttpServletRequest request, AdminUser adminUser, Map<String, Object> model )
+    {
+        String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
+        model.put( MARK_PERMISSION_CHANGE_STATE_RECORD,
+            RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
+                DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, adminUser ) );
+    }
 
-	/**
-	 * Redirects to {@link #JSP_DIRECTORY_MASS_CHANGE_STATES_RECORD}
-	 */
-	public IPluginActionResult process( HttpServletRequest request,
-			HttpServletResponse response, AdminUser adminUser,
-			DirectoryAdminSearchFields sessionFields )
-			throws AccessDeniedException 
-	{
-		IPluginActionResult result = new DefaultPluginActionResult(  );
+    /**
+     * {@inheritDoc}
+     */
+    public String getButtonTemplate(  )
+    {
+        return TEMPLATE_BUTTON;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getName(  )
+    {
+        return ACTION_NAME;
+    }
+
+    /**
+     * @see #PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS_X
+     */
+    public boolean isInvoked( HttpServletRequest request )
+    {
+        return request.getParameter( PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS_X ) != null;
+    }
+
+    /**
+     * Redirects to {@link #JSP_DIRECTORY_MASS_CHANGE_STATES_RECORD}
+     */
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
+        DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException
+    {
+        IPluginActionResult result = new DefaultPluginActionResult(  );
 
         String strRedirect = StringUtils.EMPTY;
 
         if ( ( sessionFields.getSelectedRecords(  ) != null ) && !sessionFields.getSelectedRecords(  ).isEmpty(  ) )
         {
-        	String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
+            String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
             UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DIRECTORY_MASS_CHANGE_STATES_RECORD );
             url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
 
@@ -141,12 +141,12 @@ public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<
         }
         else
         {
-            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS, AdminMessage.TYPE_INFO );
+            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS,
+                    AdminMessage.TYPE_INFO );
         }
 
         result.setRedirect( strRedirect );
 
         return result;
-	}
-
+    }
 }

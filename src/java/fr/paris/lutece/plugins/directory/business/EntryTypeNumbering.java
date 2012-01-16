@@ -45,6 +45,8 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,8 +54,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -63,7 +63,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public class EntryTypeNumbering extends Entry
 {
-	private static final String PARAMETER_PREFIX = "prefix";
+    private static final String PARAMETER_PREFIX = "prefix";
+
+    // MARKS
+    private static final String MARK_MAX_NUMBER = "max_number";
+
+    // SQL
+    private static final String SQL_ORDER_BY_RECORD_FIELD_VALUE = " ORDER BY 0 + drf.record_field_value ";
     private final String _template_create = "admin/plugins/directory/entrytypenumbering/create_entry_type_numbering.html";
     private final String _template_modify = "admin/plugins/directory/entrytypenumbering/modify_entry_type_numbering.html";
     private final String _template_html_code_form_entry = "admin/plugins/directory/entrytypenumbering/html_code_form_entry_type_numbering.html";
@@ -72,13 +78,7 @@ public class EntryTypeNumbering extends Entry
     private final String _template_html_front_code_form_entry = "skin/plugins/directory/entrytypenumbering/html_code_form_entry_type_numbering.html";
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytypenumbering/html_code_form_search_entry_type_numbering.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypenumbering/html_code_entry_value_type_numbering.html";
-    
-    // MARKS
-    private static final String MARK_MAX_NUMBER = "max_number";
-    
-    // SQL
-    private static final String SQL_ORDER_BY_RECORD_FIELD_VALUE = " ORDER BY 0 + drf.record_field_value ";
-    
+
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -117,12 +117,12 @@ public class EntryTypeNumbering extends Entry
             return _template_html_code_form_search_entry;
         }
     }
-    
+
     @Override
     public String getHtmlFormEntry( Locale locale, boolean isDisplayFront )
     {
         if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
-        {       	
+        {
             Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
@@ -154,7 +154,7 @@ public class EntryTypeNumbering extends Entry
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
         String strPrefix = request.getParameter( PARAMETER_PREFIX );
-        
+
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
         if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
@@ -215,14 +215,13 @@ public class EntryTypeNumbering extends Entry
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
         throws DirectoryErrorException
     {
-    	/*
-    	 * This method is called from several operations :
-    	 * 1) Creating a record
-    	 * 2) Updating a record
-    	 * 3) Search from BO
-    	 * 4) Search from FO
-    	 */
-    	
+        /*
+             * This method is called from several operations :
+             * 1) Creating a record
+             * 2) Updating a record
+             * 3) Search from BO
+             * 4) Search from FO
+             */
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         RecordField recordField = new RecordField(  );
         recordField.setEntry( this );
@@ -231,10 +230,10 @@ public class EntryTypeNumbering extends Entry
 
         if ( record != null )
         {
-        	/*
-        	 * CASES 1 AND 2 :
-        	 * (The record is not null for cases 1) and 2))
-        	 */
+            /*
+             * CASES 1 AND 2 :
+             * (The record is not null for cases 1) and 2))
+             */
             recordOld = RecordHome.findByPrimaryKey( record.getIdRecord(  ), pluginDirectory );
         }
 
@@ -242,18 +241,18 @@ public class EntryTypeNumbering extends Entry
 
         if ( recordOld != null )
         {
-        	/*
-        	 * CASE 2 :
-        	 * (The record old is not null for case 2))
-        	 */
+            /*
+             * CASE 2 :
+             * (The record old is not null for case 2))
+             */
             recordField.setValue( strValueEntry );
         }
         else if ( record == null )
         {
-        	/*
-        	 * CASES 3 AND 4 :
-        	 * (The record is null for cases 3) and 4))
-        	 */
+            /*
+             * CASES 3 AND 4 :
+             * (The record is null for cases 3) and 4))
+             */
             if ( bTestDirectoryError && this.isMandatory(  ) && StringUtils.isBlank( strValueEntry ) )
             {
                 throw new DirectoryErrorException( this.getTitle(  ) );
@@ -261,76 +260,81 @@ public class EntryTypeNumbering extends Entry
 
             if ( StringUtils.isNotBlank( strValueEntry ) )
             {
-            	recordField.setValue( strValueEntry );
+                recordField.setValue( strValueEntry );
             }
         }
         else
         {
-        	/*
-        	 * CASE 1 :
-        	 * (Create the record, thus fetch the max number)
-        	 */
-        	int numbering = DirectoryService.getInstance(  ).getMaxNumber( this );
+            /*
+             * CASE 1 :
+             * (Create the record, thus fetch the max number)
+             */
+            int numbering = DirectoryService.getInstance(  ).getMaxNumber( this );
             this.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
             FieldHome.update( this.getFields(  ).get( 0 ), pluginDirectory );
-        	
+
             recordField.setValue( String.valueOf( numbering ) );
         }
 
         if ( recordField.getValue(  ) != null )
         {
-        	/*
-        	 * In cases 3 and 4, if the strValueEntry is null, then that means that the user
-        	 * did not use the search function and the user only wants to display every records or
-        	 * did not want to filter his/her search for this entry.
-        	 */
-        	listRecordField.add( recordField );
+            /*
+             * In cases 3 and 4, if the strValueEntry is null, then that means that the user
+             * did not use the search function and the user only wants to display every records or
+             * did not want to filter his/her search for this entry.
+             */
+            listRecordField.add( recordField );
         }
     }
-    
+
     @Override
     public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
         List<RecordField> listRecordField, Locale locale )
         throws DirectoryErrorException
     {
-    	int numbering = DirectoryService.getInstance(  ).getNumber( this, strImportValue );
-    	if ( numbering != DirectoryUtils.CONSTANT_ID_NULL )
-    	{
-    		RecordField recordField = new RecordField(  );
+        int numbering = DirectoryService.getInstance(  ).getNumber( this, strImportValue );
+
+        if ( numbering != DirectoryUtils.CONSTANT_ID_NULL )
+        {
+            RecordField recordField = new RecordField(  );
             recordField.setEntry( this );
             recordField.setValue( Integer.toString( numbering ) );
             listRecordField.add( recordField );
-    	}
+        }
     }
-    
+
     @Override
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-    		boolean bExportDirectory )
+        boolean bExportDirectory )
     {
-    	Field field = null;
-    	if ( recordField.getField(  ) == null )
-    	{
-    		if ( getFields(  ) == null )
-    		{
-    			Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-        		setFields( FieldHome.getFieldListByIdEntry( getIdEntry(  ), plugin ) );
-    		}
-    		if ( ( getFields(  ) != null ) && ( getFields(  ).size(  ) > 0 ) )
-        	{
-    			field = getFields(  ).get( 0 );
-        	}
-    	}
-    	else
-    	{
-    		field = recordField.getField(  );
-    	}
-    	if ( field != null && StringUtils.isNotBlank( field.getTitle(  ) ) )
-    	{
-    		return field.getTitle(  ) + recordField.getValue(  );
-    	}
-    	return super.convertRecordFieldValueToString( recordField, locale, bDisplayFront, bExportDirectory );
-	}
-    
+        Field field = null;
+
+        if ( recordField.getField(  ) == null )
+        {
+            if ( getFields(  ) == null )
+            {
+                Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+                setFields( FieldHome.getFieldListByIdEntry( getIdEntry(  ), plugin ) );
+            }
+
+            if ( ( getFields(  ) != null ) && ( getFields(  ).size(  ) > 0 ) )
+            {
+                field = getFields(  ).get( 0 );
+            }
+        }
+        else
+        {
+            field = recordField.getField(  );
+        }
+
+        if ( ( field != null ) && StringUtils.isNotBlank( field.getTitle(  ) ) )
+        {
+            return field.getTitle(  ) + recordField.getValue(  );
+        }
+
+        return super.convertRecordFieldValueToString( recordField, locale, bDisplayFront, bExportDirectory );
+    }
+
     /**
      *
      * {@inheritDoc}
@@ -339,11 +343,11 @@ public class EntryTypeNumbering extends Entry
     {
         return true;
     }
-    
+
     @Override
     public String getSQLOrderBy(  )
     {
-    	// Special query in order to sort numerically and not alphabetically (thus avoiding list like 1, 10, 11, 2, ... instead of 1, 2, ..., 10, 11)
-    	return SQL_ORDER_BY_RECORD_FIELD_VALUE;
+        // Special query in order to sort numerically and not alphabetically (thus avoiding list like 1, 10, 11, 2, ... instead of 1, 2, ..., 10, 11)
+        return SQL_ORDER_BY_RECORD_FIELD_VALUE;
     }
 }

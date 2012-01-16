@@ -33,15 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.directory.business.File;
 import fr.paris.lutece.plugins.directory.business.FileHome;
 import fr.paris.lutece.plugins.directory.business.PhysicalFile;
@@ -56,6 +47,16 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.util.AppLogService;
+
+import org.apache.commons.lang.StringUtils;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -80,42 +81,48 @@ public class DoDownloadFile
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         String strIdFile = request.getParameter( PARAMETER_ID_FILE );
         int nIdFile = DirectoryUtils.CONSTANT_ID_NULL;
+
         if ( StringUtils.isBlank( strIdFile ) || !StringUtils.isNumeric( strIdFile ) )
         {
-        	String strIdDirectoryRecord = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
-        	String strIdEntry = request.getParameter( DirectoryUtils.PARAMETER_ID_ENTRY );
-        	if ( ( StringUtils.isBlank( strIdDirectoryRecord ) || !StringUtils.isNumeric( strIdDirectoryRecord ) ) &&
-        			( StringUtils.isBlank( strIdEntry ) || !StringUtils.isNumeric( strIdEntry ) ) )
-			{
-        		return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_DURING_DOWNLOAD_FILE, AdminMessage.TYPE_STOP );
-			}
-        	
-        	int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        	int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
-        	RecordFieldFilter rfFilter = new RecordFieldFilter(  );
-        	rfFilter.setIdRecord( nIdDirectoryRecord );
-        	rfFilter.setIdEntry( nIdEntry );
-        	
-        	List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( rfFilter, plugin );
-        	if ( listRecordFields != null && !listRecordFields.isEmpty(  ) )
-        	{
-        		RecordField recordField = listRecordFields.get( 0 );
-        		if ( recordField != null && recordField.getFile(  ) != null )
-        		{
-        			nIdFile = recordField.getFile(  ).getIdFile(  );
-        		}
-        	}
-        	
-        	if ( nIdFile == DirectoryUtils.CONSTANT_ID_NULL || nIdFile == DirectoryUtils.CONSTANT_ID_ZERO )
-        	{
-        		return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_DURING_DOWNLOAD_FILE, AdminMessage.TYPE_STOP );
-        	}
+            String strIdDirectoryRecord = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
+            String strIdEntry = request.getParameter( DirectoryUtils.PARAMETER_ID_ENTRY );
+
+            if ( ( StringUtils.isBlank( strIdDirectoryRecord ) || !StringUtils.isNumeric( strIdDirectoryRecord ) ) &&
+                    ( StringUtils.isBlank( strIdEntry ) || !StringUtils.isNumeric( strIdEntry ) ) )
+            {
+                return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_DURING_DOWNLOAD_FILE,
+                    AdminMessage.TYPE_STOP );
+            }
+
+            int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
+            int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
+            RecordFieldFilter rfFilter = new RecordFieldFilter(  );
+            rfFilter.setIdRecord( nIdDirectoryRecord );
+            rfFilter.setIdEntry( nIdEntry );
+
+            List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( rfFilter, plugin );
+
+            if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) )
+            {
+                RecordField recordField = listRecordFields.get( 0 );
+
+                if ( ( recordField != null ) && ( recordField.getFile(  ) != null ) )
+                {
+                    nIdFile = recordField.getFile(  ).getIdFile(  );
+                }
+            }
+
+            if ( ( nIdFile == DirectoryUtils.CONSTANT_ID_NULL ) || ( nIdFile == DirectoryUtils.CONSTANT_ID_ZERO ) )
+            {
+                return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_DURING_DOWNLOAD_FILE,
+                    AdminMessage.TYPE_STOP );
+            }
         }
         else
         {
-        	nIdFile = DirectoryUtils.convertStringToInt( strIdFile );
+            nIdFile = DirectoryUtils.convertStringToInt( strIdFile );
         }
-        
+
         File file = FileHome.findByPrimaryKey( nIdFile, plugin );
         PhysicalFile physicalFile = ( file != null )
             ? PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile(  ).getIdPhysicalFile(  ), plugin ) : null;

@@ -33,23 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web.action;
 
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.WritableByteChannel;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import fr.paris.lutece.plugins.directory.business.Category;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
@@ -92,31 +75,47 @@ import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
 
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.WritableByteChannel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 /**
  * Exports records (search records or all records)
  *
  */
 public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
 {
-	private static final String ACTION_NAME = "Export Directory XSL";
-	private static final String TEMPLATE_BUTTON = "actions/export.html";
-	
-	
+    private static final String ACTION_NAME = "Export Directory XSL";
+    private static final String TEMPLATE_BUTTON = "actions/export.html";
     private static final String PROPERTY_PATH_TMP = "path.tmp";
     private static final String PROPERTY_ENTRY_TYPE_DATE_CREATION_TITLE = "directory.entry_type_date_creation.title";
     private static final String PROPERTY_ENTRY_TYPE_DATE_MODIFICATION_TITLE = "directory.entry_type_date_modification.title";
-
-	
-	private static final String PARAMETER_BUTTON_EXPORT_ALL = "export_search_all.x";
-	private static final String PARAMETER_BUTTON_EXPORT_SEARCH = "export_search_result.x";
-	private static final String PARAMETER_ID_DIRECTORY = "id_directory";
+    private static final String PARAMETER_BUTTON_EXPORT_ALL = "export_search_all.x";
+    private static final String PARAMETER_BUTTON_EXPORT_SEARCH = "export_search_result.x";
+    private static final String PARAMETER_ID_DIRECTORY = "id_directory";
     private static final String PARAMETER_ID_DIRECTORY_XSL = "id_directory_xsl";
-
-	private static final String TAG_STATUS = "status";
+    private static final String TAG_STATUS = "status";
     private static final String TAG_DISPLAY = "display";
     private static final String TAG_YES = "yes";
     private static final String TAG_NO = "no";
     private static final String XSL_UNIQUE_PREFIX_ID = UniqueIDGenerator.getNewId(  ) + "directory-";
+
     // Export
     private static final int EXPORT_STRINGBUFFER_MAX_CONTENT_SIZE = 500000;
     private static final int EXPORT_STRINGBUFFER_INITIAL_SIZE = 600000;
@@ -131,57 +130,55 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
     private static final String EXPORT_XSL_END_DIRECTORY = "</directory>";
     private static final String EXPORT_XSL_NEW_LINE = "\r\n";
     private static final String EXPORT_CSV_EXT = "csv";
-    
     private static final String CONSTANT_MIME_TYPE_CSV = "application/csv";
     private static final String CONSTANT_MIME_TYPE_OCTETSTREAM = "application/octet-stream";
-
     private static final String MARK_XSL_EXPORT_LIST = "xsl_export_list";
 
-	public void fillModel( HttpServletRequest request, AdminUser adminUser, Map<String, Object> model )
-	{
+    public void fillModel( HttpServletRequest request, AdminUser adminUser, Map<String, Object> model )
+    {
         //add xslExport
         DirectoryXslFilter directoryXslFilter = new DirectoryXslFilter(  );
 
         directoryXslFilter.setIdCategory( Category.ID_CATEGORY_EXPORT );
 
-		ReferenceList refListXslExport = DirectoryXslHome.getRefList( directoryXslFilter, getPlugin(  ) );
+        ReferenceList refListXslExport = DirectoryXslHome.getRefList( directoryXslFilter, getPlugin(  ) );
         model.put( MARK_XSL_EXPORT_LIST, refListXslExport );
-	}
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getName(  )
-	{
-		return ACTION_NAME;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getName(  )
+    {
+        return ACTION_NAME;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getButtonTemplate(  )
-	{
-		return TEMPLATE_BUTTON;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getButtonTemplate(  )
+    {
+        return TEMPLATE_BUTTON;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isInvoked(HttpServletRequest request) 
-	{
-		return request.getParameter( PARAMETER_BUTTON_EXPORT_SEARCH ) != null || request.getParameter( PARAMETER_BUTTON_EXPORT_ALL ) != null;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public IPluginActionResult process(HttpServletRequest request,
-			HttpServletResponse response, AdminUser adminUser,
-			DirectoryAdminSearchFields searchFields) throws AccessDeniedException
-	{
-		DefaultPluginActionResult result = new DefaultPluginActionResult(  );
-		
-		String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isInvoked( HttpServletRequest request )
+    {
+        return ( request.getParameter( PARAMETER_BUTTON_EXPORT_SEARCH ) != null ) ||
+        ( request.getParameter( PARAMETER_BUTTON_EXPORT_ALL ) != null );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
+        DirectoryAdminSearchFields searchFields ) throws AccessDeniedException
+    {
+        DefaultPluginActionResult result = new DefaultPluginActionResult(  );
+
+        String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
         String strIdDirectoryXsl = request.getParameter( PARAMETER_ID_DIRECTORY_XSL );
@@ -211,15 +208,15 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 
         if ( request.getParameter( PARAMETER_BUTTON_EXPORT_SEARCH ) != null )
         {
-        	// sort order and sort entry are not needed in export
-            listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, true, null, RecordFieldFilter.ORDER_NONE, searchFields, adminUser, adminUser.getLocale(  ) );
-            
-            
+            // sort order and sort entry are not needed in export
+            listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, true, null,
+                    RecordFieldFilter.ORDER_NONE, searchFields, adminUser, adminUser.getLocale(  ) );
         }
         else
         {
-        	// sort order and sort entry are not needed in export
-            listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, false, null, RecordFieldFilter.ORDER_NONE, searchFields, adminUser, adminUser.getLocale(  ) );
+            // sort order and sort entry are not needed in export
+            listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, false,
+                    null, RecordFieldFilter.ORDER_NONE, searchFields, adminUser, adminUser.getLocale(  ) );
         }
 
         EntryFilter entryFilter = new EntryFilter(  );
@@ -309,14 +306,15 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
             XmlUtil.addElementHtml( strBufferListEntryXml, Entry.TAG_TITLE, strDateCreation );
             XmlUtil.endElement( strBufferListEntryXml, Entry.TAG_ENTRY );
         }
-        
+
         if ( bDisplayDateModification && bIsCsvExport )
         {
             Map<String, String> model = new HashMap<String, String>(  );
             model.put( Entry.ATTRIBUTE_ENTRY_ID, "0" );
             XmlUtil.beginElement( strBufferListEntryXml, Entry.TAG_ENTRY, model );
 
-            String strDateModification = I18nService.getLocalizedString( PROPERTY_ENTRY_TYPE_DATE_MODIFICATION_TITLE, locale );
+            String strDateModification = I18nService.getLocalizedString( PROPERTY_ENTRY_TYPE_DATE_MODIFICATION_TITLE,
+                    locale );
             XmlUtil.addElementHtml( strBufferListEntryXml, Entry.TAG_TITLE, strDateModification );
             XmlUtil.endElement( strBufferListEntryXml, Entry.TAG_ENTRY );
         }
@@ -503,12 +501,13 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 
         if ( bIsCsvExport )
         {
-        	response.setCharacterEncoding( DirectoryParameterService.getService(  ).getExportCSVEncoding(  ) );
+            response.setCharacterEncoding( DirectoryParameterService.getService(  ).getExportCSVEncoding(  ) );
             response.setContentType( CONSTANT_MIME_TYPE_CSV );
         }
         else
         {
-        	response.setCharacterEncoding( DirectoryParameterService.getService(  ).getExportXMLEncoding(  ) );
+            response.setCharacterEncoding( DirectoryParameterService.getService(  ).getExportXMLEncoding(  ) );
+
             String strMimeType = FileSystemUtil.getMIMEType( strFileName );
 
             if ( strMimeType != null )
@@ -556,40 +555,41 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
         }
         else
         {
-        	PrintWriter out = null;
-			try
-			{
-				out = response.getWriter(  );
-				out.print( strShotExportFinalOutPut );
-			}
-			catch ( IOException e )
-			{
-				AppLogService.error( e.getMessage(  ), e );
-			}
-			finally
-			{
-				if ( out != null )
-				{
-					out.flush(  );
-					out.close(  );
-				}
-			}
+            PrintWriter out = null;
+
+            try
+            {
+                out = response.getWriter(  );
+                out.print( strShotExportFinalOutPut );
+            }
+            catch ( IOException e )
+            {
+                AppLogService.error( e.getMessage(  ), e );
+            }
+            finally
+            {
+                if ( out != null )
+                {
+                    out.flush(  );
+                    out.close(  );
+                }
+            }
         }
-        
+
         result.setNoop( true );
-        
-		return result;
-	}
-	
-	/**
-	 * Gets the plugin
-	 * @return the plugin
-	 */
-	private Plugin getPlugin(  )
-	{
-		return PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-	}
-	
+
+        return result;
+    }
+
+    /**
+     * Gets the plugin
+     * @return the plugin
+     */
+    private Plugin getPlugin(  )
+    {
+        return PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+    }
+
     /**
      * Append partial export result to temporary file if need
      * @param strBufferListRecordXml The partial XML content

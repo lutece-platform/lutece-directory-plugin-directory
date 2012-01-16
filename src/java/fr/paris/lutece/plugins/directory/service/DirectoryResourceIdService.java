@@ -106,7 +106,7 @@ public class DirectoryResourceIdService extends ResourceIdService
 
     /** Permission for record visualisation */
     public static final String PERMISSION_VISUALISATION_RECORD = "VISUALISATION_RECORD";
-    
+
     /** Permission for import record */
     public static final String PERMISSION_IMPORT_FIELD = "IMPORT_FIELD";
 
@@ -145,16 +145,17 @@ public class DirectoryResourceIdService extends ResourceIdService
      */
     public void register(  )
     {
-    	// Override the resource type DIRECTORY_DIRECTORY_TYPE
-    	ResourceType rt = ResourceTypeManager.getResourceType( Directory.RESOURCE_TYPE );
-    	if ( rt == null )
-    	{
-    		rt = new ResourceType(  );
-    		rt.setResourceIdServiceClass( DirectoryResourceIdService.class.getName(  ) );
-    		rt.setPluginName( DirectoryPlugin.PLUGIN_NAME );
-    		rt.setResourceTypeKey( Directory.RESOURCE_TYPE );
-    		rt.setResourceTypeLabelKey( PROPERTY_LABEL_RESOURCE_TYPE );
-    	}
+        // Override the resource type DIRECTORY_DIRECTORY_TYPE
+        ResourceType rt = ResourceTypeManager.getResourceType( Directory.RESOURCE_TYPE );
+
+        if ( rt == null )
+        {
+            rt = new ResourceType(  );
+            rt.setResourceIdServiceClass( DirectoryResourceIdService.class.getName(  ) );
+            rt.setPluginName( DirectoryPlugin.PLUGIN_NAME );
+            rt.setResourceTypeKey( Directory.RESOURCE_TYPE );
+            rt.setResourceTypeLabelKey( PROPERTY_LABEL_RESOURCE_TYPE );
+        }
 
         Permission p = new Permission(  );
         p.setPermissionKey( PERMISSION_CREATE );
@@ -250,7 +251,7 @@ public class DirectoryResourceIdService extends ResourceIdService
         p.setPermissionKey( PERMISSION_VISUALISATION_MYLUTECE_USER );
         p.setPermissionTitleKey( PROPERTY_LABEL_VISUALISATION_MYLUTECE_USER );
         rt.registerPermission( p );
-        
+
         p = new Permission(  );
         p.setPermissionKey( PERMISSION_IMPORT_FIELD );
         p.setPermissionTitleKey( PROPERTY_LABEL_IMPORT_FIELD );

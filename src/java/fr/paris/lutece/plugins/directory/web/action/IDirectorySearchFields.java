@@ -44,6 +44,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 /**
  * Visualization of all needed for searched record.
  * @author merlinfe
@@ -244,12 +245,12 @@ public interface IDirectorySearchFields
      */
     public int getIsDisabled(  );
 
-   /***
-    * set true if the records displayed must be disabled
-    * @param nIsDisabled true if the records displayed must be disabled
-    */
+    /***
+     * set true if the records displayed must be disabled
+     * @param nIsDisabled true if the records displayed must be disabled
+     */
     public void setIsDisabled( int nIsDisabled );
-    
+
     /**
      * Date modification begin record
      * @return date modification begin record
@@ -285,16 +286,16 @@ public interface IDirectorySearchFields
      * @param dateModificationRecord date modification record
      */
     void setDateModificationRecord( Date dateModificationRecord );
-    
+
     /**
      * Set true if it must be sort by date modification
      * @param bSortByDateModification true if it must be sort by date modification
      */
-	public void setSortByDateModification( boolean bSortByDateModification );
-	
-	/**
-	 * Check if it must be sort by date modification
-	 * @return true if it must be sort by date modification, false otherwise
-	 */
-	boolean isSortByDateModification();
+    public void setSortByDateModification( boolean bSortByDateModification );
+
+    /**
+     * Check if it must be sort by date modification
+     * @return true if it must be sort by date modification, false otherwise
+     */
+    boolean isSortByDateModification(  );
 }

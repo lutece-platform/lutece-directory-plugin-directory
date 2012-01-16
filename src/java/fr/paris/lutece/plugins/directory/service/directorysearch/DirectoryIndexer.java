@@ -274,12 +274,13 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
         }
         else
         {
-        	// Index only the directories that have the attribute is_indexed as true
-        	DirectoryFilter filter = new DirectoryFilter(  );
-        	filter.setIsIndexed( DirectoryFilter.FILTER_TRUE );
+            // Index only the directories that have the attribute is_indexed as true
+            DirectoryFilter filter = new DirectoryFilter(  );
+            filter.setIsIndexed( DirectoryFilter.FILTER_TRUE );
+
             for ( Directory directory : DirectoryHome.getDirectoryList( filter, plugin ) )
             {
-        		sbLogs.append( "Indexing Directory" );
+                sbLogs.append( "Indexing Directory" );
                 sbLogs.append( "\r\n" );
                 recordFieldFilter.setIdDirectory( directory.getIdDirectory(  ) );
 
@@ -366,13 +367,14 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
     {
         // make a new, empty document
         org.apache.lucene.document.Document doc = new org.apache.lucene.document.Document(  );
-        if ( directory != null && record != null )
-        {
-        	doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY, Integer.toString( directory.getIdDirectory(  ) ),
-                    Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
-            doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY_RECORD, Integer.toString( record.getIdRecord(  ) ),
-                    Field.Store.YES, Field.Index.NOT_ANALYZED ) );
+        if ( ( directory != null ) && ( record != null ) )
+        {
+            doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY,
+                    Integer.toString( directory.getIdDirectory(  ) ), Field.Store.YES, Field.Index.NOT_ANALYZED ) );
+
+            doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY_RECORD,
+                    Integer.toString( record.getIdRecord(  ) ), Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
             if ( record.getWorkgroup(  ) != null )
             {
@@ -387,10 +389,13 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
             }
 
             String strDate = DateTools.dateToString( record.getDateCreation(  ), DateTools.Resolution.DAY );
-            doc.add( new Field( DirectorySearchItem.FIELD_DATE_CREATION, strDate, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
-            
-            String strDateModification = DateTools.dateToString( record.getDateModification(  ), DateTools.Resolution.DAY );
-            doc.add( new Field( DirectorySearchItem.FIELD_DATE_MODIFICATION, strDateModification, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
+            doc.add( new Field( DirectorySearchItem.FIELD_DATE_CREATION, strDate, Field.Store.YES,
+                    Field.Index.NOT_ANALYZED ) );
+
+            String strDateModification = DateTools.dateToString( record.getDateModification(  ),
+                    DateTools.Resolution.DAY );
+            doc.add( new Field( DirectorySearchItem.FIELD_DATE_MODIFICATION, strDateModification, Field.Store.YES,
+                    Field.Index.NOT_ANALYZED ) );
         }
 
         // return the document

@@ -33,14 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.regularexpression.RegularExpression;
@@ -57,6 +49,14 @@ import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.url.UrlItem;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  *
@@ -71,7 +71,7 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
     private final String _template_html_code_entry_value = "admin/plugins/directory/entrytypefile/html_code_entry_value_type_file.html";
     private final String _template_html_front_code_form_entry = "skin/plugins/directory/entrytypefile/html_code_form_entry_type_file.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypefile/html_code_entry_value_type_file.html";
-    
+
     /**
      * {@inheritDoc}
      */
@@ -117,7 +117,7 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
         String strIndexedAsTitle = request.getParameter( PARAMETER_INDEXED_AS_TITLE );
-        String strIndexedAsSummary = request.getParameter( PARAMETER_INDEXED_AS_SUMMARY);
+        String strIndexedAsSummary = request.getParameter( PARAMETER_INDEXED_AS_SUMMARY );
         String strShowInFormMainSearch = request.getParameter( PARAMETER_SHOWN_IN_ADVANCED_SEARCH );
         String strShowInResultList = request.getParameter( PARAMETER_SHOWN_IN_RESULT_LIST );
         String strShowInResultRecord = request.getParameter( PARAMETER_SHOWN_IN_RESULT_RECORD );
@@ -126,11 +126,12 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
         String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
 
         String strError = this.checkEntryData( request, locale );
+
         if ( StringUtils.isNotBlank( strError ) )
         {
-        	return strError;
+            return strError;
         }
-        
+
         this.setTitle( strTitle );
         this.setHelpMessage( strHelpMessage );
         this.setComment( strComment );
@@ -216,62 +217,65 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
         throws DirectoryErrorException
     {
-    	if ( request instanceof MultipartHttpServletRequest )
-    	{
-			List<FileItem> asynchronousFileItems = getFileSources( request );
-			
-            if ( asynchronousFileItems != null && !asynchronousFileItems.isEmpty(  ) )
+        if ( request instanceof MultipartHttpServletRequest )
+        {
+            List<FileItem> asynchronousFileItems = getFileSources( request );
+
+            if ( ( asynchronousFileItems != null ) && !asynchronousFileItems.isEmpty(  ) )
             {
-            	// Checks
-				if ( bTestDirectoryError )
-				{
-					this.checkRecordFieldData( asynchronousFileItems, locale );
-				}
-            	for ( FileItem fileItem : asynchronousFileItems )
-            	{
-            		String strFilename = fileItem != null ? FileUploadService.getFileNameOnly( fileItem ) : StringUtils.EMPTY;
-            		
-            		// Add the file to the record fields list
-            		RecordField recordField = new RecordField(  );
+                // Checks
+                if ( bTestDirectoryError )
+                {
+                    this.checkRecordFieldData( asynchronousFileItems, locale );
+                }
+
+                for ( FileItem fileItem : asynchronousFileItems )
+                {
+                    String strFilename = ( fileItem != null ) ? FileUploadService.getFileNameOnly( fileItem )
+                                                              : StringUtils.EMPTY;
+
+                    // Add the file to the record fields list
+                    RecordField recordField = new RecordField(  );
                     recordField.setEntry( this );
-            		
-            		if ( fileItem != null && fileItem.get(  ) != null && fileItem.getSize(  ) < Integer.MAX_VALUE )
-            		{
-            			PhysicalFile physicalFile = new PhysicalFile(  );
-            			physicalFile.setValue( fileItem.get(  ) );
-            			
-            			File file = new File(  );
-            			file.setPhysicalFile( physicalFile );
-            			file.setTitle( strFilename );
-            			file.setSize( (int) fileItem.getSize(  ) );
-            			file.setMimeType( FileSystemUtil.getMIMEType( strFilename ) );
-            			
-            			recordField.setFile( file );
-            		}
-            		
-            		listRecordField.add( recordField );
-            	}
+
+                    if ( ( fileItem != null ) && ( fileItem.get(  ) != null ) &&
+                            ( fileItem.getSize(  ) < Integer.MAX_VALUE ) )
+                    {
+                        PhysicalFile physicalFile = new PhysicalFile(  );
+                        physicalFile.setValue( fileItem.get(  ) );
+
+                        File file = new File(  );
+                        file.setPhysicalFile( physicalFile );
+                        file.setTitle( strFilename );
+                        file.setSize( (int) fileItem.getSize(  ) );
+                        file.setMimeType( FileSystemUtil.getMIMEType( strFilename ) );
+
+                        recordField.setFile( file );
+                    }
+
+                    listRecordField.add( recordField );
+                }
             }
             else if ( bTestDirectoryError && this.isMandatory(  ) )
-    		{
-            	throw new DirectoryErrorException( this.getTitle(  ) );
-    		}
-    	}
-    	else if ( bTestDirectoryError )
-    	{
-    		throw new DirectoryErrorException( this.getTitle(  ) );
-    	}
+            {
+                throw new DirectoryErrorException( this.getTitle(  ) );
+            }
+        }
+        else if ( bTestDirectoryError )
+        {
+            throw new DirectoryErrorException( this.getTitle(  ) );
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Paginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex )
+    public Paginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl,
+        String strPageIndexParameterName, String strPageIndex )
     {
-        return new Paginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage, strBaseUrl,
-            strPageIndexParameterName, strPageIndex );
+        return new Paginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ),
+            nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex );
     }
 
     /**
@@ -306,11 +310,11 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public LocalizedPaginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex, Locale locale )
+    public LocalizedPaginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl,
+        String strPageIndexParameterName, String strPageIndex, Locale locale )
     {
-        return new LocalizedPaginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage,
-            strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
+        return new LocalizedPaginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ),
+            nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
     }
 
     /**
@@ -318,20 +322,21 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
      */
     @Override
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-            boolean bExportDirectory )
+        boolean bExportDirectory )
     {
         if ( recordField.getFile(  ) != null )
         {
-        	UrlItem url = new UrlItem( DirectoryUtils.getBaseUrl( null ) + JSP_DOWNLOAD_FILE );
-        	url.addParameter( DirectoryUtils.PARAMETER_ID_FILE, recordField.getFile(  ).getIdFile(  ) );
-        	return url.getUrl(  );
+            UrlItem url = new UrlItem( DirectoryUtils.getBaseUrl( null ) + JSP_DOWNLOAD_FILE );
+            url.addParameter( DirectoryUtils.PARAMETER_ID_FILE, recordField.getFile(  ).getIdFile(  ) );
+
+            return url.getUrl(  );
         }
-        
+
         if ( StringUtils.isNotBlank( recordField.getValue(  ) ) )
         {
-        	return recordField.getValue(  );
+            return recordField.getValue(  );
         }
-        
+
         return StringUtils.EMPTY;
     }
 
@@ -339,69 +344,75 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-	protected String checkEntryData( HttpServletRequest request, Locale locale )
-	{
-    	String strError = super.checkEntryData( request, locale );
-    	if ( StringUtils.isBlank( strError ) )
-    	{
-    		String strWidth = request.getParameter( PARAMETER_WIDTH );
-    		if ( StringUtils.isBlank( strWidth ) )
-    		{
-    			Object[] tabRequiredFields = { I18nService.getLocalizedString( FIELD_WIDTH, locale ) };
-    			
-    			return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-    					AdminMessage.TYPE_STOP );
-    		}
-    		else if ( !StringUtils.isNumeric( strWidth ) )
-    		{
-    			Object[] tabRequiredFields = { I18nService.getLocalizedString( FIELD_WIDTH, locale ) };
-    			
-    			return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields,
-    					AdminMessage.TYPE_STOP );
-    		}
-    	}
-    	return strError;
-	}
+    protected String checkEntryData( HttpServletRequest request, Locale locale )
+    {
+        String strError = super.checkEntryData( request, locale );
 
-	/**
-     * {@inheritDoc}
-     */
-	@Override
-	protected void setFields( HttpServletRequest request, List<Field> listFields )
-	{
-		Field field = buildDefaultField( request );
-		
-		listFields.add( field );
-	}
+        if ( StringUtils.isBlank( strError ) )
+        {
+            String strWidth = request.getParameter( PARAMETER_WIDTH );
 
-	/**
-     * {@inheritDoc}
+            if ( StringUtils.isBlank( strWidth ) )
+            {
+                Object[] tabRequiredFields = { I18nService.getLocalizedString( FIELD_WIDTH, locale ) };
+
+                return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
+                    AdminMessage.TYPE_STOP );
+            }
+            else if ( !StringUtils.isNumeric( strWidth ) )
+            {
+                Object[] tabRequiredFields = { I18nService.getLocalizedString( FIELD_WIDTH, locale ) };
+
+                return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields,
+                    AdminMessage.TYPE_STOP );
+            }
+        }
+
+        return strError;
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    @Override
+    protected void setFields( HttpServletRequest request, List<Field> listFields )
+    {
+        Field field = buildDefaultField( request );
+
+        listFields.add( field );
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    @Override
+    protected void checkRecordFieldData( FileItem fileItem, Locale locale )
+        throws DirectoryErrorException
+    {
+    }
+
+    // PRIVATE METHODS
+
+    /**
+     * Build the default field
+     * @param request the HTTP request
+     * @return the default field
      */
-	@Override
-	protected void checkRecordFieldData( FileItem fileItem, Locale locale ) throws DirectoryErrorException
-	{
-	}
-	
-	// PRIVATE METHODS
-	
-	/**
-	 * Build the default field
-	 * @param request the HTTP request
-	 * @return the default field
-	 */
-	private Field buildDefaultField( HttpServletRequest request )
-	{
-		String strWidth = request.getParameter( PARAMETER_WIDTH );
+    private Field buildDefaultField( HttpServletRequest request )
+    {
+        String strWidth = request.getParameter( PARAMETER_WIDTH );
         int nWidth = DirectoryUtils.convertStringToInt( strWidth );
-        
-		Field field = DirectoryUtils.findFieldByTitleInTheList( null, getFields(  ) );
-		if ( field == null )
-		{
-			field = new Field(  );
-		}
-		field.setEntry( this );
-		field.setWidth( nWidth );
-		
-		return field;
-	}
+
+        Field field = DirectoryUtils.findFieldByTitleInTheList( null, getFields(  ) );
+
+        if ( field == null )
+        {
+            field = new Field(  );
+        }
+
+        field.setEntry( this );
+        field.setWidth( nWidth );
+
+        return field;
+    }
 }

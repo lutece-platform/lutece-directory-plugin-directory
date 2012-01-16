@@ -33,18 +33,19 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.beanutils.BeanUtils;
-
 import fr.paris.lutece.plugins.directory.business.attribute.DirectoryAttributeHome;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.ReferenceList;
+
+import org.apache.commons.beanutils.BeanUtils;
+
+import java.lang.reflect.InvocationTargetException;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -72,10 +73,11 @@ public final class DirectoryHome
     public static int create( Directory directory, Plugin plugin )
     {
         int nIdDirectory = _dao.insert( directory, plugin );
-        
+
         // Create directory attributes associated to the directory
         Map<String, Object> mapAttributes = DirectoryUtils.depopulate( directory );
         DirectoryAttributeHome.create( nIdDirectory, mapAttributes );
+
         return nIdDirectory;
     }
 
@@ -103,7 +105,7 @@ public final class DirectoryHome
             entry.setDirectory( directory );
             EntryHome.copy( entry, plugin );
         }
-        
+
         // Create directory attributes associated to the directory
         Map<String, Object> mapAttributes = DirectoryUtils.depopulate( directory );
         DirectoryAttributeHome.create( directory.getIdDirectory(  ), mapAttributes );
@@ -118,12 +120,13 @@ public final class DirectoryHome
      */
     public static void update( Directory directory, Plugin plugin )
     {
-    	// Remove directory attributes associated to the directory
+        // Remove directory attributes associated to the directory
         DirectoryAttributeHome.remove( directory.getIdDirectory(  ) );
+
         // Add directory Attribute
         Map<String, Object> mapAttributes = DirectoryUtils.depopulate( directory );
         DirectoryAttributeHome.create( directory.getIdDirectory(  ), mapAttributes );
-        
+
         _dao.store( directory, plugin );
     }
 
@@ -135,10 +138,11 @@ public final class DirectoryHome
      */
     public static void remove( int nIdDirectory, Plugin plugin )
     {
-    	// Remove records associated to the directory
+        // Remove records associated to the directory
         RecordFieldFilter recordFilter = new RecordFieldFilter(  );
         recordFilter.setIdDirectory( nIdDirectory );
-        List<Record>listRecord = RecordHome.getListRecord( recordFilter, plugin );
+
+        List<Record> listRecord = RecordHome.getListRecord( recordFilter, plugin );
 
         for ( Record record : listRecord )
         {
@@ -147,10 +151,11 @@ public final class DirectoryHome
 
         // Remove directory attributes associated to the directory
         DirectoryAttributeHome.remove( nIdDirectory );
-        
+
         // Remove entries associated to the directory
         EntryFilter entryFilter = new EntryFilter(  );
         entryFilter.setIdDirectory( nIdDirectory );
+
         List<IEntry> listEntry = EntryHome.getEntryList( entryFilter, plugin );
 
         for ( IEntry entry : listEntry )
@@ -173,21 +178,23 @@ public final class DirectoryHome
      */
     public static Directory findByPrimaryKey( int nKey, Plugin plugin )
     {
-    	Directory directory = _dao.load( nKey, plugin );
-    	Map<String, Object> mapAttributes = DirectoryAttributeHome.findByPrimaryKey( nKey );
-    	try
-		{
-			BeanUtils.populate( directory, mapAttributes );
-		}
-		catch ( IllegalAccessException e )
-		{
-			AppLogService.error( e );
-		}
-		catch ( InvocationTargetException e )
-		{
-			AppLogService.error( e );
-		}
-    	return directory;
+        Directory directory = _dao.load( nKey, plugin );
+        Map<String, Object> mapAttributes = DirectoryAttributeHome.findByPrimaryKey( nKey );
+
+        try
+        {
+            BeanUtils.populate( directory, mapAttributes );
+        }
+        catch ( IllegalAccessException e )
+        {
+            AppLogService.error( e );
+        }
+        catch ( InvocationTargetException e )
+        {
+            AppLogService.error( e );
+        }
+
+        return directory;
     }
 
     /**
@@ -198,24 +205,27 @@ public final class DirectoryHome
      */
     public static List<Directory> getDirectoryList( DirectoryFilter filter, Plugin plugin )
     {
-    	List<Directory> listDirectories = _dao.selectDirectoryList( filter, plugin );
-    	for ( Directory directory : listDirectories )
-    	{
-    		Map<String, Object> mapAttributes = DirectoryAttributeHome.findByPrimaryKey( directory.getIdDirectory(  ) );
-        	try
-    		{
-    			BeanUtils.populate( directory, mapAttributes );
-    		}
-    		catch ( IllegalAccessException e )
-    		{
-    			AppLogService.error( e );
-    		}
-    		catch ( InvocationTargetException e )
-    		{
-    			AppLogService.error( e );
-    		}
-    	}
-    	return listDirectories;
+        List<Directory> listDirectories = _dao.selectDirectoryList( filter, plugin );
+
+        for ( Directory directory : listDirectories )
+        {
+            Map<String, Object> mapAttributes = DirectoryAttributeHome.findByPrimaryKey( directory.getIdDirectory(  ) );
+
+            try
+            {
+                BeanUtils.populate( directory, mapAttributes );
+            }
+            catch ( IllegalAccessException e )
+            {
+                AppLogService.error( e );
+            }
+            catch ( InvocationTargetException e )
+            {
+                AppLogService.error( e );
+            }
+        }
+
+        return listDirectories;
     }
 
     /**

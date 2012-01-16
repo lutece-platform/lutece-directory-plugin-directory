@@ -424,21 +424,21 @@ public class EntryFilter
     {
         return ( _nIsIndexed != ALL_INT );
     }
-    
+
     /**
-	 *
-	 * @return  1 if the entry should be (part of) the title of the document in 
-	 * the global index, 0 otherwise
-	 */
+         *
+         * @return  1 if the entry should be (part of) the title of the document in
+         * the global index, 0 otherwise
+         */
     public int getIsIndexedAsTitle(  )
     {
         return _nIsIndexedAsTitle;
     }
 
     /**
-     * set  1 if the entry should be (part of) the title of the document in 
+     * set  1 if the entry should be (part of) the title of the document in
      * the global index, 0 otherwise
-     * @param isIndexed 1 if the entry should be (part of) the title of the document in 
+     * @param isIndexed 1 if the entry should be (part of) the title of the document in
      * the global index, 0 otherwise
      */
     public void setIsIndexedAsTitle( int isIndexedAsTitle )
@@ -448,44 +448,44 @@ public class EntryFilter
 
     /**
      *
-     * @return true  if the entry should be (part of) the title of the document in 
+     * @return true  if the entry should be (part of) the title of the document in
      * the global index, false otherwise
      */
     public boolean containsIsIndexedAsTitle(  )
     {
         return ( _nIsIndexedAsTitle != ALL_INT );
     }
-    
+
     /**
-	 *
-	 * @return  1 if the entry should be (part of) the summary of the document in 
-	 * the global index, 0 otherwise
-	 */
-   public int getIsIndexedAsSummary(  )
-   {
-       return _nIsIndexedAsSummary;
-   }
+         *
+         * @return  1 if the entry should be (part of) the summary of the document in
+         * the global index, 0 otherwise
+         */
+    public int getIsIndexedAsSummary(  )
+    {
+        return _nIsIndexedAsSummary;
+    }
 
-   /**
-    * set  1 if the entry should be (part of) the summary of the document in 
-    * the global index, 0 otherwise
-    * @param isIndexed 1 if the entry should be (part of) the summary of the document in 
-    * the global index, 0 otherwise
-    */
-   public void setIsIndexedAsSummary( int isIndexedAsSummary )
-   {
-       _nIsIndexedAsSummary = isIndexedAsSummary;
-   }
+    /**
+     * set  1 if the entry should be (part of) the summary of the document in
+     * the global index, 0 otherwise
+     * @param isIndexed 1 if the entry should be (part of) the summary of the document in
+     * the global index, 0 otherwise
+     */
+    public void setIsIndexedAsSummary( int isIndexedAsSummary )
+    {
+        _nIsIndexedAsSummary = isIndexedAsSummary;
+    }
 
-   /**
-    *
-    * @return true  if the entry should be (part of) the summary of the document in 
-    * the global index, false otherwise
-    */
-   public boolean containsIsIndexedAsSummary(  )
-   {
-       return ( _nIsIndexedAsSummary != ALL_INT );
-   }
+    /**
+     *
+     * @return true  if the entry should be (part of) the summary of the document in
+     * the global index, false otherwise
+     */
+    public boolean containsIsIndexedAsSummary(  )
+    {
+        return ( _nIsIndexedAsSummary != ALL_INT );
+    }
 
     /**
     *
@@ -569,35 +569,35 @@ public class EntryFilter
     {
         return ( _nIsShownInExport != ALL_INT );
     }
-    
+
     /**
     *
     * @return 1 if the entry associate to the record field is shown in record completeness,
     *         O if the entry associate to the record field is shown in record completeness
     */
-   public int getIsShownInCompleteness(  )
-   {
-       return _nIsShownInCompleteness;
-   }
+    public int getIsShownInCompleteness(  )
+    {
+        return _nIsShownInCompleteness;
+    }
 
-   /**
-    * set 1 if the entry associate to the record field is shown in record completeness,
-    *     O if the entry associate to the record field is shown in record completeness
-    *  @param nIsShownInCompleteness 1 if the entry associate to the record field is shown in record completeness
-    */
-   public void setIsShownInCompleteness( int nIsShownInCompleteness )
-   {
-       _nIsShownInCompleteness = nIsShownInCompleteness;
-   }
+    /**
+     * set 1 if the entry associate to the record field is shown in record completeness,
+     *     O if the entry associate to the record field is shown in record completeness
+     *  @param nIsShownInCompleteness 1 if the entry associate to the record field is shown in record completeness
+     */
+    public void setIsShownInCompleteness( int nIsShownInCompleteness )
+    {
+        _nIsShownInCompleteness = nIsShownInCompleteness;
+    }
 
-   /**
-    *
-    * @return true if the filter is initialized
-    */
-   public boolean containsIsShownInCompleteness(  )
-   {
-       return ( _nIsShownInCompleteness != ALL_INT );
-   }
+    /**
+     *
+     * @return true if the filter is initialized
+     */
+    public boolean containsIsShownInCompleteness(  )
+    {
+        return ( _nIsShownInCompleteness != ALL_INT );
+    }
 
     /**
     *

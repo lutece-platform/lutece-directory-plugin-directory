@@ -39,13 +39,13 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.sql.DAOUtil;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -217,10 +217,10 @@ public final class RecordDAO implements IRecordDAO
 
         if ( nSize > 0 )
         {
-        	// array to keep order from listId
-        	// because we have no way to keep it with a query
-        	Record[] tabRecords = new Record[nSize];
-        	
+            // array to keep order from listId
+            // because we have no way to keep it with a query
+            Record[] tabRecords = new Record[nSize];
+
             Directory directory;
 
             StringBuilder sb = new StringBuilder( SQL_QUERY_FIND_BY_LIST_PRIMARY_KEY );
@@ -261,7 +261,7 @@ public final class RecordDAO implements IRecordDAO
                 record.setEnabled( daoUtil.getBoolean( 4 ) );
                 record.setRoleKey( daoUtil.getString( 5 ) );
                 record.setWorkgroup( daoUtil.getString( 6 ) );
-                
+
                 if ( daoUtil.getTimestamp( 7 ) == null )
                 {
                     record.setDateModification( new Timestamp( 0 ) );
@@ -272,17 +272,17 @@ public final class RecordDAO implements IRecordDAO
                 }
 
                 // keep id order
-                tabRecords[listId.indexOf( record.getIdRecord() )] = record;
+                tabRecords[listId.indexOf( record.getIdRecord(  ) )] = record;
             }
 
             daoUtil.free(  );
-            
+
             // get list from array
             lRecord = Arrays.asList( tabRecords );
         }
         else
         {
-        	lRecord = new ArrayList<Record>();
+            lRecord = new ArrayList<Record>(  );
         }
 
         return lRecord;
@@ -329,7 +329,7 @@ public final class RecordDAO implements IRecordDAO
         daoUtil.setString( 5, record.getRoleKey(  ) );
         daoUtil.setString( 6, record.getWorkgroup(  ) );
         daoUtil.setTimestamp( 7, record.getDateModification(  ) );
-        
+
         daoUtil.setInt( 8, record.getIdRecord(  ) );
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -350,7 +350,7 @@ public final class RecordDAO implements IRecordDAO
         List<String> listStrFilter = buildFilterQueryHeader( filter );
 
         String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_SELECT_RECORD_BY_FILTER, listStrFilter,
-        		SQL_ORDER_BY_DEFAULT_ASC );
+                SQL_ORDER_BY_DEFAULT_ASC );
 
         DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
 
@@ -441,25 +441,25 @@ public final class RecordDAO implements IRecordDAO
         List<String> listFilter = buildFilterQueryHeader( filter );
 
         StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_RECORD_ID_BY_FILTER );
-        
+
         // check if filter contains entry to sort the result with.
-        if ( filter.containsSortEntry() )
+        if ( filter.containsSortEntry(  ) )
         {
-        	sbSQL.append( filter.getSortEntry().getSQLJoin() );
+            sbSQL.append( filter.getSortEntry(  ).getSQLJoin(  ) );
         }
-        
+
         String strOrderBy = StringUtils.EMPTY;
+
         if ( filter.isOrderByDateModification(  ) )
         {
-        	strOrderBy = getOrderByQuery( filter, SQL_ORDER_BY_DATE_MODIFICATION );
+            strOrderBy = getOrderByQuery( filter, SQL_ORDER_BY_DATE_MODIFICATION );
         }
         else
         {
-        	strOrderBy = getOrderByQuery( filter, SQL_ORDER_BY_DEFAULT );
+            strOrderBy = getOrderByQuery( filter, SQL_ORDER_BY_DEFAULT );
         }
-        
-        String strSQL = DirectoryUtils.buildQueryWithFilter( sbSQL, listFilter,
-        		strOrderBy );
+
+        String strSQL = DirectoryUtils.buildQueryWithFilter( sbSQL, listFilter, strOrderBy );
 
         DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
 
@@ -476,7 +476,7 @@ public final class RecordDAO implements IRecordDAO
 
         return recordList;
     }
-    
+
     /**
      * Builds an order by query using the given filter.
      * Uses the default order query if filter does not contains order data.
@@ -486,27 +486,27 @@ public final class RecordDAO implements IRecordDAO
      */
     private String getOrderByQuery( RecordFieldFilter filter, String strDefaultOrderQuery )
     {
-    	String strOrderBy;
-        
-        if ( filter.containsSortEntry() )
+        String strOrderBy;
+
+        if ( filter.containsSortEntry(  ) )
         {
-        	strOrderBy = filter.getSortEntry().getSQLOrderBy();
+            strOrderBy = filter.getSortEntry(  ).getSQLOrderBy(  );
         }
         else
         {
-        	// default sort is date_creation
-        	strOrderBy = strDefaultOrderQuery;
+            // default sort is date_creation
+            strOrderBy = strDefaultOrderQuery;
         }
-        
-        if ( filter.getSortOrder() == RecordFieldFilter.ORDER_ASC )
-    	{
-    		strOrderBy += SQL_ORDER_ASC;
-    	}
-    	else
-    	{
-    		strOrderBy += SQL_ORDER_DESC;
-    	}
-        
+
+        if ( filter.getSortOrder(  ) == RecordFieldFilter.ORDER_ASC )
+        {
+            strOrderBy += SQL_ORDER_ASC;
+        }
+        else
+        {
+            strOrderBy += SQL_ORDER_DESC;
+        }
+
         return strOrderBy;
     }
 
@@ -632,7 +632,7 @@ public final class RecordDAO implements IRecordDAO
 
             listStrFilter.add( sbRoleKeyFilter.toString(  ) );
         }
-        
+
         return listStrFilter;
     }
 
@@ -645,22 +645,22 @@ public final class RecordDAO implements IRecordDAO
     private DAOUtil buildFilterQueryFooter( DAOUtil daoUtil, RecordFieldFilter filter, int nIndex )
     {
         DAOUtil result = daoUtil;
-        
+
         // sort parameters
-        if ( filter.containsSortEntry() )
+        if ( filter.containsSortEntry(  ) )
         {
-        	for ( Object oValue : filter.getSortEntry().getSQLParametersValues() )
-        	{
-        		// try to use setInt if possible, use setString otherwise.
-        		if ( oValue instanceof Integer )
-        		{
-        			result.setInt( nIndex++, (Integer) oValue );
-        		}
-        		else
-        		{
-        			result.setString( nIndex++, oValue.toString() ); 
-        		}
-        	}
+            for ( Object oValue : filter.getSortEntry(  ).getSQLParametersValues(  ) )
+            {
+                // try to use setInt if possible, use setString otherwise.
+                if ( oValue instanceof Integer )
+                {
+                    result.setInt( nIndex++, (Integer) oValue );
+                }
+                else
+                {
+                    result.setString( nIndex++, oValue.toString(  ) );
+                }
+            }
         }
 
         if ( filter.containsIdDirectory(  ) )

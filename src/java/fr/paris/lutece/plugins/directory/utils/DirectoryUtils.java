@@ -33,26 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.utils;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.util.ReflectionUtils;
-
 import fr.paris.lutece.plugins.blobstoreclient.util.BlobStoreClientException;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
@@ -94,6 +74,28 @@ import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
+import org.springframework.util.ReflectionUtils;
+
+import java.sql.Timestamp;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -146,7 +148,7 @@ public final class DirectoryUtils
 
     // JSP
     public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
-    
+
     // SESSION
     public static final String SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS = "directory_list_submitted_record_fields";
     public static final String SESSION_DIRECTORY_TASKS_SUBMITTED_RECORD_FIELDS = "directory_tasks_submitted_record_fields";
@@ -457,7 +459,7 @@ public final class DirectoryUtils
 
         return map;
     }
-    
+
     /**
      * Build the map of <idEntry, RecordFields> from a given record
      * @param record the record
@@ -465,23 +467,26 @@ public final class DirectoryUtils
      */
     public static Map<String, List<RecordField>> buildMapIdEntryListRecordField( Record record )
     {
-    	Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>(  );
-    	
-    	for ( RecordField recordField : record.getListRecordField(  ) )
-    	{
-    		if ( recordField != null && recordField.getEntry(  ) != null )
-    		{
-    			recordField.setRecord( record );
-    			String strIdEntry = Integer.toString( recordField.getEntry(  ).getIdEntry(  ) );
-    			List<RecordField> listRecordFields = map.get( strIdEntry );
-    			if ( listRecordFields == null )
-    			{
-    				listRecordFields = new ArrayList<RecordField>(  );
-    			}
-    			listRecordFields.add( recordField );
-    			map.put( strIdEntry, listRecordFields );
-    		}
-    	}
+        Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>(  );
+
+        for ( RecordField recordField : record.getListRecordField(  ) )
+        {
+            if ( ( recordField != null ) && ( recordField.getEntry(  ) != null ) )
+            {
+                recordField.setRecord( record );
+
+                String strIdEntry = Integer.toString( recordField.getEntry(  ).getIdEntry(  ) );
+                List<RecordField> listRecordFields = map.get( strIdEntry );
+
+                if ( listRecordFields == null )
+                {
+                    listRecordFields = new ArrayList<RecordField>(  );
+                }
+
+                listRecordFields.add( recordField );
+                map.put( strIdEntry, listRecordFields );
+            }
+        }
 
         return map;
     }
@@ -589,13 +594,14 @@ public final class DirectoryUtils
     public static void getDirectoryRecordData( HttpServletRequest request, Record record, Plugin plugin, Locale locale )
         throws DirectoryErrorException
     {
-    	boolean bTestDirectoryError = true;
-		String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
-		if ( StringUtils.isNotBlank( strUploadAction ) )
-		{
-			bTestDirectoryError = false;
-		}
-    	
+        boolean bTestDirectoryError = true;
+        String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+
+        if ( StringUtils.isNotBlank( strUploadAction ) )
+        {
+            bTestDirectoryError = false;
+        }
+
         List<RecordField> listRecordFieldResult = new ArrayList<RecordField>(  );
         EntryFilter filter = new EntryFilter(  );
         filter.setIdDirectory( record.getDirectory(  ).getIdDirectory(  ) );
@@ -606,8 +612,8 @@ public final class DirectoryUtils
 
         for ( IEntry entry : listEntryFirstLevel )
         {
-    		DirectoryUtils.getDirectoryRecordFieldData( record, request, entry.getIdEntry(  ), bTestDirectoryError,
-    				listRecordFieldResult, plugin, locale );
+            DirectoryUtils.getDirectoryRecordFieldData( record, request, entry.getIdEntry(  ), bTestDirectoryError,
+                listRecordFieldResult, plugin, locale );
         }
 
         record.setListRecordField( listRecordFieldResult );
@@ -714,16 +720,16 @@ public final class DirectoryUtils
      */
     public static Field findFieldByIdInTheList( int nIdField, List<Field> listField )
     {
-    	if ( listField != null && !listField.isEmpty(  ) )
-    	{
-    		for ( Field field : listField )
-    		{
-    			if ( field.getIdField(  ) == nIdField )
-    			{
-    				return field;
-    			}
-    		}
-    	}
+        if ( ( listField != null ) && !listField.isEmpty(  ) )
+        {
+            for ( Field field : listField )
+            {
+                if ( field.getIdField(  ) == nIdField )
+                {
+                    return field;
+                }
+            }
+        }
 
         return null;
     }
@@ -739,7 +745,7 @@ public final class DirectoryUtils
      */
     public static Field findFieldByValueInTheList( String strFieldValue, List<Field> listField )
     {
-        if ( strFieldValue != null && listField != null && !listField.isEmpty(  ) )
+        if ( ( strFieldValue != null ) && ( listField != null ) && !listField.isEmpty(  ) )
         {
             for ( Field field : listField )
             {
@@ -752,7 +758,7 @@ public final class DirectoryUtils
 
         return null;
     }
-    
+
     /**
      * Return the field which title is specified in parameter
      * @param strTitle the title
@@ -761,24 +767,24 @@ public final class DirectoryUtils
      */
     public static Field findFieldByTitleInTheList( String strTitle, List<Field> listFields )
     {
-    	if ( listFields == null || listFields.isEmpty(  ) )
-    	{
-    		return null;
-    	}
-    	
-    	for ( Field field : listFields )
+        if ( ( listFields == null ) || listFields.isEmpty(  ) )
         {
-        	if ( StringUtils.isNotBlank( strTitle ) )
-        	{
-        		if ( trim( strTitle ).equals( trim( field.getTitle(  ) ) ) )
-        		{
-        			return field;
-        		}
-        	}
-        	else if ( StringUtils.isBlank( field.getTitle(  ) ) )
-        	{
-        		return field;
-        	}
+            return null;
+        }
+
+        for ( Field field : listFields )
+        {
+            if ( StringUtils.isNotBlank( strTitle ) )
+            {
+                if ( trim( strTitle ).equals( trim( field.getTitle(  ) ) ) )
+                {
+                    return field;
+                }
+            }
+            else if ( StringUtils.isBlank( field.getTitle(  ) ) )
+            {
+                return field;
+            }
         }
 
         return null;
@@ -1203,7 +1209,7 @@ public final class DirectoryUtils
         {
             filter.setSortOrder( nSortOrder );
         }
-        
+
         filter.setOrderByDateModification( searchFields.isSortByDateModification(  ) );
 
         // If workflow active, filter by workflow state
@@ -1218,8 +1224,8 @@ public final class DirectoryUtils
                 listResultRecordId = DirectorySearchService.getInstance(  )
                                                            .getSearchResults( directory, searchFields.getMapQuery(  ),
                         searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ),
-                        searchFields.getDateCreationEndRecord(  ), searchFields.getDateModificationRecord(  ), 
-                        searchFields.getDateModificationBeginRecord(  ), searchFields.getDateModificationEndRecord(  ), 
+                        searchFields.getDateCreationEndRecord(  ), searchFields.getDateModificationRecord(  ),
+                        searchFields.getDateModificationBeginRecord(  ), searchFields.getDateModificationEndRecord(  ),
                         filter, getPlugin(  ) );
             }
             else
@@ -1243,8 +1249,8 @@ public final class DirectoryUtils
                 listResultRecordId = DirectorySearchService.getInstance(  )
                                                            .getSearchResults( directory, searchFields.getMapQuery(  ),
                         searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ),
-                        searchFields.getDateCreationEndRecord(  ), searchFields.getDateModificationRecord(  ), 
-                        searchFields.getDateModificationBeginRecord(  ), searchFields.getDateModificationEndRecord(  ), 
+                        searchFields.getDateCreationEndRecord(  ), searchFields.getDateModificationRecord(  ),
+                        searchFields.getDateModificationBeginRecord(  ), searchFields.getDateModificationEndRecord(  ),
                         filter, getPlugin(  ) );
             }
             else
@@ -1468,13 +1474,13 @@ public final class DirectoryUtils
         {
             if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) )
             {
-            	for ( RecordField recordField : listRecordFields )
-            	{
-            		if ( ( recordField != null ) && StringUtils.isNotBlank( recordField.getValue(  ) ) )
-            		{
-            			recordField.setFileName( getFileName( recordField.getValue(  ) ) );
-            		}
-            	}
+                for ( RecordField recordField : listRecordFields )
+                {
+                    if ( ( recordField != null ) && StringUtils.isNotBlank( recordField.getValue(  ) ) )
+                    {
+                        recordField.setFileName( getFileName( recordField.getValue(  ) ) );
+                    }
+                }
             }
         }
 
@@ -1516,25 +1522,30 @@ public final class DirectoryUtils
      */
     public static Map<String, Object> depopulate( Directory directory )
     {
-    	Map<String, Object> mapAttributes = new HashMap<String, Object>(  );
-    	for ( java.lang.reflect.Field field : Directory.class.getDeclaredFields(  ) )
-    	{
-    		DirectoryAttribute attribute = field.getAnnotation( DirectoryAttribute.class );
-    		if ( attribute != null )
-    		{
-    			String strAttributeKey = attribute.value(  );
-    			try
-				{
-					field.setAccessible( true );
-					Object attributeValue = ReflectionUtils.getField( field, directory );
-					mapAttributes.put( strAttributeKey, attributeValue );
-				}
-				catch ( SecurityException e )
-				{
-					AppLogService.error( e );
-				}
-    		}
-    	}
-    	return mapAttributes;
+        Map<String, Object> mapAttributes = new HashMap<String, Object>(  );
+
+        for ( java.lang.reflect.Field field : Directory.class.getDeclaredFields(  ) )
+        {
+            DirectoryAttribute attribute = field.getAnnotation( DirectoryAttribute.class );
+
+            if ( attribute != null )
+            {
+                String strAttributeKey = attribute.value(  );
+
+                try
+                {
+                    field.setAccessible( true );
+
+                    Object attributeValue = ReflectionUtils.getField( field, directory );
+                    mapAttributes.put( strAttributeKey, attributeValue );
+                }
+                catch ( SecurityException e )
+                {
+                    AppLogService.error( e );
+                }
+            }
+        }
+
+        return mapAttributes;
     }
 }

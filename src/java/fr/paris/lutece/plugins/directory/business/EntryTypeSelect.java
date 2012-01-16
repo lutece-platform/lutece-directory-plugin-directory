@@ -58,6 +58,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EntryTypeSelect extends Entry
 {
+    private static final String SQL_JOIN_DIRECTORY_RECORD_FIELD = " LEFT JOIN directory_record_field drf ON drf.id_record = dr.id_record AND drf.id_entry = ? LEFT JOIN directory_field df ON df.id_entry = drf.id_entry AND drf.id_field = df.id_field ";
+    private static final String SQL_ORDER_BY_TITLE = " ORDER BY df.title ";
     private final String _template_create = "admin/plugins/directory/entrytypeselect/create_entry_type_select.html";
     private final String _template_modify = "admin/plugins/directory/entrytypeselect/modify_entry_type_select.html";
     private final String _template_html_code_form_entry = "admin/plugins/directory/entrytypeselect/html_code_form_entry_type_select.html";
@@ -66,9 +68,6 @@ public class EntryTypeSelect extends Entry
     private final String _template_html_front_code_form_entry = "skin/plugins/directory/entrytypeselect/html_code_form_entry_type_select.html";
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytypeselect/html_code_form_search_entry_type_select.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypeselect/html_code_entry_value_type_select.html";
-
-    private static final String SQL_JOIN_DIRECTORY_RECORD_FIELD = " LEFT JOIN directory_record_field drf ON drf.id_record = dr.id_record AND drf.id_entry = ? LEFT JOIN directory_field df ON df.id_entry = drf.id_entry AND drf.id_field = df.id_field ";
-    private static final String SQL_ORDER_BY_TITLE = " ORDER BY df.title ";
 
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
@@ -300,22 +299,22 @@ public class EntryTypeSelect extends Entry
         return new LocalizedPaginator( this.getFields(  ), nItemPerPage, strBaseUrl, strPageIndexParameterName,
             strPageIndex, locale );
     }
-    
+
     @Override
-    public String getSQLJoin()
+    public String getSQLJoin(  )
     {
-    	return SQL_JOIN_DIRECTORY_RECORD_FIELD;
+        return SQL_JOIN_DIRECTORY_RECORD_FIELD;
     }
-    
+
     @Override
-    public String getSQLOrderBy()
+    public String getSQLOrderBy(  )
     {
-    	return SQL_ORDER_BY_TITLE;
+        return SQL_ORDER_BY_TITLE;
     }
-    
+
     @Override
-    public List<Object> getSQLParametersValues()
+    public List<Object> getSQLParametersValues(  )
     {
-    	return Collections.<Object>singletonList( Integer.valueOf( getIdEntry() ) );
+        return Collections.<Object>singletonList( Integer.valueOf( getIdEntry(  ) ) );
     }
 }

@@ -81,15 +81,16 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         " LEFT JOIN directory_field dfield ON (drf.id_field=dfield.id_field) ";
     private static final String SQL_QUERY_COUNT_RECORD_FIELD_BY_FILTER = "SELECT COUNT(drf.id_record_field) " +
         "FROM directory_record_field drf,directory_entry ent,directory_entry_type type ";
+
     // Special query in order to sort numerically and not alphabetically (thus avoiding list like 1, 10, 11, 2, ... instead of 1, 2, ..., 10, 11)
-    private static final String SQL_QUERY_SELECT_MAX_NUMBER = " SELECT drf.record_field_value FROM directory_record_field drf " + 
-    	" INNER JOIN directory_record dr ON drf.id_record = dr.id_record " +
-    	" INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry " +
-    	" WHERE ent.id_type = ? AND dr.id_directory = ? ORDER BY 0 + drf.record_field_value DESC LIMIT 1 ";
-    private static final String SQL_QUERY_SELECT_BY_RECORD_FIELD_VALUE = " SELECT drf.id_record_field FROM directory_record_field drf " + 
-		" INNER JOIN directory_record dr ON drf.id_record = dr.id_record " +
-		" INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry " +
-		" WHERE ent.id_type = ? AND dr.id_directory = ? AND drf.record_field_value = ? "; 
+    private static final String SQL_QUERY_SELECT_MAX_NUMBER = " SELECT drf.record_field_value FROM directory_record_field drf " +
+        " INNER JOIN directory_record dr ON drf.id_record = dr.id_record " +
+        " INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry " +
+        " WHERE ent.id_type = ? AND dr.id_directory = ? ORDER BY 0 + drf.record_field_value DESC LIMIT 1 ";
+    private static final String SQL_QUERY_SELECT_BY_RECORD_FIELD_VALUE = " SELECT drf.id_record_field FROM directory_record_field drf " +
+        " INNER JOIN directory_record dr ON drf.id_record = dr.id_record " +
+        " INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry " +
+        " WHERE ent.id_type = ? AND dr.id_directory = ? AND drf.record_field_value = ? ";
     private static final String SQL_FILTER_ID_RECORD = " drf.id_record = ? ";
     private static final String SQL_FILTER_ID_RECORD_IN = " drf.id_record IN ( ? ";
     private static final String SQL_FILTER_ID_FIELD = " drf.id_field = ? ";
@@ -889,19 +890,19 @@ public final class RecordFieldDAO implements IRecordFieldDAO
      */
     public int getMaxNumber( int nIdEntryTypeNumbering, int nIdDirectory, Plugin plugin )
     {
-    	int nIndex = 1;
-    	DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_MAX_NUMBER, plugin );
-    	daoUtil.setInt( nIndex++, nIdEntryTypeNumbering );
-    	daoUtil.setInt( nIndex++, nIdDirectory );
+        int nIndex = 1;
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_MAX_NUMBER, plugin );
+        daoUtil.setInt( nIndex++, nIdEntryTypeNumbering );
+        daoUtil.setInt( nIndex++, nIdDirectory );
         daoUtil.executeQuery(  );
 
         int nKey = 1;
 
         if ( daoUtil.next(  ) )
         {
-        	nKey = daoUtil.getInt( 1 ) + 1;
+            nKey = daoUtil.getInt( 1 ) + 1;
         }
-        
+
         daoUtil.free(  );
 
         return nKey;
@@ -912,20 +913,20 @@ public final class RecordFieldDAO implements IRecordFieldDAO
      */
     public boolean isNumberOnARecordField( int nIdEntryTypeNumbering, int nIdDirectory, int nNumber, Plugin plugin )
     {
-    	int nIndex = 1;
-    	DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_RECORD_FIELD_VALUE, plugin );
-    	daoUtil.setInt( nIndex++, nIdEntryTypeNumbering );
-    	daoUtil.setInt( nIndex++, nIdDirectory );
-    	daoUtil.setInt( nIndex++, nNumber );
+        int nIndex = 1;
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_RECORD_FIELD_VALUE, plugin );
+        daoUtil.setInt( nIndex++, nIdEntryTypeNumbering );
+        daoUtil.setInt( nIndex++, nIdDirectory );
+        daoUtil.setInt( nIndex++, nNumber );
         daoUtil.executeQuery(  );
-        
+
         boolean isOn = false;
 
         if ( daoUtil.next(  ) )
         {
-        	isOn = true;
+            isOn = true;
         }
-        
+
         daoUtil.free(  );
 
         return isOn;

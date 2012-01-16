@@ -37,6 +37,7 @@ import fr.paris.lutece.plugins.directory.business.Directory;
 
 import java.util.List;
 
+
 /**
  * implementation of IDirectorySearchFields for storing in session the search filter and sort filter used in DirectoryApp
  * @author merlinfe
@@ -51,15 +52,16 @@ public class DirectorySiteSearchFields extends DefaultDirectorySearchFields
     private List<String> _roleKeyList;
     private boolean _bIncludeRoleNull;
     private boolean _bIncludeRoleNone;
-    
+
     /**
-     * 	
+     *
      * @return true if the filter must included the role none
      */
     public boolean isIncludeRoleNone(  )
     {
         return _bIncludeRoleNone;
     }
+
     /**
      *  used if the record must be filter by role
      * @param bIncludeRoleNone true if the filter must included the role none
@@ -77,6 +79,7 @@ public class DirectorySiteSearchFields extends DefaultDirectorySearchFields
     {
         _roleKeyList = roleKeyList;
     }
+
     /**
      * a list of key role
      * @return  a list of key role
@@ -85,6 +88,7 @@ public class DirectorySiteSearchFields extends DefaultDirectorySearchFields
     {
         return _roleKeyList;
     }
+
     /**
      * used if the record must be filter by role
      * @param _bIncludeRoleNull true if the filter must included the role null
@@ -93,14 +97,16 @@ public class DirectorySiteSearchFields extends DefaultDirectorySearchFields
     {
         this._bIncludeRoleNull = _bIncludeRoleNull;
     }
+
     /**
-     * 
+     *
      * @return true if the filter must included the role null
      */
     public boolean isIncludeRoleNull(  )
     {
         return _bIncludeRoleNull;
     }
+
     /*
      * (non-Javadoc)
      * @see fr.paris.lutece.plugins.directory.web.action.DefaultDirectorySearchFields#getDefaultIdSortEntry(fr.paris.lutece.plugins.directory.business.Directory)
@@ -110,11 +116,11 @@ public class DirectorySiteSearchFields extends DefaultDirectorySearchFields
         return directory.getIdSortEntryFront(  );
     }
 
-	  /*
-	   * (non-Javadoc)
-	   * @see fr.paris.lutece.plugins.directory.web.action.DefaultDirectorySearchFields#isDefaultAscendingSort(fr.paris.lutece.plugins.directory.business.Directory)
-	   */
-	    public boolean isDefaultAscendingSort( Directory directory )
+    /*
+     * (non-Javadoc)
+     * @see fr.paris.lutece.plugins.directory.web.action.DefaultDirectorySearchFields#isDefaultAscendingSort(fr.paris.lutece.plugins.directory.business.Directory)
+     */
+    public boolean isDefaultAscendingSort( Directory directory )
     {
         return directory.isAscendingSort(  );
     }

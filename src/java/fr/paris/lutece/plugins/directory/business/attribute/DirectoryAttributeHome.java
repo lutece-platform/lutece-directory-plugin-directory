@@ -33,64 +33,65 @@
  */
 package fr.paris.lutece.plugins.directory.business.attribute;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
+
 /**
- * 
+ *
  * DirectoryAttributeHome
  *
  */
 public final class DirectoryAttributeHome
 {
-	private static final String BEAN_DIRECTORY_ATTRIBUTE_DAO = "directory.directoryAttributeDAO";
-	private static Plugin _plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-	private static IDirectoryAttributeDAO _dao = (IDirectoryAttributeDAO) SpringContextService.getPluginBean( 
-			DirectoryPlugin.PLUGIN_NAME, BEAN_DIRECTORY_ATTRIBUTE_DAO );
+    private static final String BEAN_DIRECTORY_ATTRIBUTE_DAO = "directory.directoryAttributeDAO";
+    private static Plugin _plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+    private static IDirectoryAttributeDAO _dao = (IDirectoryAttributeDAO) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
+            BEAN_DIRECTORY_ATTRIBUTE_DAO );
 
-	/**
-	 * Load the attributes of the directory
-	 * @param nIdDirectory the id directory
-	 * @return a map of key - value
-	 */
-	public static Map<String, Object> findByPrimaryKey( int nIdDirectory )
-	{
-		return _dao.load( nIdDirectory, _plugin );
-	}
-	
-	/**
-	 * Create an attribute of the directory
-	 * @param directoryAttributes the directory attributes
-	 */
-	public static void create( int nIdDirectory, String strAttributeKey, Object attributeValue )
-	{
-		_dao.insert( nIdDirectory, strAttributeKey, attributeValue, _plugin );
-	}
+    /**
+     * Load the attributes of the directory
+     * @param nIdDirectory the id directory
+     * @return a map of key - value
+     */
+    public static Map<String, Object> findByPrimaryKey( int nIdDirectory )
+    {
+        return _dao.load( nIdDirectory, _plugin );
+    }
 
-	/**
-	 * Create the attribute of the directory
-	 * @param nIdDirectory the id directory
-	 * @param mapAttributes the map of attributes
-	 */
-	public static void create( int nIdDirectory, Map<String, Object> mapAttributes )
-	{
-		for ( Entry<String, Object> attribute : mapAttributes.entrySet(  ) )
-		{
-			create( nIdDirectory, attribute.getKey(  ), attribute.getValue(  ) );
-		}
-	}
-	
-	/**
-	 * Remove the attributes of the directory
-	 * @param nIdDirectory the id directory
-	 */
-	public static void remove( int nIdDirectory )
-	{
-		_dao.remove( nIdDirectory, _plugin );
-	}
+    /**
+     * Create an attribute of the directory
+     * @param directoryAttributes the directory attributes
+     */
+    public static void create( int nIdDirectory, String strAttributeKey, Object attributeValue )
+    {
+        _dao.insert( nIdDirectory, strAttributeKey, attributeValue, _plugin );
+    }
+
+    /**
+     * Create the attribute of the directory
+     * @param nIdDirectory the id directory
+     * @param mapAttributes the map of attributes
+     */
+    public static void create( int nIdDirectory, Map<String, Object> mapAttributes )
+    {
+        for ( Entry<String, Object> attribute : mapAttributes.entrySet(  ) )
+        {
+            create( nIdDirectory, attribute.getKey(  ), attribute.getValue(  ) );
+        }
+    }
+
+    /**
+     * Remove the attributes of the directory
+     * @param nIdDirectory the id directory
+     */
+    public static void remove( int nIdDirectory )
+    {
+        _dao.remove( nIdDirectory, _plugin );
+    }
 }

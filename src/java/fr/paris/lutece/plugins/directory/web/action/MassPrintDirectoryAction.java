@@ -33,11 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web.action;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
@@ -47,69 +42,72 @@ import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.url.UrlItem;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 /**
  * Redirects to jsp/admin/plugins/directory/MassPrint.jsp
  *
  */
-public class MassPrintDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
+public class MassPrintDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
+    implements IDirectoryAction
 {
-	private static final String ACTION_NAME = "Mass Print Directory";
-	private static final String TEMPLATE_BUTTON = "actions/massprint.html";
+    private static final String ACTION_NAME = "Mass Print Directory";
+    private static final String TEMPLATE_BUTTON = "actions/massprint.html";
 
-	/** the button is an image so the name is .x or .y */
-	private static final String PARAMETER_BUTTON_MASS_PRINT_X = "massprint.x";
-	
-	private static final String JSP_DIRECTORY_MASS_PRINT = "jsp/admin/plugins/directory/MassPrint.jsp";
+    /** the button is an image so the name is .x or .y */
+    private static final String PARAMETER_BUTTON_MASS_PRINT_X = "massprint.x";
+    private static final String JSP_DIRECTORY_MASS_PRINT = "jsp/admin/plugins/directory/MassPrint.jsp";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void fillModel(HttpServletRequest request, AdminUser adminUser,
-			Map<String, Object> model) 
-	{
-		// no additionnal data
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void fillModel( HttpServletRequest request, AdminUser adminUser, Map<String, Object> model )
+    {
+        // no additionnal data
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getButtonTemplate(  )
-	{
-		return TEMPLATE_BUTTON;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getButtonTemplate(  )
+    {
+        return TEMPLATE_BUTTON;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getName(  )
-	{
-		return ACTION_NAME;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getName(  )
+    {
+        return ACTION_NAME;
+    }
 
-	/**
-	 * @see #PARAMETER_BUTTON_MASS_PRINT_X
-	 */
-	public boolean isInvoked(HttpServletRequest request) 
-	{
-		return request.getParameter( PARAMETER_BUTTON_MASS_PRINT_X ) != null;
-	}
+    /**
+     * @see #PARAMETER_BUTTON_MASS_PRINT_X
+     */
+    public boolean isInvoked( HttpServletRequest request )
+    {
+        return request.getParameter( PARAMETER_BUTTON_MASS_PRINT_X ) != null;
+    }
 
-	/**
-	 * Redirects to {@link #JSP_DIRECTORY_MASS_PRINT}
-	 */
-	public IPluginActionResult process(HttpServletRequest request,
-			HttpServletResponse response, AdminUser adminUser,
-			DirectoryAdminSearchFields sessionFields)
-			throws AccessDeniedException 
-	{
-		DefaultPluginActionResult result = new DefaultPluginActionResult(  );
-		
-		UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DIRECTORY_MASS_PRINT );
-		String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
-		urlItem.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
-		
-		result.setRedirect( urlItem.getUrl(  ) );
-		return result;
-	}
+    /**
+     * Redirects to {@link #JSP_DIRECTORY_MASS_PRINT}
+     */
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
+        DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException
+    {
+        DefaultPluginActionResult result = new DefaultPluginActionResult(  );
 
+        UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DIRECTORY_MASS_PRINT );
+        String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
+        urlItem.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
+
+        result.setRedirect( urlItem.getUrl(  ) );
+
+        return result;
+    }
 }

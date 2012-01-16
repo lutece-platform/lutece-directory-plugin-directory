@@ -89,6 +89,7 @@ public class DirectoryResourceRss extends ResourceRss
     private static final String TEMPLATE_TASK_EVALUATION_CREATE_CONFIG = "admin/plugins/directory/rss/resource_create_config.html";
     private static final String TEMPLATE_TASK_EVALUATION_MODIFY_CONFIG = "admin/plugins/directory/rss/resource_modify_config.html";
     private static final String TEMPLATE_RSS_IMAGE = "admin/plugins/directory/rss/rss_image.html";
+
     //	Markers
     private static final String MARK_DIRECTORY_LIST = "directory_list";
     private static final String MARK_DIRECTORY_LIST_DEFAULT_ITEM = "directory_list_default_item";
@@ -898,13 +899,13 @@ public class DirectoryResourceRss extends ResourceRss
 
         return ( ( directory != null ) && ( entryDescription != null ) && ( entryTitle != null ) );
     }
-    
+
     /**
-     * 
+     *
      *{@inheritDoc}
      */
     @Override
-    public IFeedResource getFeed()
+    public IFeedResource getFeed(  )
     {
         // Update the head of the document
         String strRssFileLanguage = AppPropertiesService.getProperty( PROPERTY_SITE_LANGUAGE );
@@ -916,23 +917,22 @@ public class DirectoryResourceRss extends ResourceRss
         DirectoryResourceRssConfig config = DirectoryResourceRssConfigHome.findByPrimaryKey( this.getId(  ),
                 pluginDirectory );
         Directory directory = DirectoryHome.findByPrimaryKey( config.getIdDirectory(  ), pluginDirectory );
-        
-        
-    	IFeedResource resource = new FeedResource();
-    	resource.setTitle( directory.getTitle() );
-    	resource.setDescription( directory.getDescription() );
-    	resource.setLink( strSiteUrl );
-    	resource.setLanguage( strRssFileLanguage );
-    	
-    	IFeedResourceImage image = new FeedResourceImage();
-    	image.setUrl( strSiteUrl + "/images/local/skin/valid-rss.png" );
-    	image.setLink( strSiteUrl );
-    	image.setTitle( directory.getTitle() );
-    	
-    	resource.setImage( image );
-    	
-    	Locale locale = new Locale( strRssFileLanguage );
-    	
+
+        IFeedResource resource = new FeedResource(  );
+        resource.setTitle( directory.getTitle(  ) );
+        resource.setDescription( directory.getDescription(  ) );
+        resource.setLink( strSiteUrl );
+        resource.setLanguage( strRssFileLanguage );
+
+        IFeedResourceImage image = new FeedResourceImage(  );
+        image.setUrl( strSiteUrl + "/images/local/skin/valid-rss.png" );
+        image.setLink( strSiteUrl );
+        image.setTitle( directory.getTitle(  ) );
+
+        resource.setImage( image );
+
+        Locale locale = new Locale( strRssFileLanguage );
+
         RecordFieldFilter filter = new RecordFieldFilter(  );
         filter.setIdDirectory( directory.getIdDirectory(  ) );
         filter.setSortOrder( RecordFieldFilter.ORDER_DESC );
@@ -997,7 +997,7 @@ public class DirectoryResourceRss extends ResourceRss
             listResultRecordId = DirectoryUtils.retainAll( listResultRecordId, listTmpResultRecordId );
         }
 
-        List<IFeedResourceItem> listItems = new ArrayList<IFeedResourceItem>();
+        List<IFeedResourceItem> listItems = new ArrayList<IFeedResourceItem>(  );
 
         for ( Integer idRecord : listResultRecordId )
         {
@@ -1028,7 +1028,7 @@ public class DirectoryResourceRss extends ResourceRss
             }
 
             recordFieldFilter.setIdEntry( config.getIdEntryLink(  ) );
-            
+
             List<RecordField> recordFieldListLink = RecordFieldHome.getRecordFieldList( recordFieldFilter,
                     pluginDirectory );
             RecordField recordFieldLink = null;
@@ -1040,22 +1040,22 @@ public class DirectoryResourceRss extends ResourceRss
 
             if ( ( recordFieldTitle != null ) && ( recordFieldDescription != null ) )
             {
-            	IFeedResourceItem item = new FeedResourceItem();
-            	
-            	// image handling
-            	// the image is put right before the description
-            	
-            	String strImageDescription;
+                IFeedResourceItem item = new FeedResourceItem(  );
+
+                // image handling
+                // the image is put right before the description
+                String strImageDescription;
+
                 if ( ( recordFieldImage != null ) && ( recordFieldImage.getFile(  ) != null ) )
                 {
-                	Map<String, Object> model = new HashMap<String, Object>();
-                	model.put( MARK_RSS_SITE_IMAGE_ITEM, recordFieldImage.getFile(  ).getIdFile(  ) );
-                	model.put( MARK_RSS_SITE_URL, strSiteUrl );
+                    Map<String, Object> model = new HashMap<String, Object>(  );
+                    model.put( MARK_RSS_SITE_IMAGE_ITEM, recordFieldImage.getFile(  ).getIdFile(  ) );
+                    model.put( MARK_RSS_SITE_URL, strSiteUrl );
 
                     if ( ( recordFieldImage.getEntry(  ) != null ) &&
                             ( recordFieldImage.getEntry(  ).getDisplayHeight(  ) != -1 ) )
                     {
-                    	model.put( MARK_RSS_SITE_IMAGE_HEIGHT_ITEM, recordFieldImage.getEntry(  ).getDisplayHeight(  ) );
+                        model.put( MARK_RSS_SITE_IMAGE_HEIGHT_ITEM, recordFieldImage.getEntry(  ).getDisplayHeight(  ) );
                     }
 
                     if ( ( recordFieldImage.getEntry(  ) != null ) &&
@@ -1063,13 +1063,13 @@ public class DirectoryResourceRss extends ResourceRss
                     {
                         model.put( MARK_RSS_SITE_IMAGE_WIDTH_ITEM, recordFieldImage.getEntry(  ).getDisplayWidth(  ) );
                     }
-                    
+
                     HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_RSS_IMAGE, locale, model );
-                    strImageDescription = template.getHtml();
+                    strImageDescription = template.getHtml(  );
                 }
                 else
                 {
-                	strImageDescription = EMPTY_STRING;
+                    strImageDescription = EMPTY_STRING;
                 }
 
                 if ( recordFieldTitle.getValue(  ) != null )
@@ -1096,24 +1096,24 @@ public class DirectoryResourceRss extends ResourceRss
                 }
                 else
                 {
-                	UrlItem urlItem = new UrlItem( strSiteUrl + "/jsp/site/Portal.jsp" );
-                	urlItem.addParameter( PARAMETER_PAGE, CONSTANT_DIRECTORY );
-                	urlItem.addParameter( PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord() );
-                	urlItem.addParameter( PARAMETER_VIEW_DIRECTORY_RECORD, directory.getIdDirectory() );
-                	
-                	item.setLink( urlItem.getUrl() );
+                    UrlItem urlItem = new UrlItem( strSiteUrl + "/jsp/site/Portal.jsp" );
+                    urlItem.addParameter( PARAMETER_PAGE, CONSTANT_DIRECTORY );
+                    urlItem.addParameter( PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord(  ) );
+                    urlItem.addParameter( PARAMETER_VIEW_DIRECTORY_RECORD, directory.getIdDirectory(  ) );
+
+                    item.setLink( urlItem.getUrl(  ) );
                 }
-                
-                item.setGUID( item.getLink() );
+
+                item.setGUID( item.getLink(  ) );
 
                 item.setDate( record.getDateCreation(  ) );
-                
+
                 listItems.add( item );
             }
         }
-        
+
         resource.setItems( listItems );
-        
-    	return resource;
+
+        return resource;
     }
 }

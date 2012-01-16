@@ -136,7 +136,7 @@ public class Record implements AdminWorkgroupResource
     {
         _tDateCreation = dateCreation;
     }
-    
+
     /**
      *  return the date Modification
      * @return the date Modification
@@ -246,7 +246,7 @@ public class Record implements AdminWorkgroupResource
     {
         _strWorkgroupKey = workGroup;
     }
-    
+
     /**
      * The Xml of the record
      * @param record the record
@@ -265,8 +265,8 @@ public class Record implements AdminWorkgroupResource
         List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
         boolean bDisplayExport, boolean bDisplayDateCreation )
     {
-    	return getXml( plugin, locale, bWithHtmlCode, state, listEntryResultSearch, bDisplayTitleEntryTypeSelect, 
-    			bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
+        return getXml( plugin, locale, bWithHtmlCode, state, listEntryResultSearch, bDisplayTitleEntryTypeSelect,
+            bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
     }
 
     /**
@@ -297,10 +297,11 @@ public class Record implements AdminWorkgroupResource
         {
             XmlUtil.addElement( strXml, TAG_CREATION_DATE, DateUtil.getDateString( this.getDateCreation(  ), locale ) );
         }
-        
+
         if ( bDisplayDateModification )
         {
-            XmlUtil.addElement( strXml, TAG_MODIFICATION_DATE, DateUtil.getDateString( this.getDateModification(  ), locale ) );
+            XmlUtil.addElement( strXml, TAG_MODIFICATION_DATE,
+                DateUtil.getDateString( this.getDateModification(  ), locale ) );
         }
 
         if ( state != null )
@@ -416,20 +417,20 @@ public class Record implements AdminWorkgroupResource
                     {
                         IEntry entryFile = EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), plugin );
 
-                        XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE, entry.convertRecordFieldValueToString( 
-                        		recordField, locale, bDisplayFront, bDisplayExport ) );
+                        XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
+                            entry.convertRecordFieldValueToString( recordField, locale, bDisplayFront, bDisplayExport ) );
                         strXml.append( recordField.getFile(  )
                                                   .getXml( plugin, locale, entry.getEntryType(  ).getIdType(  ),
                                 entryFile.getDisplayWidth(  ), entryFile.getDisplayHeight(  ) ) );
                     }
                     else
                     {
-                        if ( bDisplayTitleEntryTypeSelect && !bIsEntryTypeNumbering)
+                        if ( bDisplayTitleEntryTypeSelect && !bIsEntryTypeNumbering )
                         {
-                        	XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
-                                    DirectoryUtils.substituteSpecialCaractersForExport( 
-                                        recordField.getEntry(  )
-                                                   .convertRecordFieldTitleToString( recordField, locale, bDisplayFront ) ) );
+                            XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
+                                DirectoryUtils.substituteSpecialCaractersForExport( 
+                                    recordField.getEntry(  )
+                                               .convertRecordFieldTitleToString( recordField, locale, bDisplayFront ) ) );
                         }
                         else
                         {
@@ -483,8 +484,8 @@ public class Record implements AdminWorkgroupResource
         List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
         boolean bDisplayExport, boolean bDisplayDateCreation )
     {
-    	return getXmlForCsvExport( plugin, locale, bWithHtmlCode, state, listEntryResultSearch, bDisplayTitleEntryTypeSelect, 
-    			bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
+        return getXmlForCsvExport( plugin, locale, bWithHtmlCode, state, listEntryResultSearch,
+            bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
     }
 
     /**
@@ -535,7 +536,7 @@ public class Record implements AdminWorkgroupResource
             XmlUtil.endElement( strXml, TAG_LIST_RECORD_FIELD );
             XmlUtil.endElement( strXml, Entry.TAG_ENTRY );
         }
-        
+
         if ( bDisplayDateModification )
         {
             HashMap<String, String> modelModificationDate = new HashMap<String, String>(  );

@@ -33,102 +33,107 @@
  */
 package fr.paris.lutece.plugins.directory.service.security;
 
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.portal.service.security.UserAttributesService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.Map;
+
+
 /**
- * 
+ *
  * DirectoryUserAttributesManager
  *
  */
 public final class DirectoryUserAttributesManager
 {
-	private static final String BEAN_WORKFLOW_USER_ATTRIBUTES_MANAGER = "directory.userAttributesManager";
-	private UserAttributesService _userAttributesService;
+    private static final String BEAN_WORKFLOW_USER_ATTRIBUTES_MANAGER = "directory.userAttributesManager";
+    private UserAttributesService _userAttributesService;
 
-	/**
-	 * Private constructor
-	 */
-	private DirectoryUserAttributesManager(  )
-	{
-	}
+    /**
+     * Private constructor
+     */
+    private DirectoryUserAttributesManager(  )
+    {
+    }
 
-	/**
-	 * Get the instance of the service
-	 * @return the service
-	 */
-	public static DirectoryUserAttributesManager getManager(  )
-	{
-		return (DirectoryUserAttributesManager) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME, 
-				BEAN_WORKFLOW_USER_ATTRIBUTES_MANAGER );
-	}
+    /**
+     * Get the instance of the service
+     * @return the service
+     */
+    public static DirectoryUserAttributesManager getManager(  )
+    {
+        return (DirectoryUserAttributesManager) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
+            BEAN_WORKFLOW_USER_ATTRIBUTES_MANAGER );
+    }
 
-	/**
-	 * Check if the UserAttributesService is enabled
-	 * @return true if the service is enabled, false otherwise
-	 */
-	public boolean isEnabled(  )
-	{
-		return _userAttributesService != null;
-	}
+    /**
+     * Check if the UserAttributesService is enabled
+     * @return true if the service is enabled, false otherwise
+     */
+    public boolean isEnabled(  )
+    {
+        return _userAttributesService != null;
+    }
 
-	/**
-	 * Set the UserAttributesService
-	 * @param userAttributesService the UserAttributesService
-	 */
-	public void setUserAttributesService( UserAttributesService userAttributesService )
-	{
-		_userAttributesService = userAttributesService;
-	}
+    /**
+     * Set the UserAttributesService
+     * @param userAttributesService the UserAttributesService
+     */
+    public void setUserAttributesService( UserAttributesService userAttributesService )
+    {
+        _userAttributesService = userAttributesService;
+    }
 
-	/**
-	 * Get the attribute
-	 * @param strUserId the id user guid
-	 * @param strAttribute the attribute
-	 * @return the attribute value
-	 */
-	public String getAttribute( String strUserId , String strAttribute )
-	{
-		String strAttributeValue = StringUtils.EMPTY;
-		try
-		{
-			if ( isEnabled(  ) )
-			{
-				strAttributeValue =  _userAttributesService.getAttribute( strUserId, strAttribute ); 
-			}
-		}
-		catch ( Exception e )
-		{
-			AppLogService.error( e );
-		}
-		return strAttributeValue;
-	}
+    /**
+     * Get the attribute
+     * @param strUserId the id user guid
+     * @param strAttribute the attribute
+     * @return the attribute value
+     */
+    public String getAttribute( String strUserId, String strAttribute )
+    {
+        String strAttributeValue = StringUtils.EMPTY;
 
-	/**
-	 * Get the attributes
-	 * @param strUserId the user id
-	 * @return a map of attribute key - attribute value
-	 */
-	public Map<String, String> getAttributes( String strUserId )
-	{
-		Map<String, String> attributes = null;
-		try
-		{
-			if ( isEnabled(  ) )
-			{
-				attributes =  _userAttributesService.getAttributes( strUserId ); 
-			}
-		}
-		catch ( Exception e )
-		{
-			AppLogService.error( e );
-		}
-		return attributes;
-	}
+        try
+        {
+            if ( isEnabled(  ) )
+            {
+                strAttributeValue = _userAttributesService.getAttribute( strUserId, strAttribute );
+            }
+        }
+        catch ( Exception e )
+        {
+            AppLogService.error( e );
+        }
+
+        return strAttributeValue;
+    }
+
+    /**
+     * Get the attributes
+     * @param strUserId the user id
+     * @return a map of attribute key - attribute value
+     */
+    public Map<String, String> getAttributes( String strUserId )
+    {
+        Map<String, String> attributes = null;
+
+        try
+        {
+            if ( isEnabled(  ) )
+            {
+                attributes = _userAttributesService.getAttributes( strUserId );
+            }
+        }
+        catch ( Exception e )
+        {
+            AppLogService.error( e );
+        }
+
+        return attributes;
+    }
 }

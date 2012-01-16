@@ -125,35 +125,41 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
     /**
      * {@inheritDoc}
      */
-	public ReferenceList selectByFilter( DirectoryParameterFilter filter, Plugin plugin )
-	{
-		// Build SQL query
-		StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
-		if ( filter.containsListParameterKeys(  ) )
-		{
-			sbSQL.append( SQL_WHERE + SQL_PARAMETER_KEY );
-			if ( filter.excludeParameterKeys(  ) )
-			{
-				sbSQL.append( SQL_NOT );
-			}
-			sbSQL.append( SQL_IN );
-			sbSQL.append( OPEN_BRACKET );
-			for ( int i = 0; i < filter.getListParameterKeys(  ).size(  ); i++ )
-			{
-				String strParameterKey = filter.getListParameterKeys(  ).get( i );
-				sbSQL.append( SIMPLE_QUOTE );
-				sbSQL.append( strParameterKey );
-				sbSQL.append( SIMPLE_QUOTE );
-				if ( i < filter.getListParameterKeys(  ).size(  ) - 1 )
-				{
-					sbSQL.append( COMMA );
-				}
-			}
-			sbSQL.append( CLOSED_BRACKET );
-		}
-		
-		// Execute SQL query
-		ReferenceList listParams = new ReferenceList(  );
+    public ReferenceList selectByFilter( DirectoryParameterFilter filter, Plugin plugin )
+    {
+        // Build SQL query
+        StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
+
+        if ( filter.containsListParameterKeys(  ) )
+        {
+            sbSQL.append( SQL_WHERE + SQL_PARAMETER_KEY );
+
+            if ( filter.excludeParameterKeys(  ) )
+            {
+                sbSQL.append( SQL_NOT );
+            }
+
+            sbSQL.append( SQL_IN );
+            sbSQL.append( OPEN_BRACKET );
+
+            for ( int i = 0; i < filter.getListParameterKeys(  ).size(  ); i++ )
+            {
+                String strParameterKey = filter.getListParameterKeys(  ).get( i );
+                sbSQL.append( SIMPLE_QUOTE );
+                sbSQL.append( strParameterKey );
+                sbSQL.append( SIMPLE_QUOTE );
+
+                if ( i < ( filter.getListParameterKeys(  ).size(  ) - 1 ) )
+                {
+                    sbSQL.append( COMMA );
+                }
+            }
+
+            sbSQL.append( CLOSED_BRACKET );
+        }
+
+        // Execute SQL query
+        ReferenceList listParams = new ReferenceList(  );
         DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
         daoUtil.executeQuery(  );
 
@@ -169,5 +175,5 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
         daoUtil.free(  );
 
         return listParams;
-	}
+    }
 }

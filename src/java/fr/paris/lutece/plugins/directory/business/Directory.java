@@ -33,11 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
 import fr.paris.lutece.plugins.directory.business.attribute.DirectoryAttribute;
 import fr.paris.lutece.plugins.directory.business.rss.DirectoryResourceRssConfigRemovalListener;
 import fr.paris.lutece.plugins.directory.service.DirectoryXslRemovalListenerService;
@@ -51,6 +46,12 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupResource;
 import fr.paris.lutece.portal.service.workgroup.WorkgroupRemovalListenerService;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
+
+import java.sql.Timestamp;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -100,35 +101,35 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     private boolean _bIsIndexed;
 
     // Creation date field
-    @DirectoryAttribute( "dateShownInResultList" ) 
+    @DirectoryAttribute( "dateShownInResultList" )
     private boolean _bDateShownInResultList;
-    @DirectoryAttribute( "dateShownInResultRecord" ) 
+    @DirectoryAttribute( "dateShownInResultRecord" )
     private boolean _bDateShownInResultRecord;
-    @DirectoryAttribute( "dateShownInHistory" ) 
+    @DirectoryAttribute( "dateShownInHistory" )
     private boolean _bDateShownInHistory;
-    @DirectoryAttribute( "dateShownInSearch" ) 
+    @DirectoryAttribute( "dateShownInSearch" )
     private boolean _bDateShownInSearch;
-    @DirectoryAttribute( "dateShownInAdvancedSearch" ) 
+    @DirectoryAttribute( "dateShownInAdvancedSearch" )
     private boolean _bDateShownInAdvancedSearch;
-    @DirectoryAttribute( "dateShownInMultiSearch" ) 
+    @DirectoryAttribute( "dateShownInMultiSearch" )
     private boolean _bDateShownInMultiSearch;
-    @DirectoryAttribute( "dateShownInExport" ) 
+    @DirectoryAttribute( "dateShownInExport" )
     private boolean _bDateShownInExport;
-    
+
     // Modification date field
-    @DirectoryAttribute( "dateModificationShownInResultList" ) 
+    @DirectoryAttribute( "dateModificationShownInResultList" )
     private boolean _bDateModificationShownInResultList;
-    @DirectoryAttribute( "dateModificationShownInResultRecord" ) 
+    @DirectoryAttribute( "dateModificationShownInResultRecord" )
     private boolean _bDateModificationShownInResultRecord;
-    @DirectoryAttribute( "dateModificationShownInHistory" ) 
+    @DirectoryAttribute( "dateModificationShownInHistory" )
     private boolean _bDateModificationShownInHistory;
-    @DirectoryAttribute( "dateModificationShownInSearch" ) 
+    @DirectoryAttribute( "dateModificationShownInSearch" )
     private boolean _bDateModificationShownInSearch;
-    @DirectoryAttribute( "dateModificationShownInAdvancedSearch" ) 
+    @DirectoryAttribute( "dateModificationShownInAdvancedSearch" )
     private boolean _bDateModificationShownInAdvancedSearch;
-    @DirectoryAttribute( "dateModificationShownInMultiSearch" ) 
+    @DirectoryAttribute( "dateModificationShownInMultiSearch" )
     private boolean _bDateModificationShownInMultiSearch;
-    @DirectoryAttribute( "dateModificationShownInExport" ) 
+    @DirectoryAttribute( "dateModificationShownInExport" )
     private boolean _bDateModificationShownInExport;
 
     /**
@@ -551,7 +552,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     {
         _bDateShownInExport = bDateShownInExport;
     }
-    
+
     public boolean isDateModificationShownInResultList(  )
     {
         return _bDateModificationShownInResultList;
@@ -641,6 +642,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     {
         _strSortEntryId = strIdSortEntry;
     }
+
     /**
      * return true if the record must be sorted by ascending sort
      * @return true if the record must be sorted by ascending sort
@@ -649,6 +651,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     {
         return _bAscSortFront;
     }
+
     /**
      * set true if the record must be sorted by ascending sort in front office
      * @param bAscendingSort return true if the record must be sorted by ascending sort
@@ -657,17 +660,18 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     {
         _bAscSortFront = bAscendingSort;
     }
+
     /**
      * return the id  of the entry used for sorted
      * @return the id  of the entry used for sorted
-     */ 
+     */
     public String getIdSortEntryFront(  )
     {
         return _strSortEntryIdFront;
     }
 
     /**
-     * 	set the id  of the entry used for sorted
+     *         set the id  of the entry used for sorted
      * @param strIdSortEntry the id  of the entry used for sorted
      */
     public void setIdSortEntryFront( String strIdSortEntry )

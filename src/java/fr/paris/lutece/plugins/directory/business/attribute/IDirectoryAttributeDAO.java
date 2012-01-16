@@ -33,38 +33,39 @@
  */
 package fr.paris.lutece.plugins.directory.business.attribute;
 
-import java.util.Map;
-
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
+import java.util.Map;
+
+
 /**
- * 
+ *
  * IDirectoryAttributeDAO
  *
  */
 public interface IDirectoryAttributeDAO
 {
-	/**
-	 * Load the attributes of the directory
-	 * @param nIdDirectory the id directory
-	 * @param plugin the plugin
-	 * @return a map of key - value
-	 */
-	Map<String, Object> load( int nIdDirectory, Plugin plugin );
-	
-	/**
-	 * Create the attributes of the directory
-	 * @param nIdDirectory the id directory
-	 * @param strAttributeKey the attribute key
-	 * @param attributeValue the attribute value
-	 * @param plugin the plugin
-	 */
-	void insert( int nIdDirectory, String strAttributeKey, Object attributeValue, Plugin plugin );
-	
-	/**
-	 * Remove the attributes of the directory
-	 * @param nIdDirectory the id directory
-	 * @param plugin the plugin
-	 */
-	void remove( int nIdDirectory, Plugin plugin );
+    /**
+     * Load the attributes of the directory
+     * @param nIdDirectory the id directory
+     * @param plugin the plugin
+     * @return a map of key - value
+     */
+    Map<String, Object> load( int nIdDirectory, Plugin plugin );
+
+    /**
+     * Create the attributes of the directory
+     * @param nIdDirectory the id directory
+     * @param strAttributeKey the attribute key
+     * @param attributeValue the attribute value
+     * @param plugin the plugin
+     */
+    void insert( int nIdDirectory, String strAttributeKey, Object attributeValue, Plugin plugin );
+
+    /**
+     * Remove the attributes of the directory
+     * @param nIdDirectory the id directory
+     * @param plugin the plugin
+     */
+    void remove( int nIdDirectory, Plugin plugin );
 }

@@ -499,7 +499,7 @@ public final class EntryDAO implements IEntryDAO
         {
             listStrFilter.add( SQL_FILTER_IS_SHOWN_IN_EXPORT );
         }
-        
+
         if ( filter.containsIsShownInCompleteness(  ) )
         {
             listStrFilter.add( SQL_FILTER_IS_SHOWN_IN_COMPLETENESS );
@@ -619,7 +619,7 @@ public final class EntryDAO implements IEntryDAO
             daoUtil.setBoolean( nIndex, filter.getIsShownInExport(  ) == EntryFilter.FILTER_TRUE );
             nIndex++;
         }
-        
+
         if ( filter.containsIsShownInCompleteness(  ) )
         {
             daoUtil.setBoolean( nIndex, filter.getIsShownInCompleteness(  ) == EntryFilter.FILTER_TRUE );
@@ -800,10 +800,12 @@ public final class EntryDAO implements IEntryDAO
         {
             listStrFilter.add( SQL_FILTER_IS_INDEXED );
         }
+
         if ( filter.containsIsIndexedAsTitle(  ) )
         {
             listStrFilter.add( SQL_FILTER_IS_INDEXED_AS_TITLE );
         }
+
         if ( filter.containsIsIndexedAsSummary(  ) )
         {
             listStrFilter.add( SQL_FILTER_IS_INDEXED_AS_SUMMARY );
@@ -848,7 +850,7 @@ public final class EntryDAO implements IEntryDAO
         {
             listStrFilter.add( SQL_FILTER_IS_SHOWN_IN_EXPORT );
         }
-        
+
         if ( filter.containsIsShownInCompleteness(  ) )
         {
             listStrFilter.add( SQL_FILTER_IS_SHOWN_IN_COMPLETENESS );
@@ -889,7 +891,6 @@ public final class EntryDAO implements IEntryDAO
             daoUtil.setBoolean( nIndex, filter.getIsIndexed(  ) == EntryFilter.FILTER_TRUE );
             nIndex++;
         }
-        
 
         if ( filter.containsIsIndexedAsTitle(  ) )
         {
@@ -902,7 +903,7 @@ public final class EntryDAO implements IEntryDAO
             daoUtil.setBoolean( nIndex, filter.getIsIndexedAsSummary(  ) == EntryFilter.FILTER_TRUE );
             nIndex++;
         }
-        
+
         if ( filter.containsIsComment(  ) )
         {
             daoUtil.setBoolean( nIndex, filter.getIsComment(  ) == EntryFilter.FILTER_TRUE );
@@ -950,7 +951,7 @@ public final class EntryDAO implements IEntryDAO
             daoUtil.setBoolean( nIndex, filter.getIsShownInExport(  ) == EntryFilter.FILTER_TRUE );
             nIndex++;
         }
-        
+
         if ( filter.containsIsShownInCompleteness(  ) )
         {
             daoUtil.setBoolean( nIndex, filter.getIsShownInCompleteness(  ) == EntryFilter.FILTER_TRUE );

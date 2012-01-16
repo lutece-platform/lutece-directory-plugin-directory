@@ -33,11 +33,12 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
+import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
+import fr.paris.lutece.portal.service.util.AppLogService;
+
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
-import fr.paris.lutece.portal.service.util.AppLogService;
 
 /**
  * Will remove fileItems uploaded by flash
@@ -64,8 +65,7 @@ public class DirectorySessionListener implements HttpSessionListener
         {
             AppLogService.debug( "DirectorySessionListener removing " + strSessionId );
         }
-        
+
         DirectoryAsynchronousUploadHandler.getHandler(  ).removeSessionFiles( strSessionId );
     }
-
 }

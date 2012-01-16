@@ -185,19 +185,20 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
                 fields.add( DirectorySearchItem.FIELD_DATE_CREATION );
                 flags.add( BooleanClause.Occur.MUST );
             }
-            
+
             //record date creation
             //contains date creation
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_MODIFICATION ) )
             {
                 Query queryDate = new TermQuery( new Term( DirectorySearchItem.FIELD_DATE_MODIFICATION,
-                            DateTools.dateToString( (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_MODIFICATION ),
+                            DateTools.dateToString( 
+                                (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_MODIFICATION ),
                                 DateTools.Resolution.DAY ) ) );
                 queries.add( queryDate.toString(  ) );
                 fields.add( DirectorySearchItem.FIELD_DATE_MODIFICATION );
                 flags.add( BooleanClause.Occur.MUST );
             }
-            
+
             //contains range modification date
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_MODIFICATION_BEGIN ) &&
                     mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_MODIFICATION_END ) )

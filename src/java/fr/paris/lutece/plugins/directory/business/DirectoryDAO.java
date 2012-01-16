@@ -58,8 +58,7 @@ public final class DirectoryDAO implements IDirectoryDAO
     private static final String SQL_QUERY_INSERT = "INSERT INTO directory_directory (id_directory,title,description," +
         " unavailability_message,workgroup_key,role_key," +
         " is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page," +
-        " id_workflow, is_search_wf_state, is_search_comp_wf_state, " +
-        " is_directory_record_activated, is_indexed) " +
+        " id_workflow, is_search_wf_state, is_search_comp_wf_state, " + " is_directory_record_activated, is_indexed) " +
         " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_directory  WHERE id_directory = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE directory_directory  SET id_directory=?,title=?,description=?," +

@@ -42,72 +42,75 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 
+
 /**
- * 
+ *
  * DirectoryParameterService
  *
  */
 public final class DirectoryParameterService
 {
-	private static final String BEAN_DIRECTORY_PARAMETER_SERVICE = "directory.directoryParameterService";
-	
-	// PARAMETERS
-	private static final String PARAMETER_EXPORT_CSV_ENCODING = "export_csv_encoding";
-	private static final String PARAMETER_EXPORT_XML_ENCODING = "export_xml_encoding";
-	
-	// PROPERTIES
-	private static final String PROPERTY_DEFAULT_EXPORT_ENCODING = "directory.export.encoding.default";
-	
-	/**
-	 * Get the instance of the service
-	 * @return the instance of the service
-	 */
-	public static DirectoryParameterService getService(  )
-	{
-		return (DirectoryParameterService) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME, 
-				BEAN_DIRECTORY_PARAMETER_SERVICE );
-	}
-	
-	/**
-	 * Find all directory parameters
-	 * @return a {@link ReferenceList}
-	 */
-	public ReferenceList findAll(  )
-	{
-		return DirectoryParameterHome.findAll( DirectoryUtils.getPlugin(  ) );
-	}
-	
-	/**
-	 * Find the default value parameters of the directory
-	 * @return a {@link ReferenceList}
-	 */
-	public ReferenceList findDefaultValueParameters(  )
-	{
-		DirectoryParameterFilter filter = new DirectoryParameterFilter(  );
-		filter.setExcludeParameterKeys( true );
-		filter.addParameterKey( PARAMETER_EXPORT_CSV_ENCODING );
-		filter.addParameterKey( PARAMETER_EXPORT_XML_ENCODING );
-		return DirectoryParameterHome.findByFilter( filter, DirectoryUtils.getPlugin(  ) );
-	}
-	
-	/**
-	 * Find the export parameters 
-	 * @return a {@link ReferenceList}
-	 */
-	public ReferenceList findExportEncodingParameters(  )
-	{
-		DirectoryParameterFilter filter = new DirectoryParameterFilter(  );
-		filter.setExcludeParameterKeys( false );
-		filter.addParameterKey( PARAMETER_EXPORT_CSV_ENCODING );
-		filter.addParameterKey( PARAMETER_EXPORT_XML_ENCODING );
-		return DirectoryParameterHome.findByFilter( filter, DirectoryUtils.getPlugin(  ) );
-	}
-	
-	/**
-     * Load the parameter value
-     * @param strParameterKey the parameter key
-     * @return The parameter value
+    private static final String BEAN_DIRECTORY_PARAMETER_SERVICE = "directory.directoryParameterService";
+
+    // PARAMETERS
+    private static final String PARAMETER_EXPORT_CSV_ENCODING = "export_csv_encoding";
+    private static final String PARAMETER_EXPORT_XML_ENCODING = "export_xml_encoding";
+
+    // PROPERTIES
+    private static final String PROPERTY_DEFAULT_EXPORT_ENCODING = "directory.export.encoding.default";
+
+    /**
+     * Get the instance of the service
+     * @return the instance of the service
      */
+    public static DirectoryParameterService getService(  )
+    {
+        return (DirectoryParameterService) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
+            BEAN_DIRECTORY_PARAMETER_SERVICE );
+    }
+
+    /**
+     * Find all directory parameters
+     * @return a {@link ReferenceList}
+     */
+    public ReferenceList findAll(  )
+    {
+        return DirectoryParameterHome.findAll( DirectoryUtils.getPlugin(  ) );
+    }
+
+    /**
+     * Find the default value parameters of the directory
+     * @return a {@link ReferenceList}
+     */
+    public ReferenceList findDefaultValueParameters(  )
+    {
+        DirectoryParameterFilter filter = new DirectoryParameterFilter(  );
+        filter.setExcludeParameterKeys( true );
+        filter.addParameterKey( PARAMETER_EXPORT_CSV_ENCODING );
+        filter.addParameterKey( PARAMETER_EXPORT_XML_ENCODING );
+
+        return DirectoryParameterHome.findByFilter( filter, DirectoryUtils.getPlugin(  ) );
+    }
+
+    /**
+     * Find the export parameters
+     * @return a {@link ReferenceList}
+     */
+    public ReferenceList findExportEncodingParameters(  )
+    {
+        DirectoryParameterFilter filter = new DirectoryParameterFilter(  );
+        filter.setExcludeParameterKeys( false );
+        filter.addParameterKey( PARAMETER_EXPORT_CSV_ENCODING );
+        filter.addParameterKey( PARAMETER_EXPORT_XML_ENCODING );
+
+        return DirectoryParameterHome.findByFilter( filter, DirectoryUtils.getPlugin(  ) );
+    }
+
+    /**
+    * Load the parameter value
+    * @param strParameterKey the parameter key
+    * @return The parameter value
+    */
     public ReferenceItem findByKey( String strParameterKey )
     {
         return DirectoryParameterHome.findByKey( strParameterKey, DirectoryUtils.getPlugin(  ) );
@@ -120,34 +123,38 @@ public final class DirectoryParameterService
      */
     public void update( ReferenceItem param )
     {
-    	DirectoryParameterHome.update( param, DirectoryUtils.getPlugin(  ) );
+        DirectoryParameterHome.update( param, DirectoryUtils.getPlugin(  ) );
     }
-    
+
     /**
      * Get the encoding for export CSV
      * @return the encoding for export CSV
      */
     public String getExportCSVEncoding(  )
     {
-    	ReferenceItem param = findByKey( PARAMETER_EXPORT_CSV_ENCODING );
-    	if ( param == null )
-    	{
-    		return AppPropertiesService.getProperty( PROPERTY_DEFAULT_EXPORT_ENCODING );
-    	}
-    	return param.getName(  );
+        ReferenceItem param = findByKey( PARAMETER_EXPORT_CSV_ENCODING );
+
+        if ( param == null )
+        {
+            return AppPropertiesService.getProperty( PROPERTY_DEFAULT_EXPORT_ENCODING );
+        }
+
+        return param.getName(  );
     }
-    
+
     /**
      * Get the encoding for export XML
      * @return the encoding for export XML
      */
     public String getExportXMLEncoding(  )
     {
-    	ReferenceItem param = findByKey( PARAMETER_EXPORT_XML_ENCODING );
-    	if ( param == null )
-    	{
-    		return AppPropertiesService.getProperty( PROPERTY_DEFAULT_EXPORT_ENCODING );
-    	}
-    	return param.getName(  );
+        ReferenceItem param = findByKey( PARAMETER_EXPORT_XML_ENCODING );
+
+        if ( param == null )
+        {
+            return AppPropertiesService.getProperty( PROPERTY_DEFAULT_EXPORT_ENCODING );
+        }
+
+        return param.getName(  );
     }
 }

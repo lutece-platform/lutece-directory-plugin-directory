@@ -84,12 +84,12 @@ public final class DirectoryParameterHome
 
     /**
      * Load parameters by filter
-     * @param filter the filter 
+     * @param filter the filter
      * @param plugin the plugin
      * @return a {@link RefereceList}
      */
     public static ReferenceList findByFilter( DirectoryParameterFilter filter, Plugin plugin )
     {
-    	return _dao.selectByFilter( filter, plugin );
+        return _dao.selectByFilter( filter, plugin );
     }
 }

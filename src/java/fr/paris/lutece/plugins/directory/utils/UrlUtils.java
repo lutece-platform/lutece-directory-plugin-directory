@@ -33,12 +33,12 @@
  */
 package fr.paris.lutece.plugins.directory.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -48,10 +48,10 @@ import org.apache.commons.lang.StringUtils;
  */
 public final class UrlUtils
 {
-	private static final String INTERROGATION_MARK = "?";
-	private static final String AMPERSAND = "&";
-	private static final String EQUAL = "=";
-	
+    private static final String INTERROGATION_MARK = "?";
+    private static final String AMPERSAND = "&";
+    private static final String EQUAL = "=";
+
     /**
      * Private constructor
      */

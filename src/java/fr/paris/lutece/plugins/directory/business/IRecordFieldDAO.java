@@ -119,7 +119,7 @@ public interface IRecordFieldDAO
      * @return the number of record field who verify the filter
      */
     int getCountByFilter( RecordFieldFilter filter, Plugin plugin );
-    
+
     /**
      * Get the max number from a given id directory
      * @param nIdEntryTypeNumbering the id of the entry type numbering
@@ -133,7 +133,7 @@ public interface IRecordFieldDAO
      * Check if the given number is already on a record field or not.
      * <br />
      * In other words, this method serves the purpose of checking the given number
-     * before creating a new record field since the entry type numbering should 
+     * before creating a new record field since the entry type numbering should
      * have unique number.
      * @param nIdEntryTypeNumbering the id entry type numbering
      * @param nIdDirectory the id directory

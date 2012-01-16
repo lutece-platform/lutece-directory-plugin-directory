@@ -33,11 +33,11 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import java.util.List;
-
 import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
+
+import java.util.List;
 
 
 /**
@@ -123,9 +123,9 @@ public final class RecordFieldHome
      */
     public static void remove( int nIdRecordField, Plugin plugin )
     {
-    	remove( nIdRecordField, false, plugin );
+        remove( nIdRecordField, false, plugin );
     }
-    
+
     /**
      * Delete the record field whose identifier is specified in parameter
      *
@@ -141,10 +141,10 @@ public final class RecordFieldHome
         {
             FileHome.remove( recordField.getFile(  ).getIdFile(  ), plugin );
         }
-        
+
         if ( bRemoveAsynchronousFiles )
         {
-        	DirectoryService.getInstance(  ).removeAsynchronousFile( recordField, plugin );
+            DirectoryService.getInstance(  ).removeAsynchronousFile( recordField, plugin );
         }
 
         _dao.delete( nIdRecordField, plugin );
@@ -185,9 +185,9 @@ public final class RecordFieldHome
      */
     public static void removeByFilter( RecordFieldFilter filter, Plugin plugin )
     {
-    	removeByFilter( filter, false, plugin );
+        removeByFilter( filter, false, plugin );
     }
-    
+
     /**
      * remove all record field  who verify the filter
      * @param filter the filter
@@ -291,7 +291,7 @@ public final class RecordFieldHome
     {
         return _dao.getCountByFilter( filter, plugin );
     }
-    
+
     /**
      * Get the max number from a given id directory
      * @param nIdEntryTypeNumbering the id of the entry type numbering
@@ -301,14 +301,14 @@ public final class RecordFieldHome
      */
     public static int findMaxNumber( int nIdEntryTypeNumbering, int nIdDirectory, Plugin plugin )
     {
-    	return _dao.getMaxNumber( nIdEntryTypeNumbering, nIdDirectory, plugin );
+        return _dao.getMaxNumber( nIdEntryTypeNumbering, nIdDirectory, plugin );
     }
-    
+
     /**
      * Check if the given number is already on a record field or not.
      * <br />
      * In other words, this method serves the purpose of checking the given number
-     * before creating a new record field since the entry type numbering should 
+     * before creating a new record field since the entry type numbering should
      * have unique number.
      * @param nIdEntryTypeNumbering the id entry type numbering
      * @param nIdDirectory the id directory
@@ -316,8 +316,9 @@ public final class RecordFieldHome
      * @param plugin {@link Plugin}
      * @return true if it is already on, false otherwise
      */
-    public static boolean isNumberOnARecordField( int nIdEntryTypeNumbering, int nIdDirectory, int nNumber, Plugin plugin )
+    public static boolean isNumberOnARecordField( int nIdEntryTypeNumbering, int nIdDirectory, int nNumber,
+        Plugin plugin )
     {
-    	return _dao.isNumberOnARecordField( nIdEntryTypeNumbering, nIdDirectory, nNumber, plugin );
+        return _dao.isNumberOnARecordField( nIdEntryTypeNumbering, nIdDirectory, nNumber, plugin );
     }
 }

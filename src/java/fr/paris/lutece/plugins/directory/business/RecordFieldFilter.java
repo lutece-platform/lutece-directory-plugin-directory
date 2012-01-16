@@ -73,63 +73,63 @@ public class RecordFieldFilter
      * Gets the entry that should be used to sort the results
      * @return the entry that should be used to sort the results
      */
-    public IEntry getSortEntry()
-	{
-		return _sortEntry;
-	}
+    public IEntry getSortEntry(  )
+    {
+        return _sortEntry;
+    }
 
     /**
      * Set the entry that should be used to sort the results
      * @param sortEntry the entry to use to sort the results, <code>null</code> to use default sort (creation date).
      */
-	public void setSortEntry( IEntry sortEntry )
-	{
-		this._sortEntry = sortEntry;
-	}
-	
-	/**
-	 * <code>true</code> if an entry should be used to sort the results, <code>false</code> otherwise
-	 * @return <code>true</code> if an entry should be used to sort the results, <code>false</code> otherwise.
-	 */
-	public boolean containsSortEntry()
-	{
-		return _sortEntry != null;
-	}
+    public void setSortEntry( IEntry sortEntry )
+    {
+        this._sortEntry = sortEntry;
+    }
 
-	/**
-	 * Gets the sort order. Default is {@link #ORDER_NONE}
-	 * @return the sort order
-	 * @see #ORDER_ASC
-	 * @see #ORDER_DESC
-	 * @see #ORDER_NONE
-	 */
-	public int getSortOrder()
-	{
-		return _nSortOrder;
-	}
+    /**
+     * <code>true</code> if an entry should be used to sort the results, <code>false</code> otherwise
+     * @return <code>true</code> if an entry should be used to sort the results, <code>false</code> otherwise.
+     */
+    public boolean containsSortEntry(  )
+    {
+        return _sortEntry != null;
+    }
 
-	/**
-	 * Sets the sort order. Use it with {@link #setSortEntry(IEntry)}
-	 * @param nSortOrder the sort order.
-	 * @see #ORDER_ASC
-	 * @see #ORDER_DESC
-	 * @see #ORDER_NONE
-	 */
-	public void setSortOrder( int nSortOrder )
-	{
-		this._nSortOrder = nSortOrder;
-	}
-	
-	/**
-	 * Return <code>true</code> if sort order is not {@link #ORDER_NONE}
-	 * @return <code>true</code> if sort order is not {@link #ORDER_NONE}, <code>false</code> otherwise.
-	 */
-	public boolean containsSortOrder()
-	{
-		return this._nSortOrder != ORDER_NONE;
-	}
+    /**
+     * Gets the sort order. Default is {@link #ORDER_NONE}
+     * @return the sort order
+     * @see #ORDER_ASC
+     * @see #ORDER_DESC
+     * @see #ORDER_NONE
+     */
+    public int getSortOrder(  )
+    {
+        return _nSortOrder;
+    }
 
-	/**
+    /**
+     * Sets the sort order. Use it with {@link #setSortEntry(IEntry)}
+     * @param nSortOrder the sort order.
+     * @see #ORDER_ASC
+     * @see #ORDER_DESC
+     * @see #ORDER_NONE
+     */
+    public void setSortOrder( int nSortOrder )
+    {
+        this._nSortOrder = nSortOrder;
+    }
+
+    /**
+     * Return <code>true</code> if sort order is not {@link #ORDER_NONE}
+     * @return <code>true</code> if sort order is not {@link #ORDER_NONE}, <code>false</code> otherwise.
+     */
+    public boolean containsSortOrder(  )
+    {
+        return this._nSortOrder != ORDER_NONE;
+    }
+
+    /**
     *
     * @return  the id of directory insert in the filter
     */
@@ -456,17 +456,17 @@ public class RecordFieldFilter
      * Set order by date modification
      * @param bOrderByDateModification true if filter by date modification
      */
-	public void setOrderByDateModification( boolean bOrderByDateModification )
-	{
-		_bOrderByDateModification = bOrderByDateModification;
-	}
+    public void setOrderByDateModification( boolean bOrderByDateModification )
+    {
+        _bOrderByDateModification = bOrderByDateModification;
+    }
 
-	/**
-	 * Order by date modification
-	 * @return order by date modification
-	 */
-	public boolean isOrderByDateModification()
-	{
-		return _bOrderByDateModification;
-	}
+    /**
+     * Order by date modification
+     * @return order by date modification
+     */
+    public boolean isOrderByDateModification(  )
+    {
+        return _bOrderByDateModification;
+    }
 }

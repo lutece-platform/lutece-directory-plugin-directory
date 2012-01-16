@@ -33,19 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryFilter;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
@@ -93,6 +80,19 @@ import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.http.SecurityUtil;
 import fr.paris.lutece.util.url.UrlItem;
 import fr.paris.lutece.util.xml.XmlUtil;
+
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -241,8 +241,8 @@ public class DirectoryApp implements XPageApplication
 
             DirectorySiteSearchFields searchFields = ( session.getAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS ) != null )
                 ? (DirectorySiteSearchFields) session.getAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS )
-                : getInitDirectorySearchField( );
-             
+                : getInitDirectorySearchField(  );
+
             model.put( MARK_DIRECTORY, directory );
 
             int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
@@ -706,9 +706,9 @@ public class DirectoryApp implements XPageApplication
             HashMap<String, String> params = new HashMap<String, String>(  );
             String strParamTitleDescriptive = I18nService.getLocalizedString( PROPERTY_DIRECTORY_FRAME_TITLE_DESCRIPTIVE,
                     locale );
-             String strParamTitleSortAsc = I18nService.getLocalizedString( PROPERTY_DIRECTORY_RESULT_TITLE_SORT_ASC,
+            String strParamTitleSortAsc = I18nService.getLocalizedString( PROPERTY_DIRECTORY_RESULT_TITLE_SORT_ASC,
                     locale );
-            String strParamTitleSortDesc= I18nService.getLocalizedString( PROPERTY_DIRECTORY_RESULT_TITLE_SORT_DESC,
+            String strParamTitleSortDesc = I18nService.getLocalizedString( PROPERTY_DIRECTORY_RESULT_TITLE_SORT_DESC,
                     locale );
 
             params.put( MARK_TITLE_SORT_ASC, strParamTitleSortAsc );
@@ -959,10 +959,9 @@ public class DirectoryApp implements XPageApplication
         return template.getHtml(  );
     }
 
-  
     /**
      * re init the map query used for searching
-     * @param request the HttpServletRequest 
+     * @param request the HttpServletRequest
      * @param searchFields the searchFields
      * @param directory the directory
      */
@@ -973,18 +972,19 @@ public class DirectoryApp implements XPageApplication
                 ( ( request.getParameter( PARAMETER_SEARCH ) == null ) &&
                 ( searchFields.getIdDirectory(  ) != directory.getIdDirectory(  ) ) ) )
         {
-           searchFields.setMapQuery( null );
+            searchFields.setMapQuery( null );
         }
     }
-    	
+
     /**
      * return a init searchField
      * @param directory the directory
      * @return the DirectorySiteSearchFields
      */
-    private DirectorySiteSearchFields getInitDirectorySearchField( )
+    private DirectorySiteSearchFields getInitDirectorySearchField(  )
     {
         DirectorySiteSearchFields searchFields = new DirectorySiteSearchFields(  );
+
         return searchFields;
     }
 }

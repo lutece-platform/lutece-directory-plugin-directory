@@ -200,7 +200,7 @@ public class EntryTypeUrl extends Entry
         this.setMandatory( strMandatory != null );
         this.setIndexed( strIndexed != null );
         this.setIndexedAsTitle( strDocumentTitle != null );
-        this.setIndexedAsSummary( strDocumentSummary!= null );
+        this.setIndexedAsSummary( strDocumentSummary != null );
         this.setShownInAdvancedSearch( strShowInAdvancedSearch != null );
         this.setShownInResultList( strShowInResultList != null );
         this.setShownInResultRecord( strShowInResultRecord != null );
@@ -278,7 +278,7 @@ public class EntryTypeUrl extends Entry
             List<RecordField> recordFieldList = RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
 
             if ( ( recordFieldList != null ) && !recordFieldList.isEmpty(  ) &&
-            		StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue(  ) ) )
+                    StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue(  ) ) )
             {
                 strValueEntry = recordFieldList.get( 0 ).getValue(  ) + ", " + strValueEntry;
             }

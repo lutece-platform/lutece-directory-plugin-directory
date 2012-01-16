@@ -52,11 +52,13 @@ public class RecordField
     private Field _field;
     private File _file;
     private Record _record;
+
     /**
      * This attribute is used for EntryTypeDownloadURL
      * @see {@link EntryTypeDownloadUrl}
      */
     private String _strFileName;
+
     /**
      * This attribute is used for EntryTypeDownloadURL
      * @see {@link EntryTypeDownloadUrl}
@@ -203,7 +205,7 @@ public class RecordField
     {
         return _strValue;
     }
-    
+
     /**
      * Get the file extensions
      * This attribute is used for EntryTypeDownloadURL
@@ -211,40 +213,40 @@ public class RecordField
      * @return the file extension if the response value is a file
      */
     public String getFileExtension(  )
-	{
-    	return _strFileExtension;
-	}
+    {
+        return _strFileExtension;
+    }
 
-	/**
-     * Set the file extension if the response value is a file
-     * This attribute is used for EntryTypeDownloadURL
-     * @see {@link EntryTypeDownloadUrl}
-     * @param fileExtension the file extension if the response value is a file
-     */
+    /**
+    * Set the file extension if the response value is a file
+    * This attribute is used for EntryTypeDownloadURL
+    * @see {@link EntryTypeDownloadUrl}
+    * @param fileExtension the file extension if the response value is a file
+    */
     public void setFileExtension( String fileExtension )
     {
-    	_strFileExtension = fileExtension;
-	}
+        _strFileExtension = fileExtension;
+    }
 
-	/**
-	 * The file name if the response value is a file
-	 * This attribute is used for EntryTypeDownloadURL
-     * @see {@link EntryTypeDownloadUrl}
-	 * @return the file name if the response value is a file
-	 */
-	public String getFileName(  )
-	{
-		return _strFileName;
-	}
-
-	/**
-	 * The file name if the response value is a file
-	 * This attribute is used for EntryTypeDownloadURL
-     * @see {@link EntryTypeDownloadUrl}
-	 * @param fileName the file name if the response value is a file
+    /**
+     * The file name if the response value is a file
+     * This attribute is used for EntryTypeDownloadURL
+    * @see {@link EntryTypeDownloadUrl}
+     * @return the file name if the response value is a file
      */
-	public void setFileName( String fileName )
-	{
-		_strFileName = fileName;
-	}
+    public String getFileName(  )
+    {
+        return _strFileName;
+    }
+
+    /**
+     * The file name if the response value is a file
+     * This attribute is used for EntryTypeDownloadURL
+    * @see {@link EntryTypeDownloadUrl}
+     * @param fileName the file name if the response value is a file
+    */
+    public void setFileName( String fileName )
+    {
+        _strFileName = fileName;
+    }
 }

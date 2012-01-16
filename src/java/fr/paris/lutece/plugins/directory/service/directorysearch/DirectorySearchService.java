@@ -33,25 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.service.directorysearch;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Searcher;
-import org.apache.lucene.store.NIOFSDirectory;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
 import fr.paris.lutece.plugins.directory.business.IndexerAction;
@@ -71,6 +52,27 @@ import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Searcher;
+import org.apache.lucene.store.NIOFSDirectory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -171,8 +173,8 @@ public class DirectorySearchService
     public List<Integer> getSearchResults( Directory directory, HashMap<String, List<RecordField>> mapSearch,
         Date dateCreation, Date dateCreationBegin, Date dateCreationEnd, RecordFieldFilter filter, Plugin plugin )
     {
-    	return getSearchResults( directory, mapSearch, dateCreationEnd, dateCreationBegin, dateCreationEnd, 
-    			null, null, null, filter, plugin );
+        return getSearchResults( directory, mapSearch, dateCreationEnd, dateCreationBegin, dateCreationEnd, null, null,
+            null, filter, plugin );
     }
 
     /**
@@ -190,9 +192,8 @@ public class DirectorySearchService
      * @return a list of record key return by the search
      */
     public List<Integer> getSearchResults( Directory directory, HashMap<String, List<RecordField>> mapSearch,
-        Date dateCreation, Date dateCreationBegin, Date dateCreationEnd, 
-        Date dateModification, Date dateModificationBegin, Date dateModificationEnd,
-        RecordFieldFilter filter, Plugin plugin )
+        Date dateCreation, Date dateCreationBegin, Date dateCreationEnd, Date dateModification,
+        Date dateModificationBegin, Date dateModificationEnd, RecordFieldFilter filter, Plugin plugin )
     {
         List<Integer> listRecordResult = new ArrayList<Integer>(  );
 
@@ -242,8 +243,9 @@ public class DirectorySearchService
 
                             if ( !bSearchEmpty )
                             {
-                            	// keeping order is important for display
-                                listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult, listRecordResultTmp );
+                                // keeping order is important for display
+                                listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
+                                        listRecordResultTmp );
                             }
                         }
                     }
@@ -261,7 +263,8 @@ public class DirectorySearchService
                     listRecordResultTmp.addAll( engine.getSearchResults( mapSearchItemEntry ) );
 
                     // keeping order is important for display
-                    listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult, listRecordResultTmp );
+                    listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
+                            listRecordResultTmp );
                 }
                 else if ( ( dateCreationBegin != null ) && ( dateCreationEnd != null ) )
                 {
@@ -276,9 +279,10 @@ public class DirectorySearchService
                     listRecordResultTmp.addAll( engine.getSearchResults( mapSearchItemEntry ) );
 
                     // keeping order is important for display
-                    listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult, listRecordResultTmp );
+                    listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
+                            listRecordResultTmp );
                 }
-                
+
                 //date modification of a record
                 if ( dateModification != null )
                 {
@@ -291,7 +295,8 @@ public class DirectorySearchService
                     listRecordResultTmp.addAll( engine.getSearchResults( mapSearchItemEntry ) );
 
                     // keeping order is important for display
-                    listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult, listRecordResultTmp );
+                    listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
+                            listRecordResultTmp );
                 }
                 else if ( ( dateModificationBegin != null ) && ( dateModificationEnd != null ) )
                 {
@@ -306,7 +311,8 @@ public class DirectorySearchService
                     listRecordResultTmp.addAll( engine.getSearchResults( mapSearchItemEntry ) );
 
                     // keeping order is important for display
-                    listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult, listRecordResultTmp );
+                    listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
+                            listRecordResultTmp );
                 }
             }
             catch ( Exception e )
@@ -476,16 +482,17 @@ public class DirectorySearchService
      */
     public void addIndexerAction( int nIdRecord, int nIdTask, Plugin plugin )
     {
-    	Record record = RecordHome.findByPrimaryKey( nIdRecord, plugin );
-    	int nDirectoryId = record.getDirectory(  ).getIdDirectory(  );
-    	Directory directory = DirectoryHome.findByPrimaryKey( nDirectoryId, plugin );
-    	if ( directory.isIndexed(  ) )
-    	{
-    		IndexerAction indexerAction = new IndexerAction(  );
+        Record record = RecordHome.findByPrimaryKey( nIdRecord, plugin );
+        int nDirectoryId = record.getDirectory(  ).getIdDirectory(  );
+        Directory directory = DirectoryHome.findByPrimaryKey( nDirectoryId, plugin );
+
+        if ( directory.isIndexed(  ) )
+        {
+            IndexerAction indexerAction = new IndexerAction(  );
             indexerAction.setIdRecord( nIdRecord );
             indexerAction.setIdTask( nIdTask );
             IndexerActionHome.create( indexerAction, plugin );
-    	}
+        }
     }
 
     /**

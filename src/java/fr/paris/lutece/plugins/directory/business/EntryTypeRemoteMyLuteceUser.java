@@ -33,16 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
@@ -57,6 +47,16 @@ import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  *
@@ -70,11 +70,11 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
     private static final String SPACE = " ";
     private static final String TWO_POINTS = ":";
     private static final String COMMA = ",";
-    
+
     // PROPERTIES
     private static final String PROPERTY_USER_LOGIN = "directory.viewing_mylutece_user.labelLogin";
     private static final String PROPERTY_USER_INFO_PREFIX = "portal.security.";
-    
+
     // TEMPLATES
     private static final String TEMPLATE_CREATE = "admin/plugins/directory/entrytyperemotemyluteceuser/create_entry_type_remote_mylutece_user.html";
     private static final String TEMPLATE_MODIFY = "admin/plugins/directory/entrytyperemotemyluteceuser/modify_entry_type_remote_mylutece_user.html";
@@ -167,6 +167,7 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
         String strShowInHistory = request.getParameter( PARAMETER_SHOWN_IN_HISTORY );
         String strIsAllSearch = request.getParameter( PARAMETER_IS_ADD_VALUE_SEARCH_ALL );
         String strLabelValueAllSearch = request.getParameter( PARAMETER_LABEL_VALUE_SEARCH_ALL );
+
         // Check if we have to show every information of the users or not
         String strShowFullInfo = request.getParameter( PARAMETER_SHOW_ALL_INFO );
 
@@ -213,7 +214,8 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
         {
             this.setLabelValueAllSearch( null );
         }
-        if ( this.getFields(  ) == null || this.getFields(  ).size(  ) == 0 )
+
+        if ( ( this.getFields(  ) == null ) || ( this.getFields(  ).size(  ) == 0 ) )
         {
             List<Field> listFields = new ArrayList<Field>(  );
             Field field = new Field(  );
@@ -247,27 +249,28 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
             listRecordField.add( recordField );
         }
     }
-    
+
     /**
-	 * {@inheritDoc}
-	 */
+         * {@inheritDoc}
+         */
     @Override
     public String getHtmlRecordFieldValue( Locale locale, RecordField recordField, boolean isDisplayFront )
     {
-    	if ( getTemplateHtmlRecordFieldValue( isDisplayFront ) != null )
+        if ( getTemplateHtmlRecordFieldValue( isDisplayFront ) != null )
         {
             Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_ENTRY, this );
             model.put( MARK_RECORD_FIELD, recordField );
             model.put( MARK_LOCALE, locale );
+
             if ( showAllInfo(  ) )
             {
-            	int nIdRecord = recordField.getRecord(  ).getIdRecord(  );
-        		String strUserGuid = DirectoryService.getInstance(  ).getUserGuid( nIdRecord, getIdEntry(  ) );
-            	ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfos( strUserGuid, getIdEntry(  ) );
-    			
-            	model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
-    			model.put( MARK_MYLUTECE_USER_LOGIN, strUserGuid );
+                int nIdRecord = recordField.getRecord(  ).getIdRecord(  );
+                String strUserGuid = DirectoryService.getInstance(  ).getUserGuid( nIdRecord, getIdEntry(  ) );
+                ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfos( strUserGuid, getIdEntry(  ) );
+
+                model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
+                model.put( MARK_MYLUTECE_USER_LOGIN, strUserGuid );
             }
 
             HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlRecordFieldValue( isDisplayFront ),
@@ -286,37 +289,42 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
         boolean bExportDirectory )
     {
-    	String strValue = StringUtils.EMPTY;
+        String strValue = StringUtils.EMPTY;
 
-        if ( recordField != null && StringUtils.isNotBlank( recordField.getValue(  ) ) && 
-        		recordField.getRecord(  ) != null )
+        if ( ( recordField != null ) && StringUtils.isNotBlank( recordField.getValue(  ) ) &&
+                ( recordField.getRecord(  ) != null ) )
         {
             if ( bExportDirectory )
             {
-            	int nIdRecord = recordField.getRecord(  ).getIdRecord(  );
-            	String strUserGuid = DirectoryService.getInstance(  ).getUserGuid( nIdRecord, getIdEntry(  ) );
-            	ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfos( strUserGuid, getIdEntry(  ) );
-        		if ( showAllInfo(  ) && StringUtils.isNotBlank( strUserGuid ) && listUserInfos != null )
-        		{
-            		StringBuilder sbValue = new StringBuilder(  );
-            		sbValue.append( I18nService.getLocalizedString( PROPERTY_USER_LOGIN, locale ) + SPACE + 
-            				TWO_POINTS + SPACE + strUserGuid );
-            		for ( ReferenceItem userInfo : listUserInfos )
-            		{
-            			sbValue.append( COMMA );
-            			sbValue.append( I18nService.getLocalizedString( PROPERTY_USER_INFO_PREFIX + userInfo.getCode(  ), locale ) );
-            			sbValue.append( SPACE + TWO_POINTS + SPACE );
-            			sbValue.append( userInfo.getName(  ) );
-            		}
-            		strValue = sbValue.toString(  );
-            	}
+                int nIdRecord = recordField.getRecord(  ).getIdRecord(  );
+                String strUserGuid = DirectoryService.getInstance(  ).getUserGuid( nIdRecord, getIdEntry(  ) );
+                ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfos( strUserGuid, getIdEntry(  ) );
+
+                if ( showAllInfo(  ) && StringUtils.isNotBlank( strUserGuid ) && ( listUserInfos != null ) )
+                {
+                    StringBuilder sbValue = new StringBuilder(  );
+                    sbValue.append( I18nService.getLocalizedString( PROPERTY_USER_LOGIN, locale ) + SPACE + TWO_POINTS +
+                        SPACE + strUserGuid );
+
+                    for ( ReferenceItem userInfo : listUserInfos )
+                    {
+                        sbValue.append( COMMA );
+                        sbValue.append( I18nService.getLocalizedString( PROPERTY_USER_INFO_PREFIX +
+                                userInfo.getCode(  ), locale ) );
+                        sbValue.append( SPACE + TWO_POINTS + SPACE );
+                        sbValue.append( userInfo.getName(  ) );
+                    }
+
+                    strValue = sbValue.toString(  );
+                }
             }
+
             if ( StringUtils.isBlank( strValue ) )
             {
-            	strValue = recordField.getValue(  );
+                strValue = recordField.getValue(  );
             }
         }
-        
+
         return strValue;
     }
 
@@ -338,28 +346,32 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
     {
         return true;
     }
-    
+
     /**
      * Check if it must show every information of the user or not
      * @return true if it must show every information, false otherwise
      */
     private boolean showAllInfo(  )
     {
-    	boolean bShow = false;
-    	List<Field> listFields = getFields(  );
-    	if ( listFields == null || listFields.isEmpty(  ) )
-    	{
-    		Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-    		listFields = FieldHome.getFieldListByIdEntry( getIdEntry(  ), plugin );
-    	}
-    	if ( listFields != null )
-    	{
-    		Field field = listFields.get( 0 );
-    		if ( field != null )
-    		{
-    			bShow = field.isDefaultValue(  );
-    		}
-    	}
-    	return bShow;
+        boolean bShow = false;
+        List<Field> listFields = getFields(  );
+
+        if ( ( listFields == null ) || listFields.isEmpty(  ) )
+        {
+            Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+            listFields = FieldHome.getFieldListByIdEntry( getIdEntry(  ), plugin );
+        }
+
+        if ( listFields != null )
+        {
+            Field field = listFields.get( 0 );
+
+            if ( field != null )
+            {
+                bShow = field.isDefaultValue(  );
+            }
+        }
+
+        return bShow;
     }
 }

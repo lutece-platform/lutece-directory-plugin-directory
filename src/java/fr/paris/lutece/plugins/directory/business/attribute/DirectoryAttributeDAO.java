@@ -33,11 +33,12 @@
  */
 package fr.paris.lutece.plugins.directory.business.attribute;
 
+import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.util.sql.DAOUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.paris.lutece.portal.service.plugin.Plugin;
-import fr.paris.lutece.util.sql.DAOUtil;
 
 /**
  *
@@ -46,58 +47,59 @@ import fr.paris.lutece.util.sql.DAOUtil;
  */
 public class DirectoryAttributeDAO implements IDirectoryAttributeDAO
 {
-	private static final String SQL_QUERY_SELECT = " SELECT attribute_key, attribute_value FROM directory_directory_attribute WHERE id_directory = ? ";
-	private static final String SQL_QUERY_INSERT = " INSERT INTO directory_directory_attribute ( id_directory, attribute_key, attribute_value ) VALUES ( ?,?,? ) ";
-	private static final String SQL_QUERY_DELETE = " DELETE FROM directory_directory_attribute WHERE id_directory = ? ";
+    private static final String SQL_QUERY_SELECT = " SELECT attribute_key, attribute_value FROM directory_directory_attribute WHERE id_directory = ? ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO directory_directory_attribute ( id_directory, attribute_key, attribute_value ) VALUES ( ?,?,? ) ";
+    private static final String SQL_QUERY_DELETE = " DELETE FROM directory_directory_attribute WHERE id_directory = ? ";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public Map<String, Object> load( int nIdDirectory, Plugin plugin )
-	{
-		Map<String, Object> mapAttributes = new HashMap<String, Object>(  );
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
+    /**
+     * {@inheritDoc}
+     */
+    public Map<String, Object> load( int nIdDirectory, Plugin plugin )
+    {
+        Map<String, Object> mapAttributes = new HashMap<String, Object>(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         daoUtil.setInt( 1, nIdDirectory );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )
         {
-        	int nIndex = 1;
-        	String strAttributeKey = daoUtil.getString( nIndex++ );
-        	Object attributeValue = daoUtil.getObject( nIndex++ );
-        	mapAttributes.put( strAttributeKey, attributeValue );
+            int nIndex = 1;
+            String strAttributeKey = daoUtil.getString( nIndex++ );
+            Object attributeValue = daoUtil.getObject( nIndex++ );
+            mapAttributes.put( strAttributeKey, attributeValue );
         }
-        daoUtil.free(  );
-        
-		return mapAttributes;
-	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public synchronized void insert( int nIdDirectory, String strAttributeKey, Object attributeValue, Plugin plugin )
-	{
-		int nIndex = 1;
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
-		daoUtil.setInt( nIndex++, nIdDirectory );
-		daoUtil.setString( nIndex++, strAttributeKey );
-		daoUtil.setString( nIndex++, attributeValue.toString(  ) );
+        daoUtil.free(  );
+
+        return mapAttributes;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public synchronized void insert( int nIdDirectory, String strAttributeKey, Object attributeValue, Plugin plugin )
+    {
+        int nIndex = 1;
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+        daoUtil.setInt( nIndex++, nIdDirectory );
+        daoUtil.setString( nIndex++, strAttributeKey );
+        daoUtil.setString( nIndex++, attributeValue.toString(  ) );
 
         daoUtil.executeUpdate(  );
 
         daoUtil.free(  );
-	}
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void remove( int nIdDirectory, Plugin plugin )
-	{
-		DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-		daoUtil.setInt( 1, nIdDirectory );
+    /**
+     * {@inheritDoc}
+     */
+    public void remove( int nIdDirectory, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
+        daoUtil.setInt( 1, nIdDirectory );
 
         daoUtil.executeUpdate(  );
 
         daoUtil.free(  );
-	}
+    }
 }

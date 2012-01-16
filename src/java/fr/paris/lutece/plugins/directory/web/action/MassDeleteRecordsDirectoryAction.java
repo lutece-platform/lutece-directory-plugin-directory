@@ -33,13 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web.action;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
@@ -54,79 +47,86 @@ import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.url.UrlItem;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 /**
- * 
+ *
  * Redirects to jsp/admin/plugins/directory/ConfirmRemoveDirectoryRecord.jsp
  *
  */
-public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
+public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
+    implements IDirectoryAction
 {
-	// ACTIONS
-	private static final String ACTION_NAME = "Mass Remove Records";
-	
-	// TEMPLATES
-	private static final String TEMPLATE_BUTTON = "actions/mass_delete_records.html";
+    // ACTIONS
+    private static final String ACTION_NAME = "Mass Remove Records";
 
-	// PARAMETERS
-	/** the button is an image so the name is .x or .y */
-	private static final String PARAMETER_BUTTON_MASS_DELETE_RECORDS_X = "mass_delete_records.x";
-	
-	// MARKS
-	private static final String MARK_PERMISSION_DELETE_RECORD = "permission_delete_record";
-	
-	// JSP
-	private static final String JSP_DIRECTORY_MASS_REMOVE_RECORDS = "jsp/admin/plugins/directory/ConfirmRemoveDirectoryRecord.jsp";
+    // TEMPLATES
+    private static final String TEMPLATE_BUTTON = "actions/mass_delete_records.html";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void fillModel( HttpServletRequest request, AdminUser adminUser,
-			Map<String, Object> model ) 
-	{
-		String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
-		model.put( MARK_PERMISSION_DELETE_RECORD, RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-				DirectoryResourceIdService.PERMISSION_DELETE_RECORD, adminUser ) );
-	}
+    // PARAMETERS
+    /** the button is an image so the name is .x or .y */
+    private static final String PARAMETER_BUTTON_MASS_DELETE_RECORDS_X = "mass_delete_records.x";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getButtonTemplate(  )
-	{
-		return TEMPLATE_BUTTON;
-	}
+    // MARKS
+    private static final String MARK_PERMISSION_DELETE_RECORD = "permission_delete_record";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getName(  )
-	{
-		return ACTION_NAME;
-	}
+    // JSP
+    private static final String JSP_DIRECTORY_MASS_REMOVE_RECORDS = "jsp/admin/plugins/directory/ConfirmRemoveDirectoryRecord.jsp";
 
-	/**
-	 * @see #PARAMETER_BUTTON_MASS_DELETE_RECORDS_X
-	 */
-	public boolean isInvoked( HttpServletRequest request ) 
-	{
-		return request.getParameter( PARAMETER_BUTTON_MASS_DELETE_RECORDS_X ) != null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void fillModel( HttpServletRequest request, AdminUser adminUser, Map<String, Object> model )
+    {
+        String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
+        model.put( MARK_PERMISSION_DELETE_RECORD,
+            RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
+                DirectoryResourceIdService.PERMISSION_DELETE_RECORD, adminUser ) );
+    }
 
-	/**
-	 * Redirects to {@link #JSP_DIRECTORY_MASS_REMOVE_RECORDS}
-	 */
-	public IPluginActionResult process( HttpServletRequest request,
-			HttpServletResponse response, AdminUser adminUser,
-			DirectoryAdminSearchFields sessionFields )
-			throws AccessDeniedException 
-	{
-		IPluginActionResult result = new DefaultPluginActionResult(  );
+    /**
+     * {@inheritDoc}
+     */
+    public String getButtonTemplate(  )
+    {
+        return TEMPLATE_BUTTON;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getName(  )
+    {
+        return ACTION_NAME;
+    }
+
+    /**
+     * @see #PARAMETER_BUTTON_MASS_DELETE_RECORDS_X
+     */
+    public boolean isInvoked( HttpServletRequest request )
+    {
+        return request.getParameter( PARAMETER_BUTTON_MASS_DELETE_RECORDS_X ) != null;
+    }
+
+    /**
+     * Redirects to {@link #JSP_DIRECTORY_MASS_REMOVE_RECORDS}
+     */
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
+        DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException
+    {
+        IPluginActionResult result = new DefaultPluginActionResult(  );
 
         String strRedirect = StringUtils.EMPTY;
 
         if ( ( sessionFields.getSelectedRecords(  ) != null ) && !sessionFields.getSelectedRecords(  ).isEmpty(  ) )
         {
-        	String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
+            String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
             UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DIRECTORY_MASS_REMOVE_RECORDS );
             url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
 
@@ -142,12 +142,12 @@ public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<Direc
         }
         else
         {
-            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS, AdminMessage.TYPE_INFO );
+            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS,
+                    AdminMessage.TYPE_INFO );
         }
 
         result.setRedirect( strRedirect );
 
         return result;
-	}
-
+    }
 }

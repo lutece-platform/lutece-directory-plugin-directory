@@ -33,16 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.blobstoreclient.util.BlobStoreClientException;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
@@ -62,6 +52,16 @@ import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.xml.XmlUtil;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  *
@@ -70,36 +70,36 @@ import fr.paris.lutece.util.xml.XmlUtil;
  */
 public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
 {
-	// CONSTANTS
+    // CONSTANTS
     public static final String CONSTANT_WS_REST_URL = "ws_rest_url";
     public static final String CONSTANT_BLOBSTORE = "blobstore";
     public static final String CONSTANT_OPTION = "option";
-    
-	// PARAMETERS
+
+    // PARAMETERS
     private static final String PARAMETER_WS_REST_URL = "ws_rest_url";
-	private static final String PARAMETER_BLOBSTORE = "blobstore";
-    
+    private static final String PARAMETER_BLOBSTORE = "blobstore";
+
     // TAGS
     private static final String TAG_A = "a";
     private static final String TAG_IMG = "img";
-    
+
     // ATTRIBUTES
     private static final String ATTRIBUTE_HREF = "href";
     private static final String ATTRIBUTE_SRC = "src";
     private static final String ATTRIBUTE_TITLE = "title";
     private static final String ATTRIBUTE_ALT = "alt";
-    
+
     // FIELDS
     private static final String FIELD_WS_REST_URL = "directory.create_entry.label_ws_rest_url";
     private static final String FIELD_BLOBSTORE = "directory.create_entry.label_blobstore";
-    
+
     // URL
     private static final String URL_IMG_DOWNLOAD = "images/local/skin/plugins/directory/download.png";
-    
+
     // PROPERTIES
     private static final String PROPERTY_LABEL_DOWNLOAD = "directory.viewing_directory_record.download";
     private static final String MESSAGE_ENTRY_NOT_WELL_CONFIGURED = "directory.message.error.entry_not_well_configured";
-    
+
     // TEMPLATES
     private final String _template_create = "admin/plugins/directory/entrytypedownloadurl/create_entry_type_download_url.html";
     private final String _template_modify = "admin/plugins/directory/entrytypedownloadurl/modify_entry_type_download_url.html";
@@ -182,22 +182,23 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
         String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
 
         String strFieldError = checkEntryData( request, locale );
+
         if ( StringUtils.isNotBlank( strFieldError ) )
         {
-        	return strFieldError;
+            return strFieldError;
         }
 
         this.setTitle( strTitle );
         this.setHelpMessage( strHelpMessage );
         this.setHelpMessageSearch( strHelpMessageSearch );
         this.setComment( strComment );
-        
+
         this.setFields( request );
-        
+
         this.setMandatory( strMandatory != null );
         this.setIndexed( strIndexed != null );
         this.setIndexedAsTitle( strDocumentTitle != null );
-        this.setIndexedAsSummary( strDocumentSummary!= null );
+        this.setIndexedAsSummary( strDocumentSummary != null );
         this.setShownInAdvancedSearch( strShowInAdvancedSearch != null );
         this.setShownInResultList( strShowInResultList != null );
         this.setShownInResultRecord( strShowInResultRecord != null );
@@ -230,11 +231,11 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public Paginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex )
+    public Paginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl,
+        String strPageIndexParameterName, String strPageIndex )
     {
-        return new Paginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage, strBaseUrl,
-            strPageIndexParameterName, strPageIndex );
+        return new Paginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ),
+            nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex );
     }
 
     /**
@@ -270,132 +271,137 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      */
     @Override
     public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
-            boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-            throws DirectoryErrorException
+        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
+        throws DirectoryErrorException
     {
-    	if ( request instanceof MultipartHttpServletRequest )
-    	{
-    		// Get entry properties
-			Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_WS_REST_URL, getFields(  ) );
-			Field fieldBlobStore = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_BLOBSTORE, getFields(  ) );
-			String strWSRestUrl = fieldWSRestUrl.getValue(  );
-			String strBlobStore = fieldBlobStore.getValue(  );
-			if ( ( fieldBlobStore == null || fieldWSRestUrl == null || StringUtils.isBlank( strWSRestUrl ) || 
-					StringUtils.isBlank( strBlobStore ) ) && bTestDirectoryError )
-			{
-				String strErrorMessage = I18nService.getLocalizedString( MESSAGE_ENTRY_NOT_WELL_CONFIGURED, locale );
-				throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
-			}
-			
-			DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
-    		
-			/**
-			 * 1) Get the files from the session
-			 * 2) Check if the user is uploading a file or not
-			 * 2A) If the user is uploading a file, the file should not be stored in the blobstore yet
-			 * 2B) Otherwise, upload the file in blobstore :
-			 * 2B-1) Delete files from the blobstore
-			 * 2B-2) Upload files to the blostore
-			 */
-			
-			/** 1) Get the files from the session */
-			List<FileItem> asynchronousFileItems = getFileSources( request );
-			
-			if ( asynchronousFileItems != null && !asynchronousFileItems.isEmpty(  ) )
-			{
-				/** 2) Check if the user is uploading a file or not */
-				String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
-				if ( StringUtils.isNotBlank( strUploadAction ) )
-				{
-					/** 2A) If the user is uploading a file, the file should not be stored in the blobstore yet */
-					for ( FileItem fileItem : asynchronousFileItems )
-    				{
-						RecordField recordField = new RecordField(  );
-    					recordField.setEntry( this );
-    					recordField.setFileName( fileItem.getName(  ) );
-    					recordField.setFileExtension( fileItem.getContentType(  ) );
-    					listRecordField.add( recordField );
-    				}
-				}
-				else
-				{
-					/** 2B) Otherwise, upload the file in blobstore : */
-    				// Checks
-					if ( bTestDirectoryError )
-					{
-						this.checkRecordFieldData( asynchronousFileItems, locale );
-					}
-    				
-    				/** 2B-1) Delete files from the blobstore */
-    				try
-    				{
-    					handler.doRemoveFile( record, this, strWSRestUrl );
-    				}
-    				catch ( BlobStoreClientException e )
-    				{
-    					AppLogService.debug( e );
-    				}
-    				
-    				/** 2B-2) Upload files to the blostore */
-    				for ( FileItem fileItem : asynchronousFileItems )
-    				{
-    					String strDownloadFileUrl = StringUtils.EMPTY;
-    					try
-    					{
-    						if ( fileItem != null )
-    						{
-    							// Store the uploaded file in the blobstore webapp
-    							String strBlobKey = handler.doUploadFile( strWSRestUrl, fileItem, strBlobStore );
-    							strDownloadFileUrl = handler.getFileUrl( strWSRestUrl, strBlobStore,
-    									strBlobKey );
-    						}
-    					}
-    					catch ( Exception e )
-    					{
-    						throw new DirectoryErrorException( this.getTitle(  ), e.getMessage(  ) );
-    					}
-    					
-    					// Add record field
-    					RecordField recordField = new RecordField(  );
-    					recordField.setEntry( this );
-    					recordField.setValue( strDownloadFileUrl );
-    					listRecordField.add( recordField );
-    				}
-    			}
-    		}
-			else
-			{
-				// No uploaded files
-				if ( bTestDirectoryError && this.isMandatory(  ) )
-				{
-					throw new DirectoryErrorException( this.getTitle(  ) );
-				}
-				// Delete files from blobstore
-				try
-				{
-					handler.doRemoveFile( record, this, strWSRestUrl );
-				}
-				catch ( BlobStoreClientException e )
-				{
-					AppLogService.debug( e );
-				}
-			}
-    	}
-    	else
-    	{
-    		// Case if we get directly the url of the blob
-    		String[] listDownloadFileUrls = request.getParameterValues( Integer.toString( getIdEntry(  ) ) );
-    		if ( listDownloadFileUrls != null && listDownloadFileUrls.length > 0 )
-    		{
-    			for ( String strDownloadFileUrl : listDownloadFileUrls )
-    			{
-    				RecordField recordField = new RecordField(  );
-    				recordField.setEntry( this );
-    				recordField.setValue( StringUtils.isNotBlank( strDownloadFileUrl ) ? strDownloadFileUrl : StringUtils.EMPTY );
-    				listRecordField.add( recordField );
-    			}
-    		}
-    	}
+        if ( request instanceof MultipartHttpServletRequest )
+        {
+            // Get entry properties
+            Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_WS_REST_URL, getFields(  ) );
+            Field fieldBlobStore = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_BLOBSTORE, getFields(  ) );
+            String strWSRestUrl = fieldWSRestUrl.getValue(  );
+            String strBlobStore = fieldBlobStore.getValue(  );
+
+            if ( ( ( fieldBlobStore == null ) || ( fieldWSRestUrl == null ) || StringUtils.isBlank( strWSRestUrl ) ||
+                    StringUtils.isBlank( strBlobStore ) ) && bTestDirectoryError )
+            {
+                String strErrorMessage = I18nService.getLocalizedString( MESSAGE_ENTRY_NOT_WELL_CONFIGURED, locale );
+                throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
+            }
+
+            DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+
+            /**
+             * 1) Get the files from the session
+             * 2) Check if the user is uploading a file or not
+             * 2A) If the user is uploading a file, the file should not be stored in the blobstore yet
+             * 2B) Otherwise, upload the file in blobstore :
+             * 2B-1) Delete files from the blobstore
+             * 2B-2) Upload files to the blostore
+             */
+
+            /** 1) Get the files from the session */
+            List<FileItem> asynchronousFileItems = getFileSources( request );
+
+            if ( ( asynchronousFileItems != null ) && !asynchronousFileItems.isEmpty(  ) )
+            {
+                /** 2) Check if the user is uploading a file or not */
+                String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+
+                if ( StringUtils.isNotBlank( strUploadAction ) )
+                {
+                    /** 2A) If the user is uploading a file, the file should not be stored in the blobstore yet */
+                    for ( FileItem fileItem : asynchronousFileItems )
+                    {
+                        RecordField recordField = new RecordField(  );
+                        recordField.setEntry( this );
+                        recordField.setFileName( fileItem.getName(  ) );
+                        recordField.setFileExtension( fileItem.getContentType(  ) );
+                        listRecordField.add( recordField );
+                    }
+                }
+                else
+                {
+                    /** 2B) Otherwise, upload the file in blobstore : */
+                    // Checks
+                    if ( bTestDirectoryError )
+                    {
+                        this.checkRecordFieldData( asynchronousFileItems, locale );
+                    }
+
+                    /** 2B-1) Delete files from the blobstore */
+                    try
+                    {
+                        handler.doRemoveFile( record, this, strWSRestUrl );
+                    }
+                    catch ( BlobStoreClientException e )
+                    {
+                        AppLogService.debug( e );
+                    }
+
+                    /** 2B-2) Upload files to the blostore */
+                    for ( FileItem fileItem : asynchronousFileItems )
+                    {
+                        String strDownloadFileUrl = StringUtils.EMPTY;
+
+                        try
+                        {
+                            if ( fileItem != null )
+                            {
+                                // Store the uploaded file in the blobstore webapp
+                                String strBlobKey = handler.doUploadFile( strWSRestUrl, fileItem, strBlobStore );
+                                strDownloadFileUrl = handler.getFileUrl( strWSRestUrl, strBlobStore, strBlobKey );
+                            }
+                        }
+                        catch ( Exception e )
+                        {
+                            throw new DirectoryErrorException( this.getTitle(  ), e.getMessage(  ) );
+                        }
+
+                        // Add record field
+                        RecordField recordField = new RecordField(  );
+                        recordField.setEntry( this );
+                        recordField.setValue( strDownloadFileUrl );
+                        listRecordField.add( recordField );
+                    }
+                }
+            }
+            else
+            {
+                // No uploaded files
+                if ( bTestDirectoryError && this.isMandatory(  ) )
+                {
+                    throw new DirectoryErrorException( this.getTitle(  ) );
+                }
+
+                // Delete files from blobstore
+                try
+                {
+                    handler.doRemoveFile( record, this, strWSRestUrl );
+                }
+                catch ( BlobStoreClientException e )
+                {
+                    AppLogService.debug( e );
+                }
+            }
+        }
+        else
+        {
+            // Case if we get directly the url of the blob
+            String[] listDownloadFileUrls = request.getParameterValues( Integer.toString( getIdEntry(  ) ) );
+
+            if ( ( listDownloadFileUrls != null ) && ( listDownloadFileUrls.length > 0 ) )
+            {
+                for ( String strDownloadFileUrl : listDownloadFileUrls )
+                {
+                    RecordField recordField = new RecordField(  );
+                    recordField.setEntry( this );
+                    recordField.setValue( StringUtils.isNotBlank( strDownloadFileUrl ) ? strDownloadFileUrl
+                                                                                       : StringUtils.EMPTY );
+                    listRecordField.add( recordField );
+                }
+            }
+        }
     }
 
     /**
@@ -408,22 +414,22 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
 
         if ( StringUtils.isNotBlank( strTitle ) && bDisplayFront )
         {
-        	// Display as an image
-        	StringBuffer sbHtml = new StringBuffer(  );
-        	
-        	Map<String, String> mapParamTagA = new HashMap<String, String>(  );
-        	mapParamTagA.put( ATTRIBUTE_HREF, strTitle );
-        	
-        	String strAlt = I18nService.getLocalizedString( PROPERTY_LABEL_DOWNLOAD, locale );
-        	Map<String, String> mapParamTagImg = new HashMap<String, String>(  );
-        	mapParamTagImg.put( ATTRIBUTE_SRC, URL_IMG_DOWNLOAD );
-        	mapParamTagImg.put( ATTRIBUTE_TITLE, strAlt );
-        	mapParamTagImg.put( ATTRIBUTE_ALT, strAlt );
-        	
-        	XmlUtil.beginElement( sbHtml, TAG_A, mapParamTagA );
-        	XmlUtil.addEmptyElement( sbHtml, TAG_IMG, mapParamTagImg );
-        	XmlUtil.endElement( sbHtml, TAG_A );
-        	
+            // Display as an image
+            StringBuffer sbHtml = new StringBuffer(  );
+
+            Map<String, String> mapParamTagA = new HashMap<String, String>(  );
+            mapParamTagA.put( ATTRIBUTE_HREF, strTitle );
+
+            String strAlt = I18nService.getLocalizedString( PROPERTY_LABEL_DOWNLOAD, locale );
+            Map<String, String> mapParamTagImg = new HashMap<String, String>(  );
+            mapParamTagImg.put( ATTRIBUTE_SRC, URL_IMG_DOWNLOAD );
+            mapParamTagImg.put( ATTRIBUTE_TITLE, strAlt );
+            mapParamTagImg.put( ATTRIBUTE_ALT, strAlt );
+
+            XmlUtil.beginElement( sbHtml, TAG_A, mapParamTagA );
+            XmlUtil.addEmptyElement( sbHtml, TAG_IMG, mapParamTagImg );
+            XmlUtil.endElement( sbHtml, TAG_A );
+
             strTitle = sbHtml.toString(  );
         }
 
@@ -443,125 +449,143 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public LocalizedPaginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex, Locale locale )
+    public LocalizedPaginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl,
+        String strPageIndexParameterName, String strPageIndex, Locale locale )
     {
-        return new LocalizedPaginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage,
-            strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
+        return new LocalizedPaginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ),
+            nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void setFields( HttpServletRequest request, List<Field> listFields )
     {
-    	listFields.add( buildFieldOption( request ) );
-    	listFields.add( buildFieldWSRestUrl( request ) );
-    	listFields.add( buildFieldBlobStore( request ) );
+        listFields.add( buildFieldOption( request ) );
+        listFields.add( buildFieldWSRestUrl( request ) );
+        listFields.add( buildFieldBlobStore( request ) );
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected String checkEntryData( HttpServletRequest request, Locale locale )
     {
-    	String strError = super.checkEntryData( request, locale );
-    	if ( StringUtils.isBlank( strError ) )
-    	{
-    		String strFieldError = StringUtils.EMPTY;
-    		String strWSRestUrl = request.getParameter( PARAMETER_WS_REST_URL );
-    		String strBlobStore = request.getParameter( PARAMETER_BLOBSTORE );
-    		if ( StringUtils.isBlank( strWSRestUrl ) )
-    		{
-    			strFieldError = FIELD_WS_REST_URL;
-    		}
-    		if ( StringUtils.isBlank( strBlobStore ) )
-    		{
-    			strFieldError = FIELD_BLOBSTORE;
-    		}
-    		
-    		if ( StringUtils.isNotBlank( strFieldError ) )
-    		{
-    			Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
-    			
-    			return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-    					AdminMessage.TYPE_STOP );
-    		}
-    	}
-    	return strError;
+        String strError = super.checkEntryData( request, locale );
+
+        if ( StringUtils.isBlank( strError ) )
+        {
+            String strFieldError = StringUtils.EMPTY;
+            String strWSRestUrl = request.getParameter( PARAMETER_WS_REST_URL );
+            String strBlobStore = request.getParameter( PARAMETER_BLOBSTORE );
+
+            if ( StringUtils.isBlank( strWSRestUrl ) )
+            {
+                strFieldError = FIELD_WS_REST_URL;
+            }
+
+            if ( StringUtils.isBlank( strBlobStore ) )
+            {
+                strFieldError = FIELD_BLOBSTORE;
+            }
+
+            if ( StringUtils.isNotBlank( strFieldError ) )
+            {
+                Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+
+                return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
+                    AdminMessage.TYPE_STOP );
+            }
+        }
+
+        return strError;
     }
-    
+
     /**
      * {@inheritDoc}
      */
-	@Override
-	protected void checkRecordFieldData( FileItem fileItem, Locale locale ) throws DirectoryErrorException
-	{
-		String strFilename = fileItem != null ? FileUploadService.getFileNameOnly( fileItem ) : StringUtils.EMPTY;
-		String strMimeType = FileSystemUtil.getMIMEType( strFilename );
-		// Check mime type with option
-		Field fieldOption = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_OPTION, getFields(  ) );
-		if ( fieldOption == null || StringUtils.isBlank( fieldOption.getValue(  ) ) )
-		{
-			throw new DirectoryErrorException( getTitle(  ) );
-		}
-		if ( StringUtils.isNotBlank( strFilename ) && StringUtils.isNotBlank( strMimeType ) && fieldOption != null && 
-				StringUtils.isNotBlank( fieldOption.getValue(  ) ) && !ALL.equals( fieldOption.getValue(  ) ) )
-		{
-			String[] listAuthorizedFileExt = fieldOption.getValue(  ).split( COMMA );
-			if ( listAuthorizedFileExt != null && listAuthorizedFileExt.length > 0 )
-			{
-				boolean bIsAuthorized = false;
-				for ( String strAuthorizedFileExt : listAuthorizedFileExt )
-				{
-					String strAuthorizedMimeType = FileSystemUtil.getMIMEType( DirectoryUtils.CONSTANT_DOT + strAuthorizedFileExt );
-					if ( StringUtils.isNotBlank( strAuthorizedMimeType ) && 
-							strAuthorizedMimeType.equals( strMimeType ) )
-					{
-						bIsAuthorized = true;
-						break;
-					}
-				}
-				if ( !bIsAuthorized )
-				{
-					Object[] param = { fieldOption.getValue(  ) };
-					String strErrorMessage = I18nService.getLocalizedString( 
-							DirectoryUtils.MESSAGE_DIRECTORY_ERROR_MIME_TYPE, param, locale );
-					throw new DirectoryErrorException( getTitle(  ), strErrorMessage );
-				}
-			}
-		}
-	}
-    
-    // PRIVATE METHODS
-    
-	/**
-	 * Build the field for option
-	 * @param request the HTTP request
-	 * @return the field
-	 */
-	private Field buildFieldOption( HttpServletRequest request )
-	{
-		String strValue = request.getParameter( PARAMETER_VALUE );
-		String strWidth = request.getParameter( PARAMETER_WIDTH );
-		/** The width is used to store the max size of the files for version 2.0.13 and below */
-        int nWidth = DirectoryUtils.convertStringToInt( strWidth );
-		// Field option
+    @Override
+    protected void checkRecordFieldData( FileItem fileItem, Locale locale )
+        throws DirectoryErrorException
+    {
+        String strFilename = ( fileItem != null ) ? FileUploadService.getFileNameOnly( fileItem ) : StringUtils.EMPTY;
+        String strMimeType = FileSystemUtil.getMIMEType( strFilename );
+
+        // Check mime type with option
         Field fieldOption = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_OPTION, getFields(  ) );
+
+        if ( ( fieldOption == null ) || StringUtils.isBlank( fieldOption.getValue(  ) ) )
+        {
+            throw new DirectoryErrorException( getTitle(  ) );
+        }
+
+        if ( StringUtils.isNotBlank( strFilename ) && StringUtils.isNotBlank( strMimeType ) && ( fieldOption != null ) &&
+                StringUtils.isNotBlank( fieldOption.getValue(  ) ) && !ALL.equals( fieldOption.getValue(  ) ) )
+        {
+            String[] listAuthorizedFileExt = fieldOption.getValue(  ).split( COMMA );
+
+            if ( ( listAuthorizedFileExt != null ) && ( listAuthorizedFileExt.length > 0 ) )
+            {
+                boolean bIsAuthorized = false;
+
+                for ( String strAuthorizedFileExt : listAuthorizedFileExt )
+                {
+                    String strAuthorizedMimeType = FileSystemUtil.getMIMEType( DirectoryUtils.CONSTANT_DOT +
+                            strAuthorizedFileExt );
+
+                    if ( StringUtils.isNotBlank( strAuthorizedMimeType ) &&
+                            strAuthorizedMimeType.equals( strMimeType ) )
+                    {
+                        bIsAuthorized = true;
+
+                        break;
+                    }
+                }
+
+                if ( !bIsAuthorized )
+                {
+                    Object[] param = { fieldOption.getValue(  ) };
+                    String strErrorMessage = I18nService.getLocalizedString( DirectoryUtils.MESSAGE_DIRECTORY_ERROR_MIME_TYPE,
+                            param, locale );
+                    throw new DirectoryErrorException( getTitle(  ), strErrorMessage );
+                }
+            }
+        }
+    }
+
+    // PRIVATE METHODS
+
+    /**
+     * Build the field for option
+     * @param request the HTTP request
+     * @return the field
+     */
+    private Field buildFieldOption( HttpServletRequest request )
+    {
+        String strValue = request.getParameter( PARAMETER_VALUE );
+        String strWidth = request.getParameter( PARAMETER_WIDTH );
+
+        /** The width is used to store the max size of the files for version 2.0.13 and below */
+        int nWidth = DirectoryUtils.convertStringToInt( strWidth );
+
+        // Field option
+        Field fieldOption = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_OPTION, getFields(  ) );
+
         if ( fieldOption == null )
         {
-        	fieldOption = new Field(  );
+            fieldOption = new Field(  );
         }
+
         fieldOption.setEntry( this );
         fieldOption.setTitle( CONSTANT_OPTION );
         fieldOption.setValue( strValue );
         fieldOption.setWidth( nWidth );
-        
+
         return fieldOption;
-	}
-	
+    }
+
     /**
      * Build the field for ws rest url
      * @param request the HTTP request
@@ -569,19 +593,21 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      */
     private Field buildFieldWSRestUrl( HttpServletRequest request )
     {
-    	String strWSRestUrl = request.getParameter( PARAMETER_WS_REST_URL );
-    	Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_WS_REST_URL, getFields(  ) );
+        String strWSRestUrl = request.getParameter( PARAMETER_WS_REST_URL );
+        Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_WS_REST_URL, getFields(  ) );
+
         if ( fieldWSRestUrl == null )
         {
-        	fieldWSRestUrl = new Field(  );
+            fieldWSRestUrl = new Field(  );
         }
+
         fieldWSRestUrl.setEntry( this );
         fieldWSRestUrl.setTitle( CONSTANT_WS_REST_URL );
         fieldWSRestUrl.setValue( strWSRestUrl );
-        
+
         return fieldWSRestUrl;
     }
-    
+
     /**
      * Build the field for blobstore
      * @param request the HTTP request
@@ -589,16 +615,18 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      */
     private Field buildFieldBlobStore( HttpServletRequest request )
     {
-    	String strBlobStore = request.getParameter( PARAMETER_BLOBSTORE );
-    	Field fieldBlobStore = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_BLOBSTORE, getFields(  ) );
+        String strBlobStore = request.getParameter( PARAMETER_BLOBSTORE );
+        Field fieldBlobStore = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_BLOBSTORE, getFields(  ) );
+
         if ( fieldBlobStore == null )
         {
-        	fieldBlobStore = new Field(  );
+            fieldBlobStore = new Field(  );
         }
+
         fieldBlobStore.setEntry( this );
         fieldBlobStore.setTitle( CONSTANT_BLOBSTORE );
         fieldBlobStore.setValue( strBlobStore );
-        
+
         return fieldBlobStore;
     }
 }

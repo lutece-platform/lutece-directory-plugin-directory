@@ -47,13 +47,13 @@ import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.Paginator;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -274,7 +274,7 @@ public class EntryTypeText extends Entry
             List<RecordField> recordFieldList = RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
 
             if ( ( recordFieldList != null ) && !recordFieldList.isEmpty(  ) &&
-            		StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue(  ) ) )
+                    StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue(  ) ) )
             {
                 strValueEntry = recordFieldList.get( 0 ).getValue(  ) + ", " + strValueEntry;
             }

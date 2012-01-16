@@ -33,11 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web.action;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
@@ -47,71 +42,73 @@ import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.url.UrlItem;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 /**
  * Basically send a redirect to create record page.
  * No template is associated.
  *
  */
-public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
+public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
+    implements IDirectoryAction
 {
-	private static final String ACTION_NAME = "Create record";
-	private static final String TEMPLATE_BUTTON = "actions/create_directory_record.html";
-	
-	/** the button is an image so the name is .x or .y */
-	private static final String PARAMETER_CREATE_RECORD_X = "create_record.x";
-	
-	private static final String JSP_CREATE_DIRECTORY_RECORD  = "jsp/admin/plugins/directory/CreateDirectoryRecord.jsp";
+    private static final String ACTION_NAME = "Create record";
+    private static final String TEMPLATE_BUTTON = "actions/create_directory_record.html";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void fillModel(HttpServletRequest request, AdminUser adminUser,
-			Map<String, Object> model) {
-		// no additionnal data
-	}
+    /** the button is an image so the name is .x or .y */
+    private static final String PARAMETER_CREATE_RECORD_X = "create_record.x";
+    private static final String JSP_CREATE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/CreateDirectoryRecord.jsp";
 
-	/**
-	 * No template - default action
-	 */
-	public String getButtonTemplate(  )
-	{
-		return TEMPLATE_BUTTON;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void fillModel( HttpServletRequest request, AdminUser adminUser, Map<String, Object> model )
+    {
+        // no additionnal data
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getName(  )
-	{
-		return ACTION_NAME;
-	}
+    /**
+     * No template - default action
+     */
+    public String getButtonTemplate(  )
+    {
+        return TEMPLATE_BUTTON;
+    }
 
-	/**
-	 * @see #PARAMETER_CREATE_RECORD_X
-	 */
-	public boolean isInvoked(HttpServletRequest request) 
-	{
-		return request.getParameter( PARAMETER_CREATE_RECORD_X ) != null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getName(  )
+    {
+        return ACTION_NAME;
+    }
 
-	/**
-	 * Sends a redirect
-	 */
-	public IPluginActionResult process(HttpServletRequest request,
-			HttpServletResponse response, AdminUser adminUser,
-			DirectoryAdminSearchFields sessionFields)
-			throws AccessDeniedException 
-	{
-		DefaultPluginActionResult result = new DefaultPluginActionResult(  );
-		String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
-        
-		UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_CREATE_DIRECTORY_RECORD );
-		urlItem.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
-		
-		result.setRedirect( urlItem.getUrl(  ) );
-		
-		return result;
-	}
-	
+    /**
+     * @see #PARAMETER_CREATE_RECORD_X
+     */
+    public boolean isInvoked( HttpServletRequest request )
+    {
+        return request.getParameter( PARAMETER_CREATE_RECORD_X ) != null;
+    }
 
+    /**
+     * Sends a redirect
+     */
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
+        DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException
+    {
+        DefaultPluginActionResult result = new DefaultPluginActionResult(  );
+        String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
+
+        UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_CREATE_DIRECTORY_RECORD );
+        urlItem.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
+
+        result.setRedirect( urlItem.getUrl(  ) );
+
+        return result;
+    }
 }
