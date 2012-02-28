@@ -113,6 +113,7 @@ public class Entry implements IEntry
     //	message
     protected static final String MESSAGE_MANDATORY_FIELD = "directory.message.mandatory.field";
     protected static final String MESSAGE_NUMERIC_FIELD = "directory.message.numeric.field";
+    protected static final String MESSAGE_BLOBSTORE_CLIENT_SERVICE_UNAVAILABLE = "directory.message.blobStoreClientService.unavailable";
     protected static final String FIELD_TITLE = "directory.create_entry.label_title";
     protected static final String FIELD_INSERT_GROUP = "directory.modify_directory.manage_entry.label_insert_group";
     protected static final String FIELD_HELP_MESSAGE = "directory.create_entry.label_help_message";

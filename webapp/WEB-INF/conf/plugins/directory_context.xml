@@ -48,7 +48,7 @@
 	<bean id="directory.massWorkflowAction" class="fr.paris.lutece.plugins.directory.web.action.MassWorkflowDirectoryAction" />
 	
 	<bean id="directory.asynchronousUploadHandler" class="fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler">
-		<property name="blobStoreClientService" ref="blobstoreclient.blobStoreClientService" />
+		<!-- <property name="blobStoreClientService" ref="blobstoreclient.blobStoreClientService" /> -->
 	</bean>
 	
 	<!-- User Attributes -->

@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.utils;
 
-import fr.paris.lutece.plugins.blobstoreclient.util.BlobStoreClientException;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
 import fr.paris.lutece.plugins.directory.business.EntryFilter;
@@ -58,6 +57,7 @@ import fr.paris.lutece.plugins.directory.web.action.DirectoryAdminSearchFields;
 import fr.paris.lutece.plugins.directory.web.action.DirectorySiteSearchFields;
 import fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields;
 import fr.paris.lutece.portal.business.user.AdminUser;
+import fr.paris.lutece.portal.service.blobstore.BlobStoreClientException;
 import fr.paris.lutece.portal.service.fileupload.FileUploadService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;

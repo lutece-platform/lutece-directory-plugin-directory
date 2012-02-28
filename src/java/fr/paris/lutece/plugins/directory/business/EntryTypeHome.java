@@ -70,11 +70,11 @@ public final class EntryTypeHome
     }
 
     /**
-         * Returns a list of all EntryType
-         *
-         * @param plugin the plugin
-         * @return  the list of entry
-         */
+     * Returns a list of all EntryType
+     *
+     * @param plugin the plugin
+     * @return  the list of entry
+     */
     public static List<EntryType> getList( Plugin plugin )
     {
         return _dao.select( plugin );

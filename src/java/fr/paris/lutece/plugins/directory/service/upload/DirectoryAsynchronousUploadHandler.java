@@ -33,8 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.service.upload;
 
-import fr.paris.lutece.plugins.blobstoreclient.service.IBlobStoreClientService;
-import fr.paris.lutece.plugins.blobstoreclient.util.BlobStoreClientException;
 import fr.paris.lutece.plugins.directory.business.EntryHome;
 import fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl;
 import fr.paris.lutece.plugins.directory.business.File;
@@ -50,6 +48,8 @@ import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.plugins.directory.utils.JSONUtils;
 import fr.paris.lutece.plugins.directory.utils.UrlUtils;
+import fr.paris.lutece.portal.service.blobstore.BlobStoreClientException;
+import fr.paris.lutece.portal.service.blobstore.IBlobStoreClientService;
 import fr.paris.lutece.portal.service.fileupload.FileUploadService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -156,6 +156,15 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     }
 
     /**
+     * Check if the service is available
+     * @return true if the service is available, false otherwise
+     */
+    public boolean isBlobStoreClientServiceAvailable(  )
+    {
+        return _blobStoreClientService != null;
+    }
+
+    /**
      * {@inheritDoc}
      * @category CALLED_BY_JS (directoryupload.js)
      */
@@ -218,7 +227,12 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     public String doUploadFile( String strBaseUrl, FileItem fileItem, String strBlobStore )
         throws BlobStoreClientException
     {
-        return _blobStoreClientService.doUploadFile( strBaseUrl, fileItem, strBlobStore );
+        if ( isBlobStoreClientServiceAvailable(  ) )
+        {
+            return _blobStoreClientService.doUploadFile( strBaseUrl, fileItem, strBlobStore );
+        }
+
+        return StringUtils.EMPTY;
     }
 
     /**
@@ -258,7 +272,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     public void doRemoveFile( RecordField recordField, IEntry entry, String strWSRestUrl )
         throws BlobStoreClientException
     {
-        if ( recordField != null )
+        if ( isBlobStoreClientServiceAvailable(  ) && ( recordField != null ) )
         {
             // Get the download file url
             String strDownloadFileUrl = entry.convertRecordFieldTitleToString( recordField, null, false );
@@ -292,7 +306,12 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     public String getFileUrl( String strBaseUrl, String strBlobKey, String strBlobStore )
         throws BlobStoreClientException
     {
-        return _blobStoreClientService.getFileUrl( strBaseUrl, strBlobKey, strBlobStore );
+        if ( isBlobStoreClientServiceAvailable(  ) )
+        {
+            return _blobStoreClientService.getFileUrl( strBaseUrl, strBlobKey, strBlobStore );
+        }
+
+        return StringUtils.EMPTY;
     }
 
     /**
@@ -303,7 +322,12 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      */
     public String getFileName( String strUrl ) throws BlobStoreClientException
     {
-        return _blobStoreClientService.getFileName( strUrl );
+        if ( isBlobStoreClientServiceAvailable(  ) )
+        {
+            return _blobStoreClientService.getFileName( strUrl );
+        }
+
+        return StringUtils.EMPTY;
     }
 
     /**
@@ -315,7 +339,10 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     public void doDownloadFile( String strUrl, String strFilePath )
         throws BlobStoreClientException
     {
-        _blobStoreClientService.doDownloadFile( strUrl, strFilePath );
+        if ( isBlobStoreClientServiceAvailable(  ) )
+        {
+            _blobStoreClientService.doDownloadFile( strUrl, strFilePath );
+        }
     }
 
     /**
@@ -326,15 +353,20 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      */
     public FileItem doDownloadFile( String strUrl ) throws BlobStoreClientException
     {
-        return _blobStoreClientService.doDownloadFile( strUrl );
+        if ( isBlobStoreClientServiceAvailable(  ) )
+        {
+            return _blobStoreClientService.doDownloadFile( strUrl );
+        }
+
+        return null;
     }
 
     /**
-         * Gets the fileItem for the entry and the given session.
-         * @param strIdEntry the entry
-         * @param strSessionId the session id
-         * @return the fileItem found, <code>null</code> otherwise.
-         */
+     * Gets the fileItem for the entry and the given session.
+     * @param strIdEntry the entry
+     * @param strSessionId the session id
+     * @return the fileItem found, <code>null</code> otherwise.
+     */
     public List<FileItem> getFileItems( String strIdEntry, String strSessionId )
     {
         initMap( strSessionId, buildFieldName( strIdEntry ) );
@@ -622,7 +654,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
                             // Add the file item to the map
                             addFileItemToUploadedFile( fileItem, Integer.toString( entry.getIdEntry(  ) ), session );
                         }
-                        else if ( recordField.getEntry(  ) instanceof EntryTypeDownloadUrl )
+                        else if ( recordField.getEntry(  ) instanceof EntryTypeDownloadUrl &&
+                                isBlobStoreClientServiceAvailable(  ) )
                         {
                             // Different behaviour if the entry is an EntryTypeDownloadUrl
                             FileItem fileItem;
@@ -762,10 +795,10 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         private String _strFileName;
 
         /**
-             * FormFileItem
-             * @param bValue the byte value
-             * @param strFileName the file name
-             */
+         * FormFileItem
+         * @param bValue the byte value
+         * @param strFileName the file name
+         */
         public DirectoryFileItem( byte[] bValue, String strFileName )
         {
             _bValue = bValue;
@@ -773,120 +806,120 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public void delete(  )
         {
             _bValue = null;
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public byte[] get(  )
         {
             return _bValue;
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public String getContentType(  )
         {
             return FileSystemUtil.getMIMEType( _strFileName );
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public String getFieldName(  )
         {
             return null;
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public InputStream getInputStream(  ) throws IOException
         {
             return IOUtils.toInputStream( new String( _bValue ) );
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public String getName(  )
         {
             return _strFileName;
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public OutputStream getOutputStream(  ) throws IOException
         {
             return null;
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public long getSize(  )
         {
             return _bValue.length;
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public String getString(  )
         {
             return new String( _bValue );
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public String getString( String encoding ) throws UnsupportedEncodingException
         {
             return new String( _bValue, encoding );
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public boolean isFormField(  )
         {
             return false;
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public boolean isInMemory(  )
         {
             return true;
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public void setFieldName( String name )
         {
             // nothing
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public void setFormField( boolean state )
         {
             // nothing
         }
 
         /**
-             * {@inheritDoc}
-             */
+         * {@inheritDoc}
+         */
         public void write( java.io.File file ) throws Exception
         {
             // nothing

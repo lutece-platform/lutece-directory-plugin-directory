@@ -33,11 +33,11 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import fr.paris.lutece.plugins.blobstoreclient.util.BlobStoreClientException;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.regularexpression.RegularExpression;
+import fr.paris.lutece.portal.service.blobstore.BlobStoreClientException;
 import fr.paris.lutece.portal.service.fileupload.FileUploadService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
@@ -276,6 +276,16 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
     {
         if ( request instanceof MultipartHttpServletRequest )
         {
+            // Check if the BlobStoreClientService is available
+            DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+
+            if ( !handler.isBlobStoreClientServiceAvailable(  ) )
+            {
+                String strErrorMessage = I18nService.getLocalizedString( MESSAGE_BLOBSTORE_CLIENT_SERVICE_UNAVAILABLE,
+                        locale );
+                throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
+            }
+
             // Get entry properties
             Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_WS_REST_URL, getFields(  ) );
             Field fieldBlobStore = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_BLOBSTORE, getFields(  ) );
@@ -288,8 +298,6 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
                 String strErrorMessage = I18nService.getLocalizedString( MESSAGE_ENTRY_NOT_WELL_CONFIGURED, locale );
                 throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
             }
-
-            DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
 
             /**
              * 1) Get the files from the session
@@ -477,6 +485,14 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
 
         if ( StringUtils.isBlank( strError ) )
         {
+            DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+
+            if ( !handler.isBlobStoreClientServiceAvailable(  ) )
+            {
+                return AdminMessageService.getMessageUrl( request, MESSAGE_BLOBSTORE_CLIENT_SERVICE_UNAVAILABLE,
+                    AdminMessage.TYPE_STOP );
+            }
+
             String strFieldError = StringUtils.EMPTY;
             String strWSRestUrl = request.getParameter( PARAMETER_WS_REST_URL );
             String strBlobStore = request.getParameter( PARAMETER_BLOBSTORE );
@@ -510,6 +526,16 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
     protected void checkRecordFieldData( FileItem fileItem, Locale locale )
         throws DirectoryErrorException
     {
+        // Check if the BlobStoreClientService is available
+        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+
+        if ( !handler.isBlobStoreClientServiceAvailable(  ) )
+        {
+            String strErrorMessage = I18nService.getLocalizedString( MESSAGE_BLOBSTORE_CLIENT_SERVICE_UNAVAILABLE,
+                    locale );
+            throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
+        }
+
         String strFilename = ( fileItem != null ) ? FileUploadService.getFileNameOnly( fileItem ) : StringUtils.EMPTY;
         String strMimeType = FileSystemUtil.getMIMEType( strFilename );
 
