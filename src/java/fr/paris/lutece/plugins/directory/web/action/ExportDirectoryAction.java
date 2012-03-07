@@ -75,10 +75,15 @@ import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import java.nio.channels.Channels;
@@ -186,9 +191,16 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
         WorkflowService workflowService = WorkflowService.getInstance(  );
         boolean bWorkflowServiceEnable = workflowService.isAvailable(  );
         String strShotExportFinalOutPut = null;
+        DirectoryXsl directoryXsl = DirectoryXslHome.findByPrimaryKey( nIdDirectoryXsl, getPlugin(  ) );
 
         // -----------------------------------------------------------------------
-        DirectoryXsl directoryXsl = DirectoryXslHome.findByPrimaryKey( nIdDirectoryXsl, getPlugin(  ) );
+        if ( ( directory == null ) || ( directoryXsl == null ) ||
+                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
+                    DirectoryResourceIdService.PERMISSION_MANAGE_RECORD, adminUser ) )
+        {
+            throw new AccessDeniedException(  );
+        }
+
         String strFileExtension = directoryXsl.getExtension(  );
         String strFileName = directory.getTitle(  ) + "." + strFileExtension;
         strFileName = StringUtil.replaceAccent( strFileName ).replace( " ", "_" );
@@ -196,13 +208,6 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
         boolean bIsCsvExport = strFileExtension.equals( EXPORT_CSV_EXT );
         boolean bDisplayDateCreation = directory.isDateShownInExport(  );
         boolean bDisplayDateModification = directory.isDateModificationShownInExport(  );
-
-        if ( ( directory == null ) || ( directoryXsl == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_MANAGE_RECORD, adminUser ) )
-        {
-            throw new AccessDeniedException(  );
-        }
 
         List<Integer> listResultRecordId = new ArrayList<Integer>(  );
 
@@ -230,6 +235,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 
         java.io.File tmpFile = null;
         BufferedWriter bufferedWriter = null;
+        OutputStreamWriter outputStreamWriter = null;
 
         File fileTemplate = null;
         String strFileOutPut = DirectoryUtils.EMPTY_STRING;
@@ -255,6 +261,18 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 
         int nSize = listResultRecordId.size(  );
         boolean bIsBigExport = ( nSize > EXPORT_RECORD_STEP );
+
+        // Encoding export
+        String strEncoding = StringUtils.EMPTY;
+
+        if ( bIsCsvExport )
+        {
+            strEncoding = DirectoryParameterService.getService(  ).getExportCSVEncoding(  );
+        }
+        else
+        {
+            strEncoding = DirectoryParameterService.getService(  ).getExportXMLEncoding(  );
+        }
 
         if ( bIsBigExport )
         {
@@ -282,7 +300,8 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
             try
             {
                 tmpFile.deleteOnExit(  );
-                bufferedWriter = new BufferedWriter( new FileWriter( tmpFile, true ) );
+                outputStreamWriter = new OutputStreamWriter( new FileOutputStream( tmpFile ), strEncoding );
+                bufferedWriter = new BufferedWriter( outputStreamWriter );
             }
             catch ( IOException e )
             {
@@ -460,13 +479,15 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                     bufferedWriter.write( strFileOutPut.substring( nXmlHeaderLength ) );
                     bufferedWriter.write( EXPORT_XSL_END_LIST_RECORD + EXPORT_XSL_NEW_LINE + EXPORT_XSL_END_DIRECTORY );
                 }
-
-                bufferedWriter.flush(  );
-                bufferedWriter.close(  );
             }
             catch ( IOException e )
             {
                 AppLogService.error( e );
+            }
+            finally
+            {
+                IOUtils.closeQuietly( bufferedWriter );
+                IOUtils.closeQuietly( outputStreamWriter );
             }
         }
         else
@@ -498,16 +519,14 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 
         // ----------------------------------------------------------------------- 
         DirectoryUtils.addHeaderResponse( request, response, strFileName );
+        response.setCharacterEncoding( strEncoding );
 
         if ( bIsCsvExport )
         {
-            response.setCharacterEncoding( DirectoryParameterService.getService(  ).getExportCSVEncoding(  ) );
             response.setContentType( CONSTANT_MIME_TYPE_CSV );
         }
         else
         {
-            response.setCharacterEncoding( DirectoryParameterService.getService(  ).getExportXMLEncoding(  ) );
-
             String strMimeType = FileSystemUtil.getMIMEType( strFileName );
 
             if ( strMimeType != null )
@@ -524,11 +543,13 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
         {
             FileChannel in = null;
             WritableByteChannel writeChannelOut = null;
+            OutputStream out = null;
 
             try
             {
                 in = new FileInputStream( tmpFile ).getChannel(  );
-                writeChannelOut = Channels.newChannel( response.getOutputStream(  ) );
+                out = response.getOutputStream(  );
+                writeChannelOut = Channels.newChannel( out );
                 response.setContentLength( Long.valueOf( in.size(  ) ).intValue(  ) );
                 in.transferTo( 0, in.size(  ), writeChannelOut );
                 response.getOutputStream(  ).close(  );
@@ -549,6 +570,8 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                     {
                     }
                 }
+
+                IOUtils.closeQuietly( out );
 
                 tmpFile.delete(  );
             }
