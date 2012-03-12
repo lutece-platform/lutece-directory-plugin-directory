@@ -3797,6 +3797,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_ENTRY_LIST, listEntry );
         model.put( MARK_DIRECTORY, directory );
         model.put( MARK_LOCALE, getLocale(  ) );
+        model.put( MARK_ID_ENTRY_TYPE_GEOLOCATION, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_GEOLOCATION, 16 ) );
         model.put( MARK_ID_ENTRY_TYPE_IMAGE, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_IMAGE, 10 ) );
         model.put( MARK_ID_ENTRY_TYPE_MYLUTECE_USER,
             AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) );

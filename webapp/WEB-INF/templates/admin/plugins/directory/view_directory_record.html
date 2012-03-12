@@ -1,10 +1,69 @@
+<#-- 
+-- Return true if the given entry is an entry type Image
+-- @param entry the entry to check
+-- @return true if the entry is an entry type Image
+-->
 <#function isEntryTypeImage entry>
 	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_image>
 </#function>
+
+<#-- 
+-- Return true if the given entry is an entry type MyLuteceUser
+-- @param entry the entry to check
+-- @return true if the entry is an entry type MyLuteceUser
+-->
 <#function isEntryTypeMyLuteceUser entry>
 	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_mylutece_user>
 </#function>
 
+<#-- 
+-- Return true if the given entry is an entry type Geolocation
+-- @param entry the entry to check
+-- @return true if the entry is an entry type Geolocation
+-->
+<#function isEntryTypeGeolocation entry>
+	<#return entry.entryType?has_content && entry.entryType.idType?has_content && entry.entryType.idType == id_entry_type_geolocation>
+</#function>
+
+<#--
+-- Build the HTML of the given record field
+-- @param entry the entry of the record field
+-- @param recordfield the recordfield
+-- @param first true if the record field is the first record field of the list of record fields of the given entry
+-- @return the HTLM code of the record field
+-->
+<#macro getRecordFieldHtml entry recordfield first>
+	<#if isEntryTypeGeolocation( entry )>
+		${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
+		<#if recordfield.field.title == 'address' && recordfield.value?has_content>
+			<div class="form-element">
+				<#include "../../../skin/plugins/directory/" + entry.mapProvider.frontHtmlCode />
+				<br />
+			</div>
+		</#if>
+	<#else>
+		<#if !first>
+			<label>&nbsp;</label>
+		</#if>
+		<#if isEntryTypeImage( entry )>    						
+			<#if recordfield.field?? & recordfield.field.isShownInResultRecord(  )>
+				${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
+			</#if>
+		<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>
+			${record_field.value}
+		<#else>
+			${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
+		</#if>
+		<br/>
+		<br/>
+	</#if>
+</#macro>
+
+<#--
+-- Build the HTML code to display the actions
+-- @param resource_actions the actions to display
+-- @return the HTML code of the actions
+-->
 <#macro display_actions resource_actions >
 	<#if resource_actions.workflow_action_list?exists>
 		<#list resource_actions.workflow_action_list as action>
@@ -85,20 +144,7 @@
 		      							<#assign entryKey=""+child.idEntry>	
 		      							<#assign first = true>
 		      							<#list map_id_entry_list_record_field[entryKey] as recordfield>
-		      								<#if !first>
-		      									<label>&nbsp;</label>
-		      								</#if>
-		      								<#if isEntryTypeImage(child)>    						
-								   				<#if recordfield.field?? & recordfield.field.isShownInResultRecord()>
-								   					${child.getHtmlRecordFieldValue( locale,recordfield,false)}
-								   				</#if>
-								   			<#elseif isEntryTypeMyLuteceUser(child) && !permission_visualisation_mylutece_user>
-							   					${record_field.value}
-								   			<#else>
-						      					${child.getHtmlRecordFieldValue( locale,recordfield,false)}
-						      				</#if>
-		      								<br/>
-		      								<br/>
+		      								<@getRecordFieldHtml entry=child recordfield=recordfield first=first />
 		      						 		<#assign first = false>
 	      								</#list>
 		      						</div>
@@ -112,21 +158,8 @@
 		      				<#if entry.title?exists>
 		      					<label for="">${entry.title} : </label>
 		      				</#if>	
-		      				<#list map_id_entry_list_record_field[entryKey] as recordfield>	      						
-	    						<#if !first>
-									<label>&nbsp;</label>
-								</#if>
-	    						<#if isEntryTypeImage(entry)>    						
-					   				<#if recordfield.field?? & recordfield.field.isShownInResultRecord()>
-					   					${entry.getHtmlRecordFieldValue( locale,recordfield,false)}
-					   				</#if>
-					   			<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>
-				   					${record_field.value}
-					   			<#else>
-			      					${entry.getHtmlRecordFieldValue( locale,recordfield,false)}
-			      				</#if>
-	   							<br/>
-	   							<br/>
+		      				<#list map_id_entry_list_record_field[entryKey] as recordfield>
+	    						<@getRecordFieldHtml entry=entry recordfield=recordfield first=first />
 	   							<#assign first = false>
 	    					</#list>
     					</div>
