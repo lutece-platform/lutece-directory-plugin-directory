@@ -101,6 +101,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
+ *
  * Exports records (search records or all records)
  *
  */
@@ -111,6 +112,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
     private static final String PROPERTY_PATH_TMP = "path.tmp";
     private static final String PROPERTY_ENTRY_TYPE_DATE_CREATION_TITLE = "directory.entry_type_date_creation.title";
     private static final String PROPERTY_ENTRY_TYPE_DATE_MODIFICATION_TITLE = "directory.entry_type_date_modification.title";
+    private static final String MESSAGE_ACCESS_DENIED = "directory.message.accessDenied";
     private static final String PARAMETER_BUTTON_EXPORT_ALL = "export_search_all.x";
     private static final String PARAMETER_BUTTON_EXPORT_SEARCH = "export_search_result.x";
     private static final String PARAMETER_ID_DIRECTORY = "id_directory";
@@ -139,6 +141,10 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
     private static final String CONSTANT_MIME_TYPE_OCTETSTREAM = "application/octet-stream";
     private static final String MARK_XSL_EXPORT_LIST = "xsl_export_list";
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void fillModel( HttpServletRequest request, AdminUser adminUser, Map<String, Object> model )
     {
         //add xslExport
@@ -153,6 +159,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getName(  )
     {
         return ACTION_NAME;
@@ -161,6 +168,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getButtonTemplate(  )
     {
         return TEMPLATE_BUTTON;
@@ -169,6 +177,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isInvoked( HttpServletRequest request )
     {
         return ( request.getParameter( PARAMETER_BUTTON_EXPORT_SEARCH ) != null ) ||
@@ -178,6 +187,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
     /**
      * {@inheritDoc}
      */
+    @Override
     public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
         DirectoryAdminSearchFields searchFields ) throws AccessDeniedException
     {
@@ -198,7 +208,8 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                 !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
                     DirectoryResourceIdService.PERMISSION_MANAGE_RECORD, adminUser ) )
         {
-            throw new AccessDeniedException(  );
+            throw new AccessDeniedException( I18nService.getLocalizedString( MESSAGE_ACCESS_DENIED,
+                    request.getLocale(  ) ) );
         }
 
         String strFileExtension = directoryXsl.getExtension(  );
@@ -423,8 +434,19 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                 {
                     State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
                             idWorflow, Integer.valueOf( directory.getIdDirectory(  ) ), null );
-                    strBufferListRecordXml.append( record.getXml( plugin, locale, false, state, listEntryResultSearch,
-                            false, false, true, bDisplayDateCreation, bDisplayDateModification ) );
+
+                    if ( bIsCsvExport )
+                    {
+                        strBufferListRecordXml.append( record.getXmlForCsvExport( plugin, locale, false, state,
+                                listEntryResultSearch, false, false, true, bDisplayDateCreation,
+                                bDisplayDateModification ) );
+                    }
+                    else
+                    {
+                        strBufferListRecordXml.append( record.getXml( plugin, locale, false, state,
+                                listEntryResultSearch, false, false, true, bDisplayDateCreation,
+                                bDisplayDateModification ) );
+                    }
                 }
 
                 strBufferListRecordXml = this.appendPartialContent( strBufferListRecordXml, bufferedWriter,
@@ -568,6 +590,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                     }
                     catch ( IOException e )
                     {
+                        AppLogService.error( e.getMessage(  ), e );
                     }
                 }
 
