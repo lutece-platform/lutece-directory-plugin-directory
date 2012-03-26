@@ -113,7 +113,7 @@ INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUE
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('unavailability_message', 'Annuaire indisponible.');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('activate_directory_record', '1');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('is_indexed', '1');
-INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('export_csv_encoding', 'UTF-8');
+INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('export_csv_encoding', 'ISO-8859-1');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('export_xml_encoding', 'UTF-8');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_result_list', '0');
 INSERT INTO directory_directory_parameter (parameter_key, parameter_value) VALUES ('date_modification_shown_in_result_record', '0');
