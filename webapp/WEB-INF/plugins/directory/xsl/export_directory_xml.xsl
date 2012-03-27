@@ -31,6 +31,9 @@
 			<creation-date>
 				<xsl:value-of select="creation-date" />
 			</creation-date>
+			<modification-date>
+				<xsl:value-of select="modification-date" />
+			</modification-date>
 			<status>
 				<xsl:value-of select="status" />
 			</status>
