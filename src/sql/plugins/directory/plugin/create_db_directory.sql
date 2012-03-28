@@ -1,23 +1,23 @@
-DROP TABLE IF EXISTS directory_directory;
-DROP TABLE IF EXISTS directory_entry;
-DROP TABLE IF EXISTS directory_field;
-DROP TABLE IF EXISTS directory_entry_type;
-DROP TABLE IF EXISTS directory_xsl;
-DROP TABLE IF EXISTS directory_category;
-DROP TABLE IF EXISTS directory_record;
-DROP TABLE IF EXISTS directory_template;
-DROP TABLE IF EXISTS directory_record_field;
-DROP TABLE IF EXISTS directory_verify_by;
-DROP TABLE IF EXISTS directory_action;
-DROP TABLE IF EXISTS directory_record_action;
-DROP TABLE IF EXISTS directory_file;
-DROP TABLE IF EXISTS directory_physical_file;
-DROP TABLE IF EXISTS directory_indexer_action;
-DROP TABLE IF EXISTS directory_directory_parameter;
-DROP TABLE IF EXISTS directory_entry_parameter;
-DROP TABLE IF EXISTS directory_xsl_action;
-DROP TABLE IF EXISTS directory_rss_cf;
-DROP TABLE IF EXISTS directory_directory_attribute;
+DROP TABLE IF EXISTS directory_directory CASCADE;
+DROP TABLE IF EXISTS directory_entry CASCADE;
+DROP TABLE IF EXISTS directory_field CASCADE;
+DROP TABLE IF EXISTS directory_entry_type CASCADE;
+DROP TABLE IF EXISTS directory_xsl CASCADE;
+DROP TABLE IF EXISTS directory_category CASCADE;
+DROP TABLE IF EXISTS directory_record CASCADE;
+DROP TABLE IF EXISTS directory_template CASCADE;
+DROP TABLE IF EXISTS directory_record_field CASCADE;
+DROP TABLE IF EXISTS directory_verify_by CASCADE;
+DROP TABLE IF EXISTS directory_action CASCADE;
+DROP TABLE IF EXISTS directory_record_action CASCADE;
+DROP TABLE IF EXISTS directory_file CASCADE;
+DROP TABLE IF EXISTS directory_physical_file CASCADE;
+DROP TABLE IF EXISTS directory_indexer_action CASCADE;
+DROP TABLE IF EXISTS directory_directory_parameter CASCADE;
+DROP TABLE IF EXISTS directory_entry_parameter CASCADE;
+DROP TABLE IF EXISTS directory_xsl_action CASCADE;
+DROP TABLE IF EXISTS directory_rss_cf CASCADE;
+DROP TABLE IF EXISTS directory_directory_attribute CASCADE;
 
 /*==============================================================*/
 /* Table structure for table directory_directory				*/
