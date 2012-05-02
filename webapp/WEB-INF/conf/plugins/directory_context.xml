@@ -27,9 +27,15 @@
     <bean id="directoryRecordRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
     <bean id="directoryEntryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
     
+    <!-- Transaction Manager -->
+    <bean id="directory.transactionManager" class="fr.paris.lutece.portal.service.database.DAOUtilTransactionManager">
+		<property name="pluginName" value="directory" />
+	</bean>
+	
     <!-- Services -->
     <bean id="directory.directoryParameterService" class="fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterService" />
     <bean id="directory.entryParameterService" class="fr.paris.lutece.plugins.directory.service.parameter.EntryParameterService" />
+    <bean id="directory.recordService" class="fr.paris.lutece.plugins.directory.service.record.RecordService" />
 
     <!-- RSS -->
     <bean id="ResourceRssTypeDirectory" class="fr.paris.lutece.portal.business.rss.ResourceRssType" >

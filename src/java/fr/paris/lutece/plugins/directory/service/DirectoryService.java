@@ -47,10 +47,11 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
 import fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterService;
 import fr.paris.lutece.plugins.directory.service.parameter.EntryParameterService;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.service.security.DirectoryUserAttributesManager;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
@@ -64,6 +65,7 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
 import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.security.SecurityService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
@@ -195,7 +197,8 @@ public class DirectoryService
         }
         else
         {
-            nNbRecords = RecordHome.getCountRecord( filter, plugin );
+            IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+            nNbRecords = recordService.getCountRecord( filter, plugin );
         }
 
         return nNbRecords;

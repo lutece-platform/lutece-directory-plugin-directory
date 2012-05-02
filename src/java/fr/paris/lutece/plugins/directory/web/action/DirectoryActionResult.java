@@ -36,12 +36,14 @@ package fr.paris.lutece.plugins.directory.web.action;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.IEntry;
 import fr.paris.lutece.plugins.directory.business.Record;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 
@@ -90,6 +92,8 @@ public class DirectoryActionResult
         _listIdsSuccessRecord = new ArrayList<Integer>(  );
         _mapFailRecords = new HashMap<String, String>(  );
 
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+
         for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
         {
             int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
@@ -119,8 +123,8 @@ public class DirectoryActionResult
                     _listIdsSuccessRecord.add( nIdRecord );
 
                     // Update record modification date
-                    Record record = RecordHome.findByPrimaryKey( nIdRecord, plugin );
-                    RecordHome.update( record, plugin );
+                    Record record = recordService.findByPrimaryKey( nIdRecord, plugin );
+                    recordService.update( record, plugin );
                 }
             }
             else
@@ -182,9 +186,11 @@ public class DirectoryActionResult
                 {
                     _listIdsSuccessRecord.add( nIdRecord );
 
+                    IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+
                     // Update record modification date
-                    Record record = RecordHome.findByPrimaryKey( nIdRecord, plugin );
-                    RecordHome.update( record, plugin );
+                    Record record = recordService.findByPrimaryKey( nIdRecord, plugin );
+                    recordService.update( record, plugin );
                 }
             }
             else
@@ -208,10 +214,12 @@ public class DirectoryActionResult
     public void fillModel( Map<String, Object> model, List<IEntry> listEntries, Plugin plugin, AdminUser user,
         Directory directory )
     {
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+
         // Add the success records to the model
         if ( ( _listIdsSuccessRecord != null ) && !_listIdsSuccessRecord.isEmpty(  ) )
         {
-            List<Record> listRecords = RecordHome.loadListByListId( _listIdsSuccessRecord, plugin );
+            List<Record> listRecords = recordService.loadListByListId( _listIdsSuccessRecord, plugin );
             List<Map<String, Object>> listMapRecords = new ArrayList<Map<String, Object>>( _listIdsSuccessRecord.size(  ) );
 
             for ( Record record : listRecords )
@@ -241,7 +249,7 @@ public class DirectoryActionResult
                 listIdsFailRecord.add( DirectoryUtils.convertStringToInt( strIdRecord ) );
             }
 
-            List<Record> listRecords = RecordHome.loadListByListId( listIdsFailRecord, plugin );
+            List<Record> listRecords = recordService.loadListByListId( listIdsFailRecord, plugin );
             List<Map<String, Object>> listMapRecords = new ArrayList<Map<String, Object>>( listIdsFailRecord.size(  ) );
 
             for ( Record record : listRecords )

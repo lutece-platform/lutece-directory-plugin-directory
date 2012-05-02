@@ -35,6 +35,8 @@ package fr.paris.lutece.plugins.directory.business;
 
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.DirectoryService;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -42,6 +44,7 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
@@ -216,12 +219,12 @@ public class EntryTypeNumbering extends Entry
         throws DirectoryErrorException
     {
         /*
-             * This method is called from several operations :
-             * 1) Creating a record
-             * 2) Updating a record
-             * 3) Search from BO
-             * 4) Search from FO
-             */
+         * This method is called from several operations :
+         * 1) Creating a record
+         * 2) Updating a record
+         * 3) Search from BO
+         * 4) Search from FO
+         */
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         RecordField recordField = new RecordField(  );
         recordField.setEntry( this );
@@ -234,7 +237,8 @@ public class EntryTypeNumbering extends Entry
              * CASES 1 AND 2 :
              * (The record is not null for cases 1) and 2))
              */
-            recordOld = RecordHome.findByPrimaryKey( record.getIdRecord(  ), pluginDirectory );
+            IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+            recordOld = recordService.findByPrimaryKey( record.getIdRecord(  ), pluginDirectory );
         }
 
         String strValueEntry = ( ( lstValue != null ) && ( lstValue.size(  ) > 0 ) ) ? lstValue.get( 0 ) : null;

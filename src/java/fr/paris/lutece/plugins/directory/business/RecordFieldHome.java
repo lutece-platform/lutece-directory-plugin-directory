@@ -34,6 +34,8 @@
 package fr.paris.lutece.plugins.directory.business;
 
 import fr.paris.lutece.plugins.directory.service.DirectoryService;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
@@ -224,6 +226,7 @@ public final class RecordFieldHome
     public static List<RecordField> getRecordFieldList( RecordFieldFilter filter, Plugin plugin )
     {
         List<RecordField> listRecordField = _dao.selectListByFilter( filter, plugin );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         for ( RecordField recordField : listRecordField )
         {
@@ -239,7 +242,7 @@ public final class RecordFieldHome
 
             if ( recordField.getRecord(  ) != null )
             {
-                recordField.setRecord( RecordHome.findByPrimaryKey( recordField.getRecord(  ).getIdRecord(  ), plugin ) );
+                recordField.setRecord( recordService.findByPrimaryKey( recordField.getRecord(  ).getIdRecord(  ), plugin ) );
             }
         }
 

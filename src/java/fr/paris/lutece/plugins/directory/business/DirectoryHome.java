@@ -34,6 +34,8 @@
 package fr.paris.lutece.plugins.directory.business;
 
 import fr.paris.lutece.plugins.directory.business.attribute.DirectoryAttributeHome;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -105,10 +107,6 @@ public final class DirectoryHome
             entry.setDirectory( directory );
             EntryHome.copy( entry, plugin );
         }
-
-        // Create directory attributes associated to the directory
-        Map<String, Object> mapAttributes = DirectoryUtils.depopulate( directory );
-        DirectoryAttributeHome.create( directory.getIdDirectory(  ), mapAttributes );
     }
 
     /**
@@ -142,11 +140,13 @@ public final class DirectoryHome
         RecordFieldFilter recordFilter = new RecordFieldFilter(  );
         recordFilter.setIdDirectory( nIdDirectory );
 
-        List<Record> listRecord = RecordHome.getListRecord( recordFilter, plugin );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+
+        List<Record> listRecord = recordService.getListRecord( recordFilter, plugin );
 
         for ( Record record : listRecord )
         {
-            RecordHome.remove( record.getIdRecord(  ), plugin );
+            recordService.remove( record.getIdRecord(  ), plugin );
         }
 
         // Remove directory attributes associated to the directory

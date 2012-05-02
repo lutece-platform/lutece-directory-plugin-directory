@@ -49,7 +49,8 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.plugins.directory.web.action.DirectorySiteSearchFields;
@@ -245,12 +246,14 @@ public class DirectoryApp implements XPageApplication
 
             model.put( MARK_DIRECTORY, directory );
 
+            IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+
             int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
             Record record = null;
 
             if ( request.getParameter( PARAMETER_VIEW_DIRECTORY_RECORD ) != null )
             {
-                record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, plugin );
+                record = recordService.findByPrimaryKey( nIdDirectoryRecord, plugin );
 
                 if ( ( record != null ) && ( record.getDirectory(  ) != null ) )
                 {
@@ -400,7 +403,7 @@ public class DirectoryApp implements XPageApplication
                         if ( bIsDisplayedDirectly && ( listResultRecordId.size(  ) == 1 ) &&
                                 ( session.getAttribute( SESSION_ONE_RECORD_ID ) == null ) )
                         {
-                            record = RecordHome.findByPrimaryKey( listResultRecordId.get( 0 ), plugin );
+                            record = recordService.findByPrimaryKey( listResultRecordId.get( 0 ), plugin );
 
                             if ( ( record != null ) && ( record.getDirectory(  ) != null ) )
                             {
@@ -473,7 +476,7 @@ public class DirectoryApp implements XPageApplication
 
                             model.put( MARK_PAGINATOR, paginator );
 
-                            List<Record> lRecord = RecordHome.loadListByListId( (List<Integer>) paginator.getPageItems(  ),
+                            List<Record> lRecord = recordService.loadListByListId( (List<Integer>) paginator.getPageItems(  ),
                                     plugin );
 
                             if ( lRecord.size(  ) > 0 )

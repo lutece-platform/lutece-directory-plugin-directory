@@ -44,9 +44,10 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.rss.FeedResource;
 import fr.paris.lutece.portal.business.rss.FeedResourceImage;
@@ -62,6 +63,7 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
@@ -758,10 +760,11 @@ public class DirectoryResourceRss extends ResourceRss
         }
 
         List<HashMap> listItem = new ArrayList<HashMap>(  );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         for ( Integer idRecord : listResultRecordId )
         {
-            Record record = RecordHome.findByPrimaryKey( idRecord, pluginDirectory );
+            Record record = recordService.findByPrimaryKey( idRecord, pluginDirectory );
             RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
             recordFieldFilter.setIdDirectory( config.getIdDirectory(  ) );
             recordFieldFilter.setIdRecord( idRecord );
@@ -998,10 +1001,11 @@ public class DirectoryResourceRss extends ResourceRss
         }
 
         List<IFeedResourceItem> listItems = new ArrayList<IFeedResourceItem>(  );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         for ( Integer idRecord : listResultRecordId )
         {
-            Record record = RecordHome.findByPrimaryKey( idRecord, pluginDirectory );
+            Record record = recordService.findByPrimaryKey( idRecord, pluginDirectory );
             RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
             recordFieldFilter.setIdDirectory( config.getIdDirectory(  ) );
             recordFieldFilter.setIdRecord( idRecord );

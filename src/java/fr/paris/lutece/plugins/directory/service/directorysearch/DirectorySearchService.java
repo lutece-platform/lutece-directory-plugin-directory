@@ -42,8 +42,9 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -197,7 +198,8 @@ public class DirectorySearchService
     {
         List<Integer> listRecordResult = new ArrayList<Integer>(  );
 
-        listRecordResult = RecordHome.getListRecordId( filter, plugin );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+        listRecordResult = recordService.getListRecordId( filter, plugin );
 
         if ( mapSearch != null )
         {
@@ -482,16 +484,21 @@ public class DirectorySearchService
      */
     public void addIndexerAction( int nIdRecord, int nIdTask, Plugin plugin )
     {
-        Record record = RecordHome.findByPrimaryKey( nIdRecord, plugin );
-        int nDirectoryId = record.getDirectory(  ).getIdDirectory(  );
-        Directory directory = DirectoryHome.findByPrimaryKey( nDirectoryId, plugin );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+        Record record = recordService.findByPrimaryKey( nIdRecord, plugin );
 
-        if ( directory.isIndexed(  ) )
+        if ( ( record != null ) && ( record.getDirectory(  ) != null ) )
         {
-            IndexerAction indexerAction = new IndexerAction(  );
-            indexerAction.setIdRecord( nIdRecord );
-            indexerAction.setIdTask( nIdTask );
-            IndexerActionHome.create( indexerAction, plugin );
+            int nDirectoryId = record.getDirectory(  ).getIdDirectory(  );
+            Directory directory = DirectoryHome.findByPrimaryKey( nDirectoryId, plugin );
+
+            if ( ( directory != null ) && directory.isIndexed(  ) )
+            {
+                IndexerAction indexerAction = new IndexerAction(  );
+                indexerAction.setIdRecord( nIdRecord );
+                indexerAction.setIdTask( nIdTask );
+                IndexerActionHome.create( indexerAction, plugin );
+            }
         }
     }
 

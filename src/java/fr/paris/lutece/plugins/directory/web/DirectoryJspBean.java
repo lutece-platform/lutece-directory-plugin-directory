@@ -56,13 +56,14 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
 import fr.paris.lutece.plugins.directory.service.DirectoryService;
 import fr.paris.lutece.plugins.directory.service.RecordRemovalListenerService;
 import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchService;
 import fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterService;
 import fr.paris.lutece.plugins.directory.service.parameter.EntryParameterService;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.service.security.DirectoryUserAttributesManager;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
@@ -86,6 +87,7 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
 import fr.paris.lutece.portal.service.security.SecurityService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
@@ -188,6 +190,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MESSAGE_ERROR_NOT_SELECTED_STATE = "directory.message.not_selected_state";
     private static final String MESSAGE_ERROR_NO_RECORD = "directory.message.no_record";
     private static final String MESSAGE_ERROR_EXPORT_ENCODING_NOT_SUPPORTED = "directory.message.error.export.encoding.not_supported";
+    private static final String MESSAGE_ERROR_GENERIC_MESSAGE = "directory.message.error.genericMessage";
     private static final String FIELD_TITLE = "directory.create_directory.label_title";
     private static final String FIELD_DESCRIPTION = "directory.create_directory.label_description";
     private static final String FIELD_TITLE_FIELD = "directory.create_field.label_title";
@@ -437,6 +440,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     //session fields    
     private DirectoryAdminSearchFields _searchFields = new DirectoryAdminSearchFields(  );
     private DirectoryActionResult _directoryActionResult = new DirectoryActionResult(  );
+    private IRecordService _recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
     /*-------------------------------MANAGEMENT  DIRECTORY-----------------------------*/
 
@@ -648,7 +652,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         RecordFieldFilter recordFilter = new RecordFieldFilter(  );
         recordFilter.setIdDirectory( directory.getIdDirectory(  ) );
 
-        int nCountRecord = RecordHome.getCountRecord( recordFilter, getPlugin(  ) );
+        int nCountRecord = _recordService.getCountRecord( recordFilter, getPlugin(  ) );
 
         if ( ( directory.getIdWorkflow(  ) != nIdWorkflow ) && ( nCountRecord != 0 ) )
         {
@@ -1061,7 +1065,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
         recordFieldFilter.setIdDirectory( nIdDirectory );
 
-        int nNumberRecord = RecordHome.getCountRecord( recordFieldFilter, getPlugin(  ) );
+        int nNumberRecord = _recordService.getCountRecord( recordFieldFilter, getPlugin(  ) );
         strMessage = ( nNumberRecord == 0 ) ? MESSAGE_CONFIRM_REMOVE_DIRECTORY
                                             : MESSAGE_CONFIRM_REMOVE_DIRECTORY_WITH_RECORD;
 
@@ -1151,9 +1155,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         RecordFieldFilter recordFilter = new RecordFieldFilter(  );
         recordFilter.setIdDirectory( nIdDirectory );
 
-        for ( Integer nRecordId : RecordHome.getListRecordId( recordFilter, plugin ) )
+        for ( Integer nRecordId : _recordService.getListRecordId( recordFilter, plugin ) )
         {
-            RecordHome.remove( nRecordId, plugin );
+            _recordService.remove( nRecordId, plugin );
         }
 
         /* Depreciated, this function does not remove the associated files*/
@@ -1716,7 +1720,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         recordFieldFilter.setIdDirectory( _searchFields.getIdDirectory(  ) );
 
         if ( !entry.getEntryType(  ).getComment(  ) && !entry.getEntryType(  ).getGroup(  ) &&
-                ( RecordHome.getCountRecord( recordFieldFilter, getPlugin(  ) ) != 0 ) )
+                ( _recordService.getCountRecord( recordFieldFilter, getPlugin(  ) ) != 0 ) )
         {
             return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_ENTRY_DIRECTORY_IS_NOT_EMPTY,
                 AdminMessage.TYPE_STOP );
@@ -2621,7 +2625,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                     _searchFields.getCurrentPageIndexDirectoryRecord(  ), getLocale(  ) );
 
             // get only record for page items.
-            List<Record> lRecord = RecordHome.loadListByListId( paginator.getPageItems(  ), getPlugin(  ) );
+            List<Record> lRecord = _recordService.loadListByListId( paginator.getPageItems(  ), getPlugin(  ) );
 
             boolean bHistoryEnabled = WorkflowService.getInstance(  ).isAvailable(  ) &&
                 ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );
@@ -2918,7 +2922,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                         record.setDateCreation( DirectoryUtils.getCurrentTimestamp(  ) );
                         //Autopublication
                         record.setEnabled( true );
-                        RecordHome.create( record, getPlugin(  ) );
+                        _recordService.create( record, getPlugin(  ) );
                     }
                     catch ( DirectoryErrorException error )
                     {
@@ -3135,7 +3139,22 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             record.setDateCreation( DirectoryUtils.getCurrentTimestamp(  ) );
             //Autopublication
             record.setEnabled( directory.isRecordActivated(  ) );
-            RecordHome.create( record, getPlugin(  ) );
+
+            try
+            {
+                _recordService.create( record, getPlugin(  ) );
+            }
+            catch ( Exception ex )
+            {
+                // something very wrong happened... a database check might be needed
+                AppLogService.error( ex.getMessage(  ) + " for Record " + record.getIdRecord(  ), ex );
+                // revert
+                // we clear the DB form the given record
+                _recordService.remove( record.getIdRecord(  ), getPlugin(  ) );
+
+                // throw a message to the user
+                return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
+            }
 
             if ( WorkflowService.getInstance(  ).isAvailable(  ) &&
                     ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
@@ -3163,7 +3182,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
 
         if ( ( record == null ) ||
                 !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -3241,7 +3260,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
 
         if ( ( record == null ) ||
                 !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -3260,7 +3279,18 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 return strRedirectUrl;
             }
 
-            RecordHome.updateWidthRecordField( record, getPlugin(  ) );
+            try
+            {
+                _recordService.updateWidthRecordField( record, getPlugin(  ) );
+            }
+            catch ( Exception ex )
+            {
+                // something very wrong happened... a database check might be needed
+                AppLogService.error( ex.getMessage(  ) + " when updating Record " + record.getIdRecord(  ), ex );
+
+                // throw a message to the user
+                return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
+            }
         }
 
         return getRedirectUrl( request );
@@ -3287,7 +3317,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             {
                 String strIdDirectoryRecord = listIdsDirectoryRecord[0];
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
                 strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
             }
 
@@ -3299,7 +3329,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
             {
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
 
                 if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
                         !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -3339,7 +3369,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
             {
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
 
                 if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
                         !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -3359,7 +3389,20 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                         AdminMessage.TYPE_STOP );
                 }
 
-                RecordHome.remove( nIdDirectoryRecord, getPlugin(  ) );
+                try
+                {
+                    _recordService.remove( nIdDirectoryRecord, getPlugin(  ) );
+                }
+                catch ( Exception ex )
+                {
+                    // something very wrong happened... a database check might be needed
+                    AppLogService.error( ex.getMessage(  ) + " when deleting Record " + record.getIdRecord(  ), ex );
+
+                    // throw a message to the user
+                    return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE,
+                        AdminMessage.TYPE_STOP );
+                }
+
                 WorkflowService.getInstance(  )
                                .doRemoveWorkFlowResource( nIdDirectoryRecord, Record.WORKFLOW_RESOURCE_TYPE );
             }
@@ -3381,7 +3424,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
 
         if ( ( record == null ) ||
                 !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -3392,7 +3435,22 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         record.setDateCreation( DirectoryUtils.getCurrentTimestamp(  ) );
-        RecordHome.copy( record, getPlugin(  ) );
+
+        try
+        {
+            _recordService.copy( record, getPlugin(  ) );
+        }
+        catch ( Exception ex )
+        {
+            // something very wrong happened... a database check might be needed
+            AppLogService.error( ex.getMessage(  ) + " when copying Record " + record.getIdRecord(  ), ex );
+
+            // Revert
+            _recordService.remove( record.getIdRecord(  ), getPlugin(  ) );
+
+            // throw a message to the user
+            return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
+        }
 
         Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory(  ).getIdDirectory(  ), getPlugin(  ) );
 
@@ -3421,7 +3479,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
         String strMessage;
 
         if ( ( record == null ) ||
@@ -3451,7 +3509,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
 
         if ( ( record == null ) ||
                 !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -3462,7 +3520,19 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         record.setEnabled( false );
-        RecordHome.update( record, getPlugin(  ) );
+
+        try
+        {
+            _recordService.update( record, getPlugin(  ) );
+        }
+        catch ( Exception ex )
+        {
+            // something very wrong happened... a database check might be needed
+            AppLogService.error( ex.getMessage(  ) + " when disabling Record " + record.getIdRecord(  ), ex );
+
+            // throw a message to the user
+            return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
+        }
 
         return getRedirectUrl( request );
     }
@@ -3478,7 +3548,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
 
         if ( ( record == null ) ||
                 !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -3489,7 +3559,19 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         record.setEnabled( true );
-        RecordHome.update( record, getPlugin(  ) );
+
+        try
+        {
+            _recordService.update( record, getPlugin(  ) );
+        }
+        catch ( Exception ex )
+        {
+            // something very wrong happened... a database check might be needed
+            AppLogService.error( ex.getMessage(  ) + " when enabling Record " + record.getIdRecord(  ), ex );
+
+            // throw a message to the user
+            return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
+        }
 
         return getRedirectUrl( request );
     }
@@ -3557,7 +3639,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             {
                 String strIdDirectoryRecord = listIdsDirectoryRecord[0];
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
                 strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
             }
 
@@ -3656,7 +3738,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strIdRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
 
-        Record record = RecordHome.findByPrimaryKey( nIdRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdRecord, getPlugin(  ) );
         int nIdDirectory = record.getDirectory(  ).getIdDirectory(  );
         int nIdWorkflow = ( DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) ) ).getIdWorkflow(  );
 
@@ -3750,7 +3832,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
         EntryFilter filter;
 
-        Record record = RecordHome.findByPrimaryKey( nIdRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdRecord, getPlugin(  ) );
 
         if ( ( record == null ) ||
                 !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -4064,7 +4146,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             {
                 String strIdDirectoryRecord = listIdsDirectoryRecord[0];
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
                 strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
             }
 
@@ -4475,7 +4557,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
-        Record record = RecordHome.findByPrimaryKey( nIdRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdRecord, getPlugin(  ) );
 
         if ( ( record == null ) ||
                 !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -4689,7 +4771,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             {
                 String strIdDirectoryRecord = listIdsDirectoryRecord[0];
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
                 strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
             }
 
@@ -4701,7 +4783,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
             {
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
 
                 if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
                         !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -4740,7 +4822,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
             {
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = RecordHome.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
 
                 if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
                         !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
@@ -4751,7 +4833,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 }
 
                 record.setEnabled( !record.isEnabled(  ) );
-                RecordHome.update( record, getPlugin(  ) );
+                _recordService.update( record, getPlugin(  ) );
             }
 
             return DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory );

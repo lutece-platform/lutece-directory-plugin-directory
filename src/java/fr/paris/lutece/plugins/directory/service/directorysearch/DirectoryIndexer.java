@@ -41,12 +41,14 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 import org.apache.lucene.document.DateTools;
@@ -102,6 +104,7 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
         throws CorruptIndexException, IOException, InterruptedException
     {
         Iterator<Integer> it = lListId.keySet(  ).iterator(  );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         while ( it.hasNext(  ) )
         {
@@ -126,8 +129,8 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
                         indexWriter.addDocument( getDocument( recordField, recordField.getRecord(  ), directory ) );
                     }
 
-                    for ( Record record : RecordHome.loadListByListId( lListRecordId.subList( i, i + LIST_RECORD_STEP ),
-                            plugin ) )
+                    for ( Record record : recordService.loadListByListId( lListRecordId.subList( i, i +
+                                LIST_RECORD_STEP ), plugin ) )
                     {
                         indexWriter.addDocument( getDocument( record, directory ) );
                     }
@@ -145,7 +148,7 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
                     indexWriter.addDocument( getDocument( recordField, recordField.getRecord(  ), directory ) );
                 }
 
-                for ( Record record : RecordHome.loadListByListId( lListRecordId.subList( nIndex, nListRecordSize ),
+                for ( Record record : recordService.loadListByListId( lListRecordId.subList( nIndex, nListRecordSize ),
                         plugin ) )
                 {
                     indexWriter.addDocument( getDocument( record, directory ) );
@@ -161,7 +164,7 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
                     indexWriter.addDocument( getDocument( recordField, recordField.getRecord(  ), directory ) );
                 }
 
-                for ( Record record : RecordHome.loadListByListId( lListRecordId, plugin ) )
+                for ( Record record : recordService.loadListByListId( lListRecordId, plugin ) )
                 {
                     indexWriter.addDocument( getDocument( record, directory ) );
                 }
@@ -205,6 +208,7 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
         HashMap<Integer, List<Integer>> hm = new HashMap<Integer, List<Integer>>(  );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         if ( !bCreate )
         {
@@ -234,7 +238,7 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
                                                                .getAllIndexerActionByTask( IndexerAction.TASK_MODIFY,
                     plugin ) )
             {
-                Integer nDirectoryId = RecordHome.getDirectoryIdByRecordId( Integer.valueOf( action.getIdRecord(  ) ),
+                Integer nDirectoryId = recordService.getDirectoryIdByRecordId( Integer.valueOf( action.getIdRecord(  ) ),
                         plugin );
 
                 if ( nDirectoryId != null )
@@ -257,7 +261,7 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
                                                                .getAllIndexerActionByTask( IndexerAction.TASK_CREATE,
                     plugin ) )
             {
-                Integer nDirectoryId = RecordHome.getDirectoryIdByRecordId( Integer.valueOf( action.getIdRecord(  ) ),
+                Integer nDirectoryId = recordService.getDirectoryIdByRecordId( Integer.valueOf( action.getIdRecord(  ) ),
                         plugin );
 
                 if ( nDirectoryId != null )
@@ -284,7 +288,7 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
                 sbLogs.append( "\r\n" );
                 recordFieldFilter.setIdDirectory( directory.getIdDirectory(  ) );
 
-                for ( Record record : RecordHome.getListRecord( recordFieldFilter, plugin ) )
+                for ( Record record : recordService.getListRecord( recordFieldFilter, plugin ) )
                 {
                     sbLogRecord( sbLogs, record.getIdRecord(  ), record.getDirectory(  ).getIdDirectory(  ),
                         IndexerAction.TASK_CREATE );
@@ -358,7 +362,7 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
      *
      * @param record the record to index
      * @param directory the directory associate to the recordField
-     * @return A Lucene {@link Document} containing QuestionAnswer Data
+     * @return A Lucene Document containing QuestionAnswer Data
      * @throws IOException The IO Exception
      * @throws InterruptedException The InterruptedException
      */

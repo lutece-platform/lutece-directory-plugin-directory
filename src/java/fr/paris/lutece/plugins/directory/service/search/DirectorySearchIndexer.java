@@ -43,8 +43,9 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.portal.service.content.XPageAppService;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -52,6 +53,7 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.search.IndexationService;
 import fr.paris.lutece.portal.service.search.SearchIndexer;
 import fr.paris.lutece.portal.service.search.SearchItem;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -161,7 +163,8 @@ public class DirectorySearchIndexer implements SearchIndexer
             return new ArrayList<Document>( 0 );
         }
 
-        Record record = RecordHome.findByPrimaryKey( nIdRecord, plugin );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+        Record record = recordService.findByPrimaryKey( nIdRecord, plugin );
         Directory directory = record.getDirectory(  );
 
         if ( !record.isEnabled(  ) || !directory.isEnabled(  ) || !directory.isIndexed(  ) )
@@ -217,6 +220,8 @@ public class DirectorySearchIndexer implements SearchIndexer
         dirFilter.setIsIndexed( DirectoryFilter.FILTER_TRUE );
         dirFilter.setIsDisabled( DirectoryFilter.FILTER_TRUE ); //Bad naming: IsDisable( true ) stands for enabled
 
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+
         for ( Directory directory : DirectoryHome.getDirectoryList( dirFilter, plugin ) )
         {
             int nIdDirectory = directory.getIdDirectory(  );
@@ -226,7 +231,7 @@ public class DirectorySearchIndexer implements SearchIndexer
             recFilter.setIdDirectory( nIdDirectory );
             recFilter.setIsDisabled( RecordFieldFilter.FILTER_TRUE ); //Bad naming: IsDisable( true ) stands for enabled
 
-            List<Record> listRecord = RecordHome.getListRecord( recFilter, plugin );
+            List<Record> listRecord = recordService.getListRecord( recFilter, plugin );
 
             //Keep processing this directory only if there are enabled records
             if ( !listRecord.isEmpty(  ) )

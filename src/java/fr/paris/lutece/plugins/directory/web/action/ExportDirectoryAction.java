@@ -49,10 +49,11 @@ import fr.paris.lutece.plugins.directory.business.PhysicalFile;
 import fr.paris.lutece.plugins.directory.business.PhysicalFileHome;
 import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
-import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
 import fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterService;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.business.workflow.State;
@@ -62,6 +63,7 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -408,6 +410,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
         // -----------------------------------------------------------------------
         List<Integer> nTmpListId = new ArrayList<Integer>(  );
         int idWorflow = directory.getIdWorkflow(  );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         if ( bIsBigExport )
         {
@@ -428,7 +431,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                     nTmpListId.add( listResultRecordId.get( j ) );
                 }
 
-                List<Record> nTmpListRecords = RecordHome.loadListByListId( nTmpListId, plugin );
+                List<Record> nTmpListRecords = recordService.loadListByListId( nTmpListId, plugin );
 
                 for ( Record record : nTmpListRecords )
                 {
@@ -462,7 +465,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                 nTmpListId.add( listResultRecordId.get( ( i ) ) );
             }
 
-            List<Record> nTmpListRecords = RecordHome.loadListByListId( nTmpListId, plugin );
+            List<Record> nTmpListRecords = recordService.loadListByListId( nTmpListId, plugin );
 
             for ( Record record : nTmpListRecords )
             {
@@ -514,7 +517,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
         }
         else
         {
-            List<Record> nTmpListRecords = RecordHome.loadListByListId( listResultRecordId, plugin );
+            List<Record> nTmpListRecords = recordService.loadListByListId( listResultRecordId, plugin );
 
             for ( Record record : nTmpListRecords )
             {
