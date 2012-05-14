@@ -103,9 +103,13 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
             {
                 List<Action> listMassActions = WorkflowService.getInstance(  )
                                                               .getMassActions( directory.getIdWorkflow(  ) );
-                refMassActions = new ReferenceList(  );
-                refMassActions.addAll( ReferenceList.convert( listMassActions, DirectoryUtils.CONSTANT_ID,
-                        DirectoryUtils.CONSTANT_NAME, true ) );
+
+                if ( ( listMassActions != null ) && !listMassActions.isEmpty(  ) )
+                {
+                    refMassActions = new ReferenceList(  );
+                    refMassActions.addAll( ReferenceList.convert( listMassActions, DirectoryUtils.CONSTANT_ID,
+                            DirectoryUtils.CONSTANT_NAME, true ) );
+                }
             }
         }
 
