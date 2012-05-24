@@ -49,6 +49,7 @@ import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearch
 import fr.paris.lutece.plugins.directory.service.record.IRecordService;
 import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+import fr.paris.lutece.plugins.workflowcore.business.state.State;
 import fr.paris.lutece.portal.business.rss.FeedResource;
 import fr.paris.lutece.portal.business.rss.FeedResourceImage;
 import fr.paris.lutece.portal.business.rss.FeedResourceItem;
@@ -56,7 +57,6 @@ import fr.paris.lutece.portal.business.rss.IFeedResource;
 import fr.paris.lutece.portal.business.rss.IFeedResourceImage;
 import fr.paris.lutece.portal.business.rss.IFeedResourceItem;
 import fr.paris.lutece.portal.business.rss.ResourceRss;
-import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;

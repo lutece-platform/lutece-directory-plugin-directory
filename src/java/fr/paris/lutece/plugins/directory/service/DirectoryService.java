@@ -56,10 +56,10 @@ import fr.paris.lutece.plugins.directory.service.security.DirectoryUserAttribute
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+import fr.paris.lutece.plugins.workflowcore.business.action.Action;
+import fr.paris.lutece.plugins.workflowcore.business.state.State;
 import fr.paris.lutece.portal.business.rbac.RBAC;
 import fr.paris.lutece.portal.business.user.AdminUser;
-import fr.paris.lutece.portal.business.workflow.Action;
-import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
@@ -506,7 +506,7 @@ public class DirectoryService
             Collection<Action> lListActions = workflowService.getActions( record.getIdRecord(  ),
                     Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow(  ), adminUser );
             State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ), adminUser );
+                    directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
             resourceActions.put( MARK_WORKFLOW_STATE, state );
             resourceActions.put( MARK_WORKFLOW_ACTION_LIST, lListActions );
         }

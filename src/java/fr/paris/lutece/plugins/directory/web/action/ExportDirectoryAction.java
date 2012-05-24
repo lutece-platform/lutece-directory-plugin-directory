@@ -55,8 +55,8 @@ import fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterSer
 import fr.paris.lutece.plugins.directory.service.record.IRecordService;
 import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+import fr.paris.lutece.plugins.workflowcore.business.state.State;
 import fr.paris.lutece.portal.business.user.AdminUser;
-import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.html.XmlTransformerService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -436,7 +436,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                 for ( Record record : nTmpListRecords )
                 {
                     State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                            idWorflow, Integer.valueOf( directory.getIdDirectory(  ) ), null );
+                            idWorflow, Integer.valueOf( directory.getIdDirectory(  ) ) );
 
                     if ( bIsCsvExport )
                     {
@@ -470,7 +470,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
             for ( Record record : nTmpListRecords )
             {
                 State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                        idWorflow, Integer.valueOf( directory.getIdDirectory(  ) ), null );
+                        idWorflow, Integer.valueOf( directory.getIdDirectory(  ) ) );
 
                 if ( bIsCsvExport )
                 {
@@ -522,7 +522,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
             for ( Record record : nTmpListRecords )
             {
                 State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                        idWorflow, Integer.valueOf( directory.getIdDirectory(  ) ), null );
+                        idWorflow, Integer.valueOf( directory.getIdDirectory(  ) ) );
 
                 if ( bIsCsvExport )
                 {

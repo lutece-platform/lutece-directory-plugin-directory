@@ -71,11 +71,11 @@ import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.plugins.directory.web.action.DirectoryActionResult;
 import fr.paris.lutece.plugins.directory.web.action.DirectoryAdminSearchFields;
 import fr.paris.lutece.plugins.directory.web.action.IDirectoryAction;
+import fr.paris.lutece.plugins.workflowcore.business.action.Action;
+import fr.paris.lutece.plugins.workflowcore.business.state.State;
 import fr.paris.lutece.portal.business.rbac.RBAC;
 import fr.paris.lutece.portal.business.role.RoleHome;
 import fr.paris.lutece.portal.business.user.AdminUser;
-import fr.paris.lutece.portal.business.workflow.Action;
-import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.fileupload.FileUploadService;
@@ -3161,7 +3161,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             {
                 WorkflowService.getInstance(  )
                                .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ), getUser(  ) );
+                    directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
                 WorkflowService.getInstance(  )
                                .executeActionAutomatic( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
                     directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
@@ -3459,7 +3459,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         {
             WorkflowService.getInstance(  )
                            .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ), getUser(  ) );
+                directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
             WorkflowService.getInstance(  )
                            .executeActionAutomatic( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
                 directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );

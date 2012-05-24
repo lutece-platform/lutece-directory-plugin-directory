@@ -54,7 +54,7 @@ import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.plugins.directory.web.action.DirectorySiteSearchFields;
-import fr.paris.lutece.portal.business.workflow.State;
+import fr.paris.lutece.plugins.workflowcore.business.state.State;
 import fr.paris.lutece.portal.service.content.XPageAppService;
 import fr.paris.lutece.portal.service.html.XmlTransformerService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -663,7 +663,7 @@ public class DirectoryApp implements XPageApplication
             {
                 state = WorkflowService.getInstance(  )
                                        .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ), null );
+                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
             }
 
             strBufferListRecordXml.append( record.getXml( plugin, locale, false, state, listEntrySearchResult, true,

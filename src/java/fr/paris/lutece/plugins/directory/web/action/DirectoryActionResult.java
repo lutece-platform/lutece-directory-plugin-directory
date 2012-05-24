@@ -39,8 +39,8 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.service.record.IRecordService;
 import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+import fr.paris.lutece.plugins.workflowcore.business.state.State;
 import fr.paris.lutece.portal.business.user.AdminUser;
-import fr.paris.lutece.portal.business.workflow.State;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -231,7 +231,7 @@ public class DirectoryActionResult
 
                 WorkflowService workflowService = WorkflowService.getInstance(  );
                 State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ), user );
+                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
                 mapRecord.put( MARK_WORKFLOW_STATE, state );
                 listMapRecords.add( mapRecord );
             }
@@ -261,7 +261,7 @@ public class DirectoryActionResult
 
                 WorkflowService workflowService = WorkflowService.getInstance(  );
                 State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ), user );
+                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
                 mapRecord.put( MARK_WORKFLOW_STATE, state );
                 listMapRecords.add( mapRecord );
             }
