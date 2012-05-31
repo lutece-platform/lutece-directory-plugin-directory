@@ -48,7 +48,7 @@ import java.util.Locale;
  */
 public class DirectoryWorkflowRemovalListener implements RemovalListener
 {
-    private static final String PROPERTY_WORKFLOW_CANNOT_BE_REMOVED = "form.message.workflow_can_not_be_removed";
+    private static final String PROPERTY_WORKFLOW_CANNOT_BE_REMOVED = "directory.message.workflow_can_not_be_removed";
 
     /**
     * Check if the object can be safely removed
