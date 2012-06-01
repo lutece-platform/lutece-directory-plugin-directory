@@ -40,6 +40,8 @@ import fr.paris.lutece.plugins.directory.service.record.IRecordService;
 import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.plugins.workflowcore.business.state.State;
+import fr.paris.lutece.plugins.workflowcore.service.action.ActionService;
+import fr.paris.lutece.plugins.workflowcore.service.action.IActionService;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -50,6 +52,7 @@ import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -92,23 +95,25 @@ public class DirectoryActionResult
         _listIdsSuccessRecord = new ArrayList<Integer>(  );
         _mapFailRecords = new HashMap<String, String>(  );
 
-        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
-
         for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
         {
             int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
 
-            if ( WorkflowService.getInstance(  )
-                                    .canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
-                        nIdDirectory, request, false ) )
+            // Get the id action to execute : it may not be the one given in the parameter, but one
+            // of the linked actions
+            int nIdActionToExecute = getIdActionToExecute( nIdDirectory, nIdAction, nIdRecord, request );
+
+            // If nIdActionToExecute == -1, then there are no actions that can be executed to the record
+            if ( nIdActionToExecute != DirectoryUtils.CONSTANT_ID_NULL )
             {
+                IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
                 boolean bHasSucceed = false;
 
                 try
                 {
                     WorkflowService.getInstance(  )
-                                   .doProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction, nIdDirectory,
-                        request, locale, false );
+                                   .doProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdActionToExecute,
+                        nIdDirectory, request, locale, false );
                     bHasSucceed = true;
                 }
                 catch ( Exception e )
@@ -295,5 +300,42 @@ public class DirectoryActionResult
         }
 
         return strError;
+    }
+
+    /**
+     * Get the ID action to execute. It may not be the one given in
+     * the parameters, but one of the linked actions of the given ID action.
+     * @param nIdDirectory the id directory
+     * @param nIdAction the id action
+     * @param nIdRecord the id record
+     * @param request the HTTP request
+     * @return the ID action to execute
+     */
+    private int getIdActionToExecute( int nIdDirectory, int nIdAction, int nIdRecord, HttpServletRequest request )
+    {
+        if ( WorkflowService.getInstance(  )
+                                .canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction, nIdDirectory,
+                    request, false ) )
+        {
+            return nIdAction;
+        }
+
+        IActionService actionService = SpringContextService.getBean( ActionService.BEAN_SERVICE );
+        Collection<Integer> listIdsLinkedAction = actionService.getListIdsLinkedAction( nIdAction );
+
+        if ( ( listIdsLinkedAction != null ) && !listIdsLinkedAction.isEmpty(  ) )
+        {
+            for ( int nIdLinkedAction : listIdsLinkedAction )
+            {
+                if ( WorkflowService.getInstance(  )
+                                        .canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdLinkedAction,
+                            nIdDirectory, request, false ) )
+                {
+                    return nIdLinkedAction;
+                }
+            }
+        }
+
+        return DirectoryUtils.CONSTANT_ID_NULL;
     }
 }
