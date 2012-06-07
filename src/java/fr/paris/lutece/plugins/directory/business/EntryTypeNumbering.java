@@ -72,7 +72,7 @@ public class EntryTypeNumbering extends Entry
     private static final String MARK_MAX_NUMBER = "max_number";
 
     // SQL
-    private static final String SQL_ORDER_BY_RECORD_FIELD_VALUE = " ORDER BY 0 + drf.record_field_value ";
+    private static final String SQL_ORDER_BY_RECORD_FIELD_VALUE = " ORDER BY CAST(drf.record_field_value AS DECIMAL) ";
     private final String _template_create = "admin/plugins/directory/entrytypenumbering/create_entry_type_numbering.html";
     private final String _template_modify = "admin/plugins/directory/entrytypenumbering/modify_entry_type_numbering.html";
     private final String _template_html_code_form_entry = "admin/plugins/directory/entrytypenumbering/html_code_form_entry_type_numbering.html";

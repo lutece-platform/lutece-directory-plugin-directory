@@ -297,14 +297,14 @@ public final class RecordFieldHome
 
     /**
      * Get the max number from a given id directory
-     * @param nIdEntryTypeNumbering the id of the entry type numbering
+     * @param nIdEntry the id of the entry
      * @param nIdDirectory the id directory
      * @param plugin {@link Plugin}
      * @return the max number
      */
-    public static int findMaxNumber( int nIdEntryTypeNumbering, int nIdDirectory, Plugin plugin )
+    public static int findMaxNumber( int nIdEntry, int nIdDirectory, Plugin plugin )
     {
-        return _dao.getMaxNumber( nIdEntryTypeNumbering, nIdDirectory, plugin );
+        return _dao.getMaxNumber( nIdEntry, nIdDirectory, plugin );
     }
 
     /**
@@ -313,15 +313,14 @@ public final class RecordFieldHome
      * In other words, this method serves the purpose of checking the given number
      * before creating a new record field since the entry type numbering should
      * have unique number.
-     * @param nIdEntryTypeNumbering the id entry type numbering
+     * @param nIdEntry the id entry
      * @param nIdDirectory the id directory
      * @param nNumber the number to check
      * @param plugin {@link Plugin}
      * @return true if it is already on, false otherwise
      */
-    public static boolean isNumberOnARecordField( int nIdEntryTypeNumbering, int nIdDirectory, int nNumber,
-        Plugin plugin )
+    public static boolean isNumberOnARecordField( int nIdEntry, int nIdDirectory, int nNumber, Plugin plugin )
     {
-        return _dao.isNumberOnARecordField( nIdEntryTypeNumbering, nIdDirectory, nNumber, plugin );
+        return _dao.isNumberOnARecordField( nIdEntry, nIdDirectory, nNumber, plugin );
     }
 }

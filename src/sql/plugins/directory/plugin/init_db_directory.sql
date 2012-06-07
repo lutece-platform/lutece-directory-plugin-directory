@@ -1,27 +1,27 @@
 /*==============================================================*/
 /*	Init  table directory_entry_type								*/
 /*==============================================================*/
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(1,'directory.entry_type_radio_button.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeRadioButton');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(2,'directory.entry_type_check_box.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeCheckBox');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(3,'directory.entry_type_comment.title',FALSE,true,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeComment');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(4,'directory.entry_type_date.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeDate');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(5,'directory.entry_type_select.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeSelect');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(6,'directory.entry_type_text.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeText');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(7,'directory.entry_type_text_area.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeTextArea');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(8,'directory.entry_type_file.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeFile');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(9,'directory.entry_type_group.title',true,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeGroup');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(10,'directory.entry_type_img.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeImg');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(11,'directory.entry_type_numbering.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeNumbering');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(12,'directory.entry_type_directory.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeDirectory');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(13,'directory.entry_type_url.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeUrl');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(14,'directory.entry_type_mail.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeMail');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(15,'directory.entry_type_sql.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeSQL');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(16,'directory.entry_type_geolocation.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(17,'directory.entry_type_internallink.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeInternalLink');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(18,'directory.entry_type_richtext.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeRichText');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(19,'directory.entry_type_mylutece_user.title',FALSE,FALSE,TRUE,'fr.paris.lutece.plugins.directory.business.EntryTypeMyLuteceUser');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(20,'directory.entry_type_download_url.title',FALSE,FALSE,FALSE,'fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl');
-insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(21,'directory.entry_type_remote_mylutece_user.title',FALSE,FALSE,TRUE,'fr.paris.lutece.plugins.directory.business.EntryTypeRemoteMyLuteceUser');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(1,'directory.entry_type_radio_button.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeRadioButton');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(2,'directory.entry_type_check_box.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeCheckBox');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(3,'directory.entry_type_comment.title',0,1,0,'fr.paris.lutece.plugins.directory.business.EntryTypeComment');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(4,'directory.entry_type_date.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeDate');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(5,'directory.entry_type_select.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeSelect');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(6,'directory.entry_type_text.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeText');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(7,'directory.entry_type_text_area.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeTextArea');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(8,'directory.entry_type_file.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeFile');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(9,'directory.entry_type_group.title',1,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeGroup');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(10,'directory.entry_type_img.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeImg');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(11,'directory.entry_type_numbering.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeNumbering');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(12,'directory.entry_type_directory.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeDirectory');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(13,'directory.entry_type_url.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeUrl');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(14,'directory.entry_type_mail.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeMail');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(15,'directory.entry_type_sql.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeSQL');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(16,'directory.entry_type_geolocation.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(17,'directory.entry_type_internallink.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeInternalLink');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(18,'directory.entry_type_richtext.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeRichText');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(19,'directory.entry_type_mylutece_user.title',0,0,1,'fr.paris.lutece.plugins.directory.business.EntryTypeMyLuteceUser');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(20,'directory.entry_type_download_url.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(21,'directory.entry_type_remote_mylutece_user.title',0,0,1,'fr.paris.lutece.plugins.directory.business.EntryTypeRemoteMyLuteceUser');
 
 /*==============================================================*/
 /*	Init  table directory_category								*/

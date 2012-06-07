@@ -305,7 +305,7 @@ public class DirectoryService
                 ( entry.getEntryType(  ) != null ) && ( entry.getDirectory(  ) != null ) )
         {
             Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-            nMaxNumber = RecordFieldHome.findMaxNumber( entry.getEntryType(  ).getIdType(  ),
+            nMaxNumber = RecordFieldHome.findMaxNumber( entry.getIdEntry(  ),
                     entry.getDirectory(  ).getIdDirectory(  ), pluginDirectory );
         }
 
@@ -334,7 +334,7 @@ public class DirectoryService
             {
                 Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
-                if ( RecordFieldHome.isNumberOnARecordField( entry.getEntryType(  ).getIdType(  ),
+                if ( RecordFieldHome.isNumberOnARecordField( entry.getIdEntry(  ),
                             entry.getDirectory(  ).getIdDirectory(  ), nNumber, pluginDirectory ) )
                 {
                     throw new DirectoryErrorException( entry.getTitle(  ),
@@ -554,7 +554,7 @@ public class DirectoryService
             else
             {
                 throw new DirectoryErrorException( entry.getTitle(  ),
-                    "Directory Error - The prefix of the entry type numbering to " + "insert is not correct." );
+                    "Directory Error - The prefix of the entry type numbering to insert is not correct." );
             }
         }
 
@@ -565,7 +565,7 @@ public class DirectoryService
         else
         {
             throw new DirectoryErrorException( entry.getTitle(  ),
-                "Directory Error - The prefix of the entry type numbering to " + "insert is not correct." );
+                "Directory Error - The prefix of the entry type numbering to insert is not correct." );
         }
 
         return nNumber;

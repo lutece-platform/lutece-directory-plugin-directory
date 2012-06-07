@@ -122,12 +122,12 @@ public interface IRecordFieldDAO
 
     /**
      * Get the max number from a given id directory
-     * @param nIdEntryTypeNumbering the id of the entry type numbering
+     * @param nIdEntry the id of the entry
      * @param nIdDirectory the id directory
      * @param plugin {@link Plugin}
      * @return the max number
      */
-    int getMaxNumber( int nIdEntryTypeNumbering, int nIdDirectory, Plugin plugin );
+    int getMaxNumber( int nIdEntry, int nIdDirectory, Plugin plugin );
 
     /**
      * Check if the given number is already on a record field or not.
@@ -135,11 +135,11 @@ public interface IRecordFieldDAO
      * In other words, this method serves the purpose of checking the given number
      * before creating a new record field since the entry type numbering should
      * have unique number.
-     * @param nIdEntryTypeNumbering the id entry type numbering
+     * @param nIdEntry the id entry
      * @param nIdDirectory the id directory
      * @param nNumber the number to check
      * @param plugin {@link Plugin}
      * @return true if it is already on, false otherwise
      */
-    boolean isNumberOnARecordField( int nIdEntryTypeNumbering, int nIdDirectory, int nNumber, Plugin plugin );
+    boolean isNumberOnARecordField( int nIdEntry, int nIdDirectory, int nNumber, Plugin plugin );
 }
