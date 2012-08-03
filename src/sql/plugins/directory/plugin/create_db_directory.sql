@@ -87,6 +87,7 @@ CREATE TABLE directory_entry (
   is_autocomplete_entry SMALLINT DEFAULT 0,
   is_shown_in_export SMALLINT DEFAULT 0,
   is_shown_in_completeness SMALLINT DEFAULT 0,
+  anonymize SMALLINT DEFAULT NULL,
   PRIMARY KEY  (id_entry)
   ) ;
 

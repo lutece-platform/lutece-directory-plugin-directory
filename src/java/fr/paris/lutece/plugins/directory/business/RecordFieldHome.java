@@ -323,4 +323,27 @@ public final class RecordFieldHome
     {
         return _dao.isNumberOnARecordField( nIdEntry, nIdDirectory, nNumber, plugin );
     }
+
+    /**
+     * Load values of record field
+     * @param lEntryId List entry to load
+     * @param nIdRecord The record Id
+     * @param plugin The plugin
+     * @return list of record
+     */
+    public static List<RecordField> selectValuesList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin )
+    {
+        return _dao.selectValuesList( lEntryId, nIdRecord, plugin );
+    }
+
+    /**
+     * Update the value of a record field
+     * @param strNewValue The new value
+     * @param nIdRecordField The id of the record field to update
+     * @param plugin The plugin
+     */
+    public static void updateValue( String strNewValue, Integer nIdRecordField, Plugin plugin )
+    {
+        _dao.updateValue( strNewValue, nIdRecordField, plugin );
+    }
 }

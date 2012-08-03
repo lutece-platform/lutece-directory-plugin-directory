@@ -42,13 +42,13 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -235,6 +235,16 @@ public class EntryTypeRichText extends Entry
      * {@inheritDoc}
      */
     public boolean isSortable(  )
+    {
+        return true;
+    }
+
+    /**
+     * Check if entries of this type are anonymizable or not.
+     * @return True if the entry type is anonymizable, false otherwise
+     */
+    @Override
+    public boolean isAnonymizable( )
     {
         return true;
     }

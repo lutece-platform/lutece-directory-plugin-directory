@@ -70,6 +70,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         " INNER JOIN directory_entry_type type ON (ent.id_type=type.id_type) " +
         " LEFT JOIN directory_file fil ON (drf.id_file=fil.id_file)" +
         " LEFT JOIN directory_field dfield ON (drf.id_field=dfield.id_field) ";
+    private static final String SQL_QUERY_SELECT_VALUES_RECORD_FIELD_LIST = "SELECT id_record_field, record_field_value FROM directory_record_field drf ";
     private static final String SQL_QUERY_SELECT_FULL_RECORD_FIELD_LIST_WITH_RECORD = "SELECT drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,ent.id_entry,ent.title,ent.display_width,ent.display_height," +
         " fil.id_file,fil.title,fil.id_physical_file,fil.file_size,fil.mime_type," +
         " dfield.id_field,dfield.id_entry,dfield.title,dfield.default_value,dfield.height,dfield.width,dfield.is_default_value,dfield.max_size_enter,dfield.field_position,dfield.value_type_date,dfield.role_key,dfield.workgroup_key," +
@@ -106,6 +107,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     private static final String SQL_FILTER_ASSOCIATION_ON_ID_ENTRY = " drf.id_entry =ent.id_entry ";
     private static final String SQL_FILTER_ASSOCIATION_ON_ID_TYPE = " ent.id_type=type.id_type ";
     private static final String SQL_WHERE = " WHERE ";
+    private static final String SQL_UPDATE_VALUE_RECORD_FIELD = "UPDATE directory_record_field SET record_field_value = ? WHERE id_record_field = ? ";
 
     /**
      * Generates a new primary key
@@ -930,5 +932,77 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         daoUtil.free(  );
 
         return isOn;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<RecordField> selectValuesList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin )
+    {
+        List<RecordField> recordFieldList = new ArrayList<RecordField>( );
+        RecordField recordField;
+        StringBuffer sbSQL = new StringBuffer( SQL_QUERY_SELECT_VALUES_RECORD_FIELD_LIST );
+
+        sbSQL.append( SQL_WHERE + SQL_FILTER_ID_RECORD );
+
+        int nListEntryIdSize = lEntryId.size( );
+
+        if ( nListEntryIdSize > 0 )
+        {
+            for ( int i = 0; i < nListEntryIdSize; i++ )
+            {
+                if ( i < 1 )
+                {
+                    sbSQL.append( SQL_FILTER_ID_ENTRY_IN );
+                }
+                else
+                {
+                    sbSQL.append( SQL_FILTER_ADITIONAL_PARAMETER );
+                }
+            }
+
+            sbSQL.append( SQL_FILTER_CLOSE_PARENTHESIS );
+        }
+
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
+        daoUtil.setInt( 1, nIdRecord );
+
+        if ( nListEntryIdSize > 0 )
+        {
+            for ( int i = 0; i < nListEntryIdSize; i++ )
+            {
+                daoUtil.setInt( i + 2, lEntryId.get( i ) );
+            }
+        }
+
+        daoUtil.executeQuery( );
+
+        while ( daoUtil.next( ) )
+        {
+            recordField = new RecordField( );
+            recordField.setIdRecordField( daoUtil.getInt( 1 ) ); // drf.id_record_field
+            recordField.setValue( daoUtil.getString( 2 ) ); // drf.record_field_value
+
+            recordFieldList.add( recordField );
+        }
+
+        daoUtil.free( );
+
+        return recordFieldList;
+    }
+
+    /**
+     * Update the value of a record field
+     * @param strNewValue The new value
+     * @param nIdRecordField The id of the record field to update
+     * @param plugin The plugin
+     */
+    public void updateValue( String strNewValue, Integer nIdRecordField, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_UPDATE_VALUE_RECORD_FIELD, plugin );
+        daoUtil.setString( 1, strNewValue );
+        daoUtil.setInt( 2, nIdRecordField );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 }

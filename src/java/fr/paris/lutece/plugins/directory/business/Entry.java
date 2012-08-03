@@ -44,8 +44,6 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-import org.apache.commons.fileupload.FileItem;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -54,6 +52,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
 
 
 /**
@@ -184,6 +184,7 @@ public class Entry implements IEntry
     private String _strLabelValueAllSearch; // For entries type directory and select
     private IMapProvider _mapProvider; // For entries type Geolocation
     private boolean _bIsAutocompleEntry; // For autocomplete entries
+    private boolean _bAnonymize;
 
     /* (non-Javadoc)
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getIdEntry()
@@ -1126,5 +1127,30 @@ public class Entry implements IEntry
     public void canUploadFiles( List<FileItem> listUploadedFileItems, List<FileItem> listFileItemsToUpload,
         Locale locale ) throws DirectoryErrorException
     {
+    }
+
+    /**
+     * Check if entries of this type are anonymizable or not.
+     * @return True if the entry is anonymizable, false otherwise
+     */
+    public boolean isAnonymizable( )
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean getAnonymize( )
+    {
+        return _bAnonymize;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setAnonymize( boolean bAnonymize )
+    {
+        this._bAnonymize = bAnonymize;
     }
 }

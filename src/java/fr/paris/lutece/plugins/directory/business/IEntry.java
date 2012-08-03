@@ -39,13 +39,13 @@ import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.Paginator;
 
-import org.apache.commons.fileupload.FileItem;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
 
 
 /**
@@ -674,4 +674,23 @@ public interface IEntry
      */
     void canUploadFiles( List<FileItem> listUploadedFileItems, List<FileItem> listFileItemsToUpload, Locale locale )
         throws DirectoryErrorException;
+
+    /**
+     * Check if this entry should be anonymized when a record is anonymized.
+     * @return True if this entry should be anonymized, false otherwise.
+     */
+    boolean getAnonymize( );
+
+    /**
+     * Set the anonymize status of an entry.
+     * @param bAnonymize True if this entry should be anonymized when a record
+     *            is anonymized, false otherwise
+     */
+    void setAnonymize( boolean bAnonymize );
+
+    /**
+     * Check if entries of this type are anonymizable or not.
+     * @return True if the entry is anonymizable, false otherwise
+     */
+    boolean isAnonymizable( );
 }

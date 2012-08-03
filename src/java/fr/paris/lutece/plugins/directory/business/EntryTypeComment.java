@@ -105,4 +105,14 @@ public class EntryTypeComment extends Entry
     {
         return _template_modify;
     }
+
+    /**
+     * Check if entries of this type are anonymizable or not.
+     * @return True if the entry type is anonymizable, false otherwise
+     */
+    @Override
+    public boolean isAnonymizable( )
+    {
+        return true;
+    }
 }

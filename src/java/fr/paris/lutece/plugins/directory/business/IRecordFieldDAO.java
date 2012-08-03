@@ -142,4 +142,21 @@ public interface IRecordFieldDAO
      * @return true if it is already on, false otherwise
      */
     boolean isNumberOnARecordField( int nIdEntry, int nIdDirectory, int nNumber, Plugin plugin );
+
+    /**
+     * Load values of record field
+     * @param lEntryId List entry to load
+     * @param nIdRecord The record Id
+     * @param plugin The plugin
+     * @return list of record
+     */
+    List<RecordField> selectValuesList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin );
+
+    /**
+     * Update the value of a record field
+     * @param strNewValue The new value
+     * @param nIdRecordField The id of the record field to update
+     * @param plugin The plugin
+     */
+    void updateValue( String strNewValue, Integer nIdRecordField, Plugin plugin );
 }

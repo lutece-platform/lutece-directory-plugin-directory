@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.directory.business;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -194,5 +195,44 @@ public final class EntryHome
     public static int getNumberEntryByFilter( EntryFilter filter, Plugin plugin )
     {
         return _dao.selectNumberEntryByFilter( filter, plugin );
+    }
+
+    /**
+     * Get the list of entries that should be anonymized when a record is
+     * anonymized
+     * @param plugin The plugin
+     * @return The list of entries to anonymize
+     */
+    public static List<IEntry> getEntryListAnonymizeStatus( Plugin plugin )
+    {
+        List<IEntry> listEntry = _dao.getEntryListAnonymizeStatus( plugin );
+        List<IEntry> listEntryRes = new ArrayList<IEntry>( );
+        for ( IEntry entry : listEntry )
+        {
+            try
+            {
+                IEntry iEntry = (IEntry) Class.forName( ( entry.getEntryType( ).getClassName( ) ) ).newInstance( );
+                if ( iEntry.isAnonymizable( ) )
+                {
+                    listEntryRes.add( entry );
+                }
+            }
+            catch ( Exception e )
+            {
+            }
+
+        }
+        return listEntryRes;
+    }
+
+    /**
+     * Update an entry anonymize status
+     * @param nEntryId The id of the entry to update
+     * @param bAnonymize True if the entry should be anonymized, false otherwise
+     * @param plugin The plugin
+     */
+    public static void updateEntryAnonymizeStatus( Integer nEntryId, Boolean bAnonymize, Plugin plugin )
+    {
+        _dao.updateEntryAnonymizeStatus( nEntryId, bAnonymize, plugin );
     }
 }
