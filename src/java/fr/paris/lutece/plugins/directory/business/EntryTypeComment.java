@@ -113,6 +113,6 @@ public class EntryTypeComment extends Entry
     @Override
     public boolean isAnonymizable( )
     {
-        return true;
+        return false;
     }
 }

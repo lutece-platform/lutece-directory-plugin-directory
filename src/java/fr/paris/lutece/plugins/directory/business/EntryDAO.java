@@ -73,7 +73,7 @@ public final class EntryDAO implements IEntryDAO
         "ent.is_fields_in_line,ent.entry_position,ent.display_width,ent.display_height,ent.is_role_associated,ent.is_workgroup_associated, " +
         "ent.is_multiple_search_fields,ent.is_shown_in_history,ent.id_entry_associate ,ent.request_sql,ent.is_add_value_search_all,ent.label_value_search_all,ent.map_provider,ent.is_autocomplete_entry,ent.is_shown_in_export,ent.is_shown_in_completeness " +
         "FROM directory_entry ent,directory_entry_type typ  ";
-    private static final String SQL_QUERY_SELECT_ENTRY_ANONYMIZE = "SELECT ent.id_entry, ent.title, ent.anonymize, det.class_name FROM directory_entry ent INNER JOIN directory_entry_type det ON (ent.id_type=det.id_type) ";
+    private static final String SQL_QUERY_SELECT_ENTRY_ANONYMIZE = "SELECT ent.id_entry, ent.title, ent.anonymize, det.class_name, det.title_key FROM directory_entry ent INNER JOIN directory_entry_type det ON (ent.id_type=det.id_type) ";
     private static final String SQL_QUERY_UPDATE_ENTRY_ANONYMIZE = "UPDATE directory_entry SET anonymize = ? WHERE id_entry = ?";
     private static final String SQL_QUERY_SELECT_NUMBER_ENTRY_BY_FILTER = "SELECT COUNT(ent.id_entry) " +
         "FROM directory_entry ent,directory_entry_type typ ";
@@ -1066,6 +1066,7 @@ public final class EntryDAO implements IEntryDAO
             entry.setAnonymize( daoUtil.getBoolean( 3 ) );
             EntryType entryType = new EntryType( );
             entryType.setClassName( daoUtil.getString( 4 ) );
+            entryType.setTitleI18nKey( daoUtil.getString( 5 ) );
             entry.setEntryType( entryType );
             entryList.add( entry );
         }
