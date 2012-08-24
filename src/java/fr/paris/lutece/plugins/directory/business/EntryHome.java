@@ -206,13 +206,15 @@ public final class EntryHome
     public static List<IEntry> getEntryListAnonymizeStatus( Plugin plugin )
     {
         List<IEntry> listEntry = _dao.getEntryListAnonymizeStatus( plugin );
-        List<IEntry> listEntryRes = new ArrayList<IEntry>( );
+        List<IEntry> listEntryRes = new ArrayList<IEntry>(  );
+
         for ( IEntry entry : listEntry )
         {
             try
             {
-                IEntry iEntry = (IEntry) Class.forName( ( entry.getEntryType( ).getClassName( ) ) ).newInstance( );
-                if ( iEntry.isAnonymizable( ) )
+                IEntry iEntry = (IEntry) Class.forName( ( entry.getEntryType(  ).getClassName(  ) ) ).newInstance(  );
+
+                if ( iEntry.isAnonymizable(  ) )
                 {
                     listEntryRes.add( entry );
                 }
@@ -220,8 +222,8 @@ public final class EntryHome
             catch ( Exception e )
             {
             }
-
         }
+
         return listEntryRes;
     }
 
@@ -234,5 +236,29 @@ public final class EntryHome
     public static void updateEntryAnonymizeStatus( Integer nEntryId, Boolean bAnonymize, Plugin plugin )
     {
         _dao.updateEntryAnonymizeStatus( nEntryId, bAnonymize, plugin );
+    }
+
+    /**
+     * Finds all the entries without any parent
+     *
+     * @param plugin the plugin
+     * @parem nIdDirectory the id of the concerned directory
+     * @return List<IEntry> the list of all the entries without parent
+     */
+    public static List<IEntry> findEntriesWithoutParent( Plugin plugin, int nIdDirectory )
+    {
+        List<IEntry> listEntry = _dao.findEntriesWithoutParent( plugin, nIdDirectory );
+
+        for ( IEntry entry : listEntry )
+        {
+            if ( entry != null )
+            {
+                EntryFilter filter = new EntryFilter(  );
+                filter.setIdEntryParent( entry.getIdEntry(  ) );
+                entry.setChildren( getEntryList( filter, plugin ) );
+            }
+        }
+
+        return listEntry;
     }
 }

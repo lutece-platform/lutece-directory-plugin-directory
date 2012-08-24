@@ -111,7 +111,7 @@ public class EntryTypeComment extends Entry
      * @return True if the entry type is anonymizable, false otherwise
      */
     @Override
-    public boolean isAnonymizable( )
+    public boolean isAnonymizable(  )
     {
         return false;
     }

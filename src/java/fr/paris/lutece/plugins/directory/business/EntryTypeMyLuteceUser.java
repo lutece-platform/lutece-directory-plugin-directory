@@ -49,6 +49,8 @@ import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -57,8 +59,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -431,7 +431,7 @@ public class EntryTypeMyLuteceUser extends Entry
      * @return True if the entry type is anonymizable, false otherwise
      */
     @Override
-    public boolean isAnonymizable( )
+    public boolean isAnonymizable(  )
     {
         return true;
     }

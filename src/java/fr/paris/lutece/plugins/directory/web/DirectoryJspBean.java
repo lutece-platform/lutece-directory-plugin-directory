@@ -302,6 +302,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_DATE_MODIFICATION_SEARCH = "date_modification_search";
     private static final String MARK_DATE_MODIFICATION_BEGIN_SEARCH = "date_modification_begin_search";
     private static final String MARK_DATE_MODIFICATION_END_SEARCH = "date_modification_end_search";
+    private static final String MARK_MAP_CHILD = "mapChild";
 
     //private static final String MARK_URL_ACTION = "url_action";
     private static final String MARK_STR_ERROR = "str_error";
@@ -383,6 +384,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_NUMBER_RECORD_PER_PAGE = "number_record_per_page";
     private static final String PARAMETER_PAGE_INDEX = "page_index";
     private static final String PARAMETER_ID_ENTRY = "id_entry";
+    private static final String PARAMETER_ORDER_ID = "order_id";
     private static final String PARAMETER_ID_FIELD = "id_field";
     private static final String PARAMETER_ID_EXPRESSION = "id_expression";
     private static final String PARAMETER_CANCEL = "cancel";
@@ -836,6 +838,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     public String getModifyDirectory( HttpServletRequest request )
         throws AccessDeniedException
     {
+        Plugin plugin = this.getPlugin(  );
         List<IEntry> listEntry = new ArrayList<IEntry>(  );
         List<IEntry> listEntryFirstLevel;
         int nNumberField;
@@ -897,6 +900,26 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 }
             }
         }
+
+        ///////////////
+        Map<String, List<Integer>> mapIdParentOrdersChildren = new HashMap<String, List<Integer>>(  );
+
+        // List of entry first level order
+        List<Integer> listOrderEntryFirstLevel = new ArrayList<Integer>(  );
+        List<IEntry> listEntryFirstLevelMap = new ArrayList<IEntry>(  );
+        listEntryFirstLevelMap.addAll( listEntryFirstLevel );
+        initOrderFirstLevel( listEntryFirstLevelMap, listOrderEntryFirstLevel );
+
+        mapIdParentOrdersChildren.put( "0", listOrderEntryFirstLevel );
+
+        if ( listEntryFirstLevelMap.size(  ) != 0 )
+        {
+            listEntryFirstLevelMap.get( 0 ).setFirstInTheList( true );
+            listEntryFirstLevelMap.get( listEntryFirstLevelMap.size(  ) - 1 ).setLastInTheList( true );
+        }
+
+        //fillEntryListWithEntryFirstLevel( plugin, listEntry, listEntryFirstLevelMap );
+        populateEntryMap( listEntry, mapIdParentOrdersChildren );
 
         _searchFields.setCurrentPageIndexEntry( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
                 _searchFields.getCurrentPageIndexEntry(  ) ) );
@@ -990,6 +1013,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_ID_ENTRY_TYPE_REMOTE_MYLUTECE_USER,
             AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER, 21 ) );
         setPageTitleProperty( PROPERTY_MODIFY_DIRECTORY_TITLE );
+        model.put( MARK_MAP_CHILD, mapIdParentOrdersChildren );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_DIRECTORY, locale, model );
 
@@ -1040,6 +1064,52 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         return getJspManageDirectory( request );
+    }
+
+    /**
+     * Change the attribute's order (move up or move down in the list)
+     * @param request the request
+     * @return The URL of the form management page
+     */
+    public String doChangeOrderEntry( HttpServletRequest request )
+    {
+        //gets the entry which needs to be changed (order)
+        Plugin plugin = getPlugin(  );
+        String strEntryId = request.getParameter( PARAMETER_ID_ENTRY );
+        String strOrderToSet = request.getParameter( PARAMETER_ORDER_ID );
+        int nEntryId = 0;
+        int nOrderToSet = 0;
+
+        if ( StringUtils.isNotBlank( strEntryId ) )
+        {
+            nEntryId = DirectoryUtils.convertStringToInt( strEntryId );
+        }
+
+        if ( StringUtils.isNotBlank( strOrderToSet ) )
+        {
+            nOrderToSet = DirectoryUtils.convertStringToInt( strOrderToSet );
+        }
+
+        IEntry entryToChangeOrder = EntryHome.findByPrimaryKey( nEntryId, plugin );
+
+        // entry goes up in the list 
+        if ( nOrderToSet < entryToChangeOrder.getPosition(  ) )
+        {
+            moveUpEntryOrder( plugin, nOrderToSet, entryToChangeOrder,
+                entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
+        }
+
+        // entry goes down in the list
+        else
+        {
+            moveDownEntryOrder( plugin, nOrderToSet, entryToChangeOrder,
+                entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
+        }
+
+        UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY );
+        url.addParameter( PARAMETER_ID_DIRECTORY, entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
+
+        return url.getUrl(  );
     }
 
     /**
@@ -1684,10 +1754,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         //remove all recordField associated
-        RecordFieldFilter filter = new RecordFieldFilter(  );
-        filter.setIdEntry( nIdEntry );
-        RecordFieldHome.removeByFilter( filter, true, plugin );
+        RecordFieldFilter filterField = new RecordFieldFilter(  );
+        filterField.setIdEntry( nIdEntry );
+        RecordFieldHome.removeByFilter( filterField, true, plugin );
+
         //remove entry
+        List<IEntry> listEntry;
+        EntryFilter filter = new EntryFilter(  );
+        filter.setIdDirectory( entry.getDirectory(  ).getIdDirectory(  ) );
+        listEntry = EntryHome.getEntryList( filter, plugin );
+        this.moveDownEntryOrder( plugin, listEntry.size(  ), entry, entry.getDirectory(  ).getIdDirectory(  ) );
         EntryHome.remove( nIdEntry, plugin );
 
         return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
@@ -1816,12 +1892,23 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         if ( ( entryGroup.getChildren(  ) != null ) && ( !entryGroup.getChildren(  ).isEmpty(  ) ) )
         {
-            nPosition = entryGroup.getChildren(  ).get( entryGroup.getChildren(  ).size(  ) - 1 ).getPosition(  ) + 1;
-            entryToMove.setPosition( nPosition );
+            nPosition = entryGroup.getPosition(  ) + entryGroup.getChildren(  ).size(  ) + 1;
+
+            //nPosition = entryGroup.getChildren(  ).get( entryGroup.getChildren(  ).size(  ) - 1 ).getPosition(  ) + 1;
+        }
+
+        if ( entryToMove.getPosition(  ) < entryGroup.getPosition(  ) )
+        {
+            nPosition = entryGroup.getPosition(  );
+            this.moveDownEntryOrder( plugin, nPosition, entryToMove, entryToMove.getDirectory(  ).getIdDirectory(  ) );
+        }
+        else
+        {
+            nPosition = entryGroup.getPosition(  ) + entryGroup.getChildren(  ).size(  ) + 1;
+            this.moveUpEntryOrder( plugin, nPosition, entryToMove, entryToMove.getDirectory(  ).getIdDirectory(  ) );
         }
 
         entryToMove.setParent( entryGroup );
-
         EntryHome.update( entryToMove, plugin );
 
         return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
@@ -1966,14 +2053,15 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
 
-        entry.setParent( null );
-
         List<IEntry> listEntry;
         EntryFilter filter = new EntryFilter(  );
-        filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
+        //filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
         filter.setIdDirectory( entry.getDirectory(  ).getIdDirectory(  ) );
         listEntry = EntryHome.getEntryList( filter, plugin );
-        entry.setPosition( listEntry.get( listEntry.size(  ) - 1 ).getPosition(  ) + 1 );
+
+        this.moveDownEntryOrder( plugin, listEntry.size(  ), entry, entry.getDirectory(  ).getIdDirectory(  ) );
+
+        entry.setParent( null );
         EntryHome.update( entry, plugin );
 
         return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
@@ -4976,5 +5064,267 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         return StringUtils.EMPTY;
+    }
+
+    /**
+     * Init the list of the attribute's orders (first level only)
+     * @param listEntryFirstLevel the list of all the attributes of the first
+     *            level
+     * @param orderFirstLevel the list to set
+     */
+    private void initOrderFirstLevel( List<IEntry> listEntryFirstLevel, List<Integer> orderFirstLevel )
+    {
+        for ( IEntry entry : listEntryFirstLevel )
+        {
+            orderFirstLevel.add( entry.getPosition(  ) );
+        }
+    }
+
+    /**
+     * @param plugin
+     * @param listEntry
+     * @param listEntryFirstLevel
+     */
+    private void fillEntryListWithEntryFirstLevel( Plugin plugin, List<IEntry> listEntry,
+        List<IEntry> listEntryFirstLevel )
+    {
+        EntryFilter filter;
+
+        for ( IEntry entry : listEntryFirstLevel )
+        {
+            listEntry.add( entry );
+
+            if ( entry.getEntryType(  ).getGroup(  ) )
+            {
+                filter = new EntryFilter(  );
+                filter.setIdEntryParent( entry.getIdEntry(  ) );
+                entry.setChildren( EntryHome.getEntryList( filter, plugin ) );
+
+                if ( entry.getChildren(  ).size(  ) != 0 )
+                {
+                    entry.getChildren(  ).get( 0 ).setFirstInTheList( true );
+                    entry.getChildren(  ).get( entry.getChildren(  ).size(  ) - 1 ).setLastInTheList( true );
+                }
+
+                for ( IEntry entryChild : entry.getChildren(  ) )
+                {
+                    listEntry.add( entryChild );
+                }
+            }
+        }
+    }
+
+    /**
+     * Populate map with ( idParent : List<Orders> ) except for entry with
+     * parent
+     * null
+     * @param listEntry
+     * @param mapIdParentOrdersChildren
+     */
+    private void populateEntryMap( List<IEntry> listEntry, Map<String, List<Integer>> mapIdParentOrdersChildren )
+    {
+        List<Integer> listOrder;
+
+        for ( IEntry entry : listEntry )
+        {
+            if ( entry.getParent(  ) != null )
+            {
+                Integer key = Integer.valueOf( entry.getParent(  ).getIdEntry(  ) );
+                String strKey = key.toString(  );
+
+                if ( mapIdParentOrdersChildren.get( strKey ) != null )
+                {
+                    mapIdParentOrdersChildren.get( key.toString(  ) ).add( entry.getPosition(  ) );
+                }
+                else
+                {
+                    listOrder = new ArrayList<Integer>(  );
+                    listOrder.add( entry.getPosition(  ) );
+                    mapIdParentOrdersChildren.put( key.toString(  ), listOrder );
+                }
+            }
+        }
+    }
+
+    /**
+     * Change the attribute's order to a greater one (move down in the list)
+     * @param plugin the plugin
+     * @param nOrderToSet the new order for the attribute
+     * @param entryToChangeOrder the attribute which will change
+     * @parem nIdDirectory the id of the directory
+     */
+    private void moveDownEntryOrder( Plugin plugin, int nOrderToSet, IEntry entryToChangeOrder, int nIdDirectory )
+    {
+        if ( entryToChangeOrder.getParent(  ) == null )
+        {
+            int nNbChild = 0;
+            int nNewOrder = 0;
+
+            List<IEntry> listEntryFirstLevel = EntryHome.findEntriesWithoutParent( plugin, nIdDirectory );
+
+            List<Integer> orderFirstLevel = new ArrayList<Integer>(  );
+            initOrderFirstLevel( listEntryFirstLevel, orderFirstLevel );
+
+            Integer nbChildEntryToChangeOrder = 0;
+
+            if ( entryToChangeOrder.getChildren(  ) != null )
+            {
+                nbChildEntryToChangeOrder = entryToChangeOrder.getChildren(  ).size(  );
+            }
+
+            for ( IEntry entry : listEntryFirstLevel )
+            {
+                for ( int i = 0; i < orderFirstLevel.size(  ); i++ )
+                {
+                    if ( ( orderFirstLevel.get( i ) == entry.getPosition(  ) ) &&
+                            ( entry.getPosition(  ) > entryToChangeOrder.getPosition(  ) ) &&
+                            ( entry.getPosition(  ) <= nOrderToSet ) )
+                    {
+                        if ( nNbChild == 0 )
+                        {
+                            nNewOrder = orderFirstLevel.get( i - 1 );
+
+                            if ( orderFirstLevel.get( i - 1 ) != entryToChangeOrder.getPosition(  ) )
+                            {
+                                nNewOrder -= nbChildEntryToChangeOrder;
+                            }
+                        }
+                        else
+                        {
+                            nNewOrder += ( nNbChild + 1 );
+                        }
+
+                        entry.setPosition( nNewOrder );
+                        EntryHome.update( entry, plugin );
+                        nNbChild = 0;
+
+                        if ( entry.getChildren(  ) != null )
+                        {
+                            for ( IEntry child : entry.getChildren(  ) )
+                            {
+                                nNbChild++;
+                                child.setPosition( nNewOrder + nNbChild );
+                                EntryHome.update( child, plugin );
+                            }
+                        }
+                    }
+                }
+            }
+
+            entryToChangeOrder.setPosition( nNewOrder + nNbChild + 1 );
+            EntryHome.update( entryToChangeOrder, plugin );
+            nNbChild = 0;
+
+            for ( IEntry child : entryToChangeOrder.getChildren(  ) )
+            {
+                nNbChild++;
+                child.setPosition( entryToChangeOrder.getPosition(  ) + nNbChild );
+                EntryHome.update( child, plugin );
+            }
+        }
+        else
+        {
+            EntryFilter filter = new EntryFilter(  );
+            filter.setIdDirectory( nIdDirectory );
+
+            List<IEntry> listAllEntry = EntryHome.getEntryList( filter, plugin );
+
+            for ( IEntry entry : listAllEntry )
+            {
+                if ( ( entry.getPosition(  ) > entryToChangeOrder.getPosition(  ) ) &&
+                        ( entry.getPosition(  ) <= nOrderToSet ) )
+                {
+                    entry.setPosition( entry.getPosition(  ) - 1 );
+                    EntryHome.update( entry, plugin );
+                }
+            }
+
+            entryToChangeOrder.setPosition( nOrderToSet );
+            EntryHome.update( entryToChangeOrder, plugin );
+        }
+    }
+
+    /**
+     * Change the attribute's order to a lower one (move up in the list)
+     * @param plugin the plugin
+     * @param nOrderToSet the new order for the attribute
+     * @param entryToChangeOrder the attribute which will change
+     * @parem nIdDirectory the id of the form
+     */
+    private void moveUpEntryOrder( Plugin plugin, int nOrderToSet, IEntry entryToChangeOrder, int nIdDirectory )
+    {
+        if ( entryToChangeOrder.getParent(  ) == null )
+        {
+            List<Integer> orderFirstLevel = new ArrayList<Integer>(  );
+
+            int nNbChild = 0;
+            int nNewOrder = nOrderToSet;
+            int nEntryToMoveOrder = entryToChangeOrder.getPosition(  );
+
+            EntryFilter filter = new EntryFilter(  );
+            filter.setIdDirectory( nIdDirectory );
+
+            List<IEntry> listEntryFirstLevel = EntryHome.findEntriesWithoutParent( plugin, nIdDirectory );
+            //the list of all the orders in the first level
+            initOrderFirstLevel( listEntryFirstLevel, orderFirstLevel );
+
+            for ( IEntry entry : listEntryFirstLevel )
+            {
+                Integer entryInitialPosition = entry.getPosition(  );
+
+                for ( int i = 0; i < orderFirstLevel.size(  ); i++ )
+                {
+                    if ( ( orderFirstLevel.get( i ) == entryInitialPosition ) &&
+                            ( entryInitialPosition < nEntryToMoveOrder ) && ( entryInitialPosition >= nOrderToSet ) )
+                    {
+                        if ( entryToChangeOrder.getPosition(  ) == nEntryToMoveOrder )
+                        {
+                            entryToChangeOrder.setPosition( nNewOrder );
+                            EntryHome.update( entryToChangeOrder, plugin );
+
+                            for ( IEntry child : entryToChangeOrder.getChildren(  ) )
+                            {
+                                nNbChild++;
+                                child.setPosition( entryToChangeOrder.getPosition(  ) + nNbChild );
+                                EntryHome.update( child, plugin );
+                            }
+                        }
+
+                        nNewOrder = nNewOrder + nNbChild + 1;
+                        entry.setPosition( nNewOrder );
+                        EntryHome.update( entry, plugin );
+                        nNbChild = 0;
+
+                        if ( entry.getChildren(  ) != null )
+                        {
+                            for ( IEntry child : entry.getChildren(  ) )
+                            {
+                                nNbChild++;
+                                child.setPosition( nNewOrder + nNbChild );
+                                EntryHome.update( child, plugin );
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            EntryFilter filter = new EntryFilter(  );
+            filter.setIdDirectory( nIdDirectory );
+
+            List<IEntry> listAllEntry = EntryHome.getEntryList( filter, plugin );
+
+            for ( IEntry entry : listAllEntry )
+            {
+                if ( ( entry.getPosition(  ) < entryToChangeOrder.getPosition(  ) ) &&
+                        ( entry.getPosition(  ) > nOrderToSet ) )
+                {
+                    entry.setPosition( entry.getPosition(  ) + 1 );
+                }
+            }
+
+            entryToChangeOrder.setPosition( nOrderToSet );
+        }
     }
 }

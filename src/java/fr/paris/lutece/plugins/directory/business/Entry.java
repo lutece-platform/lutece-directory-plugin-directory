@@ -44,6 +44,8 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.xml.XmlUtil;
 
+import org.apache.commons.fileupload.FileItem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -52,8 +54,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.fileupload.FileItem;
 
 
 /**
@@ -1133,7 +1133,7 @@ public class Entry implements IEntry
      * Check if entries of this type are anonymizable or not.
      * @return True if the entry is anonymizable, false otherwise
      */
-    public boolean isAnonymizable( )
+    public boolean isAnonymizable(  )
     {
         return false;
     }
@@ -1141,7 +1141,7 @@ public class Entry implements IEntry
     /**
      * {@inheritDoc}
      */
-    public boolean getAnonymize( )
+    public boolean getAnonymize(  )
     {
         return _bAnonymize;
     }

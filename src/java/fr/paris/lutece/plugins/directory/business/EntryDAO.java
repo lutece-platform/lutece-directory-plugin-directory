@@ -103,6 +103,13 @@ public final class EntryDAO implements IEntryDAO
     private static final String SQL_FILTER_IS_SHOWN_IN_COMPLETENESS = " ent.is_shown_in_completeness = ? ";
     private static final String CONSTANT_PARENTHESIS_LEFT = " ( ";
     private static final String CONSTANT_PARENTHESIS_RIGHT = " ) ";
+    private static final String SQL_QUERY_SELECT_ENTRIES_WITHOUT_PARENT = "SELECT ent.id_type,typ.title_key,typ.is_group," +
+        "typ.is_comment,typ.is_mylutece_user,typ.class_name,ent.id_entry,ent.id_directory," +
+        "ent.id_entry_parent,ent.title,ent.help_message,ent.help_message_search," +
+        "ent.entry_comment,ent.is_mandatory,ent.is_indexed,ent.is_indexed_as_title,ent.is_indexed_as_summary,ent.is_shown_in_search,ent.is_shown_in_result_list,ent.is_shown_in_result_record," +
+        "ent.is_fields_in_line,ent.entry_position,ent.display_width,ent.display_height,ent.is_role_associated,ent.is_workgroup_associated, " +
+        "ent.is_multiple_search_fields,ent.is_shown_in_history,ent.id_entry_associate ,ent.request_sql,ent.is_add_value_search_all,ent.label_value_search_all,ent.map_provider,ent.is_autocomplete_entry,ent.is_shown_in_export,ent.is_shown_in_completeness " +
+        "FROM directory_entry ent,directory_entry_type typ WHERE ent.id_type = typ.id_type AND id_entry_parent IS NULL AND id_directory=? ORDER BY ent.entry_position ";
 
     /**
      * Generates a new primary key
@@ -132,6 +139,7 @@ public final class EntryDAO implements IEntryDAO
     /**
      * Generates a new entry position
      * @param plugin the plugin
+     * @param nIdDirectory the id of the directory
      * @return the new entry position
      */
     private int newPosition( int nIdDirectory, Plugin plugin )
@@ -1053,25 +1061,27 @@ public final class EntryDAO implements IEntryDAO
      */
     public List<IEntry> getEntryListAnonymizeStatus( Plugin plugin )
     {
-        List<IEntry> entryList = new ArrayList<IEntry>( );
+        List<IEntry> entryList = new ArrayList<IEntry>(  );
         IEntry entry = null;
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ENTRY_ANONYMIZE, plugin );
-        daoUtil.executeQuery( );
-        while ( daoUtil.next( ) )
+        daoUtil.executeQuery(  );
+
+        while ( daoUtil.next(  ) )
         {
-            entry = new Entry( );
+            entry = new Entry(  );
             entry.setIdEntry( daoUtil.getInt( 1 ) );
             entry.setTitle( daoUtil.getString( 2 ) );
             entry.setAnonymize( daoUtil.getBoolean( 3 ) );
-            EntryType entryType = new EntryType( );
+
+            EntryType entryType = new EntryType(  );
             entryType.setClassName( daoUtil.getString( 4 ) );
             entryType.setTitleI18nKey( daoUtil.getString( 5 ) );
             entry.setEntryType( entryType );
             entryList.add( entry );
         }
 
-        daoUtil.free( );
+        daoUtil.free(  );
 
         return entryList;
     }
@@ -1079,6 +1089,7 @@ public final class EntryDAO implements IEntryDAO
     /**
      * Update an entry anonymization status
      * @param nEntryId Id of the entry
+     * @param plugin the plugin
      * @param bAnonymize True if the entry should be anonymize, false otherwise
      */
     public void updateEntryAnonymizeStatus( Integer nEntryId, Boolean bAnonymize, Plugin plugin )
@@ -1086,7 +1097,35 @@ public final class EntryDAO implements IEntryDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE_ENTRY_ANONYMIZE, plugin );
         daoUtil.setBoolean( 1, bAnonymize );
         daoUtil.setInt( 2, nEntryId );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IEntry> findEntriesWithoutParent( Plugin plugin, int nIdDirectory )
+    {
+        List<IEntry> listResult = new ArrayList<IEntry>(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ENTRIES_WITHOUT_PARENT );
+        daoUtil.setInt( 1, nIdDirectory );
+        daoUtil.executeQuery(  );
+
+        while ( daoUtil.next(  ) )
+        {
+            IEntry entry = getValuesFromQuery( daoUtil );
+
+            if ( entry == null )
+            {
+                return null;
+            }
+
+            listResult.add( entry );
+        }
+
+        daoUtil.free(  );
+
+        return listResult;
     }
 }

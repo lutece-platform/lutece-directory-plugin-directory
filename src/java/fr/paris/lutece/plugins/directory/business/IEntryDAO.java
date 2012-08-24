@@ -101,7 +101,7 @@ public interface IEntryDAO
 
     /**
      * Return the number of entry who verify the filter
-     * 
+     *
      * @param filter the filter
      * @param plugin the plugin
      * @return the number of entry who verify the filter
@@ -124,4 +124,13 @@ public interface IEntryDAO
      * @param plugin The plugin
      */
     void updateEntryAnonymizeStatus( Integer nEntryId, Boolean bAnonymize, Plugin plugin );
+
+    /**
+     * Finds all the entries without any parent
+     *
+     * @param plugin the plugin
+     * @parem nIdDirectory the id of the concerned directory
+     * @return List<IEntry> the list of all the entries without parent
+     */
+    List<IEntry> findEntriesWithoutParent( Plugin plugin, int nIdDirectory );
 }

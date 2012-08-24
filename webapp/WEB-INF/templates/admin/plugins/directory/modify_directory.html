@@ -361,38 +361,19 @@
           <tr> 
             <th width="50%"> #i18n{directory.modify_directory.manage_entry.row_title}
             </th>
-            <th width="25%"> #i18n{directory.modify_directory.manage_entry.row_type}
+            <th width="26%"> #i18n{directory.modify_directory.manage_entry.row_type}
             </th>
-            <th width="25%"> #i18n{directory.modify_directory.manage_entry.row_actions}
+            <th width="12%"> #i18n{directory.modify_directory.order}
+            </th>
+            <th width="12%%"> #i18n{directory.modify_directory.manage_entry.row_actions}
             </th>
           </tr>
           
           <#if entry_list?has_content>
           	<#list entry_list as entry>
-           		<!--  <#if entry.entryType.group && entry.entryChildren?has_content >
-					<#list entry.entryChildren as children >
-           				<@itemEntry entry=children isFirst=(entry.entryChildren?seq_index_of(children) == 0) isLast=(entry.entryChildren?seq_index_of(children) == entry.entryChildren?size-1)/>	
-           	 		</#list>	
-         	  	<#else>
-           				<@itemEntry entry=entry isFirst=(entry_list?seq_index_of(entry) == 0) isLast=(entry_list?seq_index_of(entry) == entry_list?size-1)/>	
-         	  	</#if>
-         	  	-->
-         	  	<@itemEntry entry=entry isFirst=entry.firstInTheList isLast=entry.lastInTheList />	
-      
-           	</#list>
-           </#if>
           	
-          
-        </table> 
-        <@paginationAdmin paginator=paginator />
-    </div>
- <@initEditor />
- 
-<@getDatePicker idField="date_limite" language=locale />
-<#macro itemEntry entry isFirst isLast >
-	
-	<tr>
-	            	<#if entry.entryType.group>
+          		<tr>
+	          			<#if entry.entryType.group>
 	              			<td>
 	            	
 	              			<a href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}"  class="bullet-link-blue" style="font-weight: bold;color: #364C5E;">
@@ -426,17 +407,28 @@
 	           			#i18n{${entry.entryType.titleI18nKey}}
 	           		</#if>
 	           </td>
+	           				
+		   	   <!--  Change the order of the attribute -->
+			   <#if entry.parent?exists>
+					<td class="cell-indent">
+						<form method="post" action="jsp/admin/plugins/directory/DoChangeOrderEntry.jsp">
+								<@comboOrders name="order_id" default_value=entry.position idParent=entry.parent.idEntry />
+					        	<input type="hidden" name="id_entry" id="id_entry" value="${entry.idEntry!}" />
+					        	<input type="hidden" name="id_parent" id="id_parent" value="${(entry.parent.idEntry)!}" />
+					        	<input class="button" type="submit" value="#i18n{directory.modify_directory.move}" />
+				         </form>				
+					</td>
+				<#else>
+					<td>
+						<form method="post" action="jsp/admin/plugins/directory/DoChangeOrderEntry.jsp">
+								<@comboOrders name="order_id" default_value=entry.position idParent=0 />
+					        	<input type="hidden" name="id_entry" id="id_entry" value="${entry.idEntry!}" />
+					        	<input type="hidden" name="id_parent" id="id_parent" value="${(entry.parent.idEntry)!}" />
+					        	<input class="button" type="submit" value="#i18n{directory.modify_directory.move}" />
+				         </form>					
+			 		</td>
+			   </#if> 		
 	           <td >
-	              <#if !isFirst>
-	              	<a href="jsp/admin/plugins/directory/DoMoveUpEntry.jsp?id_entry=${entry.idEntry}#list">
-	                  <img src="images/admin/skin/plugins/directory/actions/up.png"  alt="#i18n{directory.modify_directory.manage_entry.title_move_up}" title="#i18n{directory.modify_directory.manage_entry.title_move_up}">
-	                 </a>
-	                </#if>
-	               <#if !isLast>
-	                	<a href="jsp/admin/plugins/directory/DoMoveDownEntry.jsp?id_entry=${entry.idEntry}#list">
-	                 	 <img src="images/admin/skin/plugins/directory/actions/down.png" alt="#i18n{directory.modify_directory.manage_entry.title_move_down}" title="#i18n{directory.modify_directory.manage_entry.title_move_down}">
-	                 	</a>
-	                 </#if>
 	                 <#if entry.parent?exists>
 	                 	<a href="jsp/admin/plugins/directory/DoMoveOutEntry.jsp?id_entry=${entry.idEntry}#list">
 				         	 <img src="images/admin/skin/plugins/directory/actions/exit.png"  alt="#i18n{directory.modify_directory.manage_entry.title_go_out} " title="#i18n{directory.modify_directory.manage_entry.title_go_out} ">
@@ -455,7 +447,26 @@
 	                  <img src="images/admin/skin/plugins/directory/actions/delete.png" alt="#i18n{directory.modify_directory.manage_entry.title_delete}" title="#i18n{directory.modify_directory.manage_entry.title_delete}" />
 	                </a>
 	             </td>
-	        </tr>
-	</#macro>
+				</tr>
+           	</#list>
+           </#if>
+          	
+          
+        </table> 
+        <@paginationAdmin paginator=paginator />
+    </div>
+ <@initEditor />
+ 
+<@getDatePicker idField="date_limite" language=locale />
 
-	
+<#macro comboOrders name default_value idParent >
+	<select id="${name}" name="${name}" >
+		<#list mapChild[idParent!?string] as i>
+			<#if default_value == i>
+  				<option selected="selected" value="${i}" >${i}</option>
+  			<#else>
+  				<option value="${i}" >${i}</option>
+  			</#if>
+		</#list>
+	</select>
+</#macro>

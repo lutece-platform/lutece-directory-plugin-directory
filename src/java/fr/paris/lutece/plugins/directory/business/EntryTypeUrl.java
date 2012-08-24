@@ -47,13 +47,13 @@ import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.Paginator;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -345,7 +345,7 @@ public class EntryTypeUrl extends Entry
      * @return True if the entry type is anonymizable, false otherwise
      */
     @Override
-    public boolean isAnonymizable( )
+    public boolean isAnonymizable(  )
     {
         return true;
     }

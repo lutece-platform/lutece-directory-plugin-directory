@@ -939,13 +939,13 @@ public final class RecordFieldDAO implements IRecordFieldDAO
      */
     public List<RecordField> selectValuesList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin )
     {
-        List<RecordField> recordFieldList = new ArrayList<RecordField>( );
+        List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
         RecordField recordField;
         StringBuffer sbSQL = new StringBuffer( SQL_QUERY_SELECT_VALUES_RECORD_FIELD_LIST );
 
         sbSQL.append( SQL_WHERE + SQL_FILTER_ID_RECORD );
 
-        int nListEntryIdSize = lEntryId.size( );
+        int nListEntryIdSize = lEntryId.size(  );
 
         if ( nListEntryIdSize > 0 )
         {
@@ -964,7 +964,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
             sbSQL.append( SQL_FILTER_CLOSE_PARENTHESIS );
         }
 
-        DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
         daoUtil.setInt( 1, nIdRecord );
 
         if ( nListEntryIdSize > 0 )
@@ -975,18 +975,18 @@ public final class RecordFieldDAO implements IRecordFieldDAO
             }
         }
 
-        daoUtil.executeQuery( );
+        daoUtil.executeQuery(  );
 
-        while ( daoUtil.next( ) )
+        while ( daoUtil.next(  ) )
         {
-            recordField = new RecordField( );
+            recordField = new RecordField(  );
             recordField.setIdRecordField( daoUtil.getInt( 1 ) ); // drf.id_record_field
             recordField.setValue( daoUtil.getString( 2 ) ); // drf.record_field_value
 
             recordFieldList.add( recordField );
         }
 
-        daoUtil.free( );
+        daoUtil.free(  );
 
         return recordFieldList;
     }
@@ -1002,7 +1002,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         DAOUtil daoUtil = new DAOUtil( SQL_UPDATE_VALUE_RECORD_FIELD, plugin );
         daoUtil.setString( 1, strNewValue );
         daoUtil.setInt( 2, nIdRecordField );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
     }
 }
