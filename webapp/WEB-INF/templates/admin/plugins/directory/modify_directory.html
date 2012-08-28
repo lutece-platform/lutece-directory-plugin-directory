@@ -6,6 +6,7 @@
 			<#assign id_group=entryType.idType>
 		</#if>	
 </#list>
+<link href="css/plugins/directory/directory.css" type="text/css" rel="stylesheet">
 <script type="text/javascript">
 
 	function doDisplayDirectoryAdvancedSettings(isChecked)
@@ -64,6 +65,20 @@
 	{
 		doDisplayDirectoryAdvancedSettings( false );
 	}
+	$(document).ready(function() {
+		$("#selectAll").change(  function() {
+			if ( this.checked )
+			{
+				// select all
+				$("input[name='id_entry']").prop( "checked", "checked");
+			}
+			else
+			{
+				// uncheck all
+				$("input[name='id_entry']").prop( "checked", "");
+			}
+		});
+	});
 </script>
 <div id="content-box-actions">	
 	  	<form id="button_advanced_settings" method="post" action="javascript:doDisplayDirectoryAdvancedSettings(true)" style="visibility:hidden;display:none;">
@@ -357,102 +372,115 @@
 	        </div>
         <br />
 	    <@paginationAdmin paginator=paginator combo=1/>
-        <table width="100%">
-          <tr> 
-            <th width="50%"> #i18n{directory.modify_directory.manage_entry.row_title}
-            </th>
-            <th width="26%"> #i18n{directory.modify_directory.manage_entry.row_type}
-            </th>
-            <th width="12%"> #i18n{directory.modify_directory.order}
-            </th>
-            <th width="12%%"> #i18n{directory.modify_directory.manage_entry.row_actions}
-            </th>
-          </tr>
-          
-          <#if entry_list?has_content>
-          	<#list entry_list as entry>
-          	
-          		<tr>
-	          			<#if entry.entryType.group>
-	              			<td>
-	            	
-	              			<a href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}"  class="bullet-link-blue" style="font-weight: bold;color: #364C5E;">
-	              				${entry.title}
-	              			</a>
-	              			</td>
-	              		<#elseif entry.parent?exists>
-	              			<td class="cell-indent">
-	               			 	<a href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}"  class="bullet-link">
-	               			 		<#if entry.entryType.comment>
-	              						${entry.comment}
-	              					<#else>
-										${entry.title}
-									</#if>
-	               			 </a>
-	              			</td>
-	              		<#else>
-	              			<td>
-	            				<a href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}" class="bullet-link">
-	              					<#if entry.entryType.comment>
-	              						${entry.comment}
-	              					<#else>
-										${entry.title}
-									</#if>
-							</a>
-							</td>
-						</#if>			
-	              	
-	            <td>
-	           		<#if !entry.entryType.group>
-	           			#i18n{${entry.entryType.titleI18nKey}}
-	           		</#if>
-	           </td>
-	           				
-		   	   <!--  Change the order of the attribute -->
-			   <#if entry.parent?exists>
-					<td class="cell-indent">
-						<form method="post" action="jsp/admin/plugins/directory/DoChangeOrderEntry.jsp">
-								<@comboOrders name="order_id" default_value=entry.position idParent=entry.parent.idEntry />
-					        	<input type="hidden" name="id_entry" id="id_entry" value="${entry.idEntry!}" />
-					        	<input type="hidden" name="id_parent" id="id_parent" value="${(entry.parent.idEntry)!}" />
-					        	<input class="button" type="submit" value="#i18n{directory.modify_directory.move}" />
-				         </form>				
-					</td>
-				<#else>
-					<td>
-						<form method="post" action="jsp/admin/plugins/directory/DoChangeOrderEntry.jsp">
-								<@comboOrders name="order_id" default_value=entry.position idParent=0 />
-					        	<input type="hidden" name="id_entry" id="id_entry" value="${entry.idEntry!}" />
-					        	<input type="hidden" name="id_parent" id="id_parent" value="${(entry.parent.idEntry)!}" />
-					        	<input class="button" type="submit" value="#i18n{directory.modify_directory.move}" />
-				         </form>					
-			 		</td>
-			   </#if> 		
-	           <td >
-	                 <#if entry.parent?exists>
-	                 	<a href="jsp/admin/plugins/directory/DoMoveOutEntry.jsp?id_entry=${entry.idEntry}#list">
-				         	 <img src="images/admin/skin/plugins/directory/actions/exit.png"  alt="#i18n{directory.modify_directory.manage_entry.title_go_out} " title="#i18n{directory.modify_directory.manage_entry.title_go_out} ">
-				      	</a>
-				      <#elseif !entry.entryType.group>
-				      	 <a href="jsp/admin/plugins/directory/MoveEntry.jsp?id_entry=${entry.idEntry}#list">
-				          	<img src="images/admin/skin/plugins/directory/actions/move.png" alt="#i18n{directory.modify_directory.manage_entry.title_move}" title="#i18n{directory.modify_directory.manage_entry.title_move}" />
-				      	</a>
-		       		</#if>
-				     <#if !entry.entryType.group>
-	           			<a href="jsp/admin/plugins/directory/DoCopyEntry.jsp?id_entry=${entry.idEntry}#list">
-				        	<img src="images/admin/skin/plugins/directory/actions/copy.png" alt="#i18n{directory.modify_directory.manage_entry.title_copy}" title="#i18n{directory.modify_directory.manage_entry.title_copy}" />
-				     	</a>
-				     </#if>	 
-	                <a href="jsp/admin/plugins/directory/ConfirmRemoveEntry.jsp?id_entry=${entry.idEntry}#list">
-	                  <img src="images/admin/skin/plugins/directory/actions/delete.png" alt="#i18n{directory.modify_directory.manage_entry.title_delete}" title="#i18n{directory.modify_directory.manage_entry.title_delete}" />
-	                </a>
-	             </td>
-				</tr>
-           	</#list>
-           </#if>
-          	
-          
-        </table> 
+		    <!--  Mass action -->
+			<div id="content-box-actions">
+				<span class="form-toolbar">
+		<form method="post" action="jsp/admin/plugins/directory/DoChangeOrderEntry.jsp" style="margin: 0px">
+					<#if entry_group_list?has_content>
+	        			<!-- List all entry of type group  -->
+	        			<@combo name="id_entry_group" default_value="" items=entry_group_list />
+					</#if>
+					<input id="submit-image" type="submit" value="" title="#i18n{directory.modify_directory.moveAll}" name="move" />
+				</span>
+			</div>
+  			<input name="id_directory" value="${directory.idDirectory}" type="hidden" />
+			<!--  Table of entry -->
+	        <table width="100%">
+	          <tr> 
+	            <th><input type="checkbox" name="selectAll" id="selectAll" value="selectAll" title="#i18n{directory.modify_directory.selectAll}" class="hide"/></th>
+	            <th width="50%"> #i18n{directory.modify_directory.manage_entry.row_title}
+	            </th>
+	            <th width="26%"> #i18n{directory.modify_directory.manage_entry.row_type}
+	            </th>
+	            <th width="14%"> #i18n{directory.modify_directory.order}
+	            </th>
+	            <th width="10%"> #i18n{directory.modify_directory.manage_entry.row_actions}
+	            </th>
+	          </tr>
+	          
+	          <#if entry_list?has_content>
+	          	<#list entry_list as entry>
+	          	
+	          		<tr>
+						 <td>			
+						 	<!--  add checkbox if entry isn't a group -->		 	
+		          			<#if !entry.entryType.group>
+						 		<input type="checkbox" name="id_entry" value="${entry.idEntry!}" title="#i18n{directory.modify_directory.select}" />
+						 	</#if>
+						 </td>
+		          			<#if entry.entryType.group>
+		              			<td>
+		            	
+		              			<a href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}"  class="bullet-link-blue" style="font-weight: bold;color: #364C5E;">
+		              				${entry.title}
+		              			</a>
+		              			</td>
+		              		<#elseif entry.parent?exists>
+		              			<td class="cell-indent">
+		               			 	<a href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}"  class="bullet-link">
+		               			 		<#if entry.entryType.comment>
+		              						${entry.comment}
+		              					<#else>
+											${entry.title}
+										</#if>
+		               			 </a>
+		              			</td>
+		              		<#else>
+		              			<td>
+		            				<a href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}" class="bullet-link">
+		              					<#if entry.entryType.comment>
+		              						${entry.comment}
+		              					<#else>
+											${entry.title}
+										</#if>
+								</a>
+								</td>
+							</#if>			
+		              	
+		            <td>
+		           		<#if !entry.entryType.group>
+		           			#i18n{${entry.entryType.titleI18nKey}}
+		           		</#if>
+		           </td>
+		           				
+			   	   <!--  Change the order of the attribute -->
+				   <#if entry.parent?exists>
+						<td class="cell-indent">
+							<@comboOrders name="order_id_${entry.idEntry!}" default_value=entry.position idParent=entry.parent.idEntry />
+				        	<input class="button" type="submit" name="move_${entry.idEntry!}" value="#i18n{directory.modify_directory.move}" />			
+						</td>
+					<#else>
+						<td>
+							<@comboOrders name="order_id_${entry.idEntry!}" default_value=entry.position idParent=0 />
+				        	<input class="button" type="submit" name="move_${entry.idEntry!}" value="#i18n{directory.modify_directory.move}" />				
+				 		</td>
+				   </#if> 		
+		           <td >
+		                 <#if entry.parent?exists>
+		                 	<a href="jsp/admin/plugins/directory/DoMoveOutEntry.jsp?id_entry=${entry.idEntry}#list">
+					         	 <img src="images/admin/skin/plugins/directory/actions/exit.png"  alt="#i18n{directory.modify_directory.manage_entry.title_go_out} " title="#i18n{directory.modify_directory.manage_entry.title_go_out} ">
+					      	</a>
+					      <#elseif !entry.entryType.group>
+					      	 <a href="jsp/admin/plugins/directory/MoveEntry.jsp?id_entry=${entry.idEntry}#list">
+					          	<img src="images/admin/skin/plugins/directory/actions/move.png" alt="#i18n{directory.modify_directory.manage_entry.title_move}" title="#i18n{directory.modify_directory.manage_entry.title_move}" />
+					      	</a>
+			       		</#if>
+					     <#if !entry.entryType.group>
+		           			<a href="jsp/admin/plugins/directory/DoCopyEntry.jsp?id_entry=${entry.idEntry}#list">
+					        	<img src="images/admin/skin/plugins/directory/actions/copy.png" alt="#i18n{directory.modify_directory.manage_entry.title_copy}" title="#i18n{directory.modify_directory.manage_entry.title_copy}" />
+					     	</a>
+					     </#if>	 
+		                <a href="jsp/admin/plugins/directory/ConfirmRemoveEntry.jsp?id_entry=${entry.idEntry}#list">
+		                  <img src="images/admin/skin/plugins/directory/actions/delete.png" alt="#i18n{directory.modify_directory.manage_entry.title_delete}" title="#i18n{directory.modify_directory.manage_entry.title_delete}" />
+		                </a>
+		             </td>
+					</tr>
+	           	</#list>
+	           </#if>
+	          	
+	          
+	        </table> 
+	    </form>
         <@paginationAdmin paginator=paginator />
     </div>
  <@initEditor />

@@ -63,5 +63,11 @@ th a.sort{
 	margin:0 4px 0 0;
 }
 
-
+#submit-image {
+	cursor: pointer;
+	width:24px;
+	height:24px;
+	border: none;
+	background: transparent url('../../../images/admin/skin/plugins/directory/actions/move.png') no-repeat center center;
+}
 

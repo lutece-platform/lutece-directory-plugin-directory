@@ -33,8 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
-import au.com.bytecode.opencsv.CSVReader;
-
 import fr.paris.lutece.plugins.directory.business.Category;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryAction;
@@ -109,13 +107,9 @@ import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -128,6 +122,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
+import au.com.bytecode.opencsv.CSVReader;
 
 
 /**
@@ -269,6 +268,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_DIRECTORY_RECORD = "directory_record";
     private static final String MARK_PERMISSION_CREATE_DIRECTORY = "permission_create_directory";
     private static final String MARK_ENTRY_LIST = "entry_list";
+    private static final String MARK_ENTRY_GROUP_LIST = "entry_group_list";
     private static final String MARK_ENTRY_LIST_FORM_MAIN_SEARCH = "entry_list_form_main_search";
     private static final String MARK_ENTRY_LIST_FORM_COMPLEMENTARY_SEARCH = "entry_list_form_complementary_search";
     private static final String MARK_ENTRY_LIST_SEARCH_RESULT = "entry_list_search_result";
@@ -384,6 +384,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_NUMBER_RECORD_PER_PAGE = "number_record_per_page";
     private static final String PARAMETER_PAGE_INDEX = "page_index";
     private static final String PARAMETER_ID_ENTRY = "id_entry";
+    private static final String PARAMETER_MOVE_BUTTON = "move";
+    private static final String PARAMETER_ID_ENTRY_GROUP = "id_entry_group";
     private static final String PARAMETER_ORDER_ID = "order_id";
     private static final String PARAMETER_ID_FIELD = "id_field";
     private static final String PARAMETER_ID_EXPRESSION = "id_expression";
@@ -901,6 +903,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
         }
 
+        // Get list of entry group for mass actions
+        filter = new EntryFilter( );
+        filter.setIdDirectory( nIdDirectory );
+        filter.setIsGroup( EntryFilter.FILTER_TRUE );
+        List<IEntry> listEntryGroup = EntryHome.getEntryList( filter, getPlugin( ) );
+
         ///////////////
         Map<String, List<Integer>> mapIdParentOrdersChildren = new HashMap<String, List<Integer>>(  );
 
@@ -1003,6 +1011,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_ENTRY_TYPE_LIST, EntryTypeHome.getList( getPlugin(  ) ) );
         model.put( MARK_DIRECTORY, directory );
         model.put( MARK_ENTRY_LIST, paginator.getPageItems(  ) );
+        model.put( MARK_ENTRY_GROUP_LIST, ReferenceList.convert( listEntryGroup, "idEntry", "title", true ) );
         model.put( MARK_NUMBER_FIELD, nNumberField );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage(  ) );
@@ -1075,39 +1084,99 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     {
         //gets the entry which needs to be changed (order)
         Plugin plugin = getPlugin(  );
-        String strEntryId = request.getParameter( PARAMETER_ID_ENTRY );
-        String strOrderToSet = request.getParameter( PARAMETER_ORDER_ID );
-        int nEntryId = 0;
-        int nOrderToSet = 0;
 
-        if ( StringUtils.isNotBlank( strEntryId ) )
+        String strEntryId = "";
+        String strOrderToSet = "";
+        Integer nEntryId = 0;
+        Integer nOrderToSet = 0;
+        String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+        int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+        IEntry entry;
+
+        // To execute mass action "Move into"
+        if ( request.getParameter( PARAMETER_MOVE_BUTTON ) != null )
         {
-            nEntryId = DirectoryUtils.convertStringToInt( strEntryId );
+            String strIdNewParent = request.getParameter( PARAMETER_ID_ENTRY_GROUP );
+            Integer nIdNewParent = 0;
+
+            if ( StringUtils.isNotBlank( strIdNewParent ) )
+            {
+                nIdNewParent = DirectoryUtils.convertStringToInt( strIdNewParent );
+            }
+
+            // gets the entries which needs to be changed
+            String[] entryToMoveList = request.getParameterValues( PARAMETER_ID_ENTRY );
+
+            // for each entry, move it into selected group
+            for ( String strIdEntryToMove : entryToMoveList )
+            {
+                IEntry entryToMove = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( strIdEntryToMove ),
+                        plugin );
+                IEntry entryParent = EntryHome.findByPrimaryKey( nIdNewParent, plugin );
+
+                if ( ( entryToMove == null ) || ( entryParent == null ) )
+                {
+                    return AdminMessageService.getMessageUrl( request, MESSAGE_SELECT_GROUP, AdminMessage.TYPE_STOP );
+                }
+
+                // Move entry into group if not allready in
+                if ( entryToMove.getParent( ) == null
+                        || ( entryToMove.getParent( ) != null && entryToMove.getParent( ).getIdEntry( ) != entryParent
+                                .getIdEntry( ) ) )
+                {
+                    this.doMoveEntryIntoGroup( plugin, entryToMove, entryParent );
+                }
+            }
         }
-
-        if ( StringUtils.isNotBlank( strOrderToSet ) )
-        {
-            nOrderToSet = DirectoryUtils.convertStringToInt( strOrderToSet );
-        }
-
-        IEntry entryToChangeOrder = EntryHome.findByPrimaryKey( nEntryId, plugin );
-
-        // entry goes up in the list 
-        if ( nOrderToSet < entryToChangeOrder.getPosition(  ) )
-        {
-            moveUpEntryOrder( plugin, nOrderToSet, entryToChangeOrder,
-                entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
-        }
-
-        // entry goes down in the list
+        // To change order of one entry
         else
         {
-            moveDownEntryOrder( plugin, nOrderToSet, entryToChangeOrder,
-                entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
+            EntryFilter filter = new EntryFilter( );
+            filter.setIdDirectory( nIdDirectory );
+            List<IEntry> entryList = EntryHome.getEntryList( filter, getPlugin( ) );
+
+            for ( int i = 0; i < entryList.size( ); i++ )
+            {
+                entry = entryList.get( i );
+                nEntryId = entry.getIdEntry( );
+                strEntryId = request.getParameter( PARAMETER_MOVE_BUTTON + "_" + nEntryId.toString( ) );
+                if ( StringUtils.isNotBlank( strEntryId ) )
+                {
+                    strEntryId = nEntryId.toString( );
+                    strOrderToSet = request.getParameter( PARAMETER_ORDER_ID + "_" + nEntryId.toString( ) );
+                    i = entryList.size( );
+                }
+            }
+
+            if ( StringUtils.isNotBlank( strEntryId ) )
+            {
+                nEntryId = DirectoryUtils.convertStringToInt( strEntryId );
+            }
+
+            if ( StringUtils.isNotBlank( strOrderToSet ) )
+            {
+                nOrderToSet = DirectoryUtils.convertStringToInt( strOrderToSet );
+            }
+
+            IEntry entryToChangeOrder = EntryHome.findByPrimaryKey( nEntryId, plugin );
+
+            // entry goes up in the list 
+            if ( nOrderToSet < entryToChangeOrder.getPosition( ) )
+            {
+                moveUpEntryOrder( plugin, nOrderToSet, entryToChangeOrder, entryToChangeOrder.getDirectory( )
+                        .getIdDirectory( ) );
+            }
+
+            // entry goes down in the list
+            else
+            {
+                moveDownEntryOrder( plugin, nOrderToSet, entryToChangeOrder, entryToChangeOrder.getDirectory( )
+                        .getIdDirectory( ) );
+            }
         }
 
         UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY );
-        url.addParameter( PARAMETER_ID_DIRECTORY, entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
+        url.addParameter( PARAMETER_ID_DIRECTORY, nIdDirectory );
 
         return url.getUrl(  );
     }
@@ -1881,7 +1950,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException(  );
         }
 
-        int nPosition = 1;
         entryToMove = EntryHome.findByPrimaryKey( _searchFields.getIdEntry(  ), plugin );
         entryGroup = EntryHome.findByPrimaryKey( nIdEntryGroup, plugin );
 
@@ -1890,11 +1958,23 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             return AdminMessageService.getMessageUrl( request, MESSAGE_SELECT_GROUP, AdminMessage.TYPE_STOP );
         }
 
+        doMoveEntryIntoGroup( plugin, entryToMove, entryGroup );
+
+        return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
+    }
+
+    /**
+     * Move EntryToMove into entryGroup
+     * @param plugin the plugin
+     * @param entryToMove
+     * @param entryGroup
+     */
+    private void doMoveEntryIntoGroup( Plugin plugin, IEntry entryToMove, IEntry entryGroup )
+    {
+        int nPosition;
         if ( ( entryGroup.getChildren(  ) != null ) && ( !entryGroup.getChildren(  ).isEmpty(  ) ) )
         {
             nPosition = entryGroup.getPosition(  ) + entryGroup.getChildren(  ).size(  ) + 1;
-
-            //nPosition = entryGroup.getChildren(  ).get( entryGroup.getChildren(  ).size(  ) - 1 ).getPosition(  ) + 1;
         }
 
         if ( entryToMove.getPosition(  ) < entryGroup.getPosition(  ) )
@@ -1910,8 +1990,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         entryToMove.setParent( entryGroup );
         EntryHome.update( entryToMove, plugin );
-
-        return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
     }
 
     /**
@@ -5317,14 +5395,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
             for ( IEntry entry : listAllEntry )
             {
-                if ( ( entry.getPosition(  ) < entryToChangeOrder.getPosition(  ) ) &&
-                        ( entry.getPosition(  ) > nOrderToSet ) )
+                if ( ( entry.getPosition( ) < entryToChangeOrder.getPosition( ) )
+                        && ( entry.getPosition( ) >= nOrderToSet ) )
                 {
                     entry.setPosition( entry.getPosition(  ) + 1 );
+                    EntryHome.update( entry, plugin );
                 }
             }
 
             entryToChangeOrder.setPosition( nOrderToSet );
+            EntryHome.update( entryToChangeOrder, plugin );
         }
     }
 }
