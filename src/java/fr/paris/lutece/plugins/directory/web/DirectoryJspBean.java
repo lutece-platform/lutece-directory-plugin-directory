@@ -903,11 +903,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
         }
 
-        // Get list of entry group for mass actions
+        // Get ReferenceList of entry group for mass actions
         filter = new EntryFilter( );
         filter.setIdDirectory( nIdDirectory );
         filter.setIsGroup( EntryFilter.FILTER_TRUE );
         List<IEntry> listEntryGroup = EntryHome.getEntryList( filter, getPlugin( ) );
+        ReferenceList entryGroupReferenceList = ReferenceList.convert( listEntryGroup, "idEntry", "title", true );
+        ReferenceItem emptyItem = new ReferenceItem( );
+        emptyItem.setCode( "" );
+        emptyItem.setName( "" );
+        entryGroupReferenceList.add( 0, emptyItem );
 
         ///////////////
         Map<String, List<Integer>> mapIdParentOrdersChildren = new HashMap<String, List<Integer>>(  );
@@ -1011,7 +1016,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_ENTRY_TYPE_LIST, EntryTypeHome.getList( getPlugin(  ) ) );
         model.put( MARK_DIRECTORY, directory );
         model.put( MARK_ENTRY_LIST, paginator.getPageItems(  ) );
-        model.put( MARK_ENTRY_GROUP_LIST, ReferenceList.convert( listEntryGroup, "idEntry", "title", true ) );
+        model.put( MARK_ENTRY_GROUP_LIST, entryGroupReferenceList );
         model.put( MARK_NUMBER_FIELD, nNumberField );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage(  ) );
@@ -1107,24 +1112,42 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             // gets the entries which needs to be changed
             String[] entryToMoveList = request.getParameterValues( PARAMETER_ID_ENTRY );
 
-            // for each entry, move it into selected group
-            for ( String strIdEntryToMove : entryToMoveList )
+            IEntry entryParent = EntryHome.findByPrimaryKey( nIdNewParent, plugin );
+            List<IEntry> listEntry = new ArrayList<IEntry>( );
+            if ( entryParent == null )
             {
-                IEntry entryToMove = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( strIdEntryToMove ),
-                        plugin );
-                IEntry entryParent = EntryHome.findByPrimaryKey( nIdNewParent, plugin );
+                EntryFilter filter = new EntryFilter( );
+                filter.setIdDirectory( nIdDirectory );
+                listEntry = EntryHome.getEntryList( filter, plugin );
+            }
+            Integer nListEntrySize = listEntry.size( );
 
-                if ( ( entryToMove == null ) || ( entryParent == null ) )
+            if ( entryToMoveList != null )
+            {
+                // for each entry, move it into selected group
+                for ( String strIdEntryToMove : entryToMoveList )
                 {
-                    return AdminMessageService.getMessageUrl( request, MESSAGE_SELECT_GROUP, AdminMessage.TYPE_STOP );
-                }
+                    IEntry entryToMove = EntryHome.findByPrimaryKey(
+                            DirectoryUtils.convertStringToInt( strIdEntryToMove ), plugin );
 
-                // Move entry into group if not allready in
-                if ( entryToMove.getParent( ) == null
-                        || ( entryToMove.getParent( ) != null && entryToMove.getParent( ).getIdEntry( ) != entryParent
-                                .getIdEntry( ) ) )
-                {
-                    this.doMoveEntryIntoGroup( plugin, entryToMove, entryParent );
+                    if ( ( entryToMove == null ) )
+                    {
+                        return AdminMessageService
+                                .getMessageUrl( request, MESSAGE_SELECT_GROUP, AdminMessage.TYPE_STOP );
+                    }
+
+                    // if entryParent is null, move out selected entries
+                    if ( entryParent == null && entryToMove.getParent( ) != null )
+                    {
+                        doMoveOutEntry( plugin, nIdDirectory, nListEntrySize, entryToMove );
+                    }
+                    // Move entry into group if not allready in
+                    else if ( ( entryParent != null )
+                            && ( entryToMove.getParent( ) == null || ( entryToMove.getParent( ) != null && entryToMove
+                                    .getParent( ).getIdEntry( ) != entryParent.getIdEntry( ) ) ) )
+                    {
+                        this.doMoveEntryIntoGroup( plugin, entryToMove, entryParent );
+                    }
                 }
             }
         }
@@ -1179,6 +1202,20 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         url.addParameter( PARAMETER_ID_DIRECTORY, nIdDirectory );
 
         return url.getUrl(  );
+    }
+
+    /**
+     * Move out entry (no parent)
+     * @param plugin the plugin
+     * @param nIdDirectory the id directory
+     * @param nListEntrySize the number of entry
+     * @param entryToMove the entry to move
+     */
+    private void doMoveOutEntry( Plugin plugin, int nIdDirectory, Integer nListEntrySize, IEntry entryToMove )
+    {
+        this.moveDownEntryOrder( plugin, nListEntrySize, entryToMove, nIdDirectory );
+        entryToMove.setParent( null );
+        EntryHome.update( entryToMove, plugin );
     }
 
     /**
@@ -2133,14 +2170,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         List<IEntry> listEntry;
         EntryFilter filter = new EntryFilter(  );
-        //filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
         filter.setIdDirectory( entry.getDirectory(  ).getIdDirectory(  ) );
         listEntry = EntryHome.getEntryList( filter, plugin );
+        Integer nListEntrySize = listEntry.size( );
 
-        this.moveDownEntryOrder( plugin, listEntry.size(  ), entry, entry.getDirectory(  ).getIdDirectory(  ) );
-
-        entry.setParent( null );
-        EntryHome.update( entry, plugin );
+        this.doMoveOutEntry( plugin, entry.getDirectory( ).getIdDirectory( ), nListEntrySize, entry );
 
         return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
     }
