@@ -1129,6 +1129,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 {
                     IEntry entryToMove = EntryHome.findByPrimaryKey(
                             DirectoryUtils.convertStringToInt( strIdEntryToMove ), plugin );
+                    entryParent = EntryHome.findByPrimaryKey( nIdNewParent, plugin );
 
                     if ( ( entryToMove == null ) )
                     {
