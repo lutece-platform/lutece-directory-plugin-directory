@@ -6,7 +6,6 @@
 			<#assign id_group=entryType.idType>
 		</#if>	
 </#list>
-<link href="css/plugins/directory/directory.css" type="text/css" rel="stylesheet">
 <script type="text/javascript">
 
 	function doDisplayDirectoryAdvancedSettings(isChecked)
@@ -205,6 +204,12 @@
  </div>
  	<div id="advanced_settings"  class="content-box">
 		<h2>#i18n{directory.create_directory.label_advancedsettings}</h2>
+			   <p>
+	    <label for="title">#i18n{directory.create_directory.label_title} * : </label>
+	    <input type="text" name="title" id="" size="80" value="${directory.title}" maxlength="255" />
+		 <br/>
+		<label>&nbsp;</label>#i18n{directory.create_directory.label_title_comment}
+	   </p>
 			<p>
 				<label for="">#i18n{directory.create_directory.label_show_date_creation} :</label>
 				<input name="date_shown_in_result_list" value="1" type="checkbox" <#if directory.isDateShownInResultList()>checked="checked"</#if>/>
@@ -378,14 +383,14 @@
 		<form method="post" action="jsp/admin/plugins/directory/DoChangeOrderEntry.jsp" style="margin: 0px">
 					<#if entry_group_list?has_content>
 	        			<!-- List all entry of type group  -->
-	        			<@combo name="id_entry_group" default_value="" items=entry_group_list />
+	        			<@combo name="id_entry_group" default_value="-1" items=entry_group_list />
 					</#if>
-					<input id="submit-image" type="submit" value="" title="#i18n{directory.modify_directory.moveAll}" name="move" />
+					<input type="image" src="images/admin/skin/plugins/directory/actions/move.png" value="#i18n{directory.modify_directory.moveAll}" title="#i18n{directory.modify_directory.moveAll}" name="move" />
 				</span>
 			</div>
   			<input name="id_directory" value="${directory.idDirectory}" type="hidden" />
 			<!--  Table of entry -->
-	        <table width="100%">
+	        <table width="100%" id="list">
 	          <tr> 
 	            <th><input type="checkbox" name="selectAll" id="selectAll" value="selectAll" title="#i18n{directory.modify_directory.selectAll}" class="hide"/></th>
 	            <th width="50%"> #i18n{directory.modify_directory.manage_entry.row_title}

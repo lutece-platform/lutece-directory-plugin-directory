@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
+import au.com.bytecode.opencsv.CSVReader;
+
 import fr.paris.lutece.plugins.directory.business.Category;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryAction;
@@ -107,9 +109,14 @@ import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -122,11 +129,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 
 /**
@@ -239,6 +241,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER = "directory.entry_type.remote_mylutece_user";
     private static final String PROPERTY_ENTRY_TYPE_NUMBERING = "directory.entry_type.numbering";
     private static final String PROPERTY_IMPORT_FIELD_PAGE_TITLE = "directory.import_field.page_title";
+    private static final String PROPERTY_FIRST_ITEM_ENTRY_GROUP = "directory.modify_directory.entryGroup.firstItem";
 
     //Markers
     private static final String MARK_HISTORY_LIST = "history_list";
@@ -415,6 +418,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_ACTIVATE_DIRECTORY_RECORD = "activate_directory_record";
     private static final String PARAMETER_IS_INDEXED = "is_indexed";
     private static final String PARAMETER_SELECTED_RECORD = "selected_record";
+    private static final String PARAMETER_ANCHOR_LIST = "list";
 
     //private static final String PARAMETER_NUMBER_LINES_IMPORTED = "number_lines_imported";
     //private static final String PARAMETER_NUMBER_LINES_ERROR = "number_lines_error";
@@ -450,6 +454,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Gets the DirectoryAdminSearchFields
+     * @return searchFields
      */
     public DirectoryAdminSearchFields getSearchFields(  )
     {
@@ -840,7 +845,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     public String getModifyDirectory( HttpServletRequest request )
         throws AccessDeniedException
     {
-        Plugin plugin = this.getPlugin(  );
         List<IEntry> listEntry = new ArrayList<IEntry>(  );
         List<IEntry> listEntryFirstLevel;
         int nNumberField;
@@ -904,14 +908,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         // Get ReferenceList of entry group for mass actions
-        filter = new EntryFilter( );
+        filter = new EntryFilter(  );
         filter.setIdDirectory( nIdDirectory );
         filter.setIsGroup( EntryFilter.FILTER_TRUE );
-        List<IEntry> listEntryGroup = EntryHome.getEntryList( filter, getPlugin( ) );
+
+        List<IEntry> listEntryGroup = EntryHome.getEntryList( filter, getPlugin(  ) );
         ReferenceList entryGroupReferenceList = ReferenceList.convert( listEntryGroup, "idEntry", "title", true );
-        ReferenceItem emptyItem = new ReferenceItem( );
-        emptyItem.setCode( "" );
-        emptyItem.setName( "" );
+        ReferenceItem emptyItem = new ReferenceItem(  );
+        emptyItem.setCode( "-1" );
+        emptyItem.setName( StringEscapeUtils.escapeHtml( I18nService.getLocalizedString( 
+                    PROPERTY_FIRST_ITEM_ENTRY_GROUP, getLocale(  ) ) ) );
         entryGroupReferenceList.add( 0, emptyItem );
 
         ///////////////
@@ -1090,8 +1096,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         //gets the entry which needs to be changed (order)
         Plugin plugin = getPlugin(  );
 
-        String strEntryId = "";
-        String strOrderToSet = "";
+        String strEntryId = StringUtils.EMPTY;
+        String strOrderToSet = StringUtils.EMPTY;
         Integer nEntryId = 0;
         Integer nOrderToSet = 0;
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
@@ -1099,7 +1105,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         IEntry entry;
 
         // To execute mass action "Move into"
-        if ( request.getParameter( PARAMETER_MOVE_BUTTON ) != null )
+        if ( request.getParameter( PARAMETER_MOVE_BUTTON + ".x" ) != null )
         {
             String strIdNewParent = request.getParameter( PARAMETER_ID_ENTRY_GROUP );
             Integer nIdNewParent = 0;
@@ -1113,62 +1119,68 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             String[] entryToMoveList = request.getParameterValues( PARAMETER_ID_ENTRY );
 
             IEntry entryParent = EntryHome.findByPrimaryKey( nIdNewParent, plugin );
-            List<IEntry> listEntry = new ArrayList<IEntry>( );
+            List<IEntry> listEntry = new ArrayList<IEntry>(  );
+
             if ( entryParent == null )
             {
-                EntryFilter filter = new EntryFilter( );
+                EntryFilter filter = new EntryFilter(  );
                 filter.setIdDirectory( nIdDirectory );
                 listEntry = EntryHome.getEntryList( filter, plugin );
             }
-            Integer nListEntrySize = listEntry.size( );
+
+            Integer nListEntrySize = listEntry.size(  );
 
             if ( entryToMoveList != null )
             {
                 // for each entry, move it into selected group
                 for ( String strIdEntryToMove : entryToMoveList )
                 {
-                    IEntry entryToMove = EntryHome.findByPrimaryKey(
-                            DirectoryUtils.convertStringToInt( strIdEntryToMove ), plugin );
+                    IEntry entryToMove = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( 
+                                strIdEntryToMove ), plugin );
                     entryParent = EntryHome.findByPrimaryKey( nIdNewParent, plugin );
 
                     if ( ( entryToMove == null ) )
                     {
-                        return AdminMessageService
-                                .getMessageUrl( request, MESSAGE_SELECT_GROUP, AdminMessage.TYPE_STOP );
+                        return AdminMessageService.getMessageUrl( request, MESSAGE_SELECT_GROUP, AdminMessage.TYPE_STOP );
                     }
 
                     // if entryParent is null, move out selected entries
-                    if ( entryParent == null && entryToMove.getParent( ) != null )
+                    if ( ( entryParent == null ) && ( entryToMove.getParent(  ) != null ) )
                     {
                         doMoveOutEntry( plugin, nIdDirectory, nListEntrySize, entryToMove );
                     }
+
                     // Move entry into group if not allready in
-                    else if ( ( entryParent != null )
-                            && ( entryToMove.getParent( ) == null || ( entryToMove.getParent( ) != null && entryToMove
-                                    .getParent( ).getIdEntry( ) != entryParent.getIdEntry( ) ) ) )
+                    else if ( ( entryParent != null ) &&
+                            ( ( entryToMove.getParent(  ) == null ) ||
+                            ( ( entryToMove.getParent(  ) != null ) &&
+                            ( entryToMove.getParent(  ).getIdEntry(  ) != entryParent.getIdEntry(  ) ) ) ) )
                     {
                         this.doMoveEntryIntoGroup( plugin, entryToMove, entryParent );
                     }
                 }
             }
         }
+
         // To change order of one entry
         else
         {
-            EntryFilter filter = new EntryFilter( );
+            EntryFilter filter = new EntryFilter(  );
             filter.setIdDirectory( nIdDirectory );
-            List<IEntry> entryList = EntryHome.getEntryList( filter, getPlugin( ) );
 
-            for ( int i = 0; i < entryList.size( ); i++ )
+            List<IEntry> entryList = EntryHome.getEntryList( filter, getPlugin(  ) );
+
+            for ( int i = 0; i < entryList.size(  ); i++ )
             {
                 entry = entryList.get( i );
-                nEntryId = entry.getIdEntry( );
-                strEntryId = request.getParameter( PARAMETER_MOVE_BUTTON + "_" + nEntryId.toString( ) );
+                nEntryId = entry.getIdEntry(  );
+                strEntryId = request.getParameter( PARAMETER_MOVE_BUTTON + "_" + nEntryId.toString(  ) );
+
                 if ( StringUtils.isNotBlank( strEntryId ) )
                 {
-                    strEntryId = nEntryId.toString( );
-                    strOrderToSet = request.getParameter( PARAMETER_ORDER_ID + "_" + nEntryId.toString( ) );
-                    i = entryList.size( );
+                    strEntryId = nEntryId.toString(  );
+                    strOrderToSet = request.getParameter( PARAMETER_ORDER_ID + "_" + nEntryId.toString(  ) );
+                    i = entryList.size(  );
                 }
             }
 
@@ -1185,22 +1197,23 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             IEntry entryToChangeOrder = EntryHome.findByPrimaryKey( nEntryId, plugin );
 
             // entry goes up in the list 
-            if ( nOrderToSet < entryToChangeOrder.getPosition( ) )
+            if ( nOrderToSet < entryToChangeOrder.getPosition(  ) )
             {
-                moveUpEntryOrder( plugin, nOrderToSet, entryToChangeOrder, entryToChangeOrder.getDirectory( )
-                        .getIdDirectory( ) );
+                moveUpEntryOrder( plugin, nOrderToSet, entryToChangeOrder,
+                    entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
             }
 
             // entry goes down in the list
             else
             {
-                moveDownEntryOrder( plugin, nOrderToSet, entryToChangeOrder, entryToChangeOrder.getDirectory( )
-                        .getIdDirectory( ) );
+                moveDownEntryOrder( plugin, nOrderToSet, entryToChangeOrder,
+                    entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
             }
         }
 
         UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY );
         url.addParameter( PARAMETER_ID_DIRECTORY, nIdDirectory );
+        url.setAnchor( PARAMETER_ANCHOR_LIST );
 
         return url.getUrl(  );
     }
@@ -2004,12 +2017,13 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     /**
      * Move EntryToMove into entryGroup
      * @param plugin the plugin
-     * @param entryToMove
-     * @param entryGroup
+     * @param entryToMove the entry to move
+     * @param entryGroup the entry parent
      */
     private void doMoveEntryIntoGroup( Plugin plugin, IEntry entryToMove, IEntry entryGroup )
     {
         int nPosition;
+
         if ( ( entryGroup.getChildren(  ) != null ) && ( !entryGroup.getChildren(  ).isEmpty(  ) ) )
         {
             nPosition = entryGroup.getPosition(  ) + entryGroup.getChildren(  ).size(  ) + 1;
@@ -2173,9 +2187,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         EntryFilter filter = new EntryFilter(  );
         filter.setIdDirectory( entry.getDirectory(  ).getIdDirectory(  ) );
         listEntry = EntryHome.getEntryList( filter, plugin );
-        Integer nListEntrySize = listEntry.size( );
 
-        this.doMoveOutEntry( plugin, entry.getDirectory( ).getIdDirectory( ), nListEntrySize, entry );
+        Integer nListEntrySize = listEntry.size(  );
+
+        this.doMoveOutEntry( plugin, entry.getDirectory(  ).getIdDirectory(  ), nListEntrySize, entry );
 
         return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
     }
@@ -2694,9 +2709,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Return management of directory record ( list of directory record ).
-     * Processes the required action detected by {@link DirectoryActionManager#getDirectoryAction(HttpServletRequest)}.
+     * Processes the required action detected by
+     * {@link DirectoryActionManager#getDirectoryAction(HttpServletRequest)}.
      * If no action found, then displays the record list.
      * @param request The Http request
+     * @param response the Http response
      * @throws AccessDeniedException the {@link AccessDeniedException}
      * @return IPluginActionResult
      */
@@ -3930,8 +3947,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     /**
      * return the resource history
      * @param request the httpRequest
+     * @throws AccessDeniedException AccessDeniedException
      * @return the resource history
-     * @throws AccessDeniedException
      */
     public String getResourceHistory( HttpServletRequest request )
         throws AccessDeniedException
@@ -4022,9 +4039,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return the record visualisation
-     * @param request
+     * @param request the Http request
      * @return the record visualisation
-     * @throws AccessDeniedException
+     * @throws AccessDeniedException AccessDeniedException
      */
     public String getRecordVisualisation( HttpServletRequest request )
         throws AccessDeniedException
@@ -4213,6 +4230,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * return url of the jsp print mass
      * @param request The HTTP request
      * @param nIdDirectory the directory id
+     * @param strIdStateList the list of id state
      * @return url of the jsp print mass
      */
     private String getJspPrintMass( HttpServletRequest request, int nIdDirectory, String strIdStateList )
@@ -4408,6 +4426,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * Display the states for print mass
      * @param request la requete
      * @return The URL to go after performing the action
+     * @throws AccessDeniedException AccessDeniedException
      */
     public String getMassPrint( HttpServletRequest request )
         throws AccessDeniedException
@@ -4438,6 +4457,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * Verify Print Mass
      * @param request la requete
      * @return The URL to go after performing the action
+     * @throws AccessDeniedException AccessDeniedException
      */
     public String doMassPrint( HttpServletRequest request )
         throws AccessDeniedException
@@ -4515,6 +4535,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * Display Print Mass
      * @param request la requete
      * @return The URL to go after performing the action
+     * @throws AccessDeniedException AccessDeniedException
      */
     public String getDisplayMassPrint( HttpServletRequest request )
         throws AccessDeniedException
@@ -4635,7 +4656,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * Modify directory parameter default values
      * @param request HttpServletRequest
      * @return JSP return
-     * @throws AccessDeniedException
+     * @throws AccessDeniedException AccessDeniedException
      */
     public String doModifyDirectoryParameterDefaultValues( HttpServletRequest request )
         throws AccessDeniedException
@@ -4668,7 +4689,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * Modify entry parameter default values
      * @param request HttpServletRequest
      * @return JSP return
-     * @throws AccessDeniedException
+     * @throws AccessDeniedException AccessDeniedException
      */
     public String doModifyEntryParameterDefaultValues( HttpServletRequest request )
         throws AccessDeniedException
@@ -4701,7 +4722,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * Modify directory parameter default values
      * @param request HttpServletRequest
      * @return JSP return
-     * @throws AccessDeniedException
+     * @throws AccessDeniedException AccessDeniedException
      */
     public String doModifyExportEncodingParameters( HttpServletRequest request )
         throws AccessDeniedException
@@ -4747,9 +4768,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return the record visualisation
-     * @param request
+     * @param request the Http request
      * @return the record visualisation
-     * @throws AccessDeniedException
+     * @throws AccessDeniedException AccessDeniedException
      */
     public String getMyLuteceUserVisualisation( HttpServletRequest request )
         throws AccessDeniedException
@@ -5044,11 +5065,14 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     }
 
     /**
-     * Get the request data and if there is no error insert the data in the field specified in parameter.
+     * Get the request data and if there is no error insert the data in the
+     * field specified in parameter.
      * return null if there is no error or else return the error page url
      * @param request the request
      * @param field field
+     * @param listImportValue the list of imports values
      * @return null if there is no error or else return the error page url
+     * @throws DirectoryErrorException DirectoryErrorException
      */
     private void getImportFieldData( HttpServletRequest request, Field field, String[] listImportValue )
         throws DirectoryErrorException
@@ -5194,9 +5218,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     }
 
     /**
-     * @param plugin
-     * @param listEntry
-     * @param listEntryFirstLevel
+     * @param plugin the plugin
+     * @param listEntry the list of all entry
+     * @param listEntryFirstLevel the list of entry first level
      */
     private void fillEntryListWithEntryFirstLevel( Plugin plugin, List<IEntry> listEntry,
         List<IEntry> listEntryFirstLevel )
@@ -5229,10 +5253,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Populate map with ( idParent : List<Orders> ) except for entry with
-     * parent
-     * null
-     * @param listEntry
-     * @param mapIdParentOrdersChildren
+     * parent null
+     * @param listEntry the list of all entry
+     * @param mapIdParentOrdersChildren map with (idParent : List<Orders>)
      */
     private void populateEntryMap( List<IEntry> listEntry, Map<String, List<Integer>> mapIdParentOrdersChildren )
     {
@@ -5264,7 +5287,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * @param plugin the plugin
      * @param nOrderToSet the new order for the attribute
      * @param entryToChangeOrder the attribute which will change
-     * @parem nIdDirectory the id of the directory
+     * @param nIdDirectory the id of the directory
      */
     private void moveDownEntryOrder( Plugin plugin, int nOrderToSet, IEntry entryToChangeOrder, int nIdDirectory )
     {
@@ -5362,7 +5385,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      * @param plugin the plugin
      * @param nOrderToSet the new order for the attribute
      * @param entryToChangeOrder the attribute which will change
-     * @parem nIdDirectory the id of the form
+     * @param nIdDirectory the id of the form
      */
     private void moveUpEntryOrder( Plugin plugin, int nOrderToSet, IEntry entryToChangeOrder, int nIdDirectory )
     {
@@ -5430,8 +5453,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
             for ( IEntry entry : listAllEntry )
             {
-                if ( ( entry.getPosition( ) < entryToChangeOrder.getPosition( ) )
-                        && ( entry.getPosition( ) >= nOrderToSet ) )
+                if ( ( entry.getPosition(  ) < entryToChangeOrder.getPosition(  ) ) &&
+                        ( entry.getPosition(  ) >= nOrderToSet ) )
                 {
                     entry.setPosition( entry.getPosition(  ) + 1 );
                     EntryHome.update( entry, plugin );
