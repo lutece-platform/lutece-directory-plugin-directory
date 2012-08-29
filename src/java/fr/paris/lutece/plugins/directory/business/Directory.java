@@ -79,6 +79,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     private static DirectoryResourceRssConfigRemovalListener _listenerDirectoryResourceRssConfigRemovalListener;
     private int _nIdDirectory;
     private String _strTitle;
+    private String _strFrontOfficeTitle;
     private String _strDescription;
     private String _strUnavailabilityMessage;
     private String _strWorkgroupKey;
@@ -195,6 +196,24 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     public void setTitle( String strTitle )
     {
         _strTitle = strTitle;
+    }
+
+    /**
+     *
+     * @return the front office title of the directory
+     */
+    public String getFrontOfficeTitle(  )
+    {
+        return _strFrontOfficeTitle;
+    }
+
+    /**
+     * set the front office title of the directory
+     * @param strFrontOfficeTitle the front office title of the directory
+     */
+    public void setFrontOfficeTitle( String strFrontOfficeTitle )
+    {
+        _strFrontOfficeTitle = strFrontOfficeTitle;
     }
 
     /**

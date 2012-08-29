@@ -42,7 +42,8 @@
             <#list result_list as result>
 
             <div>
-	            <a href="${result.url?xhtml}">${result.title}</a>
+	            <a href="${result.url?xhtml}"><#if result.frontOfficeTitle!?has_content && result.frontOfficeTitle!?trim != "">${result.frontOfficeTitle!}
+	            <#else>${result.title!}</#if></a>
 	            <#if result.date?has_content>
 	                    ${result.date?date?string.short}
 	            </#if>
@@ -66,7 +67,8 @@
 			<ul>	      
 				<#list directory_list as directory>
 					<li>
-						<a href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" >${directory.title}</a>       
+						<a href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" ><#if directory.frontOfficeTitle!?has_content && directory.frontOfficeTitle!?trim != "">${directory.frontOfficeTitle!}
+	            <#else>${directory.title!}</#if></a>       
 					</li>
 				</#list>
 			</ul>    

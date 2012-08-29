@@ -193,6 +193,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MESSAGE_ERROR_EXPORT_ENCODING_NOT_SUPPORTED = "directory.message.error.export.encoding.not_supported";
     private static final String MESSAGE_ERROR_GENERIC_MESSAGE = "directory.message.error.genericMessage";
     private static final String FIELD_TITLE = "directory.create_directory.label_title";
+    private static final String FIELD_FRONT_OFFICE_TITLE = "directory.create_directory.label_title_front";
     private static final String FIELD_DESCRIPTION = "directory.create_directory.label_description";
     private static final String FIELD_TITLE_FIELD = "directory.create_field.label_title";
     private static final String FIELD_VALUE_FIELD = "directory.create_field.label_value";
@@ -376,6 +377,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_ID_DIRECTORY = DirectoryUtils.PARAMETER_ID_DIRECTORY;
     private static final String PARAMETER_ID_DIRECTORY_RECORD = "id_directory_record";
     private static final String PARAMETER_TITLE = "title";
+    private static final String PARAMETER_FRONT_OFFICE_TITLE = "front_office_title";
     private static final String PARAMETER_DESCRIPTION = "description";
     private static final String PARAMETER_UNAVAILABILITY_MESSAGE = "unavailability_message";
     private static final String PARAMETER_ACTIVE = "active";
@@ -558,6 +560,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private String getDirectoryData( HttpServletRequest request, Directory directory, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
+        String strFrontOfficeTitle = request.getParameter( PARAMETER_FRONT_OFFICE_TITLE );
         String strDescription = request.getParameter( PARAMETER_DESCRIPTION );
         String strUnavailabilityMessage = request.getParameter( PARAMETER_UNAVAILABILITY_MESSAGE );
         String strWorkgroup = request.getParameter( PARAMETER_WORKGROUP );
@@ -669,6 +672,13 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         directory.setTitle( strTitle );
+
+        if ( strFrontOfficeTitle == null )
+        {
+            strFrontOfficeTitle = StringUtils.EMPTY;
+        }
+
+        directory.setFrontOfficeTitle( strFrontOfficeTitle );
         directory.setDescription( strDescription );
         directory.setUnavailabilityMessage( strUnavailabilityMessage );
         directory.setWorkgroup( strWorkgroup );

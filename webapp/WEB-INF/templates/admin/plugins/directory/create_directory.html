@@ -159,6 +159,12 @@
 					
 					<h2>#i18n{directory.create_directory.label_advancedsettings}</h2>
 					
+				   <p>
+					    <label for="front_office_title">#i18n{directory.create_directory.label_title_front} : </label>
+					    <input type="text" name="front_office_title" id="" size="80" value=""  maxlength="255"/>
+						 <br/>
+						<label>&nbsp;</label>#i18n{directory.create_directory.label_title_front_comment}
+				   </p>
 					<p>
 						<label for="">#i18n{directory.create_directory.label_show_date_creation} :</label>
 						<input name="date_shown_in_result_list" value="1" type="checkbox" ${getChecked('date_shown_in_result_list',list_param_default_values)} />

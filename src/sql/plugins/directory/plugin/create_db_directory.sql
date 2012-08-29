@@ -44,6 +44,7 @@ CREATE TABLE directory_directory (
   id_sort_entry VARCHAR(50) DEFAULT NULL,
   id_sort_entry_front VARCHAR(50) DEFAULT NULL,
   is_ascending_sort_front SMALLINT DEFAULT 1,
+  front_office_title VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY  (id_directory)
   );
 
