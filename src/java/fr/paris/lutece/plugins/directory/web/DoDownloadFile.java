@@ -47,16 +47,16 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.util.AppLogService;
-
-import org.apache.commons.lang.StringUtils;
+import fr.paris.lutece.util.filesystem.FileSystemUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -133,7 +133,12 @@ public class DoDownloadFile
             {
                 byte[] byteFileOutPut = physicalFile.getValue(  );
                 DirectoryUtils.addHeaderResponse( request, response, file.getTitle(  ) );
-                response.setContentType( file.getMimeType(  ) );
+				String strMimeType = file.getMimeType( );
+				if ( strMimeType == null )
+				{
+					strMimeType = FileSystemUtil.getMIMEType( file.getTitle( ) );
+				}
+				response.setContentType( strMimeType );
                 response.setContentLength( (int) byteFileOutPut.length );
 
                 OutputStream os = response.getOutputStream(  );

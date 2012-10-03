@@ -1,10 +1,12 @@
 <#if record_field.file?exists && entry?exists >
+		<a href="jsp/site/plugins/directory/DoDownloadFile.jsp?id_file=${record_field.file.idFile}">
 		<img  src="image?resource_type=directory_entry_img&id=${record_field.file.idFile}"
-		<#if entry.displayWidth!=-1>
-		  width="${entry.displayWidth}"
-		 </#if> 
-		<#if entry.displayHeight!=-1>
-		 	height="${entry.displayHeight}"
-		 </#if> 
+			<#if entry.displayWidth!=-1>
+			  width="${entry.displayWidth}"
+			</#if>
+			<#if entry.displayHeight!=-1>
+				height="${entry.displayHeight}"
+			</#if>
 		/>
-</#if>							
+		</a>
+</#if>
