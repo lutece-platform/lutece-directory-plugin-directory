@@ -52,20 +52,17 @@ import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.image.ImageUtil;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-
 import java.awt.image.BufferedImage;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
 import java.util.List;
 import java.util.Locale;
 
 import javax.imageio.ImageIO;
-
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -663,11 +660,19 @@ public class EntryTypeImg extends AbstractEntryTypeUpload
         {
             fieldFullImage.setShownInResultList( true );
         }
+		else
+		{
+			fieldFullImage.setShownInResultList( false );
+		}
 
         if ( request.getParameter( PARAMETER_IMAGE_SHOWN_IN_RESULT_RECORD ) != null )
         {
             fieldFullImage.setShownInResultRecord( true );
         }
+		else
+		{
+			fieldFullImage.setShownInResultRecord( false );
+		}
 
         fieldFullImage.setEntry( this );
         fieldFullImage.setValue( FIELD_IMAGE );
