@@ -35,7 +35,7 @@
 <#macro getRecordFieldHtml entry recordfield first>
 	<#if isEntryTypeGeolocation( entry )>
 		${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
-		<#if recordfield.field.title == 'address' && recordfield.value?has_content>
+		<#if recordfield.field?? && recordfield.field.title?? && recordfield.field.title == 'address' && recordfield.value?has_content>
 			<div class="form-element">
 				<#include "../../../skin/plugins/directory/" + entry.mapProvider.frontHtmlCode />
 				<br />
