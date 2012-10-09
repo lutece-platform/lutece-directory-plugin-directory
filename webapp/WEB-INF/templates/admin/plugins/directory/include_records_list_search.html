@@ -1,3 +1,13 @@
+<script type="text/javascript">
+
+$('#searchForm').keypress(function(e) {
+	if(e.keyCode === 13) {
+		$("#validate").click();
+	}
+});
+
+</script>
+
 <div class="highlight-box">
 	<input name="page" value="directory" type="hidden" />
     <input name="search_action" value="search_action" type="hidden" />
@@ -150,7 +160,8 @@
 		</div>
 	</#if>
 	<p>	
-  	 	<input type="submit" value="#i18n{directory.manage_directory_record.button_search}" class="button" name="search" />
+  	 	<input type="submit" value="#i18n{directory.manage_directory_record.button_search}" class="button" name="search" id="validate" />
   	 	<input type="button" value="#i18n{directory.manage_directory_record.button_reset}" class="button" name="reset" id="reset"/>
   	</p>
 </div>
+
