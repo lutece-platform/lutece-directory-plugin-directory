@@ -33,8 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
-import au.com.bytecode.opencsv.CSVReader;
-
 import fr.paris.lutece.plugins.directory.business.Category;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryAction;
@@ -109,14 +107,9 @@ import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -129,6 +122,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
+
+import au.com.bytecode.opencsv.CSVReader;
 
 
 /**
@@ -5474,5 +5473,46 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             entryToChangeOrder.setPosition( nOrderToSet );
             EntryHome.update( entryToChangeOrder, plugin );
         }
+    }
+
+    /**
+     * Updates the entries position for a directory
+     * @param request The HTTP request
+     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * @return The URL to go after performing the action
+     */
+    public String updateEntryOrder( HttpServletRequest request ) throws AccessDeniedException
+    {
+        Plugin plugin = getPlugin( );
+        String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+        int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+
+        EntryFilter filter = new EntryFilter( );
+        filter.setIdDirectory( nIdDirectory );
+        filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
+        List<IEntry> listEntryFirstLevel = EntryHome.getEntryList( filter, plugin );
+
+        int position = 1;
+        for ( IEntry entry : listEntryFirstLevel )
+        {
+            entry.setPosition( position );
+            EntryHome.update( entry, plugin );
+            position++;
+
+            EntryFilter filterSecondLevel = new EntryFilter( );
+            filterSecondLevel.setIdEntryParent( entry.getIdEntry( ) );
+            List<IEntry> listEntrySecondLevel = EntryHome.getEntryList( filterSecondLevel, plugin );
+            if ( listEntrySecondLevel != null )
+            {
+                for ( IEntry entrySecondLevel : listEntrySecondLevel )
+                {
+                    entrySecondLevel.setPosition( position );
+                    EntryHome.update( entrySecondLevel, plugin );
+                    position++;
+                }
+            }
+        }
+
+        return getJspModifyDirectory( request, nIdDirectory );
     }
 }
