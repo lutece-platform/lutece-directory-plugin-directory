@@ -1204,19 +1204,24 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
 
             IEntry entryToChangeOrder = EntryHome.findByPrimaryKey( nEntryId, plugin );
+            int nActualOrder = entryToChangeOrder.getPosition( );
 
-            // entry goes up in the list 
-            if ( nOrderToSet < entryToChangeOrder.getPosition(  ) )
+            // does nothing if the order to set is equal to the actual order
+            if ( nOrderToSet != nActualOrder )
             {
-                moveUpEntryOrder( plugin, nOrderToSet, entryToChangeOrder,
-                    entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
-            }
+                // entry goes up in the list 
+                if ( nOrderToSet < entryToChangeOrder.getPosition( ) )
+                {
+                    moveUpEntryOrder( plugin, nOrderToSet, entryToChangeOrder, entryToChangeOrder.getDirectory( )
+                            .getIdDirectory( ) );
+                }
 
-            // entry goes down in the list
-            else
-            {
-                moveDownEntryOrder( plugin, nOrderToSet, entryToChangeOrder,
-                    entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
+                // entry goes down in the list
+                else
+                {
+                    moveDownEntryOrder( plugin, nOrderToSet, entryToChangeOrder, entryToChangeOrder.getDirectory( )
+                            .getIdDirectory( ) );
+                }
             }
         }
 
