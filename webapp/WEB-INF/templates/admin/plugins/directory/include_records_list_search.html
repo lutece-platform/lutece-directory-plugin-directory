@@ -2,7 +2,8 @@
 
 $('#searchForm').keypress(function(e) {
 	if(e.keyCode === 13) {
-		$("#validate").click();
+		$("#searchForm").submit();
+		return false ;
 	}
 });
 
