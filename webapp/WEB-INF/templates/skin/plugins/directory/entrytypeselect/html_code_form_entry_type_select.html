@@ -8,37 +8,19 @@
 	</#if>
  <#return false>
 </#function>
-<div class="form-element">
-  <span class="form-label">
-	<label  for="${entry.idEntry}">	
-		${entry.title}
-	<#if entry.mandatory>
-		*
-	</#if>
-		: 
-	</label>
-	</span>
-	<span class="form-field-column">	 
+<div class="control-group">
+	<label class="control-label"  for="${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
+	<div class="controls"> 
 		<select name="${entry.idEntry}"  id="${entry.idEntry}">
 		<#if !entry.isMandatory() && entry.isAddValueAllSearch()>
 			<option value="">${entry.labelValueAllSearch!}</option>
 		</#if>
 		<#list entry.fields as field>
 			<option  value="${field.idField}"
-				<#if ( field.defaultValue && !default_values?has_content )||( default_values?has_content && isSelected (field.idField,default_values))>
-					selected ="selected"  
-				</#if>
-				>
-					${field.title}
+				<#if ( field.defaultValue && !default_values?has_content )||( default_values?has_content && isSelected (field.idField,default_values))>selected ="selected" </#if>>${field.title}
 			</option>	
 		</#list>
 		</select>
-	   </span>
-	   <#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="form-help">
-				<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
-					<span><pre> ${entry.helpMessage}</pre></span>
-				</a>
-			</span>
-		</#if>	
+		<#if entry.helpMessage?exists&&entry.helpMessage!=''><span class="help-text">${entry.helpMessage}</p></#if>	
+	</div>	
 </div>	

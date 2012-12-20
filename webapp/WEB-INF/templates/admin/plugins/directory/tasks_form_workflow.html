@@ -1,8 +1,9 @@
-<div class="content-box">
-  <h2> #i18n{directory.tasks_form_workflow.title}</h2>
-      <form action="jsp/admin/plugins/directory/DoSaveTasksFormWorkflow.jsp?plugin_name=directory" method="post" name="" id=""  enctype="multipart/form-data" >
-	   
-	   	<input name="id_action" value="${id_action}" type="hidden" />
+<div class="row-fluid">
+	<div class="span12">
+		<fieldset>
+		<legend> #i18n{directory.tasks_form_workflow.title}</legend>
+		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoSaveTasksFormWorkflow.jsp?plugin_name=directory" method="post" name="" id=""  enctype="multipart/form-data" >
+		<input name="id_action" value="${id_action}" type="hidden" />
 	   	<#if list_ids_directory_record?? && list_ids_directory_record?has_content>
 	   		<#list list_ids_directory_record as id_directory_record>
 	   			<input name="id_directory_record" value="${id_directory_record}" type="hidden" />
@@ -11,13 +12,16 @@
 	   	<#if show_action_result??>
 			<input type="hidden" name="show_action_result" value="1" />
 	   	</#if>
-	   	
-	   	${tasks_form}
-	   	
-	    <p>
-	  		<input type="submit" value="#i18n{workflow.tasks_form_test_workflow.button_save}" class="button" name="save" />
-	  		<input type="submit" value="#i18n{workflow.tasks_form_test_workflow.button_cancel}" class="button" name="cancel" />
-	   	</p>
-   		  
-   	</form>	  
+			${tasks_form}
+	   	<div class="form-actions">
+	  		<button class="btn btn-primary" type="submit" name="save">
+				<i class="icon-ok icon-white"></i>&nbsp;#i18n{workflow.tasks_form_test_workflow.button_save}
+			</button>
+	  		<button class="btn" type="button" name="cancel" >
+				<i class="icon-remove-circle icon-white"></i>&nbsp;#i18n{workflow.tasks_form_test_workflow.button_cancel}
+			</button>
+		</div>
+	    </form>	  
+   	</fieldset>
+	</div>
  </div>

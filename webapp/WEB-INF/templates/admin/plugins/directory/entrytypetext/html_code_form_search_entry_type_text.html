@@ -1,32 +1,16 @@
-<div class="form-element">
-	 <span class="form-label">
-		 <label for="${entry.idEntry}">	
-				${entry.title}: 
-		</label>
-		
-	</span>
-	 <span class="form-field-column">	 
-		<#list entry.fields as field>
-			<input type="text" name="${entry.idEntry}" id="${entry.idEntry}"  
-				<#if default_values?has_content>
-						<#list default_values as default_value>
-							value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}"
-						</#list>	 	
-			 	
-			 	<#else>
-					 value="" 
-				</#if>
-				
-				/>
-			</#list>
-			
-		</span>	
-		<#if entry.helpMessage?exists&&entry.helpMessageSearch!=''>
-			<span class="form-help">
-				<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
-					<span><pre> ${entry.helpMessageSearch}</pre></span>
-				</a>
-			</span>
-		</#if>	
-		
+<div class="control-group">
+	<label class="control-label" for="${entry.idEntry}">${entry.title}</label>
+	<#list entry.fields as field>
+	<div class="controls">
+		<input type="text" name="${entry.idEntry}" id="${entry.idEntry}"  
+		<#if default_values?has_content>
+			<#list default_values as default_value>
+				value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}"
+			</#list>	 	
+		<#else>
+			 value="" 
+		</#if> />
+	</#list>
+	<#if entry.helpMessage?exists&&entry.helpMessageSearch!=''><p class="help-block">${entry.helpMessageSearch}</p></#if>	
+	</div>
 </div>	

@@ -1,52 +1,4 @@
-<style type="text/css">
-	
-.arrow-up {
-	border: 30px solid #fff;
-	border-bottom: 10px solid #86CC63;
-	border-top: 0;
-	height: 0;
-	width:0; 
-	margin:10px auto 10px auto;
-	cursor: pointer;
-}
-.arrow-up:hover {
-	border-bottom-color: #5F8F47;
-}
-
-.arrow-down {
-	border: 30px solid #fff;
-	border-top: 10px solid #86CC63;
-	border-bottom: 0;
-	height: 0;
-	width:0; 
-	margin:10px auto 10px auto;
-	cursor: pointer;
-}
-.arrow-down:hover {
-	border-top-color: #5F8F47;
-}
-
-.directory-elem {
-	background-color:#efefef;
-	border-top:1px solid #dddddd;
-	border-bottom:1px solid #dddddd;
-	cursor: pointer;
-	padding-left:10px;
-}
-.directory-elem:hover {
-	background-color:#fff;
-}
-.odd {
-	background-color:#dddddd;/* fonce */
-	border-bottom:1px solid #fff;
-	border-top:1px solid #fff;
-}
-.actions {
-	white-space: nowrap;
-}
-</style>
 <script type="text/javascript">
-
 	$.fn.clearForm = function() 
 	{
 		return this.each(function() 
@@ -78,13 +30,8 @@
 				$( 'input[type="checkbox"].selected-id' ).attr( 'checked', false );
 			}
 		} );
-	});
-		
-			
-	//for datepicker questions
-	 $(document).ready(function () 
-	 {
-	 	var locale = "en-US";
+	
+	 	/*var locale = "en-US";
 	 	if(document.getElementById("locale") != null)
 	 	{
 	 		locale = document.getElementById("locale").innerHTML;
@@ -102,9 +49,15 @@
 	 	$( ".datepicker-element" ).each(function( i ){
 	 		//$(this).datepicker($.extend({showStatus: true}, $.datepicker.regional[locale]));
 	 		$(this).datepicker();
-	 	});
+	 	});*/
 	 });
 
+	$('#searchForm').keypress(function(e) {
+	if(e.keyCode === 13) {
+		$("#searchForm").submit();
+		return false ;
+	}
+});
 </script>
 
 <#-- Functions -->
@@ -128,23 +81,15 @@
 <#macro display_actions resource_actions >
    <#if resource_actions.workflow_action_list?exists>
     <#list resource_actions.workflow_action_list as action>
-  	  	<a href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
-  		<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}"
-					<#if action.icon.width!=-1>
-							  width="${action.icon.width}"
- 					</#if> 
-					<#if action.icon.height!=-1>
- 								height="${action.icon.height}"
-					</#if> 
-		title="${action.name}" alt="${action.name}"
-		/>
-	</a>
+  	  	<a class="btn btn-mini btn-primary" href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
+			<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}" <#if action.icon.width!=-1> width="${action.icon.width}" </#if><#if action.icon.height!=-1> height="${action.icon.height}"	</#if> title="${action.name}" alt="${action.name}"	/>
+		</a>
   	</#list>
      </#if>
-	<#list resource_actions.record.actions as action>
+	<#list resource_actions.record.actions?sort as action>
 		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
-	 	<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">
-	  		<img src="${action.iconUrl}" alt="${action.name}" title="${action.description}">
+	 	<a class="btn btn-mini <#if action.nameKey="directory.action.delete.name" || action.nameKey=="directory.action.disable.name" >btn-danger<#elseif action.nameKey="directory.action.enable.name">btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}" title="${action.description}">
+	  		<i class="${action.iconUrl} icon-white">&nbsp;</i>
 	  	</a>
 	</#if>
 </#list>

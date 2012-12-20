@@ -14,7 +14,8 @@
 <div class="form-element">
 	
 	 <span class="form-label">
-		<label for="${entry.idEntry}">	
+		<div class="control-group">
+		<label class="control-label" for="${entry.idEntry}">	
 			${entry.title}
 			<#if entry.mandatory>
 				*
@@ -34,9 +35,15 @@
    		</#if>
    		<span class="form-field-column">
 			<#if addressField?has_content && addressField.value?has_content>
-    			<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${addressField.value}" size="50" maxlength="255" />
+    			<div class="controls">
+	<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${addressField.value}" size="50" maxlength="255" />
+		</div>
+	</div>
     		<#else>
-    			<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="" size="50" maxlength="255" />
+    			<div class="controls">
+	<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="" size="50" maxlength="255" />
+		</div>
+	</div>
     		</#if>
 		</span>
 		 <#if entry.helpMessage?exists&&entry.helpMessage!=''>
@@ -50,7 +57,8 @@
 <#if !xField?has_content || !xField.value?has_content || xField.value == '0'>
 <div class="form-element">
 	<span class="form-label">
-		<label for="">&nbsp;</label>
+		<div class="control-group">
+		<label class="control-label" for="">&nbsp;</label>
 	</span>
 	<span class="form-field-column" id="${entry.idEntry}_noGeolocation">
 		#i18n{directory.message.noGeolocation}

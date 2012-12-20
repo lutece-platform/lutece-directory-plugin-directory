@@ -10,7 +10,8 @@
 </#function>
 <div class="form-element">
 	<span class="form-label">
-		<label  for="${entry.idEntry}">	
+		<div class="control-group">
+		<label class="control-label"  for="${entry.idEntry}">	
 			${entry.title}
 		<#if entry.mandatory>
 			*
@@ -20,8 +21,11 @@
 	</span>
 	<span class="form-field-column">	 
 		<#list entry.fields as field>
-			<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" size="${field.width}" 
+			<div class="controls">
+	<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" size="${field.width}" 
 				<#if field.value?exists && !default_values?has_content >
+		</div>
+	</div>
 					value="${field.value}" 
 			 	<#elseif default_values?has_content>
 					<#list default_values as default_value>

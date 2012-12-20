@@ -1,298 +1,249 @@
 <#include "/admin/plugins/directory/commons.html" />
 <#include "/admin/util/editor/editor.html" />
-<script type="text/javascript">
-	function doDisplayMultipleSearchFields()
-	{
-		if(document.getElementById("indexed").checked)
-		{
-			displayId("show_multiple_search_fields");
-		} 
-		else 
-		{
-			hideId("show_multiple_search_fields");
-			
-		}
-	}
-	function doDisplayDateModificationMultipleSearchFields()
-	{
-		if(document.getElementById('date_modification_indexed').checked)
-		{
-			displayId('date_modification_show_multiple_search_fields');
-		} 
-		else 
-		{
-			hideId('date_modification_show_multiple_search_fields');			
-		}
-	}
-	function addAllSearch()
-	{
-		var inputAllSearch = document.getElementById("is_all_search");
-		if(inputAllSearch.checked)
-		{
-			document.getElementById("label_value_all_search").style.display="block";
-		}
-		else
-		{
-			document.getElementById("label_value_all_search").style.display="none";
-		}
-	 }
-</script>
-<div class="highlight-box">
-	<p>#i18n{directory.manage_advanced_parameters.label_create_directory_default_values}</p>
+<div class="row-fluid">
+	<div class="span12">
+	<fieldset>
+	</fieldset>
+	<legend>#i18n{directory.manage_advanced_parameters.label_create_directory_default_values}
+	<#if (right_xsl?exists && right_xsl) || (permission_index_all_directory?exists && permission_index_all_directory)>
+	<br />
+	<span class="pull-right">
+		<#if right_xsl?exists && right_xsl>
+		<a href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory" class="btn btn-primary btn-small" title="#i18n{directory.manage_plugin_directory.label_directory_xsl_comment}">
+			<i class="icon-cog icon-white"></i>&nbsp;#i18n{directory.manage_plugin_directory.label_directory_xsl}
+		</a>		
+		</#if>
+		<#if permission_index_all_directory?exists && permission_index_all_directory>
+		<a href="jsp/admin/plugins/directory/IndexAllDirectory.jsp?plugin_name=directory" class="btn btn-primary btn-small" title="#i18n{directory.manage_plugin_directory.index_all_directory_coment}">
+			<i class="icon-refresh icon-white"></i>&nbsp;#i18n{directory.manage_plugin_directory.index_all_directory}
+		</a>
+		</#if>
+		</span>
+	</#if>
+	</legend>
 	<form method="post" action="jsp/admin/plugins/directory/DoModifyDirectoryParameterDefaultValues.jsp">
-		<p>
-   			<label for="number_record_per_page">#i18n{directory.create_directory.label_number_record_per_page} : </label>
-  			<input type="text" name="number_record_per_page" id="number_record_per_page" size="5" value="${getName('number_record_per_page',list_directory_param_default_values)}" />
-  			<br/>
- 			<label>&nbsp;</label> #i18n{directory.create_directory.label_number_record_per_page_comment}
-		</p>
-		<p>
-			<label for="">#i18n{directory.create_directory.label_show_date_creation} :</label>
-			<input name="date_shown_in_result_list" value="1" type="checkbox" ${getChecked('date_shown_in_result_list',list_directory_param_default_values)} />
+		<label for="number_record_per_page">#i18n{directory.create_directory.label_number_record_per_page}</label>
+  		<input type="text" name="number_record_per_page" id="number_record_per_page" class="input-mini" value="${getName('number_record_per_page',list_directory_param_default_values)}" />
+  		<span class="help-text">&nbsp;#i18n{directory.create_directory.label_number_record_per_page_comment}</span>
+		<h5>#i18n{directory.create_directory.label_show_date_creation} </h5>
+		<label for="date_shown_in_result_list">
+			<input name="date_shown_in_result_list" id="date_shown_in_result_list" value="1" type="checkbox" ${getChecked('date_shown_in_result_list',list_directory_param_default_values)} />
 			#i18n{directory.create_entry.label_shown_in_result_list}
-			
-			<br />
-			<label>&nbsp;</label><input name="date_shown_in_result_record" value="1" type="checkbox" ${getChecked('date_shown_in_result_record',list_directory_param_default_values)} />
- 			#i18n{directory.create_entry.label_shown_in_result_record}
- 			
- 			<br />
-			<label>&nbsp;</label><input name="date_shown_in_history" value="1" type="checkbox" ${getChecked('date_shown_in_history',list_directory_param_default_values)} />
+		</label>
+		<label for="date_shown_in_result_record" class="checkbox">
+			<input name="date_shown_in_result_record" id="date_shown_in_result_record" value="1" type="checkbox" ${getChecked('date_shown_in_result_record',list_directory_param_default_values)} />
+			#i18n{directory.create_entry.label_shown_in_result_record}
+		</label>
+ 		<label for="date_shown_in_history" class="checkbox">
+			<input name="date_shown_in_history" id="date_shown_in_history" value="1" type="checkbox" ${getChecked('date_shown_in_history',list_directory_param_default_values)} />
 			#i18n{directory.create_entry.label_shown_in_history}
-			
-			
-			<br />
-			<label>&nbsp;</label><input name="date_shown_in_export" value="1" type="checkbox" ${getChecked('date_shown_in_export',list_directory_param_default_values)} />
+		</label>
+		<label for="date_shown_in_export" class="checkbox">
+			<input name="date_shown_in_export" id="date_shown_in_export" value="1" type="checkbox" ${getChecked('date_shown_in_export',list_directory_param_default_values)} />
 			#i18n{directory.create_entry.label_shown_in_export}
-			
-			<br />
-			<label>&nbsp;</label><input id="indexed" name="date_shown_in_search" value="1" type="checkbox" onclick="doDisplayMultipleSearchFields();" ${getChecked('date_shown_in_search',list_directory_param_default_values)} />
+		</label>
+		<label for="date_shown_in_search" class="checkbox">
+			<input id="date_shown_in_search" name="date_shown_in_search" value="1" type="checkbox" ${getChecked('date_shown_in_search',list_directory_param_default_values)} />
 			#i18n{directory.create_entry.label_indexed}
-			
-			<br />
-			<span id="show_multiple_search_fields" <#if getName('date_shown_in_search',list_directory_param_default_values)="0">style="visibility:hidden;display:none;"</#if>>
-				<label>&nbsp;</label><input name="date_shown_in_multi_search" value="1" type="checkbox" ${getChecked('date_shown_in_multi_search',list_directory_param_default_values)} />
+		</label>
+		<blockquote id="show_multiple_search_fields" >
+			<label for="" class="checkbox">
+				<input name="date_shown_in_multi_search" id="date_shown_in_multi_search" value="1" type="checkbox" ${getChecked('date_shown_in_multi_search',list_directory_param_default_values)} />
 				#i18n{directory.create_entry.label_multiple_search_fields}
-				<input name="date_shown_in_advanced_search" value="1" type="checkbox" ${getChecked('date_shown_in_advanced_search',list_directory_param_default_values)} />
+			</label>
+			<label for="" class="checkbox">
+				<input name="date_shown_in_advanced_search" id="date_shown_in_advanced_search" value="1" type="checkbox" ${getChecked('date_shown_in_advanced_search',list_directory_param_default_values)} />
 				#i18n{directory.create_entry.label_shown_in_advanced_search}
-			</span>
-		</p>
-		<p>
-			<label for="">#i18n{directory.create_directory.label_show_date_modification} :</label>
-			<input name="date_modification_shown_in_result_list" value="1" type="checkbox" ${getChecked('date_modification_shown_in_result_list',list_directory_param_default_values)} />
+			</label>
+		</blockquote>
+		<h5>#i18n{directory.create_directory.label_show_date_modification}</h5>
+		<label for="date_modification_shown_in_result_list" class="checkbox">
+			<input name="date_modification_shown_in_result_list" id="date_modification_shown_in_result_list" value="1" type="checkbox" ${getChecked('date_modification_shown_in_result_list',list_directory_param_default_values)} />
 			#i18n{directory.create_entry.label_shown_in_result_list}
-			
-			<br />
-			<label>&nbsp;</label><input name="date_modification_shown_in_result_record" value="1" type="checkbox" ${getChecked('date_modification_shown_in_result_record',list_directory_param_default_values)} />
- 			#i18n{directory.create_entry.label_shown_in_result_record}
- 			
- 			<br />
-			<label>&nbsp;</label><input name="date_modification_shown_in_history" value="1" type="checkbox" ${getChecked('date_modification_shown_in_history',list_directory_param_default_values)} />
+		</label>
+		<label for="date_modification_shown_in_result_record" class="checkbox">
+			<input name="date_modification_shown_in_result_record" id="date_modification_shown_in_result_record" value="1" type="checkbox" ${getChecked('date_modification_shown_in_result_record',list_directory_param_default_values)} />
+			#i18n{directory.create_entry.label_shown_in_result_record}
+		</label>
+ 		<label for="date_modification_shown_in_history" class="checkbox">
+			<input name="date_modification_shown_in_history" id="date_modification_shown_in_history" value="1" type="checkbox" ${getChecked('date_modification_shown_in_history',list_directory_param_default_values)} />
 			#i18n{directory.create_entry.label_shown_in_history}
-			
-			
-			<br />
-			<label>&nbsp;</label><input name="date_modification_shown_in_export" value="1" type="checkbox" ${getChecked('date_modification_shown_in_export',list_directory_param_default_values)} />
+		</label>
+		<label for="date_modification_shown_in_export" class="checkbox">
+			<input name="date_modification_shown_in_export" id="date_modification_shown_in_export" value="1" type="checkbox" ${getChecked('date_modification_shown_in_export',list_directory_param_default_values)} />
 			#i18n{directory.create_entry.label_shown_in_export}
-			
-			<br />
-			<label>&nbsp;</label><input id="date_modification_indexed" name="date_modification_shown_in_search" value="1" type="checkbox" onclick="doDisplayDateModificationMultipleSearchFields();" ${getChecked('date_modification_shown_in_search',list_directory_param_default_values)} />
+		</label>
+		<label for="date_modification_indexed" class="checkbox">
+			<input id="date_modification_indexed" name="date_modification_indexed" value="1" type="checkbox" ${getChecked('date_modification_shown_in_search',list_directory_param_default_values)} />
 			#i18n{directory.create_entry.label_indexed}
-			
-			<br />
-			<span id="date_modification_show_multiple_search_fields" <#if getName('date_modification_shown_in_search',list_directory_param_default_values)="0">style="visibility:hidden;display:none;"</#if>>
-				<label>&nbsp;</label><input name="date_modification_shown_in_multi_search" value="1" type="checkbox" ${getChecked('date_modification_shown_in_multi_search',list_directory_param_default_values)} />
+		</label>
+		<blockquote id="date_modification_show_multiple_searchs" >
+			<label for="date_modification_shown_in_multi_search" class="checkbox">
+				<input name="date_modification_shown_in_multi_search" id="date_modification_shown_in_multi_search" value="1" type="checkbox" ${getChecked('date_modification_shown_in_multi_search',list_directory_param_default_values)} />
 				#i18n{directory.create_entry.label_multiple_search_fields}
-				<input name="date_modification_shown_in_advanced_search" value="1" type="checkbox" ${getChecked('date_modification_shown_in_advanced_search',list_directory_param_default_values)} />
+			</label>
+			<label for="date_modification_shown_in_advanced_search" class="checkbox">
+				<input name="date_modification_shown_in_advanced_search" id="date_modification_shown_in_advanced_search" value="1" type="checkbox" ${getChecked('date_modification_shown_in_advanced_search',list_directory_param_default_values)} />
 				#i18n{directory.create_entry.label_shown_in_advanced_search}
-			</span>
-		</p>
-		<p>
-		    <label for="activate_directory_record">#i18n{directory.create_directory_record.activate_directory_record} : </label>
-		    <input name="activate_directory_record" value="1" type="checkbox" ${getChecked('activate_directory_record',list_directory_param_default_values)} />
-	   		<br/>
-		    <label>&nbsp;</label> #i18n{directory.create_directory_record.activate_directory_record_comment}
-		</p>
-		<p>
-		    <label for="is_indexed">#i18n{directory.create_directory.label.is_indexed} : </label>
-		    <input name="is_indexed" value="1" type="checkbox" ${getChecked('is_indexed',list_directory_param_default_values)} />
-	   		<br/>
-		    <label>&nbsp;</label> #i18n{directory.create_directory.label.is_indexed_comment}
-		</p>
-		<p>
-			<label for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} : </label>
-			<div class="editor" >
-			<textarea name="unavailability_message" id="unavailability_message" rows="20" cols="90" class="richtext"  style="width:100%">${getName('unavailability_message',list_directory_param_default_values)}</textarea>
-			<br/>
-			</div>	
-			<label>&nbsp;</label>
-			#i18n{directory.create_directory.label_unavailability_message_comment}   
-		</p>
-		<br />
-		<p>
-			<input type="submit" class="button" value="#i18n{directory.manage_advanced_parameters.buttonModify}" />
-		</p>
+			</label>
+		</blockquote>
+		<label for="activate_directory_record" class="checkbox">
+			<input name="activate_directory_record" id="activate_directory_record" value="1" type="checkbox" ${getChecked('activate_directory_record',list_directory_param_default_values)} />
+			#i18n{directory.create_directory_record.activate_directory_record}
+			<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_directory_record.activate_directory_record_comment}</span>
+		</label>
+	   <label for="is_indexed" class="checkbox">
+			<input name="is_indexed" id="is_indexed" value="1" type="checkbox" ${getChecked('is_indexed',list_directory_param_default_values)} />
+			#i18n{directory.create_directory.label.is_indexed}
+			<span class="help-text">&nbsp;&gt;&gt;&nbsp;&nbsp; #i18n{directory.create_directory.label.is_indexed_comment}</span>
+		</label>
+		<label for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} : </label>
+		<textarea name="unavailability_message" id="unavailability_message" rows="20" cols="90" class="richtext" style="width:80%">${getName('unavailability_message',list_directory_param_default_values)}</textarea>
+		<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_directory.label_unavailability_message_comment}   </span>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">
+				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.manage_advanced_parameters.buttonModify}
+			</button>
+		</div>
 	</form>
+	</div>
 </div>
-<div class="highlight-box">
-	<p>#i18n{directory.manage_advanced_parameters.label_create_entry_default_values}</p>
-	<form method="post" action="jsp/admin/plugins/directory/DoModifyEntryParameterDefaultValues.jsp">
-		<p>
-		    <label for="width">#i18n{directory.create_entry.label_presentation}:</label>
-		    <select id="field_in_line" name="field_in_line">
+<div class="row-fluid">
+	<div class="span12">
+	<fieldset>
+		<legend>#i18n{directory.manage_advanced_parameters.label_create_entry_default_values}</legend>
+		<form method="post" action="jsp/admin/plugins/directory/DoModifyEntryParameterDefaultValues.jsp">
+			<label for="width">#i18n{directory.create_entry.label_presentation}:</label>
+			<select id="field_in_line" name="field_in_line">
 				<option value=1 <#if getName('field_in_line',list_entry_param_default_values)="1">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_in_line}</option>
 				<option value=0 <#if getName('field_in_line',list_entry_param_default_values)="0">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_not_in_line}</option>
 			</select>
-		</p>
-		<p>
-	    	<label for="mandatory">#i18n{directory.create_entry.label_mandatory} :</label>
-	   		<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_entry_param_default_values)} />
-	   	</p>
-	   	<p>
-	    	<label for="indexed">#i18n{directory.create_entry.label_indexed} :</label>
-	   		<input name="indexed" value="1" type="checkbox" onclick="doDisplayMultipleSearchFields();" ${getChecked('indexed',list_entry_param_default_values)} />
-	   	</p>
-	   	<div id="show_multiple_search_fields">
-		   	 <p>
-		    	<label for="multiple_search_fields">#i18n{directory.create_entry.label_multiple_search_fields} : </label>
-		   		 <input name="multiple_search_fields" value="1" type="checkbox" ${getChecked('multiple_search_fields',list_entry_param_default_values)} />
-		   		 <br/>
-			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_multiple_search_fields_comment}
-		   	</p>
-	   	</div>
-		<p>
-	    	<label for="shown_in_advanced_search">#i18n{directory.create_entry.label_shown_in_advanced_search} :</label>
-	   		<input name="shown_in_advanced_search" value="1" type="checkbox" ${getChecked('shown_in_advanced_search',list_entry_param_default_values)} />
-	   		<br/>
-		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_advanced_search_comment}
-		</p>
-	   	<p>
-            <label for="indexed_as_title">#i18n{directory.create_entry.label_indexed_as_title} :</label>
-            <input name="indexed_as_title" value="1" type="checkbox" ${getChecked('indexed_as_title',list_entry_param_default_values)} />
-        </p>
-                <p>
-            <label for="indexed_as_summary">#i18n{directory.create_entry.label_indexed_as_summary} :</label>
-            <input name="indexed_as_summary" value="1" type="checkbox" ${getChecked('indexed_as_summary',list_entry_param_default_values)} />
-        </p>
-		<p>
-	    	<label for="shown_in_result_list">#i18n{directory.create_entry.label_shown_in_result_list} :</label>
-			<input name="shown_in_result_list" value="1" type="checkbox" ${getChecked('shown_in_result_list',list_entry_param_default_values)} />
-	   		<br/>
-		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_list_comment}
-		</p>	
-	   	<p>
-	    	<label for="shown_in_result_record">#i18n{directory.create_entry.label_shown_in_result_record} :</label>
-	   		<input name="shown_in_result_record" value="1" type="checkbox" ${getChecked('shown_in_result_record',list_entry_param_default_values)} />
-	   		<br/>
-		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_record_comment}
-		</p>	
-	   	<p>
-	    	<label for="shown_in_history">#i18n{directory.create_entry.label_shown_in_history} :</label>
-	   		<input name="shown_in_history" value="1" type="checkbox" ${getChecked('shown_in_history',list_entry_param_default_values)} />
-	   		<br/>
-		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_history_comment}
-		</p>
-		<p>
-		    <label for="width">#i18n{directory.create_entry.label_width}/#i18n{directory.create_entry.label_width_display} : </label>
-		    <input type="text" name="width" id="width" size="5" maxlength="100" value="${getName('width',list_entry_param_default_values)}" />
-		</p>
-		<br/>
-		<p>
-		    <label for="height">#i18n{directory.create_entry.label_height}/#i18n{directory.create_entry.label_height_display} : </label>
-		    <input type="text" name="height" id="height" size="5" maxlength="100" value="${getName('height',list_entry_param_default_values)}" />
-		</p>
-		<br/>
-		<p>
-	    	<label for="role_associated">#i18n{directory.create_entry.label_role_associated} :</label>
-	   		<input name="role_associated" value="1" type="checkbox" ${getChecked('role_associated',list_entry_param_default_values)} />
-	   		<br/>
-			<label>&nbsp;</label> #i18n{directory.create_entry.label_role_associated_comment}
-		</p>
-		<p>
-	    	<label for="workgroup_associated">#i18n{directory.create_entry.label_workgroup_associated} :</label>
-	   		<input name="workgroup_associated" value="1" type="checkbox" ${getChecked('workgroup_associated',list_entry_param_default_values)} />
-	   		<br/>
-		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_workgroup_associated_comment}
-		</p>
-		<p>
-			<label for="max_size_enter">#i18n{directory.create_entry.label_max_size_enter}  : </label>
-			<input type="text" name="max_size_enter" id="max_size_enter" size="5" maxlength="100" value="${getName('max_size_enter',list_entry_param_default_values)}" />
-		</p>
-		<p>
-	    	<label for="autocomplete_entry">#i18n{directory.create_entry.label_autocomplete_entry} :</label>
-	   		<input name="autocomplete_entry" value="1" type="checkbox" ${getChecked('autocomplete_entry',list_entry_param_default_values)} />
-	   		<br/>
-		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_autocomplete_entry_comment}
-		</p>
-		<p>
-	    	<label for="shown_in_export">#i18n{directory.create_entry.label_shown_in_export} :</label>
-	   		<input name="shown_in_export" value="1" type="checkbox" ${getChecked('shown_in_export',list_entry_param_default_values)} />
-	   		<br/>
-		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_export_comment}
-		</p>
-		<p>
-	    	<label for="shown_in_completeness">#i18n{directory.create_entry.label_shown_in_completeness} :</label>
-	   		<input name="shown_in_completeness" value="1" type="checkbox" ${getChecked('shown_in_completeness',list_entry_param_default_values)} />
-	   		<br/>
-		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_completeness_comment}
-		</p>
-		<p>
+			<label for="mandatory">
+				<input name="mandatory" id="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_mandatory}
+			</label>
+			<label for="indexed">
+				<input name="indexed" id="indexed" value="1" type="checkbox" ${getChecked('indexed',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_indexed}
+			</label>
+			<blockquote id="show_multiple_searchs">
+				<label for="multiple_search_fields">
+					<input name="multiple_search_fields" id="multiple_search_fields" value="1" type="checkbox" ${getChecked('multiple_search_fields',list_entry_param_default_values)} />
+					#i18n{directory.create_entry.label_multiple_search_fields}
+					<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_multiple_search_fields_comment}</span> 
+				</label>
+				<label for="shown_in_advanced_search">
+					<input name="shown_in_advanced_search" id="shown_in_advanced_search" value="1" type="checkbox" ${getChecked('shown_in_advanced_search',list_entry_param_default_values)} />
+					#i18n{directory.create_entry.label_shown_in_advanced_search}
+					<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_advanced_search_comment}</span> 
+				</label>
+			</blockquote>
+			<label for="indexed_as_title">
+				<input name="indexed_as_title" id="indexed_as_title" value="1" type="checkbox" ${getChecked('indexed_as_title',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_indexed_as_title}
+			</label>
+			<label for="indexed_as_summary">
+				<input name="indexed_as_summary" id="indexed_as_summary" value="1" type="checkbox" ${getChecked('indexed_as_summary',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_indexed_as_summary}
+			</label>
+			<label for="shown_in_result_list">
+				<input name="shown_in_result_list" id="shown_in_result_list" value="1" type="checkbox" ${getChecked('shown_in_result_list',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_shown_in_result_list}
+				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_result_list_comment}</span> 
+			</label>
+			<label for="shown_in_result_record">
+				<input name="shown_in_result_record" id="shown_in_result_record" value="1" type="checkbox" ${getChecked('shown_in_result_record',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_shown_in_result_record}
+				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_result_record_comment}</span> 
+			</label>
+			<label for="shown_in_history">
+				<input name="shown_in_history" id="shown_in_history" value="1" type="checkbox" ${getChecked('shown_in_history',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_shown_in_history}
+				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_history_comment}</span> 
+			</label>
+			<label for="width">#i18n{directory.create_entry.label_width}/#i18n{directory.create_entry.label_width_display} : </label>
+			<input type="text" name="width" id="width" class="input-mini" maxlength="100" value="${getName('width',list_entry_param_default_values)}" />
+			<label for="height">#i18n{directory.create_entry.label_height}/#i18n{directory.create_entry.label_height_display} : </label>
+			<input type="text" name="height" id="height" class="input-mini" maxlength="100" value="${getName('height',list_entry_param_default_values)}" />
+			<label for="role_associated">
+				<input name="role_associated" id="role_associated" value="1" type="checkbox" ${getChecked('role_associated',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_role_associated}
+				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_role_associated_comment}</span> 
+			</label>
+			<label for="workgroup_associated">
+				<input name="workgroup_associated" id="workgroup_associated" value="1" type="checkbox" ${getChecked('workgroup_associated',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_workgroup_associated}
+				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_workgroup_associated_comment}</span> 
+			</label>
+			<label for="max_size_enter">#i18n{directory.create_entry.label_max_size_enter}</label>
+			<input type="text" name="max_size_enter" id="max_size_enter" class="input-mini" maxlength="100" value="${getName('max_size_enter',list_entry_param_default_values)}" />
+			<label for="autocomplete_entry">
+				<input name="autocomplete_entry" id="autocomplete_entry" value="1" type="checkbox" ${getChecked('autocomplete_entry',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_autocomplete_entry}
+				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_autocomplete_entry_comment}</span> 
+			</label>
+			<label for="shown_in_export">
+				<input name="shown_in_export" id="shown_in_export" value="1" type="checkbox" ${getChecked('shown_in_export',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_shown_in_export}
+				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_export_comment}</span> 
+			</label>
+			<label for="shown_in_completeness">
+				<input name="shown_in_completeness" id="shown_in_completeness" value="1" type="checkbox" ${getChecked('shown_in_completeness',list_entry_param_default_values)} />
+				#i18n{directory.create_entry.label_shown_in_completeness}
+				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_completeness_comment}</span>
+			</label>
 			<label for="file_max_size">#i18n{directory.create_entry.label_file_max_size} :</label>
-			<input type="text" name="file_max_size" size="10" maxlength="255" value="${getName('file_max_size',list_entry_param_default_values)}" />
-		</p>
-		<p>
+			<input type="text" name="file_max_size" class="input-small" maxlength="255" value="${getName('file_max_size',list_entry_param_default_values)}" />
 			<label for="max_files">#i18n{directory.create_entry.label_max_files} :</label>
-			<input type="text" name="max_files" size="2" maxlength="255" value="${getName('max_files',list_entry_param_default_values)}" />
-		</p>
-		<p>
-			<input type="submit" class="button" value="#i18n{directory.manage_advanced_parameters.buttonModify}" />
-		</p>
-	</form>
-</div>
-
-<#if list_export_encoding_param?? && list_export_encoding_param?has_content>
-	<div class="highlight-box">
-		<p>#i18n{directory.manage_advanced_parameters.label_export_encoding_parameters}</p>
-		<form method="post" action="jsp/admin/plugins/directory/DoModifyExportEncodingParameters.jsp">
-			<p>
-				<label for="export_csv_encoding">#i18n{directory.manage_advanced_parameters.label_export_csv_encoding} * : </label>
-				<input type="text" name="export_csv_encoding" id="export_csv_encoding" size="20" maxlength="100" value="${getName('export_csv_encoding',list_export_encoding_param)}" />
-			</p>
-			<p>
-				<label for="export_xml_encoding">#i18n{directory.manage_advanced_parameters.label_export_xml_encoding} * : </label>
-				<input type="text" name="export_xml_encoding" id="export_xml_encoding" size="20" maxlength="100" value="${getName('export_xml_encoding',list_export_encoding_param)}" />
-			</p>
-			<p>
-				<input type="submit" class="button" value="#i18n{directory.manage_advanced_parameters.buttonModify}" />
-			</p>
+			<input type="text" name="max_files" class="input-mini" maxlength="255" value="${getName('max_files',list_entry_param_default_values)}" />
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">
+					<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.manage_advanced_parameters.buttonModify}
+				</button>
+			</div>
+		</fieldset>
 		</form>
 	</div>
-</#if>
-
-<#if (right_xsl?exists && right_xsl) || (permission_index_all_directory?exists && permission_index_all_directory)>
-	<div class="highlight-box">
-		<table>
-			<#if right_xsl?exists && right_xsl>
-				<tr>	
-					<td>
-						<a href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory" class="bullet-link">#i18n{directory.manage_plugin_directory.label_directory_xsl}</a>
-					</td>       
-					<td>    
-						#i18n{directory.manage_plugin_directory.label_directory_xsl_comment}
-					</td>
-				</tr>	
-			</#if>
-			<#if permission_index_all_directory?exists && permission_index_all_directory>
-				<tr>
-					<td>
-						<a href="jsp/admin/plugins/directory/IndexAllDirectory.jsp?plugin_name=directory" class="bullet-link">#i18n{directory.manage_plugin_directory.index_all_directory}</a>
-					</td>
-					<td>
-						#i18n{directory.manage_plugin_directory.index_all_directory_coment}
-					</td>
-				</tr>	
-			</#if>
-		</table>
+</div>
+<#if list_export_encoding_param?? && list_export_encoding_param?has_content>
+	<div class="row-fluid">
+		<div class="span12">
+		<fieldset>
+		<legend>#i18n{directory.manage_advanced_parameters.label_export_encoding_parameters}</legend>
+		<form method="post" action="jsp/admin/plugins/directory/DoModifyExportEncodingParameters.jsp">
+			<label for="export_csv_encoding">#i18n{directory.manage_advanced_parameters.label_export_csv_encoding} * : </label>
+			<input type="text" name="export_csv_encoding" id="export_csv_encoding" class="input-large" maxlength="100" value="${getName('export_csv_encoding',list_export_encoding_param)}" />
+			<label for="export_xml_encoding">#i18n{directory.manage_advanced_parameters.label_export_xml_encoding} * : </label>
+			<input type="text" name="export_xml_encoding" id="export_xml_encoding" class="input-large" maxlength="100" value="${getName('export_xml_encoding',list_export_encoding_param)}" />
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">
+					<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.manage_advanced_parameters.buttonModify}
+				</button>
+		</div>
+		</fieldset>
+		</form>
+		</div>
 	</div>
 </#if>
 
 <@initEditor />
+
+<script>
+<#if getName("date_modification_shown_in_search",list_directory_param_default_values)="0">$("#show_multiple_search_fields").hide();</#if>
+<#if getName("date_shown_in_search",list_directory_param_default_values)="0">$("#show_multiple_searchs").hide();</#if>
+<#if getName('date_modification_shown_in_search',list_directory_param_default_values)="0">$("#date_modification_show_multiple_searchs").hide();</#if>
+
+$(document).ready( function(){
+	$("#date_shown_in_search").click( function(){ 
+		$("#show_multiple_search_fields").toggle();
+	});
+
+	$("#indexed").click(function(){ 
+		$("#show_multiple_searchs").toggle();
+	});
+	
+	$("#date_modification_indexed").click(function(){ 
+		$("#date_modification_show_multiple_searchs").toggle();
+	});
+});
+</script>

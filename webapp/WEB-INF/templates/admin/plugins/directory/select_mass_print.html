@@ -1,19 +1,24 @@
-<div class="content-box">
-  <h2> #i18n{directory.mass_print.page_title}</h2>
-  <form method="post" action="jsp/admin/plugins/directory/DoMassPrint.jsp">
-   <div id="form-content">
-			<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-			 <#list state_list as state>
-			 	<p>
-					<label>${state.name}</label>
-		    		<input class="checkbox" type="checkbox" name="${state.id}" value="${state.id}" />
-				</p> 
-			 </#list>
-	</div>
-	<br/>
-	<p>
-		<input type="submit" name="print"  value="#i18n{directory.mass_print.print}" class="button"  />
-		<input class="button" type="button" onclick="javascript:window.location.href='jsp/admin/plugins/directory/ManageDirectoryRecord.jsp?id_directory=${directory.idDirectory!}'" value="#i18n{directory.mass_print.button_back}" />
-	</p>
+<div class="row-fluid">
+	<div class="span12">
+	<fieldset>
+	<legend> #i18n{directory.mass_print.page_title}</legend>
+	<form class="form-horizontal" method="post" action="jsp/admin/plugins/directory/DoMassPrint.jsp">
+		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+		 <#list state_list as state>
+		<div class="control-group">
+			<label class="control-label" >&nbsp;</label>
+				<div class="controls">
+					<label class="checkbox" for="${state.id}">
+						<input class="checkbox" type="checkbox" name="${state.id}" value="${state.id}" />${state.name}
+					</label>
+			</div>
+		</div>
+		</#list>
+		<div class="">
+			<button class="btn btn-primary" type="submit" >#i18n{directory.mass_print.print}</button>
+			<button class="btn btn-primary" onclick="javascript:window.location.href='jsp/admin/plugins/directory/ManageDirectoryRecord.jsp?id_directory=${directory.idDirectory!}'" >#i18n{directory.mass_print.button_back}</button>
+		</div>
+		</fieldset>
 	</form>
+	</div>
 </div>

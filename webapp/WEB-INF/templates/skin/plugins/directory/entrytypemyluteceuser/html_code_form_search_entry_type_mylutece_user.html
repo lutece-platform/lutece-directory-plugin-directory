@@ -6,35 +6,21 @@
   			</#if>
   		</#list>
 	</#if>
-	<#return false>
+ <#return false>
 </#function>
-<div class="form-element">
-	<span class="form-label">
-		<label  for="${entry.idEntry}">	
-			${entry.title}: 
-		</label>
-	</span>
-	<span class="form-field-column">	 
+<div class="control-group">
+	<label class="control-label"  for="${entry.idEntry}">${entry.title}</label>
+	<div class="controls">
 		<select name="${entry.idEntry}"  id="${entry.idEntry}">
 		<#if entry.isAddValueAllSearch()>
 			<option value="">${entry.labelValueAllSearch!}</option>
 		</#if>
 		<#list entry.myLuteceUsers?sort_by('name') as user>
-			<option  value="${user.code}"
-				<#if default_values?has_content && isSelected (user.code,default_values)>
-					selected ="selected"  
-				</#if>
-			>
-				${user.name}
-			</option>
+			<option  value="${user.code}"<#if default_values?has_content && isSelected (user.code,default_values)>selected ="selected" </#if>>${user.name}</option>	
 		</#list>
 		</select>
-	</span>
-	<#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''>
-		<span class="form-help">
-			<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
-				<span><pre> ${entry.helpMessageSearch}</pre></span>
-			</a>
-		</span>
-	</#if>
+		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+			<span class="help-text">${entry.helpMessage}</p>
+		</#if>
+	</div>
 </div>

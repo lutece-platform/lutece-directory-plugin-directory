@@ -1,14 +1,21 @@
 <#include "include_records_list_header.html">
-<form action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="post" id="searchForm" >
-	<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-	<input type="hidden" name="session" value="session" />
-
-	<#include "include_directory_actions.html">
-	<div class="content-box">
-		<h2> #i18n{directory.manage_directory_record.title}: '${directory.title}'</h2>
-		<div class="content-box-content">
-			<#include "include_records_list_search.html">
+<div class="row-fluid">
+	<div class="span12">
+		<form class="form-horizontal" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="post" id="searchForm" >
+		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+		<input type="hidden" name="session" value="session" />
+		<input name="page" value="directory" type="hidden" />
+		<input name="search_action" value="search_action" type="hidden" />
+		<fieldset>
+			<legend>
+				#i18n{directory.manage_directory_record.title}: '${directory.title}'
+				<#include "include_directory_actions.html">
+			</legend>
+			<div class="well">
+				<#include "include_records_list_search.html">
+			</div>
 			<#include "include_records_list.html">
-		</div>
+		</fieldset>
+		</form>
 	</div>
-</form>
+</div>

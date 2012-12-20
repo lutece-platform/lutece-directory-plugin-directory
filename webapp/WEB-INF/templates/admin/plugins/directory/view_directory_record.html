@@ -36,14 +36,10 @@
 	<#if isEntryTypeGeolocation( entry )>
 		${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
 		<#if recordfield.field?? && recordfield.field.title?? && recordfield.field.title == 'address' && recordfield.value?has_content>
-			<div class="form-element">
 				<#include "../../../skin/plugins/directory/" + entry.mapProvider.frontHtmlCode />
-				<br />
-			</div>
 		</#if>
 	<#else>
 		<#if !first>
-			<label>&nbsp;</label>
 		</#if>
 		<#if isEntryTypeImage( entry )>    						
 			<#if recordfield.field?? & recordfield.field.isShownInResultRecord(  )>
@@ -54,8 +50,6 @@
 		<#else>
 			${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
 		</#if>
-		<br/>
-		<br/>
 	</#if>
 </#macro>
 
@@ -67,32 +61,26 @@
 <#macro display_actions resource_actions >
 	<#if resource_actions.workflow_action_list?exists>
 		<#list resource_actions.workflow_action_list as action>
-			<a href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
-				<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}"
-					<#if action.icon.width!=-1>
-						width="${action.icon.width}"
- 					</#if> 
-					<#if action.icon.height!=-1>
-						height="${action.icon.height}"
-					</#if> 
-					title="${action.name}" alt="${action.name}"
-				/>
+			<a class="btn btn-small btn-primary" href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
+				<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}" <#if action.icon.width!=-1>	width="${action.icon.width}"</#if><#if action.icon.height!=-1> height="${action.icon.height}"</#if> title="${action.name}" alt="${action.name}"/>
 			</a>
 		</#list>
 	</#if>
-	<#list resource_actions.record.actions as action>
+	<br>
+	<#list resource_actions.record.actions?sort as action>
 		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
-	 		<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">
-	  			<img src="${action.iconUrl}" alt="${action.name}" title="${action.description}">
-	  		</a>
+	 	<a class="btn btn-small <#if action.nameKey="directory.action.delete.name" || action.nameKey=="directory.action.disable.name" >btn-danger<#elseif action.nameKey="directory.action.enable.name">btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}" title="${action.description}">
+	  		<i class="${action.iconUrl} icon-white">&nbsp;</i>
+	  	</a>
 		</#if>
-	</#list>
+		</#list>
+	</p>
 </#macro>
-
-<div id="left">
-	<div class="content-box">
-		<h2>#i18n{directory.viewing_directory_record.labelRecord} ${record.idRecord}</h2>
-		<table>
+<div class="row-fluid">
+	<div class="span4">
+		<fieldset>
+		<legend>#i18n{directory.viewing_directory_record.labelRecord} ${record.idRecord}</legend>
+		<table class="table table-striped table-condensed">
 			<tr>
 				<th>#i18n{directory.viewing_directory_record.labelDirectory}</th>
 			</tr>
@@ -119,67 +107,67 @@
 				</td>
 			</tr>
 		</table>
+		</fieldset>
 	</div>
-</div>
-<div id="right">
-	<div class="content-box">
-		<h2>
+	<div class="span8">
+		<fieldset>
+		<legend>
 			#i18n{directory.viewing_directory_record.title} : '${directory.title}'
 	  		<#if record.dateCreation?? && show_date_creation_record > - #i18n{directory.viewing_directory_record.date_creation} ${record.dateCreation}</#if>
 	  		<#if record.dateModification?? && show_date_modification_record > - #i18n{directory.viewing_directory_record.date_modification} ${record.dateModification}</#if>
-		</h2>
-	  <div id="form-content">
+		</legend>
 			<input name="page" value="directory" type="hidden" />
-			
-			 <#list entry_list as entry>	
-	      			<#if entry.entryType.group>	
-	      			  	<fieldset class="form-fieldset"> 
-	    					<legend class="form-legend"> ${entry.title} </legend>
-	      					<#if entry.children?has_content>
-	      						<#list entry.children as child >
-									<div class="clear">
-		      							<#if child.title?exists>
-			      							<label for="">${child.title} : </label>
-			      						 </#if> 	
-		      							<#assign entryKey=""+child.idEntry>	
-		      							<#assign first = true>
-		      							<#list map_id_entry_list_record_field[entryKey] as recordfield>
-		      								<@getRecordFieldHtml entry=child recordfield=recordfield first=first />
-		      						 		<#assign first = false>
-	      								</#list>
-		      						</div>
-	      						</#list>
-	      					</#if>
-	      				</fieldset>		
-	      			<#else>
-	      				<div class="clear">
-		      				<#assign entryKey=""+entry.idEntry>	
-	    					<#assign first = true>
-		      				<#if entry.title?exists>
-		      					<label for="">${entry.title} : </label>
-		      				</#if>	
-		      				<#list map_id_entry_list_record_field[entryKey] as recordfield>
-	    						<@getRecordFieldHtml entry=entry recordfield=recordfield first=first />
-	   							<#assign first = false>
-	    					</#list>
-    					</div>
-	      			</#if>
-	      		</#list>
-	      		<br />
-	      		<form action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="get">
-			  		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-			  		<input type="hidden" name="session" value="session" />
-					<input class="button" type="submit" value="#i18n{directory.resource_history.buttonBack}" />
-			  	</form>
-		</div>
+			<#list entry_list as entry>	
+	      	<#if entry.entryType.group>	
+				<div class="control-group">
+				<label class="control-label"> ${entry.title} </label>
+	      		<#if entry.children?has_content>
+	      			<#list entry.children as child >
+						<div class="controls">
+						<#if child.title?exists>
+							<label for="">${child.title}</label>
+						</#if> 	
+		      			<#assign entryKey=""+child.idEntry>	
+		      			<#assign first = true>
+		      			<#list map_id_entry_list_record_field[entryKey] as recordfield>
+							<@getRecordFieldHtml entry=child recordfield=recordfield first=first />
+		      				<#assign first = false>
+	      				</#list>
+						</div>								
+	      			</#list>
+				</#if>
+	      		</div>
+   			<#else>
+  				<#assign entryKey=""+entry.idEntry>	
+   				<#assign first = true>
+      			<div class="control-group">
+				<#if entry.title?exists>
+					<label class="control-label" for="">${entry.title} : </label>
+				</#if>	
+				<#list map_id_entry_list_record_field[entryKey] as recordfield>
+					<div class="controls">
+						<@getRecordFieldHtml entry=entry recordfield=recordfield first=first />
+						<#assign first = false>
+  					</div>
+				</#list>
+  				</div>
+     		</#if>
+   		</#list>
+    	<form class="form-horizontal" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="get">
+	  	<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+	  	<input type="hidden" name="session" value="session" />
+		<div class="form-actions">
+			<button class="btn btn-small" type="submit" >
+				<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.resource_history.buttonBack}
+			</button>
+			</div>
+		</form>
 	</div>
 </div>
-<div class="clear">&nbsp;</div>
-
-<script language="JavaScript" type="text/javascript">
+<script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
+<script>
 //for datepicker questions
-$(document).ready(function () 
-{
+$(document).ready(function (){
 	var locale = "en-US";
 	if(document.getElementById("locale") != null)
 	{
@@ -188,15 +176,11 @@ $(document).ready(function ()
 
 	$.datepicker.setDefaults({
 		showOn: 'button', 
-		buttonImageOnly: true, 
-		buttonImage: 'js/jquery/plugins/ui/datepicker/calendar.png', 
-		buttonText: 'Calendar', 
 		showAnim: 'slideDown', 
 		speed: 'fast'
 	});
 
 	$( ".datepicker-element" ).each(function( i ){
-		/*$(this).datepicker($.extend({showStatus: true}, $.datepicker.regional[locale]));*/
 		$(this).datepicker();
 	});
 });

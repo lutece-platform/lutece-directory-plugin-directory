@@ -8,33 +8,17 @@
 	</#if>
  <#return false>
 </#function>
-<div class="form-element">
-  <span class="form-label">
-	<label  for="${entry.idEntry}">	
-		${entry.title}: 
-	</label>
-	</span>
-	<span class="form-field-column">	 
+<div class="control-group">
+	<label class="control-label"  for="${entry.idEntry}">${entry.title}</label>
+	<div class="controls"> 
 		<select name="${entry.idEntry}"  id="${entry.idEntry}">
 		<#if entry.isAddValueAllSearch()>
 			<option value="">${entry.labelValueAllSearch!}</option>
 		</#if>
 		<#list entry.fields as field>
-			<option  value="${field.idField}"
-				<#if  default_values?has_content && isSelected (field.idField,default_values)>
-					selected ="selected"  
-				</#if>
-				>
-					${field.title}
-			</option>	
+			<option  value="${field.idField}" <#if  default_values?has_content && isSelected (field.idField,default_values)>selected ="selected"</#if>>${field.title}</option>	
 		</#list>
 		</select>
-	   </span>
-	   <#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''>
-			<span class="form-help">
-				<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
-					<span><pre> ${entry.helpMessageSearch}</pre></span>
-				</a>
-			</span>
-		</#if>	
+	   <#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''><span class="help-text">${entry.helpMessageSearch}</p></#if>	
+	</div>	
 </div>	

@@ -1,5 +1,8 @@
-<span class="form-toolbar">
-	<@combo name="id_directory_xsl" default_value="" items=xsl_export_list />
-	<input type="image" name="export_search_result"  title="#i18n{directory.manage_directory_record.button_export_search_result}" src="images/admin/skin/plugins/directory/actions/export.png" />
-	<input type="image" name="export_search_all"  title="#i18n{directory.manage_directory_record.button_export_all_result}" src="images/admin/skin/plugins/directory/actions/export_all.png"/ >
-</span>
+<@comboWithParams name="id_directory_xsl" default_value="" additionalParameters="class=\"input-normal\"" items=xsl_export_list />
+<button class="btn btn-primary btn-small" type="button" name="export_search_result"  title="#i18n{directory.manage_directory_record.button_export_search_result}" >
+	<i class=" icon-download icon-white" ></i>
+</button>
+<button class="btn btn-primary btn-small" type="button" name="export_search_all"  title="#i18n{directory.manage_directory_record.button_export_all_result}" >
+	<i class=" icon-download-alt icon-white" ></i>
+</button>
+

@@ -1,56 +1,70 @@
-<div class="content-box">
- <h2>#i18n{directory.modify_field.title}:'${field.entry.title}'</h2>
- <form action="jsp/admin/plugins/directory/DoModifyField.jsp#list" method="post" name="" id=""  >
-  <input name="id_field" value="${field.idField}" type="hidden" />
-   <p>
-    	<label for="title">#i18n{directory.create_field.label_title} * : </label>
-    	<input type="text" name="title" id="title" size="80" value="${field.title}"  maxlength="255" />
-    </p>
-    <p>
-    	<label for="value">#i18n{directory.create_field.label_value} * : </label>
-    	<input type="text" name="value" id="value" size="80" value="${field.value}"/>
-    </p>
-  	<p>
-    	<label for="default_value">#i18n{directory.create_field.label_default_value}</label>
-    	<#if field.defaultValue>
-    		<input name="default_value" value="1" type="checkbox"  checked="checked">
-  		<#else>
-  			<input name="default_value" value="1" type="checkbox">
-  		</#if>
-  			
-  	</p>
-  
-  <#if field.entry.roleAssociated && role_list?exists >
-		    <p>
-		    	<label for="role">#i18n{directory.create_field.label_role} : </label>
-		       		<#if field.roleKey?exists>
-		       			<@combo name="role_key" default_value=field.roleKey items=role_list />
-		       		<#else>
-		       			<@combo name="role_key" default_value="none" items=role_list />
-		       		</#if>	
-				 <br/>
-			  	<label>&nbsp;</label>
-					#i18n{directory.create_field.label_role}
-			</p>
-	</#if>	
-  <#if field.entry.workgroupAssociated && user_workgroup_list?exists> 	
-	 <p>
-	    <label for="">#i18n{directory.create_field.label_workgroup}  : </label>
-	     <#if field.workgroup?exists>
-	    	 <@combo name="workgroup"  items=user_workgroup_list default_value=field.workgroup/>
-	    <#else>
-	    	<@combo name="workgroup"  items=user_workgroup_list default_value="all"/>
-	    </#if>	 
-		 <br/>
-		<label>&nbsp;</label>
-		#i18n{directory.create_field.label_workgroup_comment}
-	 </p>
- </#if>	
-  	 <p>
-  		<input type="submit" value="#i18n{directory.create_field.button_save}" class="button"  name="save" / >
-  		<input type="submit" value="#i18n{directory.create_field.button_cancel}" class="button" name="cancel" />
-   </p>
-  </form>
+<div class="row-fluid">
+	<div class="span12">
+	<fieldset>
+	<legend>#i18n{directory.modify_field.title}:'${field.entry.title}'</legend>
+		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyField.jsp#list" method="post" name="" id=""  >
+		<input name="id_field" value="${field.idField}" type="hidden" />
+			<div class="control-group">
+				<label class="control-label" for="title">#i18n{directory.create_field.label_title} *</label>
+				<div class="controls">
+					<input type="text" name="title" id="title" class="inout-xxlarge" value="${field.title}"  maxlength="255" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="value">#i18n{directory.create_field.label_value} *</label>
+				<div class="controls">
+					<input type="text" name="value" id="value" class="inout-xxlarge" value="${field.value}"/>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="">&nbsp;</label>
+				<div class="controls" for="default_value">
+					<label class="checkbox">#i18n{directory.create_field.label_default_value}
+					<#if field.defaultValue>
+						<input name="default_value" value="1" type="checkbox"  checked="checked">
+					<#else>
+						<input name="default_value" value="1" type="checkbox">
+					</#if>
+					</label>
+				</div>
+			</div>
+			<#if field.entry.roleAssociated && role_list?exists >
+				<div class="control-group">
+					<label class="control-label" for="role">#i18n{directory.create_field.label_role} : </label>
+					<div class="controls">
+					<#if field.roleKey?exists>
+						<@combo name="role_key" default_value=field.roleKey items=role_list />
+					<#else>
+						<@combo name="role_key" default_value="none" items=role_list />
+					</#if>	
+					<span class="help-text">#i18n{directory.create_field.label_role_comment}</span>
+					</div>
+				</div>
+			</#if>	
+			<#if field.entry.workgroupAssociated && user_workgroup_list?exists> 	
+				<div class="control-group">
+				<label class="control-label" for="">#i18n{directory.create_field.label_workgroup}  : </label>
+					<div class="controls">
+					<#if field.workgroup?exists>
+						<@combo name="workgroup"  items=user_workgroup_list default_value=field.workgroup/>
+					<#else>
+						<@combo name="workgroup"  items=user_workgroup_list default_value="all"/>
+					</#if>
+					<span class="help-text">#i18n{directory.create_field.label_workgroup_comment}</span>
+				</div>
+			</div>
+			</#if>	
+			<div class="form-actions">
+				<button class="btn btn-primary btn-small" type="submit" >
+					<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_field.button_cancel}
+					</button>
+				<button class="btn btn-small" type="submit" >
+					<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.create_field.button_save}
+				</button>
+			</div> 
+		</form>
+	</fieldset>
+	</div>
  </div>
 
 

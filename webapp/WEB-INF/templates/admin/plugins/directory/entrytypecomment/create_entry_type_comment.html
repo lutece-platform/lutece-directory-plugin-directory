@@ -1,18 +1,26 @@
- <#include "/admin/util/editor/editor.html" />
-<div class="content-box">
- <h2>#i18n{directory.create_entry.title_comment} : '${entry.directory.title}'</h2>
- <form action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
-   <input name="id_type" value="${entry.entryType.idType}" type="hidden" />
-	<p>
-     <label for="comment"> #i18n{directory.create_entry.label_comment} * : </label>
-	 <div  class="editor">
-		<textarea name="comment" id="comment" rows="20" cols="90" class="richtext"></textarea>
-    </div>
-     </p>
-  	<p>
-  		<input type="submit" value="#i18n{directory.create_entry.button_save}" class="button" name="save" />
-  		<input type="submit" value="#i18n{directory.create_entry.button_cancel}" class="button" name="cancel" />
-  	</p>
-  </form>
+<#include "/admin/util/editor/editor.html" />
+<div class="row-fluid">
+	<div class="span12">
+	<fieldset>
+	<legend>#i18n{directory.create_entry.title_comment} : '${entry.directory.title}'</legend>
+		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
+		<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
+		<div class="control-group">
+		<label class="control-label" for="comment"> #i18n{directory.create_entry.label_comment} * : </label>
+			<div  class="controls">
+				<textarea name="comment" id="comment" rows="10" style="width:100%" class="richtext"></textarea>
+			</div>
+		</div>
+		<div class="form-actions">
+			<button class="btn btn-primary btn-small" type="submit" name="save">
+				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_entry.button_save}
+			</button>
+			<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${idDirectory}" >
+				<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.create_entry.button_cancel}
+			</a>
+		</div>
+		</form>
+	</fieldset>
+	</div> 
  </div> 
  <@initEditor />

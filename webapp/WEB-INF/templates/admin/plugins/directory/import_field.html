@@ -1,49 +1,54 @@
-<div class="content-box">
-            
-    <h2> #i18n{directory.import_field.title} : '${entry.title}'</h2>
-    <form method="post" action="jsp/admin/plugins/directory/DoImportField.jsp" enctype="multipart/form-data">
-    	<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
+<div class="row-fluid">
+	<div class="span12">
+		<fieldset>
+        <legend> #i18n{directory.import_field.title} : '${entry.title}'</legend>
+		<form class="form-horizontal" method="post" action="jsp/admin/plugins/directory/DoImportField.jsp" enctype="multipart/form-data">
+		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
     	<input type="hidden" name="id_entry" value="${entry.idEntry}" />
-        <p>
-            <label for="file_import" >#i18n{directory.import_field.label_file} * : </label>
-            <input type="file" id="file_import" name="file_import" size="60" maxlength="100"/>
-        </p>
-         <p>
-            
-            <input type="submit" value="#i18n{directory.import_field.button_save}" class="button" onclick="showMessage();"/>
-            <a href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}">
-            	<input type="button" value="#i18n{directory.import_field.button_cancel}" class="button" />
-            </a>
-        </p>
-     </form>
-     <#if finish_import?exists && finish_import>
-    
-	    <div class="highlight-box" >
-			<h2>#i18n{directory.import_field.label_result}</h2>
-			<#if number_lines_imported?exists>
-				<p><strong>#i18n{directory.import_field.label_number_lines_imported} </strong>: ${number_lines_imported}</p>
-			</#if>	
-			<#if number_lines_error?exists>
-				<p><strong>#i18n{directory.import_field.label_number_lines_error} </strong>: ${number_lines_error}</p>
-			</#if>
-			<#if str_error?exists && number_lines_error?exists && number_lines_error!=0>
-				<p>
-					<pre>${str_error}</pre>
-				</p>
-			</#if>
+        <div class="control-group">
+			<label class="control-label" for="file_import" >#i18n{directory.import_field.label_file} * : </label>
+            <div class="controls">
+				<input type="file" id="file_import" name="file_import" size="60" maxlength="100"/>
+			</div>
 		</div>
-    </#if>
-     
-</div>
-<div id="message" style="display:none;">
-	<div style="text-align:center;background-color:#6E6E6E;">
-		<img src="images/local/skin/loadingAnimation.gif" />
-		<h1 style="color:#fff;font-weight:bold;vertical-align:middle;">#i18n{directory.import_field.message_wait_during_import}...<h1>
-	</div>
+        <div class="form-actions">
+			<button class="btn btn-primary" id="save" type="submit" >
+				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.import_field.button_save}
+			</button>
+			<a class="btn btn-primary" href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}">
+				<i class="icon-edit icon-white"></i>&nbsp;#i18n{directory.import_field.button_cancel}</button>
+			</a>
+		</div>
+        </fieldset>
+		</form>
+		<#if finish_import?exists && finish_import>
+			<div class="well" >
+				<p class="lead">#i18n{directory.import_field.label_result}</p>
+				<#if number_lines_imported?exists>
+					<strong>#i18n{directory.import_field.label_number_lines_imported} </strong>: ${number_lines_imported}
+				</#if>	
+				<#if number_lines_error?exists>
+					<strong>#i18n{directory.import_field.label_number_lines_error} </strong>: ${number_lines_error}
+				</#if>
+				<#if str_error?exists && number_lines_error?exists && number_lines_error!=0>
+					<div class="alert alert-error">${str_error}</div>
+				</#if>
+			</div>
+		</#if>
+		<div id="message">
+			<div class="alert alert-error">
+				<img src="images/local/skin/loadingAnimation.gif" />
+				<strong>#i18n{directory.import_field.message_wait_during_import}...</strong>
+			</div>
+		</div>
+    </div>
 </div>
 
 <script type="text/javascript">
-	function showMessage(  ) {
-		document.getElementById( 'message' ).style.display = 'block';
-	}
+$(document).ready(function(){
+	$("#message").hide();
+	$("#save").click(function () { 
+      $("#message").toggle();
+    });
+});
 </script>

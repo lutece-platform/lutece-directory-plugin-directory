@@ -1,10 +1,10 @@
-<div class="content-box">
-  <h2> #i18n{directory.resource_history.title}</h2>
-  
-     <form method="post"  action="jsp/admin/plugins/directory/DisplayMassPrint.jsp?id_directory=${idDirectory!}&id_state=${idState!}">
-   		
-        <@pagination paginator=paginator />
-	<!-- Number of feeds per page selector -->
+<div class="row-fluid">
+	<div class="span12">
+	<fieldset>
+		<legend>#i18n{directory.resource_history.title}</legend>
+		<form class="form-horizontal" method="post"  action="jsp/admin/plugins/directory/DisplayMassPrint.jsp?id_directory=${idDirectory!}&id_state=${idState!}">
+   		<@pagination paginator=paginator />
+		<!-- Number of feeds per page selector -->
         #i18n{directory.manage_directory_record.label_items_per_page} :
         <select name="items_per_page">
             <#list [ "50" , "100", "200" ] as nb>
@@ -15,57 +15,47 @@
             	</#if>
             </#list>
         </select>
-        <input type="submit" class="button" value="#i18n{directory.manage_directory_record.button_items_per_page}" />
-    </form>
-  
-   <#list history_list as history>
-   <div id="form-content">
-			
-			 <#list entry_list as entry>	
-	      			<#if entry.entryType.group>	
-	      			  	<fieldset class="form-fieldset"> 
-	    					 <legend class="form-legend"> ${entry.title} </legend> 
-	      					<#if entry.children?has_content>
-	      						<#list entry.children as child >
-	      							<#if child.title?exists>
-		      							<label for="">${child.title} : </label>
-		      						 </#if> 	
-		      							<#assign entryKey=""+child.idEntry>	
-		      							<#list history.map_id_entry_list_record_field[entryKey] as recordfield>
-		      							
-		      								${child.getHtmlRecordFieldValue( locale, recordfield,false )}
-		      								<br/>
-	      							</#list>
-	      							<br/>
-	      						</#list>
-	      					</#if>
-	      				</fieldset>		
-	      			<#else>
-	      				<#assign entryKey=""+entry.idEntry>	
-	      				<#if entry.title?exists>
-	      					<label for="">${entry.title} : </label>
-	      				</#if>	
-	      				<#list history.map_id_entry_list_record_field[entryKey] as recordfield>
-	      						
-    						${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
-       							<br/>
-    					</#list>	
-    					<br/>
-	      			</#if>	
-	      			
-	      		</#list>
-	 			
-		</div>
-   <div class="highlight-box">
-   	 ${history.resource_history}
-   </div> 
-   <div class="history"></div>
-   </#list>
-
-   <form action="jsp/admin/plugins/directory/MassPrint.jsp" method="post">
+        <button class="btn btn-primary" type="submit" >#i18n{directory.manage_directory_record.button_items_per_page}</button>
+		</form>
+	</fieldset>
+	<#list history_list as history>
+		<#list entry_list as entry>	
+			<#if entry.entryType.group>	
+				<div class="control-group">
+	      		<label class="control-label"> ${entry.title} </label> 
+	      		<#if entry.children?has_content>
+	      			<#list entry.children as child >
+		      			<div class="controls">
+	      				<#if child.title?exists>
+							<label for="">${child.title} : </label>
+		      			 </#if> 	
+		      			<#assign entryKey=""+child.idEntry>	
+		      			<#list history.map_id_entry_list_record_field[entryKey] as recordfield>
+							${child.getHtmlRecordFieldValue( locale, recordfield,false )}
+		      			</#list>
+						</div>	
+					</#list>
+				</div>	
+	      		</#if>
+	      	<#else>
+	      		<#assign entryKey=""+entry.idEntry>	
+				<div class="control-group">
+	      		<#if entry.title?exists>
+					<label class="control-label" for="">${entry.title} : </label>
+	      		</#if>	
+      				<#list history.map_id_entry_list_record_field[entryKey] as recordfield>
+   						${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
+    				</#list>	
+				</div>
+			</#if>	
+		</#list>
+		<div class="well">
+			${history.resource_history}
+		</div> 
+	</#list>
+		<form class="form-inline" action="jsp/admin/plugins/directory/MassPrint.jsp" method="post">
 		<input type="hidden" value="${idDirectory!}" name="id_directory"/>
-		<p>
-		<input class="button" type="submit" value="#i18n{directory.resource_history.buttonBack}"/>
-		</p>
-	</form>
+			<button class="btn btn-primary" type="submit" >#i18n{directory.resource_history.buttonBack}</button>
+		</form>
+	</div>
 </div>

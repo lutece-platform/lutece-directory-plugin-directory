@@ -1,7 +1,8 @@
 <div class="form-element">
 	
 	<span class="form-label">
-		<label for="entry_${entry.idEntry}">	
+		<div class="control-group">
+		<label class="control-label" for="entry_${entry.idEntry}">	
 			${entry.title}<#if entry.mandatory> * </#if> : 
 		</label>
 	</span>
@@ -13,7 +14,7 @@
 			<#if field.value?exists && !default_values?has_content>
 				<#assign field_value = field.value/>			
 			<#elseif default_values?has_content>
-				<#assign field_value = default_values[0].entry.convertRecordFieldValueToString(default_values[0],locale,true,false)/>
+				<#assign field_value = default_values[0].entry.convertRecordFieldValueToString(default_values[0],locale,false,false)/>
 		 	<#else>
 				<#assign field_value = ""/>
 			</#if>

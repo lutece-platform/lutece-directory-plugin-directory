@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <directory-form-search>
 	<![CDATA[
-	<div id="form-content">
-				<form action="jsp/site/Portal.jsp" method="post" id="searchForm">
+		<form action="jsp/site/Portal.jsp" method="post" id="searchForm" class="form">
 				<input name="search_action" value="search_action" type="hidden" />
 				<input type="hidden" name="page" value="directory">
 				<input type="hidden" name="id_directory" value="${directory.idDirectory}">
@@ -46,11 +45,14 @@
 						    </div>
 						 </div> 	
 					   </#if>
-		  			<div  id="form-buttons">
-		  			 	<input type="submit" value="#i18n{directory.xml_form_search.button_search}" class="-lutece-input -lutece-border-radius-mini" name="search" />
-		  			 	<input type="button" value="#i18n{directory.xml_form_search.button_reset}" class="-lutece-input -lutece-border-radius-mini" name="reset" id="reset" />
+		  			<div class="form-actions">
+		  			 	<button type="submit" class="btn btn-small btn-primary" name="search">
+							#i18n{directory.xml_form_search.button_search} 
+						</button>
+		  			 	<button type="button"  class="btn btn-small" name="reset" id="reset" >
+							#i18n{directory.xml_form_search.button_reset}
+						</button>
 		  			 </div> 	
 		</form>
-	</div>
 	]]>
 </directory-form-search>

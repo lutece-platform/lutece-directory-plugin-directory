@@ -1,63 +1,57 @@
 <#function defaultValueDateBegin default_values>
-		
-			<#list default_values as default_value>
-				<#if default_value.field?exists && default_value.field.idField=-2>  		
-	  				<#return entry.convertRecordFieldValueToString(default_value,locale,false,false)>
-	  			</#if>
-	  		</#list>
-	
-	 <#return "">
+	<#list default_values as default_value>
+		<#if default_value.field?exists && default_value.field.idField=-2>  		
+	  		<#return entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+	  	</#if>
+	</#list>
+	<#return "">
 </#function>
 <#function defaultValueDateEnd default_values>
-		
-			<#list default_values as default_value>
-				<#if default_value.field?exists && default_value.field.idField=-3>  		
-	  				<#return entry.convertRecordFieldValueToString(default_value,locale,false,false)>
-	  			</#if>
-	  		</#list>
-		
+	<#list default_values as default_value>
+		<#if default_value.field?exists && default_value.field.idField=-3>  		
+			<#return entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+		</#if>
+	</#list>
 	 <#return "">
 </#function>
-
-<div class="form-element">
- <span class="form-label">	
-	<label for="${entry.idEntry}">	
-		 ${entry.title}: 
-	</label>	
-   </span>
-  
-  <#if entry.multipleSearchFields>
-	   
-   <span class="form-field-column">	  
-	
-	<#if default_values?has_content>
-		#i18n{directory.html_code_form_search_entry_type_date.of}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_begin_${entry.idEntry}" id="date_begin_${entry.idEntry}" size="10" value="${defaultValueDateBegin(default_values)}" />
-		#i18n{directory.html_code_form_search_entry_type_date.to}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_end_${entry.idEntry}" id="date_end_${entry.idEntry}" size="10" value="${defaultValueDateEnd(default_values)}" />
-	
-	<#else>
-		#i18n{directory.html_code_form_search_entry_type_date.of}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_begin_${entry.idEntry}" id="date_begin_${entry.idEntry}" size="10" value="" />
-		#i18n{directory.html_code_form_search_entry_type_date.to}<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="date_end_${entry.idEntry}" id="date_end_${entry.idEntry}" size="10" value="" />
-	</#if>
-	 </span>
-  <#else> 
-		 <span class="form-field-column">	  
+<div class="control-group">
+	<label class="control-label" for="${entry.idEntry}">${entry.title}</label>	
+    <#if entry.multipleSearchFields>
+		<#if default_values?has_content>
+			<div class="controls">
+				<label>#i18n{directory.html_code_form_search_entry_type_date.of}</label>
+				<input type="text" class="input-normal" name="date_begin_${entry.idEntry}" id="date_begin_${entry.idEntry}" value="${defaultValueDateBegin(default_values)}" />
+				<label>#i18n{directory.html_code_form_search_entry_type_date.to}</label>
+				<div class="controls">
+				<input type="text" class="input-normal" name="date_end_${entry.idEntry}" id="date_end_${entry.idEntry}" size="10" value="${defaultValueDateEnd(default_values)}" />
+				</div>
+			</div>
+		<#else>
+			<div class="controls">
+				<label>#i18n{directory.html_code_form_search_entry_type_date.of}</label>
+				<input type="text" class="input-normal" name="date_begin_${entry.idEntry}" id="date_begin_${entry.idEntry}" size="10" value="" />
+				<label>#i18n{directory.html_code_form_search_entry_type_date.to}</label>
+				<input type="text" class="input-normal" name="date_end_${entry.idEntry}" id="date_end_${entry.idEntry}" size="10" value="" />
+			</div>
+		</#if>
+	<#else> 
 		<#list entry.fields as field>
 			<#if default_values?has_content>
 				<#list default_values as default_value>
-						<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="${entry.idEntry}" id="${entry.idEntry}" size="10" value="${entry.convertRecordFieldValueToString(default_value,locale,false,false)}" />
+					<div class="controls">
+						<input type="text" class=" datepicker-element" name="${entry.idEntry}" id="${entry.idEntry}" size="10" value="${entry.convertRecordFieldValueToString(default_value,locale,false,false)}" />
+					</div>
 				</#list>	 	
 			<#else>
-			   	<input type="text" class="-lutece-input -lutece-border-radius-mini datepicker-element" name="${entry.idEntry}" id="${entry.idEntry}" size="10" value="" />
+			   	<div class="controls">
+					<input type="text" class=" datepicker-element" name="${entry.idEntry}" id="${entry.idEntry}" size="10" value="" />
+				</div>
 			</#if>
 		 </#list>
-		 </span>
     </#if>	 
-	
-	 <#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''>
-			<span class="form-help">
-				<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
-					<span><pre> ${entry.helpMessageSearch}</pre></span>
-				</a>
-			</span>
-		</#if>	
+	<#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''><p class="help-block">${entry.helpMessageSearch}</p></#if>	
 </div>
+
+<script src="js/jquery/plugins/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
+<@getDatePicker idField="date_limite" language=locale />

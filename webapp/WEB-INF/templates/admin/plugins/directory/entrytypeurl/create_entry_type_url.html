@@ -1,141 +1,185 @@
 <#include "/admin/plugins/directory/commons.html" />
-
-<script language="JavaScript" type="text/javascript">
-
-	window.onload = function() 
-	{
-		doDisplayAdvancedSettings( false );
-	}
-	
-</script> 
-
-<div id="content-box-actions">	
-  	<form id="button_advanced_settings" method="post" action="javascript:doDisplayAdvancedSettings(true)" style="visibility:hidden;display:none;">
-		<input type="submit" value="#i18n{directory.manage_directory.button_manage_advanced_parameters}" class="button bt-toolbar" />
-  	</form>	
-  	<form id="button_back" method="post" action="javascript:doDisplayAdvancedSettings(false)" style="visibility:hidden;display:none;">
-		<input type="submit" value="#i18n{directory.manage_directory.button_back}" class="button bt-toolbar" />
-  	</form>	
+<div class="row-fluid">
+<div class="span7">
+<fieldset>
+	<legend>
+	#i18n{directory.modify_entry.title_field} : '${entry.directory.title}' <span class="label label-info" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span>
+	<form class="form-inline pull-right" id="button_advanced_settings" method="post" action="javascript:doDisplayAdvancedSettings(true, 'regular_expression')" style="visibility:hidden;display:none;">
+		<button class="btn btn-primary pull-right" type="submit" >
+			<i class="icon-plus icon-white" ></i>
+			<span class="hidden-phone" >#i18n{directory.manage_directory.button_manage_advanced_parameters}</span>
+		</button>
+	</form>	
+	<form class="form-inline spaced pull-right" id="button_back" method="post" action="javascript:doDisplayAdvancedSettings(false, 'regular_expression')" style="visibility:hidden;display:none;">
+		<button class="btn btn-primary pull-right" type="submit" >
+			<i class="icon-plus icon-white" ></i>
+			<span class="hidden-phone" >#i18n{directory.manage_directory.button_back}</span>
+		</button>
+	</form>	
+	</legend>
+	<form class="form" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
+	<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
+	<div class="control-group">
+	<label class="control-label" for="title">#i18n{directory.create_entry.label_title} * </label>
+	   	<div class="controls">
+			<input type="text" name="title" id="title" class="input-xlarge" value=""  maxlength="255" />
+			<p class="help-block">#i18n{directory.create_entry.label_title_comment}</p>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="help_message">#i18n{directory.create_entry.label_help_message}</label>
+		<div class="controls">
+			<textarea  name="help_message" id="help_message" class="span5" rows="5"></textarea>
+			<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="help_message_search">#i18n{directory.create_entry.label_help_message_search} </label>
+		<div class="controls">
+			<textarea  name="help_message_search" id="help_message_search" class="span5" rows="5"></textarea>
+			<p class="help-block">#i18n{directory.create_entry.label_help_message_search_comment}</p>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="comment"> #i18n{directory.create_entry.label_comment}</label>
+		<div class="controls">
+			<textarea name="comment" class="span5" rows="2"></textarea>
+		</div>
+	</div>			
+	<div class="control-group">
+		<label class="control-label" for="value">#i18n{directory.create_entry.label_value_default}</label>
+		<div class="controls">
+			<input type="text" name="value" id="value" class="input-xlarge" value=""/>
+		</div>
+	</div>
+	<div class="control-group">
+	<label class="control-label" for=""></label>
+   	 	<div class="controls">
+			<label class="control-label" for="mandatory">
+				<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} >
+				#i18n{directory.create_entry.label_mandatory}
+			</label>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="width">#i18n{directory.create_entry.label_width} * </label>
+	    	 <div class="controls">
+					<input type="text" name="width" id="width" class="input-mini" value="${getName('width',list_param_default_values)}" />
+			</div>
+		  		
+	</div>
+	 <div class="form-actions">
+  		<button class="btn btn-primary btn-small" type="submit" name="save">
+			<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.modify_entry.button_save}
+		</button>
+  		<button class="btn btn-primary btn-small" type="submit" name="apply">
+			<i class="icon-ok-circle icon-white"></i>&nbsp;#i18n{directory.modify_entry.button_apply}
+		</button>
+  		<button class="btn btn-small" type="submit" name="cancel">
+			<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.modify_entry.button_cancel}
+		</button>
+	</div>
+	</fieldset>
+	</div>
+	<div id="advanced_settings" class="span5">
+		<fieldset>
+			<legend>#i18n{directory.create_directory.label_advancedsettings}</legend>
+			
+			<div class="control-group">
+			<label class="control-label" for="max_size_enter">#i18n{directory.create_entry.label_max_size_enter} </label>
+		    	<div class="controls">
+		    		<input type="text" name="max_size_enter" id="max_size_enter" class="input-mini" value="${getName('max_size_enter',list_param_default_values)}" />
+		    	</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="">&nbsp;</label>
+	   		 	<div class="controls">
+					<label class="checkbox" for="indexed">
+						<input name="indexed" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} >
+						#i18n{directory.create_entry.label_indexed}
+					</label>
+				</div>
+			</div>
+	   		<div class="control-group">
+				<label class="control-label" for="">&nbsp;</label>
+	   		 	<div class="controls">
+					<label class="checkbox" for="shown_in_advanced_search">
+						<input name="shown_in_advanced_search" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} >
+						#i18n{directory.create_entry.label_shown_in_advanced_search}
+					</label>
+					<span class="help-text">#i18n{directory.create_entry.label_shown_in_advanced_search_comment}</span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="">&nbsp;</label>
+					<div class="controls">
+				<label class="checkbox" for="indexed_as_title">
+					<input name="indexed_as_title" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} >
+					#i18n{directory.create_entry.label_indexed_as_title}
+				</label>
+				</div>
+			</div>
+            <div class="control-group">
+			<label class="control-label" for="">&nbsp;</label>
+				<div class="controls">
+					<label class="checkbox" for="indexed_as_summary">
+						<input name="indexed_as_summary" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} >
+						#i18n{directory.create_entry.label_indexed_as_summary}
+					</label>
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="">&nbsp;</label>
+				<div class="controls">
+					<label class="checkbox" for="shown_in_result_list">
+					#i18n{directory.create_entry.label_shown_in_result_list}
+						<input name="shown_in_result_list" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)}>
+				</label>
+				<span class="help-text">#i18n{directory.create_entry.label_shown_in_result_list_comment}</label> 
+				</div>
+			</div>
+	    	<div class="control-group">
+			<label class="control-label" for="">&nbsp;</label>
+	   		 	<div class="controls">
+					<label class="checkbox" for="shown_in_result_record">
+						<input name="shown_in_result_record" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)}>
+						#i18n{directory.create_entry.label_shown_in_result_record}
+					</label>
+					<span class="help-text">#i18n{directory.create_entry.label_shown_in_result_record_comment}</label> 
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="">&nbsp;</label>
+				<div class="controls">
+					<label class="checkbox" for="shown_in_history">
+						<input name="shown_in_history" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} > 
+						#i18n{directory.create_entry.label_shown_in_history}
+					</label>
+					<span class="help-text">#i18n{directory.create_entry.label_shown_in_history_comment}</span>
+				</div>
+			</div>
+	   		<div class="control-group">
+			<label class="control-label" for="">&nbsp;</label>
+	    		<div class="controls">
+					<label class="checkbox" for="shown_in_export">
+						<input name="shown_in_export" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)}>
+						#i18n{directory.create_entry.label_shown_in_export}
+					</label>
+					<span class="help-text" >#i18n{directory.create_entry.label_shown_in_export_comment}</span> 
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="">&nbsp;</label>
+	   			<div class="controls">
+					<label class="checkbox" for="shown_in_completeness">
+						<input name="shown_in_completeness" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)}>
+						#i18n{directory.create_entry.label_shown_in_completeness}
+					</label>
+	   				<span class="help-text">#i18n{directory.create_entry.label_shown_in_completeness_comment}</span> 
+				</div>
+			</div>
+			</fieldset>
+		</form>
+	</div>
 </div>
 
-<form action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
-	<div class="content-box" id="settings">
-	 <h2>#i18n{directory.create_entry.title_field} : '${entry.directory.title}'</h2>
-	
-	   <input name="id_type" value="${entry.entryType.idType}" type="hidden" /> 
-	   <#if entry.fieldDepend?exists>
-	   		<input name="id_field" value="${entry.fieldDepend.idField}" type="hidden" />
-	   </#if>
-		<p>
-	    	<label for="title">#i18n{directory.create_entry.label_title} * : </label>
-	    	<input type="text" name="title" id="title" size="80" value=""  maxlength="255" />
-	    	<br/>
-			<label>&nbsp;</label>#i18n{directory.create_entry.label_title_comment}
-	 	</p>
-	 	<p>
-	       <label for="help_message"> #i18n{directory.create_entry.label_help_message} : </label>
-	      
-	     	<textarea  name="help_message" id="help_message"  cols="80" rows="5"></textarea>
-	    
-		 <br/>
-		 <label>&nbsp;</label> #i18n{directory.create_entry.label_help_message_comment}
-		</p>
-		<p for="help_message_search">
-	       <label> #i18n{directory.create_entry.label_help_message_search} </label>
-	   		<textarea  name="help_message_search" id="help_message_search" cols="80" rows="5"></textarea>
-	      	<br/>
-		 	<label>&nbsp;</label> #i18n{directory.create_entry.label_help_message_search_comment}
-		</p>
-	    <p>
-	     <label for="comment"> #i18n{directory.create_entry.label_comment} : </label>
-	
-	     <textarea name="comment" cols="80" rows="2"></textarea>
-	     </p>
-	    <p>
-	     <label for="">#i18n{directory.create_entry.label_type} : </label>
-	                  #i18n{${entry.entryType.titleI18nKey}}
-		</p>
-		 <p>
-		    <label for="value">#i18n{directory.create_entry.label_value_default} : </label>
-			<input type="text" name="value" id="value" size="80" />
-		</p>
-	  
-	 	<p>
-	    	<label for="mandatory">#i18n{directory.create_entry.label_mandatory} : </label>
-	   		 <input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
-	   </p>
-	     <p>
-	   		 <label for="width">#i18n{directory.create_entry.label_width} * : </label>
-	   		 <input type="text" name="width" id="width" size="5" value="${getName('width',list_param_default_values)}" />
-	   </p>
-	
-		<p>
-	  		<input type="submit" value="#i18n{directory.create_entry.button_save}" class="button" name="save" />
-	  		<input type="submit" value="#i18n{directory.create_entry.button_apply_and_manage_verification}" class="button"  name="apply"/ >
-	  		<input type="submit" value="#i18n{directory.create_entry.button_cancel}" class="button" name="cancel" />
-	   	</p>
-		<br/>
-	 </div> 
-	 <div id="advanced_settings" class="content-box">
-		 	<h2>
-				#i18n{directory.create_directory.label_advancedsettings}
-			</h2>
-		 	
-	 		<p>
-		   		 <label for="max_size_enter">#i18n{directory.create_entry.label_max_size_enter}  : </label>
-		   		 <input type="text" name="max_size_enter" id="max_size_enter" size="5" value="${getName('max_size_enter',list_param_default_values)}" />
-		   </p>
-	 		<p>
-		    	<label for="indexed">#i18n{directory.create_entry.label_indexed} :</label>
-		   		 <input name="indexed" value="1" type="checkbox" ${getChecked('indexed',list_param_default_values)} />
-		   	</p>
-		   	  <p>
-		    	<label for="shown_in_advanced_search">#i18n{directory.create_entry.label_shown_in_advanced_search} :</label>
-		   		 <input name="shown_in_advanced_search" value="1" type="checkbox" ${getChecked('shown_in_advanced_search',list_param_default_values)} />
-		   		<br/>
-			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_advanced_search_comment}
-			 </p>
-			 <p>
-                <label for="indexed_as_title">#i18n{directory.create_entry.label_indexed_as_title} :</label>
-                <input name="indexed_as_title" value="1" type="checkbox" ${getChecked('indexed_as_title',list_param_default_values)} />
-             </p>
-             <p>
-                <label for="indexed_as_summary">#i18n{directory.create_entry.label_indexed_as_summary} :</label>
-                <input name="indexed_as_summary" value="1" type="checkbox" ${getChecked('indexed_as_summary',list_param_default_values)} />
-             </p>
-             <p>
-		    	<label for="shown_in_result_list">#i18n{directory.create_entry.label_shown_in_result_list} :</label>
-		   		 <input name="shown_in_result_list" value="1" type="checkbox" ${getChecked('shown_in_result_list',list_param_default_values)} />
-		   		<br/>
-			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_list_comment}
-			 </p>	
-		   	 <p>
-		    	 <label for="shown_in_result_record">#i18n{directory.create_entry.label_shown_in_result_record} :</label>
-		   		 <input name="shown_in_result_record" value="1" type="checkbox" ${getChecked('shown_in_result_record',list_param_default_values)} />
-		   		<br/>
-			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_record_comment}
-			 </p>	
-		   	<p>
-		    	 <label for="shown_in_history">#i18n{directory.create_entry.label_shown_in_history} :</label>
-		   		 <input name="shown_in_history" value="1" type="checkbox" ${getChecked('shown_in_history',list_param_default_values)} />
-		   		<br/>
-			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_history_comment}
-			 </p>
-			<p>
-		    	<label for="shown_in_export">#i18n{directory.create_entry.label_shown_in_export} :</label>
-		   		<input name="shown_in_export" value="1" type="checkbox" ${getChecked('shown_in_export',list_param_default_values)} />
-		   		<br/>
-			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_export_comment}
-			</p>
-			<p>
-		    	<label for="shown_in_completeness">#i18n{directory.create_entry.label_shown_in_completeness} :</label>
-		   		<input name="shown_in_completeness" value="1" type="checkbox" ${getChecked('shown_in_completeness',list_param_default_values)} />
-		   		<br/>
-			 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_completeness_comment}
-			</p>
-			<div class="alert">
-				 #i18n{directory.message.warning.entry_advanced_parameters_save}
-			</div>
-	</div>
-		
- </form>

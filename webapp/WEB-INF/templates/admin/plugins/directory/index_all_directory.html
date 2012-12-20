@@ -1,12 +1,18 @@
-  <div class="content-box">
-            
-    <h2> #i18n{directory.index_all_directory.title}</h2>
-    <form method="post" action="jsp/admin/plugins/directory/ConfirmIndexAllDirectory.jsp" >
-    	 <p>
-            
-            <label >#i18n{directory.index_all_directory.label_begin_process} </label>
-            <input type="submit" value="#i18n{directory.index_all_directory.button_validate}" class="button"  />
-            <input type="button" value="#i18n{directory.index_all_directory.button_cancel}" class="button" onclick="javascript:history.go(-1)" />
-        </p>
-     </form>
-    </div>
+<div class="row-fluid">
+	<div class="span12">
+		<fieldset>
+		<legend>#i18n{directory.index_all_directory.title}</legend>
+		<form class="form-horizontal" method="post" action="jsp/admin/plugins/directory/ConfirmIndexAllDirectory.jsp" >
+			<div class="help-block"><blockquote>#i18n{directory.index_all_directory.label_begin_process}</blockquote></div>
+			<div class="form-actions">
+				<button class="btn btn-primary" type="submit" >
+					<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.index_all_directory.button_validate}
+				</button>
+				<a class="btn" href="jsp/admin/plugins/directory/ManageAdvancedParameters.jsp" >
+					<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.index_all_directory.button_cancel}
+				</a>
+			</div>
+		</form>
+		</fieldset>
+	</div>
+</div>

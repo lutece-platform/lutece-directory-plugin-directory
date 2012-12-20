@@ -1,74 +1,81 @@
-<#if directory_list?has_content >
-<div class="span-15 prepend-1 append-1 append-bottom">
-    <div class="portlet -lutece-border-radius">
-        <a name="top"></a>
-        <h2 class="page-title">#i18n{directory.view_all_directory.search.title}</h2>
-        <form class="default-form" name="form_search" method="post">
-            <fieldset>
-            <div class="hide">
-                <input type="hidden" name="page" value="directory" />
-                <input type="hidden" name="type_filter" value="directory" />
-            </div>
-            <div>
-                <input type="text" name="query" size="20" value="${query!}" />
-                <input type="image"
-                       src="images/local/skin/buttons/b_search.png"
-                       title="#i18n{directory.view_all_directory.search.buttonSearch}"
-                       alt="#i18n{directory.view_all_directory.search.buttonSearch}" />
-            </div>
-            <div>
+<div class="row">
+    <div class="span12">
+     <a name="top"></a>
+	<#if directory_list?has_content >
+		<fieldset>
+        <legend>#i18n{directory.view_all_directory.search.title}</legend>
+			<form class="form-search" name="form_search" method="post">
+            <input type="hidden" name="page" value="directory" />
+            <input type="hidden" name="type_filter" value="directory" />
+			<div class="control-group">
+				<label class="control-label" for="default_operator"></label>
+				<div class="controls">
+					<input class="input-large" type="text" name="query" id="query" value="${query!}" />
+					<button type="submit" class="btn btn-primary btn-small">
+						<i class="icon-search icon-white"></i>&nbsp;#i18n{directory.view_all_directory.search.buttonSearch}
+					</button>
+				</div>	
+			</div>	
+			<div class="control-group">
+				<label class="control-label" for="default_operator"></label>	
+				<div class="controls">
                 <#-- default_operator and/or -->
                 #i18n{directory.view_all_directory.search.operator} :
-                <select name="default_operator">
+                <select name="default_operator" class="span2">
                     <#list ["OR","AND"] as i_operator>
                     <option value="${i_operator}" <#if i_operator == (operator!"OR")> selected="true"</#if> >
                         #i18n{directory.view_all_directory.search.operator.${i_operator}}
                     </option>
                     </#list>
                 </select>
-            </div>
-            <div>
+				</div>	
+			</div>	
+			<div class="control-group">
+				<label class="control-label" for="">#i18n{directory.view_all_directory.search.dateFilter}</label>	
+				<div class="controls">
                 <#-- date_filter -->
-                #i18n{directory.view_all_directory.search.dateFilter}&nbsp;: 
-                #i18n{directory.view_all_directory.search.dateFilterAfter}&nbsp;:&nbsp;
-                <input type=text id="date_after" name="date_after" size="10" value="${date_after!}" />
-                #i18n{directory.view_all_directory.search.dateFilterBefore}&nbsp;:&nbsp;
-                <input type=text id="date_before" name="date_before" size="10" value="${date_before!}" />
+                <label>#i18n{directory.view_all_directory.search.dateFilterAfter}</label> 
+                <input type=text id="date_after" name="date_after" class="input-small" value="${date_after!}" />
+                <label>#i18n{directory.view_all_directory.search.dateFilterBefore}</label>
+                <input type=text id="date_before" name="date_before" class="input-small" value="${date_before!}" />
                 <@getDatePickerRange idFieldFrom="date_after" idFieldTo="date_bafore" language="${locale.language}" />
-            </div>
-            </fieldset>
-        </form><br />
+				</div>	
+			</div>
+        </form>
         <#if result_list?has_content> 
             <#list result_list as result>
-
-            <div>
-	            <a href="${result.url?xhtml}"><#if result.frontOfficeTitle!?has_content && result.frontOfficeTitle!?trim != "">${result.frontOfficeTitle!}
-	            <#else>${result.title!}</#if></a>
-	            <#if result.date?has_content>
-	                    ${result.date?date?string.short}
-	            </#if>
-	        </div>
-	        <#if result.summary?has_content>
-	           <div>${result.summary}</div>
-	        </#if>
-	        <div>&nbsp;</div>
-            </#list>
+	            <a href="${result.url?xhtml}">
+					<#if result.frontOfficeTitle!?has_content && result.frontOfficeTitle!?trim != "">
+						${result.frontOfficeTitle!}
+					<#else>
+						${result.title!}</#if>
+				</a>
+				<#if result.date?has_content>
+	            <small>${result.date?date?string.short}</small>
+				</#if>
+				<#if result.summary?has_content>
+					<p class="help-block">${result.summary}</p>
+				</#if>
+	       </#list>
         <#else>
             <blockquote>#i18n{directory.message.search_nok}</blockquote>
         </#if>
+		</fieldset>
     </div>
 </div>
-</#if>
-
-<div class="span-6 append-1 append-bottom last">
-	<div class="portlet -lutece-border-radius">
+<div class="row">
+	<div class="span12">
 		<h2>#i18n{directory.view_all_directory.list.title}</h2>
-		<#if directory_list?has_content>
 			<ul>	      
 				<#list directory_list as directory>
 					<li>
-						<a href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" ><#if directory.frontOfficeTitle!?has_content && directory.frontOfficeTitle!?trim != "">${directory.frontOfficeTitle!}
-	            <#else>${directory.title!}</#if></a>       
+						<a class="" href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" >
+						<#if directory.frontOfficeTitle!?has_content && directory.frontOfficeTitle!?trim != "">
+							${directory.frontOfficeTitle!}
+						<#else>
+							${directory.title!}
+						</#if>
+						</a>       
 					</li>
 				</#list>
 			</ul>    

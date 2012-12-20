@@ -1,198 +1,184 @@
 <#include "/admin/plugins/directory/commons.html" />
-
-<script language="JavaScript" type="text/javascript">
-
-	window.onload = function() 
-	{
-		doDisplayAdvancedSettings( false );
-	}
-	
-</script> 
-
-<div id="content-box-actions">	
-  	<form id="button_advanced_settings" method="post" action="javascript:doDisplayAdvancedSettings(true)" style="visibility:hidden;display:none;">
-		<input type="submit" value="#i18n{directory.manage_directory.button_manage_advanced_parameters}" class="button bt-toolbar" />
-  	</form>	
-  	<form id="button_back" method="post" action="javascript:doDisplayAdvancedSettings(false)" style="visibility:hidden;display:none;">
-		<input type="submit" value="#i18n{directory.manage_directory.button_back}" class="button bt-toolbar" />
-  	</form>	
-</div>
-
-<form action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id=""  >
-	<div id="settings" class="content-box">
-	 <h2>#i18n{directory.modify_entry.title_field} : '${entry.directory.title}'</h2>
-	 
-	    <input name="id_entry" value="${entry.idEntry}" type="hidden" />
-		<p>
-	    	<label for="title">#i18n{directory.create_entry.label_title} *  : </label>
-	    	<input type="text" name="title" id="title" size="80" value="${entry.title}"  maxlength="255"/>
-	    	<br/>
-			<label>&nbsp;</label>#i18n{directory.create_entry.label_title_comment}
-	 	</p>
-	   <p>
-	     <label for="help_message">#i18n{directory.create_entry.label_help_message} : </label>
-	    
-	     	<textarea  name="help_message"  id="help_message" cols="80" rows="5">${entry.helpMessage}</textarea>
-	
-		 <br/>
-		 <label>&nbsp;</label> #i18n{directory.create_entry.label_help_message_comment}
-		</p>
-	    <p>
-	     <label for="comment"> #i18n{directory.create_entry.label_comment} : </label>
-	
-	     <textarea name="comment" cols="80" rows="2">${entry.comment}</textarea>
-	     </p>
-	    <p>
-	     <label for="">#i18n{directory.create_entry.label_type} : </label>
-	                  #i18n{${entry.entryType.titleI18nKey}}
-		</p>
-		<p>
-	    	<label for="mandatory">#i18n{directory.create_entry.label_mandatory} : </label>
-	   		 <#if entry.mandatory>
-	   		 	<input name="mandatory" value="1" type="checkbox" checked="checked" >
-	   		 <#else>
-	   			<input name="mandatory" value="1" type="checkbox" >
-	   		 </#if>	
-	   	</p>
-	   	<p>
-			<label for="width">#i18n{directory.create_entry.label_width} * : </label>
-	    	<#list entry.fields as field>
+<div class="row-fluid">
+<div class="span8">
+<fieldset>
+	<legend>
+	#i18n{directory.modify_entry.title_field} : '${entry.directory.title}' <span class="label label-info" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span>
+	<form class="form-inline pull-right" id="button_advanced_settings" method="post" action="javascript:doDisplayAdvancedSettings(true, 'regular_expression')" style="visibility:hidden;display:none;">
+		<button class="btn btn-primary pull-right" type="submit" >
+			<i class="icon-plus icon-white" ></i>
+			<span class="hidden-phone" >#i18n{directory.manage_directory.button_manage_advanced_parameters}</span>
+		</button>
+	</form>	
+	<form class="form-inline spaced pull-right" id="button_back" method="post" action="javascript:doDisplayAdvancedSettings(false, 'regular_expression')" style="visibility:hidden;display:none;">
+		<button class="btn btn-primary pull-right" type="submit" >
+			<i class="icon-plus icon-white" ></i>
+			<span class="hidden-phone" >#i18n{directory.manage_directory.button_back}</span>
+		</button>
+	</form>	
+	</legend>
+	<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id="" >
+	<input name="id_entry" value="${entry.idEntry}" type="hidden" >
+	<div class="control-group">
+	<label class="control-label" for="title">#i18n{directory.create_entry.label_title} * </label>
+	   	<div class="controls">
+			<input type="text" name="title" id="title" class="input-xlarge" value="${entry.title}"  maxlength="255" >
+			<p class="help-block">#i18n{directory.create_entry.label_title_comment}</p>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="help_message">#i18n{directory.create_entry.label_help_message}</label>
+	   	<div class="controls">
+	     	<textarea  name="help_message"  id="help_message" class="span5" rows="3">${entry.helpMessage}</textarea>
+			<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="comment"> #i18n{directory.create_entry.label_comment}</label>
+	 	<div class="controls">
+			<textarea name="comment"  class="span5"" rows="2">${entry.comment}</textarea>
+		</div>
+	</div>
+  <div class="control-group">
+	<label class="control-label" for="mandatory">#i18n{directory.create_entry.label_mandatory} </label>
+   	 	<div class="controls">
+			<input name="mandatory" value="1" type="checkbox" <#if entry.mandatory>checked="checked"</#if>	 >
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="width">#i18n{directory.create_entry.label_width} * </label>
+		<div class="controls">
+	   <#list entry.fields as field>
 	    		<#if !field.title??>
-		    		<input type="text" name="width" id="width" size="5" value="${field.width}" />
+		    		<input type="text" name="width" id="width" class="input-mini" value="${field.width}" />
 		    		<#assign id_field=field.idField>
 		    		<#break>
 		    	</#if> 
 	    	</#list>	
-		</p>
-		<p>
-			<label for="file_max_size">#i18n{directory.create_entry.label_file_max_size} * : </label>
-			<input type="text" name="file_max_size" id="file_max_size" size="10" value="${getFileMaxSize(entry)}" />
-		</p>
-		<p>
-			<label for="max_files">#i18n{directory.create_entry.label_max_files} * :</label>
-			<input name="max_files" type="text" size="2" value="${getMaxFiles(entry)}" maxlength="2" />
-		</p>
-		
-	    <p>
-	  		<input type="submit" value="#i18n{directory.modify_entry.button_save}" class="button"  name="save" / >
-	  		<input type="submit" value="#i18n{directory.modify_entry.button_apply}" class="button"  name="apply"/ >
-	  		<input type="submit" value="#i18n{directory.modify_entry.button_cancel}" class="button" name="cancel" />
-	   	</p>
-		<br/>
-	 </div>
-	 <div id="advanced_settings" class="content-box">
-		 	<h2>
-				#i18n{directory.create_directory.label_advancedsettings}
-			</h2>
-		 		<p>
-			    	<label for="shown_in_result_list">#i18n{directory.create_entry.label_shown_in_result_list} :</label>
-			   		  <#if entry.shownInResultList>
-			   		 	<input name="shown_in_result_list" value="1" type="checkbox" checked="checked">
-			   		  <#else>
-			   		 		<input name="shown_in_result_list" value="1" type="checkbox" >
-			   		  
-			   		  </#if>	
-			   		<br/>
-				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_list_comment}
-				 </p>	
-			   	 <p>
-			    	 <label for="shown_in_result_record">#i18n{directory.create_entry.label_shown_in_result_record} :</label>
-			   			<#if entry.shownInResultRecord>
-			   			 	<input name="shown_in_result_record" value="1" type="checkbox" checked="checked">
-			   			  <#else>
-			   			  	<input name="shown_in_result_record" value="1" type="checkbox">
-			   			  </#if>	
-			   		<br/>
-				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_result_record_comment}
-				 </p>	
-			   	<p>
-			    	 <label for="shown_in_history">#i18n{directory.create_entry.label_shown_in_history} :</label>
-			   			<#if entry.shownInHistory>
-			   			 	<input name="shown_in_history" value="1" type="checkbox" checked="checked">
-			   			  <#else>
-			   			  	<input name="shown_in_history" value="1" type="checkbox">
-			   			  </#if>	
-			   		<br/>
-				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_history_comment}
-				 </p>
-				 <p>
-			    	<label for="shown_in_export">#i18n{directory.create_entry.label_shown_in_export} :</label>
-			    	<#if entry.shownInExport>
-			   			<input name="shown_in_export" value="1" type="checkbox" checked="checked" />
-			   		<#else>
-			   			<input name="shown_in_export" value="1" type="checkbox" />
-			   		</#if>
-			   		<br/>
-				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_export_comment}
-				</p>
-				<p>
-			    	<label for="shown_in_completeness">#i18n{directory.create_entry.label_shown_in_completeness} :</label>
-			    	<#if entry.shownInCompleteness>
-			   			<input name="shown_in_completeness" value="1" type="checkbox" checked="checked" />
-			   		<#else>
-			   			<input name="shown_in_completeness" value="1" type="checkbox" />
-			   		</#if>
-			   		<br/>
-				 	<label>&nbsp;</label> #i18n{directory.create_entry.label_shown_in_completeness_comment}
-				</p>
-				<div class="alert">
-					 #i18n{directory.message.warning.entry_advanced_parameters_save}
-				</div>
 		</div>
-</form>
- 
-<#if regular_expression_list?exists>
-	<div class="content-box">
-	          <h2>#i18n{directory.create_entry.manage_regular_expression.title}</h2>
-				<div class="highlight-box">
-		            <p>
-		            <form  method="post"  action="jsp/admin/plugins/directory/DoInsertVerification.jsp#list"> 
-		              <input name="id_field" value="${id_field}" type="hidden" />
-						<label for="id_expression">
-		                	 #i18n{directory.create_entry.manage_regular_expression.label_insert} :
-		              	</label>
-		               	<@combo name="id_expression"  items=regular_expression_list default_value=-1 />
-						<input value="#i18n{directory.create_entry.manage_regular_expression.button_insert}" class="button"  type="submit">
-						 <br/>
-						 <br/>
-	 				
-	 					<label>&nbsp;</label> #i18n{directory.create_entry.manage_regular_expression.label_insert_comment}
-		            </form>
-		        </p>
-		        <p>&nbsp;</p>
-	        </div>
-		<@paginationAdmin paginator=paginator combo=1/>
+	</div>
+	<div class="control-group">
+		<label for="file_max_size" class="control-label">#i18n{directory.create_entry.label_file_max_size} *</label>
+		<div class="controls">
+			<input type="text" value="${getFileMaxSize(entry)}" class="input-small" id="file_max_size" name="file_max_size">
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="max_files" class="control-label">#i18n{directory.create_entry.label_max_files} * </label>
+		<div class="controls">
+			<input type="text" maxlength="2" value="${getMaxFiles(entry)}" class="input-mini" name="max_files">
+		</div>
+	</div>
+	<div class="form-actions">
+  		<button class="btn btn-primary btn-small" type="submit" name="save">
+			<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.modify_entry.button_save}
+		</button>
+  		<button class="btn btn-primary btn-small" type="submit" name="apply">
+			<i class="icon-ok-circle icon-white"></i>&nbsp;#i18n{directory.modify_entry.button_apply}
+		</button>
+  		<button class="btn btn-small" type="submit" name="cancel">
+			<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.modify_entry.button_cancel}
+		</button>
+	</div>
+	<#if regular_expression_list?exists>
+	<#if entry.fields?? && entry.fields[0]??>
+		<#assign id_field=entry.fields[0].idField>
+	</#if>
+	</fieldset>
+	<div id="regular_expression">
+	<fieldset> 
+		<legend>#i18n{directory.create_entry.manage_regular_expression.title}</legend>
+		<form class="form-search"  method="post"  action="jsp/admin/plugins/directory/DoInsertVerification.jsp#list">
+			<input name="id_field" value="${id_field}" type="hidden" />
+			<label for="id_expression">#i18n{directory.create_entry.manage_regular_expression.label_insert}</label>
+			<@combo name="id_expression"  items=regular_expression_list default_value=-1 />
+			<button class="btn btn-primary" type="submit" >#
+				<i class="icon-search icon-white"></i>&nbsp;i18n{directory.create_entry.manage_regular_expression.button_insert}
+			</button>
+			<p class="help-block" >#i18n{directory.create_entry.manage_regular_expression.label_insert_comment}</p>
+		</form>
+	</fieldset>
+		<@paginationAdmin paginator=paginator combo=1 />
 	    <a name="list" id="list"></a>
-        <table width="100%">
-          <tr> 
-            <th > #i18n{directory.create_entry.manage_regular_expression.row_title}
-            </th>
-            <th > #i18n{directory.create_entry.manage_regular_expression.row_information_message}
-            </th>
-            <th> #i18n{directory.create_entry.manage_regular_expression.row_valid_exemple}
-            </th>
-			<th> #i18n{directory.create_entry.manage_field.row_actions}
-            </th>
-          </tr>
-           <#list list as expression>
+        <table class="table table-striped table-condensed">
+			<tr> 
+				<th>#i18n{directory.create_entry.manage_regular_expression.row_title}</th>
+				<th>#i18n{directory.create_entry.manage_regular_expression.row_information_message}</th>
+				<th>#i18n{directory.create_entry.manage_regular_expression.row_valid_exemple}</th>
+				<th>#i18n{directory.create_entry.manage_field.row_actions}</th>
+			</tr>
+			<#list list as expression>
           	<tr>
-            	<td >
-            		${expression.title}
-              	</td>
+            	<td>${expression.title}</td>
+	            <td>${expression.informationMessage}</td>
+	            <td>${expression.validExemple}</td>
 	            <td>
-	           		${expression.informationMessage}
-	           </td>
-	            <td >
-	       			  ${expression.validExemple}  	
-	            </td >
-	            <td >
-	             	  <a href="jsp/admin/plugins/directory/DoRemoveVerification.jsp?id_expression=${expression.idExpression}&id_field=${id_field}#list">
-	                  <img src="images/admin/skin/plugins/directory/actions/delete.png" alt="#i18n{directory.create_entry.manage_field.title_delete}" title="#i18n{directory.create_entry.manage_field.title_delete}" />
-	                </a>
-	             </td>
-	          </tr>
+	             	<a class="btn btn-danger btn-mini" href="jsp/admin/plugins/directory/DoRemoveVerification.jsp?id_expression=${expression.idExpression}&id_field=${id_field}#list"  title="#i18n{directory.create_entry.manage_field.title_delete}" >
+						<i class="icon-trash icon-white"></i>
+					</a>
+				</td>
+	        </tr>
 			</#list> 
         </table>
         <@paginationAdmin paginator=paginator />
     </div>
-</#if>
+	</#if>
+	</div>
+	<div id="advanced_settings" class="span4">
+		<fieldset>
+			<legend>#i18n{directory.create_directory.label_advancedsettings}</legend>	 	
+			<div class="control-group">
+			<label class="control-label" for="">&nbsp;</label>
+				<div class="controls">
+					<label class="checkbox" for="shown_in_result_list">
+					#i18n{directory.create_entry.label_shown_in_result_list}
+						<input name="shown_in_result_list" value="1" type="checkbox" <#if entry.shownInResultList>checked="checked" </#if>>
+				</label>
+				<span class="help-text">#i18n{directory.create_entry.label_shown_in_result_list_comment}</label> 
+				</div>
+			</div>
+	    	<div class="control-group">
+			<label class="control-label" for="">&nbsp;</label>
+	   		 	<div class="controls">
+					<label class="checkbox" for="shown_in_result_record">
+						<input name="shown_in_result_record" value="1" type="checkbox" <#if entry.shownInResultRecord>checked="checked"</#if>>
+						#i18n{directory.create_entry.label_shown_in_result_record}
+					</label>
+					<span class="help-text">#i18n{directory.create_entry.label_shown_in_result_record_comment}</label> 
+				</div>
+			</div>
+			<div class="control-group">
+			<label class="control-label" for="">&nbsp;</label>
+				<div class="controls">
+					<label class="checkbox" for="shown_in_history">
+						<input name="shown_in_history" value="1" type="checkbox" <#if entry.shownInHistory>checked="checked"</#if> > 
+						#i18n{directory.create_entry.label_shown_in_history}
+					</label>
+					<span class="help-text">#i18n{directory.create_entry.label_shown_in_history_comment}</span>
+				</div>
+			</div>
+	   		<div class="control-group">
+			<label class="control-label" for="">&nbsp;</label>
+	    		<div class="controls">
+					<label class="checkbox" for="shown_in_export">
+						<input name="shown_in_export" value="1" type="checkbox" <#if entry.shownInExport>checked="checked"</#if>>
+						#i18n{directory.create_entry.label_shown_in_export}
+					</label>
+					<span class="help-text" >#i18n{directory.create_entry.label_shown_in_export_comment}</span> 
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="">&nbsp;</label>
+	   			<div class="controls">
+					<label class="checkbox" for="shown_in_completeness">
+						<input name="shown_in_completeness" value="1" type="checkbox" <#if entry.shownInCompleteness>checked="checked"</#if> >
+						#i18n{directory.create_entry.label_shown_in_completeness}
+					</label>
+	   				<span class="help-text">#i18n{directory.create_entry.label_shown_in_completeness_comment}</span> 
+				</div>
+			</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+

@@ -1,30 +1,11 @@
-<div class="form-element">
-	
-	<span class="form-label">
-		<label for="${entry.idEntry}">${entry.title}:</label>		
-	</span>
-	
-	<span class="form-field-column">	 
+<div class="control-group">
+	<label class="control-label" for="${entry.idEntry}">${entry.title}</label>		
+	<div class="controls">
 		<#list entry.fields as field>
-			<input type="text" name="${entry.idEntry}" id="${entry.idEntry}"  
-				<#if default_values?has_content>
-					<#list default_values as default_value>
-						value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,true,false)}"
-					</#list>
-			 	<#else>
-					 value="" 
-				</#if>
-			/>
-		</#list>
+		<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" <#if default_values?has_content><#list default_values as default_value>	value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}"</#list><#else>value="" </#if> ></#list>
 	</span>
-	
-	<#if entry.helpMessage?exists && entry.helpMessageSearch!=''>
-		<span class="form-help">
-			<a class="info" href="javascript:void;">
-				<img src="images/admin/skin/plugins/directory/help.gif" />
-				<span><pre> ${entry.helpMessageSearch}</pre></span>
-			</a>
-		</span>
-	</#if>
-		
+	<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+			<span class="help-text">${entry.helpMessage}</p>
+		</#if>
+	</div>	
 </div>	
