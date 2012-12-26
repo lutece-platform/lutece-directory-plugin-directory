@@ -1,7 +1,13 @@
 <div class="row-fluid">
 	<div class="span12">
 	<fieldset>
-  	<legend>#i18n{directory.modify_entry.title_group} : '${entry.directory.title}'</legend>
+  	<legend>
+		#i18n{directory.modify_entry.title_group} : '${entry.directory.title}'
+		<span class="label label-info" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span>
+		<a class="btn btn-primary btn-small pull-right" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}#list" title="#i18n{directory.manage_directory.button_back} #i18n{directory.modify_directory.manage_entry.title} '${entry.directory.title}'">
+			<i class="icon-chevron-left icon-white"></i>
+		</a>
+	</legend>
 		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id=""  >
     	<input name="id_entry" value="${entry.idEntry}" type="hidden" />
    		<div class="control-group">
