@@ -70,7 +70,7 @@ public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<
 
     // PARAMETERS
     /** the button is an image so the name is .x or .y */
-    private static final String PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS_X = "mass_change_states_record.x";
+    private static final String PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS = "mass_change_states_record";
 
     // MARKS
     private static final String MARK_PERMISSION_CHANGE_STATE_RECORD = "permission_change_state_record";
@@ -106,11 +106,11 @@ public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<
     }
 
     /**
-     * @see #PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS_X
+     * @see #PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS
      */
     public boolean isInvoked( HttpServletRequest request )
     {
-        return request.getParameter( PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS_X ) != null;
+        return request.getParameter( PARAMETER_BUTTON_MASS_CHANGE_RECORD_STATUS ) != null;
     }
 
     /**

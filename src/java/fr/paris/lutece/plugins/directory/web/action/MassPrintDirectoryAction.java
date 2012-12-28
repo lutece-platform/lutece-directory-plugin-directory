@@ -59,7 +59,7 @@ public class MassPrintDirectoryAction extends AbstractPluginAction<DirectoryAdmi
     private static final String TEMPLATE_BUTTON = "actions/massprint.html";
 
     /** the button is an image so the name is .x or .y */
-    private static final String PARAMETER_BUTTON_MASS_PRINT_X = "massprint.x";
+    private static final String PARAMETER_BUTTON_MASS_PRINT = "massprint";
     private static final String JSP_DIRECTORY_MASS_PRINT = "jsp/admin/plugins/directory/MassPrint.jsp";
 
     /**
@@ -87,11 +87,11 @@ public class MassPrintDirectoryAction extends AbstractPluginAction<DirectoryAdmi
     }
 
     /**
-     * @see #PARAMETER_BUTTON_MASS_PRINT_X
+     * @see #PARAMETER_BUTTON_MASS_PRINT
      */
     public boolean isInvoked( HttpServletRequest request )
     {
-        return request.getParameter( PARAMETER_BUTTON_MASS_PRINT_X ) != null;
+        return request.getParameter( PARAMETER_BUTTON_MASS_PRINT ) != null;
     }
 
     /**

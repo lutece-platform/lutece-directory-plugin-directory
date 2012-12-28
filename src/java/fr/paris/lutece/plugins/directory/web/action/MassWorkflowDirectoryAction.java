@@ -77,7 +77,7 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
 
     // PARAMETERS
     /** the button is an image so the name is .x or .y */
-    private static final String PARAMETER_BUTTON_MASS_WORKFLOW_ACTION_X = "mass_workflow_action.x";
+    private static final String PARAMETER_BUTTON_MASS_WORKFLOW_ACTION = "mass_workflow_action";
 
     // MARKS
     private static final String MARK_LIST_MASS_WORKFLOW_ACTIONS = "list_mass_workflow_actions";
@@ -133,11 +133,11 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
     }
 
     /**
-     * @see #PARAMETER_BUTTON_MASS_WORKFLOW_ACTION_X
+     * @see #PARAMETER_BUTTON_MASS_WORKFLOW_ACTION
      */
     public boolean isInvoked( HttpServletRequest request )
     {
-        return request.getParameter( PARAMETER_BUTTON_MASS_WORKFLOW_ACTION_X ) != null;
+        return request.getParameter( PARAMETER_BUTTON_MASS_WORKFLOW_ACTION ) != null;
     }
 
     /**

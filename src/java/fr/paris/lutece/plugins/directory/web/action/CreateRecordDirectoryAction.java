@@ -60,7 +60,7 @@ public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryA
     private static final String TEMPLATE_BUTTON = "actions/create_directory_record.html";
 
     /** the button is an image so the name is .x or .y */
-    private static final String PARAMETER_CREATE_RECORD_X = "create_record.x";
+    private static final String PARAMETER_CREATE_RECORD = "create_record";
     private static final String JSP_CREATE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/CreateDirectoryRecord.jsp";
 
     /**
@@ -92,7 +92,7 @@ public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryA
      */
     public boolean isInvoked( HttpServletRequest request )
     {
-        return request.getParameter( PARAMETER_CREATE_RECORD_X ) != null;
+        return request.getParameter( PARAMETER_CREATE_RECORD ) != null;
     }
 
     /**

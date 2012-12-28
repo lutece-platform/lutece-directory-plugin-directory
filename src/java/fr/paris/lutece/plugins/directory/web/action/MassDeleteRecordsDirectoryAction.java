@@ -71,7 +71,7 @@ public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<Direc
 
     // PARAMETERS
     /** the button is an image so the name is .x or .y */
-    private static final String PARAMETER_BUTTON_MASS_DELETE_RECORDS_X = "mass_delete_records.x";
+    private static final String PARAMETER_BUTTON_MASS_DELETE_RECORDS = "mass_delete_records";
 
     // MARKS
     private static final String MARK_PERMISSION_DELETE_RECORD = "permission_delete_record";
@@ -111,7 +111,7 @@ public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<Direc
      */
     public boolean isInvoked( HttpServletRequest request )
     {
-        return request.getParameter( PARAMETER_BUTTON_MASS_DELETE_RECORDS_X ) != null;
+        return request.getParameter( PARAMETER_BUTTON_MASS_DELETE_RECORDS ) != null;
     }
 
     /**

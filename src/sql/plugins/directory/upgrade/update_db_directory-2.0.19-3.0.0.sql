@@ -11,8 +11,8 @@ INSERT INTO directory_action (id_action, name_key, description_key, action_url, 
 	(8, 'directory.action.delete_all_directory_record.name', 'directory.action.delete_all_directory_record.description', 'jsp/admin/plugins/directory/ConfirmRemoveAllDirectoryRecord.jsp', 'icon-ban-circle', 'DELETE_ALL_RECORD', 1),
 	(9, 'directory.action.disable.name', 'directory.action.disable.description', 'jsp/admin/plugins/directory/ConfirmDisableDirectory.jsp', 'icon-remove', 'CHANGE_STATE', 1),
 	(10, 'directory.action.enable.name', 'directory.action.enable.description', 'jsp/admin/plugins/directory/DoEnableDirectory.jsp', 'icon-ok', 'CHANGE_STATE', 0),
-	(11, 'directory.action.copy.name', 'directory.action.copy.description', 'jsp/admin/plugins/directory/DoCopyDirectory.jsp', 'icon-move', 'COPY', 0),
-	(12, 'directory.action.copy.name', 'directory.action.copy.description', 'jsp/admin/plugins/directory/DoCopyDirectory.jsp', 'icon-move', 'COPY', 1),
+	(11, 'directory.action.copy.name', 'directory.action.copy.description', 'jsp/admin/plugins/directory/DoCopyDirectory.jsp', 'icon-plus-sign', 'COPY', 0),
+	(12, 'directory.action.copy.name', 'directory.action.copy.description', 'jsp/admin/plugins/directory/DoCopyDirectory.jsp', 'icon-plus-sign', 'COPY', 1),
 	(13, 'directory.action.delete.name', 'directory.action.delete.description', 'jsp/admin/plugins/directory/ConfirmRemoveDirectory.jsp', 'icon-trash', 'DELETE', 0);
 
 -- Dumping data for table lutece.directory_record_action: 12 rows
@@ -20,8 +20,8 @@ DELETE FROM directory_record_action;
 INSERT INTO directory_record_action (id_action, name_key, description_key, action_url, icon_url, action_permission, directory_state) VALUES
 	(1, 'directory.action.modify.name', 'directory.action.modify.description.record', 'jsp/admin/plugins/directory/ModifyDirectoryRecord.jsp', 'icon-edit', 'MODIFY_RECORD', 0),
 	(2, 'directory.action.modify.name', 'directory.action.modify.description.record', 'jsp/admin/plugins/directory/ModifyDirectoryRecord.jsp', 'icon-edit', 'MODIFY_RECORD', 1),
-	(3, 'directory.action.copy.name', 'directory.action.copy.description', 'jsp/admin/plugins/directory/DoCopyDirectoryRecord.jsp', 'icon-move', 'COPY_RECORD', 0),
-	(4, 'directory.action.copy.name', 'directory.action.copy.description', 'jsp/admin/plugins/directory/DoCopyDirectoryRecord.jsp', 'icon-move', 'COPY_RECORD', 1),
+	(3, 'directory.action.copy.name', 'directory.action.copy.description', 'jsp/admin/plugins/directory/DoCopyDirectoryRecord.jsp', 'icon-plus-sign', 'COPY_RECORD', 0),
+	(4, 'directory.action.copy.name', 'directory.action.copy.description', 'jsp/admin/plugins/directory/DoCopyDirectoryRecord.jsp', 'icon-plus-sign', 'COPY_RECORD', 1),
 	(5, 'directory.action.delete.name', 'directory.action.delete.description', 'jsp/admin/plugins/directory/ConfirmRemoveDirectoryRecord.jsp', 'icon-trash', 'DELETE_RECORD', 0),
 	(6, 'directory.action.disable.name', 'directory.action.disable.description', 'jsp/admin/plugins/directory/ConfirmDisableDirectoryRecord.jsp', 'icon-remove', 'CHANGE_STATE_RECORD', 1),
 	(7, 'directory.action.enable.name', 'directory.action.enable.description', 'jsp/admin/plugins/directory/DoEnableDirectoryRecord.jsp', 'icon-ok', 'CHANGE_STATE_RECORD', 0),

@@ -115,8 +115,8 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
     private static final String PROPERTY_ENTRY_TYPE_DATE_CREATION_TITLE = "directory.entry_type_date_creation.title";
     private static final String PROPERTY_ENTRY_TYPE_DATE_MODIFICATION_TITLE = "directory.entry_type_date_modification.title";
     private static final String MESSAGE_ACCESS_DENIED = "directory.message.accessDenied";
-    private static final String PARAMETER_BUTTON_EXPORT_ALL = "export_search_all.x";
-    private static final String PARAMETER_BUTTON_EXPORT_SEARCH = "export_search_result.x";
+    private static final String PARAMETER_BUTTON_EXPORT_ALL = "export_search_all";
+    private static final String PARAMETER_BUTTON_EXPORT_SEARCH = "export_search_result";
     private static final String PARAMETER_ID_DIRECTORY = "id_directory";
     private static final String PARAMETER_ID_DIRECTORY_XSL = "id_directory_xsl";
     private static final String TAG_STATUS = "status";
