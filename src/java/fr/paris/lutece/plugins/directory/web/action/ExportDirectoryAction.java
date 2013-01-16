@@ -77,9 +77,6 @@ import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -87,12 +84,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -100,6 +96,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -119,6 +118,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
     private static final String PARAMETER_BUTTON_EXPORT_SEARCH = "export_search_result";
     private static final String PARAMETER_ID_DIRECTORY = "id_directory";
     private static final String PARAMETER_ID_DIRECTORY_XSL = "id_directory_xsl";
+    private static final String PARAMETER_SELECTED_RECORD = "selected_record";
     private static final String TAG_STATUS = "status";
     private static final String TAG_DISPLAY = "display";
     private static final String TAG_YES = "yes";
@@ -226,9 +226,27 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 
         if ( request.getParameter( PARAMETER_BUTTON_EXPORT_SEARCH ) != null )
         {
-            // sort order and sort entry are not needed in export
-            listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, true, null,
-                    RecordFieldFilter.ORDER_NONE, searchFields, adminUser, adminUser.getLocale(  ) );
+            String[] selectedRecords = request.getParameterValues( PARAMETER_SELECTED_RECORD );
+            List<String> listSelectedRecords;
+
+            if ( selectedRecords != null )
+            {
+                listSelectedRecords = Arrays.asList( selectedRecords );
+
+                if ( listSelectedRecords != null && listSelectedRecords.size( ) > 0 )
+                {
+                    for ( String strRecordId : listSelectedRecords )
+                    {
+                        listResultRecordId.add( Integer.parseInt( strRecordId ) );
+                    }
+                }
+            }
+            else
+            {
+                // sort order and sort entry are not needed in export
+                listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, true,
+                        null, RecordFieldFilter.ORDER_NONE, searchFields, adminUser, adminUser.getLocale( ) );
+            }
         }
         else
         {
