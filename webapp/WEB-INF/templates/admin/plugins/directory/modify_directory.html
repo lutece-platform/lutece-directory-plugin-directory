@@ -74,7 +74,7 @@
 					</#if>
 				</#if>
 				<label  for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} *  </label>
-				<textarea name="unavailability_message" id="unavailability_message" rows="20" class="richtext" style="width:80%"<#if directory.unavailabilityMessage?exists >${directory.unavailabilityMessage}</#if></textarea>
+				<textarea name="unavailability_message" id="unavailability_message" rows="20" class="richtext" style="width:80%"><#if directory.unavailabilityMessage?exists>${directory.unavailabilityMessage}</#if></textarea>
 				<span class="help-text">#i18n{directory.create_directory.label_unavailability_message_comment}</span>
 				<div class="form-actions">
 					<button class="btn btn-primary btn-small" type="submit" name="save">
