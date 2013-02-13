@@ -65,15 +65,14 @@ import fr.paris.lutece.util.filesystem.UploadUtil;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -90,7 +89,6 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Handler for asynchronous uploads.
- * Files are stored using {@link SubForm#addFileItem(String, String, FileItem)}.
  * The <code>jessionid</code> parameter should be the <strong>REAL</strong> session id,
  * not the flash player one.
  * The uploaded files are deleted by SubForm when filling fields.
@@ -134,8 +132,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      */
     public static DirectoryAsynchronousUploadHandler getHandler(  )
     {
-        return (DirectoryAsynchronousUploadHandler) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-            BEAN_DIRECTORY_ASYNCHRONOUS_UPLOAD_HANDLER );
+        return SpringContextService.getBean( BEAN_DIRECTORY_ASYNCHRONOUS_UPLOAD_HANDLER );
     }
 
     /**
@@ -150,7 +147,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     /**
      * {@inheritDoc}
      */
-    public boolean isInvoked( HttpServletRequest request )
+    @Override
+	public boolean isInvoked( HttpServletRequest request )
     {
         return DirectoryPlugin.PLUGIN_NAME.equals( request.getParameter( PARAMETER_PLUGIN_NAME ) );
     }
@@ -168,7 +166,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * {@inheritDoc}
      * @category CALLED_BY_JS (directoryupload.js)
      */
-    public void process( HttpServletRequest request, HttpServletResponse response, JSONObject mainObject,
+    @Override
+	public void process( HttpServletRequest request, HttpServletResponse response, JSONObject mainObject,
         List<FileItem> listFileItemsToUpload )
     {
         // prevent 0 or multiple uploads for the same field
@@ -384,8 +383,10 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Removes the file from the list.
+     *
      * @param strIdEntry the entry id
      * @param strSessionId the session id
+     * @param nIndex the n index
      */
     public synchronized void removeFileItem( String strIdEntry, String strSessionId, int nIndex )
     {
@@ -493,8 +494,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param request the HTTP request
      * @param strUploadAction the name of the upload action
      * @param map the map of <idEntry, RecordFields>
+     * @param record the record
      * @param plugin the plugin
-     * @return the name of the subform to display after having performed the requested action
      * @throws DirectoryErrorException exception if there is an error
      */
     public void doUploadAction( HttpServletRequest request, String strUploadAction, Map<String, List<RecordField>> map,
@@ -763,7 +764,6 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param listUploadedFileItems the list of uploaded files
      * @param listFileItemsToUpload the list of files to upload
      * @param locale the locale
-     * @return true if the list of files can be uploaded, false otherwise
      * @throws DirectoryErrorException exception if there is an error
      */
     private void canUploadFiles( String strFieldName, List<FileItem> listUploadedFileItems,
@@ -808,7 +808,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public void delete(  )
+        @Override
+		public void delete(  )
         {
             _bValue = null;
         }
@@ -816,7 +817,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public byte[] get(  )
+        @Override
+		public byte[] get(  )
         {
             return _bValue;
         }
@@ -824,7 +826,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public String getContentType(  )
+        @Override
+		public String getContentType(  )
         {
             return FileSystemUtil.getMIMEType( _strFileName );
         }
@@ -832,7 +835,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public String getFieldName(  )
+        @Override
+		public String getFieldName(  )
         {
             return null;
         }
@@ -840,15 +844,17 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public InputStream getInputStream(  ) throws IOException
+        @Override
+		public InputStream getInputStream(  ) throws IOException
         {
-            return IOUtils.toInputStream( new String( _bValue ) );
+            return new ByteArrayInputStream( _bValue );
         }
 
         /**
          * {@inheritDoc}
          */
-        public String getName(  )
+        @Override
+		public String getName(  )
         {
             return _strFileName;
         }
@@ -856,7 +862,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public OutputStream getOutputStream(  ) throws IOException
+        @Override
+		public OutputStream getOutputStream(  ) throws IOException
         {
             return null;
         }
@@ -864,7 +871,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public long getSize(  )
+        @Override
+		public long getSize(  )
         {
             return _bValue.length;
         }
@@ -872,7 +880,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public String getString(  )
+        @Override
+		public String getString(  )
         {
             return new String( _bValue );
         }
@@ -880,7 +889,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public String getString( String encoding ) throws UnsupportedEncodingException
+        @Override
+		public String getString( String encoding ) throws UnsupportedEncodingException
         {
             return new String( _bValue, encoding );
         }
@@ -888,7 +898,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public boolean isFormField(  )
+        @Override
+		public boolean isFormField(  )
         {
             return false;
         }
@@ -896,7 +907,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public boolean isInMemory(  )
+        @Override
+		public boolean isInMemory(  )
         {
             return true;
         }
@@ -904,7 +916,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public void setFieldName( String name )
+        @Override
+		public void setFieldName( String strName )
         {
             // nothing
         }
@@ -912,7 +925,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public void setFormField( boolean state )
+        @Override
+		public void setFormField( boolean bState )
         {
             // nothing
         }
@@ -920,7 +934,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        public void write( java.io.File file ) throws Exception
+        @Override
+		public void write( java.io.File file ) throws Exception
         {
             // nothing
         }
