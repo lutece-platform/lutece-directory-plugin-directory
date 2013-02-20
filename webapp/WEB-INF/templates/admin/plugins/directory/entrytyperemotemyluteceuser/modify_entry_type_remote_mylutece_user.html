@@ -1,6 +1,6 @@
 <#include "/admin/plugins/directory/commons.html" />
 <div class="row-fluid">
-	<div class="span8">
+	<div class="span7">
 	<fieldset>
 		<legend>
 			#i18n{directory.modify_entry.title_field} : '${entry.directory.title}'
@@ -80,12 +80,16 @@
 		<div class="form-actions">
 			<button class="btn btn-primary" type="submit" >#i18n{directory.modify_entry.button_save}</button>
 	  		<button class="btn btn-primary" type="submit" >#i18n{directory.modify_entry.button_apply}</button>
-	  		<button class="btn btn-primary" type="submit" >#i18n{directory.modify_entry.button_cancel}</button>
+	  		<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
+				<i class="icon-remove-circle" ></i>
+				<span class="hidden-phone" >#i18n{directory.create_entry.button_cancel}</span>
+			</a>
 		</div>
  	</div>
-	<div id="advanced_settings" class="span4">
-		<fieldset>
-			<legend>#i18n{directory.create_directory.label_advancedsettings}</legend>
+	</fieldset>
+	<div class="span4">
+	<fieldset>
+		<legend>#i18n{directory.create_directory.label_advancedsettings}</legend>
 			<div class="control-group">
 				<label class="control-label" for="indexed">#i18n{directory.create_entry.label_indexed} : </label>
 				<div class="controls">
@@ -139,32 +143,19 @@
 					#i18n{directory.create_entry.label_shown_in_export_comment}
 				</div>
 			</div>
-			
-			
-		    	<div class="control-group">
-		<label class="control-label" for="shown_in_completeness">#i18n{directory.create_entry.label_shown_in_completeness} :</label>
-		    	<#if entry.shownInCompleteness>
-		   			<div class="controls">
-	<input name="shown_in_completeness" value="1" type="checkbox" checked="checked" />
-		</div>
-	</div>
-		   		<#else>
-		   			<div class="controls">
-	<input name="shown_in_completeness" value="1" type="checkbox" />
-		</div>
-	</div>
-		   		</#if>
-		   		<br/>
-			 	<div class="control-group">
-		<label class="control-label" > &nbsp;</label> #i18n{directory.create_entry.label_shown_in_completeness_comment}
-			
-			<div class="alert">
-				 #i18n{directory.message.warning.entry_advanced_parameters_save}
+			<div class="control-group">
+				<label class="control-label" for="shown_in_completeness">#i18n{directory.create_entry.label_shown_in_completeness}</label>
+		    	<div class="controls">
+					<input name="shown_in_completeness" value="1" type="checkbox" <#if entry.shownInCompleteness>checked="checked"</#if>>
+					<p class="help-block">#i18n{directory.create_entry.label_shown_in_completeness_comment}</p>
+				</div>
 			</div>
-		</div>
+		</form>
+		  
+	</fieldset>
+	</div>
+</div>
 		
-</fieldset>
-</form>
 
 <script type="text/javascript">
 	function addAllSearch()

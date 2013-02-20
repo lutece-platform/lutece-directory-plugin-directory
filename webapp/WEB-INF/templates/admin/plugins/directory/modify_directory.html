@@ -12,7 +12,7 @@
         <fieldset>
             <legend>
 			#i18n{directory.modify_directory.title} "${directory.title}"
-           <a class="btn btn-primary btn-small pull-right" id="tgAdvancedSettings" href="#">
+			<a class="btn btn-primary btn-small pull-right" id="tgAdvancedSettings" href="#">
 				<i class="icon-chevron-left icon-white"></i>
 				<span class="hidden-phone">&nbsp;#i18n{directory.create_directory.label_advancedsettings}</span>
 			</a>
@@ -30,7 +30,6 @@
 					<span class="hidden-phone">&nbsp;#i18n{directory.create_directory.label_hideDetails}</span>
 				</a -->
 			<div id="main-detail">
-				
 				<label  for="description"> #i18n{directory.create_directory.label_description} * </label>
 				<textarea name="description" class="span6" rows="2">${directory.description} </textarea>
 				<span class="help-text" >#i18n{directory.create_directory.label_description_comment}</span>
@@ -76,6 +75,7 @@
 				<label  for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} *  </label>
 				<textarea name="unavailability_message" id="unavailability_message" rows="20" class="richtext" style="width:80%"><#if directory.unavailabilityMessage?exists>${directory.unavailabilityMessage}</#if></textarea>
 				<span class="help-text">#i18n{directory.create_directory.label_unavailability_message_comment}</span>
+			</div>
 				<div class="form-actions">
 					<button class="btn btn-primary btn-small" type="submit" name="save">
 						<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_directory.button_save}
@@ -87,18 +87,14 @@
 						<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.create_directory.button_cancel}
 					</a>
 				</div>
-			</div>
 		</fieldset>
 	</div>
     <div id="advanced_settings" class="span3">
-		<fieldset>
-        <legend>
-			<a class="btn btn-primary btn-small pull-right" id="tgAdvancedSettingsBack" href="#">
-			#i18n{directory.create_directory.label_advancedsettings}
-				<i class="icon-chevron-right icon-white"></i>
-			</a>
-		</legend>
-        <label  for="frontOfficeTitle">#i18n{directory.create_directory.label_title_front}  </label>
+		<a class="btn btn-primary btn-small pull-right" id="tgAdvancedSettingsBack" href="#">
+			<i class="icon-chevron-right icon-white"></i>
+			<span class="hidden-phone">&nbsp;#i18n{directory.create_directory.label_advancedsettings}</span>
+		</a>
+	    <label for="frontOfficeTitle" class="span12">#i18n{directory.create_directory.label_title_front} </label>
         <input type="text" name="front_office_title" id="" size="80" value="${directory.frontOfficeTitle!}" maxlength="255" />
         <p class="help-block">#i18n{directory.create_directory.label_title_front_comment}</p>
 		<div class="well well-small">
@@ -216,7 +212,6 @@
                 #i18n{directory.modify_directory.label_asc_sort_front}
 			</label>	
         </div>
-		</fieldset>
     </div>
     </form>
 </div>	

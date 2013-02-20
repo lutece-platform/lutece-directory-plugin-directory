@@ -1,5 +1,23 @@
 <div class="row-fluid">
 	<div class="span12">
+		<ul class="nav nav-tabs">
+			<li>
+				<a href="jsp/admin/plugins/directory/ManageAdvancedParameters.jsp">
+					#i18n{directory.manage_advanced_parameters.pageTitle}
+				</a>
+			</li>
+			<li>
+				<a href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory">
+					#i18n{directory.manage_directory_xsl.title}
+				</a>
+			</li>
+			<li class="active">
+				<a href="jsp/admin/plugins/directory/IndexAllDirectory.jsp?plugin_name=directory" >
+					#i18n{directory.index_all_directory.title}
+				</a>
+			</li>
+
+		</ul>
 		<fieldset>
 		<legend>#i18n{directory.index_all_directory.title}</legend>
 		<form class="form-horizontal" method="post" action="jsp/admin/plugins/directory/ConfirmIndexAllDirectory.jsp" >

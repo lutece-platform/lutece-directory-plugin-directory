@@ -50,7 +50,7 @@
 				<i class="icon-ok icon-white" ></i>
 				<span class="hidden-phone" >#i18n{directory.create_entry.button_save}</span>
 			</button>
-			<button class="btn btn-primary btn-small" type="button" name="apply" >
+			<button class="btn btn-primary btn-small" type="submit" name="apply" >
 				<i class="icon-ok-circle icon-white" ></i>
 				<span class="hidden-phone" >#i18n{directory.create_entry.button_apply_and_manage_response}</span>
 			</button>
@@ -64,8 +64,8 @@
 	<div id="advanced_settings" class="span4">
 	<fieldset>
 		<legend>#i18n{directory.create_directory.label_advancedsettings}</legend>
-<div class="control-group">
-			<label class="control-label" for=""></label>	 	
+		<div class="control-group">
+		<label class="control-label" for=""></label>	 	
 		<div class="controls">
 				<label class="checkbox" for="indexed">
 					<input name="indexed" value="1" type="checkbox" ${getChecked('indexed',list_param_default_values)} />

@@ -1,8 +1,26 @@
 <div class="row-fluid">
 	<div class="span12">
-		<fieldset>
-		<legend>#i18n{directory.manage_advanced_parameters.pageTitle}</legend>
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="jsp/admin/plugins/directory/ManageAdvancedParameters.jsp">
+					#i18n{directory.manage_advanced_parameters.pageTitle}
+				</a>
+			</li>
+			<#if right_xsl?exists && right_xsl>
+			<li>
+				<a href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory">
+					#i18n{directory.manage_directory_xsl.title}
+				</a>
+			</li>
+			</#if>
+			<#if permission_index_all_directory?exists && permission_index_all_directory>
+			<li>
+				<a href="jsp/admin/plugins/directory/IndexAllDirectory.jsp?plugin_name=directory" >
+					#i18n{directory.index_all_directory.title}
+				</a>
+			</li>
+			</#if>
+		</ul>
 		<#include "advanced_parameters.html" />
-		</fieldset>
 	</div>
 </div>

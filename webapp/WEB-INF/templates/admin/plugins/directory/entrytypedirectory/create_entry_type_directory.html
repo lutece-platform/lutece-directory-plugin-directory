@@ -25,7 +25,7 @@
 	    <div class="control-group">
 		<label class="control-label" for="comment"> #i18n{directory.create_entry.label_comment} : </label>
 			<div class="controls">
-				<textarea name="comment"  class="span5" rows="2"></textarea>
+				<textarea name="comment" class="span5" rows="2"></textarea>
 			</div>
 		</div>
 	  	<p>#i18n{directory.create_entry.label_type} : #i18n{${entry.entryType.titleI18nKey}}</p>
@@ -48,8 +48,9 @@
 			<button class="btn btn-primary btn-small" type="submit" name="save">
 				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_entry.button_save}
 			</button>
-	  		<a class="btn btn-small" href="" name="cancel">
-				<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.create_entry.button_cancel}
+	  		<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
+				<i class="icon-remove-circle" ></i>
+				<span class="hidden-phone" >#i18n{directory.create_entry.button_cancel}</span>
 			</a>
 	   </div>
 	</div> 
@@ -157,8 +158,7 @@
  </fieldset>
 </form>
  <script>
- function select_associate()
- {
+ function select_associate() {
 	var form = document.getElementById("settings");
 	var entry = form.childNodes[13];
 	form.removeChild(entry);
@@ -196,8 +196,7 @@
 	
  }
 
- function refresh_list(id_directory)
- {
+ function refresh_list(id_directory) {
 	 if(document.getElementById("id_entry_associate")!=null)
 	 {
 		 var parent = document.getElementById("id_entry_associate").parentNode;
@@ -248,34 +247,30 @@
 	
 	form.insertBefore(p,form.childNodes[13]);
  }
-	<#assign i=1>
- <#list entry_list_associate as entry_list>
 
-	function add_entry_${i}(listEntry)
-	{
+<#assign i=1>
+<#list entry_list_associate as entry_list>
+	function add_entry_${i}(listEntry){
 		<#list entry_list as entry>
 			var option${entry.idEntry} = document.createElement("option");
 			option${entry.idEntry}.text="${entry.title}";
 
 			var value${entry.idEntry} = document.createAttribute("value");
 			value${entry.idEntry}.nodeValue = "${entry.idEntry}";
-
 			option${entry.idEntry}.setAttributeNode(value${entry.idEntry});
-			
 			listEntry.appendChild(option${entry.idEntry});
 		</#list>
 	}
 	<#assign i=i+1>
+</#list>
 
- </#list>
+var agt=navigator.userAgent.toLowerCase();
 
- var agt=navigator.userAgent.toLowerCase();
-
- var is_konq = (agt.indexOf('konqueror') != -1);
- var is_safari = ((agt.indexOf('safari')!=-1)
-&&(agt.indexOf('mac')!=-1))?true:false;
- var is_khtml  = (is_safari || is_konq);
- var is_gecko = ((!is_khtml)&&(navigator.product)
+var is_konq = (agt.indexOf('konqueror') != -1);
+var is_safari = ((agt.indexOf('safari')!=-1)
+&(agt.indexOf('mac')!=-1))?true:false;
+var is_khtml  = (is_safari || is_konq);
+var is_gecko = ((!is_khtml)&&(navigator.product)
 &&(navigator.product.toLowerCase()=="gecko"))?true:false;
  
  var is_fx = ((agt.indexOf('mozilla/5')!=-1) && (agt.indexOf('spoofer')==-1) &&
@@ -290,21 +285,6 @@
 	 <#break>
 	 </#list>
  }
-/*
-function addAllSearch()
-{
-	var inputAllSearch = document.getElementById("is_all_search");
-	if(inputAllSearch.checked)
-	{
-		document.getElementById("label_value_all_search").style.display="block";
-	}
-	else
-	{
-		document.getElementById("label_value_all_search").style.display="none";
-	}
- }
-addAllSearch(); 
-*/
 
 function addAllSearch()	{
 	if( $("#is_all_search:checked").length > 0 ){

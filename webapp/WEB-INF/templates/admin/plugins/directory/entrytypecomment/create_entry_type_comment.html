@@ -15,8 +15,9 @@
 			<button class="btn btn-primary btn-small" type="submit" name="save">
 				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_entry.button_save}
 			</button>
-			<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${idDirectory}" >
-				<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.create_entry.button_cancel}
+			<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
+				<i class="icon-remove-circle" ></i>
+				<span class="hidden-phone" >#i18n{directory.create_entry.button_cancel}</span>
 			</a>
 		</div>
 		</form>
