@@ -47,8 +47,7 @@ import java.util.Locale;
 public final class DirectoryActionHome
 {
     // Static variable pointed at the DAO instance
-    private static IDirectoryActionDAO _dao = (IDirectoryActionDAO) SpringContextService.getPluginBean( "directory",
-            "directoryActionDAO" );
+    private static IDirectoryActionDAO _dao = SpringContextService.getBean( "directoryActionDAO" );
 
     /**
      * Private constructor - this class need not be instantiated

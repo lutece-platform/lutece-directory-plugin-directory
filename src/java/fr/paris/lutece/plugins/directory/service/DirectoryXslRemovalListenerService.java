@@ -57,7 +57,6 @@ public final class DirectoryXslRemovalListenerService
      */
     public static RemovalListenerService getService(  )
     {
-        return (RemovalListenerService) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-            BEAN_DIRECTORY_XSL_REMOVAL_SERVICE );
+        return SpringContextService.getBean( BEAN_DIRECTORY_XSL_REMOVAL_SERVICE );
     }
 }

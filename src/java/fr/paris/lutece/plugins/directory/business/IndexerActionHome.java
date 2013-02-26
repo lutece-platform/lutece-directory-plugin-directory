@@ -45,8 +45,7 @@ import java.util.List;
 public final class IndexerActionHome
 {
     // Static variable pointed at the DAO instance
-    private static IIndexerActionDAO _dao = (IIndexerActionDAO) SpringContextService.getPluginBean( "directory",
-            "directoryIndexerActionDAO" );
+    private static IIndexerActionDAO _dao = SpringContextService.getBean( "directoryIndexerActionDAO" );
 
     /**
      * Private constructor - this class need not be instantiated

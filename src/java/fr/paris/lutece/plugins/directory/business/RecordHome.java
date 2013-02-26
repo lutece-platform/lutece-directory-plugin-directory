@@ -50,7 +50,7 @@ import java.util.List;
 public final class RecordHome
 {
     // Static variable pointed at the DAO instance
-    private static IRecordDAO _dao = (IRecordDAO) SpringContextService.getPluginBean( "directory", "directoryRecordDAO" );
+    private static IRecordDAO _dao = SpringContextService.getBean( "directoryRecordDAO" );
     private static final int STEP_DELETE = 50;
 
     /**

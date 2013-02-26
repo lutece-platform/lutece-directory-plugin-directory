@@ -57,7 +57,6 @@ public final class RecordRemovalListenerService
      */
     public static RemovalListenerService getService(  )
     {
-        return (RemovalListenerService) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-            BEAN_RECORD_REMOVAL_SERVICE );
+        return SpringContextService.getBean( BEAN_RECORD_REMOVAL_SERVICE );
     }
 }

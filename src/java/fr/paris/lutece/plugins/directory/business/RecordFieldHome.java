@@ -48,8 +48,7 @@ import java.util.List;
 public final class RecordFieldHome
 {
     // Static variable pointed at the DAO instance
-    private static IRecordFieldDAO _dao = (IRecordFieldDAO) SpringContextService.getPluginBean( "directory",
-            "directoryRecordFieldDAO" );
+    private static IRecordFieldDAO _dao = SpringContextService.getBean( "directoryRecordFieldDAO" );
 
     /**
      * Private constructor - this class need not be instantiated

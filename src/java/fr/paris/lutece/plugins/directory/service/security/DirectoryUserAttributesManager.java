@@ -33,14 +33,13 @@
  */
 package fr.paris.lutece.plugins.directory.service.security;
 
-import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.portal.service.security.UserAttributesService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -66,8 +65,7 @@ public final class DirectoryUserAttributesManager
      */
     public static DirectoryUserAttributesManager getManager(  )
     {
-        return (DirectoryUserAttributesManager) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-            BEAN_WORKFLOW_USER_ATTRIBUTES_MANAGER );
+        return SpringContextService.getBean( BEAN_WORKFLOW_USER_ATTRIBUTES_MANAGER );
     }
 
     /**

@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.RemovalListenerService;
 
@@ -58,7 +57,6 @@ public final class DirectoryRemovalListenerService
      */
     public static RemovalListenerService getService(  )
     {
-        return (RemovalListenerService) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-            BEAN_DIRECTORY_REMOVAL_SERVICE );
+        return SpringContextService.getBean( BEAN_DIRECTORY_REMOVAL_SERVICE );
     }
 }

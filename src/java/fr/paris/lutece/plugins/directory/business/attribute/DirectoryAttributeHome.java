@@ -51,8 +51,7 @@ public final class DirectoryAttributeHome
 {
     private static final String BEAN_DIRECTORY_ATTRIBUTE_DAO = "directory.directoryAttributeDAO";
     private static Plugin _plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-    private static IDirectoryAttributeDAO _dao = (IDirectoryAttributeDAO) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-            BEAN_DIRECTORY_ATTRIBUTE_DAO );
+    private static IDirectoryAttributeDAO _dao = SpringContextService.getBean( BEAN_DIRECTORY_ATTRIBUTE_DAO );
 
     /**
      * Load the attributes of the directory

@@ -48,8 +48,7 @@ import java.util.List;
 public final class DirectoryXslHome
 {
     // Static variable pointed at the DAO instance
-    private static IDirectoryXslDAO _dao = (IDirectoryXslDAO) SpringContextService.getPluginBean( "directory",
-            "directoryXslDAO" );
+    private static IDirectoryXslDAO _dao = SpringContextService.getBean( "directoryXslDAO" );
     private static final String CSV = "csv";
 
     /**

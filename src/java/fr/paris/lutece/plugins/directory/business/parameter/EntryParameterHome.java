@@ -47,8 +47,7 @@ import fr.paris.lutece.util.ReferenceList;
 public final class EntryParameterHome
 {
     // Static variable pointed at the DAO instance
-    private static IEntryParameterDAO _dao = (IEntryParameterDAO) SpringContextService.getPluginBean( "directory",
-            "directoryEntryParameterDAO" );
+    private static IEntryParameterDAO _dao = SpringContextService.getBean( "directoryEntryParameterDAO" );
 
     /**
          * Load all the default values

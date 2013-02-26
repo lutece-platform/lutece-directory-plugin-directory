@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business.rss;
 
-import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
@@ -46,8 +45,7 @@ import java.util.List;
 public final class DirectoryResourceRssConfigHome
 {
     // Static variable pointed at the DAO instance
-    private static IDirectoryResourceRssConfigDAO _dao = (IDirectoryResourceRssConfigDAO) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-            "resourceRssDirectoryConfigDAO" );
+    private static IDirectoryResourceRssConfigDAO _dao = SpringContextService.getBean( "resourceRssDirectoryConfigDAO" );
 
     /**
      * Private constructor - this class need not be instantiated

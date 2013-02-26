@@ -34,7 +34,6 @@
 package fr.paris.lutece.plugins.directory.service.parameter;
 
 import fr.paris.lutece.plugins.directory.business.parameter.EntryParameterHome;
-import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.ReferenceItem;
@@ -56,8 +55,7 @@ public final class EntryParameterService
      */
     public static EntryParameterService getService(  )
     {
-        return (EntryParameterService) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-            BEAN_ENTRY_PARAMETER_SERVICE );
+        return SpringContextService.getBean( BEAN_ENTRY_PARAMETER_SERVICE );
     }
 
     /**

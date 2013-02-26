@@ -46,7 +46,7 @@ import java.util.List;
 public final class EntryHome
 {
     // Static variable pointed at the DAO instance
-    private static IEntryDAO _dao = (IEntryDAO) SpringContextService.getPluginBean( "directory", "directoryEntryDAO" );
+    private static IEntryDAO _dao = SpringContextService.getBean( "directoryEntryDAO" );
 
     /**
      * Private constructor - this class need not be instantiated

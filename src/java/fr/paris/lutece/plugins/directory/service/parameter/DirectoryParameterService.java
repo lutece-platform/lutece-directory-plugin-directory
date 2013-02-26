@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.directory.service.parameter;
 
 import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterFilter;
 import fr.paris.lutece.plugins.directory.business.parameter.DirectoryParameterHome;
-import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -65,8 +64,7 @@ public final class DirectoryParameterService
      */
     public static DirectoryParameterService getService(  )
     {
-        return (DirectoryParameterService) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-            BEAN_DIRECTORY_PARAMETER_SERVICE );
+        return SpringContextService.getBean( BEAN_DIRECTORY_PARAMETER_SERVICE );
     }
 
     /**

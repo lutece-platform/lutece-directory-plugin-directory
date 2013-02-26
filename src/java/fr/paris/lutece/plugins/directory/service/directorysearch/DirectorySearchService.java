@@ -42,7 +42,6 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
-import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.record.IRecordService;
 import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
@@ -54,19 +53,8 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Searcher;
-import org.apache.lucene.store.NIOFSDirectory;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -74,6 +62,15 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Searcher;
+import org.apache.lucene.store.NIOFSDirectory;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -134,7 +131,7 @@ public class DirectorySearchService
             throw new AppException( "Analyser class name not found in directory.properties", null );
         }
 
-        _indexer = (IDirectorySearchIndexer) SpringContextService.getPluginBean( "directory", "directoryIndexer" );
+        _indexer = SpringContextService.getBean( "directoryIndexer" );
 
         try
         {
@@ -212,8 +209,7 @@ public class DirectorySearchService
             {
                 _searcher = new IndexSearcher( _luceneDirectory, true );
 
-                IDirectorySearchEngine engine = (IDirectorySearchEngine) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-                        BEAN_SEARCH_ENGINE );
+                IDirectorySearchEngine engine = SpringContextService.getBean( BEAN_SEARCH_ENGINE );
 
                 if ( mapSearch != null )
                 {
@@ -352,8 +348,7 @@ public class DirectorySearchService
 
         _searcher = new IndexSearcher( _luceneDirectory, true );
 
-        IDirectorySearchEngine engine = (IDirectorySearchEngine) SpringContextService.getPluginBean( DirectoryPlugin.PLUGIN_NAME,
-                BEAN_SEARCH_ENGINE );
+        IDirectorySearchEngine engine = SpringContextService.getBean( BEAN_SEARCH_ENGINE );
 
         if ( ( ( strIdDirectory != null ) && !strIdDirectory.equals( DirectoryUtils.EMPTY_STRING ) ) &&
                 ( ( strIdEntry != null ) && !strIdEntry.equals( DirectoryUtils.EMPTY_STRING ) ) )

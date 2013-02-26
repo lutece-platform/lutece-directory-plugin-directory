@@ -42,12 +42,11 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.ReferenceList;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 
 /**
@@ -56,7 +55,7 @@ import java.util.Map;
 public final class DirectoryHome
 {
     // Static variable pointed at the DAO instance
-    private static IDirectoryDAO _dao = (IDirectoryDAO) SpringContextService.getPluginBean( "directory", "directoryDAO" );
+    private static IDirectoryDAO _dao = SpringContextService.getBean( "directoryDAO" );
 
     /**
      * Private constructor - this class need not be instantiated
