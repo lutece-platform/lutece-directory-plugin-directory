@@ -259,7 +259,7 @@
 			<!-- List all entry of type group  -->
 			<@combo name="id_entry_group" default_value="-1" items=entry_group_list />
         </#if>
-        <button type="submit" class="btn btn-primary btn-small">
+        <button type="submit" class="btn btn-primary btn-small" name="move">
 			<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.modify_directory.moveAll}
 		</button>
 		<!--  Table of entry -->
@@ -314,7 +314,7 @@
 						<td>
                             <blockquote>
 								<@comboOrders name="order_id_${entry.idEntry!}" default_value=entry.position idParent=entry.parent.idEntry />
-								<button class="btn btn-primary btn-small" type="submit" title="#i18n{directory.modify_directory.move}" >
+								<button class="btn btn-primary btn-small" type="submit" title="#i18n{directory.modify_directory.move}" name="move_${entry.idEntry!}" value="${entry.idEntry!}">
 									<i class="icon-resize-full icon-white"></i>
 								</button>
 							</blockquote>
@@ -322,7 +322,7 @@
                     <#else>
 						<td>
                             <@comboOrders name="order_id_${entry.idEntry!}" default_value=entry.position idParent=0 />
-                            <button class="btn btn-small btn-primary" type="submit" title="#i18n{directory.modify_directory.move}" >
+                            <button class="btn btn-small btn-primary" type="submit" title="#i18n{directory.modify_directory.move}" name="move_${entry.idEntry!}" value="${entry.idEntry!}" >
 								<i class="icon-resize-full icon-white"></i>
 							</button>
 						</td>

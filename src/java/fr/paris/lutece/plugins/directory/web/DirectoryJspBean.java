@@ -1114,7 +1114,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         IEntry entry;
 
         // To execute mass action "Move into"
-        if ( request.getParameter( PARAMETER_MOVE_BUTTON + ".x" ) != null )
+        if ( request.getParameter( PARAMETER_MOVE_BUTTON + ".x" ) != null
+                || request.getParameter( PARAMETER_MOVE_BUTTON ) != null )
         {
             String strIdNewParent = request.getParameter( PARAMETER_ID_ENTRY_GROUP );
             Integer nIdNewParent = 0;
