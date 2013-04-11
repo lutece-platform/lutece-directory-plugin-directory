@@ -44,8 +44,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,11 +52,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
- *
+ * 
  * EntryTypeGeolocation
- *
+ * 
  */
 public class EntryTypeGeolocation extends Entry
 {
@@ -98,27 +98,27 @@ public class EntryTypeGeolocation extends Entry
     private static final String SQL_JOIN_DIRECTORY_RECORD_FIELD = " JOIN directory_record_field drf ON drf.id_record = dr.id_record AND drf.id_entry = ? JOIN directory_field df ON df.id_entry = drf.id_entry AND df.id_field = drf.id_field AND title=? ";
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return TEMPLATE_CREATE;
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return TEMPLATE_MODIFY;
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
@@ -133,7 +133,7 @@ public class EntryTypeGeolocation extends Entry
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
@@ -162,17 +162,17 @@ public class EntryTypeGeolocation extends Entry
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim(  ) : null;
-        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim(  ) : null;
+        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter(
+                PARAMETER_HELP_MESSAGE ).trim( ) : null;
+        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null ) ? request
+                .getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim( ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
@@ -189,7 +189,7 @@ public class EntryTypeGeolocation extends Entry
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_TITLE;
         }
@@ -199,65 +199,66 @@ public class EntryTypeGeolocation extends Entry
             Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
 
             return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+                    AdminMessage.TYPE_STOP );
         }
 
         // for don't update fields listFields=null
-        Field xField = findField( CONSTANT_X, getFields(  ) );
+        Field xField = findField( CONSTANT_X, getFields( ) );
 
         if ( xField == null )
         {
-            xField = new Field(  );
+            xField = new Field( );
         }
 
         xField.setEntry( this );
         xField.setTitle( CONSTANT_X );
         xField.setValue( CONSTANT_X );
 
-        Field yField = findField( CONSTANT_Y, getFields(  ) );
+        Field yField = findField( CONSTANT_Y, getFields( ) );
 
         if ( yField == null )
         {
-            yField = new Field(  );
+            yField = new Field( );
         }
 
         yField.setEntry( this );
         yField.setTitle( CONSTANT_Y );
         yField.setValue( CONSTANT_Y );
 
-        Field mapProviderField = findField( CONSTANT_PROVIDER, getFields(  ) );
+        Field mapProviderField = findField( CONSTANT_PROVIDER, getFields( ) );
 
         if ( mapProviderField == null )
         {
-            mapProviderField = new Field(  );
+            mapProviderField = new Field( );
         }
 
         mapProviderField.setEntry( this );
         mapProviderField.setTitle( CONSTANT_PROVIDER );
         mapProviderField.setValue( strMapProvider );
 
-        Field addressField = findField( CONSTANT_ADDRESS, getFields(  ) );
+        Field addressField = findField( CONSTANT_ADDRESS, getFields( ) );
 
         if ( addressField == null )
         {
-            addressField = new Field(  );
+            addressField = new Field( );
         }
 
         addressField.setEntry( this );
         addressField.setTitle( CONSTANT_ADDRESS );
 
-        Field showXYField = findField( CONSTANT_SHOWXY, getFields(  ) );
+        Field showXYField = findField( CONSTANT_SHOWXY, getFields( ) );
 
         if ( showXYField == null )
         {
-            showXYField = new Field(  );
+            showXYField = new Field( );
         }
 
         showXYField.setEntry( this );
         showXYField.setTitle( CONSTANT_SHOWXY );
-        showXYField.setValue( StringUtils.isNotBlank( strShowXY ) ? Boolean.TRUE.toString(  ) : Boolean.FALSE.toString(  ) );
+        showXYField
+                .setValue( StringUtils.isNotBlank( strShowXY ) ? Boolean.TRUE.toString( ) : Boolean.FALSE.toString( ) );
 
-        List<Field> listFields = new ArrayList<Field>(  );
+        List<Field> listFields = new ArrayList<Field>( );
         listFields.add( xField );
         listFields.add( yField );
         listFields.add( mapProviderField );
@@ -289,34 +290,33 @@ public class EntryTypeGeolocation extends Entry
      * Builds the {@link ReferenceList} of all available map providers
      * @return the {@link ReferenceList}
      */
-    public ReferenceList getMapProvidersRefList(  )
+    public ReferenceList getMapProvidersRefList( )
     {
-        ReferenceList refList = new ReferenceList(  );
+        ReferenceList refList = new ReferenceList( );
 
         refList.addItem( DirectoryUtils.EMPTY_STRING, DirectoryUtils.EMPTY_STRING );
 
-        for ( IMapProvider mapProvider : MapProviderManager.getMapProvidersList(  ) )
+        for ( IMapProvider mapProvider : MapProviderManager.getMapProvidersList( ) )
         {
-            refList.add( mapProvider.toRefItem(  ) );
+            refList.add( mapProvider.toRefItem( ) );
         }
 
         return refList;
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
     public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
-        boolean addNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+            boolean addNewValue, List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
-        List<String> listValue = new ArrayList<String>(  );
-        String strXValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_X );
-        String strYValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_Y );
-        String strMapProviderValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_MAP_PROVIDER );
-        String strAddressValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_ADDRESS );
+        List<String> listValue = new ArrayList<String>( );
+        String strXValue = request.getParameter( this.getIdEntry( ) + PARAMETER_SUFFIX_X );
+        String strYValue = request.getParameter( this.getIdEntry( ) + PARAMETER_SUFFIX_Y );
+        String strMapProviderValue = request.getParameter( this.getIdEntry( ) + PARAMETER_SUFFIX_MAP_PROVIDER );
+        String strAddressValue = request.getParameter( this.getIdEntry( ) + PARAMETER_SUFFIX_ADDRESS );
         listValue.add( strXValue );
         listValue.add( strYValue );
         listValue.add( strMapProviderValue );
@@ -326,7 +326,7 @@ public class EntryTypeGeolocation extends Entry
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
@@ -334,13 +334,13 @@ public class EntryTypeGeolocation extends Entry
     {
         String strValue;
 
-        if ( recordField.getValue(  ) != null )
+        if ( recordField.getValue( ) != null )
         {
-            if ( !CONSTANT_PROVIDER.equals( recordField.getField(  ).getTitle(  ) ) )
+            if ( !CONSTANT_PROVIDER.equals( recordField.getField( ).getTitle( ) ) )
             {
-                strValue = new String( recordField.getValue(  ) );
+                strValue = new String( recordField.getValue( ) );
 
-                if ( !strValue.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+                if ( !strValue.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
                 {
                     mapSearchItem.put( DirectorySearchItem.FIELD_CONTENTS, strValue );
                 }
@@ -349,17 +349,16 @@ public class EntryTypeGeolocation extends Entry
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-        boolean addNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+            boolean addNewValue, List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
-        if ( lstValue.size(  ) != CONSTANT_FIELDS_COUNT )
+        if ( lstValue.size( ) != CONSTANT_FIELDS_COUNT )
         {
-            throw new DirectoryErrorException( this.getTitle(  ) );
+            throw new DirectoryErrorException( this.getTitle( ) );
         }
 
         String strXValue = lstValue.get( CONSTANT_POSITION_X );
@@ -367,55 +366,55 @@ public class EntryTypeGeolocation extends Entry
         String strMapProviderValue = lstValue.get( CONSTANT_POSITION_MAP_PROVIDER );
         String strAddressValue = lstValue.get( CONSTANT_POSITION_ADDRESS );
 
-        Field xField = findField( CONSTANT_X, getFields(  ) );
-        Field yField = findField( CONSTANT_Y, getFields(  ) );
+        Field xField = findField( CONSTANT_X, getFields( ) );
+        Field yField = findField( CONSTANT_Y, getFields( ) );
 
         if ( bTestDirectoryError )
         {
-            if ( this.isMandatory(  ) )
+            if ( this.isMandatory( ) )
             {
-                if ( ( StringUtils.isBlank( strXValue ) || StringUtils.isBlank( strYValue ) ) &&
-                        StringUtils.isBlank( strAddressValue ) )
+                if ( ( StringUtils.isBlank( strXValue ) || StringUtils.isBlank( strYValue ) )
+                        && StringUtils.isBlank( strAddressValue ) )
                 {
-                    throw new DirectoryErrorException( this.getTitle(  ) );
+                    throw new DirectoryErrorException( this.getTitle( ) );
                 }
             }
-            else if ( ( StringUtils.isBlank( strXValue ) && StringUtils.isNotBlank( strYValue ) ) ||
-                    ( StringUtils.isNotBlank( strXValue ) && StringUtils.isBlank( strYValue ) ) )
+            else if ( ( StringUtils.isBlank( strXValue ) && StringUtils.isNotBlank( strYValue ) )
+                    || ( StringUtils.isNotBlank( strXValue ) && StringUtils.isBlank( strYValue ) ) )
             {
-                throw new DirectoryErrorException( this.getTitle(  ) );
+                throw new DirectoryErrorException( this.getTitle( ) );
             }
         }
 
-        RecordField recordFieldX = new RecordField(  );
+        RecordField recordFieldX = new RecordField( );
         recordFieldX.setEntry( this );
         recordFieldX.setValue( strXValue );
         recordFieldX.setField( xField );
         listRecordField.add( recordFieldX );
 
-        RecordField recordFieldY = new RecordField(  );
+        RecordField recordFieldY = new RecordField( );
         recordFieldY.setEntry( this );
         recordFieldY.setValue( strYValue );
         recordFieldY.setField( yField );
         listRecordField.add( recordFieldY );
 
         IMapProvider mapProvider = MapProviderManager.getMapProvider( strMapProviderValue );
-        Field mapProviderField = findField( CONSTANT_PROVIDER, getFields(  ) );
+        Field mapProviderField = findField( CONSTANT_PROVIDER, getFields( ) );
 
-        RecordField recordFieldMapProvider = new RecordField(  );
+        RecordField recordFieldMapProvider = new RecordField( );
         recordFieldMapProvider.setEntry( this );
 
         if ( mapProvider == null )
         {
-            strMapProviderValue = mapProviderField.getValue(  );
+            strMapProviderValue = mapProviderField.getValue( );
         }
 
         recordFieldMapProvider.setValue( strMapProviderValue );
         recordFieldMapProvider.setField( mapProviderField );
         listRecordField.add( recordFieldMapProvider );
 
-        RecordField recordFieldAddress = new RecordField(  );
-        Field addressField = findField( CONSTANT_ADDRESS, getFields(  ) );
+        RecordField recordFieldAddress = new RecordField( );
+        Field addressField = findField( CONSTANT_ADDRESS, getFields( ) );
 
         recordFieldAddress.setEntry( this );
         recordFieldAddress.setValue( strAddressValue );
@@ -424,25 +423,23 @@ public class EntryTypeGeolocation extends Entry
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
     public void getImportRecordFieldData( Record record, byte[] decodedBytes, String nomFile, boolean b,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+            List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
         super.getImportRecordFieldData( record, decodedBytes, nomFile, b, listRecordField, locale );
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
     public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+            List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
         List<String> lstValue = splitGeolocationValues( strImportValue );
 
@@ -456,92 +453,120 @@ public class EntryTypeGeolocation extends Entry
      */
     private List<String> splitGeolocationValues( String strNotSplittedValue )
     {
-        List<String> lstValue = new ArrayList<String>(  );
+        Field showXYField = findField( CONSTANT_SHOWXY, getFields( ) );
 
-        for ( int nCpt = 0; nCpt < CONSTANT_FIELDS_COUNT; nCpt++ )
+        //        if ( !strNotSplittedValue.contains( DirectoryUtils.CONSTANT_COMA ) )
+        if ( !Boolean.parseBoolean( showXYField.getValue( ) ) )
         {
-            lstValue.add( StringUtils.EMPTY );
-        }
+            List<String> lstValue = new ArrayList<String>( );
 
-        if ( StringUtils.isNotBlank( strNotSplittedValue ) )
-        {
-            lstValue.remove( CONSTANT_POSITION_ADDRESS );
-            lstValue.add( CONSTANT_POSITION_ADDRESS, strNotSplittedValue );
-        }
+            for ( int nCpt = 0; nCpt < CONSTANT_FIELDS_COUNT; nCpt++ )
+            {
+                lstValue.add( StringUtils.EMPTY );
+            }
 
-        return lstValue;
+            if ( StringUtils.isNotBlank( strNotSplittedValue ) )
+            {
+                lstValue.remove( CONSTANT_POSITION_ADDRESS );
+                lstValue.add( CONSTANT_POSITION_ADDRESS, strNotSplittedValue );
+            }
+
+            return lstValue;
+        }
 
         /** DIRECTORY-70 : The X, Y and provider are not displayed in the export */
         /*
-        // first, split coma ","
-        if ( StringUtils.isBlank( strNotSplittedValue ) )
-        {
-            List<String> listEmptyValues = new ArrayList<String>(  );
-        
-            for ( int nCpt = 0; nCpt < CONSTANT_FIELDS_COUNT; nCpt++ )
-            {
-                listEmptyValues.add( DirectoryUtils.EMPTY_STRING );
-            }
-        
-            return listEmptyValues;
-        }
-        
+         * // first, split coma ","
+         * if ( StringUtils.isBlank( strNotSplittedValue ) )
+         * {
+         * List<String> listEmptyValues = new ArrayList<String>( );
+         * 
+         * for ( int nCpt = 0; nCpt < CONSTANT_FIELDS_COUNT; nCpt++ )
+         * {
+         * listEmptyValues.add( DirectoryUtils.EMPTY_STRING );
+         * }
+         * 
+         * return listEmptyValues;
+         * }
+         * 
+         * String[] comaSplitted = strNotSplittedValue.split(
+         * DirectoryUtils.CONSTANT_COMA );
+         * 
+         * if ( ( comaSplitted == null ) || ( comaSplitted.length < 3 ) )
+         * {
+         * throw new DirectoryErrorException( this.getTitle( ) );
+         * }
+         */
         String[] comaSplitted = strNotSplittedValue.split( DirectoryUtils.CONSTANT_COMA );
-        
-        if ( ( comaSplitted == null ) || ( comaSplitted.length < 3 ) )
+
+        List<String> listGeolocValues = new ArrayList<String>( 4 );
+        StringBuilder sbAddress = new StringBuilder( );
+
+        for ( int i = 0; i < comaSplitted.length; i++ )
         {
-            throw new DirectoryErrorException( this.getTitle(  ) );
-        }
-        
-        String[] tabGeolocationValues = new String[4];
-        
-        for ( String strValue : comaSplitted )
-        {
-            if ( strValue.startsWith( CONSTANT_X + DirectoryUtils.CONSTANT_EQUAL ) )
+            if ( i < CONSTANT_POSITION_ADDRESS )
             {
-                tabGeolocationValues[CONSTANT_POSITION_X] = strValue.substring( ( CONSTANT_X +
-                        DirectoryUtils.CONSTANT_EQUAL ).length(  ) );
+                listGeolocValues.add( comaSplitted[i] );
             }
-            else if ( strValue.startsWith( CONSTANT_Y + DirectoryUtils.CONSTANT_EQUAL ) )
+            else if ( i == CONSTANT_POSITION_ADDRESS )
             {
-                tabGeolocationValues[CONSTANT_POSITION_Y] = strValue.substring( ( CONSTANT_Y +
-                        DirectoryUtils.CONSTANT_EQUAL ).length(  ) );
-            }
-            else if ( strValue.startsWith( CONSTANT_PROVIDER + DirectoryUtils.CONSTANT_EQUAL ) )
-            {
-                tabGeolocationValues[CONSTANT_POSITION_MAP_PROVIDER] = strValue.substring( ( CONSTANT_PROVIDER +
-                        DirectoryUtils.CONSTANT_EQUAL ).length(  ) );
-            }
-            else if ( strValue.startsWith( CONSTANT_ADDRESS + DirectoryUtils.CONSTANT_EQUAL ) )
-            {
-                tabGeolocationValues[CONSTANT_POSITION_ADDRESS] = strValue.substring( ( CONSTANT_ADDRESS +
-                        DirectoryUtils.CONSTANT_EQUAL ).length(  ) );
+                sbAddress.append( comaSplitted[i] );
             }
             else
             {
-                if ( StringUtils.isNotBlank( tabGeolocationValues[CONSTANT_POSITION_ADDRESS] ) )
-                {
-                    tabGeolocationValues[CONSTANT_POSITION_ADDRESS] += strValue;
-                }
-                else
-                {
-                    throw new DirectoryErrorException( this.getTitle(  ) );
-                }
+                sbAddress.append( DirectoryUtils.CONSTANT_COMA );
+                sbAddress.append( comaSplitted[i] );
             }
         }
-        
-        return Arrays.asList( tabGeolocationValues );
-        */
+        listGeolocValues.add( sbAddress.toString( ) );
+        return listGeolocValues;
+
+        //        for ( String strValue : comaSplitted )
+        //        {
+        //            if ( strValue.startsWith( CONSTANT_X + DirectoryUtils.CONSTANT_EQUAL ) )
+        //            {
+        //                tabGeolocationValues[CONSTANT_POSITION_X] = strValue.substring( ( CONSTANT_X +
+        //                        DirectoryUtils.CONSTANT_EQUAL ).length(  ) );
+        //            }
+        //            else if ( strValue.startsWith( CONSTANT_Y + DirectoryUtils.CONSTANT_EQUAL ) )
+        //            {
+        //                tabGeolocationValues[CONSTANT_POSITION_Y] = strValue.substring( ( CONSTANT_Y +
+        //                        DirectoryUtils.CONSTANT_EQUAL ).length(  ) );
+        //            }
+        //            else if ( strValue.startsWith( CONSTANT_PROVIDER + DirectoryUtils.CONSTANT_EQUAL ) )
+        //            {
+        //                tabGeolocationValues[CONSTANT_POSITION_MAP_PROVIDER] = strValue.substring( ( CONSTANT_PROVIDER +
+        //                        DirectoryUtils.CONSTANT_EQUAL ).length(  ) );
+        //            }
+        //            else if ( strValue.startsWith( CONSTANT_ADDRESS + DirectoryUtils.CONSTANT_EQUAL ) )
+        //            {
+        //                tabGeolocationValues[CONSTANT_POSITION_ADDRESS] = strValue.substring( ( CONSTANT_ADDRESS +
+        //                        DirectoryUtils.CONSTANT_EQUAL ).length(  ) );
+        //            }
+        //            else
+        //            {
+        //                if ( StringUtils.isNotBlank( tabGeolocationValues[CONSTANT_POSITION_ADDRESS] ) )
+        //                {
+        //                    tabGeolocationValues[CONSTANT_POSITION_ADDRESS] += strValue;
+        //                }
+        //                else
+        //                {
+        //                    throw new DirectoryErrorException( this.getTitle(  ) );
+        //                }
+        //            }
+        //        }
+        //        
+        //        return Arrays.asList( tabGeolocationValues );
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
-    public String toString(  )
+    public String toString( )
     {
-        return "Entry Type Geolocation " + this.getFields(  ) + " " + this.getMapProvider(  );
+        return "Entry Type Geolocation " + this.getFields( ) + " " + this.getMapProvider( );
     }
 
     /**
@@ -552,14 +577,14 @@ public class EntryTypeGeolocation extends Entry
      */
     private Field findField( String fieldName, List<Field> fieldList )
     {
-        if ( StringUtils.isBlank( fieldName ) || ( fieldList == null ) || ( fieldList.size(  ) == 0 ) )
+        if ( StringUtils.isBlank( fieldName ) || ( fieldList == null ) || ( fieldList.size( ) == 0 ) )
         {
             return null;
         }
 
         for ( Field field : fieldList )
         {
-            if ( fieldName.equals( field.getTitle(  ) ) )
+            if ( fieldName.equals( field.getTitle( ) ) )
             {
                 return field;
             }
@@ -569,70 +594,73 @@ public class EntryTypeGeolocation extends Entry
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
     public String convertRecordFieldTitleToString( RecordField recordField, Locale locale, boolean displayFront )
     {
-        if ( ( recordField != null ) && ( recordField.getField(  ) != null ) )
+        if ( ( recordField != null ) && ( recordField.getField( ) != null ) )
         {
-            return recordField.getValue(  );
+            return recordField.getValue( );
         }
 
-        /*if ( displayFront )
-            {
-                    if ( recordField != null && recordField.getField(  ) != null && recordField.getField(  ).getTitle(  ) != null )
-                    {
-                            if ( CONSTANT_X.equals( recordField.getField(  ).getTitle(  ) ) )
-                            {
-                                    return CONSTANT_X + DirectoryUtils.CONSTANT_EQUAL + recordField.getValue(  );
-                            }
-                            else if ( CONSTANT_Y.equals( recordField.getField(  ).getTitle(  ) ) )
-                            {
-                                    return CONSTANT_Y + DirectoryUtils.CONSTANT_EQUAL  + recordField.getValue(  );
-                            }
-                            else if ( CONSTANT_PROVIDER.equals( recordField.getField(  ).getTitle(  ) ) )
-                            {
-                                    return DirectoryUtils.EMPTY_STRING;
-                            }
-                    }
-            }*/
+        /*
+         * if ( displayFront )
+         * {
+         * if ( recordField != null && recordField.getField( ) != null &&
+         * recordField.getField( ).getTitle( ) != null )
+         * {
+         * if ( CONSTANT_X.equals( recordField.getField( ).getTitle( ) ) )
+         * {
+         * return CONSTANT_X + DirectoryUtils.CONSTANT_EQUAL +
+         * recordField.getValue( );
+         * }
+         * else if ( CONSTANT_Y.equals( recordField.getField( ).getTitle( ) ) )
+         * {
+         * return CONSTANT_Y + DirectoryUtils.CONSTANT_EQUAL +
+         * recordField.getValue( );
+         * }
+         * else if ( CONSTANT_PROVIDER.equals( recordField.getField( ).getTitle(
+         * ) ) )
+         * {
+         * return DirectoryUtils.EMPTY_STRING;
+         * }
+         * }
+         * }
+         */
         return super.convertRecordFieldTitleToString( recordField, locale, displayFront );
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
     @Override
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-        boolean bExportDirectory )
+            boolean bExportDirectory )
     {
-        if ( ( recordField != null ) && ( recordField.getField(  ) != null ) &&
-                ( recordField.getField(  ).getTitle(  ) != null ) )
+        if ( ( recordField != null ) && ( recordField.getField( ) != null )
+                && ( recordField.getField( ).getTitle( ) != null ) )
         {
-            if ( CONSTANT_X.equals( recordField.getField(  ).getTitle(  ) ) ||
-                    CONSTANT_Y.equals( recordField.getField(  ).getTitle(  ) ) ||
-                    CONSTANT_PROVIDER.equals( recordField.getField(  ).getTitle(  ) ) ||
-                    CONSTANT_ADDRESS.equals( recordField.getField(  ).getTitle(  ) ) )
+            if ( CONSTANT_X.equals( recordField.getField( ).getTitle( ) )
+                    || CONSTANT_Y.equals( recordField.getField( ).getTitle( ) )
+                    || CONSTANT_PROVIDER.equals( recordField.getField( ).getTitle( ) )
+                    || CONSTANT_ADDRESS.equals( recordField.getField( ).getTitle( ) ) )
             {
-                return recordField.getValue(  );
+                return recordField.getValue( );
             }
-            else
-            {
-                return StringUtils.EMPTY;
-            }
+            return StringUtils.EMPTY;
         }
 
         return super.convertRecordFieldValueToString( recordField, locale, bDisplayFront, bExportDirectory );
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
-    public boolean isSortable(  )
+    public boolean isSortable( )
     {
         return true;
     }
@@ -641,20 +669,20 @@ public class EntryTypeGeolocation extends Entry
      * Join that get only the address.
      */
     @Override
-    public String getSQLJoin(  )
+    public String getSQLJoin( )
     {
         return SQL_JOIN_DIRECTORY_RECORD_FIELD;
     }
 
     /**
-     *
+     * 
      * Returns the entry id and field title parameter
      */
     @Override
-    public List<Object> getSQLParametersValues(  )
+    public List<Object> getSQLParametersValues( )
     {
-        List<Object> listParameters = new ArrayList<Object>(  );
-        listParameters.add( Integer.valueOf( getIdEntry(  ) ) );
+        List<Object> listParameters = new ArrayList<Object>( );
+        listParameters.add( Integer.valueOf( getIdEntry( ) ) );
         listParameters.add( CONSTANT_ADDRESS );
 
         return listParameters;
@@ -666,13 +694,13 @@ public class EntryTypeGeolocation extends Entry
     @Override
     public void getXml( Plugin plugin, Locale locale, StringBuffer strXml )
     {
-        Map<String, String> model = new HashMap<String, String>(  );
-        model.put( ATTRIBUTE_ENTRY_ID, String.valueOf( this.getIdEntry(  ) ) );
-        model.put( ATTRIBUTE_ENTRY_ID_TYPE, String.valueOf( this.getEntryType(  ).getIdType(  ) ) );
-        model.put( CONSTANT_SHOWXY, Boolean.toString( DirectoryService.getInstance(  ).showXY( this ) ) );
+        Map<String, String> model = new HashMap<String, String>( );
+        model.put( ATTRIBUTE_ENTRY_ID, String.valueOf( this.getIdEntry( ) ) );
+        model.put( ATTRIBUTE_ENTRY_ID_TYPE, String.valueOf( this.getEntryType( ).getIdType( ) ) );
+        model.put( CONSTANT_SHOWXY, Boolean.toString( DirectoryService.getInstance( ).showXY( this ) ) );
 
         XmlUtil.beginElement( strXml, TAG_ENTRY, model );
-        XmlUtil.addElementHtml( strXml, TAG_TITLE, this.getTitle(  ) );
+        XmlUtil.addElementHtml( strXml, TAG_TITLE, this.getTitle( ) );
         XmlUtil.endElement( strXml, TAG_ENTRY );
     }
 }
