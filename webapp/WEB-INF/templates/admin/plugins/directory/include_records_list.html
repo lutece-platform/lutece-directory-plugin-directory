@@ -52,8 +52,9 @@
 							<#elseif isEntryTypeMyLuteceUser(entry)>
 				   				<#if record_field?? && record_field.record?? && permission_visualisation_mylutece_user>
 				   					<#assign id_directory_record = record_field.record.idRecord>
-				   					<a class="btn btn-primary btn-small" href="jsp/admin/plugins/directory/DoVisualisationMyLuteceUser.jsp?id_directory_record=${id_directory_record}&amp;id_entry=${record_field.entry.idEntry}"  title="null" >
-										<i class="icon-eye-open icon-white"></i>
+									
+				   					<a class="btn btn-link" href="jsp/admin/plugins/directory/DoVisualisationMyLuteceUser.jsp?id_directory_record=${id_directory_record}&amp;id_entry=${record_field.entry.idEntry}"  title="${record_field.value}" >
+										<i class="icon-user"></i> ${record_field.value}
 									</a>
 								<#else>
 				   					${record_field.value}
