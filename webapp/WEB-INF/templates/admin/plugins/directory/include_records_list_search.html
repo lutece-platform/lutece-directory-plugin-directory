@@ -1,29 +1,29 @@
 <#-- DIRECTORY ENTRY FIELD FOR SEARCH FORM -->
 <#assign sort_search_attribute = "&amp;session=session&amp;search=search">
 <#if entry_list_form_main_search?has_content>
-<#list entry_list_form_main_search as entry>	
-<#assign entryKey=""+entry.idEntry>	
-<#if map_id_entry_list_record_field?exists && map_id_entry_list_record_field[entryKey]?exists>
-${entry.getHtmlFormSearchEntry( locale,map_id_entry_list_record_field[entryKey],false )}
-<#if map_id_entry_list_record_field[entryKey]?has_content>
-<#list map_id_entry_list_record_field[entryKey] as default_value>
-<#if default_value?? && default_value.value??>
-<#if isEntryTypeMyLuteceUser(entry) || isEntryTypeDirectory(entry) || isEntryTypeNumbering(entry)>
-<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "=" + default_value.value>
-<#elseif isEntryTypeGeolocation(entry)>
-<#if default_value.field?? && default_value.field.title?? && default_value.field.title = "address" && default_value.value??>
-<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "_address=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
-</#if>
-<#else>
-<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
-</#if>
-</#if>
-</#list>
-</#if>
-<#else>
-${entry.getHtmlFormSearchEntry( locale , false)}
-</#if>
-</#list>
+	<#list entry_list_form_main_search as entry>	
+	<#assign entryKey=""+entry.idEntry>	
+		<#if map_id_entry_list_record_field?exists && map_id_entry_list_record_field[entryKey]?exists>
+			${entry.getHtmlFormSearchEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+			<#if map_id_entry_list_record_field[entryKey]?has_content>
+				<#list map_id_entry_list_record_field[entryKey] as default_value>
+					<#if default_value?? && default_value.value??>
+						<#if isEntryTypeMyLuteceUser(entry) || isEntryTypeDirectory(entry) || isEntryTypeNumbering(entry)>
+							<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "=" + default_value.value>
+						<#elseif isEntryTypeGeolocation(entry)>
+							<#if default_value.field?? && default_value.field.title?? && default_value.field.title = "address" && default_value.value??>
+								<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "_address=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+							</#if>
+						<#else>
+							<#assign sort_search_attribute = sort_search_attribute + "&amp;" + entryKey + "=" + entry.convertRecordFieldValueToString(default_value,locale,false,false)>
+						</#if>
+					</#if>
+				</#list>
+			</#if>
+		<#else>
+			${entry.getHtmlFormSearchEntry( locale , false)}
+		</#if>
+	</#list>
 </#if>
 <#-- RECORD CREATION DATE FOR SEARCH FORM -->
 <#if directory.isDateShownInSearch() & !( directory.isDateShownInAdvancedSearch() )>
