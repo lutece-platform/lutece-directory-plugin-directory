@@ -8,7 +8,7 @@
 		<input name="search_action" value="search_action" type="hidden" />
 		<fieldset>
 			<legend>
-				#i18n{directory.manage_directory_record.title}: '${directory.title}'
+				${directory.title}
 				<#include "include_directory_actions.html">
 			</legend>
 			<#include "include_records_list_search.html">
@@ -17,3 +17,50 @@
 		</form>
 	</div>
 </div>
+<script src="js/jquery/plugins/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
+<script>
+ $.fn.clearForm = function() 
+	{
+		return this.each(function() 
+		{
+			var type = this.type, tag = this.tagName.toLowerCase();
+			if (tag == 'form')
+				return $(':input',this).clearForm();
+
+			if (type == 'text' || type == 'password' || tag == 'textarea')
+				  this.value = '';
+			else if (type == 'checkbox' || type == 'radio')
+				this.checked = false;
+			else if (tag == 'select')
+				this.selectedIndex = 0;
+	  });
+	};
+	
+	$(document).ready(function () {
+		$("#reset").click(function() { 
+			$("#searchForm").clearForm();
+		});
+		$("#myModalSearch").addClass("modal fade");
+		
+
+		// For multi selection
+		$( 'input[type="checkbox"]#select-ids' ).click( function(  ) {
+			if ( $( this ).attr( 'checked' ) ) {
+				$( 'input[type="checkbox"].selected-id' ).attr( 'checked', true );
+			} else {
+				$( 'input[type="checkbox"].selected-id' ).attr( 'checked', false );
+			}
+		} );
+	
+	 	 $( ".datepicker-element" ).datepicker();
+	 });
+
+	$("#searchForm").keypress(function(e) {
+	if(e.keyCode === 13) {
+		$("#searchForm").submit();
+		return false ;
+	}
+	
+});
+</script>

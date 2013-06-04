@@ -1,4 +1,10 @@
-<#-- DIRECTORY ENTRY FIELD FOR SEARCH FORM -->
+<div id="myModalSearch" class="" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSearch" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+		<h3 id="myModalLabel">#i18n{directory.create_directory.label_radio_state_search} </h3>
+	</div>
+	<div class="modal-body">
+    <#-- DIRECTORY ENTRY FIELD FOR SEARCH FORM -->
 <#assign sort_search_attribute = "&amp;session=session&amp;search=search">
 <#if entry_list_form_main_search?has_content>
 	<#list entry_list_form_main_search as entry>	
@@ -28,18 +34,18 @@
 <#-- RECORD CREATION DATE FOR SEARCH FORM -->
 <#if directory.isDateShownInSearch() & !( directory.isDateShownInAdvancedSearch() )>
 <div class="control-group">
-    <label class="control-label" class="control-label" > #i18n{directory.manage_directory_record.date_creation} :</label>	
+    <label class="control-label" class="control-label" > #i18n{directory.manage_directory_record.date_creation}</label>	
     <#if directory.isDateShownInMultiSearch()>
-    <div class="controls controls-row">
-        <label class="inline">#i18n{directory.html_code_form_search_entry_type_date.of}</label>
-        <input type="text" class="span2 pull-left" name="date_begin_creation" id="date_begin_creation"  value="<#if date_creation_begin_search??>${date_creation_begin_search?date}</#if>" />
-        <label class="inline">#i18n{directory.html_code_form_search_entry_type_date.to}</label>
-        <input type="text" class="span2 pull-left" name="date_end_creation" id="date_end_creation"  value="<#if date_creation_end_search??>${date_creation_end_search?date}</#if>" />
-    </div>	
+		<div class="controls controls-row">
+			<label class="inline">#i18n{directory.html_code_form_search_entry_type_date.of}</label>
+			<input type="text" class="input-small datepicker-element" name="date_begin_creation" id="date_begin_creation"  value="<#if date_creation_begin_search??>${date_creation_begin_search?date}</#if>" />
+			<label class="inline">#i18n{directory.html_code_form_search_entry_type_date.to}</label>
+			<input type="text" class="input-small datepicker-element" name="date_end_creation" id="date_end_creation"  value="<#if date_creation_end_search??>${date_creation_end_search?date}</#if>" />
+		</div>	
     <#else>
-    <div class="controls">
-        <input type="text" class="input-normal" name="date_creation" id="date_creation" size="10" value="<#if date_creation_search??>${date_creation_search?date}</#if>" />
-    </div>
+		<div class="controls">
+			<input type="text" class="input-small datepicker-element" name="date_creation" id="date_creation" size="10" value="<#if date_creation_search??>${date_creation_search?date}</#if>" />
+		</div>
     </#if>	 
 </div>
 </#if>
@@ -49,16 +55,16 @@
 <div class="control-group">
     <label class="control-label" class="control-label" > #i18n{directory.manage_directory_record.date_modification} :</label>	
     <#if directory.isDateModificationShownInMultiSearch()>
-    <div class="controls controls-row">
-        <label class="inline">#i18n{directory.html_code_form_search_entry_type_date.of}</label>
-        <input type="text" class="input-normal" name="date_begin_modification" id="date_begin_modification" size="10" value="<#if date_modification_begin_search??>${date_modification_begin_search?date}</#if>" />
-        <label class="inline">#i18n{directory.html_code_form_search_entry_type_date.to}</label>
-        <input type="text" class="input-normal" name="date_end_modification" id="date_end_modification" size="10" value="<#if date_modification_end_search??>${date_modification_end_search?date}</#if>" />
-    </div>		
+		<div class="controls controls-row">
+			<label class="inline">#i18n{directory.html_code_form_search_entry_type_date.of}</label>
+			<input type="text" class="input-small datepicker-element" name="date_begin_modification" id="date_begin_modification" size="10" value="<#if date_modification_begin_search??>${date_modification_begin_search?date}</#if>" />
+			<label class="inline">#i18n{directory.html_code_form_search_entry_type_date.to}</label>
+			<input type="text" class="input-small datepicker-element" name="date_end_modification" id="date_end_modification" size="10" value="<#if date_modification_end_search??>${date_modification_end_search?date}</#if>" />
+		</div>		
     <#else>
-    <div class="controls">
-        <input type="text" class="input-normal" name="date_modification" id="date_modification" size="10" value="<#if date_modification_search??>${date_modification_search?date}</#if>" />
-    </div>
+		<div class="controls">
+			<input type="text" class="input-small datepicker-element" name="date_modification" id="date_modification" size="10" value="<#if date_modification_search??>${date_modification_search?date}</#if>" />
+		</div>
     </#if>	 
 </div>
 </#if>
@@ -74,15 +80,9 @@
 
 <#-- ADVANCED SEARCH -->
 <#if entry_list_form_complementary_search?has_content || directory.isDateShownInAdvancedSearch() || directory.isDateModificationShownInAdvancedSearch() >
-<div class="well well-small">
-    <a class="btn" href="#" onclick="displayId('complementary'); return false;" title="#i18n{directory.manage_directory_record.title_open_block}">
-        <i class="icon-chevron-down" ></i>
-    </a>
-    <a class="btn" href="#" onclick="hideId('complementary'); return false;" title="#i18n{directory.manage_directory_record.title_open_block}"> 
-        <i class="icon-chevron-up"></i>
-    </a>
-    <span>#i18n{directory.manage_directory_record.label_complementary_search}</span>
-    <div id="complementary">
+	<fieldset>
+		<legend>#i18n{directory.manage_directory_record.label_complementary_search} </legend>
+		
         <#list entry_list_form_complementary_search as entry>	
         <#assign entryKey=""+entry.idEntry>	
         <#if map_id_entry_list_record_field?exists && map_id_entry_list_record_field[entryKey]?exists>
@@ -93,7 +93,7 @@
         </#list>
         <#if directory.displayComplementarySearchState>
         <div class="control-group">
-            <label class="control-label" class="control-label" > #i18n{directory.manage_directory_record.label_state} : </label>
+            <label class="control-label" class="control-label" > #i18n{directory.manage_directory_record.label_state}</label>
             <div class="controls">
                 <@combo name="search_state_workflow"  items=search_state_workflow default_value=search_state_workflow_default />
             </div>	
@@ -102,51 +102,51 @@
         <#-- RECORD CREATION DATE FOR ADVANCED SEARCH FORM -->
         <#if directory.isDateShownInSearch() & directory.isDateShownInAdvancedSearch()>
         <div class="control-group">
-            <label class="control-label" class="control-label" > #i18n{directory.manage_directory_record.date_creation} :</label>	
+            <label class="control-label" class="control-label" > #i18n{directory.manage_directory_record.date_creation}</label>	
+            <div class="controls controls-row">
             <#if directory.isDateShownInMultiSearch()>
-            <div class="controls">
-                <label>#i18n{directory.html_code_form_search_entry_type_date.of}</label>
-                <input type="text" class="input-normal" name="date_begin_creation" id="date_begin_creation" size="10" value="<#if date_creation_begin_search??>${date_creation_begin_search?date}</#if>" />
-            </div>
-            <div class="controls">
-                <label>#i18n{directory.html_code_form_search_entry_type_date.to}</label>
-                <input type="text" class="input-normal" name="date_end_creation" id="date_end_creation" size="10" value="<#if date_creation_end_search??>${date_creation_end_search?date}</#if>" />
-            </div>
+                <label class="inline">#i18n{directory.html_code_form_search_entry_type_date.of}
+                <input type="text" class="input-small datepicker-element" name="date_begin_creation" id="date_begin_creation" value="<#if date_creation_begin_search??>${date_creation_begin_search?date}</#if>" />
+				</label>
+                <label class="inline">#i18n{directory.html_code_form_search_entry_type_date.to}
+                <input type="text" class="input-small datepicker-element" name="date_end_creation" id="date_end_creation" value="<#if date_creation_end_search??>${date_creation_end_search?date}</#if>" />
+				</label>
             <#else>
-            <div class="controls">
-                <input type="text" class="input-normal" name="date_creation" id="date_creation" size="10" value="<#if date_creation_search??>${date_creation_search?date}</#if>" />
-            </div>
+                <input type="text" class="input-small datepicker-element" name="date_creation" id="date_creation" value="<#if date_creation_search??>${date_creation_search?date}</#if>" />
             </#if>	 
+            </div>
         </div>
         </#if>
 
         <#-- RECORD MODIFICATION DATE FOR ADVANCED SEARCH FORM -->
         <#if directory.isDateModificationShownInSearch() & directory.isDateModificationShownInAdvancedSearch()>
         <div class="control-group">
-            <label class="control-label" class="control-label" > #i18n{directory.manage_directory_record.date_modification} :</label>	
-            <#if directory.isDateModificationShownInMultiSearch()>
-            <label>#i18n{directory.html_code_form_search_entry_type_date.of}</label>
-            <div class="controls">
-                <input type="text" class="input-normal" name="date_begin_modification" id="date_begin_modification" size="10" value="<#if date_modification_begin_search??>${date_modification_begin_search?date}</#if>" />
-            </div>
-            <div class="controls">
-                #i18n{directory.html_code_form_search_entry_type_date.to}
-                <input type="text" class="input-normal" name="date_end_modification" id="date_end_modification" size="10" value="<#if date_modification_end_search??>${date_modification_end_search?date}</#if>" />
-            </div>
+            <label class="control-label" class="control-label" > #i18n{directory.manage_directory_record.date_modification}</label>
+				<div class="controls controls-row">
+				<#if directory.isDateModificationShownInMultiSearch()>
+				<label class="inline">#i18n{directory.html_code_form_search_entry_type_date.of}
+					<input type="text" class="input-small datepicker-element" name="date_begin_modification" id="date_begin_modification" value="<#if date_modification_begin_search??>${date_modification_begin_search?date}</#if>" />
+				</label>
+				<label class="inline">#i18n{directory.html_code_form_search_entry_type_date.to}
+					<input type="text" class="input-small datepicker-element" name="date_end_modification" id="date_end_modification" value="<#if date_modification_end_search??>${date_modification_end_search?date}</#if>" />
+				</label>
             <#else>
-            <div class="controls">
-                <input type="text" class="input-normal" name="date_modification" id="date_modification" size="10" value="<#if date_modification_search??>${date_modification_search?date}</#if>" />
-            </div>
+				
+					<input type="text" class="input-small datepicker-element" name="date_modification" id="date_modification" value="<#if date_modification_search??>${date_modification_search?date}</#if>" />
             </#if>	 
+				</div>
         </div>
         </#if>
+		</fieldset>
         </#if>
-        <hr>
-            <button class="btn btn-primary btn-small offset1" type="submit">
-                <i class="icon-search icon-white"></i>&nbsp;#i18n{directory.manage_directory_record.button_search}
-            </button>
-            <button class="btn  btn-primary btn-small" type="reset">
-                <i class="icon-refresh icon-white"></i>&nbsp;#i18n{directory.manage_directory_record.button_reset}
-            </button>
-    </div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">
+			<i class="icon-remove-circle"></i>&nbsp;#i18n{portal.util.labelCancel}
+		</button>
+		<button class="btn btn-primary btn-small offset1" type="submit">
+			<i class="icon-search icon-white"></i>&nbsp;#i18n{directory.manage_directory_record.button_search}
+		</button>
+		<input type="hidden" name="search" value="Rechercher">
+	</div>
 </div>
