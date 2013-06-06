@@ -62,16 +62,15 @@
 		} );
 	
 	 	 $( ".datepicker-element" ).datepicker();
-	 });
-
+	});
+		
 	$('#searchForm').keypress(function(e) {
 	if(e.keyCode == 13) {
 		// add input hidden to add search into the request
 		$('#searchForm').append('<input type="hidden" name="search" value="Rechercher" />');
 		$("#searchForm").submit();
 		return false;
-	}
-});
+		}
+	});
 	
-});
 </script>
