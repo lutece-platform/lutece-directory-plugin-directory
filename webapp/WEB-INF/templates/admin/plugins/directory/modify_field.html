@@ -20,11 +20,7 @@
 				<label class="control-label" for="">&nbsp;</label>
 				<div class="controls" for="default_value">
 					<label class="checkbox">#i18n{directory.create_field.label_default_value}
-					<#if field.defaultValue>
-						<input name="default_value" value="1" type="checkbox"  checked="checked">
-					<#else>
-						<input name="default_value" value="1" type="checkbox">
-					</#if>
+						<input name="default_value" value="1" type="checkbox"  <#if field.defaultValue>checked="checked"</#if>>
 					</label>
 				</div>
 			</div>

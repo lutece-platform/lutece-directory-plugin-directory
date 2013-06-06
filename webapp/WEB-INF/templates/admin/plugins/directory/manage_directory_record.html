@@ -41,7 +41,14 @@
 		$("#reset").click(function() { 
 			$("#searchForm").clearForm();
 		});
-		$("#myModalSearch").addClass("modal fade");
+		/*$("#myModalSearch").addClass("modal fade");*/
+		
+		$("#advanced-search").toggle();
+		$("#toggleAdvSearch").click(function() { 
+			$("#advanced-search").toggle();
+			$(this).toggleClass("icon-chevron-down");
+			$(this).toggleClass("icon-chevron-up");
+		});
 		
 
 		// For multi selection
