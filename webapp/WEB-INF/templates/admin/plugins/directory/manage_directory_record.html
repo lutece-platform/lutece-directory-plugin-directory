@@ -39,6 +39,7 @@
 	
 	$(document).ready(function () {
 		$("#reset").click(function() { 
+		
 			$("#searchForm").clearForm();
 		});
 		/*$("#myModalSearch").addClass("modal fade");*/
@@ -63,11 +64,14 @@
 	 	 $( ".datepicker-element" ).datepicker();
 	 });
 
-	$("#searchForm").keypress(function(e) {
-	if(e.keyCode === 13) {
+	$('#searchForm').keypress(function(e) {
+	if(e.keyCode == 13) {
+		// add input hidden to add search into the request
+		$('#searchForm').append('<input type="hidden" name="search" value="Rechercher" />');
 		$("#searchForm").submit();
-		return false ;
+		return false;
 	}
+});
 	
 });
 </script>
