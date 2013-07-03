@@ -43,7 +43,7 @@
 			<#list entry_list_geolocation as entry>
 				<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
 					<#-- several results -->
-					<button type="button" class="btn btn-primary btn-small" id="${entry.idEntry}_map-button" />
+					<button type="button" class="btn btn-primary btn-small" id="${entry.idEntry}_map-button" >
 						#i18n{directory.show_on_map} &quot;${entry.title}&quot;
 					</button>
 					<#include entry.mapProvider.frontListHtmlCode />

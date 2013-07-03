@@ -1,93 +1,96 @@
 <div class="row">
     <div class="span12">
-     <a name="top"></a>
-	<#if directory_list?has_content >
-		<fieldset>
-        <legend>#i18n{directory.view_all_directory.search.title}</legend>
-			<div class="row">
-				<div class="span4">
-					<form class="form-search" name="form_search" method="post">
-						<input type="hidden" name="page" value="directory" >
-						<input type="hidden" name="type_filter" value="directory">
-						<div class="well well-small">
-							<div class="input-append">
-								<input class="input-large" type="text" name="query" id="query" value="${query!}" >
-								<button type="submit" class="btn" title="#i18n{directory.view_all_directory.search.buttonSearch}" >
-									<i class="icon-search"></i>
-								</button>
-							</div>
-							<label for="default_operator" class="inline">
-								<#-- default_operator and/or -->
-								#i18n{directory.view_all_directory.search.operator}
-								<select name="default_operator" class="input-normal">
-								<#list ["OR","AND"] as i_operator>
-									<option value="${i_operator}" <#if i_operator == (operator!"OR")> selected="true"</#if> >
-										#i18n{directory.view_all_directory.search.operator.${i_operator}}
-									</option>
-								</#list>
-								</select>
-							</label>
-							<p class="">#i18n{directory.view_all_directory.search.dateFilter}</p>	
-								<#-- date_filter -->
-								<div class="input-append">							
-									<label>#i18n{directory.view_all_directory.search.dateFilterBefore}&nbsp;</label>
-									<input type=text id="date_before" name="date_before" class="input-small" value="${date_before!}">
-									<span class="add-on"><i class="icon-calendar"></i></span>
-								</div>
+	    <a name="top"></a>
+		<#if directory_list?has_content >
+			<fieldset>
+	        <legend>#i18n{directory.view_all_directory.search.title}</legend>
+				<div class="row">
+					<div class="span4">
+						<form class="form-search" name="form_search" method="post">
+							<input type="hidden" name="page" value="directory" >
+							<input type="hidden" name="type_filter" value="directory">
+							<div class="well well-small">
 								<div class="input-append">
-									<label>#i18n{directory.view_all_directory.search.dateFilterAfter}&nbsp;</label> 
-									<input type=text id="date_after" name="date_after" class="input-small" value="${date_after!}">
-									<span class="add-on"><i class="icon-calendar"></i></span>
+									<input class="input-large" type="text" name="query" id="query" value="${query!}" >
+									<button type="submit" class="btn" title="#i18n{directory.view_all_directory.search.buttonSearch}" >
+										<i class="icon-search"></i>
+									</button>
 								</div>
-						</div>
-					</form>
-				</div>
-				<div class="span7">
-					<#if result_list?has_content> 
-						<#list result_list as result>
-						<a href="${result.url?xhtml}">
-							<#if result.frontOfficeTitle!?has_content && result.frontOfficeTitle!?trim != "">
-								${result.frontOfficeTitle!}
-							<#else>
-								${result.title!}</#if>
-						</a>
-						<#if result.date?has_content>
-							<small>${result.date?date?string.short}</small>
-						</#if>
-						<#if result.summary?has_content>
-							<p class="help-block">${result.summary}</p>
-						</#if>
-						</#list>
-					<#else>
-						<div class="alert alert-error">#i18n{directory.message.search_nok}</div>
-					</#if>
-				</div>
-		</fieldset>
-    </div>
-</div>
-<div class="row">
-	<div class="span12">
-		<fieldset>
-        <legend>#i18n{directory.view_all_directory.list.title}</legend>
-			<ul>	      
-				<#list directory_list as directory>
-					<li>
-						<a class="" href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" >
-						<#if directory.frontOfficeTitle!?has_content && directory.frontOfficeTitle!?trim != "">
-							${directory.frontOfficeTitle!}
+								<label for="default_operator" class="inline">
+									<#-- default_operator and/or -->
+									#i18n{directory.view_all_directory.search.operator}
+									<select name="default_operator" class="input-normal">
+									<#list ["OR","AND"] as i_operator>
+										<option value="${i_operator}" <#if i_operator == (operator!"OR")> selected="true"</#if> >
+											#i18n{directory.view_all_directory.search.operator.${i_operator}}
+										</option>
+									</#list>
+									</select>
+								</label>
+								<p class="">#i18n{directory.view_all_directory.search.dateFilter}</p>	
+									<#-- date_filter -->
+									<div class="input-append">							
+										<label>#i18n{directory.view_all_directory.search.dateFilterBefore}&nbsp;</label>
+										<input type=text id="date_before" name="date_before" class="input-small" value="${date_before!}">
+										<span class="add-on"><i class="icon-calendar"></i></span>
+									</div>
+									<div class="input-append">
+										<label>#i18n{directory.view_all_directory.search.dateFilterAfter}&nbsp;</label> 
+										<input type=text id="date_after" name="date_after" class="input-small" value="${date_after!}">
+										<span class="add-on"><i class="icon-calendar"></i></span>
+									</div>
+							</div>
+						</form>
+					</div>
+					<div class="span7">
+						<#if result_list?has_content> 
+							<#list result_list as result>
+							<a href="${result.url?xhtml}">
+								<#if result.frontOfficeTitle!?has_content && result.frontOfficeTitle!?trim != "">
+									${result.frontOfficeTitle!}
+								<#else>
+									${result.title!}</#if>
+							</a>
+							<#if result.date?has_content>
+								<small>${result.date?date?string.short}</small>
+							</#if>
+							<#if result.summary?has_content>
+								<p class="help-block">${result.summary}</p>
+							</#if>
+							</#list>
 						<#else>
-							${directory.title!}
+							<div class="alert alert-error">#i18n{directory.message.search_nok}</div>
 						</#if>
-						</a>       
-					</li>
-				</#list>
-			</ul>    
+					</div>
+				</div>
+			</fieldset>
 		<#else>
 			<div class="alert alert-error">#i18n{directory.view_all_directory.list.list_empty}</div>		
 		</#if>
-		</fieldset>
-	</div>
+    </div>
 </div>
+<#if directory_list?has_content >
+	<div class="row">
+		<div class="span12">
+			<fieldset>
+	        <legend>#i18n{directory.view_all_directory.list.title}</legend>
+				<ul>
+					<#list directory_list as directory>
+						<li>
+							<a class="" href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" >
+							<#if directory.frontOfficeTitle!?has_content && directory.frontOfficeTitle!?trim != "">
+								${directory.frontOfficeTitle!}
+							<#else>
+								${directory.title!}
+							</#if>
+							</a>       
+						</li>
+					</#list>
+				</ul>    
+			</fieldset>
+		</div>
+	</div>
+</#if>
 <script src="js/jquery/plugins/ui/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
- <@getDatePickerRange idFieldFrom="date_before" idFieldTo="date_after" language="${locale.language}" />
+<@getDatePickerRange idFieldFrom="date_before" idFieldTo="date_after" language="${locale.language}" />

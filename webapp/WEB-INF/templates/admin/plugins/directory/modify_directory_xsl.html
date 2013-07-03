@@ -7,7 +7,7 @@
         <div class="control-group">
 		<label class="control-label" for="title" >#i18n{directory.create_directory_xsl.label_title} * : </label>
             <div class="controls">
-				<input type="text" class="input-small" id="title" name="title" maxlength="255" value="${directory_xsl.title}"/>
+				<input type="text" id="title" name="title" maxlength="255" value="${directory_xsl.title}"/>
 			</div>
 		</div>
         <div class="control-group">
@@ -22,7 +22,7 @@
 						</#if>
 					</#list>
 				</select>
-				<span class="help-text">#i18n{directory.create_directory_xsl.label_category_comment}</span>
+				<span class="help-block">#i18n{directory.create_directory_xsl.label_category_comment}</span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -35,20 +35,20 @@
 		<label class="control-label" for="extension" >#i18n{directory.create_directory_xsl.label_extension} (*) : </label>
             <div class="controls">
 				<input type="text" size="10" id="extension" name="extension" maxlength="10" value="${directory_xsl.extension}"/>
+				<span class="help-block">#i18n{directory.create_directory_xsl.label_extension_comment}</span>
 			</div>
-			<span class="help-text">#i18n{directory.create_directory_xsl.label_extension_comment}</span>
 		</div>
         <div class="control-group">
 		<label class="control-label" for="id_file" >#i18n{directory.create_directory_xsl.label_file} * : </label>
            <div class="controls">
 				<input type="file" id="id_file" name="id_file" size="60" maxlength="100"/>
 				<#if directory_xsl.file?exists >
-				<p class="help-block">
-					<a class="btn" href="jsp/site/plugins/directory/DoDownloadFile.jsp?id_file=${directory_xsl.file.idFile}"/>
-						<i class="icon-download"></i>&nbsp;${directory_xsl.file.title}(${directory_xsl.file.size} O)
-					</a>
-				</p>
-			</#if>	 
+					<p class="help-block">
+						<a class="btn" href="jsp/site/plugins/directory/DoDownloadFile.jsp?id_file=${directory_xsl.file.idFile}" >
+							<i class="icon-download"></i>&nbsp;${directory_xsl.file.title}(${directory_xsl.file.size} O)
+						</a>
+					</p>
+				</#if>	 
 			</div>
 		</div>
         <div class="form-actions">

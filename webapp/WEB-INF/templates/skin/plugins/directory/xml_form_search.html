@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <directory-form-search>
 	<![CDATA[
-		<form action="jsp/site/Portal.jsp" method="post" id="searchForm" class="form">
+		<form action="jsp/site/Portal.jsp" method="post" id="searchForm" class="form form-horizontal">
 				<input name="search_action" value="search_action" type="hidden" />
-				<input type="hidden" name="page" value="directory">
-				<input type="hidden" name="id_directory" value="${directory.idDirectory}">
+				<input type="hidden" name="page" value="directory" />
+				<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
 				<#if one_session_id?exists>
-					<input type="hidden" name="id_record" value="${one_session_id}">
+					<input type="hidden" name="id_record" value="${one_session_id}" />
 				</#if>
 				<#if entry_list_form_main_search?has_content>
 						<#list entry_list_form_main_search as entry>	
@@ -22,16 +22,17 @@
 			      	</#if>
 			      	<#if entry_list_form_complementary_search?has_content>
 						<div class="highlight-box">
-					      
 					      	<div id="compementary_check_box">
-										<a href="#"  onclick="displayId('complementary'); return false;">
-											<img    src="images/admin/skin/open_block.gif" alt="#i18n{directory.xml_form_search.title_open_block}" title="#i18n{directory.xml_form_search.title_open_block}" /></a>
-										<a href="#" onclick="hideId('complementary'); return false;"> 
-											<img    src="images/admin/skin/closed_block.gif" alt="#i18n{directory.xml_form_search.title_close_block}" title="#i18n{directory.xml_form_search.title_open_block}"/></a>
-											<span > #i18n{directory.xml_form_search.label_complementary_search}
-										</span>
+										<a href="#" class="btn btn-small" onclick="displayId('complementary'); return false;" title="#i18n{directory.xml_form_search.title_open_block}">
+											<i class="icon-chevron-down"></i>
+										</a>
+										<a href="#" class="btn btn-small" onclick="hideId('complementary'); return false;" title="#i18n{directory.xml_form_search.title_open_block}"> 
+											<i class="icon-chevron-up"></i>
+										</a>
+										<span>#i18n{directory.xml_form_search.label_complementary_search}</span>
 							</div>
 						    <div id="complementary">
+						    		<!-- starttttttt -->
 							    	<#list entry_list_form_complementary_search as entry>	
 										<#assign entryKey=""+entry.idEntry>	
 										<#if map_id_entry_list_record_field?exists && map_id_entry_list_record_field[entryKey]?exists>
@@ -42,6 +43,7 @@
 						      				${entry.getHtmlFormSearchEntry( locale, true )}	
 						      			</#if>
 					      			</#list>
+					      			<!-- eeeeeeeeeend -->
 						    </div>
 						 </div> 	
 					   </#if>

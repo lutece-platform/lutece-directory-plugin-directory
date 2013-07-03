@@ -10,7 +10,7 @@
 
 	<xsl:template match="directory">
 	
-		<table width="100%" name="results_list" id="results_list">
+		<table class="table table-striped" name="results_list" id="results_list">
 			<tr>
 				<th>&#160;</th>
 				<xsl:apply-templates select="list-entry/entry" />
@@ -24,8 +24,8 @@
 	<xsl:template match="record">
 		<tr>
 			<td class="link-directory-record">
-				<a href="jsp/site/Portal.jsp?page=directory&amp;id_directory_record={@id}&amp;view_directory_record=1">
-					<img src="images/local/skin/buttons/b_search.png" title="{$title-descriptive}" alt="{$title-descriptive}" />
+				<a class="btn btn-primary btn-small" href="jsp/site/Portal.jsp?page=directory&amp;id_directory_record={@id}&amp;view_directory_record=1" title="{$title-descriptive}">
+					<i class="icon-eye-open icon-white"> </i> <img src="images/local/skin/buttons/b_search.png"  alt="{$title-descriptive}" />
 				</a>
 			</td>
 			<xsl:apply-templates select="list-entry/entry/list-record-field" />
@@ -66,11 +66,11 @@
 		<xsl:variable name="id-directory" select="../../@id" />
 		<th>
 			<xsl:if test="@is-sortable = 'true'">
-				<a class="sort" id="sort" href="jsp/site/Portal.jsp?page=directory&amp;id_directory={$id-directory}&amp;sorted_attribute_name={@id}&amp;asc_sort=true#sort" >
-					<img src="images/admin/skin/actions/sort_asc.gif" style="vertical-align: text-bottom;" alt="{$title-sort-asc}" title="{$title-sort-asc}" />
+				<a class="sort" id="sort" href="jsp/site/Portal.jsp?page=directory&amp;id_directory={$id-directory}&amp;sorted_attribute_name={@id}&amp;asc_sort=true#sort" title="{$title-sort-asc}" >
+					<i class="icon-chevron-up"> </i>
 				</a>
-				<a class="sort" href="jsp/site/Portal.jsp?page=directory&amp;id_directory={$id-directory}&amp;sorted_attribute_name={@id}&amp;asc_sort=false#sort" >
-	    			<img src="images/admin/skin/actions/sort_desc.gif" style="vertical-align: text-bottom;" alt="{$title-sort-desc}" title="{$title-sort-desc}" />
+				<a class="sort" href="jsp/site/Portal.jsp?page=directory&amp;id_directory={$id-directory}&amp;sorted_attribute_name={@id}&amp;asc_sort=false#sort" title="{$title-sort-desc}" >
+	    			<i class="icon-chevron-down"> </i>
 	    		</a>
 	    	 </xsl:if>
 	    	 <span><xsl:value-of select="title" /></span>
