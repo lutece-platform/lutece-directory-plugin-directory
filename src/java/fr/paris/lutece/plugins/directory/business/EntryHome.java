@@ -240,9 +240,9 @@ public final class EntryHome
 
     /**
      * Finds all the entries without any parent
-     *
+     * 
      * @param plugin the plugin
-     * @parem nIdDirectory the id of the concerned directory
+     * @param nIdDirectory the id of the concerned directory
      * @return List<IEntry> the list of all the entries without parent
      */
     public static List<IEntry> findEntriesWithoutParent( Plugin plugin, int nIdDirectory )

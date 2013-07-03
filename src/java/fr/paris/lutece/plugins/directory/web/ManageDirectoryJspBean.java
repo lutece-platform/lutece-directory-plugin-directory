@@ -58,6 +58,11 @@ public class ManageDirectoryJspBean extends PluginAdminPageJspBean
 {
     public static final String RIGHT_MANAGE_DIRECTORY = "DIRECTORY_MANAGEMENT";
 
+    /**
+     * Generated serial version UID
+     */
+    private static final long serialVersionUID = -2688672489375653849L;
+
     //templates
     private static final String TEMPLATE_MANAGE_PLUGIN_DIRECTORY = "admin/plugins/directory/manage_plugin_directory.html";
 
@@ -79,7 +84,7 @@ public class ManageDirectoryJspBean extends PluginAdminPageJspBean
     {
         setPageTitleProperty( EMPTY_STRING );
 
-        HashMap model = new HashMap(  );
+        HashMap<String, Object> model = new HashMap<String, Object>( );
 
         model.put( MARK_PERMISSION_INDEX_ALL_DIRECTORY,
             RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,

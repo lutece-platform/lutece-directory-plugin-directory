@@ -183,8 +183,7 @@ public class DirectoryActionDAO implements IDirectoryActionDAO
     }
 
     /**
-     * Load the list of actions for a all directory by directory state
-     * @param nState the state of the form
+     * Load the list of actions for every directory
      * @param plugin the plugin
      * @return The Collection of actions
      */

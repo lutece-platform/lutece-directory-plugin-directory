@@ -139,7 +139,7 @@ public class DoDownloadFile
 					strMimeType = FileSystemUtil.getMIMEType( file.getTitle( ) );
 				}
 				response.setContentType( strMimeType );
-                response.setContentLength( (int) byteFileOutPut.length );
+                response.setContentLength( byteFileOutPut.length );
 
                 OutputStream os = response.getOutputStream(  );
                 os.write( byteFileOutPut );

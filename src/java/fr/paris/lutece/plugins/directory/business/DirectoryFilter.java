@@ -119,9 +119,9 @@ public class DirectoryFilter
 
     /**
      * Set 1 if the forms have workflow
-     *            0 if the forms have not workflow
-     * @param idState  1 if the forms return must be enabled
-     *                                      0 if the forms return must be disabled
+     * 0 if the forms have not workflow
+     * @param idWorkflow 1 if the forms return must be enabled, 0 if the forms
+     *            return must be disabled
      */
     public void setIdWorkflow( int idWorkflow )
     {

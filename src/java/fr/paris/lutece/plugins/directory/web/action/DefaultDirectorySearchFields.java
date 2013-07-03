@@ -44,7 +44,6 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.web.constants.Parameters;
 
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,10 +51,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 
+/**
+ * DefaultDirectorySearchFields
+ */
 public abstract class DefaultDirectorySearchFields implements IDirectorySearchFields, Serializable
 {
     /**
-     *
+     * Generated serial version UID
      */
     private static final long serialVersionUID = -2839610597359957115L;
     private static final String PROPERTY_ITEM_PER_PAGE = "directory.itemsPerPage";

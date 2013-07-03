@@ -433,7 +433,7 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Get the item navigator
-     * @return
+     * @return the item navigator
      */
     public ItemNavigator getItemNavigatorViewRecords(  )
     {
@@ -487,8 +487,8 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
     }
 
     /**
-     * Get the item navigator
-     * @return
+     * Get the history item navigator
+     * @return The history item navigator
      */
     public ItemNavigator getItemNavigatorHistory(  )
     {
@@ -497,7 +497,7 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Set the redirect url
-     * @param _strRedirectUrl
+     * @param request The request
      */
     public void setRedirectUrl( HttpServletRequest request )
     {
@@ -523,17 +523,21 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
         return _strRedirectUrl;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDefaultIdSortEntry( Directory directory )
     {
-        // TODO Auto-generated method stub
         return directory.getIdSortEntry(  );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isDefaultAscendingSort( Directory directory )
     {
-        // TODO Auto-generated method stub
         return directory.isAscendingSort(  );
     }
 }

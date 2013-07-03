@@ -51,10 +51,10 @@ public class DirectoryWorkflowRemovalListener implements RemovalListener
     private static final String PROPERTY_WORKFLOW_CANNOT_BE_REMOVED = "directory.message.workflow_can_not_be_removed";
 
     /**
-    * Check if the object can be safely removed
-    * @param strId The object id
-    * @return true if the object can be removed otherwise false
-    */
+     * Check if the object can be safely removed
+     * @param strIdWorkflow The object id
+     * @return true if the object can be removed otherwise false
+     */
     public boolean canBeRemoved( String strIdWorkflow )
     {
         if ( strIdWorkflow == null )

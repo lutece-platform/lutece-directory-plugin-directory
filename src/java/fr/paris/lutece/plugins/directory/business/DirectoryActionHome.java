@@ -67,7 +67,7 @@ public final class DirectoryActionHome
     {
         List<DirectoryAction> listFormActions = _dao.selectActionsByDirectoryState( nState, plugin );
 
-        return (List<DirectoryAction>) I18nService.localizeCollection( listFormActions, locale );
+        return I18nService.localizeCollection( listFormActions, locale );
     }
 
     /**
@@ -81,7 +81,7 @@ public final class DirectoryActionHome
     {
         List<DirectoryAction> listFormActions = _dao.selectActionsByDirectoryRecordState( nState, plugin );
 
-        return (List<DirectoryAction>) I18nService.localizeCollection( listFormActions, locale );
+        return I18nService.localizeCollection( listFormActions, locale );
     }
 
     /**
@@ -108,6 +108,7 @@ public final class DirectoryActionHome
      * This method add new actions for directory record
      * @param plugin plugin
      * @param directoryAction action to check
+     * @return True if the action exists, false otherwise
      */
     public static boolean checkActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin )
     {
@@ -124,6 +125,6 @@ public final class DirectoryActionHome
     {
         List<DirectoryAction> listActions = _dao.selectActionsByDirectoryXsl( plugin );
 
-        return (List<DirectoryAction>) I18nService.localizeCollection( listActions, locale );
+        return I18nService.localizeCollection( listActions, locale );
     }
 }

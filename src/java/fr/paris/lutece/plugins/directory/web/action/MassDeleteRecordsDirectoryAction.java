@@ -47,12 +47,12 @@ import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.url.UrlItem;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -107,7 +107,7 @@ public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<Direc
     }
 
     /**
-     * @see #PARAMETER_BUTTON_MASS_DELETE_RECORDS_X
+     * {@inheritDoc}
      */
     public boolean isInvoked( HttpServletRequest request )
     {

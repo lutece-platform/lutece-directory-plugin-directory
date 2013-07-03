@@ -48,16 +48,15 @@ import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
 
 import java.sql.Timestamp;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 
 /**
- *
+ * 
  * Class Directory
- *
+ * 
  */
 public class Directory implements AdminWorkgroupResource, RBACResource
 {
@@ -136,55 +135,55 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     /**
      * Initialize the Directory
      */
-    public static void init(  )
+    public static void init( )
     {
         // Create removal listeners and register them
         if ( _listenerWorkgroup == null )
         {
-            _listenerWorkgroup = new DirectoryWorkgroupRemovalListener(  );
-            WorkgroupRemovalListenerService.getService(  ).registerListener( _listenerWorkgroup );
+            _listenerWorkgroup = new DirectoryWorkgroupRemovalListener( );
+            WorkgroupRemovalListenerService.getService( ).registerListener( _listenerWorkgroup );
         }
 
         if ( _listenerRegularExpression == null )
         {
-            _listenerRegularExpression = new DirectoryRegularExpressionRemovalListener(  );
-            RegularExpressionRemovalListenerService.getService(  ).registerListener( _listenerRegularExpression );
+            _listenerRegularExpression = new DirectoryRegularExpressionRemovalListener( );
+            RegularExpressionRemovalListenerService.getService( ).registerListener( _listenerRegularExpression );
         }
 
         if ( _listenerXslRemovalListener == null )
         {
-            _listenerXslRemovalListener = new DirectoryXslRemovalListener(  );
-            DirectoryXslRemovalListenerService.getService(  ).registerListener( _listenerXslRemovalListener );
+            _listenerXslRemovalListener = new DirectoryXslRemovalListener( );
+            DirectoryXslRemovalListenerService.getService( ).registerListener( _listenerXslRemovalListener );
         }
 
         if ( _listenerWorkflowRemovalListener == null )
         {
-            _listenerWorkflowRemovalListener = new DirectoryWorkflowRemovalListener(  );
-            WorkflowRemovalListenerService.getService(  ).registerListener( _listenerWorkflowRemovalListener );
+            _listenerWorkflowRemovalListener = new DirectoryWorkflowRemovalListener( );
+            WorkflowRemovalListenerService.getService( ).registerListener( _listenerWorkflowRemovalListener );
         }
 
         if ( _listenerEntryDirectoryRemovalListener == null )
         {
-            _listenerEntryDirectoryRemovalListener = new EntryTypeDirectoryRemovalListener(  );
-            EntryRemovalListenerService.getService(  ).registerListener( _listenerEntryDirectoryRemovalListener );
+            _listenerEntryDirectoryRemovalListener = new EntryTypeDirectoryRemovalListener( );
+            EntryRemovalListenerService.getService( ).registerListener( _listenerEntryDirectoryRemovalListener );
         }
 
         if ( _listenerDirectoryResourceRssConfigRemovalListener == null )
         {
-            _listenerDirectoryResourceRssConfigRemovalListener = new DirectoryResourceRssConfigRemovalListener(  );
-            EntryRemovalListenerService.getService(  )
-                                       .registerListener( _listenerDirectoryResourceRssConfigRemovalListener );
+            _listenerDirectoryResourceRssConfigRemovalListener = new DirectoryResourceRssConfigRemovalListener( );
+            EntryRemovalListenerService.getService( ).registerListener(
+                    _listenerDirectoryResourceRssConfigRemovalListener );
         }
 
         //ImageResourceManager
-        FileImgService.getInstance(  ).register(  );
+        FileImgService.getInstance( ).register( );
     }
 
     /**
-     *
+     * 
      * @return the title of the directory
      */
-    public String getTitle(  )
+    public String getTitle( )
     {
         return _strTitle;
     }
@@ -199,10 +198,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     *
+     * 
      * @return the front office title of the directory
      */
-    public String getFrontOfficeTitle(  )
+    public String getFrontOfficeTitle( )
     {
         return _strFrontOfficeTitle;
     }
@@ -217,18 +216,18 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     *
+     * 
      * @return the description of the directory
      */
-    public String getDescription(  )
+    public String getDescription( )
     {
         return _strDescription;
     }
 
     /**
-         * @return the _bDisplaySearchState
-         */
-    public boolean isDisplaySearchState(  )
+     * @return the _bDisplaySearchState
+     */
+    public boolean isDisplaySearchState( )
     {
         return _bDisplaySearchState;
     }
@@ -244,7 +243,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     /**
      * @return the _bDisplayComplementarySearchState
      */
-    public boolean isDisplayComplementarySearchState(  )
+    public boolean isDisplayComplementarySearchState( )
     {
         return _bDisplaySearchComplementaryState;
     }
@@ -258,19 +257,19 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-    * set the description of the directory
-    * @param description the description of the directory
-    */
+     * set the description of the directory
+     * @param description the description of the directory
+     */
     public void setDescription( String description )
     {
         this._strDescription = description;
     }
 
     /**
-     *
+     * 
      * @return the unavailability message of the directory
      */
-    public String getUnavailabilityMessage(  )
+    public String getUnavailabilityMessage( )
     {
         return _strUnavailabilityMessage;
     }
@@ -285,17 +284,17 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     *
+     * 
      * @return the work group associate to the directory
      */
-    public String getWorkgroup(  )
+    public String getWorkgroup( )
     {
         return _strWorkgroupKey;
     }
 
     /**
-     * set  the work group associate to the directory
-     * @param workGroup  the work group associate to the directory
+     * set the work group associate to the directory
+     * @param workGroup the work group associate to the directory
      */
     public void setWorkgroup( String workGroup )
     {
@@ -303,10 +302,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     *
+     * 
      * @return the id of the directory
      */
-    public int getIdDirectory(  )
+    public int getIdDirectory( )
     {
         return _nIdDirectory;
     }
@@ -321,10 +320,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     *
+     * 
      * @return true if the directory is enabled
      */
-    public boolean isEnabled(  )
+    public boolean isEnabled( )
     {
         return _bIsEnabled;
     }
@@ -339,10 +338,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     *
+     * 
      * @return the creation date
      */
-    public Timestamp getDateCreation(  )
+    public Timestamp getDateCreation( )
     {
         return _tDateCreation;
     }
@@ -357,10 +356,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-    * RBAC resource implementation
-    * @return The resource type code
-    */
-    public String getResourceTypeCode(  )
+     * RBAC resource implementation
+     * @return The resource type code
+     */
+    public String getResourceTypeCode( )
     {
         return RESOURCE_TYPE;
     }
@@ -369,16 +368,16 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * RBAC resource implementation
      * @return The resourceId
      */
-    public String getResourceId(  )
+    public String getResourceId( )
     {
         return "" + _nIdDirectory;
     }
 
     /**
-     *
+     * 
      * @return a list of action can be use for the directory
      */
-    public List<DirectoryAction> getActions(  )
+    public List<DirectoryAction> getActions( )
     {
         return _listActions;
     }
@@ -395,9 +394,9 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     /**
      * Gets the directory role
      * @return directory's role as a String
-     *
+     * 
      */
-    public String getRoleKey(  )
+    public String getRoleKey( )
     {
         return _strRoleKey;
     }
@@ -405,7 +404,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     /**
      * Sets the directory's role
      * @param strRole The role
-     *
+     * 
      */
     public void setRoleKey( String strRole )
     {
@@ -413,17 +412,17 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-           * return the id of the result list template
-           * @return  the id of the result list template
-           */
-    public int getIdResultListTemplate(  )
+     * return the id of the result list template
+     * @return the id of the result list template
+     */
+    public int getIdResultListTemplate( )
     {
         return _nIdResultListTemplate;
     }
 
     /**
      * set the id of the result list template
-     * @param idResultListTemplate  the id of the result list template
+     * @param idResultListTemplate the id of the result list template
      */
     public void setIdResultListTemplate( int idResultListTemplate )
     {
@@ -431,10 +430,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     *  return the id of the record template
-     * @return  he id of the record template
+     * return the id of the record template
+     * @return he id of the record template
      */
-    public int getIdResultRecordTemplate(  )
+    public int getIdResultRecordTemplate( )
     {
         return _nIdResultRecordTemplate;
     }
@@ -450,18 +449,18 @@ public class Directory implements AdminWorkgroupResource, RBACResource
 
     /**
      * return the id of the form search template
-     * @return  the id of the form search template
+     * @return the id of the form search template
      */
-    public int getIdFormSearchTemplate(  )
+    public int getIdFormSearchTemplate( )
     {
         return _nIdFormSearchTemplate;
     }
 
     /**
-     *
+     * 
      * @return the number of record display per page
      */
-    public int getNumberRecordPerPage(  )
+    public int getNumberRecordPerPage( )
     {
         return _nNumberRecordPerPage;
     }
@@ -477,7 +476,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
 
     /**
      * set the id of the form search template
-     * @param idFormSearchTemplate  the id of the form search template
+     * @param idFormSearchTemplate the id of the form search template
      */
     public void setIdFormSearchTemplate( int idFormSearchTemplate )
     {
@@ -485,178 +484,333 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-    *
-    * @return the id of the directory workflow
-    */
-    public int getIdWorkflow(  )
+     * 
+     * @return the id of the directory workflow
+     */
+    public int getIdWorkflow( )
     {
         return _nIdWorkflow;
     }
 
     /**
      * set the id of the directory worflow
-     * @param strTitle the id of the directory worflow
+     * @param nIdWorkflow the id of the directory worflow
      */
     public void setIdWorkflow( int nIdWorkflow )
     {
         _nIdWorkflow = nIdWorkflow;
     }
 
-    public boolean isDateShownInResultList(  )
+    /**
+     * Check if the creation date should be shown in the result list
+     * @return True if the creation date should be shown in the result list,
+     *         false otherwise
+     */
+    public boolean isDateShownInResultList( )
     {
         return _bDateShownInResultList;
     }
 
+    /**
+     * Set whether the creation date should be shown in the result list
+     * @param bDateShownInResultList True if the creation date should be shown
+     *            in the result list, false otherwise
+     */
     public void setDateShownInResultList( boolean bDateShownInResultList )
     {
         _bDateShownInResultList = bDateShownInResultList;
     }
 
-    public boolean isDateShownInResultRecord(  )
+    /**
+     * Check if the creation date should be shown in the result record
+     * @return True if the creation date should be shown in the result record,
+     *         false otherwise
+     */
+    public boolean isDateShownInResultRecord( )
     {
         return _bDateShownInResultRecord;
     }
 
+    /**
+     * Set whether the creation date should be shown in the result record
+     * @param bDateShownInResultRecord True if the creation date should be shown
+     *            in the result record, false otherwise
+     */
     public void setDateShownInResultRecord( boolean bDateShownInResultRecord )
     {
         _bDateShownInResultRecord = bDateShownInResultRecord;
     }
 
-    public boolean isDateShownInHistory(  )
+    /**
+     * Check if the creation date should be shown in history
+     * @return True if the creation date should be shown in history, false
+     *         otherwise
+     */
+    public boolean isDateShownInHistory( )
     {
         return _bDateShownInHistory;
     }
 
+    /**
+     * Set whether the creation date should be shown in the history
+     * @param bDateShownInHistory True if the creation date should be shown
+     *            in the history, false otherwise
+     */
     public void setDateShownInHistory( boolean bDateShownInHistory )
     {
         _bDateShownInHistory = bDateShownInHistory;
     }
 
-    public boolean isDateShownInSearch(  )
+    /**
+     * Check if the creation date should be shown in search
+     * @return True if the creation date should be shown in search, false
+     *         otherwise
+     */
+    public boolean isDateShownInSearch( )
     {
         return _bDateShownInSearch;
     }
 
+    /**
+     * Set whether the creation date should be shown in the search
+     * @param bDateShownInSearch True if the creation date should be shown
+     *            in the search, false otherwise
+     */
     public void setDateShownInSearch( boolean bDateShownInSearch )
     {
         _bDateShownInSearch = bDateShownInSearch;
     }
 
-    public boolean isDateShownInAdvancedSearch(  )
+    /**
+     * Check if the creation date should be shown in advanced search
+     * @return True if the creation date should be shown in advanced search,
+     *         false otherwise
+     */
+    public boolean isDateShownInAdvancedSearch( )
     {
         return _bDateShownInAdvancedSearch;
     }
 
+    /**
+     * Set whether the creation date should be shown in the advanced search
+     * @param bDateShownInAdvancedSearch True if the creation date should be
+     *            shown in the advanced search, false otherwise
+     */
     public void setDateShownInAdvancedSearch( boolean bDateShownInAdvancedSearch )
     {
         _bDateShownInAdvancedSearch = bDateShownInAdvancedSearch;
     }
 
-    public boolean isDateShownInMultiSearch(  )
+    /**
+     * Check if the creation date should be shown in multi search
+     * @return True if the creation date should be shown in multi search,
+     *         false otherwise
+     */
+    public boolean isDateShownInMultiSearch( )
     {
         return _bDateShownInMultiSearch;
     }
 
+    /**
+     * Set whether the creation date should be shown in the multi search
+     * @param bDateShownInMultiSearch True if the creation date should be shown
+     *            in the multi search, false otherwise
+     */
     public void setDateShownInMultiSearch( boolean bDateShownInMultiSearch )
     {
         _bDateShownInMultiSearch = bDateShownInMultiSearch;
     }
 
-    public boolean isDateShownInExport(  )
+    /**
+     * Check if the creation date should be exported
+     * @return True if the creation date should be exported, false otherwise
+     */
+    public boolean isDateShownInExport( )
     {
         return _bDateShownInExport;
     }
 
+    /**
+     * Set whether the creation date should be exported
+     * @param bDateShownInExport True if the creation date should be
+     *            exported, false otherwise
+     */
     public void setDateShownInExport( boolean bDateShownInExport )
     {
         _bDateShownInExport = bDateShownInExport;
     }
 
-    public boolean isDateModificationShownInResultList(  )
+    /**
+     * Check if the modification date should be shown in the result list
+     * @return True if the modification date should be shown in the result list,
+     *         false otherwise
+     */
+    public boolean isDateModificationShownInResultList( )
     {
         return _bDateModificationShownInResultList;
     }
 
+    /**
+     * Set whether the modification date should be shown in the result list
+     * @param bDateModificationShownInResultList True if the modification date
+     *            should be shown in the result list, false otherwise
+     */
     public void setDateModificationShownInResultList( boolean bDateModificationShownInResultList )
     {
         _bDateModificationShownInResultList = bDateModificationShownInResultList;
     }
 
-    public boolean isDateModificationShownInResultRecord(  )
+    /**
+     * Check if the modification date should be shown in the result record
+     * @return True if the modification date should be shown in the result
+     *         record,
+     *         false otherwise
+     */
+    public boolean isDateModificationShownInResultRecord( )
     {
         return _bDateModificationShownInResultRecord;
     }
 
+    /**
+     * Set whether the modification date should be shown in the result record
+     * @param bDateModificationShownInResultRecord True if the modification date
+     *            should be shown in the result record, false otherwise
+     */
     public void setDateModificationShownInResultRecord( boolean bDateModificationShownInResultRecord )
     {
         _bDateModificationShownInResultRecord = bDateModificationShownInResultRecord;
     }
 
-    public boolean isDateModificationShownInHistory(  )
+    /**
+     * Check if the modification date should be shown in history
+     * @return True if the modification date should be shown in history, false
+     *         otherwise
+     */
+    public boolean isDateModificationShownInHistory( )
     {
         return _bDateModificationShownInHistory;
     }
 
+    /**
+     * Set whether the modification date should be shown in history
+     * @param bDateModificationShownInHistory True if the modification date
+     *            should be shown in history, false otherwise
+     */
     public void setDateModificationShownInHistory( boolean bDateModificationShownInHistory )
     {
         _bDateModificationShownInHistory = bDateModificationShownInHistory;
     }
 
-    public boolean isDateModificationShownInSearch(  )
+    /**
+     * Check if the modification date should be shown in search
+     * @return True if the modification date should be shown in search, false
+     *         otherwise
+     */
+    public boolean isDateModificationShownInSearch( )
     {
         return _bDateModificationShownInSearch;
     }
 
+    /**
+     * Set whether the modification date should be shown in search
+     * @param bDateModificationShownInSearch True if the modification date
+     *            should be shown in search, false otherwise
+     */
     public void setDateModificationShownInSearch( boolean bDateModificationShownInSearch )
     {
         _bDateModificationShownInSearch = bDateModificationShownInSearch;
     }
 
-    public boolean isDateModificationShownInAdvancedSearch(  )
+    /**
+     * Check if the modification date should be shown in advanced search
+     * @return True if the modification date should be shown in advanced search,
+     *         false otherwise
+     */
+    public boolean isDateModificationShownInAdvancedSearch( )
     {
         return _bDateModificationShownInAdvancedSearch;
     }
 
+    /**
+     * Set whether the modification date should be shown in advanced search
+     * @param bDateModificationShownInAdvancedSearch True if the modification
+     *            date should be shown in advanced search, false otherwise
+     */
     public void setDateModificationShownInAdvancedSearch( boolean bDateModificationShownInAdvancedSearch )
     {
         _bDateModificationShownInAdvancedSearch = bDateModificationShownInAdvancedSearch;
     }
 
-    public boolean isDateModificationShownInMultiSearch(  )
+    /**
+     * Check if the modification date should be shown in multi search
+     * @return True if the modification date should be shown in multi search,
+     *         false otherwise
+     */
+    public boolean isDateModificationShownInMultiSearch( )
     {
         return _bDateModificationShownInMultiSearch;
     }
 
+    /**
+     * Set whether the modification date should be shown in multi search
+     * @param bDateModificationShownInMultiSearch True if the modification
+     *            date should be shown in multi search, false otherwise
+     */
     public void setDateModificationShownInMultiSearch( boolean bDateModificationShownInMultiSearch )
     {
         _bDateModificationShownInMultiSearch = bDateModificationShownInMultiSearch;
     }
 
-    public boolean isDateModificationShownInExport(  )
+    /**
+     * Check if the modification date should be exported
+     * @return True if the modification date should be exported, false otherwise
+     */
+    public boolean isDateModificationShownInExport( )
     {
         return _bDateModificationShownInExport;
     }
 
+    /**
+     * Set whether the modification date should be exported
+     * @param bDateModificationShownInExport True if the modification
+     *            date should be exported, false otherwise
+     */
     public void setDateModificationShownInExport( boolean bDateModificationShownInExport )
     {
         _bDateModificationShownInExport = bDateModificationShownInExport;
     }
 
-    public boolean isAscendingSort(  )
+    /**
+     * Check if the sort is ascendent
+     * @return True if the sort is ascendent, false otherwise
+     */
+    public boolean isAscendingSort( )
     {
         return _bAscSort;
     }
 
+    /**
+     * Set whether the sort is ascendent
+     * @param bAscendingSort True if the sort is ascendent, false otherwise
+     */
     public void setAscendingSort( boolean bAscendingSort )
     {
         _bAscSort = bAscendingSort;
     }
 
-    public String getIdSortEntry(  )
+    /**
+     * Get the id of the entry to sort
+     * @return the id of the entry to sort
+     */
+    public String getIdSortEntry( )
     {
         return _strSortEntryId;
     }
 
+    /**
+     * Set the id of the entry to sort
+     * @param strIdSortEntry the id of the entry to sort
+     */
     public void setIdSortEntry( String strIdSortEntry )
     {
         _strSortEntryId = strIdSortEntry;
@@ -666,14 +820,15 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * return true if the record must be sorted by ascending sort
      * @return true if the record must be sorted by ascending sort
      */
-    public boolean isAscendingSortFront(  )
+    public boolean isAscendingSortFront( )
     {
         return _bAscSortFront;
     }
 
     /**
      * set true if the record must be sorted by ascending sort in front office
-     * @param bAscendingSort return true if the record must be sorted by ascending sort
+     * @param bAscendingSort return true if the record must be sorted by
+     *            ascending sort
      */
     public void setAscendingSortFront( boolean bAscendingSort )
     {
@@ -681,49 +836,57 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     * return the id  of the entry used for sorted
-     * @return the id  of the entry used for sorted
+     * return the id of the entry used for sorted
+     * @return the id of the entry used for sorted
      */
-    public String getIdSortEntryFront(  )
+    public String getIdSortEntryFront( )
     {
         return _strSortEntryIdFront;
     }
 
     /**
-     *         set the id  of the entry used for sorted
-     * @param strIdSortEntry the id  of the entry used for sorted
+     * set the id of the entry used for sorted
+     * @param strIdSortEntry the id of the entry used for sorted
      */
     public void setIdSortEntryFront( String strIdSortEntry )
     {
         _strSortEntryIdFront = strIdSortEntry;
     }
 
-    public boolean isRecordActivated(  )
+    /**
+     * Check whether record is activated
+     * @return True if record is activated, false otherwise
+     */
+    public boolean isRecordActivated( )
     {
         return _bRecordActivated;
     }
 
+    /**
+     * Set record activated or deactivated
+     * @param bRecordActivated True if record is activated, false otherwise
+     */
     public void setRecordActivated( boolean bRecordActivated )
     {
         _bRecordActivated = bRecordActivated;
     }
 
     /**
-    *return the xml of the directory
-    * @param plugin the plugin
-    * @param locale the locale
-    * @param strListRecord the string list of record associate to the directory
-    * @param strListEntry the string list of entry associate to the directory
-    *@return xml
-    */
+     * return the xml of the directory
+     * @param plugin the plugin
+     * @param locale the locale
+     * @param strListRecord the string list of record associate to the directory
+     * @param strListEntry the string list of entry associate to the directory
+     * @return xml
+     */
     public StringBuffer getXml( Plugin plugin, Locale locale, StringBuffer strListRecord, StringBuffer strListEntry )
     {
-        StringBuffer strXml = new StringBuffer(  );
-        HashMap<String, Object> model = new HashMap<String, Object>(  );
-        model.put( ATTRIBUTE_ID, String.valueOf( getIdDirectory(  ) ) );
+        StringBuffer strXml = new StringBuffer( );
+        HashMap<String, Object> model = new HashMap<String, Object>( );
+        model.put( ATTRIBUTE_ID, String.valueOf( getIdDirectory( ) ) );
         XmlUtil.beginElement( strXml, TAG_DIRECTORY, model );
-        XmlUtil.addElement( strXml, TAG_TITLE, getTitle(  ) );
-        XmlUtil.addElement( strXml, TAG_CREATION_DATE, DateUtil.getDateString( getDateCreation(  ), locale ) );
+        XmlUtil.addElement( strXml, TAG_TITLE, getTitle( ) );
+        XmlUtil.addElement( strXml, TAG_CREATION_DATE, DateUtil.getDateString( getDateCreation( ), locale ) );
         XmlUtil.beginElement( strXml, TAG_LIST_ENTRY );
         strXml.append( strListEntry );
         XmlUtil.endElement( strXml, TAG_LIST_ENTRY );
@@ -748,7 +911,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * Check if the directory is indexed
      * @return true if the directory is indexed, false otherwise
      */
-    public boolean isIndexed(  )
+    public boolean isIndexed( )
     {
         return _bIsIndexed;
     }

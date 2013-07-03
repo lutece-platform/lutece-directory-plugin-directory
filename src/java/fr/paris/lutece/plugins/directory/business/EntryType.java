@@ -148,8 +148,8 @@ public class EntryType
     }
 
     /**
-     *
-     * @param _bIsMyLuteceUser set true if the type is a mylutece user
+     * Set the mylutece user flag
+     * @param isMyLuteceUser set true if the type is a mylutece user
      */
     public void setMyLuteceUser( Boolean isMyLuteceUser )
     {

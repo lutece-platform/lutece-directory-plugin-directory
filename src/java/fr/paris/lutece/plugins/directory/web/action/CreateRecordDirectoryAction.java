@@ -88,7 +88,7 @@ public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryA
     }
 
     /**
-     * @see #PARAMETER_CREATE_RECORD_X
+     * {@inheritDoc}
      */
     public boolean isInvoked( HttpServletRequest request )
     {

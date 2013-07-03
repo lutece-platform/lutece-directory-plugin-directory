@@ -78,6 +78,7 @@ public interface IDirectoryActionDAO
      * This method checks if an directory record action exists
      * @param plugin plugin
      * @param directoryAction The action to check
+     * @return True if the action exists, false otherwise
      */
     boolean checkActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin );
 
