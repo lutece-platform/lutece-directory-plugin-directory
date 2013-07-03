@@ -3,7 +3,7 @@
     <div class="span12">
         <fieldset>
             <legend> #i18n{directory.create_directory_record.title}: '<a href="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp?id_directory=${directory.idDirectory}">${directory.title}</a>'</legend>
-            <form action="jsp/admin/plugins/directory/DoCreateDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data">
+            <form class="form-horizontal" action="jsp/admin/plugins/directory/DoCreateDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data">
                 <input name="page" value="directory" type="hidden" />
                 <input name="id_directory" value="${directory.idDirectory}" type="hidden" />
                 <#list entry_list as entry>
@@ -29,10 +29,10 @@
                 </#if>
                 </#list>
                 <div class="form-actions">
-                    <button type="submit" name="save"  class="btn btn-primary" >
+                    <button type="submit" name="save"  class="btn btn-primary btn-small" >
                         <i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_directory_record.button_save}
                     </button>
-                    <a href="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp?id_directory=${directory.idDirectory}" class="btn">
+                    <a href="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp?id_directory=${directory.idDirectory}" class="btn btn-small">
                         <i class="icon-remove-circle"></i>&nbsp;#i18n{directory.create_directory_record.button_cancel}
                     </a>
                 </div>
