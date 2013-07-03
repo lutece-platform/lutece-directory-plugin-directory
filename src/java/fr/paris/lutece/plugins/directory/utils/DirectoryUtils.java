@@ -314,7 +314,7 @@ public final class DirectoryUtils
         filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
 
         List<IEntry> listEntryFirstLevel = EntryHome.getEntryList( filter, plugin );
-        List<IEntry> listEntryChildren = new ArrayList<IEntry>( );
+        List<IEntry> listEntryChildren;
         List<IEntry> listEntryImbricate = new ArrayList<IEntry>( );
 
         for ( IEntry entry : listEntryFirstLevel )
@@ -370,7 +370,7 @@ public final class DirectoryUtils
         filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
 
         List<IEntry> listEntryFirstLevel = EntryHome.getEntryList( filter, plugin );
-        List<IEntry> listEntryChildren = new ArrayList<IEntry>( );
+        List<IEntry> listEntryChildren;
         List<IEntry> listEntryImbricate = new ArrayList<IEntry>( );
 
         for ( IEntry entry : listEntryFirstLevel )
@@ -1221,16 +1221,7 @@ public final class DirectoryUtils
         filter.setOrderByDateModification( searchFields.isSortByDateModification( ) );
 
         // If workflow active, filter by workflow state
-        if ( ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) && bWorkflowServiceEnable /*
-                                                                                                          * &&
-                                                                                                          * (
-                                                                                                          * _nIdWorkflowSate
-                                                                                                          * !=
-                                                                                                          * DirectoryUtils
-                                                                                                          * .
-                                                                                                          * CONSTANT_ID_NULL
-                                                                                                          * )
-                                                                                                          */)
+        if ( ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) && bWorkflowServiceEnable )
         {
             if ( bUseFilterDirectory )
             {

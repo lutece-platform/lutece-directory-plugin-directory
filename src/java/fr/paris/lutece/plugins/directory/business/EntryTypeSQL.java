@@ -36,19 +36,15 @@ package fr.paris.lutece.plugins.directory.business;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
-import fr.paris.lutece.portal.business.regularexpression.RegularExpression;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
-import fr.paris.lutece.portal.service.regularexpression.RegularExpressionService;
-import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.sql.DAOUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -56,9 +52,9 @@ import javax.servlet.http.HttpServletRequest;
 
 
 /**
- *
+ * 
  * class EntryTypeSQL
- *
+ * 
  */
 public class EntryTypeSQL extends Entry
 {
@@ -114,10 +110,10 @@ public class EntryTypeSQL extends Entry
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim(  ) : null;
-        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim(  ) : null;
+        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter(
+                PARAMETER_HELP_MESSAGE ).trim( ) : null;
+        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null ) ? request
+                .getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim( ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strRequestSQL = request.getParameter( PARAMETER_REQUEST_SQL );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
@@ -133,11 +129,11 @@ public class EntryTypeSQL extends Entry
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_TITLE;
         }
-        else if ( ( strRequestSQL == null ) || strRequestSQL.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        else if ( ( strRequestSQL == null ) || strRequestSQL.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_REQUEST_SQL;
         }
@@ -147,7 +143,7 @@ public class EntryTypeSQL extends Entry
             Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
 
             return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+                    AdminMessage.TYPE_STOP );
         }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
@@ -155,7 +151,7 @@ public class EntryTypeSQL extends Entry
             Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
 
             return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+                    AdminMessage.TYPE_STOP );
         }
 
         this.setTitle( strTitle );
@@ -178,57 +174,56 @@ public class EntryTypeSQL extends Entry
     }
 
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return _template_create;
     }
 
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return _template_modify;
     }
 
     @Override
     public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex )
+            String strPageIndex )
     {
-        return new Paginator( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage, strBaseUrl,
-            strPageIndexParameterName, strPageIndex );
+        return new Paginator( this.getFields( ).get( 0 ).getRegularExpressionList( ), nItemPerPage, strBaseUrl,
+                strPageIndexParameterName, strPageIndex );
     }
 
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+            boolean bAddNewValue, List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
-        String strValueEntry = ( ( lstValue != null ) && ( lstValue.size(  ) > 0 ) ) ? lstValue.get( 0 ) : null;
-        RecordField recordField = new RecordField(  );
+        String strValueEntry = ( ( lstValue != null ) && ( lstValue.size( ) > 0 ) ) ? lstValue.get( 0 ) : null;
+        RecordField recordField = new RecordField( );
         recordField.setEntry( this );
 
         if ( ( record != null ) && bAddNewValue )
         {
-            RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-            recordFieldFilter.setIdDirectory( record.getDirectory(  ).getIdDirectory(  ) );
-            recordFieldFilter.setIdEntry( this.getIdEntry(  ) );
-            recordFieldFilter.setIdRecord( record.getIdRecord(  ) );
+            RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
+            recordFieldFilter.setIdDirectory( record.getDirectory( ).getIdDirectory( ) );
+            recordFieldFilter.setIdEntry( this.getIdEntry( ) );
+            recordFieldFilter.setIdRecord( record.getIdRecord( ) );
 
             List<RecordField> recordFieldList = RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
 
-            if ( ( recordFieldList != null ) && !recordFieldList.isEmpty(  ) &&
-                    !recordFieldList.get( 0 ).getValue(  ).equals( "" ) )
+            if ( ( recordFieldList != null ) && !recordFieldList.isEmpty( )
+                    && !recordFieldList.get( 0 ).getValue( ).equals( "" ) )
             {
-                strValueEntry = recordFieldList.get( 0 ).getValue(  ) + ", " + strValueEntry;
+                strValueEntry = recordFieldList.get( 0 ).getValue( ) + ", " + strValueEntry;
             }
         }
 
         if ( strValueEntry != null )
         {
-            if ( bTestDirectoryError && this.isMandatory(  ) && strValueEntry.equals( DirectoryUtils.EMPTY_STRING ) )
+            if ( bTestDirectoryError && this.isMandatory( ) && strValueEntry.equals( DirectoryUtils.EMPTY_STRING ) )
             {
-                throw new DirectoryErrorException( this.getTitle(  ) );
+                throw new DirectoryErrorException( this.getTitle( ) );
             }
 
             recordField.setValue( strValueEntry );
@@ -241,46 +236,43 @@ public class EntryTypeSQL extends Entry
      * Return fields from a SQL query
      * @return A list of fields
      */
-    public ReferenceList getSqlQueryFields(  )
+    public ReferenceList getSqlQueryFields( )
     {
-        ReferenceList list = new ReferenceList(  );
-        String strSQL = this.getRequestSQL(  );
+        ReferenceList list = new ReferenceList( );
+        String strSQL = this.getRequestSQL( );
         DAOUtil daoUtil = new DAOUtil( strSQL );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             list.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return list;
     }
 
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-        boolean bDisplayExport )
+            boolean bDisplayExport )
     {
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
-        if ( recordField.getValue(  ) != null )
+        if ( recordField.getValue( ) != null )
         {
             if ( bDisplayExport )
             {
-                return recordField.getValue(  );
+                return recordField.getValue( );
             }
-            else
-            {
-                IEntry entry = EntryHome.findByPrimaryKey( this.getIdEntry(  ), plugin );
-                DAOUtil daoUtil = new DAOUtil( entry.getRequestSQL(  ) );
-                daoUtil.executeQuery(  );
+            IEntry entry = EntryHome.findByPrimaryKey( this.getIdEntry( ), plugin );
+            DAOUtil daoUtil = new DAOUtil( entry.getRequestSQL( ) );
+            daoUtil.executeQuery( );
 
-                while ( daoUtil.next(  ) )
+            while ( daoUtil.next( ) )
+            {
+                if ( daoUtil.getString( 1 ).equals( recordField.getValue( ) ) )
                 {
-                    if ( daoUtil.getString( 1 ).equals( recordField.getValue(  ) ) )
-                    {
-                        return daoUtil.getString( 2 );
-                    }
+                    return daoUtil.getString( 2 );
                 }
             }
         }

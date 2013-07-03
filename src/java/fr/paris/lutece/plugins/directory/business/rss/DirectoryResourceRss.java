@@ -87,6 +87,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DirectoryResourceRss extends ResourceRss
 {
+    public static final String PROPERTY_RSS_STORAGE_FOLDER_PATH = "rss.storage.folder.path";
+    public static final String PROPERTY_STORAGE_DIRECTORY_NAME = "rss.storage.directory.name";
+
     //templates
     private static final String TEMPLATE_TASK_EVALUATION_CREATE_CONFIG = "admin/plugins/directory/rss/resource_create_config.html";
     private static final String TEMPLATE_TASK_EVALUATION_MODIFY_CONFIG = "admin/plugins/directory/rss/resource_modify_config.html";
@@ -143,8 +146,6 @@ public class DirectoryResourceRss extends ResourceRss
     private static final String MESSAGE_MANDATORY_FIELD = "directory.message.mandatory.field";
     private static final String MESSAGE_NO_REFRESH = "directory.message.no_refresh";
     private static final String MESSAGE_NO_REFRESH_FILTER = "directory.message.no_refresh_filter";
-    public static final String PROPERTY_RSS_STORAGE_FOLDER_PATH = "rss.storage.folder.path";
-    public static final String PROPERTY_STORAGE_DIRECTORY_NAME = "rss.storage.directory.name";
     private static final String TEMPLATE_PUSH_RSS_XML = "admin/plugins/directory/rss/rss_xml.html";
     private static final String MARK_ITEM_LIST = "itemList";
     private static final String MARK_RSS_SITE_NAME = "site_name";

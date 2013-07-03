@@ -77,6 +77,9 @@ public class EntryTypeMail extends Entry
     private static final String HTML_LINK_OPEN_END = "\">";
     private static final String HTML_LINK_CLOSE = "</a>";
 
+    private static final String SEMI_COLON = ";";
+    private static final String UNDERSCORE = "_";
+
     // Templates
     private final String _template_create = "admin/plugins/directory/entrytypemail/create_entry_type_mail.html";
     private final String _template_modify = "admin/plugins/directory/entrytypemail/modify_entry_type_mail.html";
@@ -87,8 +90,6 @@ public class EntryTypeMail extends Entry
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytypemail/html_code_form_search_entry_type_mail.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypemail/html_code_entry_value_type_mail.html";
 
-	private static final String SEMI_COLON = ";";
-	private static final String UNDERSCORE = "_";
 
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )

@@ -72,6 +72,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public class EntryTypeImg extends AbstractEntryTypeUpload
 {
+    protected static final String FIELD_THUMBNAIL_WIDTH = "directory.create_entry.label_width";
+    protected static final String FIELD_THUMBNAIL_HEIGHT = "directory.create_entry.label_width";
+    protected static final String FIELD_BIG_THUMBNAIL_WIDTH = "directory.create_entry.label_width";
+    protected static final String FIELD_BIG_THUMBNAIL_HEIGHT = "directory.create_entry.label_width";
+    protected static final String ERROR_FIELD_THUMBNAIL = "directory.create_entry.label_error_thumbnail";
+    protected static final String ERROR_FIELD_BIG_THUMBNAIL = "directory.create_entry.label_error_big_thumbnail";
+
     private static final String PARAMETER_THUMBNAIL_HEIGHT = "thumbnail_height";
     private static final String PARAMETER_THUMBNAIL_WIDTH = "thumbnail_width";
     private static final String PARAMETER_BIG_THUMBNAIL_WIDTH = "thumbnail_big_width";
@@ -84,17 +91,12 @@ public class EntryTypeImg extends AbstractEntryTypeUpload
     private static final String PARAMETER_BIG_THUMBNAIL_SHOWN_IN_RESULT_RECORD = "big_thbnail_shown_in_result_record";
     private static final String PARAMETER_CREATE_THUMBNAIL = "create_thumbnail";
     private static final String PARAMETER_CREATE_BIG_THUMBNAIL = "create_big_thumbnail";
-    protected static final String FIELD_THUMBNAIL_WIDTH = "directory.create_entry.label_width";
-    protected static final String FIELD_THUMBNAIL_HEIGHT = "directory.create_entry.label_width";
-    protected static final String FIELD_BIG_THUMBNAIL_WIDTH = "directory.create_entry.label_width";
-    protected static final String FIELD_BIG_THUMBNAIL_HEIGHT = "directory.create_entry.label_width";
-    protected static final String ERROR_FIELD_THUMBNAIL = "directory.create_entry.label_error_thumbnail";
-    protected static final String ERROR_FIELD_BIG_THUMBNAIL = "directory.create_entry.label_error_big_thumbnail";
     private static final String MESSAGE_ERROR_NOT_AN_IMAGE = "directory.message.error.notAnImage";
     private static final String FIELD_IMAGE = "image_full_size";
     private static final String FIELD_THUMBNAIL = "little_thumbnail";
     private static final String FIELD_BIG_THUMBNAIL = "big_thumbnail";
     private static final int INTEGER_QUALITY_MAXIMUM = 1;
+
     private final String _template_create = "admin/plugins/directory/entrytypeimg/create_entry_type_img.html";
     private final String _template_modify = "admin/plugins/directory/entrytypeimg/modify_entry_type_img.html";
     private final String _template_html_code_form_entry = "admin/plugins/directory/entrytypeimg/html_code_form_entry_type_img.html";

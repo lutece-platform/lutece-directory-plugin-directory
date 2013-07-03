@@ -134,10 +134,6 @@ public class Entry implements IEntry
     //  Jsp Definition
     protected static final String JSP_DOWNLOAD_FILE = "jsp/site/plugins/directory/DoDownloadFile.jsp";
 
-    // SQL
-    private static final String SQL_JOIN_DIRECTORY_RECORD_FIELD = " LEFT JOIN directory_record_field drf ON drf.id_record = dr.id_record AND drf.id_entry = ? ";
-    private static final String SQL_ORDER_BY_RECORD_FIELD_VALUE = " ORDER BY drf.record_field_value ";
-
     //MARK
     protected static final String MARK_ENTRY = "entry";
     protected static final String MARK_LOCALE = "locale";
@@ -149,6 +145,11 @@ public class Entry implements IEntry
 
     //PROPERTIES
     protected static final String PROPERTY_IMPORT_MULTIPLE_VALUE_DELIMITER = "directory.import.multiple_value.delimiter";
+
+    // SQL
+    private static final String SQL_JOIN_DIRECTORY_RECORD_FIELD = " LEFT JOIN directory_record_field drf ON drf.id_record = dr.id_record AND drf.id_entry = ? ";
+    private static final String SQL_ORDER_BY_RECORD_FIELD_VALUE = " ORDER BY drf.record_field_value ";
+
     private int _nIdEntry;
     private Directory _directory;
     private String _strTitle;

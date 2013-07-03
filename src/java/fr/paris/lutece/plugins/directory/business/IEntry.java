@@ -39,13 +39,13 @@ import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.Paginator;
 
-import org.apache.commons.fileupload.FileItem;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
 
 
 /**
@@ -372,13 +372,13 @@ public interface IEntry
      *
      * @return true if the entry is display with Multiple search field
      */
-    public boolean isMultipleSearchFields(  );
+    boolean isMultipleSearchFields( );
 
     /**
      * set true if the entry is display with Multiple search field
      * @param multipleSearchFields true if the entry is display with Multiple search field
      */
-    public void setMultipleSearchFields( boolean multipleSearchFields );
+    void setMultipleSearchFields( boolean multipleSearchFields );
 
     /**
     *
@@ -419,13 +419,13 @@ public interface IEntry
     /**
      * @return true if entry is autocomplete
      */
-    public boolean isAutocompleteEntry(  );
+    boolean isAutocompleteEntry( );
 
     /**
      * set autocomplete entry type
      * @param bIsAutocompleEntry
      */
-    public void setAutocompleteEntry( boolean bIsAutocompleEntry );
+    void setAutocompleteEntry( boolean bIsAutocompleEntry );
 
     /**
     *

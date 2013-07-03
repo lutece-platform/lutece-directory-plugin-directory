@@ -125,7 +125,7 @@ public interface IDirectorySearchFields
      * @param mapQuery
      *            map query
      */
-    public void setMapQuery( HashMap<String, List<RecordField>> mapQuery );
+    void setMapQuery( HashMap<String, List<RecordField>> mapQuery );
 
     /**
      * Date creation begin record
@@ -232,25 +232,25 @@ public interface IDirectorySearchFields
      * Items per page
      * @return items per page
      */
-    public int getItemsPerPage( );
+    int getItemsPerPage( );
 
     /**
      * Items per page
      * @param nItemsPerPage items per page
      */
-    public void setItemsPerPage( int nItemsPerPage );
+    void setItemsPerPage( int nItemsPerPage );
 
     /**
      * 
      * @return true if the records must be disabled
      */
-    public int getIsDisabled( );
+    int getIsDisabled( );
 
     /***
      * set true if the records displayed must be disabled
      * @param nIsDisabled true if the records displayed must be disabled
      */
-    public void setIsDisabled( int nIsDisabled );
+    void setIsDisabled( int nIsDisabled );
 
     /**
      * Date modification begin record
@@ -293,7 +293,7 @@ public interface IDirectorySearchFields
      * @param bSortByDateModification true if it must be sort by date
      *            modification
      */
-    public void setSortByDateModification( boolean bSortByDateModification );
+    void setSortByDateModification( boolean bSortByDateModification );
 
     /**
      * Check if it must be sort by date modification

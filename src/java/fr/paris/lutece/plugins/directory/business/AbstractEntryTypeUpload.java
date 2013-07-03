@@ -67,6 +67,12 @@ public abstract class AbstractEntryTypeUpload extends Entry
     protected static final String PARAMETER_MAX_FILES = "max_files";
     protected static final String PARAMETER_FILE_MAX_SIZE = "file_max_size";
 
+    // CONSTANTS
+    protected static final String CONSTANT_MAX_FILES = "max_files";
+    protected static final String CONSTANT_FILE_MAX_SIZE = "file_max_size";
+    protected static final String ALL = "*";
+    protected static final String COMMA = ",";
+
     // PROPERTIES
     private static final String PROPERTY_MESSAGE_ERROR_UPLOADING_FILE_MAX_FILES = "directory.message.error.uploading_file.max_files";
     private static final String PROPERTY_MESSAGE_ERROR_UPLOADING_FILE_FILE_MAX_SIZE = "directory.message.error.uploading_file.file_max_size";
@@ -75,12 +81,6 @@ public abstract class AbstractEntryTypeUpload extends Entry
     // FIELDS
     private static final String FIELD_MAX_FILES = "directory.create_entry.label_max_files";
     private static final String FIELD_FILE_MAX_SIZE = "directory.create_entry.label_file_max_size";
-
-    // CONSTANTS
-    protected static final String CONSTANT_MAX_FILES = "max_files";
-    protected static final String CONSTANT_FILE_MAX_SIZE = "file_max_size";
-    protected static final String ALL = "*";
-    protected static final String COMMA = ",";
 
     /**
      * Set the fields

@@ -44,9 +44,8 @@ public interface DirectorySearchEngine
 {
     /**
      * Return search results
-     * @param strQuery The search query
-     * @param filter The filter
+     * @param mapSearchQuery The map search query
      * @return Results as a collection of SearchResult
      */
-    public List<Integer> getSearchResults( HashMap<String, Object> mapSearchQuery );
+    List<Integer> getSearchResults( HashMap<String, Object> mapSearchQuery );
 }

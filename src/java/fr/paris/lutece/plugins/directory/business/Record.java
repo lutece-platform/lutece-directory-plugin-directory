@@ -41,14 +41,13 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupResource;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.sql.Timestamp;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -59,11 +58,6 @@ import java.util.Map;
 public class Record implements AdminWorkgroupResource
 {
     public static final String WORKFLOW_RESOURCE_TYPE = "DIRECTORY_RECORD";
-    private static final String TAG_RECORD = "record";
-    private static final String ATTRIBUTE_RECORD_ID = "id";
-    private static final String ATTRIBUTE_TYPE_ENTRY = "type-entry";
-    private static final String ATTRIBUTE_SHOW_IN_RECORD = "isShownInRecord";
-    private static final String ATTRIBUTE_SHOW_IN_LIST = "isShownInList";
     public static final String ATTRIBUTE_TITLE = "title";
     public static final String TAG_LIST_RECORD_FIELD = "list-record-field";
     public static final String TAG_RECORD_FIELD = "record-field";
@@ -72,6 +66,13 @@ public class Record implements AdminWorkgroupResource
     public static final String TAG_MODIFICATION_DATE = "modification-date";
     public static final String TAG_STATUS = "status";
     public static final String ATTRIBUTE_ICON = "icon";
+
+    private static final String TAG_RECORD = "record";
+    private static final String ATTRIBUTE_RECORD_ID = "id";
+    private static final String ATTRIBUTE_TYPE_ENTRY = "type-entry";
+    private static final String ATTRIBUTE_SHOW_IN_RECORD = "isShownInRecord";
+    private static final String ATTRIBUTE_SHOW_IN_LIST = "isShownInList";
+
     private int _nIdRecord;
     private Timestamp _tDateCreation;
     private Timestamp _tDateModification;
