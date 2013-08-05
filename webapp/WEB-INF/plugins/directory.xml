@@ -65,7 +65,7 @@
                 directory.daemon.directorySearchIndexer.name
 			</daemon-name>
             <daemon-description>
-                document.daemon.directorySearchIndexer.description
+                directory.daemon.directorySearchIndexer.description
 			</daemon-description>
             <daemon-class>
                 fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchIndexerDaemon
