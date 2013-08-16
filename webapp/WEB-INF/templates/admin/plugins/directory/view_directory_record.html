@@ -33,24 +33,17 @@
 -- @return the HTLM code of the record field
 -->
 <#macro getRecordFieldHtml entry recordfield first>
-	<#if isEntryTypeGeolocation( entry )>
-		${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
-		<#if recordfield.field?? && recordfield.field.title?? && recordfield.field.title == 'address' && recordfield.value?has_content>
-				<#include "../../../skin/plugins/directory/" + entry.mapProvider.frontHtmlCode />
-		</#if>
-	<#else>
-		<#if !first>
-		</#if>
-		<#if isEntryTypeImage( entry )>    						
-			<#if recordfield.field?? & recordfield.field.isShownInResultRecord(  )>
-				${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
-			</#if>
-		<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>
-			${record_field.value}
-		<#else>
-			${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
-		</#if>
-	</#if>
+<#if isEntryTypeGeolocation( entry )>
+${entry.getHtmlRecordFieldValue( locale, recordfield, false )}<#if recordfield.field?? && recordfield.field.title?? && recordfield.field.title == 'address' && recordfield.value?has_content><#include "../../../skin/plugins/directory/" + entry.mapProvider.frontHtmlCode /></#if>
+<#else>
+<#if !first>
+</#if>
+<#if isEntryTypeImage( entry )>
+<#if recordfield.field?? & recordfield.field.isShownInResultRecord(  )>${entry.getHtmlRecordFieldValue( locale, recordfield, false )}</#if>
+<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>${record_field.value}<#else>
+${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
+</#if>
+</#if>
 </#macro>
 
 <#--
@@ -78,8 +71,7 @@
 </#macro>
 <div class="row-fluid">
 	<div class="span4">
-		<fieldset>
-		<legend>#i18n{directory.viewing_directory_record.labelRecord} ${record.idRecord}</legend>
+		<h4>#i18n{directory.viewing_directory_record.labelRecord} ${record.idRecord}</h4>
 		<table class="table table-striped table-condensed">
 			<tr>
 				<th>#i18n{directory.viewing_directory_record.labelDirectory}</th>
@@ -107,53 +99,45 @@
 				</td>
 			</tr>
 		</table>
-		</fieldset>
 	</div>
 	<div class="span8">
-		<fieldset>
-		<legend>
-			#i18n{directory.viewing_directory_record.title} : '${directory.title}'
+		<form class="form-horizontal" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="get">
+		<h4>#i18n{directory.viewing_directory_record.title} : '${directory.title}'
 	  		<#if record.dateCreation?? && show_date_creation_record > - #i18n{directory.viewing_directory_record.date_creation} ${record.dateCreation}</#if>
 	  		<#if record.dateModification?? && show_date_modification_record > - #i18n{directory.viewing_directory_record.date_modification} ${record.dateModification}</#if>
-		</legend>
-			<input name="page" value="directory" type="hidden" />
-			<#list entry_list as entry>	
-	      	<#if entry.entryType.group>	
-				<div class="control-group">
-				<label class="control-label"> ${entry.title} </label>
-	      		<#if entry.children?has_content>
-	      			<#list entry.children as child >
+		</h4>
+		<input name="page" value="directory" type="hidden" />
+		<#list entry_list as entry>	
+			<#if entry.entryType.group>
+				<fieldset>
+					<legend>${entry.title} </legend>
+					<#if entry.children?has_content>
+						<#list entry.children as child >
+						<div class="control-group">
+							<label class="control-label" for=""><#if child.title?exists>${child.title}</#if></label>
+							<div class="controls">
+								<textarea disabled="disabled" class="input-xlarge" rows="1"><#assign entryKey=""+child.idEntry><#assign first = true><#list map_id_entry_list_record_field[entryKey] as recordfield><@getRecordFieldHtml entry=child recordfield=recordfield first=first /><#assign first = false></#list></textarea>
+							</div>
+						</div>
+						</#list>
+					</#if>
+				<#else>
+					<#assign entryKey=""+entry.idEntry>	
+					<#assign first = true>
+					<div class="control-group">
+					<#if entry.title?exists>
+						<label class="control-label" for="">${entry.title}</label>
+					</#if>	
+					<#list map_id_entry_list_record_field[entryKey] as recordfield>
 						<div class="controls">
-						<#if child.title?exists>
-							<label for="">${child.title}</label>
-						</#if> 	
-		      			<#assign entryKey=""+child.idEntry>	
-		      			<#assign first = true>
-		      			<#list map_id_entry_list_record_field[entryKey] as recordfield>
-							<@getRecordFieldHtml entry=child recordfield=recordfield first=first />
-		      				<#assign first = false>
-	      				</#list>
-						</div>								
-	      			</#list>
+							<@getRecordFieldHtml entry=entry recordfield=recordfield first=first />
+							<#assign first = false>
+						</div>
+					</#list>
+					</div>
 				</#if>
-	      		</div>
-   			<#else>
-  				<#assign entryKey=""+entry.idEntry>	
-   				<#assign first = true>
-      			<div class="control-group">
-				<#if entry.title?exists>
-					<label class="control-label" for="">${entry.title} : </label>
-				</#if>	
-				<#list map_id_entry_list_record_field[entryKey] as recordfield>
-					<div class="controls">
-						<@getRecordFieldHtml entry=entry recordfield=recordfield first=first />
-						<#assign first = false>
-  					</div>
-				</#list>
-  				</div>
-     		</#if>
-   		</#list>
-    	<form class="form-horizontal" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="get">
+			</#list>
+    	
 	  	<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
 	  	<input type="hidden" name="session" value="session" />
 		<div class="form-actions">
