@@ -203,7 +203,8 @@
 		</form>
 	</div>
 </div>
-<div id="regular_expression">
+<#if regular_expression_list??>
+	<div id="regular_expression">
 		<fieldset> 
 		<legend>#i18n{directory.create_entry.manage_regular_expression.title}</legend>
 		<form class="form-search"  method="post"  action="jsp/admin/plugins/directory/DoInsertVerification.jsp#list">
@@ -240,3 +241,4 @@
         </table>
         <@paginationAdmin paginator=paginator />
     </div>
+</#if>
