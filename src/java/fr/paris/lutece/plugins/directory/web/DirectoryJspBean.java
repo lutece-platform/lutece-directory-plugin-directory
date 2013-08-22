@@ -403,6 +403,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_VALUE = "value";
     private static final String PARAMETER_DEFAULT_VALUE = "default_value";
     private static final String PARAMETER_SESSION = DirectoryUtils.PARAMETER_SESSION;
+    private static final String PARAMETER_RESET_SEARCH = "resetsearch";
     private static final String PARAMETER_DATE_SHOWN_IN_RESULT_LIST = "date_shown_in_result_list";
     private static final String PARAMETER_DATE_SHOWN_IN_RESULT_RECORD = "date_shown_in_result_record";
     private static final String PARAMETER_DATE_SHOWN_IN_HISTORY = "date_shown_in_history";
@@ -2763,7 +2764,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         if ( request.getParameter( PARAMETER_SESSION ) == null
-                || Boolean.parseBoolean( request.getParameter( "resetsearch" ) ) )
+                || Boolean.parseBoolean( request.getParameter( PARAMETER_RESET_SEARCH ) ) )
         {
             reInitDirectoryRecordFilter( );
         }
