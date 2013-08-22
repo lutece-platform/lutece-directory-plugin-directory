@@ -27,21 +27,21 @@
 		<label class="control-label" for="title">#i18n{directory.create_entry.label_title}* : </label>
 	    	<div class="controls">
 				<input type="text" name="title" id="title" size="80" value="${entry.title}"  maxlength="255" />
-				<span class="help-text" > #i18n{directory.create_entry.label_title_comment}</span>
+				<span class="help-block" > #i18n{directory.create_entry.label_title_comment}</span>
 			</div>
 		</div>
 	    <div class="control-group">
 			<label class="control-label" for="help_message">#i18n{directory.create_entry.label_help_message} : </label>
 			<div class="controls">
 		     	<textarea  name="help_message"  id="help_message" cols="80" rows="5">${entry.helpMessage}</textarea>
-				<span class="help-text" > #i18n{directory.create_entry.label_help_message_comment}</span>
+				<span class="help-block" > #i18n{directory.create_entry.label_help_message_comment}</span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="help_message_search">#i18n{directory.create_entry.label_help_message_search} : </label>
 			<div class="controls">
 		   		<textarea  name="help_message_search"  id="help_message_search" cols="80" rows="5">${entry.helpMessageSearch}</textarea>
-				<span class="help-text">#i18n{directory.create_entry.label_help_message_search_comment}</span>
+				<span class="help-block">#i18n{directory.create_entry.label_help_message_search_comment}</span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -54,7 +54,7 @@
 			<label class="control-label" for="is_all_search">#i18n{directory.create_entry.label_is_all_search}</label>
 	    	<div class="controls">
 				<input type="checkbox" name="is_all_search" id="is_all_search" value="1" <#if entry.addValueAllSearch>checked="checked"</#if> onclick="javascript:addAllSearch();" />
-				<span class="help-text">#i18n{directory.create_entry.label_is_all_search_comment}</span>
+				<span class="help-block">#i18n{directory.create_entry.label_is_all_search_comment}</span>
 			</div>
 		</div>
 	   	<div class="control-group" id="label_value_all_search">

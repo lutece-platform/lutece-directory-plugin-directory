@@ -19,6 +19,6 @@
 			<option  value="${field.idField}" <#if  default_values?has_content && isSelected (field.idField,default_values)>selected ="selected"</#if>>${field.title}</option>	
 		</#list>
 		</select>
-	   <#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''><span class="help-text">${entry.helpMessageSearch}</p></#if>	
+	   <#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''><span class="help-block">${entry.helpMessageSearch}</p></#if>	
 	</div>	
 </div>	

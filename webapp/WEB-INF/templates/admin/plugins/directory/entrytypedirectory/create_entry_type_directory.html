@@ -33,7 +33,7 @@
 			<label class="control-label" for="id_entry_associate">#i18n{directory.create_entry.label_entry} *</label>
 			<div class="controls">
 				<@combo name="id_entry_associate" items=directory_entry_list_associate default_value=-1/>
-				<span class="help-text">#i18n{directory.create_entry.label_entry_comment}</span>
+				<span class="help-block">#i18n{directory.create_entry.label_entry_comment}</span>
 			</div>
 		</div>
 	  	<div class="control-group">
@@ -63,7 +63,7 @@
 						<input id="is_all_search" name="is_all_search" value="1" type="checkbox" onclick="javascript:addAllSearch();" >
 						#i18n{directory.create_entry.label_is_all_search}
 					</label>
-					<span class="help-text">#i18n{directory.create_entry.label_is_all_search_comment}</span>
+					<span class="help-block">#i18n{directory.create_entry.label_is_all_search_comment}</span>
 				</div>
 			</div>
 		    <div id="label_value_all_search">
@@ -87,7 +87,7 @@
 		   		 <div class="controls">
 					<label class="checkbox" for="shown_in_advanced_search">#i18n{directory.create_entry.label_shown_in_advanced_search} :</label>
 					<input name="shown_in_advanced_search" value="1" type="checkbox" ${getChecked('shown_in_advanced_search',list_param_default_values)} />
-					<span class="help-text">#i18n{directory.create_entry.label_shown_in_advanced_search_comment}</span>
+					<span class="help-block">#i18n{directory.create_entry.label_shown_in_advanced_search_comment}</span>
 				</div>
 			</div>
 		   	<div class="control-group">
@@ -112,7 +112,7 @@
 						<input name="shown_in_result_list" value="1" type="checkbox" ${getChecked('shown_in_result_list',list_param_default_values)} />
 						#i18n{directory.create_entry.label_shown_in_result_list}
 					</label>
-					<span class="help-text">#i18n{directory.create_entry.label_shown_in_result_list_comment}</span>
+					<span class="help-block">#i18n{directory.create_entry.label_shown_in_result_list_comment}</span>
 				</div>
 			</div>
 			<div class="control-group">
@@ -121,7 +121,7 @@
 						<input name="shown_in_result_record" value="1" type="checkbox" ${getChecked('shown_in_result_record',list_param_default_values)} />
 						#i18n{directory.create_entry.label_shown_in_result_record}
 					</label>
-					<span class="help-text">#i18n{directory.create_entry.label_shown_in_result_record_comment}</span>
+					<span class="help-block">#i18n{directory.create_entry.label_shown_in_result_record_comment}</span>
 				</div>
 			</div>
 		   	<div class="control-group">
@@ -130,7 +130,7 @@
 						<input name="shown_in_history" value="1" type="checkbox" ${getChecked('shown_in_history',list_param_default_values)} />
 						#i18n{directory.create_entry.label_shown_in_history}
 						</label>
-						<span class="help-text">#i18n{directory.create_entry.label_shown_in_history_comment}</span>
+						<span class="help-block">#i18n{directory.create_entry.label_shown_in_history_comment}</span>
 				</div>
 			</div>
 		   	<div class="control-group">
@@ -139,7 +139,7 @@
 						<input name="shown_in_export" value="1" type="checkbox" ${getChecked('shown_in_export',list_param_default_values)} />
 						#i18n{directory.create_entry.label_shown_in_export}
 					</label>
-					<span class="help-text">#i18n{directory.create_entry.label_shown_in_export_comment}</span>
+					<span class="help-block">#i18n{directory.create_entry.label_shown_in_export_comment}</span>
 				</div>
 			</div>
 			<div class="control-group">
@@ -147,7 +147,7 @@
 		   		<div class="controls">					<label class="checkbox" for="shown_in_completeness">
 						<input name="shown_in_completeness" value="1" type="checkbox" ${getChecked('shown_in_completeness',list_param_default_values)} />
 						#i18n{directory.create_entry.label_shown_in_completeness}
-						<span class="help-text">#i18n{directory.create_entry.label_shown_in_completeness_comment}</span>
+						<span class="help-block">#i18n{directory.create_entry.label_shown_in_completeness_comment}</span>
 					</label>
 				</div>
 			</div>

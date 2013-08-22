@@ -7,7 +7,7 @@
 	<form method="post" action="jsp/admin/plugins/directory/DoModifyDirectoryParameterDefaultValues.jsp">
 		<label for="number_record_per_page">#i18n{directory.create_directory.label_number_record_per_page}</label>
   		<input type="text" name="number_record_per_page" id="number_record_per_page" class="input-mini" value="${getName('number_record_per_page',list_directory_param_default_values)}" />
-  		<span class="help-text">&nbsp;#i18n{directory.create_directory.label_number_record_per_page_comment}</span>
+  		<span class="help-block">&nbsp;#i18n{directory.create_directory.label_number_record_per_page_comment}</span>
 		<h5>#i18n{directory.create_directory.label_show_date_creation} </h5>
 		<label for="date_shown_in_result_list">
 			<input name="date_shown_in_result_list" id="date_shown_in_result_list" value="1" type="checkbox" ${getChecked('date_shown_in_result_list',list_directory_param_default_values)} />
@@ -73,16 +73,16 @@
 		<label for="activate_directory_record" class="checkbox">
 			<input name="activate_directory_record" id="activate_directory_record" value="1" type="checkbox" ${getChecked('activate_directory_record',list_directory_param_default_values)} />
 			#i18n{directory.create_directory_record.activate_directory_record}
-			<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_directory_record.activate_directory_record_comment}</span>
+			<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_directory_record.activate_directory_record_comment}</span>
 		</label>
 	   <label for="is_indexed" class="checkbox">
 			<input name="is_indexed" id="is_indexed" value="1" type="checkbox" ${getChecked('is_indexed',list_directory_param_default_values)} />
 			#i18n{directory.create_directory.label.is_indexed}
-			<span class="help-text">&nbsp;&gt;&gt;&nbsp;&nbsp; #i18n{directory.create_directory.label.is_indexed_comment}</span>
+			<span class="help-block">&nbsp;&gt;&gt;&nbsp;&nbsp; #i18n{directory.create_directory.label.is_indexed_comment}</span>
 		</label>
 		<label for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} : </label>
 		<textarea name="unavailability_message" id="unavailability_message" rows="20" cols="90" class="richtext" style="width:80%">${getName('unavailability_message',list_directory_param_default_values)}</textarea>
-		<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_directory.label_unavailability_message_comment}   </span>
+		<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_directory.label_unavailability_message_comment}   </span>
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary">
 				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.manage_advanced_parameters.buttonModify}
@@ -115,12 +115,12 @@
 				<label for="multiple_search_fields">
 					<input name="multiple_search_fields" id="multiple_search_fields" value="1" type="checkbox" ${getChecked('multiple_search_fields',list_entry_param_default_values)} />
 					#i18n{directory.create_entry.label_multiple_search_fields}
-					<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_multiple_search_fields_comment}</span> 
+					<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_multiple_search_fields_comment}</span> 
 				</label>
 				<label for="shown_in_advanced_search">
 					<input name="shown_in_advanced_search" id="shown_in_advanced_search" value="1" type="checkbox" ${getChecked('shown_in_advanced_search',list_entry_param_default_values)} />
 					#i18n{directory.create_entry.label_shown_in_advanced_search}
-					<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_advanced_search_comment}</span> 
+					<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_advanced_search_comment}</span> 
 				</label>
 			</blockquote>
 			<label for="indexed_as_title">
@@ -134,17 +134,17 @@
 			<label for="shown_in_result_list">
 				<input name="shown_in_result_list" id="shown_in_result_list" value="1" type="checkbox" ${getChecked('shown_in_result_list',list_entry_param_default_values)} />
 				#i18n{directory.create_entry.label_shown_in_result_list}
-				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_result_list_comment}</span> 
+				<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_result_list_comment}</span> 
 			</label>
 			<label for="shown_in_result_record">
 				<input name="shown_in_result_record" id="shown_in_result_record" value="1" type="checkbox" ${getChecked('shown_in_result_record',list_entry_param_default_values)} />
 				#i18n{directory.create_entry.label_shown_in_result_record}
-				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_result_record_comment}</span> 
+				<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_result_record_comment}</span> 
 			</label>
 			<label for="shown_in_history">
 				<input name="shown_in_history" id="shown_in_history" value="1" type="checkbox" ${getChecked('shown_in_history',list_entry_param_default_values)} />
 				#i18n{directory.create_entry.label_shown_in_history}
-				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_history_comment}</span> 
+				<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_history_comment}</span> 
 			</label>
 			<label for="width">#i18n{directory.create_entry.label_width}/#i18n{directory.create_entry.label_width_display} : </label>
 			<input type="text" name="width" id="width" class="input-mini" maxlength="100" value="${getName('width',list_entry_param_default_values)}" />
@@ -153,29 +153,29 @@
 			<label for="role_associated">
 				<input name="role_associated" id="role_associated" value="1" type="checkbox" ${getChecked('role_associated',list_entry_param_default_values)} />
 				#i18n{directory.create_entry.label_role_associated}
-				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_role_associated_comment}</span> 
+				<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_role_associated_comment}</span> 
 			</label>
 			<label for="workgroup_associated">
 				<input name="workgroup_associated" id="workgroup_associated" value="1" type="checkbox" ${getChecked('workgroup_associated',list_entry_param_default_values)} />
 				#i18n{directory.create_entry.label_workgroup_associated}
-				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_workgroup_associated_comment}</span> 
+				<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_workgroup_associated_comment}</span> 
 			</label>
 			<label for="max_size_enter">#i18n{directory.create_entry.label_max_size_enter}</label>
 			<input type="text" name="max_size_enter" id="max_size_enter" class="input-mini" maxlength="100" value="${getName('max_size_enter',list_entry_param_default_values)}" />
 			<label for="autocomplete_entry">
 				<input name="autocomplete_entry" id="autocomplete_entry" value="1" type="checkbox" ${getChecked('autocomplete_entry',list_entry_param_default_values)} />
 				#i18n{directory.create_entry.label_autocomplete_entry}
-				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_autocomplete_entry_comment}</span> 
+				<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_autocomplete_entry_comment}</span> 
 			</label>
 			<label for="shown_in_export">
 				<input name="shown_in_export" id="shown_in_export" value="1" type="checkbox" ${getChecked('shown_in_export',list_entry_param_default_values)} />
 				#i18n{directory.create_entry.label_shown_in_export}
-				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_export_comment}</span> 
+				<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_export_comment}</span> 
 			</label>
 			<label for="shown_in_completeness">
 				<input name="shown_in_completeness" id="shown_in_completeness" value="1" type="checkbox" ${getChecked('shown_in_completeness',list_entry_param_default_values)} />
 				#i18n{directory.create_entry.label_shown_in_completeness}
-				<span class="help-text">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_completeness_comment}</span>
+				<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_entry.label_shown_in_completeness_comment}</span>
 			</label>
 			<label for="file_max_size">#i18n{directory.create_entry.label_file_max_size} :</label>
 			<input type="text" name="file_max_size" class="input-small" maxlength="255" value="${getName('file_max_size',list_entry_param_default_values)}" />

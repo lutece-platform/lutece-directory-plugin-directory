@@ -12,30 +12,30 @@
 		</legend>	   
 		<label for="title">#i18n{directory.create_directory.label_title} * </label>
 		<input type="text" name="title" id="" size="80" value=""  maxlength="255"/>
-		<span class="help-text">#i18n{directory.create_directory.label_title_comment}</span>
+		<span class="help-block">#i18n{directory.create_directory.label_title_comment}</span>
 		<label for="comment"> #i18n{directory.create_directory.label_description} *</label>
 		<textarea name="description" class="span6" rows="2"></textarea>
-		<span class="help-text">#i18n{directory.create_directory.label_description_comment}</span>
+		<span class="help-block">#i18n{directory.create_directory.label_description_comment}</span>
 		<label for="">#i18n{directory.create_directory.label_workgroup}</label>
 		<@combo name="workgroup"  items=user_workgroup_list default_value="all" />
-		<span class="help-text">#i18n{directory.create_directory.label_workgroup_comment}</span>
+		<span class="help-block">#i18n{directory.create_directory.label_workgroup_comment}</span>
 		<#if role_list?exists >
 			<label for="role">#i18n{directory.create_directory.label_role}</label>
 			 <@combo name="role_key" default_value="none" items=role_list />
-			<span class="help-text">#i18n{directory.create_directory.label_role}</span>
+			<span class="help-block">#i18n{directory.create_directory.label_role}</span>
 		</#if>
 		<label for="id_form_search_template">#i18n{directory.create_directory.label_form_search_template} * </label>
 		<@combo name="id_form_search_template" default_value="" items=form_search_template_list />
-		<span class="help-text">#i18n{directory.create_directory.label_form_search_template_comment}</span>
+		<span class="help-block">#i18n{directory.create_directory.label_form_search_template_comment}</span>
 		<label for="id_result_list_template">#i18n{directory.create_directory.label_result_list_template} * </label>
 		<@combo name="id_result_list_template" default_value="" items=result_list_template_list />
-		<span class="help-text">#i18n{directory.create_directory.label_result_list_template_comment}</span>
+		<span class="help-block">#i18n{directory.create_directory.label_result_list_template_comment}</span>
 		<label for="id_result_record_template">#i18n{directory.create_directory.label_result_record_template} *</label>
 		<@combo name="id_result_record_template" default_value="" items=result_record_template_list />
-		<span class="help-text">#i18n{directory.create_directory.label_result_record_template_comment}</span>
+		<span class="help-block">#i18n{directory.create_directory.label_result_record_template_comment}</span>
 		<label for="number_record_per_page">#i18n{directory.create_directory.label_number_record_per_page} * </label>
 		<input type="text" name="number_record_per_page" id="number_record_per_page" size="5" value="${getName('number_record_per_page',list_param_default_values)}" />
-		<span class="help-text"> #i18n{directory.create_directory.label_number_record_per_page_comment}</span>
+		<span class="help-block"> #i18n{directory.create_directory.label_number_record_per_page_comment}</span>
 		<#if workflow_list?exists>
 		<label for="id_workflow_list">#i18n{directory.create_directory.label_worflow_list} : </label>
 		<@combo name="id_workflow_list" default_value="" items=workflow_list />
@@ -47,7 +47,7 @@
 		</#if>
 		<label for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} *</label>
 		<textarea name="unavailability_message" id="unavailability_message" rows="20" class="richtext" style="width:100%">${getName('unavailability_message',list_param_default_values)}</textarea>
-		<span class="help-text">#i18n{directory.create_directory.label_unavailability_message_comment}</span>
+		<span class="help-block">#i18n{directory.create_directory.label_unavailability_message_comment}</span>
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary btn-small" name="save" >
 				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_directory.button_save}

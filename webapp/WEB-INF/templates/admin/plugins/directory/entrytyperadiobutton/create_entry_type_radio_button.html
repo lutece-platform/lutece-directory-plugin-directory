@@ -36,14 +36,14 @@
 				<label class="checkbox" for="role_associated">
 					<input name="role_associated" value="1" type="checkbox" ${getChecked('role_associated',list_param_default_values)} />
 					#i18n{directory.create_entry.label_role_associated}
-					<span class="help-text">#i18n{directory.create_entry.label_role_associated_comment}</span>
+					<span class="help-block">#i18n{directory.create_entry.label_role_associated_comment}</span>
 				</label>
 			</#if>	
 			<#if !is_association_entry_workgroup> 	
 				<label class="checkbox" for="workgroup_associated">
 					<input name="workgroup_associated" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)} />
 					#i18n{directory.create_entry.label_workgroup_associated}
-					<span class="help-text">#i18n{directory.create_entry.label_workgroup_associated_comment}</span>
+					<span class="help-block">#i18n{directory.create_entry.label_workgroup_associated_comment}</span>
 				</label>
 		 	</#if>
 			<div class="form-actions">

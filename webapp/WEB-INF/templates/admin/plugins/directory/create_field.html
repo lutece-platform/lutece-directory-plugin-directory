@@ -29,7 +29,7 @@
 				<label class="control-label" for="role">#i18n{directory.create_field.label_role} : </label>
 				<div class="controls">
 					<@combo name="role_key" default_value="none" items=role_list />
-					<span class="help-text">&nbsp;#i18n{directory.create_field.label_role}</span>
+					<span class="help-block">&nbsp;#i18n{directory.create_field.label_role}</span>
 				</div>
 			</div>
 			</#if>
@@ -38,7 +38,7 @@
 				<label class="control-label" for="workgroup">#i18n{directory.create_field.label_workgroup}  : </label>
 				<div class="controls">
 					<@combo name="workgroup"  items=user_workgroup_list default_value="all" />
-					<span class="help-text">#i18n{directory.create_field.label_workgroup_comment}</span>
+					<span class="help-block">#i18n{directory.create_field.label_workgroup_comment}</span>
 				</div>
 			</div>
 			</#if>	
