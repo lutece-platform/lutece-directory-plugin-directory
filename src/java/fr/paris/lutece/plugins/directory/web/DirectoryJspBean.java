@@ -2762,7 +2762,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        if ( request.getParameter( PARAMETER_SESSION ) == null )
+        if ( request.getParameter( PARAMETER_SESSION ) == null
+                || Boolean.parseBoolean( request.getParameter( "resetsearch" ) ) )
         {
             reInitDirectoryRecordFilter( );
         }
