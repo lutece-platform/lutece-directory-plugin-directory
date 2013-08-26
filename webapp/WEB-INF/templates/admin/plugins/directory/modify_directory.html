@@ -178,14 +178,15 @@
 								<label for="id_workflow_list">#i18n{directory.create_directory.label_worflow_list}  </label>
 								<@combo name="id_workflow_list" default_value=workflow_selected items=workflow_list />
 								<#if workflow_state_filter_search>
-								<label class="radio" for="workflow_state_filter_search">#i18n{directory.create_directory.label_state_search}  
+									<label for="workflow_state_filter_search">
+										#i18n{directory.create_directory.label_state_search} :
+									</label>  
 									<input type="radio" name="workflow_state_filter_search" value="1" <#if workflow_state_filter_search_selected="1">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search}
 									<input type="radio" name="workflow_state_filter_search" value="2" <#if workflow_state_filter_search_selected="2">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search_complementary}
 									<input type="radio" name="workflow_state_filter_search" value="3" <#if workflow_state_filter_search_selected="3">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search_no}
-								</label>
 								</#if>
 							</#if>
-							<label for="frontOfficeTitle" class="span12">#i18n{directory.create_directory.label_title_front} </label>
+							<label for="frontOfficeTitle">#i18n{directory.create_directory.label_title_front} </label>
 							<input type="text" name="front_office_title" id="" class="input-xlarge" value="${directory.frontOfficeTitle!}" maxlength="255" />
 							<p class="help-block">#i18n{directory.create_directory.label_title_front_comment}</p>
 							<label for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} * : </label>
