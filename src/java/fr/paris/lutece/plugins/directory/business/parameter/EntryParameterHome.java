@@ -40,9 +40,9 @@ import fr.paris.lutece.util.ReferenceList;
 
 
 /**
- *
+ * 
  * EntryParameterHome
- *
+ * 
  */
 public final class EntryParameterHome
 {
@@ -50,21 +50,29 @@ public final class EntryParameterHome
     private static IEntryParameterDAO _dao = SpringContextService.getBean( "directoryEntryParameterDAO" );
 
     /**
-         * Load all the default values
-         * @param plugin Plugin
-         * @return a list of ReferenceItem
-         */
+     * Private constructor
+     */
+    private EntryParameterHome( )
+    {
+
+    }
+
+    /**
+     * Load all the default values
+     * @param plugin Plugin
+     * @return a list of ReferenceItem
+     */
     public static ReferenceList findAll( Plugin plugin )
     {
         return _dao.selectAll( plugin );
     }
 
     /**
-    * Load the parameter value
-    * @param strParameterKey the parameter key
-    * @param plugin
-    * @return The parameter value
-    */
+     * Load the parameter value
+     * @param strParameterKey the parameter key
+     * @param plugin
+     * @return The parameter value
+     */
     public static ReferenceItem findByKey( String strParameterKey, Plugin plugin )
     {
         return _dao.load( strParameterKey, plugin );

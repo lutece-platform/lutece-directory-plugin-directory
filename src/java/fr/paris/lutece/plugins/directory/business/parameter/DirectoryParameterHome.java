@@ -50,6 +50,14 @@ public final class DirectoryParameterHome
     private static IDirectoryParameterDAO _dao = SpringContextService.getBean( "directoryParameterDAO" );
 
     /**
+     * Private constructor
+     */
+    private DirectoryParameterHome( )
+    {
+
+    }
+
+    /**
      * Load all the parameter default values
      * @param plugin Plugin
      * @return a list of ReferenceItem

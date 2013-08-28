@@ -91,6 +91,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     private int _nNumberRecordPerPage;
     private List<DirectoryAction> _listActions;
     private int _nIdWorkflow = DirectoryUtils.CONSTANT_ID_NULL;
+    private int _nIdWorkflowStateToRemove = DirectoryUtils.CONSTANT_ID_NULL;
     private boolean _bDisplaySearchState;
     private boolean _bDisplaySearchComplementaryState;
     private String _strSortEntryId;
@@ -499,6 +500,28 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     public void setIdWorkflow( int nIdWorkflow )
     {
         _nIdWorkflow = nIdWorkflow;
+    }
+
+    /**
+     * Get the id of the workflow state of records that must be permanently
+     * removed
+     * @return The id of the workflow state of records that must be permanently
+     *         removed
+     */
+    public int getIdWorkflowStateToRemove( )
+    {
+        return _nIdWorkflowStateToRemove;
+    }
+
+    /**
+     * Set the id of the workflow state of records that must be permanently
+     * removed
+     * @param nIdWorkflowStateToRemove The id of the workflow state of records
+     *            that must be permanently removed
+     */
+    public void setIdWorkflowStateToRemove( int nIdWorkflowStateToRemove )
+    {
+        this._nIdWorkflowStateToRemove = nIdWorkflowStateToRemove;
     }
 
     /**

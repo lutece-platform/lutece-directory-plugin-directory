@@ -43,15 +43,23 @@ import java.util.Map.Entry;
 
 
 /**
- *
+ * 
  * DirectoryAttributeHome
- *
+ * 
  */
 public final class DirectoryAttributeHome
 {
     private static final String BEAN_DIRECTORY_ATTRIBUTE_DAO = "directory.directoryAttributeDAO";
     private static Plugin _plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
     private static IDirectoryAttributeDAO _dao = SpringContextService.getBean( BEAN_DIRECTORY_ATTRIBUTE_DAO );
+
+    /**
+     * Private constructor
+     */
+    private DirectoryAttributeHome( )
+    {
+
+    }
 
     /**
      * Load the attributes of the directory
@@ -79,9 +87,9 @@ public final class DirectoryAttributeHome
      */
     public static void create( int nIdDirectory, Map<String, Object> mapAttributes )
     {
-        for ( Entry<String, Object> attribute : mapAttributes.entrySet(  ) )
+        for ( Entry<String, Object> attribute : mapAttributes.entrySet( ) )
         {
-            create( nIdDirectory, attribute.getKey(  ), attribute.getValue(  ) );
+            create( nIdDirectory, attribute.getKey( ), attribute.getValue( ) );
         }
     }
 

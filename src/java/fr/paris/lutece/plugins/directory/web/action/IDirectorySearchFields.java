@@ -117,7 +117,7 @@ public interface IDirectorySearchFields
      * 
      * @return map query
      */
-    public HashMap<String, List<RecordField>> getMapQuery( );
+    HashMap<String, List<RecordField>> getMapQuery( );
 
     /**
      * Map query

@@ -71,6 +71,18 @@
                 fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchIndexerDaemon
 			</daemon-class>
         </daemon>
+        <daemon>
+            <daemon-id>directoryWorkflowRecordRemovalDaemon</daemon-id>
+            <daemon-name>
+                directory.daemon.directoryWorkflowRecordRemovalDaemon.name
+			</daemon-name>
+            <daemon-description>
+                directory.daemon.directoryWorkflowRecordRemovalDaemon.description
+			</daemon-description>
+            <daemon-class>
+                fr.paris.lutece.plugins.directory.service.DirectoryWorkflowRecordRemovalDaemon
+			</daemon-class>
+        </daemon>
     </daemons>
 
     <!-- Search Indexer Service -->

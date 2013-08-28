@@ -187,6 +187,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MESSAGE_WORKFLOW_CHANGE = "directory.message.workflow_change";
     private static final String MESSAGE_CONFIRM_CHANGE_STATES_RECORD = "directory.message.confirm_change_states_record";
     private static final String MESSAGE_ACCESS_DENIED = "Acces denied";
+    private static final String MESSAGE_NO_DIRECTORY_STATE = "directory.message.no_automatic_record_removal";
 
     //private static final String MESSAGE_CANNOT_CREATE_ENTRY_DIRECTORY_IS_NOT_EMPTY = "directory.message.can_not_create_entry_directory_is_not_empty";
     private static final String MESSAGE_CANNOT_REMOVE_ENTRY_DIRECTORY_IS_NOT_EMPTY = "directory.message.can_not_remove_entry_directory_is_not_empty";
@@ -318,6 +319,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_NUMBER_LINES_ERROR = "number_lines_error";
     private static final String MARK_FINISH_IMPORT = "finish_import";
     private static final String MARK_WORKFLOW_REF_LIST = "workflow_list";
+    private static final String MARK_WORKFLOW_STATE_REF_LIST = "workflow_state_list";
     private static final String MARK_WORKFLOW_SELECTED = "workflow_selected";
     private static final String MARK_RECORD = "record";
     private static final String MARK_RESOURCE_ACTIONS_LIST = "resource_actions_list";
@@ -431,6 +433,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     //private static final String PARAMETER_NUMBER_LINES_ERROR = "number_lines_error";
     private static final String PARAMETER_FILE_IMPORT = "file_import";
     private static final String PARAMETER_WORKFLOW = "id_workflow_list";
+    private static final String PARAMETER_WORKFLOW_STATE = "id_workflow_state";
     private static final String PARAMETER_WORKFLOW_STATE_SEARCH = "workflow_state_filter_search";
     private static final String PARAMETER_ID_ACTION = "id_action";
     private static final String PARAMETER_ID_STATE = "id_state";
@@ -576,6 +579,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strIdResultRecordTemplate = request.getParameter( PARAMETER_ID_RESULT_RECORD_TEMPLATE );
         String strNumberRecordPerPage = request.getParameter( PARAMETER_NUMBER_RECORD_PER_PAGE );
         String strWorkflow = request.getParameter( PARAMETER_WORKFLOW );
+        String strWorkflowState = request.getParameter( PARAMETER_WORKFLOW_STATE );
         String strDisplaySearchStateWorkflow = request.getParameter( PARAMETER_WORKFLOW_STATE_SEARCH );
 
         String strIdSortEntry = request.getParameter( PARAMETER_ID_SORT_ENTRY );
@@ -612,6 +616,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdFormSearchTemplate = DirectoryUtils.convertStringToInt( strIdFormSearchTemplate );
         int nNumberRecordPerPage = DirectoryUtils.convertStringToInt( strNumberRecordPerPage );
         int nIdWorkflow = DirectoryUtils.convertStringToInt( strWorkflow );
+        int nIdWorkflowState = DirectoryUtils.convertStringToInt( strWorkflowState );
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
@@ -697,6 +702,14 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         directory.setIdResultRecordTemplate( nIdResultRecordTemplate );
         directory.setNumberRecordPerPage( nNumberRecordPerPage );
         directory.setIdWorkflow( nIdWorkflow );
+        if ( nIdWorkflow > DirectoryUtils.CONSTANT_ID_NULL )
+        {
+            directory.setIdWorkflowStateToRemove( nIdWorkflowState );
+        }
+        else
+        {
+            directory.setIdWorkflowStateToRemove( DirectoryUtils.CONSTANT_ID_NULL );
+        }
 
         if ( ( strDisplaySearchStateWorkflow != null )
                 && strDisplaySearchStateWorkflow.equals( IS_DISPLAY_STATE_SEARCH ) )
@@ -1010,6 +1023,29 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             ReferenceList referenceList = WorkflowService.getInstance( ).getWorkflowsEnabled( adminUser, locale );
             model.put( MARK_WORKFLOW_REF_LIST, referenceList );
             model.put( MARK_WORKFLOW_SELECTED, directory.getIdWorkflow( ) );
+            ReferenceList refListWorkflowState = new ReferenceList( );
+            ReferenceItem refItem = new ReferenceItem( );
+            refItem.setCode( Integer.toString( DirectoryUtils.CONSTANT_ID_NULL ) );
+            refItem.setName( I18nService.getLocalizedString( MESSAGE_NO_DIRECTORY_STATE,
+                    AdminUserService.getLocale( request ) ) );
+            refListWorkflowState.add( refItem );
+            if ( directory.getIdWorkflow( ) > DirectoryUtils.CONSTANT_ID_NULL )
+            {
+                Collection<State> listWorkflowState = WorkflowService.getInstance( ).getAllStateByWorkflow(
+                        directory.getIdWorkflow( ), AdminUserService.getAdminUser( request ) );
+                if ( listWorkflowState != null && listWorkflowState.size( ) > 0 )
+                {
+                    for ( State state : listWorkflowState )
+                    {
+                        refItem = new ReferenceItem( );
+                        refItem.setCode( Integer.toString( state.getId( ) ) );
+                        refItem.setName( state.getName( ) );
+                        refListWorkflowState.add( refItem );
+                    }
+                }
+            }
+
+            model.put( MARK_WORKFLOW_STATE_REF_LIST, refListWorkflowState );
 
             if ( !referenceList.isEmpty( ) )
             {
@@ -1082,12 +1118,17 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 {
                     throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
                 }
-
+                int nOldIdWorkflow = directory.getIdWorkflow( );
                 String strError = getDirectoryData( request, directory, getLocale( ) );
 
                 if ( strError != null )
                 {
                     return strError;
+                }
+                // If the directory has changed, then we reset the workflow state to remove records
+                if ( nOldIdWorkflow != directory.getIdWorkflow( ) )
+                {
+                    directory.setIdWorkflowStateToRemove( DirectoryUtils.CONSTANT_ID_NULL );
                 }
 
                 directory.setIdDirectory( nIdDirectory );
@@ -1805,10 +1846,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         {
             return getJspModifyDirectory( request, _searchFields.getIdDirectory( ) );
         }
-        else
-        {
-            return getJspModifyEntry( request, nIdEntry );
-        }
+        return getJspModifyEntry( request, nIdEntry );
     }
 
     /**
@@ -2034,10 +2072,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     {
         int nPosition;
 
-        if ( ( entryGroup.getChildren( ) != null ) && ( !entryGroup.getChildren( ).isEmpty( ) ) )
-        {
-            nPosition = entryGroup.getPosition( ) + entryGroup.getChildren( ).size( ) + 1;
-        }
+        //        if ( ( entryGroup.getChildren( ) != null ) && ( !entryGroup.getChildren( ).isEmpty( ) ) )
+        //        {
+        //            nPosition = entryGroup.getPosition( ) + entryGroup.getChildren( ).size( ) + 1;
+        //        }
 
         if ( entryToMove.getPosition( ) < entryGroup.getPosition( ) )
         {
@@ -2439,10 +2477,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         {
             return getJspModifyEntry( request, field.getEntry( ).getIdEntry( ) );
         }
-        else
-        {
-            return getJspModifyField( request, nIdField );
-        }
+        return getJspModifyField( request, nIdField );
     }
 
     /**
@@ -4528,7 +4563,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         WorkflowService workflowService = WorkflowService.getInstance( );
 
         Map<String, Object> model = new HashMap<String, Object>( );
-        List<Integer> recordList = new ArrayList<Integer>( );
+        List<Integer> recordList;
 
         List<String> listStrIdState = Arrays.asList( tabIdState );
 

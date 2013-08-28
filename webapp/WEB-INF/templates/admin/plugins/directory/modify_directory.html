@@ -177,6 +177,9 @@
 							<#if workflow_selected?exists>
 								<label for="id_workflow_list">#i18n{directory.create_directory.label_worflow_list}  </label>
 								<@combo name="id_workflow_list" default_value=workflow_selected items=workflow_list />
+								<label for="id_workflow_list">#i18n{directory.modify_directory.labelWorflowStateToRemoveRecords}  </label>
+								<@combo name="id_workflow_state" default_value=directory.idWorkflowStateToRemove items=workflow_state_list />
+								<p class="help-block">#i18n{directory.modify_directory.labelWorflowStateToRemoveRecordsHelp}</p>
 								<#if workflow_state_filter_search>
 									<label for="workflow_state_filter_search">
 										#i18n{directory.create_directory.label_state_search} :
