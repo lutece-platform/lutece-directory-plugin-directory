@@ -49,7 +49,7 @@
 					</div>
 					<@paginationAdmin paginator=paginator combo=1/>
 					<!--  Mass action -->
-					<form class="form" method="post" action="jsp/admin/plugins/directory/DoChangeOrderEntry.jsp" style="margin 0px">
+					<form class="form form-inline" method="post" action="jsp/admin/plugins/directory/DoChangeOrderEntry.jsp" style="margin 0px">
 						<input name="id_directory" value="${directory.idDirectory}" type="hidden" />
 						<#if entry_group_list?has_content>
 							<!-- List all entry of type group  -->

@@ -838,12 +838,15 @@ public final class DirectoryUtils
     public static int convertStringToInt( String strParameter )
     {
         int nIdParameter = -1;
-
         try
         {
-            if ( ( strParameter != null ) && strParameter.matches( REGEX_ID ) )
+            if ( strParameter != null )
             {
-                nIdParameter = Integer.parseInt( strParameter );
+                String strTrimedParameter = strParameter.trim( );
+                if ( strTrimedParameter.matches( REGEX_ID ) )
+                {
+                    nIdParameter = Integer.parseInt( strTrimedParameter );
+                }
             }
         }
         catch ( NumberFormatException ne )
