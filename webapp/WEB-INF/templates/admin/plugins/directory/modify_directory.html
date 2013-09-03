@@ -148,7 +148,7 @@
 							<input type="text" name="title" id="title"class="input-xlarge" value="${directory.title}" maxlength="255" />
 							<p class="help-block">#i18n{directory.create_directory.label_title_comment}</p>
 							<label  for="description"> #i18n{directory.create_directory.label_description} * </label>
-							<textarea name="description" class="span6" rows="2">${directory.description} </textarea>
+							<textarea name="description" class="span6" rows="2">${directory.description}</textarea>
 							<p class="help-block">#i18n{directory.create_directory.label_description_comment}</p>
 							<label  for="workgroup">#i18n{directory.create_directory.label_workgroup}  </label>
 							<@combo name="workgroup"  items=user_workgroup_list default_value=directory.workgroup />
