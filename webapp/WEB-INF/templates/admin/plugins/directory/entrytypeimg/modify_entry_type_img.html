@@ -1,6 +1,6 @@
 <#include "/admin/plugins/directory/commons.html" />
 <div class="row-fluid">
-	<form class="" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id="" >
+	<form class="" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id="" >
 		<div class="span7 form-horizontal">
 			<fieldset>
 				<legend>
@@ -23,6 +23,7 @@
 		<!-- 			</form> -->
 				</legend>
 				<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
+				<input name="id_entry" value="${entry.idEntry}" type="hidden" />
 				<div class="control-group">
 				<label class="control-label" for="title">#i18n{directory.create_entry.label_title} * </label>
 				   	<div class="controls">
