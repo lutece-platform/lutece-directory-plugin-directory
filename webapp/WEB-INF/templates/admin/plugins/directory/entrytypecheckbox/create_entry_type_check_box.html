@@ -2,14 +2,18 @@
 <form class="form" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
 <input name="id_type" value="${entry.entryType.idType}" type="hidden" />
 <div class="row-fluid">
-	<div class="span8">
+	<div class="span8 form-horizontal">
 	<fieldset>
 		<legend>#i18n{directory.create_entry.title_field} : '${entry.directory.title}' <span class="label label-info" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span></legend>
-		<label for="title">#i18n{directory.create_entry.label_title} *</label>
-		<input type="text" name="title" id="title" class="input-xxlarge" value="" maxlength="255" />
-		<span class="help-block">#i18n{directory.create_entry.label_title_comment}</span>
 		<div class="control-group">
-			<label class="control-label"  for="help_message"> #i18n{directory.create_entry.label_help_message}</label>
+			<label class="control-label" for="title">#i18n{directory.create_entry.label_title} *</label>
+			<div class="controls">
+				<input type="text" name="title" id="title" class="input-xlarge" value="" maxlength="255" />
+				<span class="help-block">#i18n{directory.create_entry.label_title_comment}</span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="help_message"> #i18n{directory.create_entry.label_help_message}</label>
 			<div class="controls">
 				<textarea  name="help_message" id="help_message" class="span8" rows="2"></textarea>
 				<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
@@ -32,20 +36,17 @@
 				<label class="control-label" for="width">#i18n{directory.create_entry.label_presentation}</label>
 				<div class="controls">
 				<select  id="field_in_line" name="field_in_line">
-					<option value=1 <#if getName('field_in_line',list_param_default_values)="1">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_in_line}</option>
-					<option value=0 <#if getName('field_in_line',list_param_default_values)="0">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_not_in_line}</option>
+					<option value="1" <#if getName('field_in_line',list_param_default_values)="1">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_in_line}</option>
+					<option value="0" <#if getName('field_in_line',list_param_default_values)="0">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_not_in_line}</option>
 				</select>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for=""></label>
-				 <div class="controls">					<label class="checkbox" for="mandatory">
-						<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
-						#i18n{directory.create_entry.label_mandatory}
-					</label>
-				</div>
+			<label class="control-label" for="mandatory">#i18n{directory.create_entry.label_mandatory}</label>
+			<div class="controls">				<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
+			</div>
 		</div>
-		<div class="form-action">
+		<div class="form-actions">
 			<button class="btn btn-primary  btn-small" type="submit" name="save">
 				<i class="icon-ok icon-white" ></i>
 				<span class="hidden-phone" >#i18n{directory.create_entry.button_save}</span>
@@ -147,7 +148,7 @@
 					#i18n{directory.create_entry.label_shown_in_completeness_comment}
 				</div>
 		</div>
-	</div>
 	</fieldset>
+	</div>
 </div>
 </form>

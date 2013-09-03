@@ -2,7 +2,7 @@
 <form class="form" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id=""  >
 <input name="id_entry" value="${entry.idEntry}" type="hidden" />
 	<div class="row-fluid">
-	<div class="span8">
+	<div class="span8 form-horizontal">
 	<fieldset>
 		<legend>
 		#i18n{directory.modify_entry.title_field} '${entry.directory.title}' 
@@ -19,60 +19,48 @@
 			</div>
 		</div>
     	<div class="control-group">
-			<label class="control-label" for=""></label>
+			<label class="control-label" for="is_all_search">#i18n{directory.create_entry.label_is_all_search}</label>
 			<div class="controls">
-				<label class="checkbox" for="is_all_search">
-				#i18n{directory.create_entry.label_is_all_search}
 				<input type="checkbox" name="is_all_search" id="is_all_search" value="1" <#if entry.addValueAllSearch>checked="checked"</#if> />
-				</label>
     			<p class="help-block">#i18n{directory.create_entry.label_is_all_search_comment}</p>
 			</div>
 		</div>
 		<div class="control-group" id="label_value_all_search">
-   			<label for="label_all_search">#i18n{directory.create_entry.label_label_all_search} : </label>
+   			<label class="control-label" for="label_all_search">#i18n{directory.create_entry.label_label_all_search} : </label>
 			<div class="controls">
 	    		<input type="text" name="label_all_search" id="label_all_search" value="<#if entry.labelValueAllSearch??>${entry.labelValueAllSearch!}</#if>" class="input-xlarge" maxlength="255" />
 	    	</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for=""></label>
-				 <div class="controls">
-					<label class="checkbox" for="mandatory">
-						<input name="mandatory" id="mandatory" value="1" type="checkbox" <#if entry.mandatory>checked="checked"</#if> />
-						#i18n{directory.create_entry.label_mandatory}
-					</label>
-				</div>
+			<label class="control-label" for="mandatory">#i18n{directory.create_entry.label_mandatory}</label>
+			<div class="controls">
+				<input name="mandatory" id="mandatory" value="1" type="checkbox" <#if entry.mandatory>checked="checked"</#if> />
+			</div>
 		</div>
 		<#if is_authentification_enabled&&(!is_association_entry_role || entry.roleAssociated)>
 	   	<div class="control-group">
-			<label class="control-label" for=""></label>
-				 <div class="controls">
-					<label class="checkbox" for="role_associated">
-	   			   	<input name="role_associated" id="role_associated" value="1" type="checkbox"  <#if entry.roleAssociated>checked="checked"</#if>	/>
-					#i18n{directory.create_entry.label_role_associated}
-	   		   		<p class="help-block"> #i18n{directory.create_entry.label_role_associated_comment}</p>
-					</label>
-				</div>
+			<label class="control-label" for="role_associated">#i18n{directory.create_entry.label_role_associated}</label>
+			<div class="controls">
+	   		   	<input name="role_associated" id="role_associated" value="1" type="checkbox"  <#if entry.roleAssociated>checked="checked"</#if>	/>
+	   			<p class="help-block"> #i18n{directory.create_entry.label_role_associated_comment}</p>
+			</div>
 		</div>	
     </#if>
 	<#if !is_association_entry_workgroup|| entry.workgroupAssociated> 		
 		<div class="control-group">
-			<label class="control-label" for=""></label>
-			 <div class="controls">
-				<label class="checkbox" for="workgroup_associated">
-					#i18n{directory.create_entry.label_workgroup_associated}
-					<input name="workgroup_associated" id="workgroup_associated" value="1" type="checkbox" <#if entry.workgroupAssociated>checked="checked"</#if>/>
-					<p class="help-block"> #i18n{directory.create_entry.label_workgroup_associated_comment}</p>
-				</label>
+			<label class="control-label" for="workgroup_associated">#i18n{directory.create_entry.label_workgroup_associated}</label>
+			<div class="controls">
+				<input name="workgroup_associated" id="workgroup_associated" value="1" type="checkbox" <#if entry.workgroupAssociated>checked="checked"</#if>/>
+				<p class="help-block"> #i18n{directory.create_entry.label_workgroup_associated_comment}</p>
 			</div>
 		</div>		
 	</#if>
 		<div class="form-actions">
-			<button class="btn btn-primary  btn-small" type="submit" >
+			<button class="btn btn-primary  btn-small" type="submit" name="save" >
 				<i class="icon-ok icon-white" ></i>
 				<span class="hidden-phone" >#i18n{directory.modify_entry.button_save}</span>
 			</button>
-			<button class="btn btn-primary btn-small" type="submit" >
+			<button class="btn btn-primary btn-small" type="submit" name="apply" >
 				<i class="icon-ok-circle icon-white" ></i>
 				<span class="hidden-phone" >#i18n{directory.modify_entry.button_apply}</span>
 			</button>

@@ -2,33 +2,34 @@
 <form class="form" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
 <input name="id_type" value="${entry.entryType.idType}" type="hidden" />
 <div class="row-fluid">
-	<div class="span8">
+	<div class="span8 form-horizontal">
 	<fieldset>
 		<legend>#i18n{directory.create_entry.title_field} : '${entry.directory.title}' <span class="label label-info" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span></legend>
-		<label for="title">#i18n{directory.create_entry.label_title} *</label>
-		<input type="text" name="title" id="title" class="input-xxlarge" value="" maxlength="255" />
-		<span class="help-block">#i18n{directory.create_entry.label_title_comment}</span>
+		<div class="control-group">
+			<label class="control-label" for="title">#i18n{directory.create_entry.label_title} *</label>
+			<div class="controls">
+				<input type="text" name="title" id="title" class="input-xlarge" value="" maxlength="255" />
+				<span class="help-block">#i18n{directory.create_entry.label_title_comment}</span>
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label"  for="help_message"> #i18n{directory.create_entry.label_help_message}</label>
 			<div class="controls">
-				<textarea  name="help_message" id="help_message" class="span8" rows="2"></textarea>
+				<textarea  name="help_message" id="help_message" class="span6" rows="2"></textarea>
 				<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
 			<div class="controls">
-				<textarea  name="help_message_search" id="help_message_search" class="span8" rows="2"></textarea>
+				<textarea  name="help_message_search" id="help_message_search" class="span6" rows="2"></textarea>
 				<p class="help-block">#i18n{directory.create_entry.label_help_message_search_comment}</p>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="">&nbsp;</label>
+			<label class="control-label" for="is_all_search">#i18n{directory.create_entry.label_is_all_search}</label>
 			<div class="controls">
-				<label class="checkbox" for="is_all_search">
-					<input type="checkbox" name="is_all_search" id="is_all_search" value="1" />
-					#i18n{directory.create_entry.label_is_all_search}
-				</label>
+				<input type="checkbox" name="is_all_search" id="is_all_search" value="1" />
 				<p class="help-block">#i18n{directory.create_entry.label_is_all_search_comment}</p>
 			</div>
 		</div>
@@ -40,42 +41,34 @@
 		</div>
 	   <#if is_authentification_enabled&&!is_association_entry_role>
 	   	<div class="control-group">
-			<label class="control-label" for="">&nbsp;</label>
+			<label class="control-label" for="role_associated">#i18n{directory.create_entry.label_role_associated}</label>
 			<div class="controls">
-				<label class="checkbox"  for="role_associated">
-					<input name="role_associated" value="1" type="checkbox" ${getChecked('role_associated',list_param_default_values)} />
-					#i18n{directory.create_entry.label_role_associated}
-				</label>
-				<p class="help-block"> #i18n{directory.create_entry.label_role_associated_comment}</p>
+				<input name="role_associated" value="1" type="checkbox" ${getChecked('role_associated',list_param_default_values)} />
+				<p class="help-block">#i18n{directory.create_entry.label_role_associated_comment}</p>
 			</div>
 		</div>
 	</#if>	
     <#if !is_association_entry_workgroup> 	
 		 <div class="control-group">
-			<label class="control-label"  for="">&nbsp;</label>
+			<label class="control-label"  for="workgroup_associated">#i18n{directory.create_entry.label_workgroup_associated}</label>
 			<div class="controls">
-				<label class="checkbox" for="workgroup_associated">
 				<input name="workgroup_associated" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)} />
-				#i18n{directory.create_entry.label_workgroup_associated}
 				<p class="help-block">#i18n{directory.create_entry.label_workgroup_associated_comment}</p>
 			</div>
 		</div>	
 	 </#if>
 		<div class="control-group">
-			<label class="control-label" for=""></label>
-				 <div class="controls">
-					<label class="checkbox" for="mandatory">
-						<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
-						#i18n{directory.create_entry.label_mandatory}
-					</label>
-				</div>
+			<label class="control-label" for="mandatory">#i18n{directory.create_entry.label_mandatory}</label>
+			 <div class="controls">
+				<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
+			</div>
 		</div>
-		<div class="form-action">
+		<div class="form-actions">
 			<button class="btn btn-primary  btn-small" type="submit" name="save">
 				<i class="icon-ok icon-white" ></i>
 				<span class="hidden-phone" >#i18n{directory.create_entry.button_save}</span>
 			</button>
-			<button class="btn btn-primary btn-small" type="button" name="apply" >
+			<button class="btn btn-primary btn-small" type="submit" name="apply" >
 				<i class="icon-ok-circle icon-white" ></i>
 				<span class="hidden-phone" >#i18n{directory.create_entry.button_apply_and_manage_response}</span>
 			</button>
@@ -182,8 +175,8 @@
 					#i18n{directory.create_entry.label_shown_in_completeness_comment}
 				</div>
 		</div>
-	</div>
 	</fieldset>
+	</div>
 </div>
 </form>
 <script>

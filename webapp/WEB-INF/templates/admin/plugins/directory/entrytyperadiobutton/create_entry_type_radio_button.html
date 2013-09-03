@@ -1,70 +1,96 @@
 <#include "/admin/plugins/directory/commons.html" />
 <div class="row-fluid">
     <form class="form" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
-	<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
-    <div class="span8" id="main">
-        <fieldset>
-            <legend>#i18n{directory.create_entry.title_field} : '${entry.directory.title}'
-			<small>#i18n{directory.create_entry.label_type} : #i18n{${entry.entryType.titleI18nKey}}</small>
-            <a class="btn btn-small pull-right" id="tgAdvancedSettings" href="#">
-				<i class="icon-chevron-left"></i>
-				<span class="hidden-phone">&nbsp;#i18n{directory.create_directory.label_advancedsettings}</span>
-			</a>
-            </legend>
-			<label for="title">#i18n{directory.create_entry.label_title} *</label>
-    		<input type="text" name="title" id="title" class="input-xlarge" value=""  maxlength="255" />
-			<p class="help-block">#i18n{directory.create_entry.label_title_comment}</p>
-			<label class="control-label">#i18n{directory.create_entry.label_help_message}</label>
-			<textarea name="help_message" id="help_message" class="span4" rows="5"></textarea>
-    		<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
-			<label for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
-			<textarea  name="help_message_search" id="help_message_search" class="span4" rows="5"></textarea>
-			<p class="help-block">#i18n{directory.create_entry.label_help_message_search_comment}</p>
-			<label for="comment"> #i18n{directory.create_entry.label_comment}</label>
-			<textarea name="comment" class="span4"  rows="2"></textarea>
-			<label for="width">#i18n{directory.create_entry.label_presentation}</label>
-			<select id="field_in_line" name="field_in_line" class="input-large">
-				<option value=1 <#if getName('field_in_line',list_param_default_values)="1">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_in_line}</option>
-				<option value=0 <#if getName('field_in_line',list_param_default_values)="0">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_not_in_line}</option>
-			</select>
-			
-            <label for="mandatory" class="checkbox">
-				<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
-				#i18n{directory.create_entry.label_mandatory}
-			</label>
-			<#if is_authentification_enabled&&!is_association_entry_role>
-				<label class="checkbox" for="role_associated">
-					<input name="role_associated" value="1" type="checkbox" ${getChecked('role_associated',list_param_default_values)} />
-					#i18n{directory.create_entry.label_role_associated}
-					<span class="help-block">#i18n{directory.create_entry.label_role_associated_comment}</span>
-				</label>
-			</#if>	
-			<#if !is_association_entry_workgroup> 	
-				<label class="checkbox" for="workgroup_associated">
-					<input name="workgroup_associated" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)} />
-					#i18n{directory.create_entry.label_workgroup_associated}
-					<span class="help-block">#i18n{directory.create_entry.label_workgroup_associated_comment}</span>
-				</label>
-		 	</#if>
-			<div class="form-actions">
-				<button class="btn btn-small btn-primary" type="submit" name="save">
-					<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_entry.button_save}
-				</button>
-				<button class="btn btn-small btn-primary" type="submit" name="apply">
-					<i class="icon-ok-circle icon-white"></i>&nbsp;#i18n{directory.create_entry.button_apply_and_manage_response}
-				</button>
-				<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
-					<i class="icon-remove-circle" ></i>
-					<span class="hidden-phone" >#i18n{directory.create_entry.button_cancel}</span>
+		<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
+	    <div class="span8 form-horizontal" id="main">
+	        <fieldset>
+	            <legend>#i18n{directory.create_entry.title_field} : '${entry.directory.title}'
+				<small>#i18n{directory.create_entry.label_type} : #i18n{${entry.entryType.titleI18nKey}}</small>
+	            <a class="btn btn-small pull-right" id="tgAdvancedSettings" href="#">
+					<i class="icon-chevron-left"></i>
+					<span class="hidden-phone">&nbsp;#i18n{directory.create_directory.label_advancedsettings}</span>
 				</a>
-			</div>
-	</div>
-	<div id="advanced_settings" class="span3">
-		<fieldset>
-			<legend>#i18n{directory.create_directory.label_advancedsettings}
-				<a class="btn btn-small pull-right" id="tgAdvancedSettingsBack" href="#">
-					<i class="icon-chevron-right"></i>
-				</a>
+	            </legend>
+	            <div class="control-group">
+					<label class="control-label" for="title">#i18n{directory.create_entry.label_title} *</label>
+	    			<div class="controls">
+						<input type="text" name="title" id="title" class="input-xlarge" value=""  maxlength="255" />
+		    			<p class="help-block">#i18n{directory.create_entry.label_title_comment}</p>
+	    			</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">#i18n{directory.create_entry.label_help_message}</label>
+					<div class="controls">
+						<textarea name="help_message" id="help_message" class="span4" rows="5"></textarea>
+	    				<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
+	    			</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
+					<div class="controls">
+						<textarea  name="help_message_search" id="help_message_search" class="span4" rows="5"></textarea>
+						<p class="help-block">#i18n{directory.create_entry.label_help_message_search_comment}</p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="comment"> #i18n{directory.create_entry.label_comment}</label>
+					<div class="controls">
+						<textarea name="comment" class="span4"  rows="2"></textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="width">#i18n{directory.create_entry.label_presentation}</label>
+					<div class="controls">
+						<select id="field_in_line" name="field_in_line" class="input-large">
+							<option value="1" <#if getName('field_in_line',list_param_default_values)="1">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_in_line}</option>
+							<option value="0" <#if getName('field_in_line',list_param_default_values)="0">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_not_in_line}</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="mandatory" class="control-label">#i18n{directory.create_entry.label_mandatory}</label>
+					<div class="controls">
+						<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
+					</div>
+				</div>
+				<#if is_authentification_enabled&&!is_association_entry_role>
+					<div class="control-group">
+						<label class="control-label" for="role_associated">#i18n{directory.create_entry.label_role_associated}</label>
+						<div class="controls">
+							<input name="role_associated" value="1" type="checkbox" ${getChecked('role_associated',list_param_default_values)} />
+							<span class="help-block">#i18n{directory.create_entry.label_role_associated_comment}</span>
+						</div>
+					</div>
+				</#if>	
+				<#if !is_association_entry_workgroup> 	
+					<div class="control-group">
+						<label class="control-label" for="workgroup_associated">#i18n{directory.create_entry.label_workgroup_associated}</label>
+						<div class="controls">
+							<input name="workgroup_associated" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)} />
+							<span class="help-block">#i18n{directory.create_entry.label_workgroup_associated_comment}</span>
+						</div>
+					</div>
+			 	</#if>
+				<div class="form-actions">
+					<button class="btn btn-small btn-primary" type="submit" name="save">
+						<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_entry.button_save}
+					</button>
+					<button class="btn btn-small btn-primary" type="submit" name="apply">
+						<i class="icon-ok-circle icon-white"></i>&nbsp;#i18n{directory.create_entry.button_apply_and_manage_response}
+					</button>
+					<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
+						<i class="icon-remove-circle" ></i>
+						<span class="hidden-phone" >#i18n{directory.create_entry.button_cancel}</span>
+					</a>
+				</div>
+			</fieldset>
+		</div>
+		<div id="advanced_settings" class="span3">
+			<fieldset>
+				<legend>#i18n{directory.create_directory.label_advancedsettings}
+					<a class="btn btn-small pull-right" id="tgAdvancedSettingsBack" href="#">
+						<i class="icon-chevron-right"></i>
+					</a>
 				</legend>
 				<label class="checkbox" for="indexed">
 					<input name="indexed" value="1" type="checkbox" ${getChecked('indexed',list_param_default_values)} />
@@ -109,8 +135,8 @@
 				</label>
 				<p class="help-block">#i18n{directory.create_entry.label_shown_in_completeness_comment}</p>
 				<!-- div>#i18n{directory.message.warning.entry_advanced_parameters_save}</div --> 
+			</fieldset>
 		</div>
-		</fieldset>
 	</form>
 </div>
 
