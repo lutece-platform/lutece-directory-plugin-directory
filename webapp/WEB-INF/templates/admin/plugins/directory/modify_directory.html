@@ -143,60 +143,108 @@
 					<form  action="jsp/admin/plugins/directory/DoModifyDirectory.jsp" method="post" name="" id="" >
 					<input name="id_directory" value="${directory.idDirectory}" type="hidden" />
 					<div class="row-fluid">
-						<div class="span6">
-							<label for="title">#i18n{directory.create_directory.label_title} *  </label>
-							<input type="text" name="title" id="title"class="input-xlarge" value="${directory.title}" maxlength="255" />
-							<p class="help-block">#i18n{directory.create_directory.label_title_comment}</p>
-							<label  for="description"> #i18n{directory.create_directory.label_description} * </label>
-							<textarea name="description" class="span6" rows="2">${directory.description}</textarea>
-							<p class="help-block">#i18n{directory.create_directory.label_description_comment}</p>
-							<label  for="workgroup">#i18n{directory.create_directory.label_workgroup}  </label>
-							<@combo name="workgroup"  items=user_workgroup_list default_value=directory.workgroup />
-							<p class="help-block">#i18n{directory.create_directory.label_workgroup_comment}</p>
+						<div class="span9 form-horizontal">
+							<div class="control-group">
+								<label class="control-label" for="title">#i18n{directory.create_directory.label_title} *  </label>
+								<div class="controls">
+									<input type="text" name="title" id="title"class="input-xlarge" value="${directory.title}" maxlength="255" />
+									<p class="help-block">#i18n{directory.create_directory.label_title_comment}</p>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="description"> #i18n{directory.create_directory.label_description} * </label>
+								<div class="controls">
+									<textarea name="description" class="span6" rows="2">${directory.description}</textarea>
+									<p class="help-block">#i18n{directory.create_directory.label_description_comment}</p>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="workgroup">#i18n{directory.create_directory.label_workgroup}  </label>
+								<div class="controls">
+									<@combo name="workgroup"  items=user_workgroup_list default_value=directory.workgroup />
+									<p class="help-block">#i18n{directory.create_directory.label_workgroup_comment}</p>
+								</div>
+							</div>
 							<#if role_list?exists >
-								<label  for="role">#i18n{directory.create_directory.label_role}  </label>
-								<#if directory.roleKey?exists >
-									<@combo name="role_key" default_value=directory.roleKey items=role_list />
-								<#else>
-									<@combo name="role_key" default_value="none" items=role_list />
-								</#if>	
-								<p class="help-block">#i18n{directory.create_directory.label_role}</p>
+								<div class="control-group">
+									<label class="control-label" for="role">#i18n{directory.create_directory.label_role}  </label>
+									<div class="controls">
+										<#if directory.roleKey?exists >
+											<@combo name="role_key" default_value=directory.roleKey items=role_list />
+										<#else>
+											<@combo name="role_key" default_value="none" items=role_list />
+										</#if>	
+										<p class="help-block">#i18n{directory.create_directory.label_role}</p>
+									</div>
+								</div>
 							</#if>	
-							<label  for="id_form_search_template">#i18n{directory.create_directory.label_form_search_template}</label>
-							<@combo name="id_form_search_template" default_value=directory.idFormSearchTemplate items=form_search_template_list />
-							<p class="help-block">#i18n{directory.create_directory.label_form_search_template_comment}</p>
-							<label  for="id_result_list_template">#i18n{directory.create_directory.label_result_list_template}</label>
-							<@combo name="id_result_list_template" default_value=directory.idResultListTemplate items=result_list_template_list />
-							<p class="help-block">#i18n{directory.create_directory.label_result_list_template_comment}</p>
-							<label  for="id_result_record_template">#i18n{directory.create_directory.label_result_record_template}</label>
-							<@combo name="id_result_record_template" default_value=directory.idResultRecordTemplate items=result_record_template_list />
-							<p class="help-block">#i18n{directory.create_directory.label_result_record_template_comment}</p>
-							<label  for="number_record_per_page">#i18n{directory.create_directory.label_number_record_per_page} * </label>
-							<input type="text" name="number_record_per_page" id="number_record_per_page" class="input-mini" value="<#if directory.numberRecordPerPage!=-1>${directory.numberRecordPerPage}</#if>">
-							<p class="help-block">#i18n{directory.create_directory.label_number_record_per_page_comment}</p>
+							<div class="control-group">
+								<label class="control-label" for="id_form_search_template">#i18n{directory.create_directory.label_form_search_template}</label>
+								<div class="controls">
+									<@combo name="id_form_search_template" default_value=directory.idFormSearchTemplate items=form_search_template_list />
+									<p class="help-block">#i18n{directory.create_directory.label_form_search_template_comment}</p>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="id_result_list_template">#i18n{directory.create_directory.label_result_list_template}</label>
+								<div class="controls">
+									<@combo name="id_result_list_template" default_value=directory.idResultListTemplate items=result_list_template_list />
+									<p class="help-block">#i18n{directory.create_directory.label_result_list_template_comment}</p>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="id_result_record_template">#i18n{directory.create_directory.label_result_record_template}</label>
+								<div class="controls">
+									<@combo name="id_result_record_template" default_value=directory.idResultRecordTemplate items=result_record_template_list />
+									<p class="help-block">#i18n{directory.create_directory.label_result_record_template_comment}</p>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="number_record_per_page">#i18n{directory.create_directory.label_number_record_per_page} * </label>
+								<div class="controls">
+									<input type="text" name="number_record_per_page" id="number_record_per_page" class="input-mini" value="<#if directory.numberRecordPerPage!=-1>${directory.numberRecordPerPage}</#if>">
+									<p class="help-block">#i18n{directory.create_directory.label_number_record_per_page_comment}</p>
+								</div>
+							</div>
 							<#if workflow_selected?exists>
-								<label for="id_workflow_list">#i18n{directory.create_directory.label_worflow_list}  </label>
-								<@combo name="id_workflow_list" default_value=workflow_selected items=workflow_list />
-								<label for="id_workflow_list">#i18n{directory.modify_directory.labelWorflowStateToRemoveRecords}  </label>
-								<@combo name="id_workflow_state" default_value=directory.idWorkflowStateToRemove items=workflow_state_list />
-								<p class="help-block">#i18n{directory.modify_directory.labelWorflowStateToRemoveRecordsHelp}</p>
+								<div class="control-group">
+									<label class="control-label" for="id_workflow_list">#i18n{directory.create_directory.label_worflow_list}  </label>
+									<div class="controls">
+										<@combo name="id_workflow_list" default_value=workflow_selected items=workflow_list />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="id_workflow_list">#i18n{directory.modify_directory.labelWorflowStateToRemoveRecords}  </label>
+									<div class="controls">
+										<@combo name="id_workflow_state" default_value=directory.idWorkflowStateToRemove items=workflow_state_list />
+										<p class="help-block">#i18n{directory.modify_directory.labelWorflowStateToRemoveRecordsHelp}</p>
+									</div>
+								</div>
 								<#if workflow_state_filter_search>
-									<label for="workflow_state_filter_search">
-										#i18n{directory.create_directory.label_state_search} :
-									</label>  
-									<input type="radio" name="workflow_state_filter_search" value="1" <#if workflow_state_filter_search_selected="1">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search}
-									<input type="radio" name="workflow_state_filter_search" value="2" <#if workflow_state_filter_search_selected="2">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search_complementary}
-									<input type="radio" name="workflow_state_filter_search" value="3" <#if workflow_state_filter_search_selected="3">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search_no}
+									<div class="control-group">
+										<label class="control-label" for="workflow_state_filter_search">
+											#i18n{directory.create_directory.label_state_search} :
+										</label>  
+										<div class="controls">
+											<input type="radio" name="workflow_state_filter_search" value="1" <#if workflow_state_filter_search_selected="1">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search}
+											<input type="radio" name="workflow_state_filter_search" value="2" <#if workflow_state_filter_search_selected="2">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search_complementary}
+											<input type="radio" name="workflow_state_filter_search" value="3" <#if workflow_state_filter_search_selected="3">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search_no}
+										</div>
+									</div>
 								</#if>
 							</#if>
+							<div class="control-group">
+								<label class="control-label" for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} * : </label>
+								<div class="controls">
+									<textarea name="unavailability_message" id="unavailability_message" rows="20" style="width:50%;"  class="richtext"  ><#if directory.unavailabilityMessage?exists >${directory.unavailabilityMessage}</#if></textarea>
+									<p class="help-block">#i18n{directory.create_directory.label_unavailability_message_comment}</p>
+								</div>
+							</div>
+						</div>
+						<div class="span3">
 							<label for="frontOfficeTitle">#i18n{directory.create_directory.label_title_front} </label>
 							<input type="text" name="front_office_title" id="" class="input-xlarge" value="${directory.frontOfficeTitle!}" maxlength="255" />
 							<p class="help-block">#i18n{directory.create_directory.label_title_front_comment}</p>
-							<label for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} * : </label>
-							<textarea name="unavailability_message" id="unavailability_message" rows="20" style="width:50%;"  class="richtext"  ><#if directory.unavailabilityMessage?exists >${directory.unavailabilityMessage}</#if></textarea>
-							<p class="help-block">#i18n{directory.create_directory.label_unavailability_message_comment}</p>
-						</div>
-						<div class="span6">
 							<div class="well well-small">
 								<p><strong>#i18n{directory.create_directory.label_show_date_creation}</strong></p>
 								<label class="checkbox" for="date_shown_in_result_list">
