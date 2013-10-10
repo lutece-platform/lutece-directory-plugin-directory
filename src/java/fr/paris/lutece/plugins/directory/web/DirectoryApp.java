@@ -62,6 +62,7 @@ import fr.paris.lutece.portal.service.message.SiteMessage;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
 import fr.paris.lutece.portal.service.message.SiteMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.portal.PortalService;
 import fr.paris.lutece.portal.service.search.SearchEngine;
 import fr.paris.lutece.portal.service.search.SearchResult;
 import fr.paris.lutece.portal.service.security.LuteceUser;
@@ -159,6 +160,7 @@ public class DirectoryApp implements XPageApplication
     private static final String MARK_OPERATOR = "operator";
     private static final String MARK_QUERY = "query";
     private static final String MARK_RESULT_LIST = "result_list";
+    private static final String MARK_IS_EXTEND_INSTALLED = "isExtendInstalled";
 
     // Markers XSL
     private static final String MARK_TITLE_DESCRIPTIVE = "title-descriptive";
@@ -814,6 +816,7 @@ public class DirectoryApp implements XPageApplication
                         PROPERTY_DIRECTORY_FRAME_LABEL_BACK_RECORD, locale );
                 params.put( MARK_TITLE_BACK_RECORD, strParamTitleBackRecord );
                 params.put( MARK_LABEL_BACK_RECORD, strParamLabelBackRecord );
+                params.put( MARK_IS_EXTEND_INSTALLED, Boolean.toString( PortalService.isExtendActivated( ) ) );
 
                 if ( ( listRecord != null ) && ( listRecord.size( ) > 1 ) )
                 {

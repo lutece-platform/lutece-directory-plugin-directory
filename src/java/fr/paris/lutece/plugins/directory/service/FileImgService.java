@@ -120,11 +120,33 @@ public class FileImgService implements ImageResourceProvider
      */
     public static String getResourceImageEntryUrl( int nEntryUrl )
     {
+        return getResourceImageEntryUrl( nEntryUrl, true );
+    }
+
+    /**
+     * Management of the image associated to the {@link EntryUrl}
+     * @param nEntryUrl The {@link EntryUrl} identifier
+     * @return The url of the resource without HTML escape characters
+     */
+    public static String getResourceImageEntryUrlWhitoutEntities( int nEntryUrl )
+    {
+        return getResourceImageEntryUrl( nEntryUrl, false );
+    }
+
+    /**
+     * Management of the image associated to the {@link EntryUrl}
+     * @param nEntryUrl The {@link EntryUrl} identifier
+     * @param bWithEntities True to get the URL with HTML escape characters,
+     *            false otherwise
+     * @return The url of the resource
+     */
+    private static String getResourceImageEntryUrl( int nEntryUrl, boolean bWithEntities )
+    {
         String strResourceType = FileImgService.getInstance(  ).getResourceTypeId(  );
         UrlItem url = new UrlItem( Parameters.IMAGE_SERVLET );
         url.addParameter( Parameters.RESOURCE_TYPE, strResourceType );
         url.addParameter( Parameters.RESOURCE_ID, Integer.toString( nEntryUrl ) );
 
-        return url.getUrlWithEntity(  );
+        return bWithEntities ? url.getUrlWithEntity( ) : url.getUrl( );
     }
 }

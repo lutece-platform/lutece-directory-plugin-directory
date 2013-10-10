@@ -37,10 +37,11 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordHome;
 import fr.paris.lutece.portal.service.plugin.Plugin;
-
-import org.springframework.transaction.annotation.Transactional;
+import fr.paris.lutece.portal.service.resource.ExtendableResourceRemovalListenerService;
 
 import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -79,6 +80,8 @@ public class RecordService implements IRecordService
     @Transactional( "directory.transactionManager" )
     public void remove( int nIdRecord, Plugin plugin )
     {
+        ExtendableResourceRemovalListenerService.doRemoveResourceExtentions( Record.EXTENDABLE_RESOURCE_TYPE,
+                Integer.toString( nIdRecord ) );
         RecordHome.remove( nIdRecord, plugin );
     }
 

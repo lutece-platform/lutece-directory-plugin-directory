@@ -61,8 +61,7 @@
         			     	</label>
         		     	</span>
         			     <div class="entry-value">
-        			          <xsl:apply-templates select="//list-record/record/list-entry/entry[@id=current()/@id]/list-record-field" />
-        		    	 </div>
+		   					<xsl:apply-templates select="//list-record/record/list-entry/entry[@id=current()/@id]/list-record-field" />
         	   	</div>
     	   	 </xsl:otherwise>
         </xsl:choose>  

@@ -39,13 +39,12 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.sql.DAOUtil;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.sql.Timestamp;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -175,7 +174,7 @@ public final class RecordDAO implements IRecordDAO
 
     /**
      * Test if directory one or more directory record has a workflow
-     * @param nIdDirectory
+     * @param nIdDirectory The id of the directory
      * @param plugin the plugin
      * @return true if one or more record has a worflow
      */

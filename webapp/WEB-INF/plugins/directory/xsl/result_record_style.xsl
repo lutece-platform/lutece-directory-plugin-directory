@@ -1,13 +1,20 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="1.0"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	
 	<xsl:param name="title-back-search" />
 	<xsl:param name="label-back-search" />
-	<xsl:param name="id-directory" />
+	<xsl:param name="id-directory" />>
+	<xsl:param name="isExtendInstalled" />
 	<xsl:output method="html" indent="yes" />
 
 	<xsl:template match="directory">
+		<xsl:if test="$isExtendInstalled = 'true'">
+				<![CDATA[@ExtenderParameter[]]><xsl:value-of select="//list-record/record/@id" /><![CDATA[,DIRECTORY_RECORD,opengraph]@]]>
+		   		<![CDATA[@Extender[]]><xsl:value-of select="//list-record/record/@id" /><![CDATA[,DIRECTORY_RECORD,actionbar]@]]>
+				<![CDATA[@Extender[]]><xsl:value-of select="//list-record/record/@id" /><![CDATA[,DIRECTORY_RECORD,hit,{show:true}]@]]>
+				<![CDATA[@Extender[]]><xsl:value-of select="//list-record/record/@id" /><![CDATA[,DIRECTORY_RECORD,rating,{show:"all"}]@]]>
+				<![CDATA[@Extender[]]><xsl:value-of select="//list-record/record/@id" /><![CDATA[,DIRECTORY_RECORD,opengraph,{footer:false, header:false}]@]]>
+		</xsl:if>
 		<div>
 			<xsl:apply-templates select="list-entry/entry" />
 		</div>
@@ -18,7 +25,11 @@
 					<xsl:value-of select="$label-back-search" />
 			</a>
 		</div>
-
+		<xsl:if test="$isExtendInstalled = 'true'">
+			<![CDATA[@Extender[]]><xsl:value-of select="//list-record/record/@id" /><![CDATA[,DIRECTORY_RECORD,comment]@]]>
+	   		<![CDATA[@Extender[]]><xsl:value-of select="//list-record/record/@id" /><![CDATA[,DIRECTORY_RECORD,feedback]@]]>
+	   		<![CDATA[@Extender[]]><xsl:value-of select="//list-record/record/@id" /><![CDATA[,DIRECTORY_RECORD,opengraph,{footer:true}]@]]>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template match="list-record-field">
@@ -27,28 +38,28 @@
 
 	<xsl:template match="entry">
     <xsl:choose>
-        <xsl:when test="not(count(./list-entry)=0)">
-           <div class="prepend-1 append-1">  
-              
-              <fieldset class="form-fieldset"> 
+	   <xsl:when test="not(count(./list-entry)=0)">
+		 <div class="prepend-1 append-1">  
+		    
+		    <fieldset class="form-fieldset"> 
 	    					 <legend class="form-legend"> <xsl:value-of select="title" /> </legend>
-                  <xsl:apply-templates select="./list-entry/entry" />
-              </fieldset> 
-             </div> 
-          </xsl:when>
+			   <xsl:apply-templates select="./list-entry/entry" />
+		    </fieldset> 
+		   </div> 
+		</xsl:when>
     	<xsl:otherwise> 
-           <div class="entry-element">
-        		    	<span class="entry-label">
-        			     	<label>
-        				      	<xsl:value-of select="title" />:
-        			     	</label>
-        		     	</span>
-        			     <div class="entry-value">
-        			          <xsl:apply-templates select="//list-record/record/list-entry/entry[@id=current()/@id]/list-record-field" />
-        		    	 </div>
-        	   	</div>
-    	   	 </xsl:otherwise>
-        </xsl:choose>  
+			<div class="entry-element">
+   		    	<span class="entry-label">
+   					<label>
+   					 	<xsl:value-of select="title" />:
+   					</label>
+   				</span>
+   				<div class="entry-value">
+   					<xsl:apply-templates select="//list-record/record/list-entry/entry[@id=current()/@id]/list-record-field" />
+				</div>
+	   	   	</div>
+		</xsl:otherwise>
+	</xsl:choose>  
 </xsl:template>
 
 	<xsl:template match="record-field">
