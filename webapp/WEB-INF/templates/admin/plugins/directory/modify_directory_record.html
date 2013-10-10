@@ -9,6 +9,9 @@
 	  	<#if directory_record.dateCreation??>- #i18n{directory.viewing_directory_record.date_creation} ${directory_record.dateCreation}</#if>
 	  	<#if directory_record.dateModification??>- #i18n{directory.viewing_directory_record.date_modification} ${directory_record.dateModification}</#if>
 		</small>
+		<#if extendableResourceActionsHtml?? && extendableResourceActionsHtml?has_content>
+			${extendableResourceActionsHtml!}
+		</#if>
 	</legend>
 		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data">
 		<input name="page" value="directory" type="hidden" />

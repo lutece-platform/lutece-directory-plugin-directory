@@ -83,6 +83,7 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.portal.PortalService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
 import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -97,6 +98,7 @@ import fr.paris.lutece.portal.web.constants.Messages;
 import fr.paris.lutece.portal.web.pluginaction.DefaultPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.portal.web.pluginaction.PluginActionManager;
+import fr.paris.lutece.portal.web.resource.ExtendableResourcePluginActionManager;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceItem;
@@ -3475,6 +3477,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, map );
         model.put( MARK_DIRECTORY, directory );
 
+        if ( PortalService.isExtendActivated( ) )
+        {
+            ExtendableResourcePluginActionManager.fillModel( request, AdminUserService.getAdminUser( request ), model,
+                    record.getIdExtendableResource( ), record.getExtendableResourceType( ) );
+        }
         if ( SecurityService.isAuthenticationEnable( ) )
         {
             model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList( ) );
