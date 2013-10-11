@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<plug-in>
 
     <!-- Plugin Informations -->
     <name>directory</name>
@@ -13,9 +14,9 @@
     <provider>directory.plugin.provider</provider>
     <provider-url>http://lutece.paris.fr</provider-url>
     <icon-url>images/admin/skin/plugins/directory/directory.png</icon-url>
-    <copyright>Copyright 2001-2012 Mairie de Paris</copyright>
+    <copyright>Copyright 2001-2013 Mairie de Paris</copyright>
     <core-version-dependency>
-        <min-core-version>4.0.0</min-core-version>
+        <min-core-version>4.1.0</min-core-version>
         <max-core-version/>
     </core-version-dependency>
     <db-pool-required>1</db-pool-required>
@@ -50,12 +51,12 @@
         <rbac-resource-type>
             <rbac-resource-type-class>
                 fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService
-			</rbac-resource-type-class>
+            </rbac-resource-type-class>
         </rbac-resource-type>
         <rbac-resource-type>
             <rbac-resource-type-class>
                 fr.paris.lutece.plugins.directory.service.DirectoryXslResourceIdService
-			</rbac-resource-type-class>
+            </rbac-resource-type-class>
         </rbac-resource-type>
     </rbac-resource-types>
     <daemons>
@@ -63,25 +64,25 @@
             <daemon-id>directorySearchIndexer</daemon-id>
             <daemon-name>
                 directory.daemon.directorySearchIndexer.name
-			</daemon-name>
+            </daemon-name>
             <daemon-description>
                 directory.daemon.directorySearchIndexer.description
-			</daemon-description>
+            </daemon-description>
             <daemon-class>
                 fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearchIndexerDaemon
-			</daemon-class>
+            </daemon-class>
         </daemon>
         <daemon>
             <daemon-id>directoryWorkflowRecordRemovalDaemon</daemon-id>
             <daemon-name>
                 directory.daemon.directoryWorkflowRecordRemovalDaemon.name
-			</daemon-name>
+            </daemon-name>
             <daemon-description>
                 directory.daemon.directoryWorkflowRecordRemovalDaemon.description
-			</daemon-description>
+            </daemon-description>
             <daemon-class>
                 fr.paris.lutece.plugins.directory.service.DirectoryWorkflowRecordRemovalDaemon
-			</daemon-class>
+            </daemon-class>
         </daemon>
     </daemons>
 
