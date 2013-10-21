@@ -100,8 +100,13 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     private boolean _bAscSortFront;
     private boolean _bRecordActivated;
     private boolean _bIsIndexed;
+    @DirectoryAttribute( "searchOperatorOr" )
+    private boolean _bSearchOperatorOr;
+    
 
-    // Creation date field
+  
+
+	// Creation date field
     @DirectoryAttribute( "dateShownInResultList" )
     private boolean _bDateShownInResultList;
     @DirectoryAttribute( "dateShownInResultRecord" )
@@ -132,6 +137,8 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     private boolean _bDateModificationShownInMultiSearch;
     @DirectoryAttribute( "dateModificationShownInExport" )
     private boolean _bDateModificationShownInExport;
+    
+
 
     /**
      * Initialize the Directory
@@ -938,4 +945,20 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     {
         return _bIsIndexed;
     }
+    
+    /**
+     * 
+     * @return true if the search operator using  is OR
+     */
+    public boolean isSearchOperatorOr() {
+  		return  _bSearchOperatorOr;
+  	}
+
+    /**
+     * 
+     * @param _bSearchOperatorOr true if the search operator using  is OR
+     */
+  	public void setSearchOperatorOr(boolean bSearchOperatorOr) {
+  		_bSearchOperatorOr = bSearchOperatorOr;
+  	}
 }

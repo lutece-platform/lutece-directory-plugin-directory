@@ -320,6 +320,11 @@
 									#i18n{directory.modify_directory.label.is_indexed}
 								</label>
 								<p class="help-block"> #i18n{directory.modify_directory.label.is_indexed_comment}
+								<label class="checkbox" for="is_search_operator_or">#i18n{directory.create_directory.label.is_search_operator_or}
+									<input name="is_search_operator_or" id="is_search_operator_or" value="1" type="checkbox"  <#if directory.isSearchOperatorOr( )>checked="checked"</#if>/>
+								</label>
+								<p class="help-block"> #i18n{directory.create_directory.label.is_search_operator_or_comment}</p>
+								
 								<label  for="id_sort_entry">#i18n{directory.modify_directory.label_sort_entry}</label>
 								<select name="id_sort_entry" id="id_sort_entry">
 									<option value=""></option>

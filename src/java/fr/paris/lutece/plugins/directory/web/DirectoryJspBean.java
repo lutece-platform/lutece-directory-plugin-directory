@@ -430,6 +430,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_IS_INDEXED = "is_indexed";
     private static final String PARAMETER_SELECTED_RECORD = "selected_record";
     private static final String PARAMETER_ANCHOR_LIST = "list";
+    private static final String PARAMETER_IS_SEARCH_OPERATOR_OR = "is_search_operator_or";
 
     //private static final String PARAMETER_NUMBER_LINES_IMPORTED = "number_lines_imported";
     //private static final String PARAMETER_NUMBER_LINES_ERROR = "number_lines_error";
@@ -590,7 +591,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strAscSortFront = request.getParameter( PARAMETER_ASC_SORT_FRONT );
         String strRecordActivated = request.getParameter( PARAMETER_ACTIVATE_DIRECTORY_RECORD );
         String strIsIndexed = request.getParameter( PARAMETER_IS_INDEXED );
-
+        String strSearchOperatorOr= request.getParameter(PARAMETER_IS_SEARCH_OPERATOR_OR);
         //creation date field
         String strShowDateInResultList = request.getParameter( PARAMETER_DATE_SHOWN_IN_RESULT_LIST );
         String strShowDateInResultRecord = request.getParameter( PARAMETER_DATE_SHOWN_IN_RESULT_RECORD );
@@ -770,7 +771,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         directory.setAscendingSortFront( strAscSortFront != null );
         directory.setRecordActivated( strRecordActivated != null );
         directory.setIndexed( strIsIndexed != null );
-
+        directory.setSearchOperatorOr( strSearchOperatorOr != null );
         return null; // No error
     }
 

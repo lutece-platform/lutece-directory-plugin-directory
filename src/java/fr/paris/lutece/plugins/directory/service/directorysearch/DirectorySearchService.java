@@ -194,15 +194,16 @@ public class DirectorySearchService
         Date dateModificationBegin, Date dateModificationEnd, RecordFieldFilter filter, Plugin plugin )
     {
         List<Integer> listRecordResult = new ArrayList<Integer>(  );
-
+                
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
         listRecordResult = recordService.getListRecordId( filter, plugin );
 
         if ( mapSearch != null )
         {
-            List<Integer> listRecordResultTmp;
+            List<Integer> listRecordResultTmp=null;
             List<RecordField> recordFieldSearch;
             HashMap<String, Object> mapSearchItemEntry;
+            boolean bSearchRecordEmpty;
             boolean bSearchEmpty;
 
             try
@@ -213,13 +214,15 @@ public class DirectorySearchService
 
                 if ( mapSearch != null )
                 {
-                    for ( Object entryMapSearch : mapSearch.entrySet(  ) )
+                	 listRecordResultTmp = new ArrayList<Integer>(  );
+                	 bSearchEmpty=true;
+                	 for ( Object entryMapSearch : mapSearch.entrySet(  ) )
                     {
-                        listRecordResultTmp = new ArrayList<Integer>(  );
-                        recordFieldSearch = ( (Entry<String, List<RecordField>>) entryMapSearch ).getValue(  );
+                      
+                    	recordFieldSearch = ( (Entry<String, List<RecordField>>) entryMapSearch ).getValue(  );
 
                         int nIdEntry = DirectoryUtils.convertStringToInt( ( (Entry<String, List<RecordField>>) entryMapSearch ).getKey(  ) );
-                        bSearchEmpty = true;
+                        bSearchRecordEmpty = true;
 
                         if ( recordFieldSearch != null )
                         {
@@ -232,21 +235,30 @@ public class DirectorySearchService
 
                             if ( mapSearchItemEntry.size(  ) > 0 )
                             {
-                                bSearchEmpty = false;
+                                bSearchRecordEmpty = false;
+                                bSearchEmpty=false;
                                 mapSearchItemEntry.put( DirectorySearchItem.FIELD_ID_DIRECTORY,
                                     directory.getIdDirectory(  ) );
                                 mapSearchItemEntry.put( DirectorySearchItem.FIELD_ID_DIRECTORY_ENTRY, nIdEntry );
                                 listRecordResultTmp.addAll( engine.getSearchResults( mapSearchItemEntry ) );
                             }
 
-                            if ( !bSearchEmpty )
+                            if ( !bSearchRecordEmpty && !directory.isSearchOperatorOr( ))
                             {
-                                // keeping order is important for display
+                            	// keeping order is important for display
                                 listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
                                         listRecordResultTmp );
+                            	listRecordResultTmp = new ArrayList<Integer>(  );
+                            	
                             }
                         }
                     }
+                    if( directory.isSearchOperatorOr() &&  !bSearchEmpty)
+                    {
+                    		listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
+                                 listRecordResultTmp );
+                     }
+                    
                 }
 
                 //date creation of a record
