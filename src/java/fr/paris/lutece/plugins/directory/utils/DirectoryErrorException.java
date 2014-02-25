@@ -33,10 +33,11 @@
  */
 package fr.paris.lutece.plugins.directory.utils;
 
+
 /**
- * 
+ *
  * DirectoryErrorException
- * 
+ *
  */
 public class DirectoryErrorException extends Exception
 {
@@ -71,7 +72,7 @@ public class DirectoryErrorException extends Exception
      * return true if the error is a mandatory error
      * @return true if the error is a mandatory error
      */
-    public boolean isMandatoryError( )
+    public boolean isMandatoryError(  )
     {
         return _bMandatoryError;
     }
@@ -89,7 +90,7 @@ public class DirectoryErrorException extends Exception
      * Gets the error Message
      * @return the error Message
      */
-    public String getErrorMessage( )
+    public String getErrorMessage(  )
     {
         return _strErrorMessage;
     }
@@ -104,10 +105,10 @@ public class DirectoryErrorException extends Exception
     }
 
     /**
-     * 
+     *
      * @return the title of the field
      */
-    public String getTitleField( )
+    public String getTitleField(  )
     {
         return _strTitleField;
     }

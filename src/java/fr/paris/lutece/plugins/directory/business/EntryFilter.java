@@ -33,10 +33,11 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+
 /**
- * 
+ *
  * class EntryFilter
- * 
+ *
  */
 public class EntryFilter
 {
@@ -66,10 +67,10 @@ public class EntryFilter
     private int _nIsShownInCompleteness = ALL_INT;
 
     /**
-     * 
+     *
      * @return the position
      */
-    public int getPosition( )
+    public int getPosition(  )
     {
         return _nPosition;
     }
@@ -84,19 +85,19 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter contain an position
      */
-    public boolean containsPosition( )
+    public boolean containsPosition(  )
     {
         return ( _nPosition != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return the entry associate id
      */
-    public int getIdEntryAssociate( )
+    public int getIdEntryAssociate(  )
     {
         return _nIdEntryAssociate;
     }
@@ -111,19 +112,19 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter contain an entry associate id
      */
-    public boolean containsIdEntryAssociate( )
+    public boolean containsIdEntryAssociate(  )
     {
         return ( _nIdEntryAssociate != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return the entry type id
      */
-    public int getIdType( )
+    public int getIdType(  )
     {
         return _nIdType;
     }
@@ -138,19 +139,19 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter contain an entry type id
      */
-    public boolean containsIdType( )
+    public boolean containsIdType(  )
     {
         return ( _nIdType != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return the id of the directory insert in the filter
      */
-    public int getIdDirectory( )
+    public int getIdDirectory(  )
     {
         return _nIdDirectory;
     }
@@ -165,19 +166,19 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter contain an id of form
      */
-    public boolean containsIdDirectory( )
+    public boolean containsIdDirectory(  )
     {
         return ( _nIdDirectory != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return the id of parent entry insert in the filter
      */
-    public int getIdEntryParent( )
+    public int getIdEntryParent(  )
     {
         return _nIdEntryParent;
     }
@@ -192,20 +193,20 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter contain an parent id
      */
-    public boolean containsIdEntryParent( )
+    public boolean containsIdEntryParent(  )
     {
         return ( _nIdEntryParent != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry parent must be null,0 if the entry parent must not
      *         be null
      */
-    public int getIsEntryParentNull( )
+    public int getIsEntryParentNull(  )
     {
         return _nIsEntryParentNull;
     }
@@ -221,19 +222,19 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter is initialized
      */
-    public boolean containsIsEntryParentNull( )
+    public boolean containsIsEntryParentNull(  )
     {
         return ( _nIsEntryParentNull != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry must be a group,0 if the entry must not be a group
      */
-    public int getIsGroup( )
+    public int getIsGroup(  )
     {
         return _nIsGroup;
     }
@@ -249,20 +250,20 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter is initialized
      */
-    public boolean containsIsGroup( )
+    public boolean containsIsGroup(  )
     {
         return ( _nIsGroup != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry must be a comment,0 if the entry must not be a
      *         comment
      */
-    public int getIsComment( )
+    public int getIsComment(  )
     {
         return _nIsComment;
     }
@@ -278,22 +279,22 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the entry must be a comment or must not be a comment
      */
-    public boolean containsIsComment( )
+    public boolean containsIsComment(  )
     {
         return ( _nIsComment != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry associate to the record field must be in the
      *         result list,
      *         O if the entry associate to the record field must not be in the
      *         result list
      */
-    public int getIsShownInResultList( )
+    public int getIsShownInResultList(  )
     {
         return _nIsShownInResultList;
     }
@@ -312,22 +313,22 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter is initialized
      */
-    public boolean containsIsShownInResultList( )
+    public boolean containsIsShownInResultList(  )
     {
         return ( _nIsShownInResultList != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry associate to the record field must be in the
      *         result record,
      *         0 if the entry associate to the record field must not be in the
      *         result record
      */
-    public int getIsShownInResultRecord( )
+    public int getIsShownInResultRecord(  )
     {
         return _nIsShownInResultRecord;
     }
@@ -346,22 +347,22 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter is initialized
      */
-    public boolean containsIsShownInResultRecord( )
+    public boolean containsIsShownInResultRecord(  )
     {
         return ( _nIsShownInResultRecord != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry associate to the record field must be in the
      *         history,
      *         O if the entry associate to the record field must not be in the
      *         history
      */
-    public int getIsShownInHistory( )
+    public int getIsShownInHistory(  )
     {
         return _nIsShownInHistory;
     }
@@ -378,20 +379,20 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter is initialized
      */
-    public boolean containsIsShownInHistory( )
+    public boolean containsIsShownInHistory(  )
     {
         return ( _nIsShownInHistory != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry associate to the record field is autocompleted,
      *         O if the entry associate to the record field is autocompleted
      */
-    public int getIsAutocompleteEntry( )
+    public int getIsAutocompleteEntry(  )
     {
         return _nIsAutocompleteEntry;
     }
@@ -408,19 +409,19 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter is initialized
      */
-    public boolean containsIsAutocompleteEntry( )
+    public boolean containsIsAutocompleteEntry(  )
     {
         return ( _nIsAutocompleteEntry != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry must be indexed,0 if the entry must not be indexed
      */
-    public int getIsIndexed( )
+    public int getIsIndexed(  )
     {
         return _nIsIndexed;
     }
@@ -436,20 +437,20 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the entry must be indexed or must not be indexed
      */
-    public boolean containsIsIndexed( )
+    public boolean containsIsIndexed(  )
     {
         return ( _nIsIndexed != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry should be (part of) the title of the document in
      *         the global index, 0 otherwise
      */
-    public int getIsIndexedAsTitle( )
+    public int getIsIndexedAsTitle(  )
     {
         return _nIsIndexedAsTitle;
     }
@@ -466,22 +467,22 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the entry should be (part of) the title of the document
      *         in
      *         the global index, false otherwise
      */
-    public boolean containsIsIndexedAsTitle( )
+    public boolean containsIsIndexedAsTitle(  )
     {
         return ( _nIsIndexedAsTitle != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry should be (part of) the summary of the document in
      *         the global index, 0 otherwise
      */
-    public int getIsIndexedAsSummary( )
+    public int getIsIndexedAsSummary(  )
     {
         return _nIsIndexedAsSummary;
     }
@@ -498,22 +499,22 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the entry should be (part of) the summary of the document
      *         in
      *         the global index, false otherwise
      */
-    public boolean containsIsIndexedAsSummary( )
+    public boolean containsIsIndexedAsSummary(  )
     {
         return ( _nIsIndexedAsSummary != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry must be associated with workgroup ,0 if the entry
      *         must not be associated with workgroup
      */
-    public int getIsWorkgroupAssociated( )
+    public int getIsWorkgroupAssociated(  )
     {
         return _nIsWorkgroupAssociated;
     }
@@ -531,21 +532,21 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the entry must be associated with workgroup or must not
      *         be associated with workgroup
      */
-    public boolean containsIsWorkgroupAssociated( )
+    public boolean containsIsWorkgroupAssociated(  )
     {
         return ( _nIsWorkgroupAssociated != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry must be associated with role ,0 if the entry must
      *         not be associated with role
      */
-    public int getIsRoleAssociated( )
+    public int getIsRoleAssociated(  )
     {
         return _nIsRoleAssociated;
     }
@@ -562,21 +563,21 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the entry must be associated with role or must not be
      *         associated with role
      */
-    public boolean containsIsRoleAssociated( )
+    public boolean containsIsRoleAssociated(  )
     {
         return ( _nIsRoleAssociated != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry associate to the record field is shown in export,
      *         O if the entry associate to the record field is shown in export
      */
-    public int getIsShownInExport( )
+    public int getIsShownInExport(  )
     {
         return _nIsShownInExport;
     }
@@ -593,22 +594,22 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter is initialized
      */
-    public boolean containsIsShownInExport( )
+    public boolean containsIsShownInExport(  )
     {
         return ( _nIsShownInExport != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry associate to the record field is shown in record
      *         completeness,
      *         O if the entry associate to the record field is shown in record
      *         completeness
      */
-    public int getIsShownInCompleteness( )
+    public int getIsShownInCompleteness(  )
     {
         return _nIsShownInCompleteness;
     }
@@ -627,20 +628,20 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter is initialized
      */
-    public boolean containsIsShownInCompleteness( )
+    public boolean containsIsShownInCompleteness(  )
     {
         return ( _nIsShownInCompleteness != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the entry must be a MyluteceUser,0 if the entry must not be
      *         a MyluteceUser
      */
-    public int getIsMyLuteceUser( )
+    public int getIsMyLuteceUser(  )
     {
         return _nIsMyLuteceUser;
     }
@@ -657,11 +658,11 @@ public class EntryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the entry must be a MyluteceUser or must not be a
      *         MyluteceUser
      */
-    public boolean containsIsMyLuteceUser( )
+    public boolean containsIsMyLuteceUser(  )
     {
         return ( _nIsMyLuteceUser != ALL_INT );
     }

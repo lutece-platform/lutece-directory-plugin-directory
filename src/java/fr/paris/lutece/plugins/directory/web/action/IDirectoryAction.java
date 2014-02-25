@@ -44,7 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * 
+ *
  * A directory action.
  * <ul>
  * <li>{@link #fillModel(HttpServletRequest, AdminUser, Map)} is called by

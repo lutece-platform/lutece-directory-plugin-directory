@@ -89,6 +89,7 @@ public class DirectorySearchIndexer implements SearchIndexer
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getName(  )
     {
         return INDEXER_NAME;
@@ -97,6 +98,7 @@ public class DirectorySearchIndexer implements SearchIndexer
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getDescription(  )
     {
         return INDEXER_DESCRIPTION;
@@ -105,6 +107,7 @@ public class DirectorySearchIndexer implements SearchIndexer
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getVersion(  )
     {
         return INDEXER_VERSION;
@@ -113,6 +116,7 @@ public class DirectorySearchIndexer implements SearchIndexer
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isEnable(  )
     {
         String strEnable = AppPropertiesService.getProperty( PROPERTY_INDEXER_ENABLE );
@@ -123,6 +127,7 @@ public class DirectorySearchIndexer implements SearchIndexer
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<String> getListType(  )
     {
         List<String> listType = new ArrayList<String>( 1 );
@@ -134,6 +139,7 @@ public class DirectorySearchIndexer implements SearchIndexer
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getSpecificSearchAppUrl(  )
     {
         UrlItem url = new UrlItem( AppPathService.getPortalUrl(  ) );
@@ -145,6 +151,7 @@ public class DirectorySearchIndexer implements SearchIndexer
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<Document> getDocuments( String recordId )
         throws IOException, InterruptedException, SiteMessageException
     {
@@ -202,15 +209,14 @@ public class DirectorySearchIndexer implements SearchIndexer
 
             return listDocument;
         }
-        else
-        {
-            return new ArrayList<Document>( 0 );
-        }
+
+        return new ArrayList<Document>( 0 );
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void indexDocuments(  ) throws IOException, InterruptedException, SiteMessageException
     {
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );

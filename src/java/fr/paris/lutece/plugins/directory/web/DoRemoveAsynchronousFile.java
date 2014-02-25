@@ -37,10 +37,6 @@ import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUpl
 import fr.paris.lutece.plugins.directory.utils.JSONUtils;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 
-import java.util.Arrays;
-
-import javax.servlet.http.HttpServletRequest;
-
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONSerializer;
@@ -48,13 +44,17 @@ import net.sf.json.JSONSerializer;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Arrays;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
- * 
+ *
  * This class is called by the directoryupload.js. It is used to
  * remove the file from the asynchronous map store in
  * {@link DirectoryAsynchronousUploadHandler}.
- * 
+ *
  */
 public class DoRemoveAsynchronousFile
 {
@@ -74,29 +74,29 @@ public class DoRemoveAsynchronousFile
      */
     public String doRemoveAsynchronousUploadedFile( HttpServletRequest request )
     {
-        String strSessionId = request.getSession( ).getId( );
+        String strSessionId = request.getSession(  ).getId(  );
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         String strFieldIndex = request.getParameter( PARAMETER_FIELD_INDEX );
         String strErrorMessage = I18nService.getLocalizedString( PROPERTY_MESSAGE_ERROR_REMOVING_FILE,
-                request.getLocale( ) );
+                request.getLocale(  ) );
 
         if ( StringUtils.isBlank( strIdEntry ) || StringUtils.isBlank( strFieldIndex ) )
         {
-            return JSONUtils.buildJsonError( strErrorMessage ).toString( );
+            return JSONUtils.buildJsonError( strErrorMessage ).toString(  );
         }
 
         // parse json
         JSON jsonFieldIndexes = JSONSerializer.toJSON( strFieldIndex );
 
-        if ( !jsonFieldIndexes.isArray( ) )
+        if ( !jsonFieldIndexes.isArray(  ) )
         {
-            return JSONUtils.buildJsonError( strErrorMessage ).toString( );
+            return JSONUtils.buildJsonError( strErrorMessage ).toString(  );
         }
 
         JSONArray jsonArrayFieldIndexers = (JSONArray) jsonFieldIndexes;
-        int[] tabFieldIndex = new int[jsonArrayFieldIndexers.size( )];
+        int[] tabFieldIndex = new int[jsonArrayFieldIndexers.size(  )];
 
-        for ( int nIndex = 0; nIndex < jsonArrayFieldIndexers.size( ); nIndex++ )
+        for ( int nIndex = 0; nIndex < jsonArrayFieldIndexers.size(  ); nIndex++ )
         {
             try
             {
@@ -104,7 +104,7 @@ public class DoRemoveAsynchronousFile
             }
             catch ( NumberFormatException nfe )
             {
-                return JSONUtils.buildJsonError( strErrorMessage ).toString( );
+                return JSONUtils.buildJsonError( strErrorMessage ).toString(  );
             }
         }
 
@@ -114,9 +114,9 @@ public class DoRemoveAsynchronousFile
 
         for ( int nFieldIndex : tabFieldIndex )
         {
-            DirectoryAsynchronousUploadHandler.getHandler( ).removeFileItem( strIdEntry, strSessionId, nFieldIndex );
+            DirectoryAsynchronousUploadHandler.getHandler(  ).removeFileItem( strIdEntry, strSessionId, nFieldIndex );
         }
 
-        return JSONUtils.buildJsonSuccess( strIdEntry, strSessionId ).toString( );
+        return JSONUtils.buildJsonSuccess( strIdEntry, strSessionId ).toString(  );
     }
 }

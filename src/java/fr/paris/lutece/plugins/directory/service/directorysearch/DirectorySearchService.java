@@ -53,8 +53,19 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Searcher;
+import org.apache.lucene.store.NIOFSDirectory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -62,15 +73,6 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Searcher;
-import org.apache.lucene.store.NIOFSDirectory;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 /**
@@ -194,13 +196,13 @@ public class DirectorySearchService
         Date dateModificationBegin, Date dateModificationEnd, RecordFieldFilter filter, Plugin plugin )
     {
         List<Integer> listRecordResult = new ArrayList<Integer>(  );
-                
+
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
         listRecordResult = recordService.getListRecordId( filter, plugin );
 
         if ( mapSearch != null )
         {
-            List<Integer> listRecordResultTmp=null;
+            List<Integer> listRecordResultTmp = null;
             List<RecordField> recordFieldSearch;
             HashMap<String, Object> mapSearchItemEntry;
             boolean bSearchRecordEmpty;
@@ -214,12 +216,12 @@ public class DirectorySearchService
 
                 if ( mapSearch != null )
                 {
-                	 listRecordResultTmp = new ArrayList<Integer>(  );
-                	 bSearchEmpty=true;
-                	 for ( Object entryMapSearch : mapSearch.entrySet(  ) )
+                    listRecordResultTmp = new ArrayList<Integer>(  );
+                    bSearchEmpty = true;
+
+                    for ( Object entryMapSearch : mapSearch.entrySet(  ) )
                     {
-                      
-                    	recordFieldSearch = ( (Entry<String, List<RecordField>>) entryMapSearch ).getValue(  );
+                        recordFieldSearch = ( (Entry<String, List<RecordField>>) entryMapSearch ).getValue(  );
 
                         int nIdEntry = DirectoryUtils.convertStringToInt( ( (Entry<String, List<RecordField>>) entryMapSearch ).getKey(  ) );
                         bSearchRecordEmpty = true;
@@ -236,29 +238,28 @@ public class DirectorySearchService
                             if ( mapSearchItemEntry.size(  ) > 0 )
                             {
                                 bSearchRecordEmpty = false;
-                                bSearchEmpty=false;
+                                bSearchEmpty = false;
                                 mapSearchItemEntry.put( DirectorySearchItem.FIELD_ID_DIRECTORY,
                                     directory.getIdDirectory(  ) );
                                 mapSearchItemEntry.put( DirectorySearchItem.FIELD_ID_DIRECTORY_ENTRY, nIdEntry );
                                 listRecordResultTmp.addAll( engine.getSearchResults( mapSearchItemEntry ) );
                             }
 
-                            if ( !bSearchRecordEmpty && !directory.isSearchOperatorOr( ))
+                            if ( !bSearchRecordEmpty && !directory.isSearchOperatorOr(  ) )
                             {
-                            	// keeping order is important for display
+                                // keeping order is important for display
                                 listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
                                         listRecordResultTmp );
-                            	listRecordResultTmp = new ArrayList<Integer>(  );
-                            	
+                                listRecordResultTmp = new ArrayList<Integer>(  );
                             }
                         }
                     }
-                    if( directory.isSearchOperatorOr() &&  !bSearchEmpty)
+
+                    if ( directory.isSearchOperatorOr(  ) && !bSearchEmpty )
                     {
-                    		listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
-                                 listRecordResultTmp );
-                     }
-                    
+                        listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
+                                listRecordResultTmp );
+                    }
                 }
 
                 //date creation of a record

@@ -44,6 +44,7 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.web.constants.Parameters;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -82,117 +83,117 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getCurrentPageIndex()
      */
-    public String getCurrentPageIndex( )
+    public String getCurrentPageIndex(  )
     {
         return _strCurrentPageIndex;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getDateCreationBeginRecord()
      */
-    public Date getDateCreationBeginRecord( )
+    public Date getDateCreationBeginRecord(  )
     {
         return _dateCreationBeginRecord;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getDateCreationEndRecord()
      */
-    public Date getDateCreationEndRecord( )
+    public Date getDateCreationEndRecord(  )
     {
         return _dateCreationEndRecord;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getDateCreationRecord()
      */
-    public Date getDateCreationRecord( )
+    public Date getDateCreationRecord(  )
     {
         return _dateCreationRecord;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getDefaultItemsPerPage()
      */
-    public int getDefaultItemsPerPage( )
+    public int getDefaultItemsPerPage(  )
     {
         return _nDefaultItemsPerPage;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getIdDirectory()
      */
-    public int getIdDirectory( )
+    public int getIdDirectory(  )
     {
         return _nIdDirectory;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getIdEntry()
      */
-    public int getIdEntry( )
+    public int getIdEntry(  )
     {
         return _nIdEntry;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getMapQuery()
      */
-    public HashMap<String, List<RecordField>> getMapQuery( )
+    public HashMap<String, List<RecordField>> getMapQuery(  )
     {
         return _mapQuery;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getSortEntry()
      */
-    public IEntry getSortEntry( )
+    public IEntry getSortEntry(  )
     {
         return _sortEntry;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getSortOrder()
      */
-    public int getSortOrder( )
+    public int getSortOrder(  )
     {
         return _nSortOrder;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setCurrentPageIndex(java.lang.String)
      */
@@ -203,7 +204,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setDateCreationBeginRecord(java.util.Date)
      */
@@ -214,7 +215,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setDateCreationEndRecord(java.util.Date)
      */
@@ -225,7 +226,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setDateCreationRecord(java.util.Date)
      */
@@ -236,7 +237,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setDefaultItemsPerPage(int)
      */
@@ -247,7 +248,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setIdDirectory(int)
      */
@@ -258,7 +259,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setIdEntry(int)
      */
@@ -269,7 +270,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setMapQuery(java.util.HashMap)
      */
@@ -280,7 +281,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setSortEntry(fr.paris.lutece.plugins.directory.business.IEntry)
      */
@@ -291,7 +292,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setSortOrder(int)
      */
@@ -302,7 +303,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setSortParameters(javax.servlet.http.HttpServletRequest,
      * fr.paris.lutece.plugins.directory.business.Directory,
@@ -360,18 +361,18 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getItemsPerPage()
      */
-    public int getItemsPerPage( )
+    public int getItemsPerPage(  )
     {
         return _nItemsPerPage;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setItemsPerPage(int)
      */
@@ -382,7 +383,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * setIsDisabled(int)
      */
@@ -393,18 +394,18 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getIsDisabled()
      */
-    public int getIsDisabled( )
+    public int getIsDisabled(  )
     {
         return _nIsDisabled;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * getDefaultIdSortEntry
      * (fr.paris.lutece.plugins.directory.business.Directory)
@@ -413,7 +414,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
      * isDefaultAscendingSort
      * (fr.paris.lutece.plugins.directory.business.Directory)
@@ -431,7 +432,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
     /**
      * {@inheritDoc}
      */
-    public Date getDateModificationBeginRecord( )
+    public Date getDateModificationBeginRecord(  )
     {
         return _dateModificationBeginRecord;
     }
@@ -447,7 +448,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
     /**
      * {@inheritDoc}
      */
-    public Date getDateModificationEndRecord( )
+    public Date getDateModificationEndRecord(  )
     {
         return _dateModificationEndRecord;
     }
@@ -463,7 +464,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
     /**
      * {@inheritDoc}
      */
-    public Date getDateModificationRecord( )
+    public Date getDateModificationRecord(  )
     {
         return _dateModificationRecord;
     }
@@ -479,7 +480,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
     /**
      * {@inheritDoc}
      */
-    public boolean isSortByDateModification( )
+    public boolean isSortByDateModification(  )
     {
         return _bIsSortByDateModification;
     }

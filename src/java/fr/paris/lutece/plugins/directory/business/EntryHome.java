@@ -240,7 +240,7 @@ public final class EntryHome
 
     /**
      * Finds all the entries without any parent
-     * 
+     *
      * @param plugin the plugin
      * @param nIdDirectory the id of the concerned directory
      * @return List<IEntry> the list of all the entries without parent

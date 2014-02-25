@@ -54,6 +54,7 @@ public class DirectoryAttributeDAO implements IDirectoryAttributeDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public Map<String, Object> load( int nIdDirectory, Plugin plugin )
     {
         Map<String, Object> mapAttributes = new HashMap<String, Object>(  );
@@ -77,6 +78,7 @@ public class DirectoryAttributeDAO implements IDirectoryAttributeDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public synchronized void insert( int nIdDirectory, String strAttributeKey, Object attributeValue, Plugin plugin )
     {
         int nIndex = 1;
@@ -93,6 +95,7 @@ public class DirectoryAttributeDAO implements IDirectoryAttributeDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public void remove( int nIdDirectory, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );

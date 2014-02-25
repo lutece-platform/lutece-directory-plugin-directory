@@ -61,7 +61,7 @@ public class RecordComparator implements Comparator<Record>
 
     /**
      * Constructor
-     * @param nIdEntry ID entry to compare
+     * @param entry the entry to compare
      * @param bIsAscSort true if it is sorted asc, false otherwise
      */
     public RecordComparator( IEntry entry, boolean bIsAscSort )
@@ -75,9 +75,10 @@ public class RecordComparator implements Comparator<Record>
      * @param r1 Record 1
      * @param r2 Record 2
      * @return < 0 if r1 is before r2 in the alphabetical order
-    *           0 if r1 equals r2
-    *         > 0 if r1 is after r2
+     *         0 if r1 equals r2
+     *         > 0 if r1 is after r2
      */
+    @Override
     public int compare( Record r1, Record r2 )
     {
         int nStatus = 0;

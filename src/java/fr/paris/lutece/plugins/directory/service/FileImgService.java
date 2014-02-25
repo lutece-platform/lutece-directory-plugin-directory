@@ -85,6 +85,7 @@ public class FileImgService implements ImageResourceProvider
     * @param nIdResource The resource identifier
     * @return The Resource Image
     */
+    @Override
     public ImageResource getImageResource( int nIdResource )
     {
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
@@ -108,19 +109,10 @@ public class FileImgService implements ImageResourceProvider
      * Return the Resource Type id
      * @return The Resource Type Id
      */
+    @Override
     public String getResourceTypeId(  )
     {
         return IMAGE_RESOURCE_TYPE_ID;
-    }
-
-    /**
-     * Management of the image associated to the {@link EntryUrl}
-     * @param nEntryUrl The {@link EntryUrl} identifier
-     * @return The url of the resource
-     */
-    public static String getResourceImageEntryUrl( int nEntryUrl )
-    {
-        return getResourceImageEntryUrl( nEntryUrl, true );
     }
 
     /**
@@ -147,6 +139,6 @@ public class FileImgService implements ImageResourceProvider
         url.addParameter( Parameters.RESOURCE_TYPE, strResourceType );
         url.addParameter( Parameters.RESOURCE_ID, Integer.toString( nEntryUrl ) );
 
-        return bWithEntities ? url.getUrlWithEntity( ) : url.getUrl( );
+        return bWithEntities ? url.getUrlWithEntity(  ) : url.getUrl(  );
     }
 }

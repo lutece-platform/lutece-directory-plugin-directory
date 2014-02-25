@@ -49,20 +49,21 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.IOException;
 import java.io.OutputStream;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-
 
 /**
- * 
+ *
  * class DoDownloadGraph
- * 
+ *
  */
 public final class DoDownloadFile
 {
@@ -72,9 +73,8 @@ public final class DoDownloadFile
     /**
      * Private constructor
      */
-    private DoDownloadFile( )
+    private DoDownloadFile(  )
     {
-
     }
 
     /**
@@ -82,7 +82,7 @@ public final class DoDownloadFile
      * @param request the http request
      * @param response The http response
      * @return Error Message
-     * 
+     *
      */
     public static String doDownloadFile( HttpServletRequest request, HttpServletResponse response )
     {
@@ -95,35 +95,35 @@ public final class DoDownloadFile
             String strIdDirectoryRecord = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
             String strIdEntry = request.getParameter( DirectoryUtils.PARAMETER_ID_ENTRY );
 
-            if ( ( StringUtils.isBlank( strIdDirectoryRecord ) || !StringUtils.isNumeric( strIdDirectoryRecord ) )
-                    && ( StringUtils.isBlank( strIdEntry ) || !StringUtils.isNumeric( strIdEntry ) ) )
+            if ( ( StringUtils.isBlank( strIdDirectoryRecord ) || !StringUtils.isNumeric( strIdDirectoryRecord ) ) &&
+                    ( StringUtils.isBlank( strIdEntry ) || !StringUtils.isNumeric( strIdEntry ) ) )
             {
                 return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_DURING_DOWNLOAD_FILE,
-                        AdminMessage.TYPE_STOP );
+                    AdminMessage.TYPE_STOP );
             }
 
             int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
             int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
-            RecordFieldFilter rfFilter = new RecordFieldFilter( );
+            RecordFieldFilter rfFilter = new RecordFieldFilter(  );
             rfFilter.setIdRecord( nIdDirectoryRecord );
             rfFilter.setIdEntry( nIdEntry );
 
             List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( rfFilter, plugin );
 
-            if ( ( listRecordFields != null ) && !listRecordFields.isEmpty( ) )
+            if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) )
             {
                 RecordField recordField = listRecordFields.get( 0 );
 
-                if ( ( recordField != null ) && ( recordField.getFile( ) != null ) )
+                if ( ( recordField != null ) && ( recordField.getFile(  ) != null ) )
                 {
-                    nIdFile = recordField.getFile( ).getIdFile( );
+                    nIdFile = recordField.getFile(  ).getIdFile(  );
                 }
             }
 
             if ( ( nIdFile == DirectoryUtils.CONSTANT_ID_NULL ) || ( nIdFile == DirectoryUtils.CONSTANT_ID_ZERO ) )
             {
                 return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_DURING_DOWNLOAD_FILE,
-                        AdminMessage.TYPE_STOP );
+                    AdminMessage.TYPE_STOP );
             }
         }
         else
@@ -132,26 +132,29 @@ public final class DoDownloadFile
         }
 
         File file = FileHome.findByPrimaryKey( nIdFile, plugin );
-        PhysicalFile physicalFile = ( file != null ) ? PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile( )
-                .getIdPhysicalFile( ), plugin ) : null;
+        PhysicalFile physicalFile = ( file != null )
+            ? PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile(  ).getIdPhysicalFile(  ), plugin ) : null;
 
         if ( physicalFile != null )
         {
             try
             {
-                byte[] byteFileOutPut = physicalFile.getValue( );
-                DirectoryUtils.addHeaderResponse( request, response, file.getTitle( ) );
-                String strMimeType = file.getMimeType( );
+                byte[] byteFileOutPut = physicalFile.getValue(  );
+                DirectoryUtils.addHeaderResponse( request, response, file.getTitle(  ) );
+
+                String strMimeType = file.getMimeType(  );
+
                 if ( strMimeType == null )
                 {
-                    strMimeType = FileSystemUtil.getMIMEType( file.getTitle( ) );
+                    strMimeType = FileSystemUtil.getMIMEType( file.getTitle(  ) );
                 }
+
                 response.setContentType( strMimeType );
                 response.setContentLength( byteFileOutPut.length );
 
-                OutputStream os = response.getOutputStream( );
+                OutputStream os = response.getOutputStream(  );
                 os.write( byteFileOutPut );
-                os.close( );
+                os.close(  );
             }
             catch ( IOException e )
             {

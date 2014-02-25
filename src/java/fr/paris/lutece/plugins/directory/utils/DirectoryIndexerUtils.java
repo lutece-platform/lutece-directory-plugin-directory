@@ -33,21 +33,23 @@
  */
 package fr.paris.lutece.plugins.directory.utils;
 
+
 /**
- * 
+ *
  * DirectoryIndexerUtils
- * 
+ *
  */
 public final class DirectoryIndexerUtils
 {
-    // Indexed resource type name
+    /**
+     * Indexed resource type name
+     */
     public static final String CONSTANT_TYPE_RESOURCE = "DIRECTORY_DIRECTORY";
 
     /**
      * Private constructor
      */
-    private DirectoryIndexerUtils( )
+    private DirectoryIndexerUtils(  )
     {
-
     }
 }

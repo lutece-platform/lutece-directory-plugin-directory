@@ -50,13 +50,13 @@ import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.string.StringUtil;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -68,15 +68,13 @@ public class EntryTypeMail extends Entry
 {
     // Property
     private static final String PROPERTY_MAILTO_FOR_ENTRY_MAIL = "directory.entry_type_mail.mailto";
-
-	private static final String PARAMETER_BANNED_DOMAIN_NAME = "banned_domain_names";
-	private static final String MESSAGE_WRONG_EMAIL_DOMAIN_NAME = "directory.message.entryTypeMail.wrongEmailDomainName";
+    private static final String PARAMETER_BANNED_DOMAIN_NAME = "banned_domain_names";
+    private static final String MESSAGE_WRONG_EMAIL_DOMAIN_NAME = "directory.message.entryTypeMail.wrongEmailDomainName";
 
     // HTML constants
     private static final String HTML_LINK_OPEN_BEGIN = "<a href=\"mailto:";
     private static final String HTML_LINK_OPEN_END = "\">";
     private static final String HTML_LINK_CLOSE = "</a>";
-
     private static final String SEMI_COLON = ";";
     private static final String UNDERSCORE = "_";
 
@@ -89,7 +87,6 @@ public class EntryTypeMail extends Entry
     private final String _template_html_front_code_form_entry = "skin/plugins/directory/entrytypemail/html_code_form_entry_type_mail.html";
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytypemail/html_code_form_search_entry_type_mail.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypemail/html_code_entry_value_type_mail.html";
-
 
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
@@ -316,18 +313,22 @@ public class EntryTypeMail extends Entry
                     }
                 }
             }
-			String strBannedDomainNames = DatastoreService.getDataValue( plugin.getName( ) + UNDERSCORE + PARAMETER_BANNED_DOMAIN_NAME, StringUtils.EMPTY );
-			if ( StringUtils.isNotBlank( strBannedDomainNames ) )
-			{
-				String[] listBannedDomainName = strBannedDomainNames.split( SEMI_COLON );
-				if ( !StringUtil.checkEmailDomainName( strValueEntry, listBannedDomainName ) )
-				{
-					Object[] args =
-					{ strBannedDomainNames };
-					String strErrorMessage = I18nService.getLocalizedString( MESSAGE_WRONG_EMAIL_DOMAIN_NAME, args, locale );
-					throw new DirectoryErrorException( this.getTitle( ), strErrorMessage );
-				}
-			}
+
+            String strBannedDomainNames = DatastoreService.getDataValue( plugin.getName(  ) + UNDERSCORE +
+                    PARAMETER_BANNED_DOMAIN_NAME, StringUtils.EMPTY );
+
+            if ( StringUtils.isNotBlank( strBannedDomainNames ) )
+            {
+                String[] listBannedDomainName = strBannedDomainNames.split( SEMI_COLON );
+
+                if ( !StringUtil.checkEmailDomainName( strValueEntry, listBannedDomainName ) )
+                {
+                    Object[] args = { strBannedDomainNames };
+                    String strErrorMessage = I18nService.getLocalizedString( MESSAGE_WRONG_EMAIL_DOMAIN_NAME, args,
+                            locale );
+                    throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
+                }
+            }
 
             response.setValue( strValueEntry );
         }

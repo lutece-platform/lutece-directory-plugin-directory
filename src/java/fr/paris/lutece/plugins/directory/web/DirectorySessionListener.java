@@ -49,6 +49,7 @@ public class DirectorySessionListener implements HttpSessionListener
     /**
      * {@inheritDoc}
      */
+    @Override
     public void sessionCreated( HttpSessionEvent se )
     {
         // nothing to do
@@ -57,6 +58,7 @@ public class DirectorySessionListener implements HttpSessionListener
     /**
      * {@inheritDoc}
      */
+    @Override
     public void sessionDestroyed( HttpSessionEvent se )
     {
         String strSessionId = se.getSession(  ).getId(  );

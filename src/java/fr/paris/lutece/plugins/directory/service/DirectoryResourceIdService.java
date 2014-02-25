@@ -141,8 +141,9 @@ public class DirectoryResourceIdService extends ResourceIdService
     }
 
     /**
-     * Initializes the service
+     * {@inheritDoc}
      */
+    @Override
     public void register(  )
     {
         // Override the resource type DIRECTORY_DIRECTORY_TYPE
@@ -265,17 +266,16 @@ public class DirectoryResourceIdService extends ResourceIdService
      * @param locale The current locale
      * @return A list of resource ids
      */
+    @Override
     public ReferenceList getResourceIdList( Locale locale )
     {
         return DirectoryHome.getDirectoryList( PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
     }
 
     /**
-     * Returns the Title of a given resource
-     * @param strId The Id of the resource
-     * @param locale The current locale
-     * @return The Title of a given resource
+     * {@inheritDoc}
      */
+    @Override
     public String getTitle( String strId, Locale locale )
     {
         int nIdDirectory = DirectoryUtils.convertStringToInt( strId );

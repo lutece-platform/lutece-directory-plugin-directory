@@ -52,17 +52,20 @@ import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.image.ImageUtil;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
 import java.awt.image.BufferedImage;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+
 import java.util.List;
 import java.util.Locale;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -78,7 +81,6 @@ public class EntryTypeImg extends AbstractEntryTypeUpload
     protected static final String FIELD_BIG_THUMBNAIL_HEIGHT = "directory.create_entry.label_width";
     protected static final String ERROR_FIELD_THUMBNAIL = "directory.create_entry.label_error_thumbnail";
     protected static final String ERROR_FIELD_BIG_THUMBNAIL = "directory.create_entry.label_error_big_thumbnail";
-
     private static final String PARAMETER_THUMBNAIL_HEIGHT = "thumbnail_height";
     private static final String PARAMETER_THUMBNAIL_WIDTH = "thumbnail_width";
     private static final String PARAMETER_BIG_THUMBNAIL_WIDTH = "thumbnail_big_width";
@@ -96,7 +98,6 @@ public class EntryTypeImg extends AbstractEntryTypeUpload
     private static final String FIELD_THUMBNAIL = "little_thumbnail";
     private static final String FIELD_BIG_THUMBNAIL = "big_thumbnail";
     private static final int INTEGER_QUALITY_MAXIMUM = 1;
-
     private final String _template_create = "admin/plugins/directory/entrytypeimg/create_entry_type_img.html";
     private final String _template_modify = "admin/plugins/directory/entrytypeimg/modify_entry_type_img.html";
     private final String _template_html_code_form_entry = "admin/plugins/directory/entrytypeimg/html_code_form_entry_type_img.html";
@@ -662,19 +663,19 @@ public class EntryTypeImg extends AbstractEntryTypeUpload
         {
             fieldFullImage.setShownInResultList( true );
         }
-		else
-		{
-			fieldFullImage.setShownInResultList( false );
-		}
+        else
+        {
+            fieldFullImage.setShownInResultList( false );
+        }
 
         if ( request.getParameter( PARAMETER_IMAGE_SHOWN_IN_RESULT_RECORD ) != null )
         {
             fieldFullImage.setShownInResultRecord( true );
         }
-		else
-		{
-			fieldFullImage.setShownInResultRecord( false );
-		}
+        else
+        {
+            fieldFullImage.setShownInResultRecord( false );
+        }
 
         fieldFullImage.setEntry( this );
         fieldFullImage.setValue( FIELD_IMAGE );

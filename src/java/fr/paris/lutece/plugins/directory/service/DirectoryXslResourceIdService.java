@@ -74,8 +74,9 @@ public class DirectoryXslResourceIdService extends ResourceIdService
     }
 
     /**
-     * Initializes the service
+     * {@inheritDoc}
      */
+    @Override
     public void register(  )
     {
         ResourceType rt = new ResourceType(  );
@@ -107,6 +108,7 @@ public class DirectoryXslResourceIdService extends ResourceIdService
      * @param locale The current locale
      * @return A list of resource ids
      */
+    @Override
     public ReferenceList getResourceIdList( Locale locale )
     {
         return DirectoryXslHome.getRefList( new DirectoryXslFilter(  ),
@@ -114,11 +116,9 @@ public class DirectoryXslResourceIdService extends ResourceIdService
     }
 
     /**
-     * Returns the Title of a given resource
-     * @param strId The Id of the resource
-     * @param locale The current locale
-     * @return The Title of a given resource
+     * {@inheritDoc}
      */
+    @Override
     public String getTitle( String strId, Locale locale )
     {
         int nIdExport = DirectoryUtils.convertStringToInt( strId );

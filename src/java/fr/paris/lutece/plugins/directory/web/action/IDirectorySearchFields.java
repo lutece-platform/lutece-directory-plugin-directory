@@ -48,20 +48,20 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Visualization of all needed for searched record.
  * @author merlinfe
- * 
+ *
  */
 public interface IDirectorySearchFields
 {
     /**
      * Default items per page
-     * 
+     *
      * @return default items per page
      */
-    int getDefaultItemsPerPage( );
+    int getDefaultItemsPerPage(  );
 
     /**
      * Default items per page
-     * 
+     *
      * @param nDefaultItemsPerPage
      *            default items per page
      */
@@ -69,14 +69,14 @@ public interface IDirectorySearchFields
 
     /**
      * Current page index
-     * 
+     *
      * @return current page index
      */
-    String getCurrentPageIndex( );
+    String getCurrentPageIndex(  );
 
     /**
      * Current page index
-     * 
+     *
      * @param strCurrentPageIndex
      *            current page index
      */
@@ -84,14 +84,14 @@ public interface IDirectorySearchFields
 
     /**
      * Id directory
-     * 
+     *
      * @return id directory
      */
-    int getIdDirectory( );
+    int getIdDirectory(  );
 
     /**
      * Id directory
-     * 
+     *
      * @param nIdDirectory
      *            id directory
      */
@@ -99,14 +99,14 @@ public interface IDirectorySearchFields
 
     /**
      * Id entry
-     * 
+     *
      * @return id entry
      */
-    int getIdEntry( );
+    int getIdEntry(  );
 
     /**
      * Id entry
-     * 
+     *
      * @param nIdEntry
      *            id entry
      */
@@ -114,14 +114,14 @@ public interface IDirectorySearchFields
 
     /**
      * Map query
-     * 
+     *
      * @return map query
      */
-    HashMap<String, List<RecordField>> getMapQuery( );
+    HashMap<String, List<RecordField>> getMapQuery(  );
 
     /**
      * Map query
-     * 
+     *
      * @param mapQuery
      *            map query
      */
@@ -129,14 +129,14 @@ public interface IDirectorySearchFields
 
     /**
      * Date creation begin record
-     * 
+     *
      * @return date creation begin record
      */
-    Date getDateCreationBeginRecord( );
+    Date getDateCreationBeginRecord(  );
 
     /**
      * Date creation begin record
-     * 
+     *
      * @param dateCreationBeginRecord
      *            date creation begin record
      */
@@ -144,14 +144,14 @@ public interface IDirectorySearchFields
 
     /**
      * Date creation end record
-     * 
+     *
      * @return date creation end record
      */
-    Date getDateCreationEndRecord( );
+    Date getDateCreationEndRecord(  );
 
     /**
      * Date creation end record
-     * 
+     *
      * @param dateCreationEndRecord
      *            date creation end record
      */
@@ -159,14 +159,14 @@ public interface IDirectorySearchFields
 
     /**
      * Date creation record
-     * 
+     *
      * @return date creation record
      */
-    Date getDateCreationRecord( );
+    Date getDateCreationRecord(  );
 
     /**
      * Date creation record
-     * 
+     *
      * @param dateCreationRecord
      *            date creation record
      */
@@ -174,7 +174,7 @@ public interface IDirectorySearchFields
 
     /**
      * Set the sort entry
-     * 
+     *
      * @param sortEntry
      *            the sort entry
      */
@@ -182,14 +182,14 @@ public interface IDirectorySearchFields
 
     /**
      * Get the sort entry
-     * 
+     *
      * @return the sort entry
      */
-    IEntry getSortEntry( );
+    IEntry getSortEntry(  );
 
     /**
      * Set the sort order
-     * 
+     *
      * @param nSortOrder
      *            the sort order
      */
@@ -197,14 +197,14 @@ public interface IDirectorySearchFields
 
     /**
      * Get the sort order
-     * 
+     *
      * @return the sort order
      */
-    int getSortOrder( );
+    int getSortOrder(  );
 
     /**
      * Set the sort parameters
-     * 
+     *
      * @param request
      *            the HTTP request
      * @param directory
@@ -232,7 +232,7 @@ public interface IDirectorySearchFields
      * Items per page
      * @return items per page
      */
-    int getItemsPerPage( );
+    int getItemsPerPage(  );
 
     /**
      * Items per page
@@ -241,10 +241,10 @@ public interface IDirectorySearchFields
     void setItemsPerPage( int nItemsPerPage );
 
     /**
-     * 
+     *
      * @return true if the records must be disabled
      */
-    int getIsDisabled( );
+    int getIsDisabled(  );
 
     /***
      * set true if the records displayed must be disabled
@@ -256,7 +256,7 @@ public interface IDirectorySearchFields
      * Date modification begin record
      * @return date modification begin record
      */
-    Date getDateModificationBeginRecord( );
+    Date getDateModificationBeginRecord(  );
 
     /**
      * Date modification begin record
@@ -268,7 +268,7 @@ public interface IDirectorySearchFields
      * Date modification end record
      * @return date modification end record
      */
-    Date getDateModificationEndRecord( );
+    Date getDateModificationEndRecord(  );
 
     /**
      * Date modification end record
@@ -280,7 +280,7 @@ public interface IDirectorySearchFields
      * Date modification record
      * @return date modification record
      */
-    Date getDateModificationRecord( );
+    Date getDateModificationRecord(  );
 
     /**
      * Date modification record
@@ -299,5 +299,5 @@ public interface IDirectorySearchFields
      * Check if it must be sort by date modification
      * @return true if it must be sort by date modification, false otherwise
      */
-    boolean isSortByDateModification( );
+    boolean isSortByDateModification(  );
 }

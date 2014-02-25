@@ -52,9 +52,8 @@ public final class DirectoryParameterHome
     /**
      * Private constructor
      */
-    private DirectoryParameterHome( )
+    private DirectoryParameterHome(  )
     {
-
     }
 
     /**

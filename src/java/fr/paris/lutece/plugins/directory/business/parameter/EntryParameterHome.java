@@ -40,9 +40,9 @@ import fr.paris.lutece.util.ReferenceList;
 
 
 /**
- * 
+ *
  * EntryParameterHome
- * 
+ *
  */
 public final class EntryParameterHome
 {
@@ -52,9 +52,8 @@ public final class EntryParameterHome
     /**
      * Private constructor
      */
-    private EntryParameterHome( )
+    private EntryParameterHome(  )
     {
-
     }
 
     /**

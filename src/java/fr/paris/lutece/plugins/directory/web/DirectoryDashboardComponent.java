@@ -70,12 +70,12 @@ import javax.servlet.http.HttpServletRequest;
 public class DirectoryDashboardComponent extends DashboardComponent
 {
     // MARKS
-    public static final String MARK_URL = "url";
-    public static final String MARK_ICON = "icon";
-    public static final String MARK_DIRECTORY_LIST = "directory_list";
-    public static final String MARK_RECORD_COUNT_LIST = "record_count_list";
-    public static final String MARK_AUTHORIZED_DIRECTORY_MODIFICATION_LIST = "authorized_directory_modification_list";
-    public static final String MARK_PERMISSION_CREATE = "permission_create";
+    private static final String MARK_URL = "url";
+    private static final String MARK_ICON = "icon";
+    private static final String MARK_DIRECTORY_LIST = "directory_list";
+    private static final String MARK_RECORD_COUNT_LIST = "record_count_list";
+    private static final String MARK_AUTHORIZED_DIRECTORY_MODIFICATION_LIST = "authorized_directory_modification_list";
+    private static final String MARK_PERMISSION_CREATE = "permission_create";
 
     // CONSTANTS
     private static final int ZONE_1 = 1;
@@ -86,11 +86,9 @@ public class DirectoryDashboardComponent extends DashboardComponent
     private static final String TEMPLATE_DASHBOARD_OTHER_ZONE = "/admin/plugins/directory/directory_dashboard_other_zone.html";
 
     /**
-     * The HTML code of the component
-     * @param user The Admin User
-         * @param request HttpServletRequest
-     * @return The dashboard component
+     * {@inheritDoc}
      */
+    @Override
     public String getDashboardData( AdminUser user, HttpServletRequest request )
     {
         Right right = RightHome.findByPrimaryKey( getRight(  ) );
@@ -170,7 +168,7 @@ public class DirectoryDashboardComponent extends DashboardComponent
         DirectoryFilter filter = new DirectoryFilter(  );
         List<Directory> directoryList = DirectoryHome.getDirectoryList( filter, getPlugin(  ) );
 
-        return (List) AdminWorkgroupService.getAuthorizedCollection( directoryList, user );
+        return (List<Directory>) AdminWorkgroupService.getAuthorizedCollection( directoryList, user );
     }
 
     /**

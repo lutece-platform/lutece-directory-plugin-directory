@@ -37,9 +37,9 @@ import fr.paris.lutece.portal.service.security.UserAttributesService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
+
+import java.util.Map;
 
 
 /**

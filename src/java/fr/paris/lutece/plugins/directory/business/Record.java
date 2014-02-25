@@ -43,19 +43,20 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupResource;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.sql.Timestamp;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
 
 /**
- * 
+ *
  * class Record
- * 
+ *
  */
 public class Record implements AdminWorkgroupResource, IExtendableResource
 {
@@ -69,13 +70,11 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
     public static final String TAG_MODIFICATION_DATE = "modification-date";
     public static final String TAG_STATUS = "status";
     public static final String ATTRIBUTE_ICON = "icon";
-
     private static final String TAG_RECORD = "record";
     private static final String ATTRIBUTE_RECORD_ID = "id";
     private static final String ATTRIBUTE_TYPE_ENTRY = "type-entry";
     private static final String ATTRIBUTE_SHOW_IN_RECORD = "isShownInRecord";
     private static final String ATTRIBUTE_SHOW_IN_LIST = "isShownInList";
-
     private int _nIdRecord;
     private Timestamp _tDateCreation;
     private Timestamp _tDateModification;
@@ -87,16 +86,16 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
     private String _strWorkgroupKey;
 
     /**
-     * 
+     *
      * @return the directory associate to the record
      */
-    public Directory getDirectory( )
+    public Directory getDirectory(  )
     {
         return _directory;
     }
 
     /**
-     * 
+     *
      * set the directory associate to the record
      * @param directory the directory associate to the record
      */
@@ -109,7 +108,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * return the id of the record
      * @return the id of the record
      */
-    public int getIdRecord( )
+    public int getIdRecord(  )
     {
         return _nIdRecord;
     }
@@ -127,7 +126,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * return the date creation
      * @return the date creation
      */
-    public Timestamp getDateCreation( )
+    public Timestamp getDateCreation(  )
     {
         return _tDateCreation;
     }
@@ -145,7 +144,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * return the date Modification
      * @return the date Modification
      */
-    public Timestamp getDateModification( )
+    public Timestamp getDateModification(  )
     {
         return _tDateModification;
     }
@@ -160,17 +159,17 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
     }
 
     /**
-     * 
+     *
      * @return the list of field associate to the record
      */
-    public List<RecordField> getListRecordField( )
+    public List<RecordField> getListRecordField(  )
     {
         return _listRecordField;
     }
 
     /**
      * set the list of record field associate to the record
-     * @param listRecordField the list of response associate to the form submit
+     * @param listAction the list of response associate to the form submit
      */
     public void setActions( List<DirectoryAction> listAction )
     {
@@ -178,10 +177,10 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
     }
 
     /**
-     * 
+     *
      * @return the list of field associate to the record
      */
-    public List<DirectoryAction> getActions( )
+    public List<DirectoryAction> getActions(  )
     {
         return _listAction;
     }
@@ -196,10 +195,10 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
     }
 
     /**
-     * 
+     *
      * @return true if the record is enabled
      */
-    public boolean isEnabled( )
+    public boolean isEnabled(  )
     {
         return _bIsEnabled;
     }
@@ -216,9 +215,9 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
     /**
      * Gets the record role
      * @return recors's role as a String
-     * 
+     *
      */
-    public String getRoleKey( )
+    public String getRoleKey(  )
     {
         return _strRoleKey;
     }
@@ -226,7 +225,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
     /**
      * Sets the directory's role
      * @param strRole The role
-     * 
+     *
      */
     public void setRoleKey( String strRole )
     {
@@ -234,10 +233,10 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
     }
 
     /**
-     * 
-     * @return the work group associate to the record
+     * {@inheritDoc}
      */
-    public String getWorkgroup( )
+    @Override
+    public String getWorkgroup(  )
     {
         return _strWorkgroupKey;
     }
@@ -253,7 +252,6 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
 
     /**
      * The Xml of the record
-     * @param record the record
      * @param plugin the plugin
      * @param locale the locale
      * @param bWithHtmlCode true if the xml must contain html code like <img src
@@ -268,16 +266,15 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @return xml
      */
     public StringBuffer getXml( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
-            List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
-            boolean bDisplayExport, boolean bDisplayDateCreation )
+        List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
+        boolean bDisplayExport, boolean bDisplayDateCreation )
     {
         return getXml( plugin, locale, bWithHtmlCode, state, listEntryResultSearch, bDisplayTitleEntryTypeSelect,
-                bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
+            bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
     }
 
     /**
      * The Xml of the record
-     * @param record the record
      * @param plugin the plugin
      * @param locale the locale
      * @param bWithHtmlCode true if the xml must contain html code like <img src
@@ -294,56 +291,56 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @return xml
      */
     public StringBuffer getXml( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
-            List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
-            boolean bDisplayExport, boolean bDisplayDateCreation, boolean bDisplayDateModification )
+        List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
+        boolean bDisplayExport, boolean bDisplayDateCreation, boolean bDisplayDateModification )
     {
-        StringBuffer strXml = new StringBuffer( );
-        Map<String, String> model = new HashMap<String, String>( );
-        model.put( ATTRIBUTE_RECORD_ID, String.valueOf( this.getIdRecord( ) ) );
+        StringBuffer strXml = new StringBuffer(  );
+        Map<String, String> model = new HashMap<String, String>(  );
+        model.put( ATTRIBUTE_RECORD_ID, String.valueOf( this.getIdRecord(  ) ) );
         XmlUtil.beginElement( strXml, TAG_RECORD, model );
 
         if ( bDisplayDateCreation )
         {
-            XmlUtil.addElement( strXml, TAG_CREATION_DATE, DateUtil.getDateString( this.getDateCreation( ), locale ) );
+            XmlUtil.addElement( strXml, TAG_CREATION_DATE, DateUtil.getDateString( this.getDateCreation(  ), locale ) );
         }
 
         if ( bDisplayDateModification )
         {
             XmlUtil.addElement( strXml, TAG_MODIFICATION_DATE,
-                    DateUtil.getDateString( this.getDateModification( ), locale ) );
+                DateUtil.getDateString( this.getDateModification(  ), locale ) );
         }
 
         if ( state != null )
         {
-            Map<String, String> stateAttributes = new HashMap<String, String>( );
-            stateAttributes.put( ATTRIBUTE_ICON, Integer.toString( state.getIcon( ).getId( ) ) );
-            XmlUtil.addElement( strXml, TAG_STATUS, state.getName( ), stateAttributes );
+            Map<String, String> stateAttributes = new HashMap<String, String>(  );
+            stateAttributes.put( ATTRIBUTE_ICON, Integer.toString( state.getIcon(  ).getId(  ) ) );
+            XmlUtil.addElement( strXml, TAG_STATUS, state.getName(  ), stateAttributes );
         }
 
         XmlUtil.beginElement( strXml, Entry.TAG_LIST_ENTRY );
 
-        Map<String, List<RecordField>> mapEntryRecordFields = DirectoryUtils.getSpecificMapIdEntryListRecordField(
-                listEntryResultSearch, this.getIdRecord( ), plugin );
+        Map<String, List<RecordField>> mapEntryRecordFields = DirectoryUtils.getSpecificMapIdEntryListRecordField( listEntryResultSearch,
+                this.getIdRecord(  ), plugin );
 
         for ( IEntry entry : listEntryResultSearch )
         {
-            if ( entry.getEntryType( ).getGroup( ) && ( entry.getChildren( ) != null ) )
+            if ( entry.getEntryType(  ).getGroup(  ) && ( entry.getChildren(  ) != null ) )
             {
-                for ( IEntry entryChildren : entry.getChildren( ) )
+                for ( IEntry entryChildren : entry.getChildren(  ) )
                 {
-                    if ( !entryChildren.getEntryType( ).getComment( ) )
+                    if ( !entryChildren.getEntryType(  ).getComment(  ) )
                     {
                         getXmlListRecordField( entryChildren, strXml, plugin, locale, bWithHtmlCode,
-                                mapEntryRecordFields.get( Integer.toString( entryChildren.getIdEntry( ) ) ),
-                                bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport );
+                            mapEntryRecordFields.get( Integer.toString( entryChildren.getIdEntry(  ) ) ),
+                            bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport );
                     }
                 }
             }
-            else if ( !entry.getEntryType( ).getComment( ) )
+            else if ( !entry.getEntryType(  ).getComment(  ) )
             {
                 getXmlListRecordField( entry, strXml, plugin, locale, bWithHtmlCode,
-                        mapEntryRecordFields.get( Integer.toString( entry.getIdEntry( ) ) ),
-                        bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport );
+                    mapEntryRecordFields.get( Integer.toString( entry.getIdEntry(  ) ) ), bDisplayTitleEntryTypeSelect,
+                    bDisplayFront, bDisplayExport );
             }
         }
 
@@ -362,16 +359,17 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @param bWithHtmlCode true if the xml must contain html code like <img src
      *            ="">
      * @param listRecordField the list of recordField to display
-     * @param true if template front or false if template back
+     * @param bDisplayFront true if template front or false if template back
+     * @param bDisplayExport
      */
     private void getXmlListRecordField( IEntry entry, StringBuffer strXml, Plugin plugin, Locale locale,
-            boolean bWithHtmlCode, List<RecordField> listRecordField, boolean bDisplayTitleEntryTypeSelect,
-            boolean bDisplayFront, boolean bDisplayExport )
+        boolean bWithHtmlCode, List<RecordField> listRecordField, boolean bDisplayTitleEntryTypeSelect,
+        boolean bDisplayFront, boolean bDisplayExport )
     {
-        Map<String, String> model = DirectoryService.getInstance( ).getModelForEntryForXml( entry );
+        Map<String, String> model = DirectoryService.getInstance(  ).getModelForEntryForXml( entry );
         XmlUtil.beginElement( strXml, Entry.TAG_ENTRY, model );
 
-        Map<String, String> modelListRecordField = new HashMap<String, String>( );
+        Map<String, String> modelListRecordField = new HashMap<String, String>(  );
         boolean bIsEntryTypeGeolocation = ( entry instanceof EntryTypeGeolocation ) ? true : false;
         boolean bIsEntryTypeNumbering = ( entry instanceof EntryTypeNumbering ) ? true : false;
         modelListRecordField.put( RecordField.ATTRIBUTE_GEOLOCATION, Boolean.toString( bIsEntryTypeGeolocation ) );
@@ -381,85 +379,88 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
         {
             for ( RecordField recordField : listRecordField )
             {
-                Map<String, String> modelRecordField = new HashMap<String, String>( );
-                Field field = recordField.getField( );
+                Map<String, String> modelRecordField = new HashMap<String, String>(  );
+                Field field = recordField.getField(  );
 
-                if ( ( field != null ) && StringUtils.isNotBlank( recordField.getField( ).getTitle( ) ) )
+                if ( ( field != null ) && StringUtils.isNotBlank( recordField.getField(  ).getTitle(  ) ) )
                 {
-                    modelRecordField.put( Record.ATTRIBUTE_TITLE, recordField.getField( ).getTitle( ) );
+                    modelRecordField.put( Record.ATTRIBUTE_TITLE, recordField.getField(  ).getTitle(  ) );
                 }
 
-                if ( entry.getEntryType( ) != null )
+                if ( entry.getEntryType(  ) != null )
                 {
-                    modelRecordField.put( ATTRIBUTE_TYPE_ENTRY, String.valueOf( entry.getEntryType( ).getIdType( ) ) );
+                    modelRecordField.put( ATTRIBUTE_TYPE_ENTRY, String.valueOf( entry.getEntryType(  ).getIdType(  ) ) );
                 }
 
                 if ( field != null )
                 {
-                    modelRecordField.put( ATTRIBUTE_SHOW_IN_RECORD, String.valueOf( field.isShownInResultRecord( ) ) );
-                    modelRecordField.put( ATTRIBUTE_SHOW_IN_LIST, String.valueOf( field.isShownInResultList( ) ) );
+                    modelRecordField.put( ATTRIBUTE_SHOW_IN_RECORD, String.valueOf( field.isShownInResultRecord(  ) ) );
+                    modelRecordField.put( ATTRIBUTE_SHOW_IN_LIST, String.valueOf( field.isShownInResultList(  ) ) );
                 }
 
                 XmlUtil.beginElement( strXml, TAG_RECORD_FIELD, modelRecordField );
 
                 if ( bWithHtmlCode )
                 {
-                    Map<String, String> modelRecordFieldValue = new HashMap<String, String>( );
+                    Map<String, String> modelRecordFieldValue = new HashMap<String, String>(  );
 
                     if ( field != null )
                     {
-                        modelRecordFieldValue.put( Field.ATTRIBUTE_FIELD_ID, Integer.toString( field.getIdField( ) ) );
+                        modelRecordFieldValue.put( Field.ATTRIBUTE_FIELD_ID, Integer.toString( field.getIdField(  ) ) );
 
-                        if ( StringUtils.isNotBlank( field.getTitle( ) ) )
+                        if ( StringUtils.isNotBlank( field.getTitle(  ) ) )
                         {
-                            modelRecordFieldValue
-                                    .put( Field.ATTRIBUTE_FIELD_TITLE, recordField.getField( ).getTitle( ) );
+                            modelRecordFieldValue.put( Field.ATTRIBUTE_FIELD_TITLE,
+                                recordField.getField(  ).getTitle(  ) );
                         }
                     }
 
-                    XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE, recordField.getEntry( )
-                            .getHtmlRecordFieldValue( locale, recordField, bDisplayFront ), modelRecordFieldValue );
+                    XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
+                        recordField.getEntry(  ).getHtmlRecordFieldValue( locale, recordField, bDisplayFront ),
+                        modelRecordFieldValue );
                 }
                 else
                 {
-                    if ( recordField.getFile( ) != null )
+                    if ( recordField.getFile(  ) != null )
                     {
-                        IEntry entryFile = EntryHome.findByPrimaryKey( recordField.getEntry( ).getIdEntry( ), plugin );
+                        IEntry entryFile = EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), plugin );
 
-                        XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE, entry.convertRecordFieldValueToString(
-                                recordField, locale, bDisplayFront, bDisplayExport ) );
-                        strXml.append( recordField.getFile( ).getXml( plugin, locale,
-                                entry.getEntryType( ).getIdType( ), entryFile.getDisplayWidth( ),
-                                entryFile.getDisplayHeight( ) ) );
+                        XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
+                            entry.convertRecordFieldValueToString( recordField, locale, bDisplayFront, bDisplayExport ) );
+                        strXml.append( recordField.getFile(  )
+                                                  .getXml( plugin, locale, entry.getEntryType(  ).getIdType(  ),
+                                entryFile.getDisplayWidth(  ), entryFile.getDisplayHeight(  ) ) );
                     }
                     else
                     {
                         if ( bDisplayTitleEntryTypeSelect && !bIsEntryTypeNumbering )
                         {
-                            XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE, DirectoryUtils
-                                    .substituteSpecialCaractersForExport( recordField.getEntry( )
-                                            .convertRecordFieldTitleToString( recordField, locale, bDisplayFront ) ) );
+                            XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
+                                DirectoryUtils.substituteSpecialCaractersForExport( 
+                                    recordField.getEntry(  )
+                                               .convertRecordFieldTitleToString( recordField, locale, bDisplayFront ) ) );
                         }
                         else
                         {
-                            Map<String, String> modelRecordFieldValue = new HashMap<String, String>( );
+                            Map<String, String> modelRecordFieldValue = new HashMap<String, String>(  );
 
-                            if ( recordField.getField( ) != null )
+                            if ( recordField.getField(  ) != null )
                             {
                                 modelRecordFieldValue.put( Field.ATTRIBUTE_FIELD_ID,
-                                        Integer.toString( recordField.getField( ).getIdField( ) ) );
+                                    Integer.toString( recordField.getField(  ).getIdField(  ) ) );
 
-                                if ( StringUtils.isNotBlank( recordField.getField( ).getTitle( ) ) )
+                                if ( StringUtils.isNotBlank( recordField.getField(  ).getTitle(  ) ) )
                                 {
-                                    modelRecordFieldValue.put( Field.ATTRIBUTE_FIELD_TITLE, recordField.getField( )
-                                            .getTitle( ) );
+                                    modelRecordFieldValue.put( Field.ATTRIBUTE_FIELD_TITLE,
+                                        recordField.getField(  ).getTitle(  ) );
                                 }
                             }
 
-                            XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE, DirectoryUtils
-                                    .substituteSpecialCaractersForExport( recordField.getEntry( )
-                                            .convertRecordFieldValueToString( recordField, locale, bDisplayFront,
-                                                    bDisplayExport ) ), modelRecordFieldValue );
+                            XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
+                                DirectoryUtils.substituteSpecialCaractersForExport( 
+                                    recordField.getEntry(  )
+                                               .convertRecordFieldValueToString( recordField, locale, bDisplayFront,
+                                        bDisplayExport ) ), modelRecordFieldValue );
                         }
 
                         XmlUtil.addEmptyElement( strXml, File.TAG_FILE, null );
@@ -490,11 +491,11 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @return xml
      */
     public StringBuffer getXmlForCsvExport( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
-            List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
-            boolean bDisplayExport, boolean bDisplayDateCreation )
+        List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
+        boolean bDisplayExport, boolean bDisplayDateCreation )
     {
         return getXmlForCsvExport( plugin, locale, bWithHtmlCode, state, listEntryResultSearch,
-                bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
+            bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
     }
 
     /**
@@ -515,35 +516,35 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @return xml
      */
     public StringBuffer getXmlForCsvExport( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
-            List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
-            boolean bDisplayExport, boolean bDisplayDateCreation, boolean bDisplayDateModification )
+        List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
+        boolean bDisplayExport, boolean bDisplayDateCreation, boolean bDisplayDateModification )
     {
-        StringBuffer strXml = new StringBuffer( );
-        Map<String, String> model = new HashMap<String, String>( );
-        model.put( ATTRIBUTE_RECORD_ID, String.valueOf( this.getIdRecord( ) ) );
+        StringBuffer strXml = new StringBuffer(  );
+        Map<String, String> model = new HashMap<String, String>(  );
+        model.put( ATTRIBUTE_RECORD_ID, String.valueOf( this.getIdRecord(  ) ) );
         XmlUtil.beginElement( strXml, TAG_RECORD, model );
 
         if ( state != null )
         {
-            Map<String, String> stateAttributes = new HashMap<String, String>( );
-            stateAttributes.put( ATTRIBUTE_ICON, Integer.toString( state.getIcon( ).getId( ) ) );
-            XmlUtil.addElement( strXml, TAG_STATUS, state.getName( ), stateAttributes );
+            Map<String, String> stateAttributes = new HashMap<String, String>(  );
+            stateAttributes.put( ATTRIBUTE_ICON, Integer.toString( state.getIcon(  ).getId(  ) ) );
+            XmlUtil.addElement( strXml, TAG_STATUS, state.getName(  ), stateAttributes );
         }
 
         XmlUtil.beginElement( strXml, Entry.TAG_LIST_ENTRY );
 
-        Map<String, List<RecordField>> mapEntryRecordFields = DirectoryUtils.getSpecificMapIdEntryListRecordField(
-                listEntryResultSearch, this.getIdRecord( ), plugin );
+        Map<String, List<RecordField>> mapEntryRecordFields = DirectoryUtils.getSpecificMapIdEntryListRecordField( listEntryResultSearch,
+                this.getIdRecord(  ), plugin );
 
         if ( bDisplayDateCreation )
         {
-            HashMap<String, String> modelCreationDate = new HashMap<String, String>( );
+            HashMap<String, String> modelCreationDate = new HashMap<String, String>(  );
             modelCreationDate.put( Entry.ATTRIBUTE_ENTRY_ID, "0" );
             XmlUtil.beginElement( strXml, Entry.TAG_ENTRY, modelCreationDate );
             XmlUtil.beginElement( strXml, TAG_LIST_RECORD_FIELD );
             XmlUtil.beginElement( strXml, TAG_RECORD_FIELD );
             XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
-                    DateUtil.getDateString( this.getDateCreation( ), locale ) );
+                DateUtil.getDateString( this.getDateCreation(  ), locale ) );
             XmlUtil.endElement( strXml, TAG_RECORD_FIELD );
             XmlUtil.endElement( strXml, TAG_LIST_RECORD_FIELD );
             XmlUtil.endElement( strXml, Entry.TAG_ENTRY );
@@ -551,13 +552,13 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
 
         if ( bDisplayDateModification )
         {
-            HashMap<String, String> modelModificationDate = new HashMap<String, String>( );
+            HashMap<String, String> modelModificationDate = new HashMap<String, String>(  );
             modelModificationDate.put( Entry.ATTRIBUTE_ENTRY_ID, "0" );
             XmlUtil.beginElement( strXml, Entry.TAG_ENTRY, modelModificationDate );
             XmlUtil.beginElement( strXml, TAG_LIST_RECORD_FIELD );
             XmlUtil.beginElement( strXml, TAG_RECORD_FIELD );
             XmlUtil.addElementHtml( strXml, TAG_RECORD_FIELD_VALUE,
-                    DateUtil.getDateString( this.getDateModification( ), locale ) );
+                DateUtil.getDateString( this.getDateModification(  ), locale ) );
             XmlUtil.endElement( strXml, TAG_RECORD_FIELD );
             XmlUtil.endElement( strXml, TAG_LIST_RECORD_FIELD );
             XmlUtil.endElement( strXml, Entry.TAG_ENTRY );
@@ -565,23 +566,23 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
 
         for ( IEntry entry : listEntryResultSearch )
         {
-            if ( entry.getEntryType( ).getGroup( ) && ( entry.getChildren( ) != null ) )
+            if ( entry.getEntryType(  ).getGroup(  ) && ( entry.getChildren(  ) != null ) )
             {
-                for ( IEntry entryChildren : entry.getChildren( ) )
+                for ( IEntry entryChildren : entry.getChildren(  ) )
                 {
-                    if ( !entryChildren.getEntryType( ).getComment( ) )
+                    if ( !entryChildren.getEntryType(  ).getComment(  ) )
                     {
                         getXmlListRecordField( entryChildren, strXml, plugin, locale, bWithHtmlCode,
-                                mapEntryRecordFields.get( Integer.toString( entryChildren.getIdEntry( ) ) ),
-                                bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport );
+                            mapEntryRecordFields.get( Integer.toString( entryChildren.getIdEntry(  ) ) ),
+                            bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport );
                     }
                 }
             }
-            else if ( !entry.getEntryType( ).getComment( ) )
+            else if ( !entry.getEntryType(  ).getComment(  ) )
             {
                 getXmlListRecordField( entry, strXml, plugin, locale, bWithHtmlCode,
-                        mapEntryRecordFields.get( Integer.toString( entry.getIdEntry( ) ) ),
-                        bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport );
+                    mapEntryRecordFields.get( Integer.toString( entry.getIdEntry(  ) ) ), bDisplayTitleEntryTypeSelect,
+                    bDisplayFront, bDisplayExport );
             }
         }
 
@@ -595,16 +596,16 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * {@inheritDoc}
      */
     @Override
-    public String getIdExtendableResource( )
+    public String getIdExtendableResource(  )
     {
-        return Integer.toString( getIdRecord( ) );
+        return Integer.toString( getIdRecord(  ) );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getExtendableResourceType( )
+    public String getExtendableResourceType(  )
     {
         return EXTENDABLE_RESOURCE_TYPE;
     }
@@ -613,49 +614,52 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * {@inheritDoc}
      */
     @Override
-    public String getExtendableResourceName( )
+    public String getExtendableResourceName(  )
     {
-        return Integer.toString( getIdRecord( ) );
+        return Integer.toString( getIdRecord(  ) );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getExtendableResourceDescription( )
+    public String getExtendableResourceDescription(  )
     {
-        return Integer.toString( getIdRecord( ) );
+        return Integer.toString( getIdRecord(  ) );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getExtendableResourceImageUrl( )
+    public String getExtendableResourceImageUrl(  )
     {
-        if ( _listRecordField != null && _listRecordField.size( ) > 0 )
+        if ( ( _listRecordField != null ) && ( _listRecordField.size(  ) > 0 ) )
         {
             RecordField recordFieldImage = null;
+
             for ( RecordField recordField : _listRecordField )
             {
-                if ( recordField.isBigThumbnail( ) )
+                if ( recordField.isBigThumbnail(  ) )
                 {
                     // If we find a big thumbnail, we return its URL
                     recordFieldImage = recordField;
+
                     break;
                 }
-                else if ( recordField.isLittleThumbnail( ) )
+                else if ( recordField.isLittleThumbnail(  ) )
                 {
                     // If we find a little thumbnail, we return its URL unless we find a big thumbnail
                     recordFieldImage = recordField;
                 }
             }
+
             if ( recordFieldImage != null )
             {
-                return FileImgService
-                        .getResourceImageEntryUrlWhitoutEntities( recordFieldImage.getFile( ).getIdFile( ) );
+                return FileImgService.getResourceImageEntryUrlWhitoutEntities( recordFieldImage.getFile(  ).getIdFile(  ) );
             }
         }
+
         return null;
     }
 }

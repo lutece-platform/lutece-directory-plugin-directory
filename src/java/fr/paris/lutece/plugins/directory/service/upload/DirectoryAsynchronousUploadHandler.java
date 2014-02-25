@@ -62,12 +62,17 @@ import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.filesystem.UploadUtil;
 
+import net.sf.json.JSONObject;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -81,11 +86,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONObject;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-
 
 /**
  * Handler for asynchronous uploads.
@@ -93,7 +93,7 @@ import org.apache.commons.lang.StringUtils;
  * session id,
  * not the flash player one.
  * The uploaded files are deleted by SubForm when filling fields.
- * 
+ *
  */
 public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHandler
 {
@@ -101,8 +101,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     /**
      * &lt;sessionId,&lt;fieldName,fileItems&gt;&gt;
      */
-    public static Map<String, Map<String, List<FileItem>>> _mapAsynchronousUpload = new ConcurrentHashMap<String, Map<String, List<FileItem>>>( );
-
+    public static Map<String, Map<String, List<FileItem>>> _mapAsynchronousUpload = new ConcurrentHashMap<String, Map<String, List<FileItem>>>(  );
     private static final String BEAN_DIRECTORY_ASYNCHRONOUS_UPLOAD_HANDLER = "directory.asynchronousUploadHandler";
     private static final String PREFIX_ENTRY_ID = "directory_";
 
@@ -120,13 +119,12 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     // PROPERTIES
     private static final String PROPERTY_MESSAGE_ERROR_UPLOADING_FILE_SESSION_LOST = "directory.message.error.uploading_file.session_lost";
-
     private IBlobStoreClientService _blobStoreClientService;
 
     /**
      * Private constructor
      */
-    private DirectoryAsynchronousUploadHandler( )
+    private DirectoryAsynchronousUploadHandler(  )
     {
     }
 
@@ -134,7 +132,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * Get the handler
      * @return the handler
      */
-    public static DirectoryAsynchronousUploadHandler getHandler( )
+    public static DirectoryAsynchronousUploadHandler getHandler(  )
     {
         return SpringContextService.getBean( BEAN_DIRECTORY_ASYNCHRONOUS_UPLOAD_HANDLER );
     }
@@ -161,7 +159,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * Check if the service is available
      * @return true if the service is available, false otherwise
      */
-    public boolean isBlobStoreClientServiceAvailable( )
+    public boolean isBlobStoreClientServiceAvailable(  )
     {
         return _blobStoreClientService != null;
     }
@@ -172,10 +170,10 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      */
     @Override
     public void process( HttpServletRequest request, HttpServletResponse response, JSONObject mainObject,
-            List<FileItem> listFileItemsToUpload )
+        List<FileItem> listFileItemsToUpload )
     {
         // prevent 0 or multiple uploads for the same field
-        if ( ( listFileItemsToUpload == null ) || listFileItemsToUpload.isEmpty( ) )
+        if ( ( listFileItemsToUpload == null ) || listFileItemsToUpload.isEmpty(  ) )
         {
             throw new AppException( "No file uploaded" );
         }
@@ -198,7 +196,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
             List<FileItem> fileItemsSession = mapFileItemsSession.get( strFieldName );
 
-            if ( canUploadFiles( strFieldName, fileItemsSession, listFileItemsToUpload, mainObject, request.getLocale( ) ) )
+            if ( canUploadFiles( strFieldName, fileItemsSession, listFileItemsToUpload, mainObject,
+                        request.getLocale(  ) ) )
             {
                 fileItemsSession.addAll( listFileItemsToUpload );
 
@@ -210,10 +209,10 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         }
         else
         {
-            AppLogService.error( DirectoryAsynchronousUploadHandler.class.getName( ) + " : Session does not exists" );
+            AppLogService.error( DirectoryAsynchronousUploadHandler.class.getName(  ) + " : Session does not exists" );
 
             String strMessage = I18nService.getLocalizedString( PROPERTY_MESSAGE_ERROR_UPLOADING_FILE_SESSION_LOST,
-                    request.getLocale( ) );
+                    request.getLocale(  ) );
             JSONUtils.buildJsonError( mainObject, strMessage );
         }
     }
@@ -227,9 +226,9 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @throws BlobStoreClientException Exception if there is an issue
      */
     public String doUploadFile( String strBaseUrl, FileItem fileItem, String strBlobStore )
-            throws BlobStoreClientException
+        throws BlobStoreClientException
     {
-        if ( isBlobStoreClientServiceAvailable( ) )
+        if ( isBlobStoreClientServiceAvailable(  ) )
         {
             return _blobStoreClientService.doUploadFile( strBaseUrl, fileItem, strBlobStore );
         }
@@ -244,17 +243,18 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param strWSRestUrl the url of the WS rest
      * @throws BlobStoreClientException Exception if there is an issue
      */
-    public void doRemoveFile( Record record, IEntry entry, String strWSRestUrl ) throws BlobStoreClientException
+    public void doRemoveFile( Record record, IEntry entry, String strWSRestUrl )
+        throws BlobStoreClientException
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
-        recordFieldFilter.setIdDirectory( record.getDirectory( ).getIdDirectory( ) );
-        recordFieldFilter.setIdEntry( entry.getIdEntry( ) );
-        recordFieldFilter.setIdRecord( record.getIdRecord( ) );
+        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+        recordFieldFilter.setIdDirectory( record.getDirectory(  ).getIdDirectory(  ) );
+        recordFieldFilter.setIdEntry( entry.getIdEntry(  ) );
+        recordFieldFilter.setIdRecord( record.getIdRecord(  ) );
 
         List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
 
-        if ( ( listRecordFields != null ) && !listRecordFields.isEmpty( ) )
+        if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) )
         {
             for ( RecordField recordField : listRecordFields )
             {
@@ -271,9 +271,9 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @throws BlobStoreClientException Exception if there is an issue
      */
     public void doRemoveFile( RecordField recordField, IEntry entry, String strWSRestUrl )
-            throws BlobStoreClientException
+        throws BlobStoreClientException
     {
-        if ( isBlobStoreClientServiceAvailable( ) && ( recordField != null ) )
+        if ( isBlobStoreClientServiceAvailable(  ) && ( recordField != null ) )
         {
             // Get the download file url
             String strDownloadFileUrl = entry.convertRecordFieldTitleToString( recordField, null, false );
@@ -285,8 +285,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
                 List<String> parameterBlobKey = mapParameters.get( PARAMETER_BLOB_KEY );
                 List<String> parameterBlobStore = mapParameters.get( PARAMETER_BLOBSTORE );
 
-                if ( ( parameterBlobKey != null ) && !parameterBlobKey.isEmpty( ) && ( parameterBlobStore != null )
-                        && !parameterBlobStore.isEmpty( ) )
+                if ( ( parameterBlobKey != null ) && !parameterBlobKey.isEmpty(  ) && ( parameterBlobStore != null ) &&
+                        !parameterBlobStore.isEmpty(  ) )
                 {
                     String strBlobKey = parameterBlobKey.get( 0 );
                     String strBlobStore = parameterBlobStore.get( 0 );
@@ -305,9 +305,9 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @throws BlobStoreClientException Exception if there is an issue
      */
     public String getFileUrl( String strBaseUrl, String strBlobKey, String strBlobStore )
-            throws BlobStoreClientException
+        throws BlobStoreClientException
     {
-        if ( isBlobStoreClientServiceAvailable( ) )
+        if ( isBlobStoreClientServiceAvailable(  ) )
         {
             return _blobStoreClientService.getFileUrl( strBaseUrl, strBlobKey, strBlobStore );
         }
@@ -323,7 +323,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      */
     public String getFileName( String strUrl ) throws BlobStoreClientException
     {
-        if ( isBlobStoreClientServiceAvailable( ) )
+        if ( isBlobStoreClientServiceAvailable(  ) )
         {
             return _blobStoreClientService.getFileName( strUrl );
         }
@@ -337,9 +337,10 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param strFilePath the file path to download
      * @throws BlobStoreClientException exception if there is an error
      */
-    public void doDownloadFile( String strUrl, String strFilePath ) throws BlobStoreClientException
+    public void doDownloadFile( String strUrl, String strFilePath )
+        throws BlobStoreClientException
     {
-        if ( isBlobStoreClientServiceAvailable( ) )
+        if ( isBlobStoreClientServiceAvailable(  ) )
         {
             _blobStoreClientService.doDownloadFile( strUrl, strFilePath );
         }
@@ -353,7 +354,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      */
     public FileItem doDownloadFile( String strUrl ) throws BlobStoreClientException
     {
-        if ( isBlobStoreClientServiceAvailable( ) )
+        if ( isBlobStoreClientServiceAvailable(  ) )
         {
             return _blobStoreClientService.doDownloadFile( strUrl );
         }
@@ -384,7 +385,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Removes the file from the list.
-     * 
+     *
      * @param strIdEntry the entry id
      * @param strSessionId the session id
      * @param nIndex the n index
@@ -394,11 +395,11 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         // Remove the file (this will also delete the file physically)
         List<FileItem> uploadedFiles = getFileItems( strIdEntry, strSessionId );
 
-        if ( ( uploadedFiles != null ) && !uploadedFiles.isEmpty( ) && ( uploadedFiles.size( ) > nIndex ) )
+        if ( ( uploadedFiles != null ) && !uploadedFiles.isEmpty(  ) && ( uploadedFiles.size(  ) > nIndex ) )
         {
             // Remove the object from the Hashmap
             FileItem fileItem = uploadedFiles.remove( nIndex );
-            fileItem.delete( );
+            fileItem.delete(  );
         }
     }
 
@@ -424,22 +425,22 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         String strFileName = UploadUtil.cleanFileName( FileUploadService.getFileNameOnly( fileItem ) );
 
         // Check if this file has not already been uploaded
-        List<FileItem> uploadedFiles = getFileItems( strIdEntry, session.getId( ) );
+        List<FileItem> uploadedFiles = getFileItems( strIdEntry, session.getId(  ) );
 
-        if ( ( uploadedFiles != null ) && !uploadedFiles.isEmpty( ) )
+        if ( ( uploadedFiles != null ) && !uploadedFiles.isEmpty(  ) )
         {
-            Iterator<FileItem> iterUploadedFiles = uploadedFiles.iterator( );
+            Iterator<FileItem> iterUploadedFiles = uploadedFiles.iterator(  );
             boolean bNew = true;
 
-            while ( bNew && iterUploadedFiles.hasNext( ) )
+            while ( bNew && iterUploadedFiles.hasNext(  ) )
             {
-                FileItem uploadedFile = iterUploadedFiles.next( );
-                String strUploadedFileName = UploadUtil
-                        .cleanFileName( FileUploadService.getFileNameOnly( uploadedFile ) );
+                FileItem uploadedFile = iterUploadedFiles.next(  );
+                String strUploadedFileName = UploadUtil.cleanFileName( FileUploadService.getFileNameOnly( uploadedFile ) );
                 // If we find a file with the same name and the same
                 // length, we consider that the current file has
                 // already been uploaded
-                bNew = !( strUploadedFileName.equals( strFileName ) && ( uploadedFile.getSize( ) == fileItem.getSize( ) ) );
+                bNew = !( strUploadedFileName.equals( strFileName ) &&
+                    ( uploadedFile.getSize(  ) == fileItem.getSize(  ) ) );
             }
 
             if ( !bNew )
@@ -450,6 +451,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
                 // TODO : Raise an error
             }
         }
+
         if ( uploadedFiles != null )
         {
             uploadedFiles.add( fileItem );
@@ -470,17 +472,17 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     /**
      * Checks the request parameters to see if an upload submit has been
      * called.
-     * 
+     *
      * @param request the HTTP request
      * @return the name of the upload action, if any. Null otherwise.
      */
     public String getUploadAction( HttpServletRequest request )
     {
-        Enumeration enumParamNames = request.getParameterNames( );
+        Enumeration<String> enumParamNames = request.getParameterNames(  );
 
-        while ( enumParamNames.hasMoreElements( ) )
+        while ( enumParamNames.hasMoreElements(  ) )
         {
-            String paramName = (String) enumParamNames.nextElement( );
+            String paramName = enumParamNames.nextElement(  );
 
             if ( paramName.startsWith( UPLOAD_SUBMIT_PREFIX ) || paramName.startsWith( UPLOAD_DELETE_PREFIX ) )
             {
@@ -493,7 +495,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Performs an upload action.
-     * 
+     *
      * @param request the HTTP request
      * @param strUploadAction the name of the upload action
      * @param map the map of <idEntry, RecordFields>
@@ -502,12 +504,12 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @throws DirectoryErrorException exception if there is an error
      */
     public void doUploadAction( HttpServletRequest request, String strUploadAction, Map<String, List<RecordField>> map,
-            Record record, Plugin plugin ) throws DirectoryErrorException
+        Record record, Plugin plugin ) throws DirectoryErrorException
     {
         // Get the name of the upload field
-        String strIdEntry = ( strUploadAction.startsWith( UPLOAD_SUBMIT_PREFIX ) ? strUploadAction
-                .substring( UPLOAD_SUBMIT_PREFIX.length( ) ) : strUploadAction
-                .substring( UPLOAD_DELETE_PREFIX.length( ) ) );
+        String strIdEntry = ( strUploadAction.startsWith( UPLOAD_SUBMIT_PREFIX )
+            ? strUploadAction.substring( UPLOAD_SUBMIT_PREFIX.length(  ) )
+            : strUploadAction.substring( UPLOAD_DELETE_PREFIX.length(  ) ) );
 
         String strFieldName = buildFieldName( strIdEntry );
 
@@ -521,26 +523,26 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
             if ( fileItem != null )
             {
                 // Check if the file can be uploaded first
-                List<FileItem> listFileItemsToUpload = new ArrayList<FileItem>( );
+                List<FileItem> listFileItemsToUpload = new ArrayList<FileItem>(  );
                 listFileItemsToUpload.add( fileItem );
 
-                HttpSession session = request.getSession( );
+                HttpSession session = request.getSession(  );
                 // The following method call throws a DirectoryErrorException if the file cannot be uploaded
-                canUploadFiles( strFieldName, getFileItems( strIdEntry, session.getId( ) ), listFileItemsToUpload,
-                        request.getLocale( ) );
+                canUploadFiles( strFieldName, getFileItems( strIdEntry, session.getId(  ) ), listFileItemsToUpload,
+                    request.getLocale(  ) );
 
                 // Add the file to the map of <idEntry, RecordFields>
                 IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( strIdEntry ), plugin );
 
                 if ( entry != null )
                 {
-                    RecordField recordField = new RecordField( );
+                    RecordField recordField = new RecordField(  );
                     recordField.setRecord( record );
                     recordField.setEntry( entry );
 
                     String strFilename = FileUploadService.getFileNameOnly( fileItem );
 
-                    if ( fileItem.get( ) != null && fileItem.getSize( ) < Integer.MAX_VALUE )
+                    if ( ( fileItem.get(  ) != null ) && ( fileItem.getSize(  ) < Integer.MAX_VALUE ) )
                     {
                         if ( entry instanceof EntryTypeDownloadUrl )
                         {
@@ -549,13 +551,13 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
                         }
                         else
                         {
-                            PhysicalFile physicalFile = new PhysicalFile( );
-                            physicalFile.setValue( fileItem.get( ) );
+                            PhysicalFile physicalFile = new PhysicalFile(  );
+                            physicalFile.setValue( fileItem.get(  ) );
 
-                            File file = new File( );
+                            File file = new File(  );
                             file.setPhysicalFile( physicalFile );
                             file.setTitle( strFilename );
-                            file.setSize( (int) fileItem.getSize( ) );
+                            file.setSize( (int) fileItem.getSize(  ) );
                             file.setMimeType( FileSystemUtil.getMIMEType( strFilename ) );
 
                             recordField.setFile( file );
@@ -566,7 +568,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
                     if ( listRecordFields == null )
                     {
-                        listRecordFields = new ArrayList<RecordField>( );
+                        listRecordFields = new ArrayList<RecordField>(  );
                     }
 
                     listRecordFields.add( recordField );
@@ -574,7 +576,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
                 }
 
                 // Add to the asynchronous uploaded files map
-                addFileItemToUploadedFile( fileItem, strIdEntry, request.getSession( ) );
+                addFileItemToUploadedFile( fileItem, strIdEntry, request.getSession(  ) );
             }
         }
         else if ( strUploadAction.startsWith( UPLOAD_DELETE_PREFIX ) )
@@ -588,17 +590,17 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
                 String strPrefix = UPLOAD_CHECKBOX_PREFIX + strIdEntry;
 
                 // Look for the checkboxes in the request
-                Enumeration enumParamNames = request.getParameterNames( );
-                List<Integer> listIndexes = new ArrayList<Integer>( );
+                Enumeration<String> enumParamNames = request.getParameterNames(  );
+                List<Integer> listIndexes = new ArrayList<Integer>(  );
 
-                while ( enumParamNames.hasMoreElements( ) )
+                while ( enumParamNames.hasMoreElements(  ) )
                 {
-                    String strParamName = (String) enumParamNames.nextElement( );
+                    String strParamName = enumParamNames.nextElement(  );
 
                     if ( strParamName.startsWith( strPrefix ) )
                     {
                         // Get the index from the name of the checkbox
-                        listIndexes.add( Integer.parseInt( strParamName.substring( strPrefix.length( ) ) ) );
+                        listIndexes.add( Integer.parseInt( strParamName.substring( strPrefix.length(  ) ) ) );
                     }
                 }
 
@@ -616,7 +618,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
                     }
 
                     // Remove from the asynchronous uploaded files map
-                    removeFileItem( strIdEntry, session.getId( ), nIndex );
+                    removeFileItem( strIdEntry, session.getId(  ), nIndex );
                 }
             }
         }
@@ -630,49 +632,52 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      */
     public void reinitMap( HttpServletRequest request, Map<String, List<RecordField>> map, Plugin plugin )
     {
-        HttpSession session = request.getSession( );
-        removeSessionFiles( session.getId( ) );
+        HttpSession session = request.getSession(  );
+        removeSessionFiles( session.getId(  ) );
 
-        if ( ( map != null ) && !map.isEmpty( ) )
+        if ( ( map != null ) && !map.isEmpty(  ) )
         {
-            for ( java.util.Map.Entry<String, List<RecordField>> param : map.entrySet( ) )
+            for ( java.util.Map.Entry<String, List<RecordField>> param : map.entrySet(  ) )
             {
-                for ( RecordField recordField : param.getValue( ) )
+                for ( RecordField recordField : param.getValue(  ) )
                 {
                     if ( recordField != null )
                     {
-                        IEntry entry = recordField.getEntry( );
+                        IEntry entry = recordField.getEntry(  );
 
-                        if ( ( recordField.getFile( ) != null ) && ( recordField.getFile( ).getPhysicalFile( ) != null )
-                                && !recordField.isLittleThumbnail( ) && !recordField.isBigThumbnail( ) )
+                        if ( ( recordField.getFile(  ) != null ) &&
+                                ( recordField.getFile(  ).getPhysicalFile(  ) != null ) &&
+                                !recordField.isLittleThumbnail(  ) && !recordField.isBigThumbnail(  ) )
                         {
                             // The little thumbnail and the big thumbnail should not be stored in the session
-                            File file = recordField.getFile( );
-                            PhysicalFile physicalFile = PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile( )
-                                    .getIdPhysicalFile( ), plugin );
-                            FileItem fileItem = new DirectoryFileItem( physicalFile.getValue( ), file.getTitle( ) );
+                            File file = recordField.getFile(  );
+                            PhysicalFile physicalFile = PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile(  )
+                                                                                               .getIdPhysicalFile(  ),
+                                    plugin );
+                            FileItem fileItem = new DirectoryFileItem( physicalFile.getValue(  ), file.getTitle(  ) );
                             // Add the file item to the map
-                            addFileItemToUploadedFile( fileItem, Integer.toString( entry.getIdEntry( ) ), session );
+                            addFileItemToUploadedFile( fileItem, Integer.toString( entry.getIdEntry(  ) ), session );
                         }
-                        else if ( recordField.getEntry( ) instanceof EntryTypeDownloadUrl
-                                && isBlobStoreClientServiceAvailable( ) )
+                        else if ( recordField.getEntry(  ) instanceof EntryTypeDownloadUrl &&
+                                isBlobStoreClientServiceAvailable(  ) )
                         {
                             // Different behaviour if the entry is an EntryTypeDownloadUrl
                             FileItem fileItem;
 
                             try
                             {
-                                fileItem = doDownloadFile( recordField.getValue( ) );
+                                fileItem = doDownloadFile( recordField.getValue(  ) );
 
-                                FileItem directoryFileItem = new DirectoryFileItem( fileItem.get( ), fileItem.getName( ) );
+                                FileItem directoryFileItem = new DirectoryFileItem( fileItem.get(  ),
+                                        fileItem.getName(  ) );
                                 // Add the file item to the map
-                                addFileItemToUploadedFile( directoryFileItem, Integer.toString( entry.getIdEntry( ) ),
-                                        session );
+                                addFileItemToUploadedFile( directoryFileItem, Integer.toString( entry.getIdEntry(  ) ),
+                                    session );
                             }
                             catch ( BlobStoreClientException e )
                             {
-                                AppLogService.error( DirectoryAsynchronousUploadHandler.class.getName( )
-                                        + " - Error when reinit map. Cause : " + e.getMessage( ) );
+                                AppLogService.error( DirectoryAsynchronousUploadHandler.class.getName(  ) +
+                                    " - Error when reinit map. Cause : " + e.getMessage(  ) );
                             }
                         }
                     }
@@ -698,7 +703,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
             {
                 if ( _mapAsynchronousUpload.get( strSessionId ) == null )
                 {
-                    mapFileItemsSession = new ConcurrentHashMap<String, List<FileItem>>( );
+                    mapFileItemsSession = new ConcurrentHashMap<String, List<FileItem>>(  );
                     _mapAsynchronousUpload.put( strSessionId, mapFileItemsSession );
                 }
             }
@@ -708,7 +713,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
         if ( listFileItems == null )
         {
-            listFileItems = new ArrayList<FileItem>( );
+            listFileItems = new ArrayList<FileItem>(  );
             mapFileItemsSession.put( strFieldName, listFileItems );
         }
     }
@@ -726,13 +731,13 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @category CALLED_BY_JS (directoryupload.js)
      */
     private boolean canUploadFiles( String strFieldName, List<FileItem> listUploadedFileItems,
-            List<FileItem> listFileItemsToUpload, JSONObject mainObject, Locale locale )
+        List<FileItem> listFileItemsToUpload, JSONObject mainObject, Locale locale )
     {
         if ( StringUtils.isNotBlank( strFieldName ) )
         {
-            String strIdEntry = strFieldName.substring( PREFIX_ENTRY_ID.length( ) );
+            String strIdEntry = strFieldName.substring( PREFIX_ENTRY_ID.length(  ) );
             int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
-            IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, DirectoryUtils.getPlugin( ) );
+            IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, DirectoryUtils.getPlugin(  ) );
 
             if ( entry != null )
             {
@@ -742,7 +747,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
                 }
                 catch ( DirectoryErrorException e )
                 {
-                    JSONUtils.buildJsonError( mainObject, e.getErrorMessage( ) );
+                    JSONUtils.buildJsonError( mainObject, e.getErrorMessage(  ) );
 
                     return false;
                 }
@@ -765,13 +770,14 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @throws DirectoryErrorException exception if there is an error
      */
     private void canUploadFiles( String strFieldName, List<FileItem> listUploadedFileItems,
-            List<FileItem> listFileItemsToUpload, Locale locale ) throws DirectoryErrorException
+        List<FileItem> listFileItemsToUpload, Locale locale )
+        throws DirectoryErrorException
     {
         if ( StringUtils.isNotBlank( strFieldName ) )
         {
-            String strIdEntry = strFieldName.substring( PREFIX_ENTRY_ID.length( ) );
+            String strIdEntry = strFieldName.substring( PREFIX_ENTRY_ID.length(  ) );
             int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
-            IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, DirectoryUtils.getPlugin( ) );
+            IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, DirectoryUtils.getPlugin(  ) );
 
             if ( entry != null )
             {
@@ -781,11 +787,11 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     }
 
     /**
-     * 
+     *
      * DirectoryFileItem : builds fileItem from json response.
-     * 
+     *
      */
-    private static class DirectoryFileItem implements FileItem, Serializable
+    private static class DirectoryFileItem implements FileItem
     {
         private static final long serialVersionUID = 1L;
         private byte[] _bValue;
@@ -806,7 +812,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public void delete( )
+        public void delete(  )
         {
             _bValue = null;
         }
@@ -815,7 +821,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public byte[] get( )
+        public byte[] get(  )
         {
             return _bValue;
         }
@@ -824,7 +830,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public String getContentType( )
+        public String getContentType(  )
         {
             return FileSystemUtil.getMIMEType( _strFileName );
         }
@@ -833,7 +839,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public String getFieldName( )
+        public String getFieldName(  )
         {
             return null;
         }
@@ -842,7 +848,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public InputStream getInputStream( ) throws IOException
+        public InputStream getInputStream(  ) throws IOException
         {
             return new ByteArrayInputStream( _bValue );
         }
@@ -851,7 +857,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public String getName( )
+        public String getName(  )
         {
             return _strFileName;
         }
@@ -860,7 +866,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public OutputStream getOutputStream( ) throws IOException
+        public OutputStream getOutputStream(  ) throws IOException
         {
             return null;
         }
@@ -869,7 +875,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public long getSize( )
+        public long getSize(  )
         {
             return _bValue.length;
         }
@@ -878,7 +884,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public String getString( )
+        public String getString(  )
         {
             return new String( _bValue );
         }
@@ -896,7 +902,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public boolean isFormField( )
+        public boolean isFormField(  )
         {
             return false;
         }
@@ -905,7 +911,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
          * {@inheritDoc}
          */
         @Override
-        public boolean isInMemory( )
+        public boolean isInMemory(  )
         {
             return true;
         }

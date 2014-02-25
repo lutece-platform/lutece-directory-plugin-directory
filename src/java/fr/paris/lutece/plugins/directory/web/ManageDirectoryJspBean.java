@@ -84,7 +84,7 @@ public class ManageDirectoryJspBean extends PluginAdminPageJspBean
     {
         setPageTitleProperty( EMPTY_STRING );
 
-        HashMap<String, Object> model = new HashMap<String, Object>( );
+        HashMap<String, Object> model = new HashMap<String, Object>(  );
 
         model.put( MARK_PERMISSION_INDEX_ALL_DIRECTORY,
             RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,

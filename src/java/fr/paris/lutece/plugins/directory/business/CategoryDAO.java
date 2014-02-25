@@ -51,9 +51,10 @@ public class CategoryDAO implements ICategoryDAO
         " FROM directory_category WHERE id_category=?";
     private static final String SQL_QUERY_SELECT = "SELECT id_category,title_key" + " FROM directory_category ";
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.ICategoryDAO#load(int, fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Category load( int idKey, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
@@ -74,9 +75,10 @@ public class CategoryDAO implements ICategoryDAO
         return category;
     }
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.ICategoryDAO#select(fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<Category> select( Plugin plugin )
     {
         List<Category> listCategory = new ArrayList<Category>(  );

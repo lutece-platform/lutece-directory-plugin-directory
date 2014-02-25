@@ -43,9 +43,9 @@ import java.util.Map.Entry;
 
 
 /**
- * 
+ *
  * DirectoryAttributeHome
- * 
+ *
  */
 public final class DirectoryAttributeHome
 {
@@ -56,9 +56,8 @@ public final class DirectoryAttributeHome
     /**
      * Private constructor
      */
-    private DirectoryAttributeHome( )
+    private DirectoryAttributeHome(  )
     {
-
     }
 
     /**
@@ -73,7 +72,9 @@ public final class DirectoryAttributeHome
 
     /**
      * Create an attribute of the directory
-     * @param directoryAttributes the directory attributes
+     * @param nIdDirectory The id of the directory
+     * @param strAttributeKey The key of the attribute
+     * @param attributeValue The attribute value
      */
     public static void create( int nIdDirectory, String strAttributeKey, Object attributeValue )
     {
@@ -87,9 +88,9 @@ public final class DirectoryAttributeHome
      */
     public static void create( int nIdDirectory, Map<String, Object> mapAttributes )
     {
-        for ( Entry<String, Object> attribute : mapAttributes.entrySet( ) )
+        for ( Entry<String, Object> attribute : mapAttributes.entrySet(  ) )
         {
-            create( nIdDirectory, attribute.getKey( ), attribute.getValue( ) );
+            create( nIdDirectory, attribute.getKey(  ), attribute.getValue(  ) );
         }
     }
 

@@ -35,10 +35,6 @@ package fr.paris.lutece.plugins.directory.utils;
 
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
@@ -46,11 +42,15 @@ import net.sf.json.JSONSerializer;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
- * 
+ *
  * JSONUtils
- * 
+ *
  */
 public final class JSONUtils
 {
@@ -66,7 +66,7 @@ public final class JSONUtils
     /**
      * Private constructor
      */
-    private JSONUtils( )
+    private JSONUtils(  )
     {
     }
 
@@ -77,7 +77,7 @@ public final class JSONUtils
      */
     public static JSONObject buildJsonError( String strMessage )
     {
-        JSONObject json = new JSONObject( );
+        JSONObject json = new JSONObject(  );
         buildJsonError( json, strMessage );
 
         return json;
@@ -104,10 +104,11 @@ public final class JSONUtils
      */
     public static JSONObject buildJsonSuccess( String strIdEntry, String strSessionId )
     {
-        JSONObject json = new JSONObject( );
-        json.accumulateAll( getUploadedFileJSON( DirectoryAsynchronousUploadHandler.getHandler( ).getFileItems(
-                strIdEntry, strSessionId ) ) );
-        buildJsonSuccess( DirectoryAsynchronousUploadHandler.getHandler( ).buildFieldName( strIdEntry ), json );
+        JSONObject json = new JSONObject(  );
+        json.accumulateAll( getUploadedFileJSON( DirectoryAsynchronousUploadHandler.getHandler(  )
+                                                                                   .getFileItems( strIdEntry,
+                    strSessionId ) ) );
+        buildJsonSuccess( DirectoryAsynchronousUploadHandler.getHandler(  ).buildFieldName( strIdEntry ), json );
 
         return json;
     }
@@ -137,17 +138,17 @@ public final class JSONUtils
      */
     public static JSONObject getUploadedFileJSON( List<FileItem> listFileItem )
     {
-        JSONObject json = new JSONObject( );
+        JSONObject json = new JSONObject(  );
 
         if ( listFileItem != null )
         {
             for ( FileItem fileItem : listFileItem )
             {
-                json.accumulate( JSON_KEY_UPLOADED_FILES, fileItem.getName( ) );
-                json.accumulate( JSON_KEY_UPLOADED_FILES_SIZE, fileItem.getSize( ) );
+                json.accumulate( JSON_KEY_UPLOADED_FILES, fileItem.getName(  ) );
+                json.accumulate( JSON_KEY_UPLOADED_FILES_SIZE, fileItem.getSize(  ) );
             }
 
-            json.element( JSON_KEY_FILE_COUNT, listFileItem.size( ) );
+            json.element( JSON_KEY_FILE_COUNT, listFileItem.size(  ) );
         }
         else
         {
@@ -172,7 +173,7 @@ public final class JSONUtils
      */
     public static Map<String, String> getUserInfos( String strJSON )
     {
-        Map<String, String> userInfos = new HashMap<String, String>( );
+        Map<String, String> userInfos = new HashMap<String, String>(  );
 
         if ( StringUtils.isNotBlank( strJSON ) )
         {
@@ -187,7 +188,7 @@ public final class JSONUtils
                 if ( arrayUserAttributes != null )
                 {
                     // Browse each user attribute
-                    for ( int i = 0; i < arrayUserAttributes.size( ); i++ )
+                    for ( int i = 0; i < arrayUserAttributes.size(  ); i++ )
                     {
                         put( userInfos, arrayUserAttributes.getJSONObject( i ) );
                     }
@@ -207,9 +208,9 @@ public final class JSONUtils
     {
         if ( userAttribute != null )
         {
-            JSONArray listCodes = userAttribute.names( );
+            JSONArray listCodes = userAttribute.names(  );
 
-            for ( int i = 0; i < listCodes.size( ); i++ )
+            for ( int i = 0; i < listCodes.size(  ); i++ )
             {
                 String strCode = listCodes.getString( i );
                 String strValue = userAttribute.getString( strCode );

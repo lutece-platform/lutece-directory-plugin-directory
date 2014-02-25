@@ -41,14 +41,18 @@ import fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation;
  */
 public class DirectoryPlugin extends PluginDefaultImplementation
 {
+    /**
+     * Name of the directory plugin
+     */
     public static final String PLUGIN_NAME = "directory";
 
     /**
-     * Initialize the plugin form
+     * {@inheritDoc}
      */
+    @Override
     public void init(  )
     {
-        // Initialize the Poll service
+        // Initialize the Directory service
         DirectoryService.getInstance(  ).init(  );
     }
 }

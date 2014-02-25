@@ -49,30 +49,30 @@ public final class DirectoryDAO implements IDirectoryDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_directory ) FROM directory_directory";
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_directory,title,description,"
-            + " unavailability_message,workgroup_key,role_key,"
-            + " is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page,"
-            + " id_workflow, is_search_wf_state, is_search_comp_wf_state, "
-            + " is_ascending_sort, is_directory_record_activated, id_sort_entry, is_indexed,id_sort_entry_front,is_ascending_sort_front, front_office_title, automatic_record_removal_workflow_state "
-            + " FROM directory_directory WHERE id_directory = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_directory (id_directory,title,description,"
-            + " unavailability_message,workgroup_key,role_key,"
-            + " is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page,"
-            + " id_workflow, is_search_wf_state, is_search_comp_wf_state, is_directory_record_activated, is_indexed, front_office_title, automatic_record_removal_workflow_state) "
-            + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_directory,title,description," +
+        " unavailability_message,workgroup_key,role_key," +
+        " is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page," +
+        " id_workflow, is_search_wf_state, is_search_comp_wf_state, " +
+        " is_ascending_sort, is_directory_record_activated, id_sort_entry, is_indexed,id_sort_entry_front,is_ascending_sort_front, front_office_title, automatic_record_removal_workflow_state " +
+        " FROM directory_directory WHERE id_directory = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_directory (id_directory,title,description," +
+        " unavailability_message,workgroup_key,role_key," +
+        " is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page," +
+        " id_workflow, is_search_wf_state, is_search_comp_wf_state, is_directory_record_activated, is_indexed, front_office_title, automatic_record_removal_workflow_state) " +
+        " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_directory  WHERE id_directory = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE directory_directory  SET id_directory=?,title=?,description=?,"
-            + "unavailability_message=?,workgroup_key=?,role_key=?,"
-            + "is_enabled=?,id_result_list_template=?,id_result_record_template=? ,id_form_search_template=? ,number_record_per_page=?,"
-            + "id_workflow=?, is_search_wf_state=?, is_search_comp_wf_state=?, "
-            + "is_ascending_sort=?, is_directory_record_activated=?, id_sort_entry=?, is_indexed=?,id_sort_entry_front=?,is_ascending_sort_front=?, "
-            + "front_office_title=?, automatic_record_removal_workflow_state=? WHERE id_directory=?";
-    private static final String SQL_QUERY_SELECT_DIRECTORY_BY_FILTER = "SELECT id_directory,title,description,"
-            + "unavailability_message,workgroup_key,role_key,"
-            + "is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page"
-            + ",id_workflow,is_search_wf_state, is_search_comp_wf_state, is_ascending_sort, "
-            + " is_directory_record_activated, id_sort_entry, is_indexed,id_sort_entry_front,is_ascending_sort_front, front_office_title, automatic_record_removal_workflow_state "
-            + "FROM directory_directory ";
+    private static final String SQL_QUERY_UPDATE = "UPDATE directory_directory  SET id_directory=?,title=?,description=?," +
+        "unavailability_message=?,workgroup_key=?,role_key=?," +
+        "is_enabled=?,id_result_list_template=?,id_result_record_template=? ,id_form_search_template=? ,number_record_per_page=?," +
+        "id_workflow=?, is_search_wf_state=?, is_search_comp_wf_state=?, " +
+        "is_ascending_sort=?, is_directory_record_activated=?, id_sort_entry=?, is_indexed=?,id_sort_entry_front=?,is_ascending_sort_front=?, " +
+        "front_office_title=?, automatic_record_removal_workflow_state=? WHERE id_directory=?";
+    private static final String SQL_QUERY_SELECT_DIRECTORY_BY_FILTER = "SELECT id_directory,title,description," +
+        "unavailability_message,workgroup_key,role_key," +
+        "is_enabled,date_creation,id_result_list_template,id_result_record_template,id_form_search_template,number_record_per_page" +
+        ",id_workflow,is_search_wf_state, is_search_comp_wf_state, is_ascending_sort, " +
+        " is_directory_record_activated, id_sort_entry, is_indexed,id_sort_entry_front,is_ascending_sort_front, front_office_title, automatic_record_removal_workflow_state " +
+        "FROM directory_directory ";
     private static final String SQL_FILTER_WORKGROUP = " workgroup_key = ? ";
     private static final String SQL_FILTER_IS_ENABLED = " is_enabled = ? ";
     private static final String SQL_FILTER_WORKFLOW = " id_workflow = ? ";
@@ -81,32 +81,32 @@ public final class DirectoryDAO implements IDirectoryDAO
 
     /**
      * Generates a new primary key
-     * 
+     *
      * @param plugin the plugin
      * @return The new primary key
      */
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery( );
+        daoUtil.executeQuery(  );
 
         int nKey;
 
-        if ( !daoUtil.next( ) )
+        if ( !daoUtil.next(  ) )
         {
             // if the table is empty
             nKey = 1;
         }
 
         nKey = daoUtil.getInt( 1 ) + 1;
-        daoUtil.free( );
+        daoUtil.free(  );
 
         return nKey;
     }
 
     /**
      * Insert a new record in the table.
-     * 
+     *
      * @param directory instance of the Directory to insert
      * @param plugin the plugin
      * @return the new directory create
@@ -114,71 +114,71 @@ public final class DirectoryDAO implements IDirectoryDAO
     public synchronized int insert( Directory directory, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
-        daoUtil.setString( 2, directory.getTitle( ) );
-        daoUtil.setString( 3, directory.getDescription( ) );
-        daoUtil.setString( 4, directory.getUnavailabilityMessage( ) );
-        daoUtil.setString( 5, directory.getWorkgroup( ) );
-        daoUtil.setString( 6, directory.getRoleKey( ) );
-        daoUtil.setBoolean( 7, directory.isEnabled( ) );
-        daoUtil.setTimestamp( 8, directory.getDateCreation( ) );
+        daoUtil.setString( 2, directory.getTitle(  ) );
+        daoUtil.setString( 3, directory.getDescription(  ) );
+        daoUtil.setString( 4, directory.getUnavailabilityMessage(  ) );
+        daoUtil.setString( 5, directory.getWorkgroup(  ) );
+        daoUtil.setString( 6, directory.getRoleKey(  ) );
+        daoUtil.setBoolean( 7, directory.isEnabled(  ) );
+        daoUtil.setTimestamp( 8, directory.getDateCreation(  ) );
 
-        if ( directory.getIdResultListTemplate( ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( directory.getIdResultListTemplate(  ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            daoUtil.setInt( 9, directory.getIdResultListTemplate( ) );
+            daoUtil.setInt( 9, directory.getIdResultListTemplate(  ) );
         }
         else
         {
             daoUtil.setIntNull( 9 );
         }
 
-        if ( directory.getIdResultRecordTemplate( ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( directory.getIdResultRecordTemplate(  ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            daoUtil.setInt( 10, directory.getIdResultRecordTemplate( ) );
+            daoUtil.setInt( 10, directory.getIdResultRecordTemplate(  ) );
         }
         else
         {
             daoUtil.setIntNull( 10 );
         }
 
-        if ( directory.getIdFormSearchTemplate( ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( directory.getIdFormSearchTemplate(  ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            daoUtil.setInt( 11, directory.getIdFormSearchTemplate( ) );
+            daoUtil.setInt( 11, directory.getIdFormSearchTemplate(  ) );
         }
         else
         {
             daoUtil.setIntNull( 11 );
         }
 
-        daoUtil.setInt( 12, directory.getNumberRecordPerPage( ) );
+        daoUtil.setInt( 12, directory.getNumberRecordPerPage(  ) );
 
-        if ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            daoUtil.setInt( 13, directory.getIdWorkflow( ) );
+            daoUtil.setInt( 13, directory.getIdWorkflow(  ) );
         }
         else
         {
             daoUtil.setIntNull( 13 );
         }
 
-        daoUtil.setBoolean( 14, directory.isDisplaySearchState( ) );
-        daoUtil.setBoolean( 15, directory.isDisplayComplementarySearchState( ) );
-        daoUtil.setBoolean( 16, directory.isRecordActivated( ) );
-        daoUtil.setBoolean( 17, directory.isIndexed( ) );
-        daoUtil.setString( 18, directory.getFrontOfficeTitle( ) );
-        daoUtil.setInt( 19, directory.getIdWorkflowStateToRemove( ) );
+        daoUtil.setBoolean( 14, directory.isDisplaySearchState(  ) );
+        daoUtil.setBoolean( 15, directory.isDisplayComplementarySearchState(  ) );
+        daoUtil.setBoolean( 16, directory.isRecordActivated(  ) );
+        daoUtil.setBoolean( 17, directory.isIndexed(  ) );
+        daoUtil.setString( 18, directory.getFrontOfficeTitle(  ) );
+        daoUtil.setInt( 19, directory.getIdWorkflowStateToRemove(  ) );
 
         directory.setIdDirectory( newPrimaryKey( plugin ) );
-        daoUtil.setInt( 1, directory.getIdDirectory( ) );
+        daoUtil.setInt( 1, directory.getIdDirectory(  ) );
 
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
 
-        return directory.getIdDirectory( );
+        return directory.getIdDirectory(  );
     }
 
     /**
      * Load the data of the Directory from the table
-     * 
+     *
      * @param nId The identifier of the directory
      * @param plugin the plugin
      * @return the instance of the Directory
@@ -187,13 +187,13 @@ public final class DirectoryDAO implements IDirectoryDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
         daoUtil.setInt( 1, nId );
-        daoUtil.executeQuery( );
+        daoUtil.executeQuery(  );
 
         Directory directory = null;
 
-        if ( daoUtil.next( ) )
+        if ( daoUtil.next(  ) )
         {
-            directory = new Directory( );
+            directory = new Directory(  );
             directory.setIdDirectory( daoUtil.getInt( 1 ) );
             directory.setTitle( daoUtil.getString( 2 ) );
             directory.setDescription( daoUtil.getString( 3 ) );
@@ -238,14 +238,14 @@ public final class DirectoryDAO implements IDirectoryDAO
             directory.setIdWorkflowStateToRemove( daoUtil.getInt( 23 ) );
         }
 
-        daoUtil.free( );
+        daoUtil.free(  );
 
         return directory;
     }
 
     /**
      * Delete a record from the table
-     * 
+     *
      * @param nIdDirectory The identifier of the directory
      * @param plugin the plugin
      */
@@ -253,13 +253,13 @@ public final class DirectoryDAO implements IDirectoryDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdDirectory );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
     }
 
     /**
      * Update the directory in the table
-     * 
+     *
      * @param directory instance of the Directory object to update
      * @param plugin the plugin
      */
@@ -267,68 +267,68 @@ public final class DirectoryDAO implements IDirectoryDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-        daoUtil.setInt( 1, directory.getIdDirectory( ) );
-        daoUtil.setString( 2, directory.getTitle( ) );
-        daoUtil.setString( 3, directory.getDescription( ) );
-        daoUtil.setString( 4, directory.getUnavailabilityMessage( ) );
-        daoUtil.setString( 5, directory.getWorkgroup( ) );
-        daoUtil.setString( 6, directory.getRoleKey( ) );
-        daoUtil.setBoolean( 7, directory.isEnabled( ) );
+        daoUtil.setInt( 1, directory.getIdDirectory(  ) );
+        daoUtil.setString( 2, directory.getTitle(  ) );
+        daoUtil.setString( 3, directory.getDescription(  ) );
+        daoUtil.setString( 4, directory.getUnavailabilityMessage(  ) );
+        daoUtil.setString( 5, directory.getWorkgroup(  ) );
+        daoUtil.setString( 6, directory.getRoleKey(  ) );
+        daoUtil.setBoolean( 7, directory.isEnabled(  ) );
 
-        if ( directory.getIdResultListTemplate( ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( directory.getIdResultListTemplate(  ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            daoUtil.setInt( 8, directory.getIdResultListTemplate( ) );
+            daoUtil.setInt( 8, directory.getIdResultListTemplate(  ) );
         }
         else
         {
             daoUtil.setIntNull( 8 );
         }
 
-        if ( directory.getIdResultRecordTemplate( ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( directory.getIdResultRecordTemplate(  ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            daoUtil.setInt( 9, directory.getIdResultRecordTemplate( ) );
+            daoUtil.setInt( 9, directory.getIdResultRecordTemplate(  ) );
         }
         else
         {
             daoUtil.setIntNull( 9 );
         }
 
-        if ( directory.getIdFormSearchTemplate( ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( directory.getIdFormSearchTemplate(  ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            daoUtil.setInt( 10, directory.getIdFormSearchTemplate( ) );
+            daoUtil.setInt( 10, directory.getIdFormSearchTemplate(  ) );
         }
         else
         {
             daoUtil.setIntNull( 10 );
         }
 
-        daoUtil.setInt( 11, directory.getNumberRecordPerPage( ) );
+        daoUtil.setInt( 11, directory.getNumberRecordPerPage(  ) );
 
-        if ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            daoUtil.setInt( 12, directory.getIdWorkflow( ) );
+            daoUtil.setInt( 12, directory.getIdWorkflow(  ) );
         }
         else
         {
             daoUtil.setIntNull( 12 );
         }
 
-        daoUtil.setBoolean( 13, directory.isDisplaySearchState( ) );
-        daoUtil.setBoolean( 14, directory.isDisplayComplementarySearchState( ) );
+        daoUtil.setBoolean( 13, directory.isDisplaySearchState(  ) );
+        daoUtil.setBoolean( 14, directory.isDisplayComplementarySearchState(  ) );
 
-        daoUtil.setBoolean( 15, directory.isAscendingSort( ) );
-        daoUtil.setBoolean( 16, directory.isRecordActivated( ) );
-        daoUtil.setString( 17, directory.getIdSortEntry( ) );
-        daoUtil.setBoolean( 18, directory.isIndexed( ) );
-        daoUtil.setString( 19, directory.getIdSortEntryFront( ) );
-        daoUtil.setBoolean( 20, directory.isAscendingSortFront( ) );
-        daoUtil.setString( 21, directory.getFrontOfficeTitle( ) );
-        daoUtil.setInt( 22, directory.getIdWorkflowStateToRemove( ) );
+        daoUtil.setBoolean( 15, directory.isAscendingSort(  ) );
+        daoUtil.setBoolean( 16, directory.isRecordActivated(  ) );
+        daoUtil.setString( 17, directory.getIdSortEntry(  ) );
+        daoUtil.setBoolean( 18, directory.isIndexed(  ) );
+        daoUtil.setString( 19, directory.getIdSortEntryFront(  ) );
+        daoUtil.setBoolean( 20, directory.isAscendingSortFront(  ) );
+        daoUtil.setString( 21, directory.getFrontOfficeTitle(  ) );
+        daoUtil.setInt( 22, directory.getIdWorkflowStateToRemove(  ) );
 
-        daoUtil.setInt( 23, directory.getIdDirectory( ) );
+        daoUtil.setInt( 23, directory.getIdDirectory(  ) );
 
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        daoUtil.executeUpdate(  );
+        daoUtil.free(  );
     }
 
     /**
@@ -340,26 +340,26 @@ public final class DirectoryDAO implements IDirectoryDAO
      */
     public List<Directory> selectDirectoryList( DirectoryFilter filter, Plugin plugin )
     {
-        List<Directory> directoryList = new ArrayList<Directory>( );
+        List<Directory> directoryList = new ArrayList<Directory>(  );
         Directory directory = null;
-        List<String> listStrFilter = new ArrayList<String>( );
+        List<String> listStrFilter = new ArrayList<String>(  );
 
-        if ( filter.containsWorkgroupCriteria( ) )
+        if ( filter.containsWorkgroupCriteria(  ) )
         {
             listStrFilter.add( SQL_FILTER_WORKGROUP );
         }
 
-        if ( filter.containsIsDisabled( ) )
+        if ( filter.containsIsDisabled(  ) )
         {
             listStrFilter.add( SQL_FILTER_IS_ENABLED );
         }
 
-        if ( filter.containsIdWorkflow( ) )
+        if ( filter.containsIdWorkflow(  ) )
         {
             listStrFilter.add( SQL_FILTER_WORKFLOW );
         }
 
-        if ( filter.containsIsIndexed( ) )
+        if ( filter.containsIsIndexed(  ) )
         {
             listStrFilter.add( SQL_FILTER_IS_INDEXED );
         }
@@ -369,35 +369,35 @@ public final class DirectoryDAO implements IDirectoryDAO
         DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
         int nIndex = 1;
 
-        if ( filter.containsWorkgroupCriteria( ) )
+        if ( filter.containsWorkgroupCriteria(  ) )
         {
-            daoUtil.setString( nIndex, filter.getWorkgroup( ) );
+            daoUtil.setString( nIndex, filter.getWorkgroup(  ) );
             nIndex++;
         }
 
-        if ( filter.containsIsDisabled( ) )
+        if ( filter.containsIsDisabled(  ) )
         {
-            daoUtil.setInt( nIndex, filter.getIsDisabled( ) );
+            daoUtil.setInt( nIndex, filter.getIsDisabled(  ) );
             nIndex++;
         }
 
-        if ( filter.containsIdWorkflow( ) )
+        if ( filter.containsIdWorkflow(  ) )
         {
-            daoUtil.setInt( nIndex, filter.getIdWorkflow( ) );
+            daoUtil.setInt( nIndex, filter.getIdWorkflow(  ) );
             nIndex++;
         }
 
-        if ( filter.containsIsIndexed( ) )
+        if ( filter.containsIsIndexed(  ) )
         {
-            daoUtil.setInt( nIndex, filter.getIsIndexed( ) );
+            daoUtil.setInt( nIndex, filter.getIsIndexed(  ) );
             nIndex++;
         }
 
-        daoUtil.executeQuery( );
+        daoUtil.executeQuery(  );
 
-        while ( daoUtil.next( ) )
+        while ( daoUtil.next(  ) )
         {
-            directory = new Directory( );
+            directory = new Directory(  );
             directory.setIdDirectory( daoUtil.getInt( 1 ) );
             directory.setTitle( daoUtil.getString( 2 ) );
             directory.setDescription( daoUtil.getString( 3 ) );
@@ -438,7 +438,7 @@ public final class DirectoryDAO implements IDirectoryDAO
             directoryList.add( directory );
         }
 
-        daoUtil.free( );
+        daoUtil.free(  );
 
         return directoryList;
     }
@@ -450,21 +450,21 @@ public final class DirectoryDAO implements IDirectoryDAO
      */
     public ReferenceList getEnableDirectoryList( Plugin plugin )
     {
-        ReferenceList listDirectory = new ReferenceList( );
+        ReferenceList listDirectory = new ReferenceList(  );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_DIRECTORY_BY_FILTER + SQL_ORDER_BY_DATE_CREATION, plugin );
-        daoUtil.executeQuery( );
+        daoUtil.executeQuery(  );
 
         Directory directory;
 
-        while ( daoUtil.next( ) )
+        while ( daoUtil.next(  ) )
         {
-            directory = new Directory( );
+            directory = new Directory(  );
             directory.setIdDirectory( daoUtil.getInt( 1 ) );
             directory.setTitle( daoUtil.getString( 2 ) );
-            listDirectory.addItem( directory.getIdDirectory( ), directory.getTitle( ) );
+            listDirectory.addItem( directory.getIdDirectory(  ), directory.getTitle(  ) );
         }
 
-        daoUtil.free( );
+        daoUtil.free(  );
 
         return listDirectory;
     }

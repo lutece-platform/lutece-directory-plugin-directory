@@ -60,17 +60,19 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.url.UrlItem;
 
+import org.xml.sax.InputSource;
+
 import java.io.ByteArrayInputStream;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.InputSource;
 
 
 /**
@@ -84,6 +86,7 @@ public class DirectoryXslJspBean extends PluginAdminPageJspBean
      * Generated serial version UID
      */
     private static final long serialVersionUID = -7470840339614028656L;
+
     //	templates
     private static final String TEMPLATE_MANAGE_DIRECTORY_XSL = "admin/plugins/directory/manage_directory_xsl.html";
     private static final String TEMPLATE_CREATE_DIRECTORY_XSL = "admin/plugins/directory/create_directory_xsl.html";
@@ -115,7 +118,6 @@ public class DirectoryXslJspBean extends PluginAdminPageJspBean
     private static final String MESSAGE_CAN_NOT_REMOVE_DIRECTORY_XSL = "directory.message.can_not_remove_directory_xsl";
     private static final String FIELD_TITLE = "directory.create_directory_xsl.label_title";
     private static final String FIELD_DESCRIPTION = "directory.create_directory_xsl.label_description";
-    //    private static final String FIELD_EXTENSION = "directory.create_directory_xsl.label_extension";
     private static final String FIELD_FILE = "directory.create_directory_xsl.label_file";
     private static final String MESSAGE_XML_NOT_VALID = "directory.message.xml_not_valid";
 
@@ -141,7 +143,7 @@ public class DirectoryXslJspBean extends PluginAdminPageJspBean
      */
     public String getManageDirectoryXsl( HttpServletRequest request )
     {
-        HashMap<String, Object> model = new HashMap<String, Object>( );
+        HashMap<String, Object> model = new HashMap<String, Object>(  );
         List<DirectoryXsl> listDirectoryXsl = DirectoryXslHome.getList( new DirectoryXslFilter(  ), getPlugin(  ) );
         _strCurrentPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
         _nItemsPerPage = Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage,
@@ -162,7 +164,7 @@ public class DirectoryXslJspBean extends PluginAdminPageJspBean
 
         LocalizedPaginator<DirectoryXsl> paginator = new LocalizedPaginator<DirectoryXsl>( listDirectoryXsl,
                 _nItemsPerPage, getJspManageDirectoryXsl( request ), PARAMETER_PAGE_INDEX, _strCurrentPageIndex,
-                getLocale( ) );
+                getLocale(  ) );
 
         model.put( MARK_PAGINATOR, paginator );
         model.put( MARK_NB_ITEMS_PER_PAGE, EMPTY_STRING + _nItemsPerPage );
@@ -187,7 +189,7 @@ public class DirectoryXslJspBean extends PluginAdminPageJspBean
             return getJspManageDirectoryXsl( request );
         }
 
-        HashMap<String, Object> model = new HashMap<String, Object>( );
+        HashMap<String, Object> model = new HashMap<String, Object>(  );
         model.put( MARK_CATEGORY_LIST, CategoryHome.getList( getPlugin(  ) ) );
         setPageTitleProperty( PROPERTY_CREATE_DIRECTORY_XSL_TITLE );
 
@@ -238,7 +240,7 @@ public class DirectoryXslJspBean extends PluginAdminPageJspBean
     {
         DirectoryXsl directoryXsl;
         String strIdDirectoryXsl = request.getParameter( PARAMETER_ID_DIRECTORY_XSL );
-        HashMap<String, Object> model = new HashMap<String, Object>( );
+        HashMap<String, Object> model = new HashMap<String, Object>(  );
         int nIdDirectoryXsl = DirectoryUtils.convertStringToInt( strIdDirectoryXsl );
         directoryXsl = DirectoryXslHome.findByPrimaryKey( nIdDirectoryXsl, getPlugin(  ) );
 
