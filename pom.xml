@@ -10,7 +10,7 @@
 	<groupId>fr.paris.lutece.plugins</groupId>
 	<artifactId>plugin-directory</artifactId>
 	<packaging>lutece-plugin</packaging>
-	<version>3.0.5-SNAPSHOT</version>
+	<version>3.1.0-SNAPSHOT</version>
 	<name>Lutece directory plugin</name>
 	
 	<repositories>
@@ -34,7 +34,7 @@
 		<dependency>
 	    	<groupId>fr.paris.lutece</groupId>
 	    	<artifactId>lutece-core</artifactId>
-	    	<version>[4.1.0,5.0.0-SNAPSHOT)</version>
+	    	<version>[4.4.0-SNAPSHOT,5.0.0-SNAPSHOT)</version>
 	    	<type>lutece-core</type>
 	   </dependency>
 	   <dependency>
@@ -52,6 +52,13 @@
 			<artifactId>library-image</artifactId>
 			<version>[1.0.0,5.0.0-SNAPSHOT)</version>
 		</dependency>
+        <!-- Blobstore -->
+        <dependency>
+            <groupId>fr.paris.lutece.plugins</groupId>
+            <artifactId>library-blobstore</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
    </dependencies>
 
    <properties>

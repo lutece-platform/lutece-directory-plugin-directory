@@ -33,11 +33,21 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
+import fr.paris.lutece.plugins.blobstore.service.BlobStoreClientException;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.regularexpression.RegularExpression;
-import fr.paris.lutece.portal.service.blobstore.BlobStoreClientException;
 import fr.paris.lutece.portal.service.fileupload.FileUploadService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
@@ -52,21 +62,11 @@ import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 
 /**
- *
+ * 
  * class EntryTypeDownloadUrl
- *
+ * 
  */
 public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
 {
@@ -165,10 +165,10 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim(  ) : null;
-        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim(  ) : null;
+        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter(
+                PARAMETER_HELP_MESSAGE ).trim( ) : null;
+        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null ) ? request
+                .getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim( ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
@@ -213,7 +213,7 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return _template_create;
     }
@@ -222,7 +222,7 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return _template_modify;
     }
@@ -232,10 +232,10 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      */
     @Override
     public Paginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl,
-        String strPageIndexParameterName, String strPageIndex )
+            String strPageIndexParameterName, String strPageIndex )
     {
-        return new Paginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ),
-            nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex );
+        return new Paginator<RegularExpression>( this.getFields( ).get( 0 ).getRegularExpressionList( ), nItemPerPage,
+                strBaseUrl, strPageIndexParameterName, strPageIndex );
     }
 
     /**
@@ -246,19 +246,19 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
     {
         ReferenceList refListRegularExpression = null;
 
-        if ( RegularExpressionService.getInstance(  ).isAvailable(  ) )
+        if ( RegularExpressionService.getInstance( ).isAvailable( ) )
         {
-            refListRegularExpression = new ReferenceList(  );
+            refListRegularExpression = new ReferenceList( );
 
-            List<RegularExpression> listRegularExpression = RegularExpressionService.getInstance(  )
-                                                                                    .getAllRegularExpression(  );
+            List<RegularExpression> listRegularExpression = RegularExpressionService.getInstance( )
+                    .getAllRegularExpression( );
 
             for ( RegularExpression regularExpression : listRegularExpression )
             {
-                if ( !entry.getFields(  ).get( 0 ).getRegularExpressionList(  ).contains( regularExpression ) )
+                if ( !entry.getFields( ).get( 0 ).getRegularExpressionList( ).contains( regularExpression ) )
                 {
-                    refListRegularExpression.addItem( regularExpression.getIdExpression(  ),
-                        regularExpression.getTitle(  ) );
+                    refListRegularExpression.addItem( regularExpression.getIdExpression( ),
+                            regularExpression.getTitle( ) );
                 }
             }
         }
@@ -271,38 +271,38 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      */
     @Override
     public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+            boolean bAddNewValue, List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
         if ( request instanceof MultipartHttpServletRequest )
         {
             // Check if the BlobStoreClientService is available
-            DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+            DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler( );
 
-            if ( !handler.isBlobStoreClientServiceAvailable(  ) )
+            if ( !handler.isBlobStoreClientServiceAvailable( ) )
             {
                 String strErrorMessage = I18nService.getLocalizedString( MESSAGE_BLOBSTORE_CLIENT_SERVICE_UNAVAILABLE,
                         locale );
-                throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
+                throw new DirectoryErrorException( this.getTitle( ), strErrorMessage );
             }
 
             // Get entry properties
-            Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_WS_REST_URL, getFields(  ) );
-            Field fieldBlobStore = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_BLOBSTORE, getFields(  ) );
-            String strWSRestUrl = fieldWSRestUrl.getValue(  );
-            String strBlobStore = fieldBlobStore.getValue(  );
+            Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_WS_REST_URL, getFields( ) );
+            Field fieldBlobStore = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_BLOBSTORE, getFields( ) );
+            String strWSRestUrl = fieldWSRestUrl.getValue( );
+            String strBlobStore = fieldBlobStore.getValue( );
 
-            if ( ( ( fieldBlobStore == null ) || ( fieldWSRestUrl == null ) || StringUtils.isBlank( strWSRestUrl ) ||
-                    StringUtils.isBlank( strBlobStore ) ) && bTestDirectoryError )
+            if ( ( ( fieldBlobStore == null ) || ( fieldWSRestUrl == null ) || StringUtils.isBlank( strWSRestUrl ) || StringUtils
+                    .isBlank( strBlobStore ) ) && bTestDirectoryError )
             {
                 String strErrorMessage = I18nService.getLocalizedString( MESSAGE_ENTRY_NOT_WELL_CONFIGURED, locale );
-                throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
+                throw new DirectoryErrorException( this.getTitle( ), strErrorMessage );
             }
 
             /**
              * 1) Get the files from the session
              * 2) Check if the user is uploading a file or not
-             * 2A) If the user is uploading a file, the file should not be stored in the blobstore yet
+             * 2A) If the user is uploading a file, the file should not be
+             * stored in the blobstore yet
              * 2B) Otherwise, upload the file in blobstore :
              * 2B-1) Delete files from the blobstore
              * 2B-2) Upload files to the blostore
@@ -311,20 +311,23 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
             /** 1) Get the files from the session */
             List<FileItem> asynchronousFileItems = getFileSources( request );
 
-            if ( ( asynchronousFileItems != null ) && !asynchronousFileItems.isEmpty(  ) )
+            if ( ( asynchronousFileItems != null ) && !asynchronousFileItems.isEmpty( ) )
             {
                 /** 2) Check if the user is uploading a file or not */
-                String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+                String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler( ).getUploadAction( request );
 
                 if ( StringUtils.isNotBlank( strUploadAction ) )
                 {
-                    /** 2A) If the user is uploading a file, the file should not be stored in the blobstore yet */
+                    /**
+                     * 2A) If the user is uploading a file, the file should not
+                     * be stored in the blobstore yet
+                     */
                     for ( FileItem fileItem : asynchronousFileItems )
                     {
-                        RecordField recordField = new RecordField(  );
+                        RecordField recordField = new RecordField( );
                         recordField.setEntry( this );
-                        recordField.setFileName( fileItem.getName(  ) );
-                        recordField.setFileExtension( fileItem.getContentType(  ) );
+                        recordField.setFileName( fileItem.getName( ) );
+                        recordField.setFileExtension( fileItem.getContentType( ) );
                         listRecordField.add( recordField );
                     }
                 }
@@ -363,11 +366,11 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
                         }
                         catch ( Exception e )
                         {
-                            throw new DirectoryErrorException( this.getTitle(  ), e.getMessage(  ) );
+                            throw new DirectoryErrorException( this.getTitle( ), e.getMessage( ) );
                         }
 
                         // Add record field
-                        RecordField recordField = new RecordField(  );
+                        RecordField recordField = new RecordField( );
                         recordField.setEntry( this );
                         recordField.setValue( strDownloadFileUrl );
                         listRecordField.add( recordField );
@@ -377,9 +380,9 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
             else
             {
                 // No uploaded files
-                if ( bTestDirectoryError && this.isMandatory(  ) )
+                if ( bTestDirectoryError && this.isMandatory( ) )
                 {
-                    throw new DirectoryErrorException( this.getTitle(  ) );
+                    throw new DirectoryErrorException( this.getTitle( ) );
                 }
 
                 // Delete files from blobstore
@@ -396,16 +399,16 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
         else
         {
             // Case if we get directly the url of the blob
-            String[] listDownloadFileUrls = request.getParameterValues( Integer.toString( getIdEntry(  ) ) );
+            String[] listDownloadFileUrls = request.getParameterValues( Integer.toString( getIdEntry( ) ) );
 
             if ( ( listDownloadFileUrls != null ) && ( listDownloadFileUrls.length > 0 ) )
             {
                 for ( String strDownloadFileUrl : listDownloadFileUrls )
                 {
-                    RecordField recordField = new RecordField(  );
+                    RecordField recordField = new RecordField( );
                     recordField.setEntry( this );
                     recordField.setValue( StringUtils.isNotBlank( strDownloadFileUrl ) ? strDownloadFileUrl
-                                                                                       : StringUtils.EMPTY );
+                            : StringUtils.EMPTY );
                     listRecordField.add( recordField );
                 }
             }
@@ -423,13 +426,13 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
         if ( StringUtils.isNotBlank( strTitle ) && bDisplayFront )
         {
             // Display as an image
-            StringBuffer sbHtml = new StringBuffer(  );
+            StringBuffer sbHtml = new StringBuffer( );
 
-            Map<String, String> mapParamTagA = new HashMap<String, String>(  );
+            Map<String, String> mapParamTagA = new HashMap<String, String>( );
             mapParamTagA.put( ATTRIBUTE_HREF, strTitle );
 
             String strAlt = I18nService.getLocalizedString( PROPERTY_LABEL_DOWNLOAD, locale );
-            Map<String, String> mapParamTagImg = new HashMap<String, String>(  );
+            Map<String, String> mapParamTagImg = new HashMap<String, String>( );
             mapParamTagImg.put( ATTRIBUTE_SRC, URL_IMG_DOWNLOAD );
             mapParamTagImg.put( ATTRIBUTE_TITLE, strAlt );
             mapParamTagImg.put( ATTRIBUTE_ALT, strAlt );
@@ -438,17 +441,18 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
             XmlUtil.addEmptyElement( sbHtml, TAG_IMG, mapParamTagImg );
             XmlUtil.endElement( sbHtml, TAG_A );
 
-            strTitle = sbHtml.toString(  );
+            strTitle = sbHtml.toString( );
         }
 
         return strTitle;
     }
 
     /**
-     *
+     * 
      * {@inheritDoc}
      */
-    public boolean isSortable(  )
+    @Override
+    public boolean isSortable( )
     {
         return true;
     }
@@ -458,10 +462,10 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      */
     @Override
     public LocalizedPaginator<RegularExpression> getPaginator( int nItemPerPage, String strBaseUrl,
-        String strPageIndexParameterName, String strPageIndex, Locale locale )
+            String strPageIndexParameterName, String strPageIndex, Locale locale )
     {
-        return new LocalizedPaginator<RegularExpression>( this.getFields(  ).get( 0 ).getRegularExpressionList(  ),
-            nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
+        return new LocalizedPaginator<RegularExpression>( this.getFields( ).get( 0 ).getRegularExpressionList( ),
+                nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
     }
 
     /**
@@ -485,12 +489,12 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
 
         if ( StringUtils.isBlank( strError ) )
         {
-            DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+            DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler( );
 
-            if ( !handler.isBlobStoreClientServiceAvailable(  ) )
+            if ( !handler.isBlobStoreClientServiceAvailable( ) )
             {
                 return AdminMessageService.getMessageUrl( request, MESSAGE_BLOBSTORE_CLIENT_SERVICE_UNAVAILABLE,
-                    AdminMessage.TYPE_STOP );
+                        AdminMessage.TYPE_STOP );
             }
 
             String strFieldError = StringUtils.EMPTY;
@@ -512,7 +516,7 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
                 Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
 
                 return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                    AdminMessage.TYPE_STOP );
+                        AdminMessage.TYPE_STOP );
             }
         }
 
@@ -523,34 +527,33 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    protected void checkRecordFieldData( FileItem fileItem, Locale locale )
-        throws DirectoryErrorException
+    protected void checkRecordFieldData( FileItem fileItem, Locale locale ) throws DirectoryErrorException
     {
         // Check if the BlobStoreClientService is available
-        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler( );
 
-        if ( !handler.isBlobStoreClientServiceAvailable(  ) )
+        if ( !handler.isBlobStoreClientServiceAvailable( ) )
         {
             String strErrorMessage = I18nService.getLocalizedString( MESSAGE_BLOBSTORE_CLIENT_SERVICE_UNAVAILABLE,
                     locale );
-            throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
+            throw new DirectoryErrorException( this.getTitle( ), strErrorMessage );
         }
 
         String strFilename = ( fileItem != null ) ? FileUploadService.getFileNameOnly( fileItem ) : StringUtils.EMPTY;
         String strMimeType = FileSystemUtil.getMIMEType( strFilename );
 
         // Check mime type with option
-        Field fieldOption = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_OPTION, getFields(  ) );
+        Field fieldOption = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_OPTION, getFields( ) );
 
-        if ( ( fieldOption == null ) || StringUtils.isBlank( fieldOption.getValue(  ) ) )
+        if ( ( fieldOption == null ) || StringUtils.isBlank( fieldOption.getValue( ) ) )
         {
-            throw new DirectoryErrorException( getTitle(  ) );
+            throw new DirectoryErrorException( getTitle( ) );
         }
 
-        if ( StringUtils.isNotBlank( strFilename ) && StringUtils.isNotBlank( strMimeType ) && ( fieldOption != null ) &&
-                StringUtils.isNotBlank( fieldOption.getValue(  ) ) && !ALL.equals( fieldOption.getValue(  ) ) )
+        if ( StringUtils.isNotBlank( strFilename ) && StringUtils.isNotBlank( strMimeType ) && ( fieldOption != null )
+                && StringUtils.isNotBlank( fieldOption.getValue( ) ) && !ALL.equals( fieldOption.getValue( ) ) )
         {
-            String[] listAuthorizedFileExt = fieldOption.getValue(  ).split( COMMA );
+            String[] listAuthorizedFileExt = fieldOption.getValue( ).split( COMMA );
 
             if ( ( listAuthorizedFileExt != null ) && ( listAuthorizedFileExt.length > 0 ) )
             {
@@ -558,11 +561,10 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
 
                 for ( String strAuthorizedFileExt : listAuthorizedFileExt )
                 {
-                    String strAuthorizedMimeType = FileSystemUtil.getMIMEType( DirectoryUtils.CONSTANT_DOT +
-                            strAuthorizedFileExt );
+                    String strAuthorizedMimeType = FileSystemUtil.getMIMEType( DirectoryUtils.CONSTANT_DOT
+                            + strAuthorizedFileExt );
 
-                    if ( StringUtils.isNotBlank( strAuthorizedMimeType ) &&
-                            strAuthorizedMimeType.equals( strMimeType ) )
+                    if ( StringUtils.isNotBlank( strAuthorizedMimeType ) && strAuthorizedMimeType.equals( strMimeType ) )
                     {
                         bIsAuthorized = true;
 
@@ -572,10 +574,10 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
 
                 if ( !bIsAuthorized )
                 {
-                    Object[] param = { fieldOption.getValue(  ) };
-                    String strErrorMessage = I18nService.getLocalizedString( DirectoryUtils.MESSAGE_DIRECTORY_ERROR_MIME_TYPE,
-                            param, locale );
-                    throw new DirectoryErrorException( getTitle(  ), strErrorMessage );
+                    Object[] param = { fieldOption.getValue( ) };
+                    String strErrorMessage = I18nService.getLocalizedString(
+                            DirectoryUtils.MESSAGE_DIRECTORY_ERROR_MIME_TYPE, param, locale );
+                    throw new DirectoryErrorException( getTitle( ), strErrorMessage );
                 }
             }
         }
@@ -593,15 +595,18 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
         String strValue = request.getParameter( PARAMETER_VALUE );
         String strWidth = request.getParameter( PARAMETER_WIDTH );
 
-        /** The width is used to store the max size of the files for version 2.0.13 and below */
+        /**
+         * The width is used to store the max size of the files for version
+         * 2.0.13 and below
+         */
         int nWidth = DirectoryUtils.convertStringToInt( strWidth );
 
         // Field option
-        Field fieldOption = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_OPTION, getFields(  ) );
+        Field fieldOption = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_OPTION, getFields( ) );
 
         if ( fieldOption == null )
         {
-            fieldOption = new Field(  );
+            fieldOption = new Field( );
         }
 
         fieldOption.setEntry( this );
@@ -620,11 +625,11 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
     private Field buildFieldWSRestUrl( HttpServletRequest request )
     {
         String strWSRestUrl = request.getParameter( PARAMETER_WS_REST_URL );
-        Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_WS_REST_URL, getFields(  ) );
+        Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_WS_REST_URL, getFields( ) );
 
         if ( fieldWSRestUrl == null )
         {
-            fieldWSRestUrl = new Field(  );
+            fieldWSRestUrl = new Field( );
         }
 
         fieldWSRestUrl.setEntry( this );
@@ -642,11 +647,11 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
     private Field buildFieldBlobStore( HttpServletRequest request )
     {
         String strBlobStore = request.getParameter( PARAMETER_BLOBSTORE );
-        Field fieldBlobStore = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_BLOBSTORE, getFields(  ) );
+        Field fieldBlobStore = DirectoryUtils.findFieldByTitleInTheList( CONSTANT_BLOBSTORE, getFields( ) );
 
         if ( fieldBlobStore == null )
         {
-            fieldBlobStore = new Field(  );
+            fieldBlobStore = new Field( );
         }
 
         fieldBlobStore.setEntry( this );
