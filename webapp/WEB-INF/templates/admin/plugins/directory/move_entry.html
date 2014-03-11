@@ -1,25 +1,25 @@
 <div class="row-fluid">
-	<div class="span12">
-		<fieldset>
-		<legend>#i18n{directory.move_entry.title}:'${entry.directory.title}''</legend>
-		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoMoveEntry.jsp#list" method="post">
-		<div class="control-group">
-		<label class="control-label" > #i18n{directory.move_entry.label_select_entry}</label>
-			<#list entry_list as entry>
-				<div class="controls">
-					<label class="radio" for="id${entry.idEntry}"></label>
-					<input class="radio" name="id_entry" id="id${entry.idEntry}" value="${entry.idEntry}" type="radio">
-					${entry.title}
-				</div>
-			</#list>
-		</div>
-		<div class="form-actions">
-			<button class="btn btn-primary" type="submit" name="save" >
-				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.move_entry.button_save}
-			</button>
-			<button class="btn" onclick="javascript:history.go(-1)" >
-				<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.move_entry.button_cancel}
-			</button>
-		</div>
+    <div class="span12">
+        <fieldset>
+        <legend>#i18n{directory.move_entry.title}:'${entry.directory.title}''</legend>
+        <form class="form-horizontal" action="jsp/admin/plugins/directory/DoMoveEntry.jsp#list" method="post">
+        <div class="control-group">
+        <label class="control-label" > #i18n{directory.move_entry.label_select_entry}</label>
+            <#list entry_list as entry>
+                <div class="controls">
+                    <label class="radio" for="id${entry.idEntry}"></label>
+                    <input class="radio" name="id_entry" id="id${entry.idEntry}" value="${entry.idEntry}" type="radio">
+                    ${entry.title}
+                </div>
+            </#list>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit" name="save" >
+                <i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.move_entry.button_save}
+            </button>
+            <button class="btn" type="button" onclick="javascript:history.go(-1)" >
+                <i class="icon-remove-circle"></i>&nbsp;#i18n{directory.move_entry.button_cancel}
+            </button>
+        </div>
     </div>
 </div>
