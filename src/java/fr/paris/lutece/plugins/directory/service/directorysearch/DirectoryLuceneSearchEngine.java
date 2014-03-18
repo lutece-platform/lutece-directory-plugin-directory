@@ -46,15 +46,14 @@ import java.util.List;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.util.BytesRef;
 
 
 /**
@@ -71,7 +70,7 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
     public List<Integer> getSearchResults( HashMap<String, Object> mapQuery )
     {
         ArrayList<Integer> listResults = new ArrayList<Integer>( );
-        IndexSearcher searcher = null;
+        Searcher searcher = null;
 
         try
         {
@@ -151,10 +150,10 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_BEGIN )
                     && mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_END ) )
             {
-                BytesRef strLowerTerm = new BytesRef( DateTools.dateToString(
-                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_BEGIN ), DateTools.Resolution.DAY ) );
-                BytesRef strUpperTerm = new BytesRef( DateTools.dateToString(
-                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_END ), DateTools.Resolution.DAY ) );
+                String strLowerTerm = DateTools.dateToString(
+                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_BEGIN ), DateTools.Resolution.DAY );
+                String strUpperTerm = DateTools.dateToString(
+                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_END ), DateTools.Resolution.DAY );
                 Query queryRangeDate = new TermRangeQuery( DirectorySearchItem.FIELD_DATE, strLowerTerm, strUpperTerm,
                         true, true );
                 queries.add( queryRangeDate.toString( ) );
@@ -178,10 +177,10 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_CREATION_BEGIN )
                     && mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_CREATION_END ) )
             {
-                BytesRef strLowerTerm = new BytesRef( DateTools.dateToString(
-                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_CREATION_BEGIN ), DateTools.Resolution.DAY ) );
-                BytesRef strUpperTerm = new BytesRef( DateTools.dateToString(
-                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_CREATION_END ), DateTools.Resolution.DAY ) );
+                String strLowerTerm = DateTools.dateToString(
+                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_CREATION_BEGIN ), DateTools.Resolution.DAY );
+                String strUpperTerm = DateTools.dateToString(
+                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_CREATION_END ), DateTools.Resolution.DAY );
                 Query queryRangeDate = new TermRangeQuery( DirectorySearchItem.FIELD_DATE_CREATION, strLowerTerm,
                         strUpperTerm, true, true );
                 queries.add( queryRangeDate.toString( ) );
@@ -205,12 +204,12 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_MODIFICATION_BEGIN )
                     && mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_MODIFICATION_END ) )
             {
-                BytesRef strLowerTerm = new BytesRef( DateTools.dateToString(
+                String strLowerTerm = DateTools.dateToString(
                         (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_MODIFICATION_BEGIN ),
-                        DateTools.Resolution.DAY ) );
-                BytesRef strUpperTerm = new BytesRef( DateTools.dateToString(
+                        DateTools.Resolution.DAY );
+                String strUpperTerm = DateTools.dateToString(
                         (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_MODIFICATION_END ),
-                        DateTools.Resolution.DAY ) );
+                        DateTools.Resolution.DAY );
                 Query queryRangeDate = new TermRangeQuery( DirectorySearchItem.FIELD_DATE_MODIFICATION, strLowerTerm,
                         strUpperTerm, true, true );
                 queries.add( queryRangeDate.toString( ) );

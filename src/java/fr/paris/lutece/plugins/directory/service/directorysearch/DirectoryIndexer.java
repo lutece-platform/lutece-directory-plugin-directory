@@ -59,11 +59,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.lucene.document.DateTools;
-import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.FieldType;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
@@ -323,18 +319,15 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
     {
         // make a new, empty document
         org.apache.lucene.document.Document doc = new org.apache.lucene.document.Document( );
-
-        FieldType ft = new FieldType( StringField.TYPE_STORED );
-        ft.setOmitNorms( false );
-
         HashMap<String, Object> mapSearchItemField;
-        doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY, Integer.toString( directory.getIdDirectory( ) ), ft ) );
+        doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY, Integer.toString( directory.getIdDirectory( ) ),
+                Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
         doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY_RECORD, Integer.toString( record.getIdRecord( ) ),
-                ft ) );
+                Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
         doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY_ENTRY, Integer.toString( recordField.getEntry( )
-                .getIdEntry( ) ), ft ) );
+                .getIdEntry( ) ), Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
         mapSearchItemField = new HashMap<String, Object>( );
         recordField.getEntry( ).addSearchCriteria( mapSearchItemField, recordField );
@@ -344,7 +337,8 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
             for ( Integer idField : (List<Integer>) mapSearchItemField
                     .get( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD ) )
             {
-                doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD, Integer.toString( idField ), ft ) );
+                doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD, Integer.toString( idField ),
+                        Field.Store.YES, Field.Index.NOT_ANALYZED ) );
             }
         }
 
@@ -352,13 +346,13 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
         {
             String strDate = DateTools.dateToString( (Date) mapSearchItemField.get( DirectorySearchItem.FIELD_DATE ),
                     DateTools.Resolution.DAY );
-            doc.add( new Field( DirectorySearchItem.FIELD_DATE, strDate, ft ) );
+            doc.add( new Field( DirectorySearchItem.FIELD_DATE, strDate, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
         }
 
         if ( mapSearchItemField.containsKey( DirectorySearchItem.FIELD_CONTENTS ) )
         {
             doc.add( new Field( DirectorySearchItem.FIELD_CONTENTS, (String) mapSearchItemField
-                    .get( DirectorySearchItem.FIELD_CONTENTS ), TextField.TYPE_NOT_STORED ) );
+                    .get( DirectorySearchItem.FIELD_CONTENTS ), Field.Store.NO, Field.Index.ANALYZED ) );
         }
 
         // return the document
@@ -381,33 +375,34 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
         // make a new, empty document
         org.apache.lucene.document.Document doc = new org.apache.lucene.document.Document( );
 
-        FieldType ft = new FieldType( StringField.TYPE_STORED );
-        ft.setOmitNorms( false );
-
         if ( ( directory != null ) && ( record != null ) )
         {
             doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY,
-                    Integer.toString( directory.getIdDirectory( ) ), ft ) );
+                    Integer.toString( directory.getIdDirectory( ) ), Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
             doc.add( new Field( DirectorySearchItem.FIELD_ID_DIRECTORY_RECORD,
-                    Integer.toString( record.getIdRecord( ) ), ft ) );
+                    Integer.toString( record.getIdRecord( ) ), Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
             if ( record.getWorkgroup( ) != null )
             {
-                doc.add( new Field( DirectorySearchItem.FIELD_WORKGROUP_KEY, record.getWorkgroup( ), ft ) );
+                doc.add( new Field( DirectorySearchItem.FIELD_WORKGROUP_KEY, record.getWorkgroup( ), Field.Store.YES,
+                        Field.Index.NOT_ANALYZED ) );
             }
 
             if ( record.getRoleKey( ) != null )
             {
-                doc.add( new Field( DirectorySearchItem.FIELD_ROLE_KEY, record.getRoleKey( ), ft ) );
+                doc.add( new Field( DirectorySearchItem.FIELD_ROLE_KEY, record.getRoleKey( ), Field.Store.YES,
+                        Field.Index.NOT_ANALYZED ) );
             }
 
             String strDate = DateTools.dateToString( record.getDateCreation( ), DateTools.Resolution.DAY );
-            doc.add( new Field( DirectorySearchItem.FIELD_DATE_CREATION, strDate, ft ) );
+            doc.add( new Field( DirectorySearchItem.FIELD_DATE_CREATION, strDate, Field.Store.YES,
+                    Field.Index.NOT_ANALYZED ) );
 
             String strDateModification = DateTools.dateToString( record.getDateModification( ),
                     DateTools.Resolution.DAY );
-            doc.add( new Field( DirectorySearchItem.FIELD_DATE_MODIFICATION, strDateModification, ft ) );
+            doc.add( new Field( DirectorySearchItem.FIELD_DATE_MODIFICATION, strDateModification, Field.Store.YES,
+                    Field.Index.NOT_ANALYZED ) );
         }
 
         // return the document

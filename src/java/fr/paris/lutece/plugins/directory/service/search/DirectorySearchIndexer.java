@@ -67,9 +67,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.FieldType;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
 
 
 /**
@@ -306,18 +303,6 @@ public class DirectorySearchIndexer implements SearchIndexer
     {
         Document doc = new Document( );
 
-        FieldType ftNo = new FieldType( StringField.TYPE_STORED );
-        ftNo.setIndexed( false );
-        ftNo.setTokenized( false );
-        ftNo.setOmitNorms( false );
-
-        FieldType ftNotStored = new FieldType( StringField.TYPE_NOT_STORED );
-        ftNotStored.setOmitNorms( false );
-        ftNotStored.setTokenized( false );
-
-        FieldType ft = new FieldType( StringField.TYPE_STORED );
-        ft.setOmitNorms( false );
-
         boolean bFallback = false;
 
         //Fallback if there is no entry marker as indexed_as_title
@@ -345,7 +330,7 @@ public class DirectorySearchIndexer implements SearchIndexer
             return null;
         }
 
-        doc.add( new Field( SearchItem.FIELD_TITLE, strTitle, TextField.TYPE_STORED ) );
+        doc.add( new Field( SearchItem.FIELD_TITLE, strTitle, Field.Store.YES, Field.Index.ANALYZED ) );
 
         if ( !listContentEntry.isEmpty( ) )
         {
@@ -353,7 +338,7 @@ public class DirectorySearchIndexer implements SearchIndexer
 
             if ( StringUtils.isNotBlank( strContent ) )
             {
-                doc.add( new Field( SearchItem.FIELD_CONTENTS, strContent, TextField.TYPE_NOT_STORED ) );
+                doc.add( new Field( SearchItem.FIELD_CONTENTS, strContent, Field.Store.NO, Field.Index.ANALYZED ) );
             }
         }
 
@@ -363,7 +348,7 @@ public class DirectorySearchIndexer implements SearchIndexer
 
             if ( StringUtils.isNotBlank( strSummary ) )
             {
-                doc.add( new Field( SearchItem.FIELD_SUMMARY, strSummary, TextField.TYPE_STORED ) );
+                doc.add( new Field( SearchItem.FIELD_SUMMARY, strSummary, Field.Store.YES, Field.Index.ANALYZED ) );
             }
         }
 
@@ -374,27 +359,27 @@ public class DirectorySearchIndexer implements SearchIndexer
             strRoleKey = ROLE_NONE;
         }
 
-        doc.add( new Field( SearchItem.FIELD_ROLE, strRoleKey, ftNo ) );
+        doc.add( new Field( SearchItem.FIELD_ROLE, strRoleKey, Field.Store.YES, Field.Index.NO ) );
 
         String strDate = DateTools.dateToString( record.getDateCreation( ), DateTools.Resolution.DAY );
-        doc.add( new Field( SearchItem.FIELD_DATE, strDate, ft ) );
+        doc.add( new Field( SearchItem.FIELD_DATE, strDate, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
         String strDateModification = DateTools.dateToString( record.getDateModification( ), DateTools.Resolution.DAY );
-        doc.add( new Field( SearchItem.FIELD_DATE, strDateModification, ft ) );
+        doc.add( new Field( SearchItem.FIELD_DATE, strDateModification, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
-        doc.add( new Field( SearchItem.FIELD_TYPE, DIRECTORY, ft ) );
+        doc.add( new Field( SearchItem.FIELD_TYPE, DIRECTORY, Field.Store.YES, Field.Index.NOT_ANALYZED ) );
 
         UrlItem url = new UrlItem( AppPathService.getPortalUrl( ) );
         url.addParameter( XPageAppService.PARAM_XPAGE_APP, DIRECTORY );
         url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord( ) );
         url.addParameter( PARAMETER_VIEW_DIRECTORY_RECORD, "" );
-        doc.add( new Field( SearchItem.FIELD_URL, url.getUrl( ), ftNo ) );
+        doc.add( new Field( SearchItem.FIELD_URL, url.getUrl( ), Field.Store.YES, Field.Index.NO ) );
 
         //Add the uid as a field, so that index can be incrementally maintained.
         // This field is not stored with question/answer, it is indexed, but it is not
         // tokenized prior to indexing.
         String strUID = Integer.toString( record.getIdRecord( ) ) + "_" + SHORT_NAME;
-        doc.add( new Field( SearchItem.FIELD_UID, strUID, ftNotStored ) );
+        doc.add( new Field( SearchItem.FIELD_UID, strUID, Field.Store.NO, Field.Index.NOT_ANALYZED ) );
 
         return doc;
     }
