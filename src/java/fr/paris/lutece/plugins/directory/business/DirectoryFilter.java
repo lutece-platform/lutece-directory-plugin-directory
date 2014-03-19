@@ -33,11 +33,10 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-
 /**
- *
+ * 
  * class DirectoryFilter
- *
+ * 
  */
 public class DirectoryFilter
 {
@@ -49,22 +48,23 @@ public class DirectoryFilter
     private String _strWorkgroup = ALL_STRING;
     private int _nIdWorkflow = ALL_INT;
     private int _nIsIndexed = ALL_INT;
+    private String _strOrder;
 
     /**
-     *
+     * 
      * @return 1 if the directories return must be enabled
-     *                    0 if the forms return must be disabled
+     *         0 if the forms return must be disabled
      */
-    public int getIsDisabled(  )
+    public int getIsDisabled( )
     {
         return _nIsDisabled;
     }
 
     /**
      * Set 1 if the directories return must be enabled
-     *            0 if the forms return must be disabled
-     * @param idState  1 if the forms return must be enabled
-     *                                      0 if the directories return must be disabled
+     * 0 if the forms return must be disabled
+     * @param idState 1 if the forms return must be enabled
+     *            0 if the directories return must be disabled
      */
     public void setIsDisabled( int idState )
     {
@@ -75,16 +75,16 @@ public class DirectoryFilter
      * Check if the filter contains isDisabled state
      * @return true if the filter contain isDisabled state
      */
-    public boolean containsIsDisabled(  )
+    public boolean containsIsDisabled( )
     {
         return ( _nIsDisabled != ALL_INT );
     }
 
     /**
-         *
-         * @return the workgroup of the search forms
-         */
-    public String getWorkgroup(  )
+     * 
+     * @return the workgroup of the search forms
+     */
+    public String getWorkgroup( )
     {
         return _strWorkgroup;
     }
@@ -99,20 +99,20 @@ public class DirectoryFilter
     }
 
     /**
-     *
+     * 
      * @return true if the filter contain workgroup criteria
      */
-    public boolean containsWorkgroupCriteria(  )
+    public boolean containsWorkgroupCriteria( )
     {
         return ( !_strWorkgroup.equals( ALL_STRING ) );
     }
 
     /**
-    *
-    * @return 1 if the forms have workflow
-    *                    0 if the forms have not workflow
-    */
-    public int getIdWorkflow(  )
+     * 
+     * @return 1 if the forms have workflow
+     *         0 if the forms have not workflow
+     */
+    public int getIdWorkflow( )
     {
         return _nIdWorkflow;
     }
@@ -129,29 +129,29 @@ public class DirectoryFilter
     }
 
     /**
-     *
+     * 
      * @return true if the filter contain form state
      */
-    public boolean containsIdWorkflow(  )
+    public boolean containsIdWorkflow( )
     {
         return ( _nIdWorkflow != ALL_INT );
     }
 
     /**
-     *
-    * @return 1 if the directories return must be Indexed
-    *                    0 if the forms return must not be Indexed
-    */
-    public int getIsIndexed(  )
+     * 
+     * @return 1 if the directories return must be Indexed
+     *         0 if the forms return must not be Indexed
+     */
+    public int getIsIndexed( )
     {
         return _nIsIndexed;
     }
 
     /**
      * Set 1 if the directories return must be indexed
-     *            0 if the directories return must be indexed
-     * @param idState  1 if the directories return must be indexed
-     *                                      0 if the forms return must not be indexed
+     * 0 if the directories return must be indexed
+     * @param idState 1 if the directories return must be indexed
+     *            0 if the forms return must not be indexed
      */
     public void setIsIndexed( int idState )
     {
@@ -159,11 +159,27 @@ public class DirectoryFilter
     }
 
     /**
-    * Check if the filter contains isIndexed state
-    * @return true if the filter contains isIndexed state
-    */
-    public boolean containsIsIndexed(  )
+     * Check if the filter contains isIndexed state
+     * @return true if the filter contains isIndexed state
+     */
+    public boolean containsIsIndexed( )
     {
         return ( _nIsIndexed != ALL_INT );
+    }
+
+    /**
+     * @return the _strOrder
+     */
+    public String getOrder( )
+    {
+        return this._strOrder;
+    }
+
+    /**
+     * @param strOrder the _strOrder to set
+     */
+    public void setOrder( String strOrder )
+    {
+        this._strOrder = strOrder;
     }
 }
