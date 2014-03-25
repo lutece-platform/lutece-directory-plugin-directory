@@ -64,11 +64,13 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Searcher;
 import org.apache.lucene.store.NIOFSDirectory;
+import org.apache.lucene.util.Version;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -92,7 +94,7 @@ public class DirectorySearchService
     private static int _nWriterMergeFactor;
     private static int _nWriterMaxFieldLength;
     private static Analyzer _analyzer;
-    private static Searcher _searcher;
+    private static IndexSearcher _searcher;
     private static IDirectorySearchIndexer _indexer;
     private static final int CONSTANT_TIME_CORRECTION = 3600000 * 12;
 
@@ -212,7 +214,7 @@ public class DirectorySearchService
 
             try
             {
-                _searcher = new IndexSearcher( _luceneDirectory, true );
+                _searcher = new IndexSearcher( DirectoryReader.open( _luceneDirectory ) );
 
                 IDirectorySearchEngine engine = SpringContextService.getBean( BEAN_SEARCH_ENGINE );
 
@@ -257,7 +259,6 @@ public class DirectorySearchService
                             }
                         }
                     }
-
                     if ( directory.isSearchOperatorOr( ) && !bSearchEmpty )
                     {
                         listRecordResult = DirectoryUtils.retainAllIdsKeepingFirstOrder( listRecordResult,
@@ -335,20 +336,6 @@ public class DirectorySearchService
                 // If an error occurred clean result list
                 listRecordResult = new ArrayList<Integer>( );
             }
-            finally
-            {
-                try
-                {
-                    if ( _searcher != null )
-                    {
-                        _searcher.close( );
-                    }
-                }
-                catch ( Exception e )
-                {
-                    AppLogService.error( e.getMessage( ), e );
-                }
-            }
         }
 
         return listRecordResult;
@@ -361,7 +348,7 @@ public class DirectorySearchService
         Plugin plugin = PluginService.getPlugin( "directory" );
         StringBuffer result = new StringBuffer( );
 
-        _searcher = new IndexSearcher( _luceneDirectory, true );
+        _searcher = new IndexSearcher( DirectoryReader.open( _luceneDirectory ) );
 
         IDirectorySearchEngine engine = SpringContextService.getBean( BEAN_SEARCH_ENGINE );
 
@@ -428,7 +415,7 @@ public class DirectorySearchService
         {
             sbLogs.append( "\r\nIndexing all contents ...\r\n" );
 
-            if ( !IndexReader.indexExists( _luceneDirectory ) )
+            if ( !DirectoryReader.indexExists( _luceneDirectory ) )
             { //init index
                 bCreateIndex = true;
             }
@@ -438,9 +425,18 @@ public class DirectorySearchService
                 IndexWriter.unlock( _luceneDirectory );
             }
 
-            writer = new IndexWriter( _luceneDirectory, _analyzer, bCreateIndex, IndexWriter.MaxFieldLength.UNLIMITED );
-            writer.setMergeFactor( _nWriterMergeFactor );
-            writer.setMaxFieldLength( _nWriterMaxFieldLength );
+            IndexWriterConfig conf = new IndexWriterConfig( Version.LUCENE_46, _analyzer );
+
+            if ( bCreateIndex )
+            {
+                conf.setOpenMode( OpenMode.CREATE );
+            }
+            else
+            {
+                conf.setOpenMode( OpenMode.APPEND );
+            }
+
+            writer = new IndexWriter( _luceneDirectory, conf );
 
             Date start = new Date( );
 
@@ -456,8 +452,6 @@ public class DirectorySearchService
             sbLogs.append( "Duration of the treatment : " );
             sbLogs.append( end.getTime( ) - start.getTime( ) );
             sbLogs.append( " milliseconds\r\n" );
-
-            writer.optimize( );
         }
         catch ( Exception e )
         {
@@ -540,7 +534,7 @@ public class DirectorySearchService
      * return searcher
      * @return searcher
      */
-    public Searcher getSearcher( )
+    public IndexSearcher getSearcher( )
     {
         return _searcher;
     }
@@ -549,7 +543,7 @@ public class DirectorySearchService
      * set searcher
      * @param searcher searcher
      */
-    public void setSearcher( Searcher searcher )
+    public void setSearcher( IndexSearcher searcher )
     {
         _searcher = searcher;
     }
