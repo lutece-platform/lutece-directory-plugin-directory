@@ -20,7 +20,6 @@
     <css-stylesheets>
         <css-stylesheets-scope>xpage</css-stylesheets-scope>
         <css-stylesheet>directory/directory.css</css-stylesheet>
-        <css-stylesheet>jscalendar/calendar-lutece.css</css-stylesheet>
     </css-stylesheets>
 
     <!-- Specific plugin JAVASCRIPT -->
