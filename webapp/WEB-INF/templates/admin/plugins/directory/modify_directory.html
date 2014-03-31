@@ -32,7 +32,6 @@
 					<form class="form-inline pull-left spaced" method="post"  action="jsp/admin/plugins/directory/CreateEntry.jsp">
 						<label  for="id_type">#i18n{directory.modify_directory.manage_entry.label_insert_entry}</label>
 						<select name="id_type" id="id_type">
-							<option value="-1"></option>
 							<#list entry_type_list as entryType>
 								<#if !entryType.group && ( !entryType.myLuteceUser || entryType.myLuteceUser && 
 									( entryType.idType = id_entry_type_mylutece_user && is_active_mylutece_authentification || 
