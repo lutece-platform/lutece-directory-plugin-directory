@@ -381,6 +381,8 @@ public final class DirectoryUtils
             {
                 EntryFilter entryFilter = new EntryFilter( );
                 entryFilter.setIdEntryParent( entryFistLevel.getIdEntry( ) );
+                entryFilter.setIsComment( EntryFilter.FILTER_FALSE );
+                entryFilter.setIsShownInResultRecord( EntryFilter.FILTER_TRUE );
                 listEntryChildren = new ArrayList<IEntry>( );
 
                 for ( IEntry entryChildren : EntryHome.getEntryList( entryFilter, plugin ) )

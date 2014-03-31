@@ -33,6 +33,19 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryFilter;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
@@ -82,19 +95,6 @@ import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.http.SecurityUtil;
 import fr.paris.lutece.util.url.UrlItem;
 import fr.paris.lutece.util.xml.XmlUtil;
-
-import org.apache.commons.lang.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 /**
@@ -190,7 +190,7 @@ public class DirectoryApp implements XPageApplication
     private static final String MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD = "directory.message.directory_error.mandatory.field";
 
     // Properties
-    private static final String XSL_UNIQUE_PREFIX_ID = UniqueIDGenerator.getNewId(  ) + "directory-";
+    private static final String XSL_UNIQUE_PREFIX_ID = UniqueIDGenerator.getNewId( ) + "directory-";
     private static final String OPERATOR_AND = "AND";
     private static final String OPERATOR_OR = "OR";
     private static final String BEAN_SEARCH_ENGINE = "searchEngine";
@@ -204,7 +204,7 @@ public class DirectoryApp implements XPageApplication
     /**
      * Returns the Directory XPage result content depending on the request
      * parameters and the current mode.
-     *
+     * 
      * @param request
      *            The HTTP request.
      * @param nMode
@@ -218,21 +218,21 @@ public class DirectoryApp implements XPageApplication
      *             the UserNotSignedException
      */
     @Override
-    public XPage getPage( HttpServletRequest request, int nMode, Plugin plugin )
-        throws SiteMessageException, UserNotSignedException
+    public XPage getPage( HttpServletRequest request, int nMode, Plugin plugin ) throws SiteMessageException,
+            UserNotSignedException
     {
-        XPage page = new XPage(  );
+        XPage page = new XPage( );
 
-        page.setTitle( I18nService.getLocalizedString( PROPERTY_XPAGE_PAGETITLE, request.getLocale(  ) ) );
-        page.setPathLabel( I18nService.getLocalizedString( PROPERTY_XPAGE_PATHLABEL, request.getLocale(  ) ) );
+        page.setTitle( I18nService.getLocalizedString( PROPERTY_XPAGE_PAGETITLE, request.getLocale( ) ) );
+        page.setPathLabel( I18nService.getLocalizedString( PROPERTY_XPAGE_PATHLABEL, request.getLocale( ) ) );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
 
-        List<Record> listRecord = new ArrayList<Record>(  );
-        List<Integer> listIdDirectory = new ArrayList<Integer>(  );
+        List<Record> listRecord = new ArrayList<Record>( );
+        List<Integer> listIdDirectory = new ArrayList<Integer>( );
 
         Boolean bSingleResult = null;
 
@@ -243,13 +243,12 @@ public class DirectoryApp implements XPageApplication
         else
         {
             Directory directory;
-            HttpSession session = request.getSession(  );
+            HttpSession session = request.getSession( );
             int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
             directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-            DirectorySiteSearchFields searchFields = ( session.getAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS ) != null )
-                ? (DirectorySiteSearchFields) session.getAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS )
-                : getInitDirectorySearchField(  );
+            DirectorySiteSearchFields searchFields = ( session.getAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS ) != null ) ? (DirectorySiteSearchFields) session
+                    .getAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS ) : getInitDirectorySearchField( );
 
             model.put( MARK_DIRECTORY, directory );
 
@@ -262,20 +261,20 @@ public class DirectoryApp implements XPageApplication
             {
                 record = recordService.findByPrimaryKey( nIdDirectoryRecord, plugin );
 
-                if ( ( record != null ) && ( record.getDirectory(  ) != null ) )
+                if ( ( record != null ) && ( record.getDirectory( ) != null ) )
                 {
-                    directory = DirectoryHome.findByPrimaryKey( record.getDirectory(  ).getIdDirectory(  ), plugin );
+                    directory = DirectoryHome.findByPrimaryKey( record.getDirectory( ).getIdDirectory( ), plugin );
 
                     listRecord = (List<Record>) session.getAttribute( SESSION_ID_LAST_RECORD );
 
-                    if ( ( listRecord != null ) && ( listRecord.size(  ) > 0 ) &&
-                            ( listRecord.get( listRecord.size(  ) - 1 ).getIdRecord(  ) != record.getIdRecord(  ) ) )
+                    if ( ( listRecord != null ) && ( listRecord.size( ) > 0 )
+                            && ( listRecord.get( listRecord.size( ) - 1 ).getIdRecord( ) != record.getIdRecord( ) ) )
                     {
                         listRecord.add( record );
                     }
                     else if ( listRecord == null )
                     {
-                        listRecord = new ArrayList<Record>(  );
+                        listRecord = new ArrayList<Record>( );
                         listRecord.add( record );
                     }
 
@@ -283,26 +282,27 @@ public class DirectoryApp implements XPageApplication
 
                     listIdDirectory = (List<Integer>) session.getAttribute( SESSION_ID_LAST_DIRECTORY );
 
-                    if ( ( listIdDirectory != null ) && ( listIdDirectory.size(  ) > 0 ) &&
-                            !listIdDirectory.get( listIdDirectory.size(  ) - 1 )
-                                                .equals( record.getDirectory(  ).getIdDirectory(  ) ) )
+                    if ( ( listIdDirectory != null )
+                            && ( listIdDirectory.size( ) > 0 )
+                            && !listIdDirectory.get( listIdDirectory.size( ) - 1 ).equals(
+                                    record.getDirectory( ).getIdDirectory( ) ) )
                     {
-                        listIdDirectory.add( record.getDirectory(  ).getIdDirectory(  ) );
+                        listIdDirectory.add( record.getDirectory( ).getIdDirectory( ) );
                     }
                     else if ( listIdDirectory == null )
                     {
-                        listIdDirectory = new ArrayList<Integer>(  );
-                        listIdDirectory.add( record.getDirectory(  ).getIdDirectory(  ) );
+                        listIdDirectory = new ArrayList<Integer>( );
+                        listIdDirectory.add( record.getDirectory( ).getIdDirectory( ) );
                     }
 
                     session.setAttribute( SESSION_ID_LAST_DIRECTORY, listIdDirectory );
                 }
             }
 
-            String strPortalUrl = AppPathService.getPortalUrl(  );
+            String strPortalUrl = AppPathService.getPortalUrl( );
             UrlItem urlDirectoryXpage = new UrlItem( strPortalUrl );
             urlDirectoryXpage.addParameter( XPageAppService.PARAM_XPAGE_APP,
-                AppPropertiesService.getProperty( PROPERTY_PAGE_APPLICATION_ID ) );
+                    AppPropertiesService.getProperty( PROPERTY_PAGE_APPLICATION_ID ) );
             urlDirectoryXpage.addParameter( PARAMETER_ID_DIRECTORY, strIdDirectory );
 
             if ( directory == null )
@@ -312,22 +312,21 @@ public class DirectoryApp implements XPageApplication
                 return null;
             }
 
-            if ( ( directory.getRoleKey(  ) != null ) && !directory.getRoleKey(  ).equals( Directory.ROLE_NONE ) &&
-                    SecurityService.isAuthenticationEnable(  ) &&
-                    !SecurityService.getInstance(  ).isUserInRole( request, directory.getRoleKey(  ) ) )
+            if ( ( directory.getRoleKey( ) != null ) && !directory.getRoleKey( ).equals( Directory.ROLE_NONE )
+                    && SecurityService.isAuthenticationEnable( )
+                    && !SecurityService.getInstance( ).isUserInRole( request, directory.getRoleKey( ) ) )
             {
                 SiteMessageService.setMessage( request, MESSAGE_ACCESS_DENIED, SiteMessage.TYPE_STOP );
             }
 
-            if ( directory.isEnabled(  ) )
+            if ( directory.isEnabled( ) )
             {
                 if ( request.getParameter( PARAMETER_VIEW_DIRECTORY_RECORD ) != null )
                 {
-                    if ( ( record == null ) ||
-                            ( ( record.getRoleKey(  ) != null ) &&
-                            !record.getRoleKey(  ).equals( Directory.ROLE_NONE ) &&
-                            SecurityService.isAuthenticationEnable(  ) &&
-                            !SecurityService.getInstance(  ).isUserInRole( request, record.getRoleKey(  ) ) ) )
+                    if ( ( record == null )
+                            || ( ( record.getRoleKey( ) != null ) && !record.getRoleKey( ).equals( Directory.ROLE_NONE )
+                                    && SecurityService.isAuthenticationEnable( ) && !SecurityService.getInstance( )
+                                    .isUserInRole( request, record.getRoleKey( ) ) ) )
                     {
                         SiteMessageService.setMessage( request, MESSAGE_ACCESS_DENIED, SiteMessage.TYPE_STOP );
 
@@ -338,15 +337,15 @@ public class DirectoryApp implements XPageApplication
 
                     bSingleResult = true;
 
-                    String strDirectoryRecord = getHtmlResultRecord( directory, record, request.getLocale(  ), plugin,
+                    String strDirectoryRecord = getHtmlResultRecord( directory, record, request.getLocale( ), plugin,
                             session );
                     model.put( MARK_STR_RESULT_RECORD, strDirectoryRecord );
                 }
                 else
                 {
                     searchFields.setCurrentPageIndex( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
-                            searchFields.getCurrentPageIndex(  ) ) );
-                    searchFields.setItemsPerPage( directory.getNumberRecordPerPage(  ) );
+                            searchFields.getCurrentPageIndex( ) ) );
+                    searchFields.setItemsPerPage( directory.getNumberRecordPerPage( ) );
                     // Init Map query if requested
                     initMapQuery( request, searchFields, directory );
 
@@ -356,40 +355,40 @@ public class DirectoryApp implements XPageApplication
                         try
                         {
                             HashMap<String, List<RecordField>> mapQuery = DirectoryUtils.getSearchRecordData( request,
-                                    directory.getIdDirectory(  ), plugin, request.getLocale(  ) );
+                                    directory.getIdDirectory( ), plugin, request.getLocale( ) );
 
                             searchFields.setMapQuery( mapQuery );
-                            searchFields.setIdDirectory( directory.getIdDirectory(  ) );
+                            searchFields.setIdDirectory( directory.getIdDirectory( ) );
                         }
                         catch ( DirectoryErrorException error )
                         {
-                            if ( error.isMandatoryError(  ) )
+                            if ( error.isMandatoryError( ) )
                             {
-                                Object[] tabRequiredFields = { error.getTitleField(  ) };
+                                Object[] tabRequiredFields = { error.getTitleField( ) };
                                 SiteMessageService.setMessage( request, MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD,
-                                    tabRequiredFields, SiteMessage.TYPE_STOP );
+                                        tabRequiredFields, SiteMessage.TYPE_STOP );
                             }
                             else
                             {
-                                Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
+                                Object[] tabRequiredFields = { error.getTitleField( ), error.getErrorMessage( ) };
                                 SiteMessageService.setMessage( request, MESSAGE_DIRECTORY_ERROR, tabRequiredFields,
-                                    SiteMessage.TYPE_STOP );
+                                        SiteMessage.TYPE_STOP );
                             }
                         }
                     }
 
-                    if ( searchFields.getMapQuery(  ) != null )
+                    if ( searchFields.getMapQuery( ) != null )
                     {
                         // call search service
                         searchFields.setIsDisabled( RecordFieldFilter.FILTER_TRUE );
 
-                        List<Integer> listResultRecordId = new ArrayList<Integer>(  );
+                        List<Integer> listResultRecordId = new ArrayList<Integer>( );
 
-                        if ( SecurityService.isAuthenticationEnable(  ) )
+                        if ( SecurityService.isAuthenticationEnable( ) )
                         {
-                            SecurityService securityService = SecurityService.getInstance(  );
+                            SecurityService securityService = SecurityService.getInstance( );
                             LuteceUser user = securityService.getRegisteredUser( request );
-                            List<String> roleKeyList = new ArrayList<String>(  );
+                            List<String> roleKeyList = new ArrayList<String>( );
 
                             if ( user != null )
                             {
@@ -406,27 +405,27 @@ public class DirectoryApp implements XPageApplication
                         searchFields.setSortParameters( request, directory, plugin );
 
                         listResultRecordId = DirectoryUtils.getListResults( request, directory, false, true,
-                                searchFields, null, request.getLocale(  ) );
+                                searchFields, null, request.getLocale( ) );
 
-                        boolean bIsDisplayedDirectly = Boolean.parseBoolean( AppPropertiesService.getProperty( 
-                                    PROPERTY_DISPLAY_ONE_RESULT_DIRECTLY ) );
+                        boolean bIsDisplayedDirectly = Boolean.parseBoolean( AppPropertiesService
+                                .getProperty( PROPERTY_DISPLAY_ONE_RESULT_DIRECTLY ) );
 
-                        if ( bIsDisplayedDirectly && ( listResultRecordId.size(  ) == 1 ) &&
-                                ( session.getAttribute( SESSION_ONE_RECORD_ID ) == null ) )
+                        if ( bIsDisplayedDirectly && ( listResultRecordId.size( ) == 1 )
+                                && ( session.getAttribute( SESSION_ONE_RECORD_ID ) == null ) )
                         {
                             record = recordService.findByPrimaryKey( listResultRecordId.get( 0 ), plugin );
 
-                            if ( ( record != null ) && ( record.getDirectory(  ) != null ) )
+                            if ( ( record != null ) && ( record.getDirectory( ) != null ) )
                             {
-                                directory = DirectoryHome.findByPrimaryKey( record.getDirectory(  ).getIdDirectory(  ),
+                                directory = DirectoryHome.findByPrimaryKey( record.getDirectory( ).getIdDirectory( ),
                                         plugin );
                             }
 
-                            if ( ( record == null ) ||
-                                    ( ( record.getRoleKey(  ) != null ) &&
-                                    !record.getRoleKey(  ).equals( Directory.ROLE_NONE ) &&
-                                    SecurityService.isAuthenticationEnable(  ) &&
-                                    !SecurityService.getInstance(  ).isUserInRole( request, record.getRoleKey(  ) ) ) )
+                            if ( ( record == null )
+                                    || ( ( record.getRoleKey( ) != null )
+                                            && !record.getRoleKey( ).equals( Directory.ROLE_NONE )
+                                            && SecurityService.isAuthenticationEnable( ) && !SecurityService
+                                            .getInstance( ).isUserInRole( request, record.getRoleKey( ) ) ) )
                             {
                                 SiteMessageService.setMessage( request, MESSAGE_ACCESS_DENIED, SiteMessage.TYPE_STOP );
 
@@ -435,24 +434,26 @@ public class DirectoryApp implements XPageApplication
 
                             record.setDirectory( directory );
 
-                            String strDirectoryRecord = getHtmlResultRecord( directory, record, request.getLocale(  ),
+                            String strDirectoryRecord = getHtmlResultRecord( directory, record, request.getLocale( ),
                                     plugin, session );
                             model.put( MARK_STR_RESULT_RECORD, strDirectoryRecord );
                             bSingleResult = true;
                             model.put( MARK_ONE_RESULT, true );
 
-                            session.setAttribute( SESSION_ONE_RECORD_ID, record.getIdRecord(  ) );
+                            session.setAttribute( SESSION_ONE_RECORD_ID, record.getIdRecord( ) );
 
                             listRecord = (List<Record>) session.getAttribute( SESSION_ID_LAST_RECORD );
 
-                            if ( ( listRecord != null ) && ( listRecord.size(  ) > 0 ) &&
-                                    ( listRecord.get( listRecord.size(  ) - 1 ).getIdRecord(  ) != record.getIdRecord(  ) ) )
+                            if ( ( listRecord != null )
+                                    && ( listRecord.size( ) > 0 )
+                                    && ( listRecord.get( listRecord.size( ) - 1 ).getIdRecord( ) != record
+                                            .getIdRecord( ) ) )
                             {
                                 listRecord.add( record );
                             }
                             else if ( listRecord == null )
                             {
-                                listRecord = new ArrayList<Record>(  );
+                                listRecord = new ArrayList<Record>( );
                                 listRecord.add( record );
                             }
 
@@ -460,16 +461,17 @@ public class DirectoryApp implements XPageApplication
 
                             listIdDirectory = (List<Integer>) session.getAttribute( SESSION_ID_LAST_DIRECTORY );
 
-                            if ( ( listIdDirectory != null ) && ( listIdDirectory.size(  ) > 0 ) &&
-                                    !listIdDirectory.get( listIdDirectory.size(  ) - 1 )
-                                                        .equals( record.getDirectory(  ).getIdDirectory(  ) ) )
+                            if ( ( listIdDirectory != null )
+                                    && ( listIdDirectory.size( ) > 0 )
+                                    && !listIdDirectory.get( listIdDirectory.size( ) - 1 ).equals(
+                                            record.getDirectory( ).getIdDirectory( ) ) )
                             {
-                                listIdDirectory.add( record.getDirectory(  ).getIdDirectory(  ) );
+                                listIdDirectory.add( record.getDirectory( ).getIdDirectory( ) );
                             }
                             else if ( listIdDirectory == null )
                             {
-                                listIdDirectory = new ArrayList<Integer>(  );
-                                listIdDirectory.add( record.getDirectory(  ).getIdDirectory(  ) );
+                                listIdDirectory = new ArrayList<Integer>( );
+                                listIdDirectory.add( record.getDirectory( ).getIdDirectory( ) );
                             }
 
                             session.setAttribute( SESSION_ID_LAST_DIRECTORY, listIdDirectory );
@@ -479,21 +481,21 @@ public class DirectoryApp implements XPageApplication
                             session.setAttribute( SESSION_ONE_RECORD_ID, null );
                         }
 
-                        if ( ( listResultRecordId.size(  ) != 1 ) || !bIsDisplayedDirectly )
+                        if ( ( listResultRecordId.size( ) != 1 ) || !bIsDisplayedDirectly )
                         {
                             bSingleResult = false;
 
                             Paginator<Integer> paginator = new Paginator<Integer>( listResultRecordId,
-                                    searchFields.getItemsPerPage(  ), urlDirectoryXpage.getUrl(  ),
-                                    Paginator.PARAMETER_PAGE_INDEX, searchFields.getCurrentPageIndex(  ) );
+                                    searchFields.getItemsPerPage( ), urlDirectoryXpage.getUrl( ),
+                                    Paginator.PARAMETER_PAGE_INDEX, searchFields.getCurrentPageIndex( ) );
 
                             model.put( MARK_PAGINATOR, paginator );
 
-                            List<Record> lRecord = recordService.loadListByListId( paginator.getPageItems(  ), plugin );
+                            List<Record> lRecord = recordService.loadListByListId( paginator.getPageItems( ), plugin );
 
-                            if ( lRecord.size(  ) > 0 )
+                            if ( lRecord.size( ) > 0 )
                             {
-                                String strResultList = getHtmlResultList( directory, lRecord, request.getLocale(  ),
+                                String strResultList = getHtmlResultList( directory, lRecord, request.getLocale( ),
                                         plugin );
                                 model.put( MARK_STR_RESULT_LIST, strResultList );
                             }
@@ -505,19 +507,19 @@ public class DirectoryApp implements XPageApplication
                         model.put( MARK_NEW_SEARCH, Integer.valueOf( 1 ) );
                     }
 
-                    String strFormSearch = getHtmlFormSearch( directory, searchFields.getMapQuery(  ), request, plugin );
+                    String strFormSearch = getHtmlFormSearch( directory, searchFields.getMapQuery( ), request, plugin );
                     model.put( MARK_STR_FORM_SEARCH, strFormSearch );
                 }
 
-                model.put( MARK_LOCALE, request.getLocale(  ) );
+                model.put( MARK_LOCALE, request.getLocale( ) );
             }
             else
             {
-                model.put( MARK_UNAVAILABILITY_MESSAGE, directory.getUnavailabilityMessage(  ) );
+                model.put( MARK_UNAVAILABILITY_MESSAGE, directory.getUnavailabilityMessage( ) );
             }
 
-            EntryFilter filterGeolocation = new EntryFilter(  );
-            filterGeolocation.setIdDirectory( directory.getIdDirectory(  ) );
+            EntryFilter filterGeolocation = new EntryFilter( );
+            filterGeolocation.setIdDirectory( directory.getIdDirectory( ) );
             filterGeolocation.setIdType( AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_GEOLOCATION, 16 ) );
 
             if ( bSingleResult != null )
@@ -536,8 +538,8 @@ public class DirectoryApp implements XPageApplication
             model.put( MARK_ENTRY_LIST_GEOLOCATION, entriesGeolocationList );
 
             HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_XPAGE_FRAME_DIRECTORY,
-                    request.getLocale(  ), model );
-            page.setContent( template.getHtml(  ) );
+                    request.getLocale( ), model );
+            page.setContent( template.getHtml( ) );
             session.setAttribute( SESSION_DIRECTORY_SITE_SEARCH_FIELDS, searchFields );
         }
 
@@ -546,7 +548,7 @@ public class DirectoryApp implements XPageApplication
 
     /**
      * return the HTML form search
-     *
+     * 
      * @param directory
      *            the directory
      * @param mapQuery
@@ -558,29 +560,29 @@ public class DirectoryApp implements XPageApplication
      * @return the html form search
      */
     private String getHtmlFormSearch( Directory directory, HashMap<String, List<RecordField>> mapQuery,
-        HttpServletRequest request, Plugin plugin )
+            HttpServletRequest request, Plugin plugin )
     {
         // build entryFilter
-        EntryFilter entryFilter = new EntryFilter(  );
-        entryFilter.setIdDirectory( directory.getIdDirectory(  ) );
+        EntryFilter entryFilter = new EntryFilter( );
+        entryFilter.setIdDirectory( directory.getIdDirectory( ) );
         entryFilter.setIsGroup( EntryFilter.FILTER_FALSE );
         entryFilter.setIsComment( EntryFilter.FILTER_FALSE );
         entryFilter.setIsIndexed( EntryFilter.FILTER_TRUE );
 
-        List<IEntry> listEntryFormMainSearch = new ArrayList<IEntry>(  );
-        List<IEntry> listEntryFormComplementarySearch = new ArrayList<IEntry>(  );
+        List<IEntry> listEntryFormMainSearch = new ArrayList<IEntry>( );
+        List<IEntry> listEntryFormComplementarySearch = new ArrayList<IEntry>( );
         IEntry entryStore;
 
         for ( IEntry entry : EntryHome.getEntryList( entryFilter, plugin ) )
         {
-            entryStore = EntryHome.findByPrimaryKey( entry.getIdEntry(  ), plugin );
+            entryStore = EntryHome.findByPrimaryKey( entry.getIdEntry( ), plugin );
 
-            if ( entryStore.isRoleAssociated(  ) )
+            if ( entryStore.isRoleAssociated( ) )
             {
-                entryStore.setFields( DirectoryUtils.getAuthorizedFieldsByRole( request, entryStore.getFields(  ) ) );
+                entryStore.setFields( DirectoryUtils.getAuthorizedFieldsByRole( request, entryStore.getFields( ) ) );
             }
 
-            if ( !entryStore.isShownInAdvancedSearch(  ) )
+            if ( !entryStore.isShownInAdvancedSearch( ) )
             {
                 listEntryFormMainSearch.add( entryStore );
             }
@@ -590,14 +592,14 @@ public class DirectoryApp implements XPageApplication
             }
         }
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_ENTRY_LIST_FORM_MAIN_SEARCH, listEntryFormMainSearch );
         model.put( MARK_ENTRY_LIST_FORM_COMPLEMENTARY_SEARCH, listEntryFormComplementarySearch );
         model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, mapQuery );
         model.put( MARK_DIRECTORY, directory );
-        model.put( MARK_LOCALE, request.getLocale(  ) );
+        model.put( MARK_LOCALE, request.getLocale( ) );
 
-        HttpSession session = request.getSession(  );
+        HttpSession session = request.getSession( );
 
         if ( session.getAttribute( SESSION_ONE_RECORD_ID ) != null )
         {
@@ -605,26 +607,26 @@ public class DirectoryApp implements XPageApplication
         }
 
         HtmlTemplate templateXmlFormSearch = AppTemplateService.getTemplate( TEMPLATE_XML_FORM_SEARCH,
-                request.getLocale(  ), model );
+                request.getLocale( ), model );
 
         File fileTemplate = null;
-        DirectoryXsl directoryXsl = DirectoryXslHome.findByPrimaryKey( directory.getIdFormSearchTemplate(  ), plugin );
+        DirectoryXsl directoryXsl = DirectoryXslHome.findByPrimaryKey( directory.getIdFormSearchTemplate( ), plugin );
 
-        if ( directoryXsl.getFile(  ) != null )
+        if ( directoryXsl.getFile( ) != null )
         {
-            fileTemplate = FileHome.findByPrimaryKey( directoryXsl.getFile(  ).getIdFile(  ), plugin );
+            fileTemplate = FileHome.findByPrimaryKey( directoryXsl.getFile( ).getIdFile( ), plugin );
         }
 
-        if ( ( fileTemplate != null ) && ( fileTemplate.getPhysicalFile(  ) != null ) )
+        if ( ( fileTemplate != null ) && ( fileTemplate.getPhysicalFile( ) != null ) )
         {
-            fileTemplate.setPhysicalFile( PhysicalFileHome.findByPrimaryKey( 
-                    fileTemplate.getPhysicalFile(  ).getIdPhysicalFile(  ), plugin ) );
+            fileTemplate.setPhysicalFile( PhysicalFileHome.findByPrimaryKey( fileTemplate.getPhysicalFile( )
+                    .getIdPhysicalFile( ), plugin ) );
 
-            XmlTransformerService xmlTransformerService = new XmlTransformerService(  );
-            PhysicalFile physicalFile = fileTemplate.getPhysicalFile(  );
-            String strXslId = XSL_UNIQUE_PREFIX_ID + physicalFile.getIdPhysicalFile(  );
-            String strResult = xmlTransformerService.transformBySourceWithXslCache( templateXmlFormSearch.getHtml(  ),
-                    physicalFile.getValue(  ), strXslId, null, null );
+            XmlTransformerService xmlTransformerService = new XmlTransformerService( );
+            PhysicalFile physicalFile = fileTemplate.getPhysicalFile( );
+            String strXslId = XSL_UNIQUE_PREFIX_ID + physicalFile.getIdPhysicalFile( );
+            String strResult = xmlTransformerService.transformBySourceWithXslCache( templateXmlFormSearch.getHtml( ),
+                    physicalFile.getValue( ), strXslId, null, null );
 
             return strResult;
         }
@@ -634,7 +636,7 @@ public class DirectoryApp implements XPageApplication
 
     /**
      * return the HTML result list
-     *
+     * 
      * @param directory
      *            the directory
      * @param listRecord
@@ -649,33 +651,32 @@ public class DirectoryApp implements XPageApplication
      */
     private String getHtmlResultList( Directory directory, List<Record> listRecord, Locale locale, Plugin plugin )
     {
-        StringBuffer strBufferListRecordXml = new StringBuffer(  );
-        StringBuffer strBufferListEntryXml = new StringBuffer(  );
+        StringBuffer strBufferListRecordXml = new StringBuffer( );
+        StringBuffer strBufferListEntryXml = new StringBuffer( );
 
         // get directory Entry
-        EntryFilter entryFilter = new EntryFilter(  );
-        entryFilter.setIdDirectory( directory.getIdDirectory(  ) );
+        EntryFilter entryFilter = new EntryFilter( );
+        entryFilter.setIdDirectory( directory.getIdDirectory( ) );
         entryFilter.setIsGroup( EntryFilter.FILTER_FALSE );
         entryFilter.setIsComment( EntryFilter.FILTER_FALSE );
         entryFilter.setIsShownInResultList( EntryFilter.FILTER_TRUE );
 
         List<IEntry> listEntrySearchResult = EntryHome.getEntryList( entryFilter, plugin );
 
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+        RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
 
         for ( Record record : listRecord )
         {
-            recordFieldFilter.setIdRecord( record.getIdRecord(  ) );
+            recordFieldFilter.setIdRecord( record.getIdRecord( ) );
             recordFieldFilter.setIsEntryShownInResultList( RecordFieldFilter.FILTER_TRUE );
             record.setListRecordField( RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin ) );
 
             State state = null;
 
-            if ( WorkflowService.getInstance(  ).isAvailable(  ) )
+            if ( WorkflowService.getInstance( ).isAvailable( ) )
             {
-                state = WorkflowService.getInstance(  )
-                                       .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
+                state = WorkflowService.getInstance( ).getState( record.getIdRecord( ), Record.WORKFLOW_RESOURCE_TYPE,
+                        directory.getIdWorkflow( ), Integer.valueOf( directory.getIdDirectory( ) ) );
             }
 
             strBufferListRecordXml.append( record.getXml( plugin, locale, false, state, listEntrySearchResult, true,
@@ -687,10 +688,10 @@ public class DirectoryApp implements XPageApplication
             entry.getXml( plugin, locale, strBufferListEntryXml );
         }
 
-        HashMap<String, String> model = new HashMap<String, String>(  );
+        HashMap<String, String> model = new HashMap<String, String>( );
 
-        if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                WorkflowService.getInstance(  ).isAvailable(  ) )
+        if ( ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL )
+                && WorkflowService.getInstance( ).isAvailable( ) )
         {
             model.put( TAG_DISPLAY, TAG_YES );
         }
@@ -701,26 +702,26 @@ public class DirectoryApp implements XPageApplication
 
         XmlUtil.addEmptyElement( strBufferListEntryXml, TAG_STATUS, model );
 
-        StringBuilder strBufferXml = new StringBuilder(  );
-        strBufferXml.append( XmlUtil.getXmlHeader(  ) );
+        StringBuilder strBufferXml = new StringBuilder( );
+        strBufferXml.append( XmlUtil.getXmlHeader( ) );
         strBufferXml.append( directory.getXml( plugin, locale, strBufferListRecordXml, strBufferListEntryXml ) );
 
         File fileTemplate = null;
-        DirectoryXsl directoryXsl = DirectoryXslHome.findByPrimaryKey( directory.getIdResultListTemplate(  ), plugin );
+        DirectoryXsl directoryXsl = DirectoryXslHome.findByPrimaryKey( directory.getIdResultListTemplate( ), plugin );
 
-        if ( directoryXsl.getFile(  ) != null )
+        if ( directoryXsl.getFile( ) != null )
         {
-            fileTemplate = FileHome.findByPrimaryKey( directoryXsl.getFile(  ).getIdFile(  ), plugin );
+            fileTemplate = FileHome.findByPrimaryKey( directoryXsl.getFile( ).getIdFile( ), plugin );
         }
 
-        if ( ( fileTemplate != null ) && ( fileTemplate.getPhysicalFile(  ) != null ) )
+        if ( ( fileTemplate != null ) && ( fileTemplate.getPhysicalFile( ) != null ) )
         {
-            fileTemplate.setPhysicalFile( PhysicalFileHome.findByPrimaryKey( 
-                    fileTemplate.getPhysicalFile(  ).getIdPhysicalFile(  ), plugin ) );
+            fileTemplate.setPhysicalFile( PhysicalFileHome.findByPrimaryKey( fileTemplate.getPhysicalFile( )
+                    .getIdPhysicalFile( ), plugin ) );
 
-            HashMap<String, String> params = new HashMap<String, String>(  );
-            String strParamTitleDescriptive = I18nService.getLocalizedString( PROPERTY_DIRECTORY_FRAME_TITLE_DESCRIPTIVE,
-                    locale );
+            HashMap<String, String> params = new HashMap<String, String>( );
+            String strParamTitleDescriptive = I18nService.getLocalizedString(
+                    PROPERTY_DIRECTORY_FRAME_TITLE_DESCRIPTIVE, locale );
             String strParamTitleSortAsc = I18nService.getLocalizedString( PROPERTY_DIRECTORY_RESULT_TITLE_SORT_ASC,
                     locale );
             String strParamTitleSortDesc = I18nService.getLocalizedString( PROPERTY_DIRECTORY_RESULT_TITLE_SORT_DESC,
@@ -730,11 +731,11 @@ public class DirectoryApp implements XPageApplication
             params.put( MARK_TITLE_SORT_DESC, strParamTitleSortDesc );
             params.put( MARK_TITLE_DESCRIPTIVE, strParamTitleDescriptive );
 
-            XmlTransformerService xmlTransformerService = new XmlTransformerService(  );
-            PhysicalFile physicalFile = fileTemplate.getPhysicalFile(  );
-            String strXslId = XSL_UNIQUE_PREFIX_ID + physicalFile.getIdPhysicalFile(  );
-            String strResult = xmlTransformerService.transformBySourceWithXslCache( strBufferXml.toString(  ),
-                    physicalFile.getValue(  ), strXslId, params, null );
+            XmlTransformerService xmlTransformerService = new XmlTransformerService( );
+            PhysicalFile physicalFile = fileTemplate.getPhysicalFile( );
+            String strXslId = XSL_UNIQUE_PREFIX_ID + physicalFile.getIdPhysicalFile( );
+            String strResult = xmlTransformerService.transformBySourceWithXslCache( strBufferXml.toString( ),
+                    physicalFile.getValue( ), strXslId, params, null );
 
             return strResult;
         }
@@ -744,7 +745,7 @@ public class DirectoryApp implements XPageApplication
 
     /**
      * return the HTML result lrcord
-     *
+     * 
      * @param directory
      *            the directory
      * @param record
@@ -757,22 +758,20 @@ public class DirectoryApp implements XPageApplication
      * @return the Html result record
      */
     private String getHtmlResultRecord( Directory directory, Record record, Locale locale, Plugin plugin,
-        HttpSession session )
+            HttpSession session )
     {
-        RecordFieldFilter filter = new RecordFieldFilter(  );
-        filter.setIdRecord( record.getIdRecord(  ) );
+        RecordFieldFilter filter = new RecordFieldFilter( );
+        filter.setIdRecord( record.getIdRecord( ) );
         filter.setIsEntryShownInResultRecord( RecordFieldFilter.FILTER_TRUE );
 
         List<RecordField> listRecordField = RecordFieldHome.getRecordFieldList( filter, plugin );
         record.setListRecordField( listRecordField );
 
-        StringBuffer strBufferListEntryXml = new StringBuffer(  );
+        StringBuffer strBufferListEntryXml = new StringBuffer( );
 
         // get directory Entry
-        EntryFilter entryFilter = new EntryFilter(  );
-        entryFilter.setIdDirectory( record.getDirectory(  ).getIdDirectory(  ) );
-        entryFilter.setIsComment( EntryFilter.FILTER_FALSE );
-        entryFilter.setIsShownInResultRecord( EntryFilter.FILTER_TRUE );
+        EntryFilter entryFilter = new EntryFilter( );
+        entryFilter.setIdDirectory( record.getDirectory( ).getIdDirectory( ) );
 
         List<IEntry> listEntry = DirectoryUtils.getFormEntriesByFilter( entryFilter, plugin );
 
@@ -781,53 +780,54 @@ public class DirectoryApp implements XPageApplication
             entry.getXml( plugin, locale, strBufferListEntryXml );
         }
 
-        StringBuffer strBufferListRecordXml = new StringBuffer(  );
-        strBufferListRecordXml.append( record.getXml( plugin, locale, false, null, listEntry, true, true, false, true ) );
+        StringBuffer strBufferListRecordXml = new StringBuffer( );
+        strBufferListRecordXml
+                .append( record.getXml( plugin, locale, false, null, listEntry, true, true, false, true ) );
 
-        StringBuilder strBufferXml = new StringBuilder(  );
-        strBufferXml.append( XmlUtil.getXmlHeader(  ) );
+        StringBuilder strBufferXml = new StringBuilder( );
+        strBufferXml.append( XmlUtil.getXmlHeader( ) );
         strBufferXml.append( directory.getXml( plugin, locale, strBufferListRecordXml, strBufferListEntryXml ) );
 
         File fileTemplate = null;
-        DirectoryXsl directoryXsl = DirectoryXslHome.findByPrimaryKey( record.getDirectory(  )
-                                                                             .getIdResultRecordTemplate(  ), plugin );
+        DirectoryXsl directoryXsl = DirectoryXslHome.findByPrimaryKey( record.getDirectory( )
+                .getIdResultRecordTemplate( ), plugin );
 
-        if ( directoryXsl.getFile(  ) != null )
+        if ( directoryXsl.getFile( ) != null )
         {
-            fileTemplate = FileHome.findByPrimaryKey( directoryXsl.getFile(  ).getIdFile(  ), plugin );
+            fileTemplate = FileHome.findByPrimaryKey( directoryXsl.getFile( ).getIdFile( ), plugin );
         }
 
-        if ( ( fileTemplate != null ) && ( fileTemplate.getPhysicalFile(  ) != null ) )
+        if ( ( fileTemplate != null ) && ( fileTemplate.getPhysicalFile( ) != null ) )
         {
-            fileTemplate.setPhysicalFile( PhysicalFileHome.findByPrimaryKey( 
-                    fileTemplate.getPhysicalFile(  ).getIdPhysicalFile(  ), plugin ) );
+            fileTemplate.setPhysicalFile( PhysicalFileHome.findByPrimaryKey( fileTemplate.getPhysicalFile( )
+                    .getIdPhysicalFile( ), plugin ) );
 
-            HashMap<String, String> params = new HashMap<String, String>(  );
-            String strParamTitleBackSearch = I18nService.getLocalizedString( PROPERTY_DIRECTORY_FRAME_TITLE_BACK_SEARCH,
-                    locale );
-            String strParamLabelBackSearch = I18nService.getLocalizedString( PROPERTY_DIRECTORY_FRAME_LABEL_BACK_SEARCH,
-                    locale );
+            HashMap<String, String> params = new HashMap<String, String>( );
+            String strParamTitleBackSearch = I18nService.getLocalizedString(
+                    PROPERTY_DIRECTORY_FRAME_TITLE_BACK_SEARCH, locale );
+            String strParamLabelBackSearch = I18nService.getLocalizedString(
+                    PROPERTY_DIRECTORY_FRAME_LABEL_BACK_SEARCH, locale );
 
             params.put( MARK_TITLE_BACK_SEARCH, strParamTitleBackSearch );
             params.put( MARK_LABEL_BACK_SEARCH, strParamLabelBackSearch );
-            params.put( MARK_ID_DIRECTORY, Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ) );
+            params.put( MARK_ID_DIRECTORY, Integer.toString( record.getDirectory( ).getIdDirectory( ) ) );
 
             // Params linked with last record
             if ( session.getAttribute( SESSION_ID_LAST_RECORD ) != null )
             {
                 List<Record> listRecord = (List<Record>) session.getAttribute( SESSION_ID_LAST_RECORD );
-                String strParamTitleBackRecord = I18nService.getLocalizedString( PROPERTY_DIRECTORY_FRAME_TITLE_BACK_RECORD,
-                        locale );
-                String strParamLabelBackRecord = I18nService.getLocalizedString( PROPERTY_DIRECTORY_FRAME_LABEL_BACK_RECORD,
-                        locale );
+                String strParamTitleBackRecord = I18nService.getLocalizedString(
+                        PROPERTY_DIRECTORY_FRAME_TITLE_BACK_RECORD, locale );
+                String strParamLabelBackRecord = I18nService.getLocalizedString(
+                        PROPERTY_DIRECTORY_FRAME_LABEL_BACK_RECORD, locale );
                 params.put( MARK_TITLE_BACK_RECORD, strParamTitleBackRecord );
                 params.put( MARK_LABEL_BACK_RECORD, strParamLabelBackRecord );
-                params.put( MARK_IS_EXTEND_INSTALLED, Boolean.toString( PortalService.isExtendActivated(  ) ) );
+                params.put( MARK_IS_EXTEND_INSTALLED, Boolean.toString( PortalService.isExtendActivated( ) ) );
 
-                if ( ( listRecord != null ) && ( listRecord.size(  ) > 1 ) )
+                if ( ( listRecord != null ) && ( listRecord.size( ) > 1 ) )
                 {
-                    Record lastRecord = listRecord.get( listRecord.size(  ) - 2 );
-                    params.put( MARK_ID_LAST_RECORD, "" + lastRecord.getIdRecord(  ) );
+                    Record lastRecord = listRecord.get( listRecord.size( ) - 2 );
+                    params.put( MARK_ID_LAST_RECORD, "" + lastRecord.getIdRecord( ) );
                 }
             }
 
@@ -835,18 +835,18 @@ public class DirectoryApp implements XPageApplication
             {
                 List<Integer> listIdDirectory = (List<Integer>) session.getAttribute( SESSION_ID_LAST_DIRECTORY );
 
-                if ( ( listIdDirectory != null ) && ( listIdDirectory.size(  ) > 1 ) )
+                if ( ( listIdDirectory != null ) && ( listIdDirectory.size( ) > 1 ) )
                 {
-                    Integer lastIdDirectory = listIdDirectory.get( listIdDirectory.size(  ) - 2 );
+                    Integer lastIdDirectory = listIdDirectory.get( listIdDirectory.size( ) - 2 );
                     params.put( MARK_ID_LAST_DIRECTORY, "" + lastIdDirectory );
                 }
             }
 
-            XmlTransformerService xmlTransformerService = new XmlTransformerService(  );
-            PhysicalFile physicalFile = fileTemplate.getPhysicalFile(  );
-            String strXslId = XSL_UNIQUE_PREFIX_ID + physicalFile.getIdPhysicalFile(  );
-            String strResult = xmlTransformerService.transformBySourceWithXslCache( strBufferXml.toString(  ),
-                    physicalFile.getValue(  ), strXslId, params, null );
+            XmlTransformerService xmlTransformerService = new XmlTransformerService( );
+            PhysicalFile physicalFile = fileTemplate.getPhysicalFile( );
+            String strXslId = XSL_UNIQUE_PREFIX_ID + physicalFile.getIdPhysicalFile( );
+            String strResult = xmlTransformerService.transformBySourceWithXslCache( strBufferXml.toString( ),
+                    physicalFile.getValue( ), strXslId, params, null );
 
             return strResult;
         }
@@ -856,7 +856,7 @@ public class DirectoryApp implements XPageApplication
 
     /**
      * Returns the html code of the search page
-     *
+     * 
      * @param request
      *            the http request
      * @param plugin
@@ -865,12 +865,11 @@ public class DirectoryApp implements XPageApplication
      * @throws SiteMessageException
      *             a exception that triggers a site message
      */
-    public String getSearchPage( HttpServletRequest request, Plugin plugin )
-        throws SiteMessageException
+    public String getSearchPage( HttpServletRequest request, Plugin plugin ) throws SiteMessageException
     {
         String strQuery = request.getParameter( PARAMETER_QUERY );
 
-        HashMap<String, Object> model = new HashMap<String, Object>(  );
+        HashMap<String, Object> model = new HashMap<String, Object>( );
 
         if ( StringUtils.isNotBlank( strQuery ) )
         {
@@ -886,13 +885,13 @@ public class DirectoryApp implements XPageApplication
             {
                 Object[] tabRequiredFields = { PARAMETER_OPERATOR };
                 SiteMessageService.setMessage( request, MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields,
-                    SiteMessage.TYPE_STOP );
+                        SiteMessage.TYPE_STOP );
             }
 
             // Safety checks
             if ( StringUtils.isNotBlank( strDateBegin ) )
             {
-                dateBegin = DateUtil.formatDate( strDateBegin, request.getLocale(  ) );
+                dateBegin = DateUtil.formatDate( strDateBegin, request.getLocale( ) );
 
                 if ( dateBegin == null )
                 {
@@ -902,7 +901,7 @@ public class DirectoryApp implements XPageApplication
 
             if ( StringUtils.isNotBlank( strDateEnd ) )
             {
-                dateEnd = DateUtil.formatDate( strDateEnd, request.getLocale(  ) );
+                dateEnd = DateUtil.formatDate( strDateEnd, request.getLocale( ) );
 
                 if ( dateEnd == null )
                 {
@@ -935,20 +934,20 @@ public class DirectoryApp implements XPageApplication
         }
 
         // Display the list of all Directory
-        DirectoryFilter filter = new DirectoryFilter(  );
+        DirectoryFilter filter = new DirectoryFilter( );
         filter.setIsDisabled( DirectoryFilter.FILTER_TRUE );
 
         List<Directory> listDirectory = DirectoryHome.getDirectoryList( filter, plugin );
         List<Directory> listDirectoryAuthorized;
 
-        if ( SecurityService.isAuthenticationEnable(  ) )
+        if ( SecurityService.isAuthenticationEnable( ) )
         {
-            listDirectoryAuthorized = new ArrayList<Directory>(  );
+            listDirectoryAuthorized = new ArrayList<Directory>( );
 
             for ( Directory directory : listDirectory )
             {
-                if ( ( directory.getRoleKey(  ) == null ) || directory.getRoleKey(  ).equals( Directory.ROLE_NONE ) ||
-                        SecurityService.getInstance(  ).isUserInRole( request, directory.getRoleKey(  ) ) )
+                if ( ( directory.getRoleKey( ) == null ) || directory.getRoleKey( ).equals( Directory.ROLE_NONE )
+                        || SecurityService.getInstance( ).isUserInRole( request, directory.getRoleKey( ) ) )
                 {
                     listDirectoryAuthorized.add( directory );
                 }
@@ -961,12 +960,12 @@ public class DirectoryApp implements XPageApplication
 
         model.put( MARK_DIRECTORY_LIST, listDirectoryAuthorized );
 
-        model.put( MARK_LOCALE, request.getLocale(  ) );
+        model.put( MARK_LOCALE, request.getLocale( ) );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_XPAGE_VIEW_ALL_DIRECTORIES,
-                request.getLocale(  ), model );
+                request.getLocale( ), model );
 
-        return template.getHtml(  );
+        return template.getHtml( );
     }
 
     /**
@@ -976,11 +975,11 @@ public class DirectoryApp implements XPageApplication
      * @param directory the directory
      */
     private static void initMapQuery( HttpServletRequest request, DirectorySiteSearchFields searchFields,
-        Directory directory )
+            Directory directory )
     {
-        if ( ( request.getParameter( INIT_MAP_QUERY ) != null ) ||
-                ( ( request.getParameter( PARAMETER_SEARCH ) == null ) &&
-                ( searchFields.getIdDirectory(  ) != directory.getIdDirectory(  ) ) ) )
+        if ( ( request.getParameter( INIT_MAP_QUERY ) != null )
+                || ( ( request.getParameter( PARAMETER_SEARCH ) == null ) && ( searchFields.getIdDirectory( ) != directory
+                        .getIdDirectory( ) ) ) )
         {
             searchFields.setMapQuery( null );
         }
@@ -991,9 +990,9 @@ public class DirectoryApp implements XPageApplication
      * @param directory the directory
      * @return the DirectorySiteSearchFields
      */
-    private DirectorySiteSearchFields getInitDirectorySearchField(  )
+    private DirectorySiteSearchFields getInitDirectorySearchField( )
     {
-        DirectorySiteSearchFields searchFields = new DirectorySiteSearchFields(  );
+        DirectorySiteSearchFields searchFields = new DirectorySiteSearchFields( );
 
         return searchFields;
     }
