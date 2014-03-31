@@ -33,6 +33,27 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
+
+import au.com.bytecode.opencsv.CSVReader;
 import fr.paris.lutece.plugins.directory.business.Category;
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryAction;
@@ -108,28 +129,6 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 
 /**
@@ -1980,13 +1979,6 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
         recordFieldFilter.setIdDirectory( _searchFields.getIdDirectory( ) );
-
-        if ( !entry.getEntryType( ).getComment( ) && !entry.getEntryType( ).getGroup( )
-                && ( _recordService.getCountRecord( recordFieldFilter, getPlugin( ) ) != 0 ) )
-        {
-            return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_ENTRY_DIRECTORY_IS_NOT_EMPTY,
-                    AdminMessage.TYPE_STOP );
-        }
 
         Object[] tabEntryTitleCopy = { entry.getTitle( ) };
         String strTitleCopyEntry = I18nService.getLocalizedString( PROPERTY_COPY_ENTRY_TITLE, tabEntryTitleCopy,
