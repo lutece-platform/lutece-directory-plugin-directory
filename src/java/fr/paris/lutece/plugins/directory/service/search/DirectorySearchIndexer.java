@@ -33,6 +33,19 @@
  */
 package fr.paris.lutece.plugins.directory.service.search;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.document.DateTools;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FieldType;
+import org.apache.lucene.document.StoredField;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
+
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryFilter;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
@@ -58,18 +71,6 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.url.UrlItem;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.lucene.document.DateTools;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.FieldType;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
 
 
 /**
@@ -306,17 +307,12 @@ public class DirectorySearchIndexer implements SearchIndexer
     {
         Document doc = new Document( );
 
-        FieldType ftNo = new FieldType( StringField.TYPE_STORED );
-        ftNo.setIndexed( false );
-        ftNo.setTokenized( false );
-        ftNo.setOmitNorms( false );
+        FieldType ft = new FieldType( StringField.TYPE_STORED );
+        ft.setOmitNorms( false );
 
         FieldType ftNotStored = new FieldType( StringField.TYPE_NOT_STORED );
         ftNotStored.setOmitNorms( false );
         ftNotStored.setTokenized( false );
-
-        FieldType ft = new FieldType( StringField.TYPE_STORED );
-        ft.setOmitNorms( false );
 
         boolean bFallback = false;
 
@@ -345,7 +341,7 @@ public class DirectorySearchIndexer implements SearchIndexer
             return null;
         }
 
-        doc.add( new Field( SearchItem.FIELD_TITLE, strTitle, TextField.TYPE_STORED ) );
+        doc.add( new Field( SearchItem.FIELD_TITLE, strTitle, ft ) );
 
         if ( !listContentEntry.isEmpty( ) )
         {
@@ -363,7 +359,7 @@ public class DirectorySearchIndexer implements SearchIndexer
 
             if ( StringUtils.isNotBlank( strSummary ) )
             {
-                doc.add( new Field( SearchItem.FIELD_SUMMARY, strSummary, TextField.TYPE_STORED ) );
+                doc.add( new StoredField( SearchItem.FIELD_SUMMARY, strSummary ) );
             }
         }
 
@@ -374,7 +370,7 @@ public class DirectorySearchIndexer implements SearchIndexer
             strRoleKey = ROLE_NONE;
         }
 
-        doc.add( new Field( SearchItem.FIELD_ROLE, strRoleKey, ftNo ) );
+        doc.add( new Field( SearchItem.FIELD_ROLE, strRoleKey, ft ) );
 
         String strDate = DateTools.dateToString( record.getDateCreation( ), DateTools.Resolution.DAY );
         doc.add( new Field( SearchItem.FIELD_DATE, strDate, ft ) );
@@ -388,7 +384,7 @@ public class DirectorySearchIndexer implements SearchIndexer
         url.addParameter( XPageAppService.PARAM_XPAGE_APP, DIRECTORY );
         url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord( ) );
         url.addParameter( PARAMETER_VIEW_DIRECTORY_RECORD, "" );
-        doc.add( new Field( SearchItem.FIELD_URL, url.getUrl( ), ftNo ) );
+        doc.add( new Field( SearchItem.FIELD_URL, url.getUrl( ), ft ) );
 
         //Add the uid as a field, so that index can be incrementally maintained.
         // This field is not stored with question/answer, it is indexed, but it is not
