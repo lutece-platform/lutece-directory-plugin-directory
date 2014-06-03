@@ -1,0 +1,33 @@
+<div class="control-group">
+	<label class="control-label" for="form${entry.idEntry}" id="form${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
+			<div class="table-responsive">
+				<table class="table table-striped">
+			<#assign x=entry.numberRow>
+			<#list 1..x+1 as i>
+			  <tr>
+				<#assign y=entry.numberColumn>
+				<#list 1..y+1 as j>
+			  	<td>
+					<#assign title="">
+					<#list entry.fields as field>
+						<#assign value=i+"_"+j>
+						<#if field.value == value>
+							<#assign title=field.title!>
+						</#if>
+					</#list>
+			  		<#if j==1 && i!=1>
+					    ${title!}
+				  	<#elseif i == 1 && j != 1>
+					    ${title!}
+				  	<#elseif i == 1 && j == 1>
+				  		<b>${entry.comment}</b>
+				  	<#else>
+				  		<input id="field_${i}_${j}" name="field_${i}_${j}" type="text" />
+				  	</#if>
+			  	</td>
+			  	</#list>
+			  </tr>
+			</#list>  
+				</table>
+		</div>
+</div>

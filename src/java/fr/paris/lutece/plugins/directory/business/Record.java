@@ -382,10 +382,9 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
                 Map<String, String> modelRecordField = new HashMap<String, String>( );
                 Field field = recordField.getField( );
 
-                if ( ( field != null ) && StringUtils.isNotBlank( recordField.getField( ).getTitle( ) ) )
+                if ( ( field != null ) && StringUtils.isNotBlank( field.getTitle( ) ) )
                 {
-                    modelRecordField.put( Record.ATTRIBUTE_TITLE,
-                            StringEscapeUtils.escapeXml( recordField.getField( ).getTitle( ) ) );
+                    modelRecordField.put( Record.ATTRIBUTE_TITLE, StringEscapeUtils.escapeXml( field.getTitle( ) ) );
                 }
 
                 if ( entry.getEntryType( ) != null )

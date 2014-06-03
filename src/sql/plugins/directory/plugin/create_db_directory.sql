@@ -90,6 +90,8 @@ CREATE TABLE directory_entry (
   is_shown_in_export SMALLINT DEFAULT 0,
   is_shown_in_completeness SMALLINT DEFAULT 0,
   anonymize SMALLINT DEFAULT NULL,
+  num_row SMALLINT DEFAULT 0,
+  num_column SMALLINT DEFAULT 0,
   PRIMARY KEY  (id_entry)
   ) ;
 

@@ -110,6 +110,8 @@ public class Entry implements IEntry
     protected static final String PARAMETER_SHOWN_IN_EXPORT = "shown_in_export";
     protected static final String PARAMETER_SHOWN_IN_COMPLETENESS = "shown_in_completeness";
     protected static final String PARAMETER_SHOW_ALL_INFO = "show_all_info";
+    protected static final String PARAMETER_NUMBER_ROWS = "num_row";
+    protected static final String PARAMETER_NUMBER_COLUMNS = "num_column";
 
     //	message
     protected static final String MESSAGE_MANDATORY_FIELD = "directory.message.mandatory.field";
@@ -131,6 +133,8 @@ public class Entry implements IEntry
     protected static final String FIELD_ENTRY_ASSOCIATE = "directory.create_entry.label_entry";
     protected static final String FIELD_REQUEST_SQL = "directory.create_entry.label_request_sql";
     protected static final String FIELD_LABEL_ALL_SEARCH = "directory.create_entry.label_label_all_search";
+    protected static final String FIELD_NUMBER_ROWS = "directory.create_entry.labelNumberRows";
+    protected static final String FIELD_NUMBER_COLUMNS = "directory.create_entry.labelNumberColumns";
 
     //  Jsp Definition
     protected static final String JSP_DOWNLOAD_FILE = "jsp/site/plugins/directory/DoDownloadFile.jsp";
@@ -186,6 +190,8 @@ public class Entry implements IEntry
     private IMapProvider _mapProvider; // For entries type Geolocation
     private boolean _bIsAutocompleEntry; // For autocomplete entries
     private boolean _bAnonymize;
+    private int _nNumberRow;
+    private int _nNumberColumn;
 
     /*
      * (non-Javadoc)
@@ -1415,5 +1421,37 @@ public class Entry implements IEntry
     public void setAnonymize( boolean bAnonymize )
     {
         this._bAnonymize = bAnonymize;
+    }
+
+    /**
+     * @return the _nNumberRow
+     */
+    public int getNumberRow( )
+    {
+        return _nNumberRow;
+    }
+
+    /**
+     * @param nNumberRow the _nNumberRow to set
+     */
+    public void setNumberRow( int nNumberRow )
+    {
+        this._nNumberRow = nNumberRow;
+    }
+
+    /**
+     * @return the _nNumberColumn
+     */
+    public int getNumberColumn( )
+    {
+        return _nNumberColumn;
+    }
+
+    /**
+     * @param nNumberColumn the _nNumberColumn to set
+     */
+    public void setNumberColumn( int nNumberColumn )
+    {
+        this._nNumberColumn = nNumberColumn;
     }
 }
