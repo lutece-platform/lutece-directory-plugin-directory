@@ -33,6 +33,16 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.business.regularexpression.RegularExpression;
@@ -48,14 +58,6 @@ import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.url.UrlItem;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -219,17 +221,31 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
     {
         if ( request instanceof MultipartHttpServletRequest )
         {
-            List<FileItem> asynchronousFileItems = getFileSources( request );
-
-            if ( ( asynchronousFileItems != null ) && !asynchronousFileItems.isEmpty(  ) )
+           
+        	//get asynchronous file items
+        	List<FileItem> fileItems = getFileSources( request );
+            //if asynchronous file items is empty get the file in the multipart request
+            if( CollectionUtils.isEmpty(fileItems))
+            {
+            	FileItem fileItem = ((MultipartHttpServletRequest)request).getFile(  DirectoryUtils.EMPTY_STRING + this.getIdEntry(  ) );	
+            	if(fileItem !=null)
+            	{
+            	
+            		fileItems=new ArrayList<FileItem>();
+            		fileItems.add(fileItem);
+            	}
+            	
+            }
+            
+            if ( ( fileItems != null ) && !fileItems.isEmpty(  ) )
             {
                 // Checks
                 if ( bTestDirectoryError )
                 {
-                    this.checkRecordFieldData( asynchronousFileItems, locale );
+                    this.checkRecordFieldData( fileItems, locale );
                 }
 
-                for ( FileItem fileItem : asynchronousFileItems )
+                for ( FileItem fileItem : fileItems )
                 {
                     String strFilename = ( fileItem != null ) ? FileUploadService.getFileNameOnly( fileItem )
                                                               : StringUtils.EMPTY;
