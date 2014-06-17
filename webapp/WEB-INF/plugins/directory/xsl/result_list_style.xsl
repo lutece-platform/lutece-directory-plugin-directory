@@ -25,7 +25,7 @@
 		<tr>
 			<td class="link-directory-record">
 				<a class="btn btn-primary btn-small" href="jsp/site/Portal.jsp?page=directory&amp;id_directory_record={@id}&amp;view_directory_record=1" title="{$title-descriptive}">
-					<i class="icon-eye-open icon-white"> </i> <img src="images/local/skin/buttons/b_search.png"  alt="{$title-descriptive}" />
+					<i class="icon-eye-open icon-white"> </i> <span class="glyphicon glyphicon-search"></span>
 				</a>
 			</td>
 			<xsl:apply-templates select="list-entry/entry/list-record-field" />
