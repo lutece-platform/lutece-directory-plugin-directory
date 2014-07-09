@@ -42,6 +42,8 @@ import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,13 +51,11 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
-
 
 /**
- * 
+ *
  * class EntryTypeDate
- * 
+ *
  */
 public class EntryTypeArray extends Entry
 {
@@ -111,10 +111,10 @@ public class EntryTypeArray extends Entry
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter(
-                PARAMETER_HELP_MESSAGE ).trim( ) : null;
-        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null ) ? request
-                .getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim( ) : null;
+        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null )
+            ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim(  ) : null;
+        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null )
+            ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim(  ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
         String strIndexedAsTitle = request.getParameter( PARAMETER_INDEXED_AS_TITLE );
@@ -130,7 +130,7 @@ public class EntryTypeArray extends Entry
         String strNumberRows = request.getParameter( PARAMETER_NUMBER_ROWS );
         String strNumberColumns = request.getParameter( PARAMETER_NUMBER_COLUMNS );
 
-        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_TITLE;
         }
@@ -148,21 +148,21 @@ public class EntryTypeArray extends Entry
             Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
 
             return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                    AdminMessage.TYPE_STOP );
+                AdminMessage.TYPE_STOP );
         }
         else if ( !isValid( strNumberRows ) )
         {
             Object[] tabRequiredFields = { I18nService.getLocalizedString( FIELD_NUMBER_ROWS, locale ) };
 
             return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields,
-                    AdminMessage.TYPE_STOP );
+                AdminMessage.TYPE_STOP );
         }
         else if ( !isValid( strNumberColumns ) )
         {
             Object[] tabRequiredFields = { I18nService.getLocalizedString( FIELD_NUMBER_COLUMNS, locale ) };
 
             return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields,
-                    AdminMessage.TYPE_STOP );
+                AdminMessage.TYPE_STOP );
         }
 
         int row = Integer.valueOf( strNumberRows );
@@ -186,8 +186,8 @@ public class EntryTypeArray extends Entry
         this.setNumberColumn( column );
         this.setNumberRow( row );
 
-        ArrayList<Field> listFields = new ArrayList<Field>( );
-        List<Field> fields = FieldHome.getFieldListByIdEntry( this.getIdEntry( ),
+        ArrayList<Field> listFields = new ArrayList<Field>(  );
+        List<Field> fields = FieldHome.getFieldListByIdEntry( this.getIdEntry(  ),
                 PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
 
         for ( int i = 1; i <= ( row + 1 ); i++ )
@@ -198,7 +198,7 @@ public class EntryTypeArray extends Entry
 
                 for ( Field f : fields )
                 {
-                    if ( f.getValue( ).equals( i + "_" + j ) )
+                    if ( f.getValue(  ).equals( i + "_" + j ) )
                     {
                         existingFields = f;
 
@@ -210,7 +210,7 @@ public class EntryTypeArray extends Entry
 
                 if ( ( i == 1 ) && ( j != 1 ) )
                 {
-                    Field field = new Field( );
+                    Field field = new Field(  );
 
                     if ( existingFields != null )
                     {
@@ -224,7 +224,7 @@ public class EntryTypeArray extends Entry
                 }
                 else if ( ( i != 1 ) && ( j == 1 ) )
                 {
-                    Field field = new Field( );
+                    Field field = new Field(  );
 
                     if ( existingFields != null )
                     {
@@ -238,7 +238,7 @@ public class EntryTypeArray extends Entry
                 }
                 else
                 {
-                    Field field = new Field( );
+                    Field field = new Field(  );
                     field.setEntry( this );
                     field.setValue( i + "_" + j );
                     listFields.add( field );
@@ -252,33 +252,34 @@ public class EntryTypeArray extends Entry
     }
 
     @Override
-    public String getTemplateCreate( )
+    public String getTemplateCreate(  )
     {
         return _template_create;
     }
 
     @Override
-    public String getTemplateModify( )
+    public String getTemplateModify(  )
     {
         return _template_modify;
     }
 
     @Override
     public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
-            boolean bAddNewValue, List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
+        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
+        throws DirectoryErrorException
     {
-        List<Field> fields = FieldHome.getFieldListByIdEntry( this.getIdEntry( ),
+        List<Field> fields = FieldHome.getFieldListByIdEntry( this.getIdEntry(  ),
                 PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
 
-        for ( int i = 1; i <= ( this.getNumberRow( ) + 1 ); i++ )
+        for ( int i = 1; i <= ( this.getNumberRow(  ) + 1 ); i++ )
         {
-            for ( int j = 1; j <= ( this.getNumberColumn( ) + 1 ); j++ )
+            for ( int j = 1; j <= ( this.getNumberColumn(  ) + 1 ); j++ )
             {
                 Field existingFields = null;
 
                 for ( Field f : fields )
                 {
-                    if ( f.getValue( ).equals( i + "_" + j ) )
+                    if ( f.getValue(  ).equals( i + "_" + j ) )
                     {
                         existingFields = f;
 
@@ -290,7 +291,7 @@ public class EntryTypeArray extends Entry
 
                 if ( ( i != 1 ) && ( j != 1 ) )
                 {
-                    RecordField recordField = new RecordField( );
+                    RecordField recordField = new RecordField(  );
                     recordField.setEntry( this );
                     recordField.setValue( strValueEntry );
                     recordField.setField( existingFields );
@@ -302,27 +303,28 @@ public class EntryTypeArray extends Entry
 
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-            boolean bAddNewValue, List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
+        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
+        throws DirectoryErrorException
     {
     }
 
     @Override
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-            boolean bDisplayExport )
+        boolean bDisplayExport )
     {
-        Field field = recordField.getField( );
+        Field field = recordField.getField(  );
 
-        String[] fieldValues = field.getValue( ).split( "_" );
+        String[] fieldValues = field.getValue(  ).split( "_" );
 
         int nRow = Integer.valueOf( fieldValues[0] );
         int nColumn = Integer.valueOf( fieldValues[1] );
 
-        Field fieldRow = FieldHome.findByValue( field.getEntry( ).getIdEntry( ), nRow + "_1",
+        Field fieldRow = FieldHome.findByValue( field.getEntry(  ).getIdEntry(  ), nRow + "_1",
                 PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-        Field fieldColumn = FieldHome.findByValue( field.getEntry( ).getIdEntry( ), "1_" + nColumn,
+        Field fieldColumn = FieldHome.findByValue( field.getEntry(  ).getIdEntry(  ), "1_" + nColumn,
                 PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
 
-        return fieldRow.getTitle( ) + "/" + fieldColumn.getTitle( ) + " : " + recordField.getValue( );
+        return fieldRow.getTitle(  ) + "/" + fieldColumn.getTitle(  ) + " : " + recordField.getValue(  );
     }
 
     public String convertRecordFieldTitleToString( RecordField recordField, Locale locale, boolean bDisplayFront )
@@ -333,25 +335,25 @@ public class EntryTypeArray extends Entry
     @Override
     public void addSearchCriteria( HashMap<String, Object> mapSearchItem, RecordField recordField )
     {
-        if ( !recordField.getValue( ).equals( DirectoryUtils.EMPTY_STRING ) && ( recordField.getField( ) != null )
-                && ( recordField.getField( ).getValue( ) != null )
-                && !recordField.getField( ).getValue( ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( !recordField.getValue(  ).equals( DirectoryUtils.EMPTY_STRING ) && ( recordField.getField(  ) != null ) &&
+                ( recordField.getField(  ).getValue(  ) != null ) &&
+                !recordField.getField(  ).getValue(  ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            List<Integer> listIdField = (List<Integer>) mapSearchItem
-                    .get( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD );
+            List<Integer> listIdField = (List<Integer>) mapSearchItem.get( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD );
 
             if ( listIdField == null )
             {
-                listIdField = new ArrayList<Integer>( );
+                listIdField = new ArrayList<Integer>(  );
             }
 
-            listIdField.add( recordField.getField( ).getIdField( ) );
+            listIdField.add( recordField.getField(  ).getIdField(  ) );
             mapSearchItem.put( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD, listIdField );
-            if ( recordField.getValue( ) != null )
-            {
-                String strValue = new String( recordField.getValue( ) );
 
-                if ( !strValue.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
+            if ( recordField.getValue(  ) != null )
+            {
+                String strValue = new String( recordField.getValue(  ) );
+
+                if ( !strValue.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
                 {
                     mapSearchItem.put( DirectorySearchItem.FIELD_CONTENTS, strValue );
                 }

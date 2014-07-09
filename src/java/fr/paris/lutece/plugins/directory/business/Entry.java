@@ -44,6 +44,9 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.xml.XmlUtil;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -53,14 +56,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringEscapeUtils;
-
 
 /**
- * 
+ *
  * class Entry
- * 
+ *
  */
 public class Entry implements IEntry
 {
@@ -195,17 +195,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getIdEntry()
      */
-    public int getIdEntry( )
+    public int getIdEntry(  )
     {
         return _nIdEntry;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#setIdEntry(int)
      */
     public void setIdEntry( int idEntry )
@@ -215,17 +215,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getDirectory()
      */
-    public Directory getDirectory( )
+    public Directory getDirectory(  )
     {
         return _directory;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setDirectory(fr.paris
      * .lutece.plugins.directory.business.Directory)
@@ -237,17 +237,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getTitle()
      */
-    public String getTitle( )
+    public String getTitle(  )
     {
         return _strTitle;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setTitle(java.lang.
      * String)
@@ -259,17 +259,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getHelpMessage()
      */
-    public String getHelpMessage( )
+    public String getHelpMessage(  )
     {
         return _strHelpMessage;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setHelpMessage(java
      * .lang.String)
@@ -281,18 +281,18 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getHelpMessageSearch()
      */
-    public String getHelpMessageSearch( )
+    public String getHelpMessageSearch(  )
     {
         return _strHelpMessageSearch;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setHelpMessageSearch
      * (java.lang.String)
@@ -304,17 +304,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getComment()
      */
-    public String getComment( )
+    public String getComment(  )
     {
         return _strComment;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setComment(java.lang
      * .String)
@@ -326,17 +326,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#isMandatory()
      */
-    public boolean isMandatory( )
+    public boolean isMandatory(  )
     {
         return _bMandatory;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setMandatory(boolean)
      */
@@ -347,17 +347,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#isFieldInLine()
      */
-    public boolean isFieldInLine( )
+    public boolean isFieldInLine(  )
     {
         return _bFieldInLine;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setFieldInLine(boolean)
      */
@@ -368,19 +368,19 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#isShownInFormMainSearch
      * ()
      */
-    public boolean isShownInAdvancedSearch( )
+    public boolean isShownInAdvancedSearch(  )
     {
         return _bShownInAdvancedSearch;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setShownInFormMainSearch
      * (boolean)
@@ -392,18 +392,18 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#isShownInResultList()
      */
-    public boolean isShownInResultList( )
+    public boolean isShownInResultList(  )
     {
         return _bShownInResultList;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setShownInResultList
      * (boolean)
@@ -415,18 +415,18 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#isShownInResultRecord()
      */
-    public boolean isShownInResultRecord( )
+    public boolean isShownInResultRecord(  )
     {
         return _bShownInResultRecord;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setShownInResultRecord
      * (boolean)
@@ -438,18 +438,18 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#isShownInResultRecord()
      */
-    public boolean isShownInHistory( )
+    public boolean isShownInHistory(  )
     {
         return _bShownInHistory;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setShownInExport(boolean
      * )
@@ -461,17 +461,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#isShownInExport()
      */
-    public boolean isShownInExport( )
+    public boolean isShownInExport(  )
     {
         return _bShownInExport;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setShownInExport(boolean
      * )
@@ -483,18 +483,18 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#isShownInCompleteness()
      */
-    public boolean isShownInCompleteness( )
+    public boolean isShownInCompleteness(  )
     {
         return _bShownInCompleteness;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setShownInCompleteness
      * (boolean)
@@ -506,17 +506,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#isIndexed()
      */
-    public boolean isIndexed( )
+    public boolean isIndexed(  )
     {
         return _bIndexed;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setIndexed(boolean)
      */
@@ -527,17 +527,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getPosition()
      */
-    public int getPosition( )
+    public int getPosition(  )
     {
         return _nPosition;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#setPosition(int)
      */
     public void setPosition( int position )
@@ -547,17 +547,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getEntryType()
      */
-    public EntryType getEntryType( )
+    public EntryType getEntryType(  )
     {
         return _entryType;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setEntryType(fr.paris
      * .lutece.plugins.directory.business.EntryType)
@@ -569,17 +569,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getFields()
      */
-    public List<Field> getFields( )
+    public List<Field> getFields(  )
     {
         return _listFields;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setFields(java.util
      * .List)
@@ -591,17 +591,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getParent()
      */
-    public IEntry getParent( )
+    public IEntry getParent(  )
     {
         return _entryParent;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setParent(fr.paris.
      * lutece.plugins.directory.business.IEntry)
@@ -613,17 +613,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getChildren()
      */
-    public List<IEntry> getChildren( )
+    public List<IEntry> getChildren(  )
     {
         return _listEntryChildren;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setChildren(java.util
      * .List)
@@ -635,17 +635,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#isLastInTheList()
      */
-    public boolean isLastInTheList( )
+    public boolean isLastInTheList(  )
     {
         return _nLastInTheList;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setLastInTheList(boolean
      * )
@@ -657,17 +657,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#isFirstInTheList()
      */
-    public boolean isFirstInTheList( )
+    public boolean isFirstInTheList(  )
     {
         return _nFirstInTheList;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setFirstInTheList(boolean
      * )
@@ -679,17 +679,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getDisplayWidth()
      */
-    public int getDisplayWidth( )
+    public int getDisplayWidth(  )
     {
         return _nDisplayWidth;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setDisplayWidth(int)
      */
@@ -700,17 +700,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getDisplayHeight()
      */
-    public int getDisplayHeight( )
+    public int getDisplayHeight(  )
     {
         return _nDisplayHeight;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setDisplayHeight(int)
      */
@@ -721,17 +721,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#isRoleAssociated()
      */
-    public boolean isRoleAssociated( )
+    public boolean isRoleAssociated(  )
     {
         return _bRoleAssociated;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setRoleAssociated(boolean
      * )
@@ -743,18 +743,18 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#isWorkgroupAssociated()
      */
-    public boolean isWorkgroupAssociated( )
+    public boolean isWorkgroupAssociated(  )
     {
         return _bWorkgroupAssociated;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setWorkgroupAssociated
      * (boolean)
@@ -766,19 +766,19 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#isMultipleSearchFields
      * ()
      */
-    public boolean isMultipleSearchFields( )
+    public boolean isMultipleSearchFields(  )
     {
         return _bMultipleSearchFields;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setMultipleSearchFields
      * (boolean)
@@ -790,18 +790,18 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getEntryAssociate()
      */
-    public int getEntryAssociate( )
+    public int getEntryAssociate(  )
     {
         return _nIdEntryAssociate;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setEntryAssociate(int)
      */
@@ -812,17 +812,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getComment()
      */
-    public String getRequestSQL( )
+    public String getRequestSQL(  )
     {
         return _strRequestSQL;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setComment(java.lang
      * .String)
@@ -834,17 +834,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getComment()
      */
-    public boolean isAddValueAllSearch( )
+    public boolean isAddValueAllSearch(  )
     {
         return _bAddValueAllSearch;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setComment(java.lang
      * .String)
@@ -856,18 +856,18 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#isAutocompleteEntry()
      */
-    public boolean isAutocompleteEntry( )
+    public boolean isAutocompleteEntry(  )
     {
         return _bIsAutocompleEntry;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setAutocompleteEntry
      * (boolean)
@@ -879,17 +879,17 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getComment()
      */
-    public String getLabelValueAllSearch( )
+    public String getLabelValueAllSearch(  )
     {
         return _strLabelValueAllSearch;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#setComment(java.lang
      * .String)
@@ -905,8 +905,8 @@ public class Entry implements IEntry
      * @param isDisplayFront true if display for front office or false if
      *            display for back office
      * @return the template url
-     * 
-     * 
+     *
+     *
      */
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -919,7 +919,7 @@ public class Entry implements IEntry
      * @param isDisplayFront true if display for front office or false if
      *            display for back office
      * @return the template url
-     * 
+     *
      * */
     public String getTemplateHtmlFormSearchEntry( boolean isDisplayFront )
     {
@@ -932,7 +932,7 @@ public class Entry implements IEntry
      * @param isDisplayFront true if display for front office or false if
      *            display for back office
      * @return the template url
-     * 
+     *
      * */
     public String getTemplateHtmlRecordFieldValue( boolean isDisplayFront )
     {
@@ -941,7 +941,7 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getEntryData(javax.
      * servlet.http.HttpServletRequest, java.util.Locale)
@@ -953,7 +953,7 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getRecordFieldData(
      * fr.paris.lutece.plugins.directory.business.Record,
@@ -961,81 +961,84 @@ public class Entry implements IEntry
      * java.util.Locale)
      */
     public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
-            boolean bAddNewValue, List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
+        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
+        throws DirectoryErrorException
     {
-        List<String> lstValue = new ArrayList<String>( );
-        String strValueEntry = ( request.getParameter( DirectoryUtils.EMPTY_STRING + this.getIdEntry( ) ) != null ) ? request
-                .getParameter( DirectoryUtils.EMPTY_STRING + this.getIdEntry( ) ).trim( ) : null;
+        List<String> lstValue = new ArrayList<String>(  );
+        String strValueEntry = ( request.getParameter( DirectoryUtils.EMPTY_STRING + this.getIdEntry(  ) ) != null )
+            ? request.getParameter( DirectoryUtils.EMPTY_STRING + this.getIdEntry(  ) ).trim(  ) : null;
         lstValue.add( strValueEntry );
         getRecordFieldData( record, lstValue, bTestDirectoryError, bAddNewValue, listRecordField, locale );
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getImportRecordFieldData
      * (fr.paris.lutece.plugins.directory.business.Record, java.lang.String,
      * boolean, java.util.List, java.util.Locale)
      */
     public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
-            List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
+        List<RecordField> listRecordField, Locale locale )
+        throws DirectoryErrorException
     {
-        List<String> lstValue = new ArrayList<String>( );
+        List<String> lstValue = new ArrayList<String>(  );
         lstValue.add( strImportValue );
         getRecordFieldData( record, lstValue, bTestDirectoryError, false, listRecordField, locale );
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getRecordFieldData(
      * fr.paris.lutece.plugins.directory.business.Record, java.util.List,
      * boolean, java.util.List, java.util.Locale)
      */
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-            boolean bAddNewValue, List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
+        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
+        throws DirectoryErrorException
     {
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getTemplateCreate()
      */
-    public String getTemplateCreate( )
+    public String getTemplateCreate(  )
     {
         return null;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getTemplateModify()
      */
-    public String getTemplateModify( )
+    public String getTemplateModify(  )
     {
         return null;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getPaginator(int,
      * java.lang.String, java.lang.String, java.lang.String)
      */
     public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-            String strPageIndex )
+        String strPageIndex )
     {
         return null;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#
      * getReferenceListRegularExpression
      * (fr.paris.lutece.plugins.directory.business.IEntry,
@@ -1048,7 +1051,7 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getHtmlFormEntry(java
      * .util.Locale)
@@ -1057,14 +1060,14 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>( );
+            Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
 
             HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale,
                     model );
 
-            return template.getHtml( );
+            return template.getHtml(  );
         }
 
         return null;
@@ -1072,7 +1075,7 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getHtmlFormEntry(java
      * .util.Locale, java.util.List)
@@ -1081,7 +1084,7 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>( );
+            Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
             model.put( MARK_DEFAULT_VALUES, defaultValues );
@@ -1089,7 +1092,7 @@ public class Entry implements IEntry
             HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale,
                     model );
 
-            return template.getHtml( );
+            return template.getHtml(  );
         }
 
         return null;
@@ -1097,7 +1100,7 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getHtmlFormSearchEntry
      * (java.util.Locale)
@@ -1106,14 +1109,14 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlFormSearchEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>( );
+            Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
 
             HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormSearchEntry( isDisplayFront ),
                     locale, model );
 
-            return template.getHtml( );
+            return template.getHtml(  );
         }
 
         return null;
@@ -1121,7 +1124,7 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getHtmlFormSearchEntry
      * (java.util.Locale, java.util.List)
@@ -1130,7 +1133,7 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlFormSearchEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>( );
+            Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
             model.put( MARK_DEFAULT_VALUES, defaultValues );
@@ -1138,7 +1141,7 @@ public class Entry implements IEntry
             HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormSearchEntry( isDisplayFront ),
                     locale, model );
 
-            return template.getHtml( );
+            return template.getHtml(  );
         }
 
         return null;
@@ -1146,7 +1149,7 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getHtmlRecordFieldValue
      * (java.util.Locale,
@@ -1156,7 +1159,7 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlRecordFieldValue( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>( );
+            Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_ENTRY, this );
             model.put( MARK_RECORD_FIELD, recordField );
             model.put( MARK_LOCALE, locale );
@@ -1164,7 +1167,7 @@ public class Entry implements IEntry
             HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlRecordFieldValue( isDisplayFront ),
                     locale, model );
 
-            return template.getHtml( );
+            return template.getHtml(  );
         }
 
         return null;
@@ -1172,29 +1175,29 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#
      * convertRecordFieldValueToString
      * (fr.paris.lutece.plugins.directory.business.RecordField,
      * java.util.Locale)
      */
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-            boolean bExportDirectory )
+        boolean bExportDirectory )
     {
-        if ( recordField.getValue( ) != null )
+        if ( recordField.getValue(  ) != null )
         {
-            if ( recordField.getField( ) != null )
+            if ( recordField.getField(  ) != null )
             {
-                if ( ( recordField.getField( ).getValue( ) != null )
-                        && !recordField.getField( ).getValue( ).equals( DirectoryUtils.EMPTY_STRING ) )
+                if ( ( recordField.getField(  ).getValue(  ) != null ) &&
+                        !recordField.getField(  ).getValue(  ).equals( DirectoryUtils.EMPTY_STRING ) )
                 {
-                    return recordField.getField( ).getValue( );
+                    return recordField.getField(  ).getValue(  );
                 }
 
-                return recordField.getValue( );
+                return recordField.getValue(  );
             }
 
-            return recordField.getValue( );
+            return recordField.getValue(  );
         }
 
         return DirectoryUtils.EMPTY_STRING;
@@ -1202,7 +1205,7 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#
      * convertRecordFieldTitleToString
      * (fr.paris.lutece.plugins.directory.business.RecordField,
@@ -1210,20 +1213,20 @@ public class Entry implements IEntry
      */
     public String convertRecordFieldTitleToString( RecordField recordField, Locale locale, boolean bDisplayFront )
     {
-        if ( recordField.getValue( ) != null )
+        if ( recordField.getValue(  ) != null )
         {
-            if ( recordField.getField( ) != null )
+            if ( recordField.getField(  ) != null )
             {
-                if ( ( recordField.getField( ).getTitle( ) != null )
-                        && !recordField.getField( ).getTitle( ).equals( DirectoryUtils.EMPTY_STRING ) )
+                if ( ( recordField.getField(  ).getTitle(  ) != null ) &&
+                        !recordField.getField(  ).getTitle(  ).equals( DirectoryUtils.EMPTY_STRING ) )
                 {
-                    return recordField.getField( ).getTitle( );
+                    return recordField.getField(  ).getTitle(  );
                 }
 
-                return recordField.getValue( );
+                return recordField.getValue(  );
             }
 
-            return recordField.getValue( );
+            return recordField.getValue(  );
         }
 
         return DirectoryUtils.EMPTY_STRING;
@@ -1231,7 +1234,7 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#addSearchCriteria(java
      * .util.HashMap, fr.paris.lutece.plugins.directory.business.RecordField)
@@ -1240,11 +1243,11 @@ public class Entry implements IEntry
     {
         String strValue;
 
-        if ( recordField.getValue( ) != null )
+        if ( recordField.getValue(  ) != null )
         {
-            strValue = new String( recordField.getValue( ) );
+            strValue = new String( recordField.getValue(  ) );
 
-            if ( !strValue.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
+            if ( !strValue.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
             {
                 mapSearchItem.put( DirectorySearchItem.FIELD_CONTENTS, strValue );
             }
@@ -1253,28 +1256,28 @@ public class Entry implements IEntry
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * fr.paris.lutece.plugins.directory.business.IEntry#getXml(fr.paris.lutece
      * .portal.service.plugin.Plugin, java.util.Locale, java.lang.StringBuffer)
      */
     public void getXml( Plugin plugin, Locale locale, StringBuffer strXml )
     {
-        if ( !this.getEntryType( ).getComment( ) )
+        if ( !this.getEntryType(  ).getComment(  ) )
         {
-            Map<String, String> model = new HashMap<String, String>( );
-            model.put( ATTRIBUTE_ENTRY_ID, String.valueOf( this.getIdEntry( ) ) );
-            model.put( ATTRIBUTE_ENTRY_ID_TYPE, String.valueOf( this.getEntryType( ).getIdType( ) ) );
-            model.put( Entry.ATTRIBUTE_IS_SORTABLE, Boolean.toString( this.isSortable( ) ) );
+            Map<String, String> model = new HashMap<String, String>(  );
+            model.put( ATTRIBUTE_ENTRY_ID, String.valueOf( this.getIdEntry(  ) ) );
+            model.put( ATTRIBUTE_ENTRY_ID_TYPE, String.valueOf( this.getEntryType(  ).getIdType(  ) ) );
+            model.put( Entry.ATTRIBUTE_IS_SORTABLE, Boolean.toString( this.isSortable(  ) ) );
 
             XmlUtil.beginElement( strXml, TAG_ENTRY, model );
-            XmlUtil.addElementHtml( strXml, TAG_TITLE, StringEscapeUtils.escapeXml( this.getTitle( ) ) );
+            XmlUtil.addElementHtml( strXml, TAG_TITLE, StringEscapeUtils.escapeXml( this.getTitle(  ) ) );
 
-            if ( this.getEntryType( ).getGroup( ) && ( this.getChildren( ) != null ) )
+            if ( this.getEntryType(  ).getGroup(  ) && ( this.getChildren(  ) != null ) )
             {
                 XmlUtil.beginElement( strXml, TAG_LIST_ENTRY, model );
 
-                for ( IEntry entry : this.getChildren( ) )
+                for ( IEntry entry : this.getChildren(  ) )
                 {
                     entry.getXml( plugin, locale, strXml );
                 }
@@ -1287,13 +1290,14 @@ public class Entry implements IEntry
     }
 
     public void getImportRecordFieldData( Record record, byte[] decodedBytes, String nomFile, boolean b,
-            List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
+        List<RecordField> listRecordField, Locale locale )
+        throws DirectoryErrorException
     {
         // TODO Auto-generated method stub
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
      */
     public void setMapProvider( IMapProvider mapProvider )
@@ -1302,10 +1306,10 @@ public class Entry implements IEntry
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
      */
-    public IMapProvider getMapProvider( )
+    public IMapProvider getMapProvider(  )
     {
         return _mapProvider;
     }
@@ -1314,54 +1318,54 @@ public class Entry implements IEntry
      * Check if the entry is sortable
      * @return true if it is sortable, false otherwise
      */
-    public boolean isSortable( )
+    public boolean isSortable(  )
     {
         return false;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see fr.paris.lutece.plugins.directory.business.IEntry#getPaginator(int,
      * java.lang.String, java.lang.String, java.lang.String, java.util.Locale)
      */
     public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-            String strPageIndex, Locale locale )
+        String strPageIndex, Locale locale )
     {
         return null;
     }
 
     /**
-     * 
+     *
      * Provide default join on directory_record_field
      */
-    public String getSQLJoin( )
+    public String getSQLJoin(  )
     {
         return SQL_JOIN_DIRECTORY_RECORD_FIELD;
     }
 
     /**
-     * 
+     *
      * Provides default order by on directory_record_field.record_field_value
      */
-    public String getSQLOrderBy( )
+    public String getSQLOrderBy(  )
     {
         return SQL_ORDER_BY_RECORD_FIELD_VALUE;
     }
 
     /**
-     * 
+     *
      * Returns the entry id
      */
-    public List<Object> getSQLParametersValues( )
+    public List<Object> getSQLParametersValues(  )
     {
-        return Collections.<Object> singletonList( Integer.valueOf( getIdEntry( ) ) );
+        return Collections.<Object>singletonList( Integer.valueOf( getIdEntry(  ) ) );
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isIndexedAsTitle( )
+    public boolean isIndexedAsTitle(  )
     {
         return _bIndexedAsTitle;
     }
@@ -1377,7 +1381,7 @@ public class Entry implements IEntry
     /**
      * {@inheritDoc}
      */
-    public boolean isIndexedAsSummary( )
+    public boolean isIndexedAsSummary(  )
     {
         return _bIndexedAsSummary;
     }
@@ -1394,7 +1398,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     public void canUploadFiles( List<FileItem> listUploadedFileItems, List<FileItem> listFileItemsToUpload,
-            Locale locale ) throws DirectoryErrorException
+        Locale locale ) throws DirectoryErrorException
     {
     }
 
@@ -1402,7 +1406,7 @@ public class Entry implements IEntry
      * Check if entries of this type are anonymizable or not.
      * @return True if the entry is anonymizable, false otherwise
      */
-    public boolean isAnonymizable( )
+    public boolean isAnonymizable(  )
     {
         return false;
     }
@@ -1410,7 +1414,7 @@ public class Entry implements IEntry
     /**
      * {@inheritDoc}
      */
-    public boolean getAnonymize( )
+    public boolean getAnonymize(  )
     {
         return _bAnonymize;
     }
@@ -1426,7 +1430,7 @@ public class Entry implements IEntry
     /**
      * @return the _nNumberRow
      */
-    public int getNumberRow( )
+    public int getNumberRow(  )
     {
         return _nNumberRow;
     }
@@ -1442,7 +1446,7 @@ public class Entry implements IEntry
     /**
      * @return the _nNumberColumn
      */
-    public int getNumberColumn( )
+    public int getNumberColumn(  )
     {
         return _nNumberColumn;
     }

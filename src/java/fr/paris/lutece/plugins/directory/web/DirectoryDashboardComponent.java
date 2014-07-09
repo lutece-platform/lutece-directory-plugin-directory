@@ -78,12 +78,10 @@ public class DirectoryDashboardComponent extends DashboardComponent
     private static final String MARK_PERMISSION_CREATE = "permission_create";
 
     // CONSTANTS
-    private static final int ZONE_1 = 1;
     private static final String EMPTY_STRING = "";
 
     // TEMPALTES
-    private static final String TEMPLATE_DASHBOARD_ZONE_1 = "/admin/plugins/directory/directory_dashboard_zone_1.html";
-    private static final String TEMPLATE_DASHBOARD_OTHER_ZONE = "/admin/plugins/directory/directory_dashboard_other_zone.html";
+    private static final String TEMPLATE_DASHBOARD = "/admin/plugins/directory/directory_dashboard.html";
 
     /**
      * {@inheritDoc}
@@ -152,7 +150,7 @@ public class DirectoryDashboardComponent extends DashboardComponent
             RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
                 DirectoryResourceIdService.PERMISSION_CREATE, user ) );
 
-        HtmlTemplate t = AppTemplateService.getTemplate( getTemplateDashboard(  ), user.getLocale(  ), model );
+        HtmlTemplate t = AppTemplateService.getTemplate( TEMPLATE_DASHBOARD, user.getLocale(  ), model );
 
         return t.getHtml(  );
     }
@@ -169,19 +167,5 @@ public class DirectoryDashboardComponent extends DashboardComponent
         List<Directory> directoryList = DirectoryHome.getDirectoryList( filter, getPlugin(  ) );
 
         return (List<Directory>) AdminWorkgroupService.getAuthorizedCollection( directoryList, user );
-    }
-
-    /**
-     * Get the template
-     * @return the template
-     */
-    private String getTemplateDashboard(  )
-    {
-        if ( getZone(  ) == ZONE_1 )
-        {
-            return TEMPLATE_DASHBOARD_ZONE_1;
-        }
-
-        return TEMPLATE_DASHBOARD_OTHER_ZONE;
     }
 }

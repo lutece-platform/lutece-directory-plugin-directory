@@ -47,18 +47,19 @@ import fr.paris.lutece.portal.service.workgroup.WorkgroupRemovalListenerService;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.sql.Timestamp;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 
 /**
- * 
+ *
  * Class Directory
- * 
+ *
  */
 public class Directory implements AdminWorkgroupResource, RBACResource
 {
@@ -140,55 +141,55 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     /**
      * Initialize the Directory
      */
-    public static void init( )
+    public static void init(  )
     {
         // Create removal listeners and register them
         if ( _listenerWorkgroup == null )
         {
-            _listenerWorkgroup = new DirectoryWorkgroupRemovalListener( );
-            WorkgroupRemovalListenerService.getService( ).registerListener( _listenerWorkgroup );
+            _listenerWorkgroup = new DirectoryWorkgroupRemovalListener(  );
+            WorkgroupRemovalListenerService.getService(  ).registerListener( _listenerWorkgroup );
         }
 
         if ( _listenerRegularExpression == null )
         {
-            _listenerRegularExpression = new DirectoryRegularExpressionRemovalListener( );
-            RegularExpressionRemovalListenerService.getService( ).registerListener( _listenerRegularExpression );
+            _listenerRegularExpression = new DirectoryRegularExpressionRemovalListener(  );
+            RegularExpressionRemovalListenerService.getService(  ).registerListener( _listenerRegularExpression );
         }
 
         if ( _listenerXslRemovalListener == null )
         {
-            _listenerXslRemovalListener = new DirectoryXslRemovalListener( );
-            DirectoryXslRemovalListenerService.getService( ).registerListener( _listenerXslRemovalListener );
+            _listenerXslRemovalListener = new DirectoryXslRemovalListener(  );
+            DirectoryXslRemovalListenerService.getService(  ).registerListener( _listenerXslRemovalListener );
         }
 
         if ( _listenerWorkflowRemovalListener == null )
         {
-            _listenerWorkflowRemovalListener = new DirectoryWorkflowRemovalListener( );
-            WorkflowRemovalListenerService.getService( ).registerListener( _listenerWorkflowRemovalListener );
+            _listenerWorkflowRemovalListener = new DirectoryWorkflowRemovalListener(  );
+            WorkflowRemovalListenerService.getService(  ).registerListener( _listenerWorkflowRemovalListener );
         }
 
         if ( _listenerEntryDirectoryRemovalListener == null )
         {
-            _listenerEntryDirectoryRemovalListener = new EntryTypeDirectoryRemovalListener( );
-            EntryRemovalListenerService.getService( ).registerListener( _listenerEntryDirectoryRemovalListener );
+            _listenerEntryDirectoryRemovalListener = new EntryTypeDirectoryRemovalListener(  );
+            EntryRemovalListenerService.getService(  ).registerListener( _listenerEntryDirectoryRemovalListener );
         }
 
         if ( _listenerDirectoryResourceRssConfigRemovalListener == null )
         {
-            _listenerDirectoryResourceRssConfigRemovalListener = new DirectoryResourceRssConfigRemovalListener( );
-            EntryRemovalListenerService.getService( ).registerListener(
-                    _listenerDirectoryResourceRssConfigRemovalListener );
+            _listenerDirectoryResourceRssConfigRemovalListener = new DirectoryResourceRssConfigRemovalListener(  );
+            EntryRemovalListenerService.getService(  )
+                                       .registerListener( _listenerDirectoryResourceRssConfigRemovalListener );
         }
 
         //ImageResourceManager
-        FileImgService.getInstance( ).register( );
+        FileImgService.getInstance(  ).register(  );
     }
 
     /**
-     * 
+     *
      * @return the title of the directory
      */
-    public String getTitle( )
+    public String getTitle(  )
     {
         return _strTitle;
     }
@@ -203,10 +204,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     * 
+     *
      * @return the front office title of the directory
      */
-    public String getFrontOfficeTitle( )
+    public String getFrontOfficeTitle(  )
     {
         return _strFrontOfficeTitle;
     }
@@ -221,10 +222,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     * 
+     *
      * @return the description of the directory
      */
-    public String getDescription( )
+    public String getDescription(  )
     {
         return _strDescription;
     }
@@ -232,7 +233,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     /**
      * @return the _bDisplaySearchState
      */
-    public boolean isDisplaySearchState( )
+    public boolean isDisplaySearchState(  )
     {
         return _bDisplaySearchState;
     }
@@ -248,7 +249,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     /**
      * @return the _bDisplayComplementarySearchState
      */
-    public boolean isDisplayComplementarySearchState( )
+    public boolean isDisplayComplementarySearchState(  )
     {
         return _bDisplaySearchComplementaryState;
     }
@@ -271,10 +272,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     * 
+     *
      * @return the unavailability message of the directory
      */
-    public String getUnavailabilityMessage( )
+    public String getUnavailabilityMessage(  )
     {
         return _strUnavailabilityMessage;
     }
@@ -289,10 +290,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     * 
+     *
      * @return the work group associate to the directory
      */
-    public String getWorkgroup( )
+    public String getWorkgroup(  )
     {
         return _strWorkgroupKey;
     }
@@ -307,10 +308,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     * 
+     *
      * @return the id of the directory
      */
-    public int getIdDirectory( )
+    public int getIdDirectory(  )
     {
         return _nIdDirectory;
     }
@@ -325,10 +326,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     * 
+     *
      * @return true if the directory is enabled
      */
-    public boolean isEnabled( )
+    public boolean isEnabled(  )
     {
         return _bIsEnabled;
     }
@@ -343,10 +344,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     * 
+     *
      * @return the creation date
      */
-    public Timestamp getDateCreation( )
+    public Timestamp getDateCreation(  )
     {
         return _tDateCreation;
     }
@@ -364,7 +365,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * RBAC resource implementation
      * @return The resource type code
      */
-    public String getResourceTypeCode( )
+    public String getResourceTypeCode(  )
     {
         return RESOURCE_TYPE;
     }
@@ -373,16 +374,16 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * RBAC resource implementation
      * @return The resourceId
      */
-    public String getResourceId( )
+    public String getResourceId(  )
     {
         return "" + _nIdDirectory;
     }
 
     /**
-     * 
+     *
      * @return a list of action can be use for the directory
      */
-    public List<DirectoryAction> getActions( )
+    public List<DirectoryAction> getActions(  )
     {
         return _listActions;
     }
@@ -399,9 +400,9 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     /**
      * Gets the directory role
      * @return directory's role as a String
-     * 
+     *
      */
-    public String getRoleKey( )
+    public String getRoleKey(  )
     {
         return _strRoleKey;
     }
@@ -409,7 +410,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     /**
      * Sets the directory's role
      * @param strRole The role
-     * 
+     *
      */
     public void setRoleKey( String strRole )
     {
@@ -420,7 +421,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * return the id of the result list template
      * @return the id of the result list template
      */
-    public int getIdResultListTemplate( )
+    public int getIdResultListTemplate(  )
     {
         return _nIdResultListTemplate;
     }
@@ -438,7 +439,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * return the id of the record template
      * @return he id of the record template
      */
-    public int getIdResultRecordTemplate( )
+    public int getIdResultRecordTemplate(  )
     {
         return _nIdResultRecordTemplate;
     }
@@ -456,16 +457,16 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * return the id of the form search template
      * @return the id of the form search template
      */
-    public int getIdFormSearchTemplate( )
+    public int getIdFormSearchTemplate(  )
     {
         return _nIdFormSearchTemplate;
     }
 
     /**
-     * 
+     *
      * @return the number of record display per page
      */
-    public int getNumberRecordPerPage( )
+    public int getNumberRecordPerPage(  )
     {
         return _nNumberRecordPerPage;
     }
@@ -489,10 +490,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     * 
+     *
      * @return the id of the directory workflow
      */
-    public int getIdWorkflow( )
+    public int getIdWorkflow(  )
     {
         return _nIdWorkflow;
     }
@@ -512,7 +513,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return The id of the workflow state of records that must be permanently
      *         removed
      */
-    public int getIdWorkflowStateToRemove( )
+    public int getIdWorkflowStateToRemove(  )
     {
         return _nIdWorkflowStateToRemove;
     }
@@ -533,7 +534,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the creation date should be shown in the result list,
      *         false otherwise
      */
-    public boolean isDateShownInResultList( )
+    public boolean isDateShownInResultList(  )
     {
         return _bDateShownInResultList;
     }
@@ -553,7 +554,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the creation date should be shown in the result record,
      *         false otherwise
      */
-    public boolean isDateShownInResultRecord( )
+    public boolean isDateShownInResultRecord(  )
     {
         return _bDateShownInResultRecord;
     }
@@ -573,7 +574,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the creation date should be shown in history, false
      *         otherwise
      */
-    public boolean isDateShownInHistory( )
+    public boolean isDateShownInHistory(  )
     {
         return _bDateShownInHistory;
     }
@@ -593,7 +594,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the creation date should be shown in search, false
      *         otherwise
      */
-    public boolean isDateShownInSearch( )
+    public boolean isDateShownInSearch(  )
     {
         return _bDateShownInSearch;
     }
@@ -613,7 +614,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the creation date should be shown in advanced search,
      *         false otherwise
      */
-    public boolean isDateShownInAdvancedSearch( )
+    public boolean isDateShownInAdvancedSearch(  )
     {
         return _bDateShownInAdvancedSearch;
     }
@@ -633,7 +634,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the creation date should be shown in multi search,
      *         false otherwise
      */
-    public boolean isDateShownInMultiSearch( )
+    public boolean isDateShownInMultiSearch(  )
     {
         return _bDateShownInMultiSearch;
     }
@@ -652,7 +653,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * Check if the creation date should be exported
      * @return True if the creation date should be exported, false otherwise
      */
-    public boolean isDateShownInExport( )
+    public boolean isDateShownInExport(  )
     {
         return _bDateShownInExport;
     }
@@ -672,7 +673,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the modification date should be shown in the result list,
      *         false otherwise
      */
-    public boolean isDateModificationShownInResultList( )
+    public boolean isDateModificationShownInResultList(  )
     {
         return _bDateModificationShownInResultList;
     }
@@ -693,7 +694,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      *         record,
      *         false otherwise
      */
-    public boolean isDateModificationShownInResultRecord( )
+    public boolean isDateModificationShownInResultRecord(  )
     {
         return _bDateModificationShownInResultRecord;
     }
@@ -713,7 +714,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the modification date should be shown in history, false
      *         otherwise
      */
-    public boolean isDateModificationShownInHistory( )
+    public boolean isDateModificationShownInHistory(  )
     {
         return _bDateModificationShownInHistory;
     }
@@ -733,7 +734,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the modification date should be shown in search, false
      *         otherwise
      */
-    public boolean isDateModificationShownInSearch( )
+    public boolean isDateModificationShownInSearch(  )
     {
         return _bDateModificationShownInSearch;
     }
@@ -753,7 +754,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the modification date should be shown in advanced search,
      *         false otherwise
      */
-    public boolean isDateModificationShownInAdvancedSearch( )
+    public boolean isDateModificationShownInAdvancedSearch(  )
     {
         return _bDateModificationShownInAdvancedSearch;
     }
@@ -773,7 +774,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * @return True if the modification date should be shown in multi search,
      *         false otherwise
      */
-    public boolean isDateModificationShownInMultiSearch( )
+    public boolean isDateModificationShownInMultiSearch(  )
     {
         return _bDateModificationShownInMultiSearch;
     }
@@ -792,7 +793,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * Check if the modification date should be exported
      * @return True if the modification date should be exported, false otherwise
      */
-    public boolean isDateModificationShownInExport( )
+    public boolean isDateModificationShownInExport(  )
     {
         return _bDateModificationShownInExport;
     }
@@ -811,7 +812,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * Check if the sort is ascendent
      * @return True if the sort is ascendent, false otherwise
      */
-    public boolean isAscendingSort( )
+    public boolean isAscendingSort(  )
     {
         return _bAscSort;
     }
@@ -829,7 +830,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * Get the id of the entry to sort
      * @return the id of the entry to sort
      */
-    public String getIdSortEntry( )
+    public String getIdSortEntry(  )
     {
         return _strSortEntryId;
     }
@@ -847,7 +848,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * return true if the record must be sorted by ascending sort
      * @return true if the record must be sorted by ascending sort
      */
-    public boolean isAscendingSortFront( )
+    public boolean isAscendingSortFront(  )
     {
         return _bAscSortFront;
     }
@@ -866,7 +867,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * return the id of the entry used for sorted
      * @return the id of the entry used for sorted
      */
-    public String getIdSortEntryFront( )
+    public String getIdSortEntryFront(  )
     {
         return _strSortEntryIdFront;
     }
@@ -884,7 +885,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * Check whether record is activated
      * @return True if record is activated, false otherwise
      */
-    public boolean isRecordActivated( )
+    public boolean isRecordActivated(  )
     {
         return _bRecordActivated;
     }
@@ -908,12 +909,12 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      */
     public StringBuffer getXml( Plugin plugin, Locale locale, StringBuffer strListRecord, StringBuffer strListEntry )
     {
-        StringBuffer strXml = new StringBuffer( );
-        HashMap<String, Object> model = new HashMap<String, Object>( );
-        model.put( ATTRIBUTE_ID, String.valueOf( getIdDirectory( ) ) );
+        StringBuffer strXml = new StringBuffer(  );
+        HashMap<String, Object> model = new HashMap<String, Object>(  );
+        model.put( ATTRIBUTE_ID, String.valueOf( getIdDirectory(  ) ) );
         XmlUtil.beginElement( strXml, TAG_DIRECTORY, model );
-        XmlUtil.addElement( strXml, TAG_TITLE, StringEscapeUtils.escapeXml( getTitle( ) ) );
-        XmlUtil.addElement( strXml, TAG_CREATION_DATE, DateUtil.getDateString( getDateCreation( ), locale ) );
+        XmlUtil.addElement( strXml, TAG_TITLE, StringEscapeUtils.escapeXml( getTitle(  ) ) );
+        XmlUtil.addElement( strXml, TAG_CREATION_DATE, DateUtil.getDateString( getDateCreation(  ), locale ) );
         XmlUtil.beginElement( strXml, TAG_LIST_ENTRY );
         strXml.append( strListEntry );
         XmlUtil.endElement( strXml, TAG_LIST_ENTRY );
@@ -938,22 +939,22 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * Check if the directory is indexed
      * @return true if the directory is indexed, false otherwise
      */
-    public boolean isIndexed( )
+    public boolean isIndexed(  )
     {
         return _bIsIndexed;
     }
 
     /**
-     * 
+     *
      * @return true if the search operator using is OR
      */
-    public boolean isSearchOperatorOr( )
+    public boolean isSearchOperatorOr(  )
     {
         return _bSearchOperatorOr;
     }
 
     /**
-     * 
+     *
      * @param _bSearchOperatorOr true if the search operator using is OR
      */
     public void setSearchOperatorOr( boolean bSearchOperatorOr )

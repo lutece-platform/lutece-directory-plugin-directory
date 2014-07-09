@@ -33,10 +33,11 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+
 /**
- * 
+ *
  * class DirectoryFilter
- * 
+ *
  */
 public class DirectoryFilter
 {
@@ -51,11 +52,11 @@ public class DirectoryFilter
     private String _strOrder;
 
     /**
-     * 
+     *
      * @return 1 if the directories return must be enabled
      *         0 if the forms return must be disabled
      */
-    public int getIsDisabled( )
+    public int getIsDisabled(  )
     {
         return _nIsDisabled;
     }
@@ -75,16 +76,16 @@ public class DirectoryFilter
      * Check if the filter contains isDisabled state
      * @return true if the filter contain isDisabled state
      */
-    public boolean containsIsDisabled( )
+    public boolean containsIsDisabled(  )
     {
         return ( _nIsDisabled != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return the workgroup of the search forms
      */
-    public String getWorkgroup( )
+    public String getWorkgroup(  )
     {
         return _strWorkgroup;
     }
@@ -99,20 +100,20 @@ public class DirectoryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter contain workgroup criteria
      */
-    public boolean containsWorkgroupCriteria( )
+    public boolean containsWorkgroupCriteria(  )
     {
         return ( !_strWorkgroup.equals( ALL_STRING ) );
     }
 
     /**
-     * 
+     *
      * @return 1 if the forms have workflow
      *         0 if the forms have not workflow
      */
-    public int getIdWorkflow( )
+    public int getIdWorkflow(  )
     {
         return _nIdWorkflow;
     }
@@ -129,20 +130,20 @@ public class DirectoryFilter
     }
 
     /**
-     * 
+     *
      * @return true if the filter contain form state
      */
-    public boolean containsIdWorkflow( )
+    public boolean containsIdWorkflow(  )
     {
         return ( _nIdWorkflow != ALL_INT );
     }
 
     /**
-     * 
+     *
      * @return 1 if the directories return must be Indexed
      *         0 if the forms return must not be Indexed
      */
-    public int getIsIndexed( )
+    public int getIsIndexed(  )
     {
         return _nIsIndexed;
     }
@@ -162,7 +163,7 @@ public class DirectoryFilter
      * Check if the filter contains isIndexed state
      * @return true if the filter contains isIndexed state
      */
-    public boolean containsIsIndexed( )
+    public boolean containsIsIndexed(  )
     {
         return ( _nIsIndexed != ALL_INT );
     }
@@ -170,7 +171,7 @@ public class DirectoryFilter
     /**
      * @return the _strOrder
      */
-    public String getOrder( )
+    public String getOrder(  )
     {
         return this._strOrder;
     }

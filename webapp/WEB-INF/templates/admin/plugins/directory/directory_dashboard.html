@@ -1,50 +1,69 @@
-<table class="table table-striped table-condensed">
-<thead>
-   	<tr>
-   		<th>#i18n{directory.dashboard.columnTitleLabel}</th>
-   		<th>#i18n{directory.dashboard.view_directory}</th>  
-   		<th>#i18n{directory.dashboard.row_state}</th>  
-   		<th>#i18n{directory.dashboard.columnTitleActions}</th>  
- 	 		
-   	</tr>
-</thead>
-<tbody>
-    <#list directory_list as directory>
-    	<tr>
-			<td>
-				<strong>${directory.title}</strong>
-				<br>
-				#i18n{directory.dashboard.nb_records} <strong>${record_count_list[directory.idDirectory?string]}</strong>
-			</td>
-			<td>
-				<a href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" target="_blank">
-					<i class="icon-eye-open" title="#i18n{directory.dashboard.view_directory} ${directory.title}"></i>
-				</a>
-			</td>
-			<td>
-				<#if directory.enabled>
-					<span class="label label-success"><i class="icon-ok-sign icon-white"></i></span>
-				<#else>
-					<span class="label label-important"><i class="icon-remove icon-white"></i></span>
-				</#if>	     
-			</td>
-			<td>
-				<#if directory.actions?exists>
-					<#list directory.actions as action>
-						<#if action.permission='MANAGE_RECORD' || action.permission='DELETE' || action.permission='CHANGE_STATE'>
-							<a class="btn btn-small spaced pull-right <#if action.permission='DELETE' || action.permission='DELETE_ALL_RECORD' || action.nameKey=='directory.action.disable.name' >btn-danger<#elseif action.nameKey=='directory.action.enable.name'>btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory=${directory.idDirectory}" title="${action.description}">
-								<i class="${action.iconUrl} icon-white"></i>
+<div class="well lutece-dashboard-application">
+    <fieldset>
+	    <legend>
+	        <img src="${icon}" title="logo #i18n{directory.directoryList}" alt="logo #i18n{directory.directoryList}"/>
+	        <a href="${url}" title="#i18n{directory.directoryList}">&nbsp;#i18n{directory.dashboard.directoryList}</a>
+	            <div class="pull-right">
+	                
+	                <#if permission_create>
+	                <a class="btn btn-small btn-primary" href="jsp/admin/plugins/directory/CreateDirectory.jsp" title="#i18n{directory.dashboard.addDirectory}" >
+	                    <i class="icon-plus icon-white"></i>
+	                </a>
+	                </#if>
+	                <a href="jsp/admin/AdminMenu.jsp#top" title="#i18n{directory.dashboard.top}">
+	                    <i class="icon-arrow-up"></i>
+	                </a>
+	            </div>
+	    </legend>
+    	<table class="table table-striped table-condensed">
+			<thead>
+			   	<tr>
+			   		<th>#i18n{directory.dashboard.columnTitleLabel}</th>
+			   		<th>#i18n{directory.dashboard.view_directory}</th>  
+			   		<th>#i18n{directory.dashboard.row_state}</th>  
+			   		<th>#i18n{directory.dashboard.columnTitleActions}</th>  
+			 	 		
+			   	</tr>
+			</thead>
+			<tbody>
+			    <#list directory_list as directory>
+			    	<tr>
+						<td>
+							<strong>${directory.title}</strong>
+							<br>
+							#i18n{directory.dashboard.nb_records} <strong>${record_count_list[directory.idDirectory?string]}</strong>
+						</td>
+						<td>
+							<a href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" target="_blank">
+								<i class="icon-eye-open" title="#i18n{directory.dashboard.view_directory} ${directory.title}"></i>
 							</a>
-					  	</#if>
-					</#list>
-				</#if>
-				<#if authorized_directory_modification_list?seq_contains(directory.idDirectory)>
-					<a class="btn btn-small btn-primary pull-right" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${directory.idDirectory}&plugin_name=directory">
-						<i class="icon-edit icon-white"></i>
-					</a>
-				</#if>	     
-            </td>   
-    	</tr>
-    </#list>
-</tbody>
-</table>
+						</td>
+						<td>
+							<#if directory.enabled>
+								<span class="label label-success"><i class="icon-ok-sign icon-white"></i></span>
+							<#else>
+								<span class="label label-important"><i class="icon-remove icon-white"></i></span>
+							</#if>	     
+						</td>
+						<td>
+							<#if directory.actions?exists>
+								<#list directory.actions as action>
+									<#if action.permission='MANAGE_RECORD' || action.permission='DELETE' || action.permission='CHANGE_STATE'>
+										<a class="btn btn-small spaced pull-right <#if action.permission='DELETE' || action.permission='DELETE_ALL_RECORD' || action.nameKey=='directory.action.disable.name' >btn-danger<#elseif action.nameKey=='directory.action.enable.name'>btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory=${directory.idDirectory}" title="${action.description}">
+											<i class="${action.iconUrl} icon-white"></i>
+										</a>
+								  	</#if>
+								</#list>
+							</#if>
+							<#if authorized_directory_modification_list?seq_contains(directory.idDirectory)>
+								<a class="btn btn-small btn-primary pull-right" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${directory.idDirectory}&plugin_name=directory">
+									<i class="icon-edit icon-white"></i>
+								</a>
+							</#if>	     
+			            </td>   
+			    	</tr>
+			    </#list>
+			</tbody>
+		</table>
+    </fieldset>
+</div>

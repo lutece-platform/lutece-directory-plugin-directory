@@ -75,19 +75,19 @@ import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.util.ReferenceList;
 
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-
 
 /**
- * 
+ *
  * Directory Service
- * 
+ *
  */
 public class DirectoryService
 {
@@ -109,23 +109,23 @@ public class DirectoryService
 
     /**
      * Initialize the Form service
-     * 
+     *
      */
-    public void init( )
+    public void init(  )
     {
-        Directory.init( );
+        Directory.init(  );
     }
 
     /**
      * Returns the instance of the singleton
-     * 
+     *
      * @return The instance of the singleton
      */
-    public static DirectoryService getInstance( )
+    public static DirectoryService getInstance(  )
     {
         if ( _singleton == null )
         {
-            _singleton = new DirectoryService( );
+            _singleton = new DirectoryService(  );
         }
 
         return _singleton;
@@ -138,16 +138,16 @@ public class DirectoryService
      */
     public Map<String, Object> getManageAdvancedParameters( AdminUser user )
     {
-        Map<String, Object> model = new HashMap<String, Object>( );
+        Map<String, Object> model = new HashMap<String, Object>(  );
 
         if ( RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, user ) )
+                    DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, user ) )
         {
-            ReferenceList listDirectoryParamDefaultValues = DirectoryParameterService.getService( )
-                    .findDefaultValueParameters( );
-            ReferenceList listEntryParamDefaultValues = EntryParameterService.getService( ).findAll( );
-            ReferenceList listExportEncodingParam = DirectoryParameterService.getService( )
-                    .findExportEncodingParameters( );
+            ReferenceList listDirectoryParamDefaultValues = DirectoryParameterService.getService(  )
+                                                                                     .findDefaultValueParameters(  );
+            ReferenceList listEntryParamDefaultValues = EntryParameterService.getService(  ).findAll(  );
+            ReferenceList listExportEncodingParam = DirectoryParameterService.getService(  )
+                                                                             .findExportEncodingParameters(  );
 
             model.put( MARK_LIST_DIRECTORY_PARAM_DEFAULT_VALUES, listDirectoryParamDefaultValues );
             model.put( MARK_LIST_ENTRY_PARAM_DEFAULT_VALUES, listEntryParamDefaultValues );
@@ -155,13 +155,13 @@ public class DirectoryService
         }
 
         if ( RBACService.isAuthorized( DirectoryXsl.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                DirectoryXslResourceIdService.PERMISSION_CREATE, user ) )
+                    DirectoryXslResourceIdService.PERMISSION_CREATE, user ) )
         {
             model.put( MARK_PERMISSION_XSL, true );
         }
 
         if ( RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                DirectoryResourceIdService.PERMISSION_INDEX_ALL_DIRECTORY, user ) )
+                    DirectoryResourceIdService.PERMISSION_INDEX_ALL_DIRECTORY, user ) )
         {
             model.put( MARK_PERMISSION_INDEX_ALL_DIRECTORY, true );
         }
@@ -179,22 +179,24 @@ public class DirectoryService
     {
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         int nNbRecords = 0;
-        boolean bWorkflowServiceEnable = WorkflowService.getInstance( ).isAvailable( );
-        RecordFieldFilter filter = new RecordFieldFilter( );
-        filter.setIdDirectory( directory.getIdDirectory( ) );
-        filter.setWorkgroupKeyList( AdminWorkgroupService.getUserWorkgroups( user, user.getLocale( ) ) );
+        boolean bWorkflowServiceEnable = WorkflowService.getInstance(  ).isAvailable(  );
+        RecordFieldFilter filter = new RecordFieldFilter(  );
+        filter.setIdDirectory( directory.getIdDirectory(  ) );
+        filter.setWorkgroupKeyList( AdminWorkgroupService.getUserWorkgroups( user, user.getLocale(  ) ) );
 
-        if ( ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL )
-                && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_ZERO ) && bWorkflowServiceEnable )
+        if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
+                ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_ZERO ) && bWorkflowServiceEnable )
         {
-            List<Integer> listResultRecordIds = DirectorySearchService.getInstance( ).getSearchResults( directory,
-                    null, null, null, null, filter, plugin );
-            List<Integer> listTmpResultRecordIds = WorkflowService.getInstance( ).getAuthorizedResourceList(
-                    Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ), DirectoryUtils.CONSTANT_ID_NULL,
-                    Integer.valueOf( directory.getIdDirectory( ) ), user );
+            List<Integer> listResultRecordIds = DirectorySearchService.getInstance(  )
+                                                                      .getSearchResults( directory, null, null, null,
+                    null, filter, plugin );
+            List<Integer> listTmpResultRecordIds = WorkflowService.getInstance(  )
+                                                                  .getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
+                    directory.getIdWorkflow(  ), DirectoryUtils.CONSTANT_ID_NULL,
+                    Integer.valueOf( directory.getIdDirectory(  ) ), user );
             listResultRecordIds = DirectoryUtils.retainAllIdsKeepingFirstOrder( listResultRecordIds,
                     listTmpResultRecordIds );
-            nNbRecords = listResultRecordIds.size( );
+            nNbRecords = listResultRecordIds.size(  );
         }
         else
         {
@@ -227,23 +229,23 @@ public class DirectoryService
             Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
             IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
 
-            if ( ( entry != null ) && ( entry.getEntryType( ) != null ) )
+            if ( ( entry != null ) && ( entry.getEntryType(  ) != null ) )
             {
-                if ( ( entry.getEntryType( ).getIdType( ) == AppPropertiesService.getPropertyInt(
-                        PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER, 21 ) )
-                        && DirectoryUserAttributesManager.getManager( ).isEnabled( ) )
+                if ( ( entry.getEntryType(  ).getIdType(  ) == AppPropertiesService.getPropertyInt( 
+                            PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER, 21 ) ) &&
+                        DirectoryUserAttributesManager.getManager(  ).isEnabled(  ) )
                 {
-                    userInfos = DirectoryUtils.convertMapToReferenceList( DirectoryUserAttributesManager.getManager( )
-                            .getAttributes( strUserGuid ) );
+                    userInfos = DirectoryUtils.convertMapToReferenceList( DirectoryUserAttributesManager.getManager(  )
+                                                                                                        .getAttributes( strUserGuid ) );
                 }
-                else if ( entry.getEntryType( ).getIdType( ) == AppPropertiesService.getPropertyInt(
-                        PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) )
+                else if ( entry.getEntryType(  ).getIdType(  ) == AppPropertiesService.getPropertyInt( 
+                            PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) )
                 {
-                    LuteceUser user = SecurityService.getInstance( ).getUser( strUserGuid );
+                    LuteceUser user = SecurityService.getInstance(  ).getUser( strUserGuid );
 
                     if ( user != null )
                     {
-                        userInfos = DirectoryUtils.convertMapToReferenceList( user.getUserInfos( ) );
+                        userInfos = DirectoryUtils.convertMapToReferenceList( user.getUserInfos(  ) );
                     }
                 }
             }
@@ -266,25 +268,25 @@ public class DirectoryService
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
 
-        if ( ( entry != null ) && ( entry.getEntryType( ) != null ) )
+        if ( ( entry != null ) && ( entry.getEntryType(  ) != null ) )
         {
-            if ( ( ( entry.getEntryType( ).getIdType( ) == AppPropertiesService.getPropertyInt(
-                    PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER, 21 ) ) && DirectoryUserAttributesManager.getManager( )
-                    .isEnabled( ) )
-                    || ( entry.getEntryType( ).getIdType( ) == AppPropertiesService.getPropertyInt(
-                            PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) ) )
+            if ( ( ( entry.getEntryType(  ).getIdType(  ) == AppPropertiesService.getPropertyInt( 
+                        PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER, 21 ) ) &&
+                    DirectoryUserAttributesManager.getManager(  ).isEnabled(  ) ) ||
+                    ( entry.getEntryType(  ).getIdType(  ) == AppPropertiesService.getPropertyInt( 
+                        PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) ) )
             {
-                RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
+                RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
                 recordFieldFilter.setIdRecord( nIdRecord );
                 recordFieldFilter.setIdEntry( nIdEntry );
 
-                List<RecordField> listRecordFields = DirectoryService.getInstance( ).getRecordFieldByFilter(
-                        recordFieldFilter );
+                List<RecordField> listRecordFields = DirectoryService.getInstance(  )
+                                                                     .getRecordFieldByFilter( recordFieldFilter );
 
-                if ( ( listRecordFields != null ) && !listRecordFields.isEmpty( )
-                        && ( listRecordFields.get( 0 ) != null ) )
+                if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) &&
+                        ( listRecordFields.get( 0 ) != null ) )
                 {
-                    strUserGuid = listRecordFields.get( 0 ).getValue( );
+                    strUserGuid = listRecordFields.get( 0 ).getValue(  );
                 }
             }
         }
@@ -301,12 +303,12 @@ public class DirectoryService
     {
         int nMaxNumber = 1;
 
-        if ( entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeNumbering
-                && ( entry.getEntryType( ) != null ) && ( entry.getDirectory( ) != null ) )
+        if ( entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeNumbering &&
+                ( entry.getEntryType(  ) != null ) && ( entry.getDirectory(  ) != null ) )
         {
             Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-            nMaxNumber = RecordFieldHome.findMaxNumber( entry.getIdEntry( ), entry.getDirectory( ).getIdDirectory( ),
-                    pluginDirectory );
+            nMaxNumber = RecordFieldHome.findMaxNumber( entry.getIdEntry(  ),
+                    entry.getDirectory(  ).getIdDirectory(  ), pluginDirectory );
         }
 
         return nMaxNumber;
@@ -320,13 +322,14 @@ public class DirectoryService
      * @throws DirectoryErrorException exception if the number already exists on
      *             an another record field
      */
-    public int getNumber( IEntry entry, String strNumber ) throws DirectoryErrorException
+    public int getNumber( IEntry entry, String strNumber )
+        throws DirectoryErrorException
     {
         int nNumber = DirectoryUtils.CONSTANT_ID_NULL;
 
-        if ( entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeNumbering
-                && ( entry.getFields( ) != null ) && ( entry.getFields( ).size( ) > 0 )
-                && ( entry.getEntryType( ) != null ) && ( entry.getDirectory( ) != null ) )
+        if ( entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeNumbering &&
+                ( entry.getFields(  ) != null ) && ( entry.getFields(  ).size(  ) > 0 ) &&
+                ( entry.getEntryType(  ) != null ) && ( entry.getDirectory(  ) != null ) )
         {
             nNumber = buildNumber( entry, strNumber );
 
@@ -334,11 +337,11 @@ public class DirectoryService
             {
                 Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
-                if ( RecordFieldHome.isNumberOnARecordField( entry.getIdEntry( ), entry.getDirectory( )
-                        .getIdDirectory( ), nNumber, pluginDirectory ) )
+                if ( RecordFieldHome.isNumberOnARecordField( entry.getIdEntry(  ),
+                            entry.getDirectory(  ).getIdDirectory(  ), nNumber, pluginDirectory ) )
                 {
-                    throw new DirectoryErrorException( entry.getTitle( ),
-                            "Directory Error - The number already exists in an " + "another record field." );
+                    throw new DirectoryErrorException( entry.getTitle(  ),
+                        "Directory Error - The number already exists in an " + "another record field." );
                 }
             }
         }
@@ -365,10 +368,10 @@ public class DirectoryService
      */
     public Map<String, String> getModelForEntryForXml( IEntry entry )
     {
-        Map<String, String> model = new HashMap<String, String>( );
-        model.put( Entry.ATTRIBUTE_ENTRY_ID, String.valueOf( entry.getIdEntry( ) ) );
-        model.put( Entry.ATTRIBUTE_TITLE, StringEscapeUtils.escapeXml( entry.getTitle( ) ) );
-        model.put( Entry.ATTRIBUTE_IS_SORTABLE, Boolean.toString( entry.isSortable( ) ) );
+        Map<String, String> model = new HashMap<String, String>(  );
+        model.put( Entry.ATTRIBUTE_ENTRY_ID, String.valueOf( entry.getIdEntry(  ) ) );
+        model.put( Entry.ATTRIBUTE_TITLE, StringEscapeUtils.escapeXml( entry.getTitle(  ) ) );
+        model.put( Entry.ATTRIBUTE_IS_SORTABLE, Boolean.toString( entry.isSortable(  ) ) );
 
         if ( entry instanceof EntryTypeGeolocation )
         {
@@ -389,19 +392,19 @@ public class DirectoryService
 
         if ( entry instanceof EntryTypeGeolocation )
         {
-            if ( ( entry.getFields( ) == null ) || ( entry.getFields( ).size( ) == 0 ) )
+            if ( ( entry.getFields(  ) == null ) || ( entry.getFields(  ).size(  ) == 0 ) )
             {
-                entry.setFields( getFieldsListFromIdEntry( entry.getIdEntry( ) ) );
+                entry.setFields( getFieldsListFromIdEntry( entry.getIdEntry(  ) ) );
             }
 
-            if ( ( entry.getFields( ) != null ) && !entry.getFields( ).isEmpty( ) )
+            if ( ( entry.getFields(  ) != null ) && !entry.getFields(  ).isEmpty(  ) )
             {
                 Field fieldShowXY = DirectoryUtils.findFieldByTitleInTheList( EntryTypeGeolocation.CONSTANT_SHOWXY,
-                        entry.getFields( ) );
+                        entry.getFields(  ) );
 
                 if ( fieldShowXY != null )
                 {
-                    bShowXY = Boolean.valueOf( fieldShowXY.getValue( ) );
+                    bShowXY = Boolean.valueOf( fieldShowXY.getValue(  ) );
                 }
             }
         }
@@ -416,16 +419,16 @@ public class DirectoryService
      */
     public void removeAsynchronousFile( RecordField recordField, Plugin plugin )
     {
-        if ( ( recordField != null ) && ( recordField.getEntry( ) != null ) )
+        if ( ( recordField != null ) && ( recordField.getEntry(  ) != null ) )
         {
-            IEntry entry = recordField.getEntry( );
+            IEntry entry = recordField.getEntry(  );
             String strWSRestUrl = getWSRestUrl( entry, plugin );
 
             if ( StringUtils.isNotBlank( strWSRestUrl ) )
             {
                 try
                 {
-                    DirectoryAsynchronousUploadHandler.getHandler( ).doRemoveFile( recordField, entry, strWSRestUrl );
+                    DirectoryAsynchronousUploadHandler.getHandler(  ).doRemoveFile( recordField, entry, strWSRestUrl );
                 }
                 catch ( Exception e )
                 {
@@ -447,19 +450,19 @@ public class DirectoryService
 
         if ( ( entry != null ) && entry instanceof EntryTypeDownloadUrl )
         {
-            if ( entry.getFields( ) == null )
+            if ( entry.getFields(  ) == null )
             {
-                entry.setFields( getFieldsListFromIdEntry( entry.getIdEntry( ) ) );
+                entry.setFields( getFieldsListFromIdEntry( entry.getIdEntry(  ) ) );
             }
 
-            if ( ( entry.getFields( ) != null ) && !entry.getFields( ).isEmpty( ) )
+            if ( ( entry.getFields(  ) != null ) && !entry.getFields(  ).isEmpty(  ) )
             {
-                Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList(
-                        EntryTypeDownloadUrl.CONSTANT_WS_REST_URL, entry.getFields( ) );
+                Field fieldWSRestUrl = DirectoryUtils.findFieldByTitleInTheList( EntryTypeDownloadUrl.CONSTANT_WS_REST_URL,
+                        entry.getFields(  ) );
 
                 if ( fieldWSRestUrl != null )
                 {
-                    strWSRestUrl = fieldWSRestUrl.getValue( );
+                    strWSRestUrl = fieldWSRestUrl.getValue(  );
                 }
             }
         }
@@ -483,11 +486,10 @@ public class DirectoryService
      * @return a map of string - object
      */
     public Map<String, Object> getResourceAction( Record record, Directory directory,
-            List<IEntry> listEntryResultSearch, AdminUser adminUser,
-            List<DirectoryAction> listActionsForDirectoryEnable, List<DirectoryAction> listActionsForDirectoryDisable,
-            boolean bGetFileName, Plugin plugin )
+        List<IEntry> listEntryResultSearch, AdminUser adminUser, List<DirectoryAction> listActionsForDirectoryEnable,
+        List<DirectoryAction> listActionsForDirectoryDisable, boolean bGetFileName, Plugin plugin )
     {
-        if ( record.isEnabled( ) )
+        if ( record.isEnabled(  ) )
         {
             record.setActions( listActionsForDirectoryEnable );
         }
@@ -497,21 +499,22 @@ public class DirectoryService
         }
 
         //workflow service
-        Map<String, Object> resourceActions = new HashMap<String, Object>( );
+        Map<String, Object> resourceActions = new HashMap<String, Object>(  );
         resourceActions.put( MARK_RECORD, record );
-        resourceActions.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, DirectoryUtils.getMapIdEntryListRecordField(
-                listEntryResultSearch, record.getIdRecord( ), plugin, bGetFileName ) );
+        resourceActions.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
+            DirectoryUtils.getMapIdEntryListRecordField( listEntryResultSearch, record.getIdRecord(  ), plugin,
+                bGetFileName ) );
 
-        boolean bWorkflowServiceEnable = WorkflowService.getInstance( ).isAvailable( )
-                && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL );
+        boolean bWorkflowServiceEnable = WorkflowService.getInstance(  ).isAvailable(  ) &&
+            ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );
 
         if ( bWorkflowServiceEnable )
         {
-            WorkflowService workflowService = WorkflowService.getInstance( );
-            Collection<Action> lListActions = workflowService.getActions( record.getIdRecord( ),
-                    Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ), adminUser );
-            State state = workflowService.getState( record.getIdRecord( ), Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow( ), Integer.valueOf( directory.getIdDirectory( ) ) );
+            WorkflowService workflowService = WorkflowService.getInstance(  );
+            Collection<Action> lListActions = workflowService.getActions( record.getIdRecord(  ),
+                    Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow(  ), adminUser );
+            State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
+                    directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
             resourceActions.put( MARK_WORKFLOW_STATE, state );
             resourceActions.put( MARK_WORKFLOW_ACTION_LIST, lListActions );
         }
@@ -543,25 +546,26 @@ public class DirectoryService
      * @throws DirectoryErrorException exception if the directory entry type
      *             numbering does not have the same prefix as the number
      */
-    private int buildNumber( IEntry entry, String strNumber ) throws DirectoryErrorException
+    private int buildNumber( IEntry entry, String strNumber )
+        throws DirectoryErrorException
     {
         int nNumber = DirectoryUtils.CONSTANT_ID_NULL;
 
-        Field field = entry.getFields( ).get( 0 );
-        String strPrefix = field.getTitle( );
+        Field field = entry.getFields(  ).get( 0 );
+        String strPrefix = field.getTitle(  );
 
         String strNumberTmp = strNumber;
 
         if ( StringUtils.isNotBlank( strPrefix ) )
         {
-            if ( StringUtils.isNotBlank( strNumber ) && ( strPrefix.length( ) < strNumber.length( ) ) )
+            if ( StringUtils.isNotBlank( strNumber ) && ( strPrefix.length(  ) < strNumber.length(  ) ) )
             {
-                strNumberTmp = strNumber.substring( strPrefix.length( ), strNumber.length( ) );
+                strNumberTmp = strNumber.substring( strPrefix.length(  ), strNumber.length(  ) );
             }
             else
             {
-                throw new DirectoryErrorException( entry.getTitle( ),
-                        "Directory Error - The prefix of the entry type numbering to insert is not correct." );
+                throw new DirectoryErrorException( entry.getTitle(  ),
+                    "Directory Error - The prefix of the entry type numbering to insert is not correct." );
             }
         }
 
@@ -571,8 +575,8 @@ public class DirectoryService
         }
         else
         {
-            throw new DirectoryErrorException( entry.getTitle( ),
-                    "Directory Error - The prefix of the entry type numbering to insert is not correct." );
+            throw new DirectoryErrorException( entry.getTitle(  ),
+                "Directory Error - The prefix of the entry type numbering to insert is not correct." );
         }
 
         return nNumber;
