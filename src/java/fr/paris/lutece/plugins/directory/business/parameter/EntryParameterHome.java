@@ -69,7 +69,7 @@ public final class EntryParameterHome
     /**
      * Load the parameter value
      * @param strParameterKey the parameter key
-     * @param plugin
+     * @param plugin The plugin
      * @return The parameter value
      */
     public static ReferenceItem findByKey( String strParameterKey, Plugin plugin )
@@ -79,9 +79,8 @@ public final class EntryParameterHome
 
     /**
      * Update the parameter value
-     * @param strParameterKey The parameter key
-     * @param strParameterValue The parameter value
-     * @param plugin
+     * @param param The parameter
+     * @param plugin The plugin
      */
     public static void update( ReferenceItem param, Plugin plugin )
     {

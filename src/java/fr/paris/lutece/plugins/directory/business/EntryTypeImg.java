@@ -115,10 +115,8 @@ public class EntryTypeImg extends AbstractEntryTypeUpload
         {
             return _template_html_front_code_form_entry;
         }
-        else
-        {
-            return _template_html_code_form_entry;
-        }
+
+        return _template_html_code_form_entry;
     }
 
     /**
@@ -131,10 +129,8 @@ public class EntryTypeImg extends AbstractEntryTypeUpload
         {
             return _template_html_front_code_entry_value;
         }
-        else
-        {
-            return _template_html_code_entry_value;
-        }
+
+        return _template_html_code_entry_value;
     }
 
     /**

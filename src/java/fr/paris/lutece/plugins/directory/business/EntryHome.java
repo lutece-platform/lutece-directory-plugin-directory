@@ -221,6 +221,7 @@ public final class EntryHome
             }
             catch ( Exception e )
             {
+                // Do nothing
             }
         }
 

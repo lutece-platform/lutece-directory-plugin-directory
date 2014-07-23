@@ -82,6 +82,9 @@ public class EntryTypeNumbering extends Entry
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytypenumbering/html_code_form_search_entry_type_numbering.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypenumbering/html_code_entry_value_type_numbering.html";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -95,6 +98,9 @@ public class EntryTypeNumbering extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlRecordFieldValue( boolean isDisplayFront )
     {
@@ -102,12 +108,13 @@ public class EntryTypeNumbering extends Entry
         {
             return _template_html_front_code_entry_value;
         }
-        else
-        {
-            return _template_html_code_entry_value;
-        }
+
+        return _template_html_code_entry_value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormSearchEntry( boolean isDisplayFront )
     {
@@ -115,12 +122,13 @@ public class EntryTypeNumbering extends Entry
         {
             return _template_html_front_code_form_search_entry;
         }
-        else
-        {
-            return _template_html_code_form_search_entry;
-        }
+
+        return _template_html_code_form_search_entry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHtmlFormEntry( Locale locale, boolean isDisplayFront )
     {
@@ -140,6 +148,9 @@ public class EntryTypeNumbering extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -201,18 +212,27 @@ public class EntryTypeNumbering extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate(  )
     {
         return _template_create;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify(  )
     {
         return _template_modify;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
@@ -283,14 +303,19 @@ public class EntryTypeNumbering extends Entry
         if ( recordField.getValue(  ) != null )
         {
             /*
-             * In cases 3 and 4, if the strValueEntry is null, then that means that the user
-             * did not use the search function and the user only wants to display every records or
+             * In cases 3 and 4, if the strValueEntry is null, then that means
+             * that the user
+             * did not use the search function and the user only wants to
+             * display every records or
              * did not want to filter his/her search for this entry.
              */
             listRecordField.add( recordField );
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
         List<RecordField> listRecordField, Locale locale )
@@ -307,6 +332,9 @@ public class EntryTypeNumbering extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
         boolean bExportDirectory )
@@ -340,14 +368,17 @@ public class EntryTypeNumbering extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
+    @Override
     public boolean isSortable(  )
     {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSQLOrderBy(  )
     {

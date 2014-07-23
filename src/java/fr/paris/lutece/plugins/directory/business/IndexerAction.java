@@ -49,7 +49,7 @@ public class IndexerAction
     private int _nIdRecord;
 
     /**
-     *
+     * Get the id of the action
      * @return the action id
      */
     public int getIdAction(  )
@@ -67,7 +67,7 @@ public class IndexerAction
     }
 
     /**
-     *
+     * Get the id of the record
      * @return the record Id
      */
     public int getIdRecord(  )

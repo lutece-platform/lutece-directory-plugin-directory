@@ -62,12 +62,10 @@ import java.util.List;
  */
 public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
 {
-    /*
-     * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.
-     * IDirectorySearchEngine#getSearchResults(java.util.HashMap)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public List<Integer> getSearchResults( HashMap<String, Object> mapQuery )
     {
         ArrayList<Integer> listResults = new ArrayList<Integer>(  );
@@ -116,10 +114,10 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
                 }
 
                 Query queryMultiIdDirectoryField = MultiFieldQueryParser.parse( IndexationService.LUCENE_INDEX_VERSION,
-                        (String[]) queriesIdDirectoryField.toArray( new String[queriesIdDirectoryField.size(  )] ),
-                        (String[]) queriesIdDirectoryField.toArray( new String[fieldsIdDirectoryField.size(  )] ),
-                        (BooleanClause.Occur[]) flagsIdDirectoryField.toArray( 
-                            new BooleanClause.Occur[flagsIdDirectoryField.size(  )] ), IndexationService.getAnalyser(  ) );
+                        queriesIdDirectoryField.toArray( new String[queriesIdDirectoryField.size(  )] ),
+                        queriesIdDirectoryField.toArray( new String[fieldsIdDirectoryField.size(  )] ),
+                        flagsIdDirectoryField.toArray( new BooleanClause.Occur[flagsIdDirectoryField.size(  )] ),
+                        IndexationService.getAnalyser(  ) );
 
                 queries.add( queryMultiIdDirectoryField.toString(  ) );
                 fields.add( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD );
@@ -221,10 +219,8 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
             }
 
             Query queryMulti = MultiFieldQueryParser.parse( IndexationService.LUCENE_INDEX_VERSION,
-                    (String[]) queries.toArray( new String[queries.size(  )] ),
-                    (String[]) fields.toArray( new String[fields.size(  )] ),
-                    (BooleanClause.Occur[]) flags.toArray( new BooleanClause.Occur[flags.size(  )] ),
-                    IndexationService.getAnalyser(  ) );
+                    queries.toArray( new String[queries.size(  )] ), fields.toArray( new String[fields.size(  )] ),
+                    flags.toArray( new BooleanClause.Occur[flags.size(  )] ), IndexationService.getAnalyser(  ) );
 
             // Get results documents
             TopDocs topDocs = searcher.search( queryMulti, LuceneSearchEngine.MAX_RESPONSES );
@@ -234,7 +230,7 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
             {
                 int docId = hits[i].doc;
                 Document document = searcher.doc( docId );
-                listResults.add( (Integer) new DirectorySearchItem( document ).getIdDirectoryRecord(  ) );
+                listResults.add( new DirectorySearchItem( document ).getIdDirectoryRecord(  ) );
             }
         }
         catch ( Exception e )

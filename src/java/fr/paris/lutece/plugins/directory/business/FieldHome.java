@@ -165,8 +165,8 @@ public final class FieldHome
     /**
      * Returns an instance of a Field whose value is specified in parameter
      *
-     *^@param the entry id
-     * @param strValue strValue
+     * @param nIdEntry The entry id
+     * @param strValue The value
      * @param plugin the Plugin
      * @return an instance of Field
      */

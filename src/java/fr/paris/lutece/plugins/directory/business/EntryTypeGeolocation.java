@@ -663,9 +663,9 @@ public class EntryTypeGeolocation extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
+    @Override
     public boolean isSortable(  )
     {
         return true;

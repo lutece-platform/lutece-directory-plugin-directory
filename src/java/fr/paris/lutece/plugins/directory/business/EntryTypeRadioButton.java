@@ -52,7 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *
- *  class EntryTypeRadioButton
+ * class EntryTypeRadioButton
  *
  */
 public class EntryTypeRadioButton extends Entry
@@ -66,6 +66,9 @@ public class EntryTypeRadioButton extends Entry
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytyperadiobutton/html_code_form_search_entry_type_radio_button.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytyperadiobutton/html_code_entry_value_type_radio_button.html";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -73,12 +76,13 @@ public class EntryTypeRadioButton extends Entry
         {
             return _template_html_front_code_form_entry;
         }
-        else
-        {
-            return _template_html_code_form_entry;
-        }
+
+        return _template_html_code_form_entry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormSearchEntry( boolean isDisplayFront )
     {
@@ -86,12 +90,13 @@ public class EntryTypeRadioButton extends Entry
         {
             return _template_html_front_code_form_search_entry;
         }
-        else
-        {
-            return _template_html_code_form_search_entry;
-        }
+
+        return _template_html_code_form_search_entry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlRecordFieldValue( boolean isDisplayFront )
     {
@@ -99,12 +104,13 @@ public class EntryTypeRadioButton extends Entry
         {
             return _template_html_front_code_entry_value;
         }
-        else
-        {
-            return _template_html_code_entry_value;
-        }
+
+        return _template_html_code_entry_value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -167,18 +173,27 @@ public class EntryTypeRadioButton extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate(  )
     {
         return _template_create;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify(  )
     {
         return _template_modify;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex )
@@ -186,6 +201,9 @@ public class EntryTypeRadioButton extends Entry
         return new Paginator( this.getFields(  ), nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
         List<RecordField> listRecordField, Locale locale )
@@ -203,6 +221,9 @@ public class EntryTypeRadioButton extends Entry
         getRecordFieldData( record, lstValue, bTestDirectoryError, false, listRecordField, locale );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
@@ -250,6 +271,9 @@ public class EntryTypeRadioButton extends Entry
         listRecordField.add( recordField );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addSearchCriteria( HashMap<String, Object> mapSearchItem, RecordField recordField )
     {
@@ -269,14 +293,17 @@ public class EntryTypeRadioButton extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
+    @Override
     public boolean isSortable(  )
     {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex, Locale locale )

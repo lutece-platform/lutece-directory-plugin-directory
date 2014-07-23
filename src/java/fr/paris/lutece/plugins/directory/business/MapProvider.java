@@ -54,6 +54,7 @@ public class MapProvider implements IMapProvider
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getKey(  )
     {
         return _strKey;
@@ -71,6 +72,7 @@ public class MapProvider implements IMapProvider
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getDisplayedName(  )
     {
         return _strDisplayedName;
@@ -88,6 +90,7 @@ public class MapProvider implements IMapProvider
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getHtmlCode(  )
     {
         return _strHtmlCode;
@@ -105,6 +108,7 @@ public class MapProvider implements IMapProvider
     /**
      * {@inheritDoc}
      */
+    @Override
     public ReferenceItem toRefItem(  )
     {
         ReferenceItem refItem = new ReferenceItem(  );
@@ -118,6 +122,7 @@ public class MapProvider implements IMapProvider
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getFrontHtmlCode(  )
     {
         return _strFrontHtmlCode;
@@ -126,6 +131,7 @@ public class MapProvider implements IMapProvider
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getFrontListHtmlCode(  )
     {
         return _strFrontListHtmlCode;
@@ -161,6 +167,7 @@ public class MapProvider implements IMapProvider
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getBackListHtmlCode(  )
     {
         return _strBackListHtmlCode;
@@ -169,6 +176,7 @@ public class MapProvider implements IMapProvider
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isMapListSupported(  )
     {
         return _bMapListSupported;

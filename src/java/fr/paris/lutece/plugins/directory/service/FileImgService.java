@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.directory.service;
 
+import fr.paris.lutece.plugins.directory.business.EntryTypeUrl;
 import fr.paris.lutece.plugins.directory.business.File;
 import fr.paris.lutece.plugins.directory.business.FileHome;
 import fr.paris.lutece.plugins.directory.business.PhysicalFile;
@@ -116,8 +117,8 @@ public class FileImgService implements ImageResourceProvider
     }
 
     /**
-     * Management of the image associated to the {@link EntryUrl}
-     * @param nEntryUrl The {@link EntryUrl} identifier
+     * Management of the image associated to the {@link EntryTypeUrl}
+     * @param nEntryUrl The {@link EntryTypeUrl} identifier
      * @return The url of the resource without HTML escape characters
      */
     public static String getResourceImageEntryUrlWhitoutEntities( int nEntryUrl )

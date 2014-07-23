@@ -50,10 +50,9 @@ public class DirectoryWorkgroupRemovalListener implements RemovalListener
     private static final String PROPERTY_WORKGROUP_CANNOT_BE_REMOVED = "form.message.workgroup_can_not_be_removed";
 
     /**
-    * Check if the object can be safely removed
-    * @param strId The object id
-    * @return true if the object can be removed otherwise false
-    */
+     * {@inheritDoc}
+     */
+    @Override
     public boolean canBeRemoved( String strId )
     {
         if ( strId == null )
@@ -76,11 +75,9 @@ public class DirectoryWorkgroupRemovalListener implements RemovalListener
     }
 
     /**
-     * Gives a message explaining why the object can't be removed
-     * @param strId The object id
-     * @param locale The current locale
-     * @return The message
+     * {@inheritDoc}
      */
+    @Override
     public String getRemovalRefusedMessage( String strId, Locale locale )
     {
         // Build a message 

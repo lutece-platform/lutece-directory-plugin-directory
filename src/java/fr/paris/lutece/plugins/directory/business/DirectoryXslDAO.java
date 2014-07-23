@@ -59,9 +59,10 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
     private static final String SQL_FILTER_ID_CATEGORY = " id_category = ? ";
     private static final String SQL_ORDER_BY_ID_CATEGORY = " ORDER BY id_category ";
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IDirectoryXslDAO#newPrimaryKey(fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
@@ -81,12 +82,16 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
         return nKey;
     }
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IDirectoryXslDAO#insert(fr.paris.lutece.plugins.directory.business.DirectoryXsl, fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public synchronized void insert( DirectoryXsl directoryXsl, Plugin plugin )
     {
+        directoryXsl.setIdDirectoryXsl( newPrimaryKey( plugin ) );
+
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+        daoUtil.setInt( 1, directoryXsl.getIdDirectoryXsl(  ) );
         daoUtil.setString( 2, directoryXsl.getTitle(  ) );
         daoUtil.setString( 3, directoryXsl.getDescription(  ) );
         daoUtil.setString( 4, directoryXsl.getExtension(  ) );
@@ -109,17 +114,15 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
             daoUtil.setIntNull( 6 );
         }
 
-        directoryXsl.setIdDirectoryXsl( newPrimaryKey( plugin ) );
-        daoUtil.setInt( 1, directoryXsl.getIdDirectoryXsl(  ) );
-
         daoUtil.executeUpdate(  );
 
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IDirectoryXslDAO#load(int, fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public DirectoryXsl load( int nId, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
@@ -158,9 +161,10 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
         return directoryXsl;
     }
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IDirectoryXslDAO#delete(int, fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void delete( int nIdDirectoryXsl, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
@@ -169,9 +173,10 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IDirectoryXslDAO#store(fr.paris.lutece.plugins.directory.business.DirectoryXsl, fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void store( DirectoryXsl directoryXsl, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
@@ -203,9 +208,10 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IDirectoryXslDAO#selectListExport(fr.paris.lutece.plugins.directory.business.DirectoryXslFilter, fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<DirectoryXsl> selectList( DirectoryXslFilter filter, Plugin plugin )
     {
         List<DirectoryXsl> directoryXslList = new ArrayList<DirectoryXsl>(  );

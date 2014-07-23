@@ -109,15 +109,15 @@ public final class DirectoryDAO implements IDirectoryDAO
     }
 
     /**
-     * Insert a new record in the table.
-     *
-     * @param directory instance of the Directory to insert
-     * @param plugin the plugin
-     * @return the new directory create
+     * {@inheritDoc}
      */
+    @Override
     public synchronized int insert( Directory directory, Plugin plugin )
     {
+        directory.setIdDirectory( newPrimaryKey( plugin ) );
+
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+        daoUtil.setInt( 1, directory.getIdDirectory(  ) );
         daoUtil.setString( 2, directory.getTitle(  ) );
         daoUtil.setString( 3, directory.getDescription(  ) );
         daoUtil.setString( 4, directory.getUnavailabilityMessage(  ) );
@@ -171,9 +171,6 @@ public final class DirectoryDAO implements IDirectoryDAO
         daoUtil.setString( 18, directory.getFrontOfficeTitle(  ) );
         daoUtil.setInt( 19, directory.getIdWorkflowStateToRemove(  ) );
 
-        directory.setIdDirectory( newPrimaryKey( plugin ) );
-        daoUtil.setInt( 1, directory.getIdDirectory(  ) );
-
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
 
@@ -181,12 +178,9 @@ public final class DirectoryDAO implements IDirectoryDAO
     }
 
     /**
-     * Load the data of the Directory from the table
-     *
-     * @param nId The identifier of the directory
-     * @param plugin the plugin
-     * @return the instance of the Directory
+     * {@inheritDoc}
      */
+    @Override
     public Directory load( int nId, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
@@ -248,11 +242,9 @@ public final class DirectoryDAO implements IDirectoryDAO
     }
 
     /**
-     * Delete a record from the table
-     *
-     * @param nIdDirectory The identifier of the directory
-     * @param plugin the plugin
+     * {@inheritDoc}
      */
+    @Override
     public void delete( int nIdDirectory, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
@@ -262,11 +254,9 @@ public final class DirectoryDAO implements IDirectoryDAO
     }
 
     /**
-     * Update the directory in the table
-     *
-     * @param directory instance of the Directory object to update
-     * @param plugin the plugin
+     * {@inheritDoc}
      */
+    @Override
     public void store( Directory directory, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
@@ -336,12 +326,9 @@ public final class DirectoryDAO implements IDirectoryDAO
     }
 
     /**
-     * Load the data of all the directory who verify the filter and returns them
-     * in a list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return the list of form
+     * {@inheritDoc}
      */
+    @Override
     public List<Directory> selectDirectoryList( DirectoryFilter filter, Plugin plugin )
     {
         List<Directory> directoryList = new ArrayList<Directory>(  );
@@ -462,10 +449,9 @@ public final class DirectoryDAO implements IDirectoryDAO
     }
 
     /**
-     * Load the data of all enable directory returns them in a reference list
-     * @param plugin the plugin
-     * @return a reference list of directory
+     * {@inheritDoc}
      */
+    @Override
     public ReferenceList getEnableDirectoryList( Plugin plugin )
     {
         ReferenceList listDirectory = new ReferenceList(  );

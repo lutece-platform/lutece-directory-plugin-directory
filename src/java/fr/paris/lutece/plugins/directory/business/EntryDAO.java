@@ -163,15 +163,16 @@ public final class EntryDAO implements IEntryDAO
     }
 
     /**
-     * Insert a new record in the table.
-     *
-     * @param entry instance of the Entry object to insert
-     * @param plugin the plugin
-     * @return the id of the new entry
+     * {@inheritDoc}
      */
+    @Override
     public synchronized int insert( IEntry entry, Plugin plugin )
     {
+        entry.setIdEntry( newPrimaryKey( plugin ) );
+        entry.setPosition( newPosition( entry.getDirectory(  ).getIdDirectory(  ), plugin ) );
+
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+        daoUtil.setInt( 1, entry.getIdEntry(  ) );
 
         if ( entry.getParent(  ) != null )
         {
@@ -196,7 +197,7 @@ public final class EntryDAO implements IEntryDAO
         daoUtil.setBoolean( 14, entry.isShownInResultList(  ) );
         daoUtil.setBoolean( 15, entry.isShownInResultRecord(  ) );
         daoUtil.setBoolean( 16, entry.isFieldInLine(  ) );
-        daoUtil.setInt( 17, newPosition( entry.getDirectory(  ).getIdDirectory(  ), plugin ) );
+        daoUtil.setInt( 17, entry.getPosition(  ) );
         daoUtil.setInt( 18, entry.getDisplayWidth(  ) );
         daoUtil.setInt( 19, entry.getDisplayHeight(  ) );
         daoUtil.setBoolean( 20, entry.isRoleAssociated(  ) );
@@ -218,9 +219,6 @@ public final class EntryDAO implements IEntryDAO
         daoUtil.setInt( 32, entry.getNumberRow(  ) );
         daoUtil.setInt( 33, entry.getNumberColumn(  ) );
 
-        entry.setIdEntry( newPrimaryKey( plugin ) );
-        daoUtil.setInt( 1, entry.getIdEntry(  ) );
-
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
 
@@ -228,12 +226,9 @@ public final class EntryDAO implements IEntryDAO
     }
 
     /**
-     * Load the data of the entry from the table
-     *
-     * @param nId The identifier of the entry
-     * @param plugin the plugin
-     * @return the instance of the Entry
+     * {@inheritDoc}
      */
+    @Override
     public IEntry load( int nId, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
@@ -338,11 +333,9 @@ public final class EntryDAO implements IEntryDAO
     }
 
     /**
-     * Delete a record from the table
-     *
-     * @param nIdEntry The identifier of the entry
-     * @param plugin the plugin
+     * {@inheritDoc}
      */
+    @Override
     public void delete( int nIdEntry, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
@@ -352,11 +345,9 @@ public final class EntryDAO implements IEntryDAO
     }
 
     /**
-     * Update the entry in the table
-     *
-     * @param entry instance of the Entry object to update
-     * @param plugin the plugin
+     * {@inheritDoc}
      */
+    @Override
     public void store( IEntry entry, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
@@ -415,6 +406,11 @@ public final class EntryDAO implements IEntryDAO
         daoUtil.free(  );
     }
 
+    /**
+     * Get the list of filter queries from an entry filter
+     * @param filter The filter
+     * @return The list of filter queries
+     */
     private List<String> setSelectFilter( EntryFilter filter )
     {
         List<String> listStrFilter = new ArrayList<String>(  );
@@ -737,12 +733,9 @@ public final class EntryDAO implements IEntryDAO
     }
 
     /**
-     * Load the data of all the entry who verify the filter and returns them in
-     * a list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return the list of entry
+     * {@inheritDoc}
      */
+    @Override
     public List<IEntry> selectEntryListByFilter( EntryFilter filter, Plugin plugin )
     {
         List<IEntry> entryList = new ArrayList<IEntry>(  );
@@ -776,11 +769,9 @@ public final class EntryDAO implements IEntryDAO
     }
 
     /**
-     * Return the number of entry who verify the filter
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return the number of entry who verify the filter
+     * {@inheritDoc}
      */
+    @Override
     public int selectNumberEntryByFilter( EntryFilter filter, Plugin plugin )
     {
         int nNumberEntry = 0;
@@ -987,6 +978,10 @@ public final class EntryDAO implements IEntryDAO
         return nNumberEntry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<IEntry> selectEntryListByTypeByFilter( List<Integer> idTypeEntryList, EntryFilter filter, Plugin plugin )
     {
         List<IEntry> entryList = new ArrayList<IEntry>(  );
@@ -1061,11 +1056,9 @@ public final class EntryDAO implements IEntryDAO
     }
 
     /**
-     * Get the list of entries whith their titles, their ids and their
-     * anonymisation status. Also get the class name of the entry type.
-     * @return A list of entries with their titles, their ids and their
-     *         anonymisation status.
+     * {@inheritDoc}
      */
+    @Override
     public List<IEntry> getEntryListAnonymizeStatus( Plugin plugin )
     {
         List<IEntry> entryList = new ArrayList<IEntry>(  );
@@ -1094,11 +1087,9 @@ public final class EntryDAO implements IEntryDAO
     }
 
     /**
-     * Update an entry anonymization status
-     * @param nEntryId Id of the entry
-     * @param plugin the plugin
-     * @param bAnonymize True if the entry should be anonymize, false otherwise
+     * {@inheritDoc}
      */
+    @Override
     public void updateEntryAnonymizeStatus( Integer nEntryId, Boolean bAnonymize, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE_ENTRY_ANONYMIZE, plugin );

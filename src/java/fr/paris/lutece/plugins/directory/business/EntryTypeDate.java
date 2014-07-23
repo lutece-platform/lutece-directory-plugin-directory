@@ -74,6 +74,9 @@ public class EntryTypeDate extends Entry
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytypedate/html_code_form_search_entry_type_date.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypedate/html_code_entry_value_type_date.html";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -81,12 +84,13 @@ public class EntryTypeDate extends Entry
         {
             return _template_html_front_code_form_entry;
         }
-        else
-        {
-            return _template_html_code_form_entry;
-        }
+
+        return _template_html_code_form_entry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlRecordFieldValue( boolean isDisplayFront )
     {
@@ -94,12 +98,13 @@ public class EntryTypeDate extends Entry
         {
             return _template_html_front_code_entry_value;
         }
-        else
-        {
-            return _template_html_code_entry_value;
-        }
+
+        return _template_html_code_entry_value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormSearchEntry( boolean isDisplayFront )
     {
@@ -107,12 +112,13 @@ public class EntryTypeDate extends Entry
         {
             return _template_html_front_code_form_search_entry;
         }
-        else
-        {
-            return _template_html_code_form_search_entry;
-        }
+
+        return _template_html_code_form_search_entry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -190,18 +196,27 @@ public class EntryTypeDate extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate(  )
     {
         return _template_create;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify(  )
     {
         return _template_modify;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
@@ -222,6 +237,9 @@ public class EntryTypeDate extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
@@ -336,6 +354,9 @@ public class EntryTypeDate extends Entry
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
         boolean bDisplayExport )
@@ -358,11 +379,18 @@ public class EntryTypeDate extends Entry
         return DirectoryUtils.EMPTY_STRING;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String convertRecordFieldTitleToString( RecordField recordField, Locale locale, boolean bDisplayFront )
     {
         return convertRecordFieldValueToString( recordField, locale, bDisplayFront, false );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addSearchCriteria( HashMap<String, Object> mapSearchItem, RecordField recordField )
     {
@@ -397,9 +425,9 @@ public class EntryTypeDate extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
+    @Override
     public boolean isSortable(  )
     {
         return true;

@@ -79,8 +79,7 @@ public final class EntryParameterService
 
     /**
      * Update the parameter value
-     * @param strParameterKey The parameter key
-     * @param strParameterValue The parameter value
+     * @param param The parameter
      */
     public void update( ReferenceItem param )
     {

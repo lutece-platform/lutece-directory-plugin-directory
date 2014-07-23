@@ -94,9 +94,10 @@ public interface IRecordFieldDAO
     List<RecordField> selectListByFilter( RecordFieldFilter filter, Plugin plugin );
 
     /**
-     * Load full record field data (except binary file data) of given list of Record id
+     * Load full record field data (except binary file data) of given list of
+     * Record id
      * * /!\ include record data
-     * @param nIdRecord the Record id
+     * @param lIdRecordList the list of record id
      * @param plugin the plugin
      * @return list of record
      */

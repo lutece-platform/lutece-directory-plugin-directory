@@ -67,6 +67,9 @@ public class EntryTypeRichText extends Entry
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytyperichtext/html_code_form_search_entry_type_richtext.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytyperichtext/html_code_entry_value_type_richtext.html";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -74,12 +77,13 @@ public class EntryTypeRichText extends Entry
         {
             return _template_html_front_code_form_entry;
         }
-        else
-        {
-            return _template_html_code_form_entry;
-        }
+
+        return _template_html_code_form_entry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlRecordFieldValue( boolean isDisplayFront )
     {
@@ -87,12 +91,13 @@ public class EntryTypeRichText extends Entry
         {
             return _template_html_front_code_entry_value;
         }
-        else
-        {
-            return _template_html_code_entry_value;
-        }
+
+        return _template_html_code_entry_value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormSearchEntry( boolean isDisplayFront )
     {
@@ -100,12 +105,13 @@ public class EntryTypeRichText extends Entry
         {
             return _template_html_front_code_form_search_entry;
         }
-        else
-        {
-            return _template_html_code_form_search_entry;
-        }
+
+        return _template_html_code_form_search_entry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -178,18 +184,27 @@ public class EntryTypeRichText extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate(  )
     {
         return _template_create;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify(  )
     {
         return _template_modify;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
@@ -231,9 +246,9 @@ public class EntryTypeRichText extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
+    @Override
     public boolean isSortable(  )
     {
         return true;

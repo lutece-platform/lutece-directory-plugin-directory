@@ -64,6 +64,7 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public ReferenceList selectAll( Plugin plugin )
     {
         ReferenceList listParams = new ReferenceList(  );
@@ -88,6 +89,7 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public ReferenceItem load( String strParameterKey, Plugin plugin )
     {
         ReferenceItem param = null;
@@ -111,6 +113,7 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public void store( ReferenceItem param, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
@@ -125,6 +128,7 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public ReferenceList selectByFilter( DirectoryParameterFilter filter, Plugin plugin )
     {
         // Build SQL query

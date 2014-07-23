@@ -51,10 +51,9 @@ public class EntryTypeDirectoryRemovalListener implements RemovalListener
     private static final String PROPERTY_ENTRY_TYPE_DIRECTORY_CANNOT_BE_REMOVED = "directory.message.entry_type_directory_can_not_be_removed";
 
     /**
-    * Check if the object can be safely removed
-    * @param strId The object id
-    * @return true if the object can be removed otherwise false
-    */
+     * {@inheritDoc}
+     */
+    @Override
     public boolean canBeRemoved( String strId )
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
@@ -72,18 +71,14 @@ public class EntryTypeDirectoryRemovalListener implements RemovalListener
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
     /**
-     * Gives a message explaining why the object can't be removed
-     * @param strId The object id
-     * @param locale The current locale
-     * @return The message
+     * {@inheritDoc}
      */
+    @Override
     public String getRemovalRefusedMessage( String strId, Locale locale )
     {
         // Build a message 

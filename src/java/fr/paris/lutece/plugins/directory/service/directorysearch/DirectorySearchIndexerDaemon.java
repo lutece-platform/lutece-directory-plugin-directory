@@ -44,6 +44,7 @@ public class DirectorySearchIndexerDaemon extends Daemon
     /**
      * Process Direcory indexing
      */
+    @Override
     public void run(  )
     {
         setLastRunLogs( DirectorySearchService.getInstance(  ).processIndexing( false ) );

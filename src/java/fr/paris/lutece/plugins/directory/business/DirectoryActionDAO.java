@@ -57,11 +57,9 @@ public class DirectoryActionDAO implements IDirectoryActionDAO
     private static final String SQL_QUERY_DELETE_ACTION_RECORD = "DELETE FROM directory_record_action WHERE name_key = ? AND description_key = ? AND action_url = ? AND icon_url = ? AND action_permission = ? AND directory_state = ? ;";
 
     /**
-     * Load the list of actions for a all directory by directory state
-     * @param nState the state of the form
-     * @param plugin the plugin
-     * @return The Collection of actions
+     * {@inheritDoc}
      */
+    @Override
     public List<DirectoryAction> selectActionsByDirectoryState( int nState, Plugin plugin )
     {
         List<DirectoryAction> listActions = new ArrayList<DirectoryAction>(  );
@@ -87,11 +85,9 @@ public class DirectoryActionDAO implements IDirectoryActionDAO
     }
 
     /**
-     * Load the list of actions for a all directory by directory state
-     * @param nState the state of the form
-     * @param plugin the plugin
-     * @return The Collection of actions
+     * {@inheritDoc}
      */
+    @Override
     public List<DirectoryAction> selectActionsByDirectoryRecordState( int nState, Plugin plugin )
     {
         List<DirectoryAction> listActions = new ArrayList<DirectoryAction>(  );
@@ -117,10 +113,9 @@ public class DirectoryActionDAO implements IDirectoryActionDAO
     }
 
     /**
-     * Add a new action for directory record for module which uses plugin-directory
-     * @param directoryAction The action builded in module which uses plugin-directory
-     * @param plugin the plugin
+     * {@inheritDoc}
      */
+    @Override
     public void addNewActionInDirectoryRecordAction( DirectoryAction directoryAction, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_MAX_ACTION_RECORD, plugin );
@@ -149,6 +144,7 @@ public class DirectoryActionDAO implements IDirectoryActionDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean checkActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_CHECK_ACTION_RECORD, plugin );
@@ -169,6 +165,7 @@ public class DirectoryActionDAO implements IDirectoryActionDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public void deleteActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_ACTION_RECORD, plugin );
@@ -183,10 +180,9 @@ public class DirectoryActionDAO implements IDirectoryActionDAO
     }
 
     /**
-     * Load the list of actions for every directory
-     * @param plugin the plugin
-     * @return The Collection of actions
+     * {@inheritDoc}
      */
+    @Override
     public List<DirectoryAction> selectActionsByDirectoryXsl( Plugin plugin )
     {
         List<DirectoryAction> listActions = new ArrayList<DirectoryAction>(  );

@@ -84,9 +84,9 @@ public class RecordField
     }
 
     /**
-    *
-    * @return the entry associate to the field
-    */
+     *
+     * @return the entry associate to the field
+     */
     public IEntry getEntry(  )
     {
         return _entry;
@@ -173,34 +173,41 @@ public class RecordField
         _file = file;
     }
 
+    /**
+     * Check if this record field represents a little thumbnail
+     * @return True if this record field represents a little thumbnail, false
+     *         otherwise
+     */
     public boolean isLittleThumbnail(  )
     {
         if ( StringUtils.isNotBlank( _strValue ) && ( _strValue.startsWith( CONSTANT_LITTLE_THUMBNAIL ) ) )
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
+    /**
+     * Check if this record field represents a big thumbnail
+     * @return True if this record field represents a big thumbnail, false
+     *         otherwise
+     */
     public boolean isBigThumbnail(  )
     {
         if ( StringUtils.isNotBlank( _strValue ) && ( _strValue.startsWith( CONSTANT_BIG_THUMBNAIL ) ) )
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
     /**
-     *
+     * Converts this record field into a string
      * @return the value of the recordField
      */
+    @Override
     public String toString(  )
     {
         return _strValue;
@@ -218,11 +225,11 @@ public class RecordField
     }
 
     /**
-    * Set the file extension if the response value is a file
-    * This attribute is used for EntryTypeDownloadURL
-    * @see {@link EntryTypeDownloadUrl}
-    * @param fileExtension the file extension if the response value is a file
-    */
+     * Set the file extension if the response value is a file
+     * This attribute is used for EntryTypeDownloadURL
+     * @see {@link EntryTypeDownloadUrl}
+     * @param fileExtension the file extension if the response value is a file
+     */
     public void setFileExtension( String fileExtension )
     {
         _strFileExtension = fileExtension;
@@ -231,7 +238,7 @@ public class RecordField
     /**
      * The file name if the response value is a file
      * This attribute is used for EntryTypeDownloadURL
-    * @see {@link EntryTypeDownloadUrl}
+     * @see {@link EntryTypeDownloadUrl}
      * @return the file name if the response value is a file
      */
     public String getFileName(  )
@@ -242,9 +249,9 @@ public class RecordField
     /**
      * The file name if the response value is a file
      * This attribute is used for EntryTypeDownloadURL
-    * @see {@link EntryTypeDownloadUrl}
+     * @see {@link EntryTypeDownloadUrl}
      * @param fileName the file name if the response value is a file
-    */
+     */
     public void setFileName( String fileName )
     {
         _strFileName = fileName;

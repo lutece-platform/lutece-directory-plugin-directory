@@ -299,8 +299,9 @@ public class EntryTypeMyLuteceUser extends Entry
     }
 
     /**
-         * {@inheritDoc}
-         */
+     * {@inheritDoc}
+     */
+    @Override
     public String getHtmlRecordFieldValue( Locale locale, RecordField recordField, boolean isDisplayFront )
     {
         if ( getTemplateHtmlRecordFieldValue( isDisplayFront ) != null )
@@ -336,6 +337,7 @@ public class EntryTypeMyLuteceUser extends Entry
      * @param bDisplayFront true if it is displayed in front
      * @param bExportDirectory true if it is exported
      */
+    @Override
     public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
         boolean bExportDirectory )
     {
@@ -384,15 +386,16 @@ public class EntryTypeMyLuteceUser extends Entry
      * @param locale Locale
      * @param bDisplayFront true if it is displayed in front
      */
+    @Override
     public String convertRecordFieldTitleToString( RecordField recordField, Locale locale, boolean bDisplayFront )
     {
         return convertRecordFieldValueToString( recordField, locale, bDisplayFront, false );
     }
 
     /**
-     *
      * {@inheritDoc}
      */
+    @Override
     public boolean isSortable(  )
     {
         return true;

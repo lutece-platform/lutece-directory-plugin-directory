@@ -93,11 +93,13 @@ public class DirectorySearchService
     private static final String PARAMETER_ID_DIRECTORY = "id_directory";
     private static final String PARAMETER_ID_ENTRY = "id_entry";
     private static final String JSON_QUERY_RESULT = "query";
-    private static final int DEFAULT_WRITER_MERGE_FACTOR = 20;
-    private static final int DEFAULT_WRITER_MAX_FIELD_LENGTH = 1000000;
+
+    //    private static final int DEFAULT_WRITER_MERGE_FACTOR = 20;
+    //    private static final int DEFAULT_WRITER_MAX_FIELD_LENGTH = 1000000;
     private static org.apache.lucene.store.Directory _luceneDirectory;
-    private static int _nWriterMergeFactor;
-    private static int _nWriterMaxFieldLength;
+
+    //    private static int _nWriterMergeFactor;
+    //    private static int _nWriterMaxFieldLength;
     private static Analyzer _analyzer;
     private static IndexSearcher _searcher;
     private static IDirectorySearchIndexer _indexer;
@@ -126,11 +128,10 @@ public class DirectorySearchService
             throw new AppException( "Lucene index path not found in directory.properties", null );
         }
 
-        _nWriterMergeFactor = AppPropertiesService.getPropertyInt( PROPERTY_WRITER_MERGE_FACTOR,
-                DEFAULT_WRITER_MERGE_FACTOR );
-        _nWriterMaxFieldLength = AppPropertiesService.getPropertyInt( PROPERTY_WRITER_MAX_FIELD_LENGTH,
-                DEFAULT_WRITER_MAX_FIELD_LENGTH );
-
+        //        _nWriterMergeFactor = AppPropertiesService.getPropertyInt( PROPERTY_WRITER_MERGE_FACTOR,
+        //                DEFAULT_WRITER_MERGE_FACTOR );
+        //        _nWriterMaxFieldLength = AppPropertiesService.getPropertyInt( PROPERTY_WRITER_MAX_FIELD_LENGTH,
+        //                DEFAULT_WRITER_MAX_FIELD_LENGTH );
         String strAnalyserClassName = AppPropertiesService.getProperty( PROPERTY_ANALYSER_CLASS_NAME );
 
         if ( ( strAnalyserClassName == null ) || ( strAnalyserClassName.equals( "" ) ) )

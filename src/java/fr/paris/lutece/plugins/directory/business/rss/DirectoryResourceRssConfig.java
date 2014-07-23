@@ -190,7 +190,7 @@ public class DirectoryResourceRssConfig
 
     /**
      * set value of Entry directory used as filter 1
-     * @param idEntryFilter1 id of Entry directory
+     * @param strValueFilter1 id of Entry directory
      */
     public void setValueFilter1( String strValueFilter1 )
     {
@@ -208,11 +208,11 @@ public class DirectoryResourceRssConfig
 
     /**
      * set id of Entry directory used as filter 1
-     * @param idEntryFilter1 id of Entry directory
+     * @param nIdEntryFilter2 id of Entry directory
      */
-    public void setIdEntryFilter2( int idEntryFilter2 )
+    public void setIdEntryFilter2( int nIdEntryFilter2 )
     {
-        _nIdEntryFilter2 = idEntryFilter2;
+        _nIdEntryFilter2 = nIdEntryFilter2;
     }
 
     /**
@@ -226,7 +226,7 @@ public class DirectoryResourceRssConfig
 
     /**
      * set value of Entry directory used as filter 2
-     * @param idEntryFilter2 id of Entry directory
+     * @param strValueFilter2 id of Entry directory
      */
     public void setValueFilter2( String strValueFilter2 )
     {

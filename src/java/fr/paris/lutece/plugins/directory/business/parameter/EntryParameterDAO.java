@@ -52,10 +52,9 @@ public class EntryParameterDAO implements IEntryParameterDAO
     private static final String SQL_QUERY_SELECT_ALL = " SELECT parameter_key, parameter_value FROM directory_entry_parameter ORDER BY parameter_key ASC ";
 
     /**
-     * Load all the default values
-     * @param plugin Plugin
-     * @return a list of ReferenceItem
+     * {@inheritDoc}
      */
+    @Override
     public ReferenceList selectAll( Plugin plugin )
     {
         ReferenceList listParams = new ReferenceList(  );
@@ -77,11 +76,9 @@ public class EntryParameterDAO implements IEntryParameterDAO
     }
 
     /**
-     * Load the parameter value
-     * @param strParameterKey the parameter key
-     * @param plugin
-     * @return The parameter value
+     * {@inheritDoc}
      */
+    @Override
     public ReferenceItem load( String strParameterKey, Plugin plugin )
     {
         ReferenceItem param = null;
@@ -102,11 +99,9 @@ public class EntryParameterDAO implements IEntryParameterDAO
     }
 
     /**
-     * Update the parameter value
-     * @param strParameterValue The parameter value
-     * @param strParameterKey The parameter key
-     * @param plugin
+     * {@inheritDoc}
      */
+    @Override
     public void store( ReferenceItem param, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );

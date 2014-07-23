@@ -84,12 +84,10 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
     private static final String PROPERTY_INDEXER_ENABLE = "directory.internalIndexer.enable";
     private static final List<Integer> _lListIdRecordToDelete = new ArrayList<Integer>(  );
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.
-     * IDirectorySearchIndexer#getDescription()
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public String getDescription(  )
     {
         return AppPropertiesService.getProperty( PROPERTY_INDEXER_DESCRIPTION );
@@ -204,14 +202,10 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
         return hm;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.
-     * IDirectorySearchIndexer
-     * #processIndexing(org.apache.lucene.index.IndexWriter, boolean,
-     * java.lang.StringBuffer)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void processIndexing( IndexWriter indexWriter, boolean bCreate, StringBuffer sbLogs )
         throws IOException, InterruptedException, SiteMessageException
     {
@@ -418,34 +412,28 @@ public class DirectoryIndexer implements IDirectorySearchIndexer
         return doc;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.
-     * IDirectorySearchIndexer#getName()
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public String getName(  )
     {
         return AppPropertiesService.getProperty( PROPERTY_INDEXER_NAME );
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.
-     * IDirectorySearchIndexer#getVersion()
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public String getVersion(  )
     {
         return AppPropertiesService.getProperty( PROPERTY_INDEXER_VERSION );
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.
-     * IDirectorySearchIndexer#isEnable()
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public boolean isEnable(  )
     {
         boolean bReturn = false;

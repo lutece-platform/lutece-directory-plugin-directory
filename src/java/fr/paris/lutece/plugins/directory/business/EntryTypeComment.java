@@ -45,7 +45,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *
- *  class EntryTypeComment
+ * class EntryTypeComment
  *
  */
 public class EntryTypeComment extends Entry
@@ -55,6 +55,9 @@ public class EntryTypeComment extends Entry
     private final String _template_html_code_form_entry = "admin/plugins/directory/entrytypecomment/html_code_form_entry_type_comment.html";
     private final String _template_html_front_code_form_entry = "skin/plugins/directory/entrytypecomment/html_code_form_entry_type_comment.html";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -62,12 +65,13 @@ public class EntryTypeComment extends Entry
         {
             return _template_html_front_code_form_entry;
         }
-        else
-        {
-            return _template_html_code_form_entry;
-        }
+
+        return _template_html_code_form_entry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -94,12 +98,18 @@ public class EntryTypeComment extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate(  )
     {
         return _template_create;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify(  )
     {

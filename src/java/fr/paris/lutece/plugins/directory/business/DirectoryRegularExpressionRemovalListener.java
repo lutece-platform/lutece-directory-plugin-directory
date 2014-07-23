@@ -50,10 +50,9 @@ public class DirectoryRegularExpressionRemovalListener implements RemovalListene
     private static final String PROPERTY_REGULAR_EXPRESSION_CANNOT_BE_REMOVED = "directory.message.regular_expression_can_not_be_removed";
 
     /**
-    * Check if the object can be safely removed
-    * @param strId The object id
-    * @return true if the object can be removed otherwise false
-    */
+     * {@inheritDoc}
+     */
+    @Override
     public boolean canBeRemoved( String strId )
     {
         int nIdRegularExpression = DirectoryUtils.convertStringToInt( strId );
@@ -68,11 +67,9 @@ public class DirectoryRegularExpressionRemovalListener implements RemovalListene
     }
 
     /**
-     * Gives a message explaining why the object can't be removed
-     * @param strId The object id
-     * @param locale The current locale
-     * @return The message
+     * {@inheritDoc}
      */
+    @Override
     public String getRemovalRefusedMessage( String strId, Locale locale )
     {
         // Build a message 

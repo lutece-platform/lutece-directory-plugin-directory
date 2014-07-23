@@ -112,6 +112,8 @@ public class DirectoryResourceIdService extends ResourceIdService
 
     /** Permission for mylutece user visualisation */
     public static final String PERMISSION_VISUALISATION_MYLUTECE_USER = "VISUALISATION_MYLUTECE_USER";
+
+    /** Label resource type */
     public static final String PROPERTY_LABEL_RESOURCE_TYPE = "directory.permission.label.resource_type_directory";
     private static final String PROPERTY_LABEL_CREATE = "directory.permission.label.create_directory";
     private static final String PROPERTY_LABEL_MANAGE_RECORD = "directory.permission.label.manage_directory_record";

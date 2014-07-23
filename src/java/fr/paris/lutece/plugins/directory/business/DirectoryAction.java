@@ -181,6 +181,7 @@ public class DirectoryAction implements RBACAction, Localizable
      * Returns the permission associated to the action
      * @return The permission
      */
+    @Override
     public String getPermission(  )
     {
         return _strPermission;
@@ -200,6 +201,7 @@ public class DirectoryAction implements RBACAction, Localizable
      * Implements Localizable
      * @param locale The current locale
      */
+    @Override
     public void setLocale( Locale locale )
     {
         _locale = locale;

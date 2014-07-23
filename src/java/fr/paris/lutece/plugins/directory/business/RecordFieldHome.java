@@ -190,18 +190,19 @@ public final class RecordFieldHome
     }
 
     /**
-     * remove all record field  who verify the filter
+     * remove all record field who verify the filter
      * @param filter the filter
+     * @param bRemoveByAsynchronousFiles True to remove by asynchronous files
      * @param plugin the plugin
      *
      */
-    public static void removeByFilter( RecordFieldFilter filter, boolean bRemoveByAsynchronouseFiles, Plugin plugin )
+    public static void removeByFilter( RecordFieldFilter filter, boolean bRemoveByAsynchronousFiles, Plugin plugin )
     {
         List<RecordField> listRecordField = _dao.selectListByFilter( filter, plugin );
 
         for ( RecordField recordField : listRecordField )
         {
-            remove( recordField.getIdRecordField(  ), bRemoveByAsynchronouseFiles, plugin );
+            remove( recordField.getIdRecordField(  ), bRemoveByAsynchronousFiles, plugin );
         }
     }
 
@@ -249,9 +250,10 @@ public final class RecordFieldHome
     }
 
     /**
-     * Load full record field data (except binary file data) of given list of Record id
+     * Load full record field data (except binary file data) of given list of
+     * Record id
      * * /!\ include record data
-     * @param nIdRecord the Record id
+     * @param lIdRecordList the list of record id
      * @param plugin the plugin
      * @return list of record
      */

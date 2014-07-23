@@ -130,7 +130,8 @@ public class Field implements AdminWorkgroupResource
 
     /**
      * set a list of regular expression which is associate to the field
-     * @param regularExpressionList a list of regular expression which is associate to the field
+     * @param regularExpressionList a list of regular expression which is
+     *            associate to the field
      */
     public void setRegularExpressionList( List<RegularExpression> regularExpressionList )
     {
@@ -193,7 +194,7 @@ public class Field implements AdminWorkgroupResource
 
     /**
      *
-     * @return  the height of the field
+     * @return the height of the field
      */
     public int getHeight(  )
     {
@@ -202,7 +203,7 @@ public class Field implements AdminWorkgroupResource
 
     /**
      * set the height of the field
-     * @param height  the height of the field
+     * @param height the height of the field
      */
     public void setHeight( int height )
     {
@@ -238,11 +239,12 @@ public class Field implements AdminWorkgroupResource
 
     /**
      * set true if the field is shown in result list
-     * @return shownInResultList true if the field is shown in result list
+     * @param bShown True if the field is shown in the result list, false
+     *            otherwise
      */
-    public void setShownInResultList( boolean shown )
+    public void setShownInResultList( boolean bShown )
     {
-        _bShownInResultList = shown;
+        _bShownInResultList = bShown;
     }
 
     /**
@@ -256,11 +258,12 @@ public class Field implements AdminWorkgroupResource
 
     /**
      * set true if the field is shown in result record
-     * @return shownInResultRecord true if the field is shown in result record
+     * @param bShown True if the field is shown in the result list, false
+     *            otherwise
      */
-    public void setShownInResultRecord( boolean shown )
+    public void setShownInResultRecord( boolean bShown )
     {
-        _bShownInResultRecord = shown;
+        _bShownInResultRecord = bShown;
     }
 
     /**
@@ -320,17 +323,17 @@ public class Field implements AdminWorkgroupResource
     }
 
     /**
-    *
-    * @return the work group associate to the field
-    */
+     * {@inheritDoc}
+     */
+    @Override
     public String getWorkgroup(  )
     {
         return _strWorkgroupKey;
     }
 
     /**
-     * set  the work group associate to the field
-     * @param workGroup  the work group associate to the field
+     * set the work group associate to the field
+     * @param workGroup the work group associate to the field
      */
     public void setWorkgroup( String workGroup )
     {

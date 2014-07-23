@@ -67,11 +67,11 @@ public final class DirectoryParameterHome
     }
 
     /**
-    * Load the parameter value
-    * @param strParameterKey the parameter key
-    * @param plugin
-    * @return The parameter value
-    */
+     * Load the parameter value
+     * @param strParameterKey the parameter key
+     * @param plugin the plugin
+     * @return The parameter value
+     */
     public static ReferenceItem findByKey( String strParameterKey, Plugin plugin )
     {
         return _dao.load( strParameterKey, plugin );
@@ -79,9 +79,8 @@ public final class DirectoryParameterHome
 
     /**
      * Update the parameter value
-     * @param strParameterKey The parameter key
-     * @param strParameterValue The parameter value
-     * @param plugin
+     * @param param The parameter
+     * @param plugin the plugin
      */
     public static void update( ReferenceItem param, Plugin plugin )
     {
@@ -92,7 +91,7 @@ public final class DirectoryParameterHome
      * Load parameters by filter
      * @param filter the filter
      * @param plugin the plugin
-     * @return a {@link RefereceList}
+     * @return a {@link ReferenceList}
      */
     public static ReferenceList findByFilter( DirectoryParameterFilter filter, Plugin plugin )
     {

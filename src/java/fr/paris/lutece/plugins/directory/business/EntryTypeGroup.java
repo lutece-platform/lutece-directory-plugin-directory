@@ -53,6 +53,9 @@ public class EntryTypeGroup extends Entry
     //	templates
     private final String _template_modify = "admin/plugins/directory/entrytypegroup/modify_entry_type_group.html";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -79,6 +82,9 @@ public class EntryTypeGroup extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify(  )
     {

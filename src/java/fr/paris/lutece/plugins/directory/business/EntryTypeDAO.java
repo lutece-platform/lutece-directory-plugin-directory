@@ -53,12 +53,9 @@ public class EntryTypeDAO implements IEntryTypeDAO
         " FROM directory_entry_type ";
 
     /**
-     * Load the data of the entry type from the table
-     *
-     * @param idKey The identifier of the entry type
-     * @param plugin the plugin
-     * @return the instance of the EntryType
+     * {@inheritDoc}
      */
+    @Override
     public EntryType load( int idKey, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
@@ -84,10 +81,9 @@ public class EntryTypeDAO implements IEntryTypeDAO
     }
 
     /**
-     * Load the data of all  entry type returns them in a  list
-     * @param plugin the plugin
-     * @return  the list of entry type
+     * {@inheritDoc}
      */
+    @Override
     public List<EntryType> select( Plugin plugin )
     {
         List<EntryType> listEntryType = new ArrayList<EntryType>(  );

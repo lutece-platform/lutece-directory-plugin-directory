@@ -59,10 +59,10 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
     private static final String SQL_QUERY_FIND_ALL = "SELECT id_rss,id_directory,id_entry_title,id_entry_description,id_entry_image,id_entry_link,id_workflow_state,id_entry_filter_1,value_filter_1,id_entry_filter_2,value_filter_2 " +
         "FROM directory_rss_cf";
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.rss.IDirectoryResourceRssConfigDAO#insert(fr.paris.lutece.plugins.directory.business.rss.DirectoryResourceRssConfig, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public synchronized void insert( DirectoryResourceRssConfig config, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
@@ -85,10 +85,10 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
         daoUtil.free(  );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.rss.IDirectoryResourceRssConfigDAO#store(fr.paris.lutece.plugins.directory.business.rss.DirectoryResourceRssConfig, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void store( DirectoryResourceRssConfig config, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
@@ -112,10 +112,10 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
         daoUtil.free(  );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.rss.IDirectoryResourceRssConfigDAO#load(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public DirectoryResourceRssConfig load( int nIdRss, Plugin plugin )
     {
         DirectoryResourceRssConfig config = null;
@@ -148,10 +148,10 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
         return config;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.rss.IDirectoryResourceRssConfigDAO#delete(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void delete( int nIdRss, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
@@ -161,10 +161,10 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
         daoUtil.free(  );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.rss.IDirectoryResourceRssConfigDAO#loadAll(fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public List<DirectoryResourceRssConfig> loadAll( Plugin plugin )
     {
         List<DirectoryResourceRssConfig> configList = new ArrayList<DirectoryResourceRssConfig>(  );

@@ -347,7 +347,7 @@ public final class RecordHome
 
     /**
      * Load a list of record
-     * @param listId list of record id
+     * @param lIdList list of record id
      * @param plugin the plugin
      * @return list of Record
      */

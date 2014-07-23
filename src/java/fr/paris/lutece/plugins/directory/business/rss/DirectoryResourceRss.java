@@ -67,6 +67,7 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
+import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.url.UrlItem;
@@ -162,6 +163,10 @@ public class DirectoryResourceRss extends ResourceRss
     private static final String NAME = "name";
     private static final String EMPTY_STRING = "";
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean contentResourceRss(  )
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
@@ -174,9 +179,10 @@ public class DirectoryResourceRss extends ResourceRss
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.portal.business.rss.IResourceRss#doSaveConfig( javax.servlet.http.HttpServletRequest, java.util.Locale )
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void doSaveConfig( HttpServletRequest request, Locale locale )
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
@@ -208,9 +214,10 @@ public class DirectoryResourceRss extends ResourceRss
         DirectoryResourceRssConfigHome.create( config, pluginDirectory );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.portal.business.rss.IResourceRss#doSaveConfig( javax.servlet.http.HttpServletRequest, java.util.Locale )
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void doUpdateConfig( HttpServletRequest request, Locale locale )
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
@@ -242,10 +249,10 @@ public class DirectoryResourceRss extends ResourceRss
         DirectoryResourceRssConfigHome.update( config, pluginDirectory );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.portal.business.rss.IResourceRss#doValidateTask(javax.servlet.http.HttpServletRequest, java.util.Locale)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public String doValidateConfigForm( HttpServletRequest request, Locale locale )
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
@@ -311,9 +318,10 @@ public class DirectoryResourceRss extends ResourceRss
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.portal.business.rss.IResourceRss#getDisplayCreateConfigForm( javax.servlet.http.HttpServletRequest,java.util.Locale)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public String getDisplayCreateConfigForm( HttpServletRequest request, Locale locale )
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
@@ -450,7 +458,7 @@ public class DirectoryResourceRss extends ResourceRss
             model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
             model.put( MARK_WORKFLOW_STATE_LIST_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
             model.put( MARK_DIRECTORY_LIST_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-            model.put( MARK_ENTRY_LIST, new ArrayList(  ) );
+            model.put( MARK_ENTRY_LIST, new ArrayList<ReferenceItem>(  ) );
         }
 
         model.put( MARK_DIRECTORY_LIST, directoryList );
@@ -460,9 +468,10 @@ public class DirectoryResourceRss extends ResourceRss
         return template.getHtml(  );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.portal.business.rss.IResourceRss#getDisplayModifyConfigForm( javax.servlet.http.HttpServletRequest , java.util.Locale)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public String getDisplayModifyConfigForm( HttpServletRequest request, Locale locale )
     {
         String strEntryTypeImage = AppPropertiesService.getProperty( PROPERTY_ENTRY_DIRECTORY_TYPE_IMAGE );
@@ -513,7 +522,7 @@ public class DirectoryResourceRss extends ResourceRss
             filter.setIdDirectory( directory.getIdDirectory(  ) );
             model.put( MARK_DIRECTORY_LIST_DEFAULT_ITEM, directoryResourceRssConfig.getIdDirectory(  ) );
 
-            if ( WorkflowService.getInstance(  ).isAvailable(  ) && ( directory != null ) &&
+            if ( WorkflowService.getInstance(  ).isAvailable(  ) &&
                     ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
             {
                 Collection<State> listState = WorkflowService.getInstance(  )
@@ -673,10 +682,12 @@ public class DirectoryResourceRss extends ResourceRss
         return template.getHtml(  );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.portal.business.rss.IResourceRss#createHtmlRss( )
+    /**
+     * {@inheritDoc}
+     * @deprecated This method is deprecated
      */
     @Deprecated
+    @Override
     public String createHtmlRss(  )
     {
         HashMap<String, Object> model = new HashMap<String, Object>(  );
@@ -760,7 +771,7 @@ public class DirectoryResourceRss extends ResourceRss
             listResultRecordId = DirectoryUtils.retainAll( listResultRecordId, listTmpResultRecordId );
         }
 
-        List<HashMap> listItem = new ArrayList<HashMap>(  );
+        List<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>(  );
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         for ( Integer idRecord : listResultRecordId )
@@ -861,18 +872,20 @@ public class DirectoryResourceRss extends ResourceRss
         return template.getHtml(  );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.portal.business.rss.IResourceRss#deleteResourceRssConfig( int )
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void deleteResourceRssConfig( int idResourceRss )
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         DirectoryResourceRssConfigHome.remove( idResourceRss, pluginDirectory );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.portal.business.rss.IResourceRss#getParameterToApply( javax.servlet.http.HttpServletRequest )
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public Map<String, String> getParameterToApply( HttpServletRequest request )
     {
         Map<String, String> map = new HashMap<String, String>(  );
@@ -889,9 +902,10 @@ public class DirectoryResourceRss extends ResourceRss
         return map;
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.portal.business.rss.IResourceRss#checkResource(  )
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public boolean checkResource(  )
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
@@ -905,8 +919,7 @@ public class DirectoryResourceRss extends ResourceRss
     }
 
     /**
-     *
-     *{@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public IFeedResource getFeed(  )

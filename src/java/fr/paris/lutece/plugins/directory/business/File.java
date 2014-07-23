@@ -170,13 +170,16 @@ public class File
         _physicalFile = file;
     }
 
-    /** return the xml of file
-           *
-           * @param plugin the plugin
-           * @param locale the locale
-           * @return xml
-           */
-    public StringBuffer getXml( Plugin plugin, Locale locale, int nTypeEntry, int width, int height )
+    /**
+     * return the xml of file
+     * @param plugin the plugin
+     * @param locale the locale
+     * @param nTypeEntry The entry type
+     * @param nWidth The width
+     * @param nHeight The height
+     * @return The produced xml
+     */
+    public StringBuffer getXml( Plugin plugin, Locale locale, int nTypeEntry, int nWidth, int nHeight )
     {
         StringBuffer strXml = new StringBuffer(  );
         HashMap<String, Object> model = new HashMap<String, Object>(  );
@@ -186,8 +189,8 @@ public class File
         XmlUtil.addElementHtml( strXml, TAG_TITLE, getTitle(  ) );
         XmlUtil.addElement( strXml, TAG_SIZE, getSize(  ) );
         XmlUtil.addElement( strXml, TAG_MIME_TYPE, getMimeType(  ) );
-        XmlUtil.addElement( strXml, TAG_WIDTH, width );
-        XmlUtil.addElement( strXml, TAG_HEIGHT, height );
+        XmlUtil.addElement( strXml, TAG_WIDTH, nWidth );
+        XmlUtil.addElement( strXml, TAG_HEIGHT, nHeight );
         XmlUtil.endElement( strXml, TAG_FILE );
 
         return strXml;

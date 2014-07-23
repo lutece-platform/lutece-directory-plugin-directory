@@ -124,13 +124,17 @@ public final class FieldDAO implements IFieldDAO
         return nPos;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IFieldDAO#insert(fr.paris.lutece.plugins.directory.business.Field, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public synchronized int insert( Field field, Plugin plugin )
     {
+        field.setIdField( newPrimaryKey( plugin ) );
+        field.setPosition( newPosition( plugin ) );
+
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+        daoUtil.setInt( 1, field.getIdField(  ) );
         daoUtil.setInt( 2, field.getEntry(  ).getIdEntry(  ) );
         daoUtil.setString( 3, field.getTitle(  ) );
         daoUtil.setString( 4, field.getValue(  ) );
@@ -138,7 +142,7 @@ public final class FieldDAO implements IFieldDAO
         daoUtil.setInt( 6, field.getWidth(  ) );
         daoUtil.setBoolean( 7, field.isDefaultValue(  ) );
         daoUtil.setInt( 8, field.getMaxSizeEnter(  ) );
-        daoUtil.setInt( 9, newPosition( plugin ) );
+        daoUtil.setInt( 9, field.getPosition(  ) );
         daoUtil.setDate( 10,
             ( field.getValueTypeDate(  ) == null ) ? null : new Date( field.getValueTypeDate(  ).getTime(  ) ) );
 
@@ -147,19 +151,16 @@ public final class FieldDAO implements IFieldDAO
         daoUtil.setBoolean( 13, field.isShownInResultList(  ) );
         daoUtil.setBoolean( 14, field.isShownInResultRecord(  ) );
 
-        field.setIdField( newPrimaryKey( plugin ) );
-        daoUtil.setInt( 1, field.getIdField(  ) );
-
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
 
         return field.getIdField(  );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IFieldDAO#load(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public Field load( int nId, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
@@ -196,10 +197,10 @@ public final class FieldDAO implements IFieldDAO
         return field;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IFieldDAO#loadByValue(int, java.lang.String, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public Field loadByValue( int nIdEntry, String strValue, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_VALUE, plugin );
@@ -237,10 +238,10 @@ public final class FieldDAO implements IFieldDAO
         return field;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IFieldDAO#delete(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void delete( int nIdField, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
@@ -249,10 +250,10 @@ public final class FieldDAO implements IFieldDAO
         daoUtil.free(  );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IFieldDAO#store(fr.paris.lutece.plugins.directory.business.Field, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void store( Field field, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
@@ -276,10 +277,10 @@ public final class FieldDAO implements IFieldDAO
         daoUtil.free(  );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IFieldDAO#selectFieldListByIdEntry(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public List<Field> selectFieldListByIdEntry( int nIdEntry, Plugin plugin )
     {
         List<Field> fieldList = new ArrayList<Field>(  );
@@ -319,10 +320,10 @@ public final class FieldDAO implements IFieldDAO
         return fieldList;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IFieldDAO#deleteVerifyBy(int, int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void deleteVerifyBy( int nIdField, int nIdExpression, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_VERIF_BY, plugin );
@@ -332,10 +333,10 @@ public final class FieldDAO implements IFieldDAO
         daoUtil.free(  );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IFieldDAO#insertVerifyBy(int, int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void insertVerifyBy( int nIdField, int nIdExpression, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT_VERIF_BY, plugin );
@@ -345,10 +346,10 @@ public final class FieldDAO implements IFieldDAO
         daoUtil.free(  );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IFieldDAO#selectListRegularExpressionKeyByIdField(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public List<Integer> selectListRegularExpressionKeyByIdField( int nIdField, Plugin plugin )
     {
         List<Integer> regularExpressionList = new ArrayList<Integer>(  );
@@ -366,10 +367,10 @@ public final class FieldDAO implements IFieldDAO
         return regularExpressionList;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IFieldDAO#isRegularExpressionIsUse(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public boolean isRegularExpressionIsUse( int nIdExpression, Plugin plugin )
     {
         int nNumberEntry = 0;

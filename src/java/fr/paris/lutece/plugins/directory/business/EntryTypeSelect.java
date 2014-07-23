@@ -69,6 +69,9 @@ public class EntryTypeSelect extends Entry
     private final String _template_html_front_code_form_search_entry = "skin/plugins/directory/entrytypeselect/html_code_form_search_entry_type_select.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypeselect/html_code_entry_value_type_select.html";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlFormEntry( boolean isDisplayFront )
     {
@@ -76,12 +79,13 @@ public class EntryTypeSelect extends Entry
         {
             return _template_html_front_code_form_entry;
         }
-        else
-        {
-            return _template_html_code_form_entry;
-        }
+
+        return _template_html_code_form_entry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateHtmlRecordFieldValue( boolean isDisplayFront )
     {
@@ -89,24 +93,27 @@ public class EntryTypeSelect extends Entry
         {
             return _template_html_front_code_entry_value;
         }
-        else
-        {
-            return _template_html_code_entry_value;
-        }
+
+        return _template_html_code_entry_value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getTemplateHtmlFormSearchEntry( boolean isDisplayFront )
     {
         if ( isDisplayFront )
         {
             return _template_html_front_code_form_search_entry;
         }
-        else
-        {
-            return _template_html_code_form_search_entry;
-        }
+
+        return _template_html_code_form_search_entry;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
@@ -182,18 +189,27 @@ public class EntryTypeSelect extends Entry
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateCreate(  )
     {
         return _template_create;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTemplateModify(  )
     {
         return _template_modify;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex )
@@ -201,6 +217,9 @@ public class EntryTypeSelect extends Entry
         return new Paginator( this.getFields(  ), nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
         List<RecordField> listRecordField, Locale locale )
@@ -218,6 +237,9 @@ public class EntryTypeSelect extends Entry
         getRecordFieldData( record, lstValue, bTestDirectoryError, false, listRecordField, locale );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
         boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
@@ -265,6 +287,9 @@ public class EntryTypeSelect extends Entry
         listRecordField.add( recordField );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addSearchCriteria( HashMap<String, Object> mapSearchItem, RecordField recordField )
     {
@@ -284,14 +309,17 @@ public class EntryTypeSelect extends Entry
     }
 
     /**
-     *
      * {@inheritDoc}
      */
+    @Override
     public boolean isSortable(  )
     {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
         String strPageIndex, Locale locale )
@@ -300,18 +328,27 @@ public class EntryTypeSelect extends Entry
             strPageIndex, locale );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSQLJoin(  )
     {
         return SQL_JOIN_DIRECTORY_RECORD_FIELD;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSQLOrderBy(  )
     {
         return SQL_ORDER_BY_TITLE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Object> getSQLParametersValues(  )
     {

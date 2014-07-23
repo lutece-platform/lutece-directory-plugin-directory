@@ -58,9 +58,10 @@ public final class IndexerActionDAO implements IIndexerActionDAO
         " FROM directory_indexer_action  ";
     private static final String SQL_FILTER_ID_TASK = " id_task = ? ";
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.IIndexerActionDAO#newPrimaryKey(fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
@@ -80,26 +81,28 @@ public final class IndexerActionDAO implements IIndexerActionDAO
         return nKey;
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.IIndexerActionDAO#insert(fr.paris.lutece.plugins.directory.service.directorysearch.IndexerAction, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public synchronized void insert( IndexerAction indexerAction, Plugin plugin )
     {
+        indexerAction.setIdAction( newPrimaryKey( plugin ) );
+
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+        daoUtil.setInt( 1, indexerAction.getIdAction(  ) );
         daoUtil.setInt( 2, indexerAction.getIdRecord(  ) );
         daoUtil.setInt( 3, indexerAction.getIdTask(  ) );
-
-        indexerAction.setIdAction( newPrimaryKey( plugin ) );
-        daoUtil.setInt( 1, indexerAction.getIdAction(  ) );
 
         daoUtil.executeUpdate(  );
 
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.IIndexerActionDAO#load(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public IndexerAction load( int nId, Plugin plugin )
     {
         IndexerAction indexerAction = null;
@@ -121,9 +124,10 @@ public final class IndexerActionDAO implements IIndexerActionDAO
         return indexerAction;
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.IIndexerActionDAO#delete(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void delete( int nId, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
@@ -132,9 +136,10 @@ public final class IndexerActionDAO implements IIndexerActionDAO
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.IIndexerActionDAO#store(fr.paris.lutece.plugins.directory.service.directorysearch.IndexerAction, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void store( IndexerAction indexerAction, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
@@ -148,9 +153,10 @@ public final class IndexerActionDAO implements IIndexerActionDAO
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.service.directorysearch.IIndexerActionDAO#selectList(fr.paris.lutece.plugins.directory.service.directorysearch.IndexerActionlFilter, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public List<IndexerAction> selectList( IndexerActionFilter filter, Plugin plugin )
     {
         List<IndexerAction> indexerActionList = new ArrayList<IndexerAction>(  );

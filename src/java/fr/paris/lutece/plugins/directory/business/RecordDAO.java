@@ -114,24 +114,21 @@ public final class RecordDAO implements IRecordDAO
     }
 
     /**
-     * Insert a new record in the table.
-     * @param record instance of the record  object to insert
-     * @param plugin the plugin
-     * @return the id of the record
+     * {@inheritDoc}
      */
+    @Override
     public synchronized int insert( Record record, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+        record.setIdRecord( newPrimaryKey( plugin ) );
 
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
+        daoUtil.setInt( 1, record.getIdRecord(  ) );
         daoUtil.setTimestamp( 2, record.getDateCreation(  ) );
         daoUtil.setInt( 3, record.getDirectory(  ).getIdDirectory(  ) );
         daoUtil.setBoolean( 4, record.isEnabled(  ) );
         daoUtil.setString( 5, record.getRoleKey(  ) );
         daoUtil.setString( 6, record.getWorkgroup(  ) );
         daoUtil.setTimestamp( 7, record.getDateModification(  ) );
-
-        record.setIdRecord( newPrimaryKey( plugin ) );
-        daoUtil.setInt( 1, record.getIdRecord(  ) );
 
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -140,12 +137,9 @@ public final class RecordDAO implements IRecordDAO
     }
 
     /**
-     * Load the data of the record from the table
-     *
-     * @param nIdRecord The identifier of the record
-     * @param plugin the plugin
-     * @return the instance of the record
+     * {@inheritDoc}
      */
+    @Override
     public Record load( int nIdRecord, Plugin plugin )
     {
         Record record = null;
@@ -174,11 +168,9 @@ public final class RecordDAO implements IRecordDAO
     }
 
     /**
-     * Test if directory one or more directory record has a workflow
-     * @param nIdDirectory The id of the directory
-     * @param plugin the plugin
-     * @return true if one or more record has a worflow
+     * {@inheritDoc}
      */
+    @Override
     public Boolean direcytoryRecordListHasWorkflow( int nIdDirectory, Plugin plugin )
     {
         Boolean bResult = null;
@@ -207,9 +199,10 @@ public final class RecordDAO implements IRecordDAO
         return bResult;
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordDAO#loadList(java.util.List, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public List<Record> loadList( List<Integer> listId, Plugin plugin )
     {
         List<Record> lRecord;
@@ -289,11 +282,9 @@ public final class RecordDAO implements IRecordDAO
     }
 
     /**
-     *  Delete a record from the table
-     *
-     * @param nIdRecord The identifier of the record
-     * @param plugin the plugin
+     * {@inheritDoc}
      */
+    @Override
     public void delete( int nIdRecord, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
@@ -302,9 +293,10 @@ public final class RecordDAO implements IRecordDAO
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordDAO#deleteRecordByDirectoryId(java.lang.Integer, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void deleteRecordByDirectoryId( Integer nDirectoryId, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_ID_DIRECTORY, plugin );
@@ -314,11 +306,9 @@ public final class RecordDAO implements IRecordDAO
     }
 
     /**
-     * Update the record in the table
-     *
-     * @param record instance of the record object to update
-     * @param plugin the plugin
+     * {@inheritDoc}
      */
+    @Override
     public void store( Record record, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
@@ -336,11 +326,9 @@ public final class RecordDAO implements IRecordDAO
     }
 
     /**
-     * Load the data of all the record who verify the filter and returns them in a  list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the list of record
+     * {@inheritDoc}
      */
+    @Override
     public List<Record> selectListByFilter( RecordFieldFilter filter, Plugin plugin )
     {
         List<Record> recordList = new ArrayList<Record>(  );
@@ -379,9 +367,10 @@ public final class RecordDAO implements IRecordDAO
         return recordList;
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordDAO#getDirectoryIdByRecordId(java.lang.Integer, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public Integer getDirectoryIdByRecordId( Integer nRecordId, Plugin plugin )
     {
         Integer nResult = null;
@@ -401,11 +390,9 @@ public final class RecordDAO implements IRecordDAO
     }
 
     /**
-     * Count record who verify the filter
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the number of record
+     * {@inheritDoc}
      */
+    @Override
     public int selectCountByFilter( RecordFieldFilter filter, Plugin plugin )
     {
         int nIdCount = 0;
@@ -430,11 +417,9 @@ public final class RecordDAO implements IRecordDAO
     }
 
     /**
-     * Load the data of all the record id who verify the filter and returns them in a  list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the list of id record
+     * {@inheritDoc}
      */
+    @Override
     public List<Integer> selectListIdByFilter( RecordFieldFilter filter, Plugin plugin )
     {
         List<Integer> recordList = new ArrayList<Integer>(  );
@@ -642,9 +627,10 @@ public final class RecordDAO implements IRecordDAO
      * @param nIndex
      * @return List of string to add to the SQL query
      */
-    private DAOUtil buildFilterQueryFooter( DAOUtil daoUtil, RecordFieldFilter filter, int nIndex )
+    private DAOUtil buildFilterQueryFooter( DAOUtil daoUtil, RecordFieldFilter filter, int nDefaultIndex )
     {
         DAOUtil result = daoUtil;
+        int nIndex = nDefaultIndex;
 
         // sort parameters
         if ( filter.containsSortEntry(  ) )

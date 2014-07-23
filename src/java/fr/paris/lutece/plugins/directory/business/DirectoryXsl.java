@@ -45,6 +45,9 @@ import java.util.List;
  */
 public class DirectoryXsl implements RBACResource
 {
+    /**
+     * The resource type
+     */
     public static final String RESOURCE_TYPE = "DIRECTORY_XSL_FORMAT_TYPE";
     private int _nIdDirectoryXsl;
     private String _strTitle;
@@ -127,18 +130,18 @@ public class DirectoryXsl implements RBACResource
     }
 
     /**
-     * RBAC resource implmentation
-     * @return The resource type code
+     * {@inheritDoc}
      */
+    @Override
     public String getResourceTypeCode(  )
     {
         return RESOURCE_TYPE;
     }
 
     /**
-     * RBAC resource implmentation
-     * @return The resourceId
+     * {@inheritDoc}
      */
+    @Override
     public String getResourceId(  )
     {
         return "" + _nIdDirectoryXsl;

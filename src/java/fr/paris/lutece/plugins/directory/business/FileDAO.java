@@ -52,9 +52,10 @@ public final class FileDAO implements IFileDAO
     private static final String SQL_QUERY_UPDATE = "UPDATE  directory_file SET " +
         "id_file=?,title=?,id_physical_file=?,file_size=?,mime_type=? WHERE id_file = ?";
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IFileDAO#newPrimaryKey(fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
@@ -74,9 +75,10 @@ public final class FileDAO implements IFileDAO
         return nKey;
     }
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IFileDAO#insert(fr.paris.lutece.plugins.directory.business.File, fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public synchronized int insert( File file, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
@@ -103,9 +105,10 @@ public final class FileDAO implements IFileDAO
         return file.getIdFile(  );
     }
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IFileDAO#load(int, fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public File load( int nId, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
@@ -137,9 +140,10 @@ public final class FileDAO implements IFileDAO
         return file;
     }
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IFileDAO#delete(int, fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void delete( int nIdFile, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
@@ -148,9 +152,10 @@ public final class FileDAO implements IFileDAO
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-         * @see fr.paris.lutece.plugins.directory.business.IFileDAO#store(fr.paris.lutece.plugins.directory.business.File, fr.paris.lutece.portal.service.plugin.Plugin)
-         */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void store( File file, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );

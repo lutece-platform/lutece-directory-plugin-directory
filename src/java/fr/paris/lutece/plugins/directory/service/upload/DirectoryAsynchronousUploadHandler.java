@@ -709,12 +709,15 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
             }
         }
 
-        List<FileItem> listFileItems = mapFileItemsSession.get( strFieldName );
-
-        if ( listFileItems == null )
+        if ( mapFileItemsSession != null )
         {
-            listFileItems = new ArrayList<FileItem>(  );
-            mapFileItemsSession.put( strFieldName, listFileItems );
+            List<FileItem> listFileItems = mapFileItemsSession.get( strFieldName );
+
+            if ( listFileItems == null )
+            {
+                listFileItems = new ArrayList<FileItem>(  );
+                mapFileItemsSession.put( strFieldName, listFileItems );
+            }
         }
     }
 

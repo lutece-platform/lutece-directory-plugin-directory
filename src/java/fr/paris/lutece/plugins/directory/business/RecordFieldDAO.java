@@ -134,14 +134,17 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         return nKey;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordFieldDAO#insert(fr.paris.lutece.plugins.directory.business.RecordField, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public synchronized void insert( RecordField recordField, Plugin plugin )
     {
+        recordField.setIdRecordField( newPrimaryKey( plugin ) );
+
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
 
+        daoUtil.setInt( 1, recordField.getIdRecordField(  ) );
         daoUtil.setInt( 2, recordField.getRecord(  ).getIdRecord(  ) );
         daoUtil.setString( 3, recordField.getValue(  ) );
         // daoUtil.setBytes( 3 , recordField.getValue().getBytes() );
@@ -165,18 +168,15 @@ public final class RecordFieldDAO implements IRecordFieldDAO
             daoUtil.setIntNull( 6 );
         }
 
-        recordField.setIdRecordField( newPrimaryKey( plugin ) );
-        daoUtil.setInt( 1, recordField.getIdRecordField(  ) );
-
         daoUtil.executeUpdate(  );
 
         daoUtil.free(  );
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordFieldDAO#load(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public RecordField load( int nIdRecordField, Plugin plugin )
     {
         boolean bException = false;
@@ -266,10 +266,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         return recordField;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordFieldDAO#delete(int, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void delete( int nIdRecordField, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
@@ -278,9 +278,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordFieldDAO#deleteByListRecordId(java.util.List, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void deleteByListRecordId( List<Integer> lListRecordId, Plugin plugin )
     {
         int nListIdSize = lListRecordId.size(  );
@@ -308,10 +309,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordFieldDAO#store(fr.paris.lutece.plugins.directory.business.RecordField, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void store( RecordField recordField, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
@@ -346,9 +347,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         daoUtil.free(  );
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordFieldDAO#getRecordFieldListByRecordId(java.lang.Integer, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public List<RecordField> getRecordFieldListByRecordIdList( List<Integer> lIdRecordList, Plugin plugin )
     {
         boolean bException = false;
@@ -497,9 +499,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         return recordFieldList;
     }
 
-    /* (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordFieldDAO#selectSpecificList(java.util.List, java.lang.Integer, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public List<RecordField> selectSpecificList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin )
     {
         boolean bException = false;
@@ -643,10 +646,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         return recordFieldList;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordFieldDAO#selectListByFilter(fr.paris.lutece.plugins.directory.business.RecordFieldFilter, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public List<RecordField> selectListByFilter( RecordFieldFilter filter, Plugin plugin )
     {
         boolean bException = false;
@@ -802,10 +805,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         return recordFieldList;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.business.IRecordFieldDAO#getCountByFilter(fr.paris.lutece.plugins.directory.business.RecordFieldFilter, fr.paris.lutece.portal.service.plugin.Plugin)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public int getCountByFilter( RecordFieldFilter filter, Plugin plugin )
     {
         int nCount = 0;
@@ -890,6 +893,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getMaxNumber( int nIdEntry, int nIdDirectory, Plugin plugin )
     {
         int nIndex = 1;
@@ -913,6 +917,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isNumberOnARecordField( int nIdEntry, int nIdDirectory, int nNumber, Plugin plugin )
     {
         int nIndex = 1;
@@ -937,6 +942,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<RecordField> selectValuesList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin )
     {
         List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
@@ -992,11 +998,9 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     }
 
     /**
-     * Update the value of a record field
-     * @param strNewValue The new value
-     * @param nIdRecordField The id of the record field to update
-     * @param plugin The plugin
+     * {@inheritDoc}
      */
+    @Override
     public void updateValue( String strNewValue, Integer nIdRecordField, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_UPDATE_VALUE_RECORD_FIELD, plugin );

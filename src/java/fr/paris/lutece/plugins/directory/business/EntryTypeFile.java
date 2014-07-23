@@ -84,10 +84,8 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
         {
             return _template_html_front_code_form_entry;
         }
-        else
-        {
-            return _template_html_code_form_entry;
-        }
+
+        return _template_html_code_form_entry;
     }
 
     /**
@@ -100,10 +98,8 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
         {
             return _template_html_front_code_entry_value;
         }
-        else
-        {
-            return _template_html_code_entry_value;
-        }
+
+        return _template_html_code_entry_value;
     }
 
     /**
@@ -388,8 +384,8 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     @Override
     protected void setFields( HttpServletRequest request, List<Field> listFields )
     {
@@ -399,12 +395,13 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     @Override
     protected void checkRecordFieldData( FileItem fileItem, Locale locale )
         throws DirectoryErrorException
     {
+        // Do nothing
     }
 
     // PRIVATE METHODS

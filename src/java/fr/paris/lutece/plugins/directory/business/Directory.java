@@ -290,9 +290,10 @@ public class Directory implements AdminWorkgroupResource, RBACResource
     }
 
     /**
-     *
+     * Get the workgroup key of the directory
      * @return the work group associate to the directory
      */
+    @Override
     public String getWorkgroup(  )
     {
         return _strWorkgroupKey;
@@ -365,6 +366,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * RBAC resource implementation
      * @return The resource type code
      */
+    @Override
     public String getResourceTypeCode(  )
     {
         return RESOURCE_TYPE;
@@ -374,6 +376,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
      * RBAC resource implementation
      * @return The resourceId
      */
+    @Override
     public String getResourceId(  )
     {
         return "" + _nIdDirectory;

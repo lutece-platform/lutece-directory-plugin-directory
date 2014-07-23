@@ -120,10 +120,8 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
         {
             return _template_html_front_code_form_entry;
         }
-        else
-        {
-            return _template_html_code_form_entry;
-        }
+
+        return _template_html_code_form_entry;
     }
 
     /**
@@ -136,10 +134,8 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
         {
             return _template_html_front_code_entry_value;
         }
-        else
-        {
-            return _template_html_code_entry_value;
-        }
+
+        return _template_html_code_entry_value;
     }
 
     /**
@@ -152,10 +148,8 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
         {
             return _template_html_front_code_form_search_entry;
         }
-        else
-        {
-            return _template_html_code_form_search_entry;
-        }
+
+        return _template_html_code_form_search_entry;
     }
 
     /**
@@ -292,8 +286,7 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
             String strWSRestUrl = fieldWSRestUrl.getValue(  );
             String strBlobStore = fieldBlobStore.getValue(  );
 
-            if ( ( ( fieldBlobStore == null ) || ( fieldWSRestUrl == null ) || StringUtils.isBlank( strWSRestUrl ) ||
-                    StringUtils.isBlank( strBlobStore ) ) && bTestDirectoryError )
+            if ( bTestDirectoryError && ( StringUtils.isBlank( strWSRestUrl ) || StringUtils.isBlank( strBlobStore ) ) )
             {
                 String strErrorMessage = I18nService.getLocalizedString( MESSAGE_ENTRY_NOT_WELL_CONFIGURED, locale );
                 throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
@@ -552,7 +545,7 @@ public class EntryTypeDownloadUrl extends AbstractEntryTypeUpload
             throw new DirectoryErrorException( getTitle(  ) );
         }
 
-        if ( StringUtils.isNotBlank( strFilename ) && StringUtils.isNotBlank( strMimeType ) && ( fieldOption != null ) &&
+        if ( StringUtils.isNotBlank( strFilename ) && StringUtils.isNotBlank( strMimeType ) &&
                 StringUtils.isNotBlank( fieldOption.getValue(  ) ) && !ALL.equals( fieldOption.getValue(  ) ) )
         {
             String[] listAuthorizedFileExt = fieldOption.getValue(  ).split( COMMA );

@@ -110,7 +110,7 @@ public interface IEntryDAO
 
     /**
      * Get the list of entries whith their titles, their ids and their
-     * anonymization status.
+     * anonymization status. Also get the class name of the entry type.
      * @param plugin The plugin
      * @return A list of entries with their titles, their ids and their
      *         anonymization status.
@@ -127,9 +127,8 @@ public interface IEntryDAO
 
     /**
      * Finds all the entries without any parent
-     *
      * @param plugin the plugin
-     * @parem nIdDirectory the id of the concerned directory
+     * @param nIdDirectory the id of the concerned directory
      * @return List<IEntry> the list of all the entries without parent
      */
     List<IEntry> findEntriesWithoutParent( Plugin plugin, int nIdDirectory );
