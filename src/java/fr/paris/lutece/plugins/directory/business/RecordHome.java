@@ -39,7 +39,9 @@ import fr.paris.lutece.plugins.directory.service.directorysearch.DirectorySearch
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
+import fr.paris.lutece.util.sql.TransactionManager;
 
 import java.util.List;
 
@@ -71,15 +73,28 @@ public final class RecordHome
     public static int create( Record record, Plugin plugin )
     {
         record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
-        record.setIdRecord( _dao.insert( record, plugin ) );
 
-        DirectorySearchService.getInstance(  )
-                              .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_CREATE, plugin );
+        TransactionManager.beginTransaction( plugin );
 
-        for ( RecordField recordField : record.getListRecordField(  ) )
+        try
         {
-            recordField.setRecord( record );
-            RecordFieldHome.create( recordField, plugin );
+            record.setIdRecord( _dao.insert( record, plugin ) );
+
+            DirectorySearchService.getInstance(  )
+                                  .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_CREATE, plugin );
+
+            for ( RecordField recordField : record.getListRecordField(  ) )
+            {
+                recordField.setRecord( record );
+                RecordFieldHome.create( recordField, plugin );
+            }
+
+            TransactionManager.commitTransaction( plugin );
+        }
+        catch ( Exception e )
+        {
+            TransactionManager.rollBack( plugin );
+            throw new AppException( e.getMessage(  ), e );
         }
 
         return record.getIdRecord(  );
@@ -100,34 +115,48 @@ public final class RecordHome
         RecordFieldFilter filter = new RecordFieldFilter(  );
         filter.setIdRecord( record.getIdRecord(  ) );
         record.setListRecordField( RecordFieldHome.getRecordFieldList( filter, plugin ) );
-        record.setIdRecord( _dao.insert( record, plugin ) );
 
-        DirectorySearchService.getInstance(  )
-                              .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_CREATE, plugin );
+        TransactionManager.beginTransaction( plugin );
 
-        for ( RecordField recordField : record.getListRecordField(  ) )
+        try
         {
-            recordField.setRecord( record );
+            record.setIdRecord( _dao.insert( record, plugin ) );
 
-            //we don't copy numbering entry
-            if ( !recordField.getEntry(  ).getEntryType(  ).getClassName(  ).equals( EntryTypeNumbering.class.getName(  ) ) )
-            {
-                RecordFieldHome.copy( recordField, plugin );
-            }
-            else
-            {
-                //update the number
-                IEntry entryNumbering = EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), plugin );
-                int numbering = DirectoryService.getInstance(  ).getMaxNumber( entryNumbering );
+            DirectorySearchService.getInstance(  )
+                                  .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_CREATE, plugin );
 
-                if ( numbering != DirectoryUtils.CONSTANT_ID_NULL )
+            for ( RecordField recordField : record.getListRecordField(  ) )
+            {
+                recordField.setRecord( record );
+
+                //we don't copy numbering entry
+                if ( !recordField.getEntry(  ).getEntryType(  ).getClassName(  )
+                                     .equals( EntryTypeNumbering.class.getName(  ) ) )
                 {
-                    entryNumbering.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
-                    FieldHome.update( entryNumbering.getFields(  ).get( 0 ), plugin );
-                    recordField.setValue( String.valueOf( numbering ) );
-                    RecordFieldHome.create( recordField, plugin );
+                    RecordFieldHome.copy( recordField, plugin );
+                }
+                else
+                {
+                    //update the number
+                    IEntry entryNumbering = EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), plugin );
+                    int numbering = DirectoryService.getInstance(  ).getMaxNumber( entryNumbering );
+
+                    if ( numbering != DirectoryUtils.CONSTANT_ID_NULL )
+                    {
+                        entryNumbering.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
+                        FieldHome.update( entryNumbering.getFields(  ).get( 0 ), plugin );
+                        recordField.setValue( String.valueOf( numbering ) );
+                        RecordFieldHome.create( recordField, plugin );
+                    }
                 }
             }
+
+            TransactionManager.commitTransaction( plugin );
+        }
+        catch ( Exception e )
+        {
+            TransactionManager.rollBack( plugin );
+            throw new AppException( e.getMessage(  ), e );
         }
 
         return record.getIdRecord(  );
@@ -143,21 +172,35 @@ public final class RecordHome
     public static void updateWidthRecordField( Record record, Plugin plugin )
     {
         record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
-        DirectorySearchService.getInstance(  )
-                              .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_MODIFY, plugin );
 
-        _dao.store( record, plugin );
-
-        //delete all record field in database associate
         RecordFieldFilter filter = new RecordFieldFilter(  );
         filter.setIdRecord( record.getIdRecord(  ) );
-        RecordFieldHome.removeByFilter( filter, plugin );
 
-        //insert the new record Field
-        for ( RecordField recordField : record.getListRecordField(  ) )
+        TransactionManager.beginTransaction( plugin );
+
+        try
         {
-            recordField.setRecord( record );
-            RecordFieldHome.create( recordField, plugin );
+            _dao.store( record, plugin );
+
+            DirectorySearchService.getInstance(  )
+                                  .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_MODIFY, plugin );
+
+            //delete all record field in database associate
+            RecordFieldHome.removeByFilter( filter, plugin );
+
+            //insert the new record Field
+            for ( RecordField recordField : record.getListRecordField(  ) )
+            {
+                recordField.setRecord( record );
+                RecordFieldHome.create( recordField, plugin );
+            }
+
+            TransactionManager.commitTransaction( plugin );
+        }
+        catch ( Exception e )
+        {
+            TransactionManager.rollBack( plugin );
+            throw new AppException( e.getMessage(  ), e );
         }
     }
 
@@ -171,10 +214,9 @@ public final class RecordHome
     public static void update( Record record, Plugin plugin )
     {
         record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
+        _dao.store( record, plugin );
         DirectorySearchService.getInstance(  )
                               .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_MODIFY, plugin );
-
-        _dao.store( record, plugin );
     }
 
     /**
@@ -185,14 +227,25 @@ public final class RecordHome
      */
     public static void remove( int nIdRecord, Plugin plugin )
     {
-        DirectorySearchService.getInstance(  ).addIndexerAction( nIdRecord, IndexerAction.TASK_DELETE, plugin );
-        WorkflowService.getInstance(  ).doRemoveWorkFlowResource( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE );
+        TransactionManager.beginTransaction( plugin );
 
-        //delete all record field in database associate
-        RecordFieldFilter filter = new RecordFieldFilter(  );
-        filter.setIdRecord( nIdRecord );
-        RecordFieldHome.removeByFilter( filter, true, plugin );
-        _dao.delete( nIdRecord, plugin );
+        try
+        {
+            DirectorySearchService.getInstance(  ).addIndexerAction( nIdRecord, IndexerAction.TASK_DELETE, plugin );
+            WorkflowService.getInstance(  ).doRemoveWorkFlowResource( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE );
+
+            //delete all record field in database associate
+            RecordFieldFilter filter = new RecordFieldFilter(  );
+            filter.setIdRecord( nIdRecord );
+            RecordFieldHome.removeByFilter( filter, true, plugin );
+            _dao.delete( nIdRecord, plugin );
+            TransactionManager.commitTransaction( plugin );
+        }
+        catch ( Exception e )
+        {
+            TransactionManager.rollBack( plugin );
+            throw new AppException( e.getMessage(  ), e );
+        }
     }
 
     /**

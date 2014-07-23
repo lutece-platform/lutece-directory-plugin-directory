@@ -108,6 +108,7 @@ import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.html.Paginator;
+import fr.paris.lutece.util.sql.TransactionManager;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
@@ -3430,31 +3431,34 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             //Autopublication
             record.setEnabled( directory.isRecordActivated(  ) );
 
+            TransactionManager.beginTransaction( getPlugin(  ) );
+
             try
             {
                 _recordService.create( record, getPlugin(  ) );
+
+                if ( WorkflowService.getInstance(  ).isAvailable(  ) &&
+                        ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
+                {
+                    WorkflowService.getInstance(  )
+                                   .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
+                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
+                    WorkflowService.getInstance(  )
+                                   .executeActionAutomatic( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
+                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
+                }
+
+                TransactionManager.commitTransaction( getPlugin(  ) );
             }
             catch ( Exception ex )
             {
                 // something very wrong happened... a database check might be needed
                 AppLogService.error( ex.getMessage(  ) + " for Record " + record.getIdRecord(  ), ex );
                 // revert
-                // we clear the DB form the given record
-                _recordService.remove( record.getIdRecord(  ), getPlugin(  ) );
+                TransactionManager.rollBack( getPlugin(  ) );
 
                 // throw a message to the user
                 return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
-            }
-
-            if ( WorkflowService.getInstance(  ).isAvailable(  ) &&
-                    ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
-            {
-                WorkflowService.getInstance(  )
-                               .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
-                WorkflowService.getInstance(  )
-                               .executeActionAutomatic( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
             }
         }
 
