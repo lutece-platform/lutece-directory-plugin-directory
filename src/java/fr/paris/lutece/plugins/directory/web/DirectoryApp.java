@@ -394,7 +394,9 @@ public class DirectoryApp implements XPageApplication
                             if ( user != null )
                             {
                                 String[] lRoles = securityService.getRolesByUser( user );
-                                roleKeyList = new ArrayList<String>( Arrays.asList( lRoles ) );
+                                if ( lRoles != null ) {
+                                    roleKeyList = new ArrayList<String>( Arrays.asList( lRoles ) );
+                                }
                             }
 
                             searchFields.setRoleKeyList( roleKeyList );
