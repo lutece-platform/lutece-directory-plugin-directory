@@ -99,7 +99,7 @@
 	<#list entry_list_geolocation as entry>
 		<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
 			<#-- several results -->
-			<button class="btn btn-primary">#i18n{directory.show_on_map} &quot;${entry.title}&quot;</button>
+			<button type="button" class="btn btn-primary" id="${entry.idEntry}_map-button">#i18n{directory.show_on_map} &quot;${entry.title}&quot;</button>
 			<#include entry.mapProvider.backListHtmlCode />
 		</#if>
 	</#list>
