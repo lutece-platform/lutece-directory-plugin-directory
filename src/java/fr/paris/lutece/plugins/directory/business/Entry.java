@@ -926,8 +926,8 @@ public class Entry implements IEntry
             Map<String, Object> model = new HashMap<String, Object>(  );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
-            model.put( MARK_DEFAULT_VALUES, defaultValues );
-
+          	model.put( MARK_DEFAULT_VALUES, defaultValues );
+            
             HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale,
                     model );
 
@@ -936,7 +936,62 @@ public class Entry implements IEntry
 
         return null;
     }
+    //popup display for task help filling
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getHtmlFormEntryPopup( Locale locale, List<RecordField> defaultValues, boolean isDisplayFront )
+    {
+        if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
+        {
+            Map<String, Object> model = new HashMap<String, Object>(  );
+            model.put( MARK_ENTRY, this );
+            model.put( MARK_LOCALE, locale );
+            if( !defaultValues.isEmpty() )
+            {
+          		model.put( MARK_DEFAULT_VALUES, defaultValues );
+            }
+            String res= this.getTitle() + " : " ;
+            for(RecordField list :defaultValues)
+            {
+            	String value =list.getEntry().convertRecordFieldTitleToString(list, locale, false);
+            	if (!"".equals(value))
+            	{
+            		res+=  value;
+            	}
+            	else
+            	{
+            		res = "";
+            	}
+            }
+            
+            return res;
+        }
 
+        return null;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getHtmlListEntry( Locale locale, List<RecordField> defaultValues, boolean isDisplayFront )
+    {
+        if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
+        {
+            Map<String, Object> model = new HashMap<String, Object>(  );
+            model.put( MARK_ENTRY, this );
+            model.put( MARK_LOCALE, locale );
+            if( !defaultValues.isEmpty() )
+            {
+          		model.put( MARK_DEFAULT_VALUES, defaultValues );
+            }
+            
+            return this.getTitle() ;
+        }
+
+        return null;
+    }
     /**
      * {@inheritDoc}
      */
@@ -1287,4 +1342,6 @@ public class Entry implements IEntry
     {
         this._nNumberColumn = nNumberColumn;
     }
+
+	
 }

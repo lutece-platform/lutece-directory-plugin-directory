@@ -588,7 +588,7 @@ public interface IEntry
      *
      * */
     String getHtmlRecordFieldValue( Locale locale, RecordField recordField, boolean isDisplayFront );
-
+    
     /**
      * convert the value contains in the record field to string
      * @param recordField the recordField
@@ -597,6 +597,8 @@ public interface IEntry
      * @param bDisplayExport true if display export
      * @return string
      */
+    
+    
     String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
         boolean bDisplayExport );
 
@@ -748,4 +750,10 @@ public interface IEntry
      * @param nNumberColumn the _nNumberColumn to set
      */
     void setNumberColumn( int nNumberColumn );
+
+	String getHtmlFormEntryPopup(Locale locale, List<RecordField> defaultValues, boolean isDisplayFront);
+
+	String getHtmlListEntry(Locale locale, List<RecordField> defaultValues,	boolean isDisplayFront);
+
+	
 }
