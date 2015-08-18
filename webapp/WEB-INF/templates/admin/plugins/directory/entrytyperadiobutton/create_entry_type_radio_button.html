@@ -1,85 +1,85 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="row-fluid">
+<div class="row">
     <form class="form" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
 		<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
 	    <div class="span8 form-horizontal" id="main">
 	        <fieldset>
 	            <legend>#i18n{directory.create_entry.title_field} : '${entry.directory.title}'
 				<small>#i18n{directory.create_entry.label_type} : #i18n{${entry.entryType.titleI18nKey}}</small>
-	            <a class="btn btn-small pull-right" id="tgAdvancedSettings" href="#">
-					<i class="icon-chevron-left"></i>
+	            <a class="btn btn-sm pull-right" id="tgAdvancedSettings" href="#">
+					<i class="glyphicon glyphicon-chevron-left"></i>
 					<span class="hidden-phone">&nbsp;#i18n{directory.create_directory.label_advancedsettings}</span>
 				</a>
 	            </legend>
-	            <div class="control-group">
-					<label class="control-label" for="title">#i18n{directory.create_entry.label_title} *</label>
-	    			<div class="controls">
+	            <div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="title">#i18n{directory.create_entry.label_title} *</label>
+	    			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<input type="text" name="title" id="title" class="input-xlarge" value=""  maxlength="255" />
 		    			<p class="help-block">#i18n{directory.create_entry.label_title_comment}</p>
 	    			</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label">#i18n{directory.create_entry.label_help_message}</label>
-					<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3">#i18n{directory.create_entry.label_help_message}</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<textarea name="help_message" id="help_message" class="span4" rows="5"></textarea>
 	    				<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
 	    			</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
-					<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<textarea  name="help_message_search" id="help_message_search" class="span4" rows="5"></textarea>
 						<p class="help-block">#i18n{directory.create_entry.label_help_message_search_comment}</p>
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="comment"> #i18n{directory.create_entry.label_comment}</label>
-					<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="comment"> #i18n{directory.create_entry.label_comment}</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<textarea name="comment" class="span4"  rows="2"></textarea>
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="width">#i18n{directory.create_entry.label_presentation}</label>
-					<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="width">#i18n{directory.create_entry.label_presentation}</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<select id="field_in_line" name="field_in_line" class="input-large">
 							<option value="1" <#if getName('field_in_line',list_param_default_values)="1">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_in_line}</option>
 							<option value="0" <#if getName('field_in_line',list_param_default_values)="0">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_not_in_line}</option>
 						</select>
 					</div>
 				</div>
-				<div class="control-group">
+				<div class="form-group">
 					<label for="mandatory" class="control-label">#i18n{directory.create_entry.label_mandatory}</label>
-					<div class="controls">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} />
 					</div>
 				</div>
 				<#if is_authentification_enabled&&!is_association_entry_role>
-					<div class="control-group">
-						<label class="control-label" for="role_associated">#i18n{directory.create_entry.label_role_associated}</label>
-						<div class="controls">
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="role_associated">#i18n{directory.create_entry.label_role_associated}</label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input name="role_associated" value="1" type="checkbox" ${getChecked('role_associated',list_param_default_values)} />
 							<span class="help-block">#i18n{directory.create_entry.label_role_associated_comment}</span>
 						</div>
 					</div>
 				</#if>	
 				<#if !is_association_entry_workgroup> 	
-					<div class="control-group">
-						<label class="control-label" for="workgroup_associated">#i18n{directory.create_entry.label_workgroup_associated}</label>
-						<div class="controls">
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="workgroup_associated">#i18n{directory.create_entry.label_workgroup_associated}</label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input name="workgroup_associated" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)} />
 							<span class="help-block">#i18n{directory.create_entry.label_workgroup_associated_comment}</span>
 						</div>
 					</div>
 			 	</#if>
-				<div class="form-actions">
-					<button class="btn btn-small btn-primary" type="submit" name="save">
-						<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_entry.button_save}
+				<div class="form-group">
+					<button class="btn btn-sm btn-primary" type="submit" name="save">
+						<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_entry.button_save}
 					</button>
-					<button class="btn btn-small btn-primary" type="submit" name="apply">
-						<i class="icon-ok-circle icon-white"></i>&nbsp;#i18n{directory.create_entry.button_apply_and_manage_response}
+					<button class="btn btn-sm btn-primary" type="submit" name="apply">
+						<i class="glyphicon glyphicon-ok-circle"></i>&nbsp;#i18n{directory.create_entry.button_apply_and_manage_response}
 					</button>
-					<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
-						<i class="icon-remove-circle" ></i>
+					<a class="btn btn-sm" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
+						<i class="glyphicon glyphicon-remove-circle" ></i>
 						<span class="hidden-phone" >#i18n{directory.create_entry.button_cancel}</span>
 					</a>
 				</div>
@@ -88,8 +88,8 @@
 		<div id="advanced_settings" class="span3">
 			<fieldset>
 				<legend>#i18n{directory.create_directory.label_advancedsettings}
-					<a class="btn btn-small pull-right" id="tgAdvancedSettingsBack" href="#">
-						<i class="icon-chevron-right"></i>
+					<a class="btn btn-sm pull-right" id="tgAdvancedSettingsBack" href="#">
+						<i class="glyphicon glyphicon-chevron-right"></i>
 					</a>
 				</legend>
 				<label class="checkbox" for="indexed">

@@ -14,20 +14,20 @@
 	</#list>
 	 <#return "">
 </#function>
-<div class="control-group">
-	<label class="control-label" for="${entry.idEntry}">${entry.title}</label>	
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="${entry.idEntry}">${entry.title}</label>	
     <#if entry.multipleSearchFields>
 		<#if default_values?has_content>
-			<div class="controls">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<label>#i18n{directory.html_code_form_search_entry_type_date.of}</label>
 				<input type="text" class="input-normal" name="date_begin_${entry.idEntry}" id="date_begin_${entry.idEntry}" value="${defaultValueDateBegin(default_values)}" />
 				<label>#i18n{directory.html_code_form_search_entry_type_date.to}</label>
-				<div class="controls">
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<input type="text" class="input-normal" name="date_end_${entry.idEntry}" id="date_end_${entry.idEntry}" size="10" value="${defaultValueDateEnd(default_values)}" />
 				</div>
 			</div>
 		<#else>
-			<div class="controls">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<label>#i18n{directory.html_code_form_search_entry_type_date.of}</label>
 				<input type="text" class="input-normal" name="date_begin_${entry.idEntry}" id="date_begin_${entry.idEntry}" size="10" value="" />
 				<label>#i18n{directory.html_code_form_search_entry_type_date.to}</label>
@@ -38,12 +38,12 @@
 		<#list entry.fields as field>
 			<#if default_values?has_content>
 				<#list default_values as default_value>
-					<div class="controls">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<input type="text" class=" datepicker-element" name="${entry.idEntry}" id="${entry.idEntry}" size="10" value="${entry.convertRecordFieldValueToString(default_value,locale,false,false)}" />
 					</div>
 				</#list>	 	
 			<#else>
-			   	<div class="controls">
+			   	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<input type="text" class=" datepicker-element" name="${entry.idEntry}" id="${entry.idEntry}" size="10" value="" />
 				</div>
 			</#if>

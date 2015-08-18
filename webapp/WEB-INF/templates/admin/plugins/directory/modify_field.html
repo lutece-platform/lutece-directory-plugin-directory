@@ -1,33 +1,33 @@
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<fieldset>
 	<legend>#i18n{directory.modify_field.title}:'${field.entry.title}'</legend>
 		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyField.jsp#list" method="post" name="" id=""  >
 		<input name="id_field" value="${field.idField}" type="hidden" />
-			<div class="control-group">
-				<label class="control-label" for="title">#i18n{directory.create_field.label_title} *</label>
-				<div class="controls">
-					<input type="text" name="title" id="title" class="inout-xxlarge" value="${field.title}"  maxlength="255" />
+			<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="title">#i18n{directory.create_field.label_title} *</label>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<input type="text" class="form-control input-sm" name="title" id="title" value="${field.title}" maxlength="255" />
 				</div>
 			</div>
-			<div class="control-group">
-				<label class="control-label" for="value">#i18n{directory.create_field.label_value} *</label>
-				<div class="controls">
-					<input type="text" name="value" id="value" class="inout-xxlarge" value="${field.value}"/>
+			<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="value">#i18n{directory.create_field.label_value} *</label>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<input type="text" class="form-control input-sm" name="value" id="value" value="${field.value}"/>
 				</div>
 			</div>
-			<div class="control-group">
-				<label class="control-label" for="">&nbsp;</label>
-				<div class="controls" for="default_value">
+			<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" for="default_value">
 					<label class="checkbox">#i18n{directory.create_field.label_default_value}
 						<input name="default_value" value="1" type="checkbox"  <#if field.defaultValue>checked="checked"</#if>>
 					</label>
 				</div>
 			</div>
 			<#if field.entry.roleAssociated && role_list?exists >
-				<div class="control-group">
-					<label class="control-label" for="role">#i18n{directory.create_field.label_role} : </label>
-					<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="role">#i18n{directory.create_field.label_role} : </label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<#if field.roleKey?exists>
 						<@combo name="role_key" default_value=field.roleKey items=role_list />
 					<#else>
@@ -38,9 +38,9 @@
 				</div>
 			</#if>	
 			<#if field.entry.workgroupAssociated && user_workgroup_list?exists> 	
-				<div class="control-group">
-				<label class="control-label" for="">#i18n{directory.create_field.label_workgroup}  : </label>
-					<div class="controls">
+				<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">#i18n{directory.create_field.label_workgroup}  : </label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<#if field.workgroup?exists>
 						<@combo name="workgroup"  items=user_workgroup_list default_value=field.workgroup/>
 					<#else>
@@ -50,18 +50,15 @@
 				</div>
 			</div>
 			</#if>	
-			<div class="form-actions">
-				<button class="btn btn-primary btn-small" type="submit" name="save" >
-					<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_field.button_save}
+			<div class="form-group">
+				<button class="btn btn-primary btn-sm" type="submit" name="save" >
+					<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_field.button_save}
 				</button>
-				<button class="btn btn-small" type="submit" name="cancel" >
-					<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.create_field.button_cancel}
+				<button class="btn btn-sm" type="submit" name="cancel" >
+					<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.create_field.button_cancel}
 				</button>
 			</div> 
 		</form>
 	</fieldset>
 	</div>
- </div>
-
-
- 
+ </div> 

@@ -1,22 +1,22 @@
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<fieldset>
         <legend> #i18n{directory.import_field.title} : '${entry.title}'</legend>
 		<form class="form-horizontal" method="post" action="jsp/admin/plugins/directory/DoImportField.jsp" enctype="multipart/form-data">
 		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
     	<input type="hidden" name="id_entry" value="${entry.idEntry}" />
-        <div class="control-group">
-			<label class="control-label" for="file_import" >#i18n{directory.import_field.label_file} * : </label>
-            <div class="controls">
+        <div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="file_import" >#i18n{directory.import_field.label_file} * : </label>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<input type="file" id="file_import" name="file_import" size="60" maxlength="100"/>
 			</div>
 		</div>
-        <div class="form-actions">
+        <div class="form-group">
 			<button class="btn btn-primary" id="save" type="submit" >
-				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.import_field.button_save}
+				<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.import_field.button_save}
 			</button>
 			<a class="btn btn-primary" href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}">
-				<i class="icon-edit icon-white"></i>&nbsp;#i18n{directory.import_field.button_cancel}</button>
+				<i class="glyphicon glyphicon-edit"></i>&nbsp;#i18n{directory.import_field.button_cancel}</button>
 			</a>
 		</div>
         </fieldset>

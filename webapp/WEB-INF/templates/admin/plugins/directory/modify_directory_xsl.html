@@ -1,19 +1,19 @@
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<fieldset>
 		<legend> #i18n{directory.modify_directory_xsl.title}</legend>
 		<form class="form-horizontal" method="post" action="jsp/admin/plugins/directory/DoModifyDirectoryXsl.jsp" enctype="multipart/form-data" >
         <input name="id_directory_xsl" value="${directory_xsl.idDirectoryXsl}" type="hidden" />
-        <div class="control-group">
-		<label class="control-label" for="title" >#i18n{directory.create_directory_xsl.label_title} * : </label>
-            <div class="controls">
-				<input type="text" id="title" name="title" maxlength="255" value="${directory_xsl.title}"/>
+        <div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="title" >#i18n{directory.create_directory_xsl.label_title} * : </label>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<input type="text" class="form-control input-sm" id="title" name="title" maxlength="255" value="${directory_xsl.title}"/>
 			</div>
 		</div>
-        <div class="control-group">
-			<label class="control-label" for="">#i18n{directory.create_directory_xsl.label_category}  : </label>
-			<div class="controls">
-				<select name="id_category" id="id_category">
+        <div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">#i18n{directory.create_directory_xsl.label_category}  : </label>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<select name="id_category" id="id_category" class="form-control input-sm">
 					<#list category_list as category>
 						<#if directory_xsl.category?exists && directory_xsl.category.idCategory=category.idCategory>
 							<option value="${category.idCategory}" selected="selected">#i18n{${category.titleI18nKey}}</option>
@@ -25,35 +25,35 @@
 				<span class="help-block">#i18n{directory.create_directory_xsl.label_category_comment}</span>
 			</div>
 		</div>
-		<div class="control-group">
-		<label class="control-label" for="description" >#i18n{directory.create_directory_xsl.label_description} * : </label>
-            <div class="controls">
-				<input type="text" size="60" id="description" name="description" maxlength="255" value="${directory_xsl.description}"/>
+		<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="description" >#i18n{directory.create_directory_xsl.label_description} * : </label>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<input type="text" class="form-control input-sm" size="60" id="description" name="description" maxlength="255" value="${directory_xsl.description}"/>
 			</div>
 		</div>
-        <div class="control-group">
-		<label class="control-label" for="extension" >#i18n{directory.create_directory_xsl.label_extension} (*) : </label>
-            <div class="controls">
-				<input type="text" size="10" id="extension" name="extension" maxlength="10" value="${directory_xsl.extension}"/>
+        <div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="extension" >#i18n{directory.create_directory_xsl.label_extension} (*) : </label>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<input type="text" class="form-control input-sm" size="10" id="extension" name="extension" maxlength="10" value="${directory_xsl.extension}"/>
 				<span class="help-block">#i18n{directory.create_directory_xsl.label_extension_comment}</span>
 			</div>
 		</div>
-        <div class="control-group">
-		<label class="control-label" for="id_file" >#i18n{directory.create_directory_xsl.label_file} * : </label>
-           <div class="controls">
+        <div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_file" >#i18n{directory.create_directory_xsl.label_file} * : </label>
+           <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<input type="file" id="id_file" name="id_file" size="60" maxlength="100"/>
 				<#if directory_xsl.file?exists >
 					<p class="help-block">
 						<a class="btn" href="jsp/site/plugins/directory/DoDownloadFile.jsp?id_file=${directory_xsl.file.idFile}" >
-							<i class="icon-download"></i>&nbsp;${directory_xsl.file.title}(${directory_xsl.file.size} O)
+							<i class="glyphicon glyphicon-download"></i>&nbsp;${directory_xsl.file.title}(${directory_xsl.file.size} O)
 						</a>
 					</p>
 				</#if>	 
 			</div>
 		</div>
-        <div class="form-actions">
-      		<button class="btn btn-primary" type="submit" ><i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_directory_xsl.button_save}</button>
-            <button class="btn" onclick="javascript:history.go(-1)" ><i class="icon-remove-circle"></i>&nbsp;#i18n{directory.create_directory_xsl.button_cancel}</button>
+        <div class="form-group">
+      		<button class="btn btn-primary" type="submit" ><i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_directory_xsl.button_save}</button>
+            <button class="btn btn-default" onclick="javascript:history.go(-1)" ><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.create_directory_xsl.button_cancel}</button>
         </div>
 	</div>
 </div>

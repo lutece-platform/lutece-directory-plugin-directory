@@ -1,27 +1,27 @@
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<fieldset>
   	<legend>
 		#i18n{directory.modify_entry.title_group} : '${entry.directory.title}'
 		<span class="label label-info" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span>
-		<a class="btn btn-primary btn-small pull-right" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}#list" title="#i18n{directory.manage_directory.button_back} #i18n{directory.modify_directory.manage_entry.title} '${entry.directory.title}'">
-			<i class="icon-chevron-left icon-white"></i>
+		<a class="btn btn-primary btn-sm pull-right" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}#list" title="#i18n{directory.manage_directory.button_back} #i18n{directory.modify_directory.manage_entry.title} '${entry.directory.title}'">
+			<i class="glyphicon glyphicon-chevron-left"></i>
 		</a>
 	</legend>
 		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id=""  >
     	<input name="id_entry" value="${entry.idEntry}" type="hidden" />
-   		<div class="control-group">
-			<label class="control-label" for="title">#i18n{directory.create_entry.label_title} * : </label>
-				<div class="controls">
+   		<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="title">#i18n{directory.create_entry.label_title} * : </label>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<input type="text" name="title" id="title" class="input-xxlarge" value="${entry.title}" maxlength="255" />
 				</div>
 		</div>
-		<div class="form-actions">
-			<button class="btn btn-primary btn-small" type="submit" >
-				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_directory.button_save}
+		<div class="form-group">
+			<button class="btn btn-primary btn-sm" type="submit" >
+				<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_directory.button_save}
 			</button>
-			<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
-				<i class="icon-remove-circle" ></i>
+			<a class="btn btn-sm" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
+				<i class="glyphicon glyphicon-remove-circle" ></i>
 				<span class="hidden-phone" >#i18n{directory.create_entry.button_cancel}</span>
 			</a>	
 		</div>

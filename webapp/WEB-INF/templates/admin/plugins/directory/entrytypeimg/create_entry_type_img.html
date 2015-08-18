@@ -1,5 +1,5 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="row-fluid">
+<div class="row">
 	<form class="" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
 		<div class="span7 form-horizontal">
 			<fieldset>
@@ -7,77 +7,77 @@
 				#i18n{directory.modify_entry.title_field} : '${entry.directory.title}' <span class="label label-info" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span>
 			<!-- 	<form class="form-inline pull-right" id="button_advanced_settings" method="post" action="javascript:doDisplayAdvancedSettings(true, 'regular_expression')" style="visibility:hidden;display:none;"> -->
 			<!-- 		<button class="btn btn-primary pull-right" type="submit" > -->
-			<!-- 			<i class="icon-plus icon-white" ></i> -->
+			<!-- 			<i class="glyphicon glyphicon-plus" ></i> -->
 			<!-- 			<span class="hidden-phone" >#i18n{directory.manage_directory.button_manage_advanced_parameters}</span> -->
 			<!-- 		</button> -->
 			<!-- 	</form>	 -->
 			<!-- 	<form class="form-inline spaced pull-right" id="button_back" method="post" action="javascript:doDisplayAdvancedSettings(false, 'regular_expression')" style="visibility:hidden;display:none;"> -->
 			<!-- 		<button class="btn btn-primary pull-right" type="submit" > -->
-			<!-- 			<i class="icon-plus icon-white" ></i> -->
+			<!-- 			<i class="glyphicon glyphicon-plus" ></i> -->
 			<!-- 			<span class="hidden-phone" >#i18n{directory.manage_directory.button_back}</span> -->
 			<!-- 		</button> -->
 			<!-- 	</form>	 -->
 				</legend>
 				<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
-				<div class="control-group">
-				<label class="control-label" for="title">#i18n{directory.create_entry.label_title} * </label>
-				   	<div class="controls">
+				<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="title">#i18n{directory.create_entry.label_title} * </label>
+				   	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<input type="text" name="title" id="title" class="input-xlarge" value=""  maxlength="255" />
 						<p class="help-block">#i18n{directory.create_entry.label_title_comment}</p>
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="help_message">#i18n{directory.create_entry.label_help_message}</label>
-					<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="help_message">#i18n{directory.create_entry.label_help_message}</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<textarea  name="help_message" id="help_message" class="span5" rows="5"></textarea>
 						<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="comment">#i18n{directory.create_entry.label_comment}</label>
-					<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="comment">#i18n{directory.create_entry.label_comment}</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<textarea name="comment" class="span5" rows="2"></textarea>
 					</div>
 				</div>	
-				<div class="control-group">
-				<label class="control-label" for="mandatory">#i18n{directory.create_entry.label_mandatory} </label>
-			   	 	<div class="controls">
+				<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="mandatory">#i18n{directory.create_entry.label_mandatory} </label>
+			   	 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<input name="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} >
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="width">#i18n{directory.create_entry.label_width} * </label>
-				    <div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="width">#i18n{directory.create_entry.label_width} * </label>
+				    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<input type="text" name="width" id="width" class="input-mini" value="${getName('width',list_param_default_values)}" />
 					</div>
 				</div>
-				<div class="control-group">
+				<div class="form-group">
 					<label for="file_max_size" class="control-label">#i18n{directory.create_entry.label_file_max_size} *</label>
-						<div class="controls">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input type="text" value="${getName('file_max_size',list_param_default_values)}" class="input-small" id="file_max_size" name="file_max_size">
 					</div>
 				</div>
-				<div class="control-group">
+				<div class="form-group">
 					<label for="max_files" class="control-label">#i18n{directory.create_entry.label_max_files} * </label>
-						<div class="controls">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input type="text" maxlength="2" value="${getName('max_files',list_param_default_values)}" class="span1" name="max_files">
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="display_width">#i18n{directory.create_entry.label_width_display}</label>
-					<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="display_width">#i18n{directory.create_entry.label_width_display}</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<input type="text" name="display_width" id="display_width" class="span1 inline" value="${getName('width',list_param_default_values)}" />
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="display_height">#i18n{directory.create_entry.label_height_display}</label>
-					<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="display_height">#i18n{directory.create_entry.label_height_display}</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<input type="text" name="display_height" id="display_height" class="span1 inline" value="${getName('height',list_param_default_values)}" />
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" >#i18n{directory.create_entry.label_image_full_size} </label>
-			    	<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" >#i18n{directory.create_entry.label_image_full_size} </label>
+			    	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<label class="checkbox" > 
 							<input name="image_shown_in_result_list" value="1" type="checkbox" >
 							#i18n{directory.create_entry.label_shown_in_result_list}
@@ -88,91 +88,91 @@
 						</label>
 					</div>
 				</div>  
-			   	<div class="control-group">
-					<label class="control-label" for="create_thumbnail">#i18n{directory.create_entry.label_thumbnail}</label>
-					<div class="controls">
+			   	<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="create_thumbnail">#i18n{directory.create_entry.label_thumbnail}</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<input name="create_thumbnail" id="create_thumbnail" value="1" type="checkbox" checked="checked" >
 						<span class="help-block">#i18n{directory.create_entry.label_thumbnail_comment}</span>
 					</div>
 				</div>
 				<div id="thumbnail" class="well">
-					<div class="control-group">
-			   			<div class="controls">
+					<div class="form-group">
+			   			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<h3>#i18n{directory.create_entry.label_thumbnail}</h3>
 						</div>
 					</div>
-					<div class="control-group" >
-						<label class="control-label">#i18n{directory.create_entry.label_shown_in_result_list}</label>
-						<div class="controls">
+					<div class="form-group" >
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3">#i18n{directory.create_entry.label_shown_in_result_list}</label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input name="thbnail_shown_in_result_list" id="thbnail_shown_in_result_list" value="1" type="checkbox" checked="checked" />
 						</div>
 					</div>
-					<div class="control-group" >
-						<label class="control-label">#i18n{directory.create_entry.label_shown_in_result_record}</label>
-						<div class="controls">
+					<div class="form-group" >
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3">#i18n{directory.create_entry.label_shown_in_result_record}</label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input name="thbnail_shown_in_result_record" id="thbnail_shown_in_result_record" value="1" type="checkbox" >
 						</div>
 					</div>
-					<div class="control-group" >
-						<label class="control-label" for="thumbnail_width"> #i18n{directory.create_entry.label_thumbnail_width} (*)</label>
-						<div class="controls">
+					<div class="form-group" >
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="thumbnail_width"> #i18n{directory.create_entry.label_thumbnail_width} (*)</label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input type="text" name="thumbnail_width" id="thumbnail_width" class="input-mini" value="" >
 						</div>
 					</div>
-					<div class="control-group" >
-						<label class="control-label" for="thumbnail_height">#i18n{directory.create_entry.label_thumbnail_height}(*)</label>
-						<div class="controls">
+					<div class="form-group" >
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="thumbnail_height">#i18n{directory.create_entry.label_thumbnail_height}(*)</label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input type="text" name="thumbnail_height" id="thumbnail_height" class="input-mini" value="" >
 						</div>
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="create_big_thumbnail">#i18n{directory.create_entry.label_big_thumbnail}</label>
-				  	<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="create_big_thumbnail">#i18n{directory.create_entry.label_big_thumbnail}</label>
+				  	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<input name="create_big_thumbnail" id="create_big_thumbnail" value="1" type="checkbox" >
 						<p class="help-block" >#i18n{directory.create_entry.label_big_thumbnail_comment}</p>
 					</div>
 				</div>
 				<div id="thumbnail_big" class="well">
-					<div class="control-group">
-			   			<div class="controls">
+					<div class="form-group">
+			   			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<h3>#i18n{directory.create_entry.label_big_thumbnail}</h3>
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="big_thbnail_shown_in_result_list" >#i18n{directory.create_entry.label_shown_in_result_list}</label>
-						<div class="controls">
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="big_thbnail_shown_in_result_list" >#i18n{directory.create_entry.label_shown_in_result_list}</label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input name="big_thbnail_shown_in_result_list" value="1" type="checkbox" checked="checked" >
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="big_thbnail_shown_in_result_record" >#i18n{directory.create_entry.label_shown_in_result_record}</label>
-						<div class="controls">
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="big_thbnail_shown_in_result_record" >#i18n{directory.create_entry.label_shown_in_result_record}</label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input name="big_thbnail_shown_in_result_record" value="1" type="checkbox" >
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="thumbnail_big_width"> #i18n{directory.create_entry.label_thumbnail_width} (*)</label>
-						<div class="controls">
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="thumbnail_big_width"> #i18n{directory.create_entry.label_thumbnail_width} (*)</label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input type="text" name="thumbnail_big_width" id="thumbnail_big_width" class="input-mini" value="" />
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="thumbnail_big_height">#i18n{directory.create_entry.label_thumbnail_height} (*) : </label>
-						<div class="controls">
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="thumbnail_big_height">#i18n{directory.create_entry.label_thumbnail_height} (*) : </label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<input type="text" name="thumbnail_big_height" id="thumbnail_big_height" class="input-mini" value="" />
 						</div>
 					</div>
 				</div>
-				<div class="form-actions">
-			  		<button class="btn btn-primary btn-small" type="submit" name="save">
-						<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.modify_entry.button_save}
+				<div class="form-group">
+			  		<button class="btn btn-primary btn-sm" type="submit" name="save">
+						<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.modify_entry.button_save}
 					</button>
-			  		<button class="btn btn-primary btn-small" type="submit" name="apply">
-						<i class="icon-ok-circle icon-white"></i>&nbsp;#i18n{directory.modify_entry.button_apply}
+			  		<button class="btn btn-primary btn-sm" type="submit" name="apply">
+						<i class="glyphicon glyphicon-ok-circle"></i>&nbsp;#i18n{directory.modify_entry.button_apply}
 					</button>
-			  		<button class="btn btn-small" type="submit" name="cancel">
-						<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.modify_entry.button_cancel}
+			  		<button class="btn btn-sm" type="submit" name="cancel">
+						<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.modify_entry.button_cancel}
 					</button>
 				</div>
 			</fieldset>
@@ -180,9 +180,9 @@
 		<div id="advanced_settings" class="span5">
 			<fieldset>
 				<legend>#i18n{directory.create_directory.label_advancedsettings}</legend>
-				<div class="control-group">
-				<label class="control-label" for="">&nbsp;</label>
-					<div class="controls">
+				<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<label class="checkbox" for="shown_in_result_list">
 						#i18n{directory.create_entry.label_shown_in_result_list}
 							<input name="shown_in_result_list" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)}>
@@ -190,9 +190,9 @@
 					<span class="help-block">#i18n{directory.create_entry.label_shown_in_result_list_comment}</label> 
 					</div>
 				</div>
-		    	<div class="control-group">
-				<label class="control-label" for="">&nbsp;</label>
-		   		 	<div class="controls">
+		    	<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+		   		 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<label class="checkbox" for="shown_in_result_record">
 							<input name="shown_in_result_record" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)}>
 							#i18n{directory.create_entry.label_shown_in_result_record}
@@ -200,9 +200,9 @@
 						<span class="help-block">#i18n{directory.create_entry.label_shown_in_result_record_comment}</label> 
 					</div>
 				</div>
-				<div class="control-group">
-				<label class="control-label" for="">&nbsp;</label>
-					<div class="controls">
+				<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<label class="checkbox" for="shown_in_history">
 							<input name="shown_in_history" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)} > 
 							#i18n{directory.create_entry.label_shown_in_history}
@@ -210,9 +210,9 @@
 						<span class="help-block">#i18n{directory.create_entry.label_shown_in_history_comment}</span>
 					</div>
 				</div>
-		   		<div class="control-group">
-				<label class="control-label" for="">&nbsp;</label>
-		    		<div class="controls">
+		   		<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+		    		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<label class="checkbox" for="shown_in_export">
 							<input name="shown_in_export" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)}>
 							#i18n{directory.create_entry.label_shown_in_export}
@@ -220,9 +220,9 @@
 						<span class="help-block" >#i18n{directory.create_entry.label_shown_in_export_comment}</span> 
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="">&nbsp;</label>
-		   			<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+		   			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<label class="checkbox" for="shown_in_completeness">
 							<input name="shown_in_completeness" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)}>
 							#i18n{directory.create_entry.label_shown_in_completeness}

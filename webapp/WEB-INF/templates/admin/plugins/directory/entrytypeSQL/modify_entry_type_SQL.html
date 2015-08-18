@@ -1,86 +1,86 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="row-fluid">
+<div class="row">
 <div class="span8">
 <fieldset>
 	<legend>
 	#i18n{directory.modify_entry.title_field} : '${entry.directory.title}' 
 	<span class="label label-info" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span>
-		<a class="btn btn-primary btn-small pull-right" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}#list" title="#i18n{directory.manage_directory.button_back} #i18n{directory.modify_directory.manage_entry.title} '${entry.directory.title}'">
-			<i class="icon-chevron-left icon-white"></i>
+		<a class="btn btn-primary btn-sm pull-right" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}#list" title="#i18n{directory.manage_directory.button_back} #i18n{directory.modify_directory.manage_entry.title} '${entry.directory.title}'">
+			<i class="glyphicon glyphicon-chevron-left"></i>
 		</a>
 	<form class="form-inline pull-right" id="button_advanced_settings" method="post" action="javascript:doDisplayAdvancedSettings(true, 'regular_expression')" style="visibility:hidden;display:none;">
 		<button class="btn btn-primary pull-right" type="submit" >
-			<i class="icon-plus icon-white" ></i>
+			<i class="glyphicon glyphicon-plus" ></i>
 			<span class="hidden-phone" >#i18n{directory.manage_directory.button_manage_advanced_parameters}</span>
 		</button>
 	</form>	
 	<form class="form-inline spaced pull-right" id="button_back" method="post" action="javascript:doDisplayAdvancedSettings(false, 'regular_expression')" style="visibility:hidden;display:none;">
 		<button class="btn btn-primary pull-right" type="submit" >
-			<i class="icon-plus icon-white" ></i>
+			<i class="glyphicon glyphicon-plus" ></i>
 			<span class="hidden-phone" >#i18n{directory.manage_directory.button_back}</span>
 		</button>
 	</form>	
 	</legend>
 	<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id=""  >
 	<input name="id_entry" value="${entry.idEntry}" type="hidden" />
-	<div class="control-group">
-	<label class="control-label" for="title">#i18n{directory.create_entry.label_title} * </label>
-	   	<div class="controls">
+	<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="title">#i18n{directory.create_entry.label_title} * </label>
+	   	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			<input type="text" name="title" id="title" class="input-xlarge" value="${entry.title}"  maxlength="255" />
 			<p class="help-block">#i18n{directory.create_entry.label_title_comment}</p>
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label" for="help_message">#i18n{directory.create_entry.label_help_message}</label>
-	   	<div class="controls">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="help_message">#i18n{directory.create_entry.label_help_message}</label>
+	   	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 	     	<textarea  name="help_message"  id="help_message" class="span5" rows="5">${entry.helpMessage}</textarea>
 			<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label" for="help_message_search">#i18n{directory.create_entry.label_help_message_search} </label>
-		 	<div class="controls">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="help_message_search">#i18n{directory.create_entry.label_help_message_search} </label>
+		 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<textarea  name="help_message_search"  id="help_message_search"  class="span5" rows="5">${entry.helpMessageSearch}</textarea>
 				<p class="help-block">##i18n{directory.create_entry.label_help_message_search_comment}</p>
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label" for="comment"> #i18n{directory.create_entry.label_comment}</label>
-	 	<div class="controls">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="comment"> #i18n{directory.create_entry.label_comment}</label>
+	 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			<textarea name="comment"  class="span5"" rows="2">${entry.comment}</textarea>
 		</div>
 	</div>
-   <div class="control-group">
-	<label class="control-label" for="request_sql">#i18n{directory.create_entry.label_request_sql} * : </label>
-		<div class="controls">
+   <div class="form-group">
+	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="request_sql">#i18n{directory.create_entry.label_request_sql} * : </label>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			<textarea type="text" name="request_sql" id="request_sql" rows="10" class="span10"><#if entry.requestSQL?has_content>${entry.requestSQL}</#if></textarea>
 			<span class="help-block" >#i18n{directory.create_entry.label_request_sql_comment}</span> 
 		</div>
 	</div>
-	<div class="control-group">
-	<label class="control-label" for="mandatory">#i18n{directory.create_entry.label_mandatory} </label>
-   	 	<div class="controls">
+	<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="mandatory">#i18n{directory.create_entry.label_mandatory} </label>
+   	 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			<input name="mandatory" value="1" type="checkbox" <#if entry.mandatory>checked="checked"</#if>	 >
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label" for="width">#i18n{directory.create_entry.label_width} *  </label>
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="width">#i18n{directory.create_entry.label_width} *  </label>
 	    	<#list entry.fields as field>
-		    <div class="controls">
+		    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<input type="text" name="width" id="width" class="input-mini" value="${field.width}" />
 			</div>
 		  	<#assign id_field=field.idField> 
 		</#list>	
 	</div>
-	 <div class="form-actions">
-  		<button class="btn btn-primary btn-small" type="submit" name="save">
-			<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.modify_entry.button_save}
+	 <div class="form-group">
+  		<button class="btn btn-primary btn-sm" type="submit" name="save">
+			<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.modify_entry.button_save}
 		</button>
-  		<button class="btn btn-primary btn-small" type="submit" name="apply">
-			<i class="icon-ok-circle icon-white"></i>&nbsp;#i18n{directory.modify_entry.button_apply}
+  		<button class="btn btn-primary btn-sm" type="submit" name="apply">
+			<i class="glyphicon glyphicon-ok-circle"></i>&nbsp;#i18n{directory.modify_entry.button_apply}
 		</button>
-  		<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
-			<i class="icon-remove-circle" ></i>
+  		<a class="btn btn-sm" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
+			<i class="glyphicon glyphicon-remove-circle" ></i>
 			<span class="hidden-phone" >#i18n{directory.create_entry.button_cancel}</span>
 		</a>
 	</div>
@@ -94,7 +94,7 @@
 			<label for="id_expression">#i18n{directory.create_entry.manage_regular_expression.label_insert}</label>
 			<@combo name="id_expression"  items=regular_expression_list default_value=-1 />
 			<button class="btn btn-primary" type="submit" >
-				<i class="icon-search icon-white"></i>&nbsp;#i18n{directory.create_entry.manage_regular_expression.button_insert}
+				<i class="glyphicon glyphicon-search"></i>&nbsp;#i18n{directory.create_entry.manage_regular_expression.button_insert}
 			</button>
 			<p class="help-block" >#i18n{directory.create_entry.manage_regular_expression.label_insert_comment}</p>
 		</form>
@@ -115,7 +115,7 @@
 	            <td>${expression.validExemple}</td>
 	            <td>
 	             	<a class="btn btn-danger btn-mini" href="jsp/admin/plugins/directory/DoRemoveVerification.jsp?id_expression=${expression.idExpression}&id_field=${id_field}#list"  title="#i18n{directory.create_entry.manage_field.title_delete}" >
-						<i class="icon-trash icon-white"></i>
+						<i class="glyphicon glyphicon-trash"></i>
 					</a>
 				</td>
 	        </tr>
@@ -128,10 +128,10 @@
 	<div id="advanced_settings" class="span4">
 		<fieldset>
 			<legend>#i18n{directory.create_directory.label_advancedsettings}</legend>	 	
-			<div class="control-group">
-			<label class="control-label" for="max_size_enter">#i18n{directory.create_entry.label_max_size_enter} </label>
+			<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="max_size_enter">#i18n{directory.create_entry.label_max_size_enter} </label>
 		    	<#list entry.fields as field>
-    			<div class="controls">
+    			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 		    		<#if field.maxSizeEnter!=-1>
 							<input type="text" name="max_size_enter" id="max_size_enter" class="input-mini" value="${field.maxSizeEnter}" />
 		    		<#else>
@@ -140,18 +140,18 @@
 					</div>
 		    	</#list>	
 			</div>
-			<div class="control-group">
-			<label class="control-label" for="">&nbsp;</label>
-	   		 	<div class="controls">
+			<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+	   		 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<label class="checkbox" for="indexed">
 						<input name="indexed" value="1" type="checkbox"  <#if entry.indexed>checked="checked"</#if> >
 						#i18n{directory.create_entry.label_indexed}
 					</label>
 				</div>
 			</div>
-	   		<div class="control-group">
-				<label class="control-label" for="">&nbsp;</label>
-	   		 	<div class="controls">
+	   		<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+	   		 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<label class="checkbox" for="shown_in_advanced_search">
 						<input name="shown_in_advanced_search" value="1" type="checkbox"  <#if entry.shownInAdvancedSearch>checked="checked"</#if>>
 						#i18n{directory.create_entry.label_shown_in_advanced_search}
@@ -159,27 +159,27 @@
 					<span class="help-block">#i18n{directory.create_entry.label_shown_in_advanced_search_comment}</span>
 				</div>
 			</div>
-			<div class="control-group">
-				<label class="control-label" for="">&nbsp;</label>
-					<div class="controls">
+			<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<label class="checkbox" for="indexed_as_title">
 					<input name="indexed_as_title" value="1" type="checkbox" <#if entry.indexedAsTitle>checked="checked"</#if> >
 					#i18n{directory.create_entry.label_indexed_as_title}
 				</label>
 				</div>
 			</div>
-            <div class="control-group">
-			<label class="control-label" for="">&nbsp;</label>
-				<div class="controls">
+            <div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<label class="checkbox" for="indexed_as_summary">
 						<input name="indexed_as_summary" value="1" type="checkbox" <#if entry.indexedAsSummary>checked="checked"</#if> >
 						#i18n{directory.create_entry.label_indexed_as_summary}
 					</label>
 				</div>
 			</div>
-			<div class="control-group">
-			<label class="control-label" for="">&nbsp;</label>
-				<div class="controls">
+			<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<label class="checkbox" for="shown_in_result_list">
 					#i18n{directory.create_entry.label_shown_in_result_list}
 						<input name="shown_in_result_list" value="1" type="checkbox" <#if entry.shownInResultList>checked="checked" </#if>>
@@ -187,9 +187,9 @@
 				<span class="help-block">#i18n{directory.create_entry.label_shown_in_result_list_comment}</label> 
 				</div>
 			</div>
-	    	<div class="control-group">
-			<label class="control-label" for="">&nbsp;</label>
-	   		 	<div class="controls">
+	    	<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+	   		 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<label class="checkbox" for="shown_in_result_record">
 						<input name="shown_in_result_record" value="1" type="checkbox" <#if entry.shownInResultRecord>checked="checked"</#if>>
 						#i18n{directory.create_entry.label_shown_in_result_record}
@@ -197,9 +197,9 @@
 					<span class="help-block">#i18n{directory.create_entry.label_shown_in_result_record_comment}</label> 
 				</div>
 			</div>
-			<div class="control-group">
-			<label class="control-label" for="">&nbsp;</label>
-				<div class="controls">
+			<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<label class="checkbox" for="shown_in_history">
 						<input name="shown_in_history" value="1" type="checkbox" <#if entry.shownInHistory>checked="checked"</#if> > 
 						#i18n{directory.create_entry.label_shown_in_history}
@@ -207,9 +207,9 @@
 					<span class="help-block">#i18n{directory.create_entry.label_shown_in_history_comment}</span>
 				</div>
 			</div>
-	   		<div class="control-group">
-			<label class="control-label" for="">&nbsp;</label>
-	    		<div class="controls">
+	   		<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+	    		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<label class="checkbox" for="shown_in_export">
 						<input name="shown_in_export" value="1" type="checkbox" <#if entry.shownInExport>checked="checked"</#if>>
 						#i18n{directory.create_entry.label_shown_in_export}
@@ -217,9 +217,9 @@
 					<span class="help-block" >#i18n{directory.create_entry.label_shown_in_export_comment}</span> 
 				</div>
 			</div>
-			<div class="control-group">
-				<label class="control-label" for="">&nbsp;</label>
-	   			<div class="controls">
+			<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">&nbsp;</label>
+	   			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 					<label class="checkbox" for="shown_in_completeness">
 						<input name="shown_in_completeness" value="1" type="checkbox" <#if entry.shownInCompleteness>checked="checked"</#if> >
 						#i18n{directory.create_entry.label_shown_in_completeness}

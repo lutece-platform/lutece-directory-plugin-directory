@@ -1,15 +1,15 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="control-group">
-	<label class="control-label" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
-	<div class="controls">
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 		<input type="file" name="directory_${entry.idEntry}" id="directory_${entry.idEntry}" />
 		<input type="hidden" name="_directory_upload_maxLength_directory_${entry.idEntry}" id="_directory_upload_maxLength_directory_${entry.idEntry}" value="${getFileMaxSize( entry )}" />
 		<input type="hidden" name="_directory_upload_fileTypes_directory_${entry.idEntry}" id="_directory_upload_fileTypes_directory_${entry.idEntry}" value="${getFileTypes( entry )}" />
 		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
 			<span class="help-block">${entry.helpMessage}</p>
 		</#if>	
-		<button class="btn btn-primary btn-small" type="submit" >
-			<i class="icon-mail icon-white"></i>&nbsp;#i18n{directory.action.send.name}
+		<button class="btn btn-primary btn-sm" type="submit" >
+			<i class="glyphicon glyphicon-mail"></i>&nbsp;#i18n{directory.action.send.name}
 		</button>
 		<#-- file removing -->
 		<#assign has_files = false>
@@ -47,8 +47,8 @@
 		</#if>
 		</div>
 		<div id="_file_deletion_button_directory_${entry.idEntry}">
-			<button class="btn btn-danger btn-small" type="submit" >
-				<i class="icon-trash icon-white"></i>&nbsp;#i18n{directory.action.delete.name}
+			<button class="btn btn-danger btn-sm" type="submit" >
+				<i class="glyphicon glyphicon-trash"></i>&nbsp;#i18n{directory.action.delete.name}
 			</button>
 		</div>
 	</div>

@@ -1,22 +1,22 @@
 <#include "/admin/util/editor/editor.html" />
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<fieldset>
 	<legend>#i18n{directory.create_entry.title_comment} : '${entry.directory.title}'</legend>
 		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
 		<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
-		<div class="control-group">
-		<label class="control-label" for="comment"> #i18n{directory.create_entry.label_comment} * : </label>
+		<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="comment"> #i18n{directory.create_entry.label_comment} * : </label>
 			<div  class="controls">
 				<textarea name="comment" id="comment" rows="10" style="width:100%" class="richtext"></textarea>
 			</div>
 		</div>
-		<div class="form-actions">
-			<button class="btn btn-primary btn-small" type="submit" name="save">
-				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.create_entry.button_save}
+		<div class="form-group">
+			<button class="btn btn-primary btn-sm" type="submit" name="save">
+				<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_entry.button_save}
 			</button>
-			<a class="btn btn-small" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
-				<i class="icon-remove-circle" ></i>
+			<a class="btn btn-sm" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
+				<i class="glyphicon glyphicon-remove-circle" ></i>
 				<span class="hidden-phone" >#i18n{directory.create_entry.button_cancel}</span>
 			</a>
 		</div>

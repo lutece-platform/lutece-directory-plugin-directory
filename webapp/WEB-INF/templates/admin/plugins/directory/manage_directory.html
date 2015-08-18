@@ -1,27 +1,27 @@
-<div class="row-fluid">
-    <div class="span12">
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <fieldset>
             <legend>#i18n{directory.manage_directory.title}
                 <#if permission_create_directory>
                 <form class="form-inline pull-right spaced" method="post" action="jsp/admin/plugins/directory/CreateDirectory.jsp">
-                    <button class="btn btn-small btn-primary" type="submit" ><i class="icon-plus icon-white"></i>&nbsp;#i18n{directory.manage_directory.button_create}</button>
+                    <button class="btn btn-sm btn-primary" type="submit" ><i class="glyphicon glyphicon-plus"></i>&nbsp;#i18n{directory.manage_directory.button_create}</button>
                 </form>
                 </#if>
                 <#if permission_manage_advanced_parameters>
                 <form class="form-inline pull-right" method="post" action="jsp/admin/plugins/directory/ManageAdvancedParameters.jsp">
-                    <button class="btn btn-small btn-primary" type="submit" >
-                        <i class="icon-cog icon-white"></i>&nbsp;#i18n{directory.manage_directory.button_manage_advanced_parameters}</button>
+                    <button class="btn btn-sm btn-primary" type="submit" >
+                        <i class="glyphicon glyphicon-cog"></i>&nbsp;#i18n{directory.manage_directory.button_manage_advanced_parameters}</button>
                 </form>
                 </#if>
             </legend>
-            <div class="well well-small">
+            <div class="well well-sm">
                 <form action="" method="" name="" id="" class="form-inline">
                     <label for="active">#i18n{directory.manage_directory.label_active}</label>
                     <@combo name="active"  items=active_list  default_value=active_selected />
                     <label for="workgroup">#i18n{directory.manage_directory.label_workgroup} :</label>
                     <@combo name="workgroup"  items=user_workgroup_list default_value=user_workgroup_selected />
-                    <button class="btn-small btn-primary" type="submit">
-                        <i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.manage_directory.button_search}
+                    <button class="btn-sm btn-primary" type="submit">
+                        <i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.manage_directory.button_search}
                     </button>
                 </form>
             </div>
@@ -41,19 +41,19 @@
                     <tr>
                         <td>
                             <#if directory.enabled>
-                                <span class="label label-success"><i class="icon-ok icon-white"></i></span>
+                                <span class="label label-success"><i class="glyphicon glyphicon-ok"></i></span>
                             <#else>
-                                <span class="label label-important"><i class="icon-remove icon-white"></i></span>
+                                <span class="label label-important"><i class="glyphicon glyphicon-remove"></i></span>
                             </#if>
                             ${directory.title}
                             <a href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" target="_blank">
-                                <i class="icon-globe" title="Access ${directory.title}"></i>
+                                <i class="glyphicon glyphicon-globe" title="Access ${directory.title}"></i>
                             </a>
                         <td>
                             <#if directory.actions?exists>
                                 <#list directory.actions as action>
-                                <a class="btn btn-small <#if action.permission='DELETE' || action.permission='DELETE_ALL_RECORD' || action.nameKey='directory.action.disable.name' >btn-danger<#elseif action.nameKey='directory.action.enable.name' >btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory=${directory.idDirectory}" title="${action.description}">
-                                    <i class="${action.iconUrl} icon-white"></i>
+                                <a class="btn btn-sm <#if action.permission='DELETE' || action.permission='DELETE_ALL_RECORD' || action.nameKey='directory.action.disable.name' >btn-danger<#elseif action.nameKey='directory.action.enable.name' >btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory=${directory.idDirectory}" title="${action.description}">
+                                    <i class="${action.iconUrl}"></i>
                                 </a>
                                 </#list>
                             </#if>  

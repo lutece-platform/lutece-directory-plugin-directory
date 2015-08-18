@@ -1,7 +1,7 @@
 <#include "/admin/plugins/directory/commons.html" />
 <#include "/admin/util/editor/editor.html" />
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<fieldset>
 	<legend>#i18n{directory.manage_advanced_parameters.label_create_directory_default_values}</legend>
 	<form method="post" action="jsp/admin/plugins/directory/DoModifyDirectoryParameterDefaultValues.jsp">
@@ -83,9 +83,9 @@
 		<label for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} : </label>
 		<textarea name="unavailability_message" id="unavailability_message" rows="20" cols="90" class="richtext" style="width:80%">${getName('unavailability_message',list_directory_param_default_values)}</textarea>
 		<span class="help-block">&nbsp;&gt;&gt;&nbsp;#i18n{directory.create_directory.label_unavailability_message_comment}   </span>
-		<div class="form-actions">
+		<div class="form-group">
 			<button type="submit" class="btn btn-primary">
-				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.manage_advanced_parameters.buttonModify}
+				<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.manage_advanced_parameters.buttonModify}
 			</button>
 		</div>
 	</form>
@@ -93,8 +93,8 @@
 	
 	</div>
 </div>
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<fieldset>
 		<legend>#i18n{directory.manage_advanced_parameters.label_create_entry_default_values}</legend>
 		<form method="post" action="jsp/admin/plugins/directory/DoModifyEntryParameterDefaultValues.jsp">
@@ -181,9 +181,9 @@
 			<input type="text" name="file_max_size" class="input-small" maxlength="255" value="${getName('file_max_size',list_entry_param_default_values)}" />
 			<label for="max_files">#i18n{directory.create_entry.label_max_files} :</label>
 			<input type="text" name="max_files" class="input-mini" maxlength="255" value="${getName('max_files',list_entry_param_default_values)}" />
-			<div class="form-actions">
+			<div class="form-group">
 				<button type="submit" class="btn btn-primary">
-					<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.manage_advanced_parameters.buttonModify}
+					<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.manage_advanced_parameters.buttonModify}
 				</button>
 			</div>
 		</fieldset>
@@ -191,8 +191,8 @@
 	</div>
 </div>
 <#if list_export_encoding_param?? && list_export_encoding_param?has_content>
-	<div class="row-fluid">
-		<div class="span12">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<fieldset>
 		<legend>#i18n{directory.manage_advanced_parameters.label_export_encoding_parameters}</legend>
 		<form method="post" action="jsp/admin/plugins/directory/DoModifyExportEncodingParameters.jsp">
@@ -200,9 +200,9 @@
 			<input type="text" name="export_csv_encoding" id="export_csv_encoding" class="input-large" maxlength="100" value="${getName('export_csv_encoding',list_export_encoding_param)}" />
 			<label for="export_xml_encoding">#i18n{directory.manage_advanced_parameters.label_export_xml_encoding} * : </label>
 			<input type="text" name="export_xml_encoding" id="export_xml_encoding" class="input-large" maxlength="100" value="${getName('export_xml_encoding',list_export_encoding_param)}" />
-			<div class="form-actions">
+			<div class="form-group">
 				<button type="submit" class="btn btn-primary">
-					<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.manage_advanced_parameters.buttonModify}
+					<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.manage_advanced_parameters.buttonModify}
 				</button>
 		</div>
 		</fieldset>

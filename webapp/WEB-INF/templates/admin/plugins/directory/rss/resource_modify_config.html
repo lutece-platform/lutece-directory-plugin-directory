@@ -1,42 +1,42 @@
-	<div class="control-group">
-		<label class="control-label" for="id_directory">#i18n{directory.resource_rss.label_directory} * :</label>
-		    <div class="controls">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_directory">#i18n{directory.resource_rss.label_directory} * :</label>
+		    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<@combo name="id_directory" default_value=directory_list_default_item items=directory_list />
-				<button class="btn btn-primary" type="submit" ><i class="icon-ok-circle icon-white"></i>&nbsp;#i18n{directory.resource_rss.button_apply}</button>
+				<button class="btn btn-primary" type="submit" ><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;#i18n{directory.resource_rss.button_apply}</button>
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label" for="id_entry_title">#i18n{directory.resource_rss.label_entry_title} * :</label>
-	    	<div class="controls">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_entry_title">#i18n{directory.resource_rss.label_entry_title} * :</label>
+	    	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<@combo name="id_entry_title" default_value=entry_list_title_default_item items=entry_list />
 		</div>
 	</div>
-	<div class="control-group">
-		<label class="control-label" for="id_entry_description">#i18n{directory.resource_rss.label_entry_description} * :</label>
-	    	<div class="controls">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_entry_description">#i18n{directory.resource_rss.label_entry_description} * :</label>
+	    	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<@combo name="id_entry_description" default_value=entry_list_description_default_item items=entry_list />
 		</div>
 	</div>
 	<#if entry_list_image?exists>
-	<div class="control-group">
-		<label class="control-label" for="id_entry_image">#i18n{directory.resource_rss.label_entry_image} : </label>
-		    	<div class="controls">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_entry_image">#i18n{directory.resource_rss.label_entry_image} : </label>
+		    	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<@combo name="id_entry_image" default_value=entry_list_image_default_item items=entry_list_image />
 		</div>
 	</div>
 	</#if>
 	<#if entry_list_link?exists>
-	<div class="control-group">
-		<label class="control-label" for="id_entry_link">#i18n{directory.resource_rss.label_entry_link} : </label>
-		<div class="controls">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_entry_link">#i18n{directory.resource_rss.label_entry_link} : </label>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			<@combo name="id_entry_link" default_value=entry_list_link_default_item items=entry_list_link />
 		</div>
 	</div>
 	</#if>
 	<#if workflow_state_list?exists>
-	<div class="control-group">
-		<label class="control-label" for="id_workflow_state">#i18n{directory.resource_rss.label_workflow} : </label>
-	   	<div class="controls">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_workflow_state">#i18n{directory.resource_rss.label_workflow} : </label>
+	   	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			<@combo name="id_workflow_state" default_value=workflow_state_list_default_item items=workflow_state_list />
 		</div>
 	</div>
@@ -45,14 +45,14 @@
 	<fieldset>
 		<legend>#i18n{directory.resource_rss.label_filter}</legend>
 		<button class="btn btn-primary" type="submit" >
-			<i class="icon-ok-circle icon-white"></i>&nbsp;#i18n{directory.resource_rss.button_apply}
+			<i class="glyphicon glyphicon-ok-circle"></i>&nbsp;#i18n{directory.resource_rss.button_apply}
 		</button>
 		<table class="table table-striped table-condensed">
 		<tr>
 			<td>		
-				<div class="control-group">
-				<label class="control-label" for="id_entry_filter_1">#i18n{directory.resource_rss.label_list_filter_1} : </label>
-			    	<div class="controls">
+				<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_entry_filter_1">#i18n{directory.resource_rss.label_list_filter_1} : </label>
+			    	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<#if entry_filter_1?exists>
 							<@combo name="id_entry_filter_1" default_value=entry_filter_1.idEntry items=entry_list_filter />
 						<#else>
@@ -62,9 +62,9 @@
 				</div>
 			</td>
 			<td>
-				<div class="control-group">
-					<label class="control-label" for="id_entry_filter_2">#i18n{directory.resource_rss.label_list_filter_2} : </label>
-					<div class="controls">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_entry_filter_2">#i18n{directory.resource_rss.label_list_filter_2} : </label>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			   		<#if entry_filter_2?exists>
 						<@combo name="id_entry_filter_2" default_value=entry_filter_2.idEntry items=entry_list_filter />
 					<#else>
@@ -77,9 +77,9 @@
 		<tr>
 			<td>
 			<#if entry_filter_1?exists>
-			<div class="control-group">
-				<label class="control-label" for="id_entry_filter_1">#i18n{directory.resource_rss.label_filter_1}</label>
-				<div class="controls">
+			<div class="form-group">
+				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_entry_filter_1">#i18n{directory.resource_rss.label_filter_1}</label>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<#if recordField_filter_1?exists>
 		   			${entry_filter_1.getHtmlFormEntry( locale,recordField_filter_1,false )}	
 				<#else>
@@ -91,9 +91,9 @@
 			</td>
 			<#if entry_filter_2?exists>
 				<td>
-					<div class="control-group">
-						<label class="control-label" style="width:100%;text-align:left;" for="id_entry_filter_1">#i18n{directory.resource_rss.label_filter_2} : </label>
-						<div class="controls">
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" style="width:100%;text-align:left;" for="id_entry_filter_1">#i18n{directory.resource_rss.label_filter_2} : </label>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<#if recordField_filter_2?exists>
 				   			${entry_filter_2.getHtmlFormEntry( locale,recordField_filter_2,false )}	
 						<#else>

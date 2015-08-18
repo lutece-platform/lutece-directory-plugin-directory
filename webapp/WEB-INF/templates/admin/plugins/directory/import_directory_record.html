@@ -1,18 +1,18 @@
-  <div class="row-fluid">
-	<div class="span12">
+  <div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<fieldset>
         <legend> #i18n{directory.import_directory_record.title} : '${directory.title}'</legend>
 		<form class="form" method="post" action="jsp/admin/plugins/directory/DoImportDirectoryRecord.jsp" enctype="multipart/form-data">
 			<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
 			<label for="file_import" >#i18n{directory.import_directory_record.label_file} * : </label>
 			<input type="file" id="file_import" name="file_import" class="input-xxlarge" maxlength="100"/>
-			<div class="form-actions">
-			<button class="btn btn-small btn-primary" type="submit" >
-				<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.import_directory_record.button_save}
+			<div class="form-group">
+			<button class="btn btn-sm btn-primary" type="submit" >
+				<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.import_directory_record.button_save}
 			</button>
 			
-			<a class="btn btn-small" href="jsp/admin/plugins/directory/ManageDirectory.jsp">
-				<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.import_directory_record.button_cancel}
+			<a class="btn btn-sm" href="jsp/admin/plugins/directory/ManageDirectory.jsp">
+				<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.import_directory_record.button_cancel}
 			</a>
 			</div>
 		</form>

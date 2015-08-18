@@ -1,5 +1,5 @@
-<div class="row-fluid" >
-	<div class="span12">
+<div class="row" >
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<fieldset>
 		<legend>#i18n{directory.manage_plugin_directory.title}</legend>
 		<table class="table table-striped table-condensed">
@@ -8,17 +8,17 @@
 	        </tr>
         	<tr>
 	            <td>
-					<a class="btn btn-primary btn-small" href="jsp/admin/plugins/directory/ManageDirectory.jsp?plugin_name=directory"  title="#i18n{directory.manage_plugin_directory.label_manage_directory_comment}" >
-						<i class="icon-edit icon-white"></i>
+					<a class="btn btn-primary btn-sm" href="jsp/admin/plugins/directory/ManageDirectory.jsp?plugin_name=directory"  title="#i18n{directory.manage_plugin_directory.label_manage_directory_comment}" >
+						<i class="glyphicon glyphicon-edit"></i>
 					</a>
 					<#if right_xsl?exists && right_xsl>
-						<a class="btn btn-primary btn-small" href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory"  title="#i18n{directory.manage_plugin_directory.label_directory_xsl_comment}" >
-							<i class="icon-cog icon-white"></i>
+						<a class="btn btn-primary btn-sm" href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory"  title="#i18n{directory.manage_plugin_directory.label_directory_xsl_comment}" >
+							<i class="glyphicon glyphicon-cog"></i>
 						</a>
 					</#if>
 					<#if permission_index_all_directory?exists && permission_index_all_directory>
-						<a class="btn btn-primary btn-small" href="jsp/admin/plugins/directory/IndexAllDirectory.jsp?plugin_name=directory"  title="#i18n{directory.manage_plugin_directory.index_all_directory_coment}" >
-							<i class="icon-question-sign icon-white"></i>
+						<a class="btn btn-primary btn-sm" href="jsp/admin/plugins/directory/IndexAllDirectory.jsp?plugin_name=directory"  title="#i18n{directory.manage_plugin_directory.index_all_directory_coment}" >
+							<i class="glyphicon glyphicon-question-sign"></i>
 						</a>
 					</#if>
 				</td>       

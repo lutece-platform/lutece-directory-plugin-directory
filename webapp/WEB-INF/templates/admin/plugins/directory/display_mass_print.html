@@ -1,14 +1,14 @@
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<fieldset>
 		<legend>#i18n{directory.resource_history.title}
 			<form class="form-inline pull-right" action="jsp/admin/plugins/directory/MassPrint.jsp" method="post">
 			<input type="hidden" value="${idDirectory!}" name="id_directory"/>
-			<button class="btn btn-primary btn-small spaced" type="button" id="print">
-				<i class="icon-print icon-white"></i>&nbsp;#i18n{directory.manage_directory_record.button_mass_print}
+			<button class="btn btn-primary btn-sm spaced" type="button" id="print">
+				<i class="glyphicon glyphicon-print"></i>&nbsp;#i18n{directory.manage_directory_record.button_mass_print}
 			</button
-			><button class="btn btn-small" type="submit" >
-				<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.resource_history.buttonBack}
+			><button class="btn btn-sm" type="submit" >
+				<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.resource_history.buttonBack}
 			</button>
 		</form>
 		</legend>
@@ -26,15 +26,15 @@
 					</#if>
 				</#list>
 				</select>
-				<button class="btn btn-primary btn-small " type="submit" >
-					<i class="icon-white icon-ok"></i>&nbsp;#i18n{directory.manage_directory_record.button_items_per_page}
+				<button class="btn btn-primary btn-sm " type="submit" >
+					<i class="glyphicon glyphicon-white icon-ok"></i>&nbsp;#i18n{directory.manage_directory_record.button_items_per_page}
 				</button>
 			</label>-->
 		</form> 
 		<br class="clearfix">
 		<#list history_list as history>
-		<div class="well well-small">
-			<div class="row-fluid">
+		<div class="well well-sm">
+			<div class="row">
 				<div class="span3">
 					<#list entry_list as entry>	
 						<#if entry.entryType.group>	
@@ -54,7 +54,7 @@
 						<#else>
 							<#assign entryKey=""+entry.idEntry>	
 							<#if entry.title?exists>
-								<label class="control-label" for="">${entry.title}</label>
+								<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">${entry.title}</label>
 							</#if>	
 								<#list history.map_id_entry_list_record_field[entryKey] as recordfield>
 									<strong>${entry.getHtmlRecordFieldValue( locale, recordfield, false )}</strong>
@@ -64,9 +64,9 @@
 				</#list>
 				</div>
 				<div class="span8">
-					<div class="control-group">
-						<label class="control-label">&nbsp;</label> 
-						<div class="controls">
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3">&nbsp;</label> 
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						${history.resource_history}
 						</div> 
 					</div> 

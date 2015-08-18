@@ -54,7 +54,7 @@ ${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
 <#macro display_actions resource_actions >
 	<#if resource_actions.workflow_action_list?exists>
 		<#list resource_actions.workflow_action_list as action>
-			<a class="btn btn-small btn-primary" href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
+			<a class="btn btn-sm btn-primary" href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
 				<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}" <#if action.icon.width!=-1>	width="${action.icon.width}"</#if><#if action.icon.height!=-1> height="${action.icon.height}"</#if> title="${action.name}" alt="${action.name}"/>
 			</a>
 		</#list>
@@ -62,14 +62,14 @@ ${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
 	<br>
 	<#list resource_actions.record.actions?sort as action>
 		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
-	 	<a class="btn btn-small <#if action.nameKey="directory.action.delete.name" || action.nameKey=="directory.action.disable.name" >btn-danger<#elseif action.nameKey="directory.action.enable.name">btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}" title="${action.description}">
-	  		<i class="${action.iconUrl} icon-white">&nbsp;</i>
+	 	<a class="btn btn-sm <#if action.nameKey="directory.action.delete.name" || action.nameKey=="directory.action.disable.name" >btn-danger<#elseif action.nameKey="directory.action.enable.name">btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}" title="${action.description}">
+	  		<i class="${action.iconUrl}">&nbsp;</i>
 	  	</a>
 		</#if>
 		</#list>
 	</p>
 </#macro>
-<div class="row-fluid">
+<div class="row">
 	<div class="span4">
 		<h4>#i18n{directory.viewing_directory_record.labelRecord} ${record.idRecord}</h4>
 		<table class="table table-striped table-condensed">
@@ -113,9 +113,9 @@ ${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
 					<legend>${entry.title} </legend>
 					<#if entry.children?has_content>
 						<#list entry.children as child >
-						<div class="control-group">
-							<label class="control-label" for=""><#if child.title?exists>${child.title}</#if></label>
-							<div class="controls">
+						<div class="form-group">
+							<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for=""><#if child.title?exists>${child.title}</#if></label>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 								<#assign entryKey=""+child.idEntry><#assign first = true><#list map_id_entry_list_record_field[entryKey] as recordfield><@getRecordFieldHtml entry=child recordfield=recordfield first=first /><#assign first = false></#list>
 							</div>
 						</div>
@@ -124,12 +124,12 @@ ${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
 				<#else>
 					<#assign entryKey=""+entry.idEntry>	
 					<#assign first = true>
-					<div class="control-group">
+					<div class="form-group">
 					<#if entry.title?exists>
-						<label class="control-label" for="">${entry.title}</label>
+						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">${entry.title}</label>
 					</#if>	
 					<#list map_id_entry_list_record_field[entryKey] as recordfield>
-						<div class="controls">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<@getRecordFieldHtml entry=entry recordfield=recordfield first=first />
 							<#assign first = false>
 						</div>
@@ -140,9 +140,9 @@ ${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
     	
 	  	<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
 	  	<input type="hidden" name="session" value="session" />
-		<div class="form-actions">
-			<button class="btn btn-small" type="submit" >
-				<i class="icon-remove-circle"></i>&nbsp;#i18n{directory.resource_history.buttonBack}
+		<div class="form-group">
+			<button class="btn btn-sm" type="submit" >
+				<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.resource_history.buttonBack}
 			</button>
 			</div>
 		</form>

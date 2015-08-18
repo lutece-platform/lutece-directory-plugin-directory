@@ -1,12 +1,12 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="control-group">
-	<label class="control-label" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
-	<div class="controls"> 
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"> 
 		<input type="hidden" name="_directory_upload_maxLength_directory_${entry.idEntry}" id="_directory_upload_maxLength_directory_${entry.idEntry}" value="${getFileMaxSize( entry )}" />
 		<input type="hidden" name="_directory_upload_fileTypes_directory_${entry.idEntry}" id="_directory_upload_fileTypes_directory_${entry.idEntry}" value="${getFileTypes( entry )}" />
 		<input type="file" name="directory_${entry.idEntry}" id="directory_${entry.idEntry}" >&nbsp;
-		<button type="submit" class="btn btn-primary btn-small" id="_directory_upload_submit_directory_${entry.idEntry}" name="_directory_upload_submit_directory_${entry.idEntry}">
-			<i class="icon-upload icon-white"></i>&nbsp;#i18n{directory.action.send.name}
+		<button type="submit" class="btn btn-primary btn-sm" id="_directory_upload_submit_directory_${entry.idEntry}" name="_directory_upload_submit_directory_${entry.idEntry}">
+			<i class="glyphicon glyphicon-upload"></i>&nbsp;#i18n{directory.action.send.name}
 		</button>
 		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
 			<span class="help-block">${entry.helpMessage}</p>
@@ -47,8 +47,8 @@
 		</#if>
 		<div class="form-element" id="_file_deletion_button_directory_${entry.idEntry}">
 			<label for="${entry.idEntry}">&nbsp;</label>
-			<button type="submit" class="btn btn-danger btn-small" name="_directory_upload_delete_directory_${entry.idEntry}">
-				<i class="icon-trash icon-white"></i>&nbsp;#i18n{directory.action.delete.name}
+			<button type="submit" class="btn btn-danger btn-sm" name="_directory_upload_delete_directory_${entry.idEntry}">
+				<i class="glyphicon glyphicon-trash"></i>&nbsp;#i18n{directory.action.delete.name}
 			</button> 
 		</div>
 	</div>

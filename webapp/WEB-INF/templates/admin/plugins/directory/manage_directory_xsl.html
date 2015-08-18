@@ -1,5 +1,5 @@
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<ul class="nav nav-tabs">
 			<li>
 				<a href="jsp/admin/plugins/directory/ManageAdvancedParameters.jsp">
@@ -23,8 +23,8 @@
 		#i18n{directory.manage_directory_xsl.title}
 		<#if right_create>
 			<form class="form-inline pull-right" method="post"  action="jsp/admin/plugins/directory/CreateDirectoryXsl.jsp" >
-				<button class="btn btn-primary btn-small pull-right" type="submit" >
-				<i class="icon-plus icon-white" ></i>
+				<button class="btn btn-primary btn-sm pull-right" type="submit" >
+				<i class="glyphicon glyphicon-plus" ></i>
 					<span class="hidden-phone" >#i18n{directory.manage_directory_xsl.button_create}</span>
 				</button>
 			</form>
@@ -46,8 +46,8 @@
 	                <td>
 						<#if directory_xsl.actions?exists>
 							<#list directory_xsl.actions as action>
-							<a class="btn btn-small <#if action.permission='MODIFY'>btn-primary<#else>btn-danger</#if> " href="${action.url}?id_directory_xsl=${directory_xsl.idDirectoryXsl}"  title="${action.description}" >
-								<i class="${action.iconUrl} icon-white"></i>
+							<a class="btn btn-sm <#if action.permission='MODIFY'>btn-primary<#else>btn-danger</#if> " href="${action.url}?id_directory_xsl=${directory_xsl.idDirectoryXsl}"  title="${action.description}" >
+								<i class="${action.iconUrl}"></i>
 							</a>
 							</#list>
 						</#if>	

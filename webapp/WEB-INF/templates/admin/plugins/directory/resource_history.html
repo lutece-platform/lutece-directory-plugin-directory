@@ -16,13 +16,13 @@
 	</#if>
 	<#list resource_actions.record.actions as action>
 		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
-	 		<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}" title="${action.description}" class="btn btn-small <#if action.nameKey="directory.action.delete.name" || action.nameKey=="directory.action.disable.name" >btn-danger<#elseif action.nameKey="directory.action.enable.name">btn-success<#else>btn-primary</#if>">
-	  			<i class="icon-white ${action.iconUrl}" alt="${action.name}">&nbsp;</i>
+	 		<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}" title="${action.description}" class="btn btn-sm <#if action.nameKey="directory.action.delete.name" || action.nameKey=="directory.action.disable.name" >btn-danger<#elseif action.nameKey="directory.action.enable.name">btn-success<#else>btn-primary</#if>">
+	  			<i class="glyphicon glyphicon-white ${action.iconUrl}" alt="${action.name}">&nbsp;</i>
 	  		</a>
 		</#if>
 	</#list>
 </#macro>
-<div class="row-fluid">
+<div class="row">
 	<div class="span4">
 		<fieldset>
 		<legend>#i18n{directory.resource_history.labelRecord} ${record.idRecord}</legend>
@@ -67,14 +67,14 @@
 		   	  	<p>&nbsp;${entry.title}</p> 
 				<#if entry.children?has_content>
 					<#list entry.children as child >
-						<div class="control-group">
+						<div class="form-group">
 						<#if child.title?exists>
-							<label class="control-label" for="">${child.title} : </label>
+							<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">${child.title} : </label>
 		 				</#if>
 		 				<#assign entryKey=""+child.idEntry>
 		 				<#assign first = true>
 		 				<#list map_id_entry_list_record_field[entryKey] as recordfield>
-							<div class="controls">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 		 					<#if !first>
 									<label>&nbsp;</label>
 							</#if>
@@ -92,9 +92,9 @@
 						<p>${entry.title}</p>
 					</#if>
 					<#list map_id_entry_list_record_field[entryKey] as recordfield>
-						<div class="control-group">
+						<div class="form-group">
 						<#if !first>
-							<label class="control-label" > &nbsp;</label>
+							<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" > &nbsp;</label>
 						</#if>
 							${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
 						</div>
@@ -107,7 +107,7 @@
 				<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
 				<input type="hidden" name="session" value="session" />
 				<button class="btn btn-primary" type="submit" >
-					<i class="icon-ok icon-white"></i>&nbsp;#i18n{directory.resource_history.buttonBack}
+					<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.resource_history.buttonBack}
 				</button>
 			</form>
 	  	</fieldset>

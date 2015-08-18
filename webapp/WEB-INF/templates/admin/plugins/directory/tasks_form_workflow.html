@@ -1,5 +1,5 @@
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<fieldset>
 		<legend> #i18n{directory.tasks_form_workflow.title}</legend>
 		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoSaveTasksFormWorkflow.jsp?plugin_name=directory" method="post" name="" id=""  enctype="multipart/form-data" >
@@ -13,12 +13,12 @@
 			<input type="hidden" name="show_action_result" value="1" />
 	   	</#if>
 		${tasks_form}
-	   	<div class="form-actions">
-	  		<button class="btn btn-small btn-primary" type="submit" name="save">
-				<i class="icon-ok icon-white"></i>&nbsp;#i18n{workflow.tasks_form_test_workflow.button_save}
+	   	<div class="form-group">
+	  		<button class="btn btn-sm btn-primary" type="submit" name="save">
+				<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{workflow.tasks_form_test_workflow.button_save}
 			</button>
-	  		<button class="btn btn-small" type="submit" name="cancel" >
-				<i class="icon-remove-circle"></i>&nbsp;#i18n{workflow.tasks_form_test_workflow.button_cancel}
+	  		<button class="btn btn-sm" type="submit" name="cancel" >
+				<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{workflow.tasks_form_test_workflow.button_cancel}
 			</button>
 		</div>
 	    </form>	  
