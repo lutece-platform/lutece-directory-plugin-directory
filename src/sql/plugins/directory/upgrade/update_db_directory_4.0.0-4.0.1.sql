@@ -1,0 +1,26 @@
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-edit' WHERE id_action = 1;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-edit' WHERE id_action = 2;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-folder-open' WHERE id_action = 3;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-folder-open' WHERE id_action = 4;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-upload' WHERE id_action = 5;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-upload' WHERE id_action = 6;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-ban-circle' WHERE id_action = 7;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-ban-circle' WHERE id_action = 8;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-remove' WHERE id_action = 9;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-ok' WHERE id_action = 10;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-plus-sign' WHERE id_action = 11;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-plus-sign' WHERE id_action = 12;
+UPDATE directory_action SET icon_url = 'glyphicon glyphicon-trash' WHERE id_action = 13;
+
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-edit' WHERE id_action = 1;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-edit' WHERE id_action = 2;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-plus-sign' WHERE id_action = 3;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-plus-sign' WHERE id_action = 4;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-trash' WHERE id_action = 5;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-remove' WHERE id_action = 6;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-ok' WHERE id_action = 7;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-trash' WHERE id_action = 8;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-list' WHERE id_action = 9;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-list' WHERE id_action = 10;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-eye-open' WHERE id_action = 11;
+UPDATE directory_record_action SET icon_url = 'glyphicon glyphicon-eye-open' WHERE id_action = 12;

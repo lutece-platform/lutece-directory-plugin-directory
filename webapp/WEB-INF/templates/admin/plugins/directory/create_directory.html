@@ -1,8 +1,9 @@
 <#include "/admin/plugins/directory/commons.html" />
 <#include "/admin/util/editor/editor.html" />
 <div class="row">
-	<form action="jsp/admin/plugins/directory/DoCreateDirectory.jsp?plugin_name=directory" method="post" name="" id=""  >
-		<div class="span9 form-horizontal" id="main">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<form action="jsp/admin/plugins/directory/DoCreateDirectory.jsp?plugin_name=directory" method="post" name="" id="">
+		<div class="col-md-9 form-horizontal" id="main">
 			<fieldset>
 			<legend> #i18n{directory.create_directory.title}
 				<a class="btn btn-sm pull-right" id="tgAdvancedSettings" href="#">
@@ -12,58 +13,58 @@
 			</legend>
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="title">#i18n{directory.create_directory.label_title} * </label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<input type="text" class="form-control input-sm" name="title" id="" size="80" value=""  maxlength="255"/>
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+					<input type="text" class="form-control input-sm" name="title" id="" size="80" value="" maxlength="255"/>
 					<span class="help-block">#i18n{directory.create_directory.label_title_comment}</span>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="comment"> #i18n{directory.create_directory.label_description} *</label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 					<textarea name="description" class="form-control input-sm" rows="2"></textarea>
 					<span class="help-block">#i18n{directory.create_directory.label_description_comment}</span>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">#i18n{directory.create_directory.label_workgroup}</label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<@combo name="workgroup"  items=user_workgroup_list default_value="all" />
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+					<@comboWithParams name="workgroup"  items=user_workgroup_list default_value="all" additionalParameters="class='form-control input-sm'" />
 					<span class="help-block">#i18n{directory.create_directory.label_workgroup_comment}</span>
 				</div>
 			</div>
 			<#if role_list?exists >
 				<div class="form-group">
 					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="role">#i18n{directory.create_directory.label_role}</label>
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<@combo name="role_key" default_value="none" items=role_list />
+					<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+						<@comboWithParams name="role_key" default_value="none" items=role_list additionalParameters="class='form-control input-sm'" />
 						<span class="help-block">#i18n{directory.create_directory.label_role}</span>
 					</div>
 				</div>
 			</#if>
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_form_search_template">#i18n{directory.create_directory.label_form_search_template} * </label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<@combo name="id_form_search_template" default_value="" items=form_search_template_list />
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+					<@comboWithParams name="id_form_search_template" default_value="" items=form_search_template_list additionalParameters="class='form-control input-sm'" />
 					<span class="help-block">#i18n{directory.create_directory.label_form_search_template_comment}</span>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_result_list_template">#i18n{directory.create_directory.label_result_list_template} * </label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<@combo name="id_result_list_template" default_value="" items=result_list_template_list />
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+					<@comboWithParams name="id_result_list_template" default_value="" items=result_list_template_list additionalParameters="class='form-control input-sm'" />
 					<span class="help-block">#i18n{directory.create_directory.label_result_list_template_comment}</span>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_result_record_template">#i18n{directory.create_directory.label_result_record_template} *</label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<@combo name="id_result_record_template" default_value="" items=result_record_template_list />
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+					<@comboWithParams name="id_result_record_template" default_value="" items=result_record_template_list additionalParameters="class='form-control input-sm'" />
 					<span class="help-block">#i18n{directory.create_directory.label_result_record_template_comment}</span>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="number_record_per_page">#i18n{directory.create_directory.label_number_record_per_page} * </label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 					<input type="text" class="form-control input-sm" name="number_record_per_page" id="number_record_per_page" size="5" value="${getName('number_record_per_page',list_param_default_values)}" />
 					<span class="help-block"> #i18n{directory.create_directory.label_number_record_per_page_comment}</span>
 				</div>
@@ -71,13 +72,13 @@
 			<#if workflow_list?exists>
 				<div class="form-group">
 					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="id_workflow_list">#i18n{directory.create_directory.label_worflow_list} : </label>
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<@combo name="id_workflow_list" default_value="" items=workflow_list />
+					<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+						<@comboWithParams name="id_workflow_list" default_value="" items=workflow_list additionalParameters="class='form-control input-sm'" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="workflow_state_filter_search">#i18n{directory.create_directory.label_state_search} : </label>
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 						<input type="radio" name="workflow_state_filter_search" value="1" <#if workflow_state_filter_search_selected="1">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search}
 						<input type="radio" name="workflow_state_filter_search" value="2" <#if workflow_state_filter_search_selected="2">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search_complementary}
 						<input type="radio" name="workflow_state_filter_search" value="3" <#if workflow_state_filter_search_selected="3">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search_no}
@@ -86,31 +87,37 @@
 			</#if>
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} *</label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 					<textarea name="unavailability_message" id="unavailability_message" rows="20" class="richtext" style="width:100%">${getName('unavailability_message',list_param_default_values)}</textarea>
 					<span class="help-block">#i18n{directory.create_directory.label_unavailability_message_comment}</span>
 				</div>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-sm" name="save" >
-					<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_directory.button_save}
-				</button>
-				<a type="button" class="btn btn-sm" href="jsp/admin/plugins/directory/ManageDirectory.jsp" >
-					<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.create_directory.button_cancel}
-				</a>
+				<div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+					<button type="submit" class="btn btn-primary btn-sm" name="save" >
+						<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_directory.button_save}
+					</button>
+					<a type="button" class="btn btn-default btn-sm" href="jsp/admin/plugins/directory/ManageDirectory.jsp" >
+						<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.create_directory.button_cancel}
+					</a>
+				</div>
 			</div>
 			</fieldset>
 		</div>
-		<div class="span3" id="advanced_settings">	
+		<div class="col-md-3" id="advanced_settings">	
 			<fieldset>
 				<legend>#i18n{directory.create_directory.label_advancedsettings}
 					<a class="btn btn-sm pull-right" id="tgAdvancedSettingsBack" href="#">
 						<i class="glyphicon glyphicon-chevron-right"></i>
 					</a>
 				</legend>
-				<label for="front_office_title">#i18n{directory.create_directory.label_title_front} : </label>
-				<input type="text" name="front_office_title" id="" class="input-large" value=""  maxlength="255"/>
-				<span class="help-block">#i18n{directory.create_directory.label_title_front_comment}</span>
+				
+				<div class="form-group>
+					<label for="front_office_title">#i18n{directory.create_directory.label_title_front} : </label>
+					<input type="text" name="front_office_title" id="" class="form-control input-sm" value=""  maxlength="255"/>
+					<span class="help-block">#i18n{directory.create_directory.label_title_front_comment}</span>
+				</div>
+				
 				<div class="well well-sm">
 					<p><strong>#i18n{directory.create_directory.label_show_date_creation}</strong></p>
 					
@@ -211,26 +218,29 @@
 						<input name="activate_directory_record" id="activate_directory_record" value="1" type="checkbox" ${getChecked('activate_directory_record',list_param_default_values)} />
 						#i18n{directory.create_directory_record.activate_directory_record}
 					</label>
+					<p class="help-block"> #i18n{directory.create_directory_record.activate_directory_record_comment}</p>
 				</div>
-				<p class="help-block"> #i18n{directory.create_directory_record.activate_directory_record_comment}</p>
 				<div class="checkbox">
-					<label for="is_indexed">#i18n{directory.create_directory.label.is_indexed}
+					<label for="is_indexed">
 						<input name="is_indexed" id="is_indexed" value="1" type="checkbox" ${getChecked('is_indexed',list_param_default_values)} />
+						#i18n{directory.create_directory.label.is_indexed}
 					</label>
+					<p class="help-block"> #i18n{directory.create_directory.label.is_indexed_comment}</p>
 				</div>
-				<p class="help-block"> #i18n{directory.create_directory.label.is_indexed_comment}</p>
 				<!-- Not useful anymore ? 
 				<div class="alert alert-danger">#i18n{directory.message.warning.directory_advanced_parameters_save}</div>
 				-->
 				<div class="checkbox">
-					<label for="is_search_operator_or">#i18n{directory.create_directory.label.is_search_operator_or}
+					<label for="is_search_operator_or">
 						<input name="is_search_operator_or" id="is_search_operator_or" value="1" type="checkbox"  />
+						#i18n{directory.create_directory.label.is_search_operator_or}
 					</label>
 					<p class="help-block"> #i18n{directory.create_directory.label.is_search_operator_or_comment}</p>
 				</div>
 			</fieldset>
 		</div>
 	</form>
+</div>
 </div>
 <script>
 $(document).ready(function() {
