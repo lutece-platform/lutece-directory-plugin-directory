@@ -6,29 +6,31 @@
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="title">#i18n{directory.create_field.label_title} *</label>
 				 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<input type="text" name="title" id="title" class="input-xlarge" value=""  maxlength="255" />
+					<input type="text" name="title" id="title" class="form-control input-sm" value=""  maxlength="255" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="value">#i18n{directory.create_field.label_value} *</label>
 				 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<input type="text" name="value" id="value" class="input-xlarge" value="" />
+					<input type="text" name="value" id="value" class="form-control input-sm" value="" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for=""></label>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<label for="default_value" class="checkbox">
-					<input name="default_value" value="1" type="checkbox" >
-					 #i18n{directory.create_field.label_default_value}
-				</label>
+					<div class="checkbox">
+						<label for="default_value">
+							<input name="default_value" value="1" type="checkbox" >
+							 #i18n{directory.create_field.label_default_value}
+						</label>
+					</div>
 				</div>
 			</div>
 			<#if field.entry.roleAssociated && role_list?exists >
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="role">#i18n{directory.create_field.label_role} : </label>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<@combo name="role_key" default_value="none" items=role_list />
+					<@comboWithParams name="role_key" default_value="none" items=role_list additionalParameters="class='form-control input-sm'" />
 					<span class="help-block">&nbsp;#i18n{directory.create_field.label_role}</span>
 				</div>
 			</div>
@@ -37,23 +39,22 @@
 			<div class="form-group">
 				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="workgroup">#i18n{directory.create_field.label_workgroup}  : </label>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<@combo name="workgroup"  items=user_workgroup_list default_value="all" />
+					<@comboWithParams name="workgroup"  items=user_workgroup_list default_value="all" additionalParameters="class='form-control input-sm'" />
 					<span class="help-block">#i18n{directory.create_field.label_workgroup_comment}</span>
 				</div>
 			</div>
 			</#if>	
 			<div class="form-group">
-				<button type="submit" value="#i18n{directory.create_field.button_save}" title="#i18n{directory.create_field.button_save}" class="btn btn-primary btn-sm" name="save" >
-					<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_field.button_save}
-				</button>
-				<button type="submit" class="btn btn-sm" name="cancel" title="#i18n{directory.create_field.button_cancel}">
-					<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.create_field.button_cancel}
-				</button>
+				<div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
+					<button type="submit" value="#i18n{directory.create_field.button_save}" title="#i18n{directory.create_field.button_save}" class="btn btn-primary btn-sm" name="save" >
+						<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_field.button_save}
+					</button>
+					<button type="submit" class="btn btn-default btn-sm" name="cancel" title="#i18n{directory.create_field.button_cancel}">
+						<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.create_field.button_cancel}
+					</button>
+				</div>
 			</div>
 		</form>
 	</fieldset>
 	</div>
-</div>
-
-
- 
+</div> 

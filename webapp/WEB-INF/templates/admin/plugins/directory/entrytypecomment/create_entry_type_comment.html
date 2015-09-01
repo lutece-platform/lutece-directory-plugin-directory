@@ -6,19 +6,22 @@
 		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id=""  >
 		<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
 		<div class="form-group">
-		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="comment"> #i18n{directory.create_entry.label_comment} * : </label>
-			<div  class="controls">
-				<textarea name="comment" id="comment" rows="10" style="width:100%" class="richtext"></textarea>
+			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="comment"> #i18n{directory.create_entry.label_comment} * : </label>
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+				<textarea name="comment" id="comment" rows="10" class="richtext form-control input-sm"></textarea>
 			</div>
 		</div>
 		<div class="form-group">
-			<button class="btn btn-primary btn-sm" type="submit" name="save">
-				<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_entry.button_save}
-			</button>
-			<a class="btn btn-sm" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
-				<i class="glyphicon glyphicon-remove-circle" ></i>
-				<span class="hidden-phone" >#i18n{directory.create_entry.button_cancel}</span>
-			</a>
+			<div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-9 col-lg-offset-3 col-lg-9">
+				<button class="btn btn-primary btn-sm" type="submit" name="save">
+					<i class="glyphicon glyphicon-ok"></i>
+					&nbsp;#i18n{directory.create_entry.button_save}
+				</button>
+				<a class="btn btn-default btn-sm" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
+					<i class="glyphicon glyphicon-remove-circle"></i>
+					#i18n{directory.create_entry.button_cancel}
+				</a>
+			</div>
 		</div>
 		</form>
 	</fieldset>
