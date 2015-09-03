@@ -1,8 +1,8 @@
 <#include "/admin/plugins/directory/commons.html" />
-<form class="form" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id=""  >
+<form class="form form-horizontal" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id=""  >
 <input name="id_entry" value="${entry.idEntry}" type="hidden" />
 	<div class="row">
-	<div class="span8 form-horizontal">
+	<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 form-horizontal">
 	<fieldset>
 		<legend>
 		#i18n{directory.modify_entry.title_field} '${entry.directory.title}' 
@@ -13,35 +13,47 @@
 		</legend>
 		<div class="form-group">
 			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="title">#i18n{directory.create_entry.label_title} * : </label>
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<input type="text" name="title" id="title" class="input-xxlarge" value="${entry.title}" maxlength="255" />
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+				<input type="text" name="title" id="title" class="form-control input-sm" value="${entry.title}" maxlength="255" />
 				<p class="help-block">#i18n{directory.create_entry.label_title_comment}</p>
 			</div>
 		</div>
     	<div class="form-group">
 			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="is_all_search">#i18n{directory.create_entry.label_is_all_search}</label>
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<input type="checkbox" name="is_all_search" id="is_all_search" value="1" <#if entry.addValueAllSearch>checked="checked"</#if> />
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="is_all_search" id="is_all_search" value="1" <#if entry.addValueAllSearch>checked="checked"</#if> />
+					</label>
+				</div>
     			<p class="help-block">#i18n{directory.create_entry.label_is_all_search_comment}</p>
 			</div>
 		</div>
 		<div class="form-group" id="label_value_all_search">
    			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="label_all_search">#i18n{directory.create_entry.label_label_all_search} : </label>
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-	    		<input type="text" name="label_all_search" id="label_all_search" value="<#if entry.labelValueAllSearch??>${entry.labelValueAllSearch!}</#if>" class="input-xlarge" maxlength="255" />
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+	    		<input type="text" name="label_all_search" id="label_all_search" value="<#if entry.labelValueAllSearch??>${entry.labelValueAllSearch!}</#if>" class="form-control input-sm" maxlength="255" />
 	    	</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="mandatory">#i18n{directory.create_entry.label_mandatory}</label>
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<input name="mandatory" id="mandatory" value="1" type="checkbox" <#if entry.mandatory>checked="checked"</#if> />
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+				<div class="checkbox">
+					<label>
+						<input name="mandatory" id="mandatory" value="1" type="checkbox" <#if entry.mandatory>checked="checked"</#if> />
+					</label>
+				</div>
 			</div>
 		</div>
 		<#if is_authentification_enabled&&(!is_association_entry_role || entry.roleAssociated)>
 	   	<div class="form-group">
 			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="role_associated">#i18n{directory.create_entry.label_role_associated}</label>
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-	   		   	<input name="role_associated" id="role_associated" value="1" type="checkbox"  <#if entry.roleAssociated>checked="checked"</#if>	/>
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+	   		   	<div class="checkbox">
+					<label>
+						<input name="role_associated" id="role_associated" value="1" type="checkbox" <#if entry.roleAssociated>checked="checked"</#if>	/>
+					</label>
+				</div>
 	   			<p class="help-block"> #i18n{directory.create_entry.label_role_associated_comment}</p>
 			</div>
 		</div>	
@@ -49,39 +61,45 @@
 	<#if !is_association_entry_workgroup|| entry.workgroupAssociated> 		
 		<div class="form-group">
 			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="workgroup_associated">#i18n{directory.create_entry.label_workgroup_associated}</label>
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<input name="workgroup_associated" id="workgroup_associated" value="1" type="checkbox" <#if entry.workgroupAssociated>checked="checked"</#if>/>
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+				<div class="checkbox">
+					<label>
+						<input name="workgroup_associated" id="workgroup_associated" value="1" type="checkbox" <#if entry.workgroupAssociated>checked="checked"</#if>/>
+					</label>
+				</div>
 				<p class="help-block"> #i18n{directory.create_entry.label_workgroup_associated_comment}</p>
 			</div>
 		</div>		
 	</#if>
 		<div class="form-group">
-			<button class="btn btn-primary  btn-sm" type="submit" name="save" >
-				<i class="glyphicon glyphicon-ok" ></i>
-				<span class="hidden-phone" >#i18n{directory.modify_entry.button_save}</span>
-			</button>
-			<button class="btn btn-primary btn-sm" type="submit" name="apply" >
-				<i class="glyphicon glyphicon-ok-circle" ></i>
-				<span class="hidden-phone" >#i18n{directory.modify_entry.button_apply}</span>
-			</button>
-			<a class="btn btn-sm" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
-				<i class="glyphicon glyphicon-remove-circle" ></i>
-				<span class="hidden-phone" >#i18n{directory.modify_entry.button_cancel}</span>
-			</a>
+			<div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-9 col-lg-offset-3 col-lg-9">
+				<button class="btn btn-primary btn-sm" type="submit" name="save">
+					<i class="glyphicon glyphicon-ok"></i>
+					<span class="hidden-xs" >#i18n{directory.modify_entry.button_save}</span>
+				</button>
+				<button class="btn btn-primary btn-sm" type="submit" name="apply">
+					<i class="glyphicon glyphicon-ok-circle"></i>
+					<span class="hidden-xs" >#i18n{directory.modify_entry.button_apply}</span>
+				</button>
+				<a class="btn btn-default btn-sm" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
+					<i class="glyphicon glyphicon-remove-circle"></i>
+					<span class="hidden-xs" >#i18n{directory.modify_entry.button_cancel}</span>
+				</a>
+			</div>
 		</div>
 	</fieldset>
 	<fieldset>
 		<legend>#i18n{directory.create_entry.manage_field.title}
-			<form class="form-inline pull-right" method="post"  action="jsp/admin/plugins/directory/CreateField.jsp">
+			<span class="pull-right">
 				<a class="btn btn-primary btn-sm" href="jsp/admin/plugins/directory/CreateField.jsp">
-					<i class="glyphicon glyphicon-ok"></i>
-					<span class="hidden-phone" >&nbsp;#i18n{directory.create_entry.manage_field.button_insert}</span>
+					<i class="glyphicon glyphicon-plus"></i>
+					<span class="hidden-xs hidden-sm hidden-md">&nbsp;#i18n{directory.create_entry.manage_field.button_insert}</span>
 				</a>
 				<a class="btn btn-primary btn-sm" href="jsp/admin/plugins/directory/ImportField.jsp?id_directory=${idDirectory}&amp;id_entry=${entry.idEntry}">
 					<i class="glyphicon glyphicon-upload"></i>
-					<span class="hidden-phone" >&nbsp;#i18n{directory.import_field.title}</span>
+					<span class="hidden-xs hidden-sm hidden-md">&nbsp;#i18n{directory.import_field.title}</span>
 				</a>
-			</form>
+			</span>
 		</legend>
 		<@paginationAdmin paginator=paginator combo=1/>
 	    <table class="table table-striped table-condensed">
@@ -105,20 +123,20 @@
 	            </td >
 	            <td>${field.idField}</td>
 	            <td>
-					<a class="btn btn-primary btn-sm" href="jsp/admin/plugins/directory/ModifyField.jsp?id_field=${field.idField}"  title="null" >
+					<a class="btn btn-primary btn-xs" href="jsp/admin/plugins/directory/ModifyField.jsp?id_field=${field.idField}"  title="null" >
 						<i class="glyphicon glyphicon-edit"></i>
 					</a>
 					<#if cpt!=1>
-	              	<a class="btn btn-primary btn-sm" href="jsp/admin/plugins/directory/DoMoveUpField.jsp?id_field=${field.idField}#list"  title="#i18n{directory.create_entry.manage_field.title_move_up}" >
+	              	<a class="btn btn-primary btn-xs" href="jsp/admin/plugins/directory/DoMoveUpField.jsp?id_field=${field.idField}#list"  title="#i18n{directory.create_entry.manage_field.title_move_up}" >
 						<i class="glyphicon glyphicon-chevron-up"></i>
 					</a>
 					</#if> 
 	               <#if field_has_next>
-	                <a class="btn btn-primary btn-sm" href="jsp/admin/plugins/directory/DoMoveDownField.jsp?id_field=${field.idField}#list"  title="#i18n{directory.create_entry.manage_field.title_move_down}" >
+	                <a class="btn btn-primary btn-xs" href="jsp/admin/plugins/directory/DoMoveDownField.jsp?id_field=${field.idField}#list"  title="#i18n{directory.create_entry.manage_field.title_move_down}" >
 						<i class="glyphicon glyphicon-chevron-down"></i>
 					</a>
 					</#if>
-	                <a class="btn btn-danger btn-sm" href="jsp/admin/plugins/directory/ConfirmRemoveField.jsp?id_field=${field.idField}#list"  title="#i18n{directory.create_entry.manage_field.title_delete}" >
+	                <a class="btn btn-danger btn-xs" href="jsp/admin/plugins/directory/ConfirmRemoveField.jsp?id_field=${field.idField}#list"  title="#i18n{directory.create_entry.manage_field.title_delete}" >
 						<i class="glyphicon glyphicon-trash"></i>
 					</a>
 					</td>
@@ -128,103 +146,88 @@
         
         </fieldset>
 	</div>
-	<div id="advanced_settings" class="span4">
+	<div id="advanced_settings" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 	<fieldset>
-		<legend>#i18n{directory.create_directory.label_advancedsettings}</legend>	 	
-		<label  for="help_message"> #i18n{directory.create_entry.label_help_message} </label>
-			<textarea  name="help_message" id="help_message" class="span7" rows="2">${entry.helpMessage}</textarea>
-			<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
+		<legend>#i18n{directory.create_directory.label_advancedsettings}</legend>
 		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<textarea  name="help_message_search" id="help_message_search" class="span7" rows="2">${entry.helpMessageSearch}</textarea>
+			<label class="col-xs-12 col-sm-12 col-md-12 col-lg-12" for="help_message"> #i18n{directory.create_entry.label_help_message} </label>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<textarea name="help_message" id="help_message" class="form-control input-sm" rows="2">${entry.helpMessage}</textarea>
+					<p class="help-block">#i18n{directory.create_entry.label_help_message_comment}</p>
+				</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-12 col-md-12 col-lg-12" for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<textarea  name="help_message_search" id="help_message_search" class="form-control input-sm" rows="2">${entry.helpMessageSearch}</textarea>
 				<p class="help-block">#i18n{directory.create_entry.label_help_message_search_comment}</p>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="comment"> #i18n{directory.create_entry.label_comment}</label>
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<textarea name="comment" class="span7" rows="2">${entry.comment}</textarea>
+			<label class="col-xs-12 col-sm-12 col-md-12 col-lg-12" for="comment"> #i18n{directory.create_entry.label_comment}</label>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<textarea name="comment" class="form-control input-sm" rows="2">${entry.comment}</textarea>
 			</div>
 		</div>
-		<div class="form-group">
-	   		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<label class="checkbox" for="indexed">
+		<div class="checkbox">
+			<label for="indexed">
 				<input name="indexed" value="1" type="checkbox"  <#if entry.indexed>checked="checked"</#if> >
 				 #i18n{directory.create_entry.label_indexed}
-				</label>
-			</div>
+			</label>
 		</div>
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<label class="checkbox" for="shown_in_advanced_search">
+		<div class="checkbox">
+			<label for="shown_in_advanced_search">
 				<input name="shown_in_advanced_search" value="1" type="checkbox" <#if entry.shownInAdvancedSearch>checked="checked"</#if>>
 				 #i18n{directory.create_entry.label_shown_in_advanced_search}
-				</label>
-				<p class="help-block">#i18n{directory.create_entry.label_shown_in_advanced_search_comment}</p>
-			</div>
+			<p class="help-block">#i18n{directory.create_entry.label_shown_in_advanced_search_comment}</p>
+			</label>
 		</div>
-		<div class="form-group">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<label class="checkbox" for="indexed_as_title">
+		<div class="checkbox">
+			<label for="indexed_as_title">
 				<input name="indexed_as_title" value="1" type="checkbox" <#if entry.indexedAsTitle>checked="checked"</#if>>
 				 #i18n{directory.create_entry.label_indexed_as_title}
-				</label>
-			</div>
+			</label>
 		</div>
-        <div class="form-group">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="indexed_as_summary">
+        <div class="checkbox">
+			<label for="indexed_as_summary">
 				<input name="indexed_as_summary" value="1" type="checkbox" <#if entry.indexedAsSummary>checked="checked"</#if>>
 				 #i18n{directory.create_entry.label_indexed_as_summary}
-				</label>
-			</div>
+			</label>
 		</div>
-        <div class="form-group">
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<label class="checkbox" for="shown_in_result_list">
-					<input name="shown_in_result_list" value="1" type="checkbox" <#if entry.shownInResultList>checked="checked"</#if>>
-					#i18n{directory.create_entry.label_shown_in_result_list}
-				</label>
+        <div class="checkbox">
+			<label for="shown_in_result_list">
+				<input name="shown_in_result_list" value="1" type="checkbox" <#if entry.shownInResultList>checked="checked"</#if>>
+				#i18n{directory.create_entry.label_shown_in_result_list}
 				<p class="help-block">#i18n{directory.create_entry.label_shown_in_result_list_comment}</p>
-			</div>
+			</label>
 		</div>
-		<div class="form-group">
-	   		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<label class="checkbox" for="shown_in_result_record">
-					<input name="shown_in_result_record" value="1" type="checkbox" <#if entry.shownInResultRecord>checked="checked"</#if>>
-	 				 #i18n{directory.create_entry.label_shown_in_result_record}
-				</label>
+		<div class="checkbox">
+			<label for="shown_in_result_record">
+				<input name="shown_in_result_record" value="1" type="checkbox" <#if entry.shownInResultRecord>checked="checked"</#if>>
+	 			 #i18n{directory.create_entry.label_shown_in_result_record}
 				<p class="help-block">#i18n{directory.create_entry.label_shown_in_result_record_comment}</p>
-			</div>
+			</label>
 		</div>
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<label class="checkbox" for="shown_in_history">
-					<input name="shown_in_history" value="1" type="checkbox" <#if entry.shownInHistory>checked="checked"</#if>>
-					#i18n{directory.create_entry.label_shown_in_history}
-				</label>
+		<div class="checkbox">
+			<label for="shown_in_history">
+				<input name="shown_in_history" value="1" type="checkbox" <#if entry.shownInHistory>checked="checked"</#if>>
+				#i18n{directory.create_entry.label_shown_in_history}
 				<p class="help-block">#i18n{directory.create_entry.label_shown_in_history_comment}</p>
-			</div>
+			</label>
 		</div>
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="shown_in_export">
-					<input name="shown_in_export" value="1" type="checkbox" <#if entry.shownInExport>checked="checked"</#if>>
-					#i18n{directory.create_entry.label_shown_in_export}
-				</label>
+		<div class="checkbox">
+			<label for="shown_in_export">
+				<input name="shown_in_export" value="1" type="checkbox" <#if entry.shownInExport>checked="checked"</#if>>
+				#i18n{directory.create_entry.label_shown_in_export}
 				<p class="help-block">#i18n{directory.create_entry.label_shown_in_export_comment}</p>
-			</div>
+			</label>
 		</div>
-		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="shown_in_completeness"></label>
-	    	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<label class="checkbox" for="shown_in_completeness">
-					<input name="shown_in_completeness" value="1" type="checkbox" <#if entry.shownInCompleteness>checked="checked"</#if>>
-					#i18n{directory.create_entry.label_shown_in_completeness}
-				</label>
+		<div class="checkbox">
+			<label for="shown_in_completeness">
+				<input name="shown_in_completeness" value="1" type="checkbox" <#if entry.shownInCompleteness>checked="checked"</#if>>
+				#i18n{directory.create_entry.label_shown_in_completeness}
 				<p class="help-block">#i18n{directory.create_entry.label_shown_in_completeness_comment}</p>
-			</div>
+			</label>
 		</div>
  		</fieldset>
 	</div>
