@@ -1,7 +1,7 @@
 <#function isSelected nIdField  default_values >
 	<#if default_values?has_content>
 		<#list default_values as default_value>
-			<#if default_value.field?exists && default_value.field.idField=nIdField> 		
+			<#if default_value.field?exists && default_value.field.idField=nIdField>
   				<#return true>
   			</#if>
   		</#list>
@@ -10,20 +10,27 @@
 </#function>
 <#assign cpt=0>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
+	<div class="col-xs-12 col-sm-9">
 	<#list entry.fields as field>
    	<#assign cpt=cpt+1>
-			<label class="radio<#if entry.fieldInLine> inline</#if>" >   
-				<input type=radio name="${entry.idEntry}" value="${field.idField}" <#if ( field.defaultValue && !default_values?has_content )||( default_values?has_content && isSelected (field.idField,default_values))> checked="checked"</#if> > 
+		<#if entry.fieldInLine>
+			<label class="radio-inline" for="${entry.idEntry}_${cpt}">
+		<#else>
+			<div class="radio">
+				<label for="${entry.idEntry}_${cpt}">
+		</#if>
+			<input type=radio name="${entry.idEntry}" id="${entry.idEntry}_${cpt}" value="${field.idField}" <#if ( field.defaultValue && !default_values?has_content )||( default_values?has_content && isSelected (field.idField,default_values))> checked="checked"</#if> >
 				${field.title}
-			</label>
-			<#if !entry.fieldInLine&&cpt=1&&entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''>
-				<span class="help-block">${entry.helpMessageSearch}</span>
-			</#if>	
-			<#if entry.fieldInLine&&entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''>
-				<p class="help-block">${entry.helpMessageSearch}</p>
-			</#if>	
+		<#if entry.fieldInLine>
+				</label>
+		<#else>
+				</label>
+			</div>
+		</#if>
+		<#if entry.fieldInLine&&entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''>
+			<span class="help-text">${entry.helpMessageSearch}</span>
+		</#if>
 	</#list>
 	</div>
 </div>

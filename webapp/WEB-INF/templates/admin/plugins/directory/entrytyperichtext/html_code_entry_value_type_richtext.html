@@ -1,7 +1,8 @@
-<strong><em>(Texte riche)</em></strong>
+
 <#assign value = record_field.entry.convertRecordFieldValueToString(record_field,locale,false,false)>
 <#if value?length &gt; 80>
 	${value?substring(0, 80)?xhtml}&nbsp;<strong><em>(&hellip;)</em></strong>
 <#else>
 	${value?xhtml}
 </#if>
+<p class="help-text"><strong><em>(Texte riche)</em></strong></p>

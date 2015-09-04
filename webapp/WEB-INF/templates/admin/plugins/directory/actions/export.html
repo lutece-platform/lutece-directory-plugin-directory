@@ -1,11 +1,11 @@
-<span class="well well-sm spaced">
-<@comboWithParams name="id_directory_xsl" default_value="" additionalParameters="class=\"input-medium\"" items=xsl_export_list />
-<button class="btn btn-primary btn-sm" type="submit" id="export_search_result" name="export_search_result"  title="#i18n{directory.manage_directory_record.button_export_search_result}" >
-	<i class=" icon-download" ></i>
-</button>
-<button class="btn btn-primary btn-sm" type="submit" id="export_search_all" name="export_search_all"  title="#i18n{directory.manage_directory_record.button_export_all_result}" >
-	<i class=" icon-download-alt" ></i>
-</button>
-</span>
-
-
+<div class="btn-group" role="group">
+	<div class="btn-group" role="group">
+		<@comboWithParams name="id_directory_xsl" default_value="" additionalParameters=" class=\"pull-left form-control input-xs\"" items=xsl_export_list />
+	</div>
+	<button class="btn btn-primary btn-xs btn-flat" type="submit" id="export_search_result" name="export_search_result"  title="#i18n{directory.manage_directory_record.button_export_search_result}" >
+		<i class=" fa fa-download" ></i>
+	</button>
+	<button class="btn btn-primary btn-xs btn-flat" type="submit" id="export_search_all" name="export_search_all"  title="#i18n{directory.manage_directory_record.button_export_all_result}" >
+		<i class="fa fa-cloud-download" ></i>
+	</button>
+</div>

@@ -6,40 +6,18 @@
 				<#break>
 			</#if>
 		</#if>
-	</#list> 
+	</#list>
 </#if>
-<div class="form-element">
-	
-	 <span class="form-label">
-		<div class="form-group">
-		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="${entry.idEntry}">	
-			${entry.title}
-			<#if entry.mandatory>
-				*
-			</#if>
-			 : 
-		</label>
-	    </span>
-	    <span class="form-field-column">
-    				<span class="form-field-column"> 
-		    		<#if address??>
-		    			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-	<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${address}"/>
-		</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}_address">${entry.title}</label>
+	<div class="col-xs-12 col-sm-9">
+	<#if address??>
+		<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${address}"/>
+	<#else>
+		<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value=""/>
+	</#if>
+	<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+		<span class="help-text">${entry.helpMessage}</span>
+	</#if>
 	</div>
-		    		<#else>
-		    			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-	<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value=""/>
-		</div>
-	</div>
-		    		</#if>
-		    		</span>
-		</span>
-		 <#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="form-help">
-				<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
-					<span id="info-details" class="hide"><pre> ${entry.helpMessage}</pre></span>
-				</a>
-			</span>
-		</#if>
 </div>

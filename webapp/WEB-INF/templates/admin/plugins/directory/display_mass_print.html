@@ -1,81 +1,57 @@
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<fieldset>
-		<legend>#i18n{directory.resource_history.title}
-			<form class="form-inline pull-right" action="jsp/admin/plugins/directory/MassPrint.jsp" method="post">
-			<input type="hidden" value="${idDirectory!}" name="id_directory"/>
-			<button class="btn btn-primary btn-sm spaced" type="button" id="print">
-				<i class="glyphicon glyphicon-print"></i>&nbsp;#i18n{directory.manage_directory_record.button_mass_print}
-			</button
-			><button class="btn btn-sm" type="submit" >
-				<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.resource_history.buttonBack}
-			</button>
-		</form>
-		</legend>
-		<form class="form pull-right" method="post"  action="jsp/admin/plugins/directory/DisplayMassPrint.jsp?id_directory=${idDirectory!}&id_state=${idState!}">
-			<@paginationAdmin paginator=paginator combo=1 />
-			<!-- Number of feeds per page selector
-			<label class="inline">
-				#i18n{directory.manage_directory_record.label_items_per_page} 
-				<select name="items_per_page" class="input-mini">
-				<#list [ "50" , "100", "200" ] as nb>
-					<#if nb_items_per_page = nb >
-						<option selected="selected" value="${nb}">${nb}</option>
-					<#else>
-						<option value="${nb}">${nb}</option>
-					</#if>
-				</#list>
-				</select>
-				<button class="btn btn-primary btn-sm " type="submit" >
-					<i class="glyphicon glyphicon-white icon-ok"></i>&nbsp;#i18n{directory.manage_directory_record.button_items_per_page}
-				</button>
-			</label>-->
-		</form> 
-		<br class="clearfix">
-		<#list history_list as history>
-		<div class="well well-sm">
-			<div class="row">
-				<div class="span3">
-					<#list entry_list as entry>	
-						<#if entry.entryType.group>	
-							<label> ${entry.title} </label> 
+	<div class="col-xs-12 col-sm-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">#i18n{directory.resource_history.title}	</h3>
+				<div class="box-tools">
+					<form class="form-inline pull-right" action="jsp/admin/plugins/directory/MassPrint.jsp" method="post">
+						<input type="hidden" value="${idDirectory!}" name="id_directory">
+						<button class="btn btn-primary btn-xs spaced" type="button" id="print">
+							<i class="fa fa-print"></i> #i18n{directory.manage_directory_record.button_mass_print}
+						</button>
+						<button class="btn btn-default btn-xs btn-flat" type="submit" >
+							<i class="fa fa-remove"></i> #i18n{directory.resource_history.buttonBack}
+						</button>
+					</form>
+				</div>
+			</div>
+			<div class="box-body">
+				<form class="form-inline" method="post"  action="jsp/admin/plugins/directory/DisplayMassPrint.jsp?id_directory=${idDirectory!}&id_state=${idState!}">
+					<@paginationAdmin paginator=paginator combo=1 />
+				</form>
+				<div class="callout callout-info">
+				<#list history_list as history>
+					<#list entry_list as entry>
+						<#if entry.entryType.group>
+							<strong> ${entry.title} </strong>
 							<#if entry.children?has_content>
 								<#list entry.children as child >
 									<#if child.title?exists>
-										<label for="">${child.title}</label>
-									 </#if> 	
-									<#assign entryKey=""+child.idEntry>	
+										<strong>${child.title} </strong>
+									 </#if>
+									<#assign entryKey=""+child.idEntry>
 									<#list history.map_id_entry_list_record_field[entryKey] as recordfield>
 										${child.getHtmlRecordFieldValue( locale, recordfield,false )}
 									</#list>
-									
 								</#list>
 							</#if>
 						<#else>
-							<#assign entryKey=""+entry.idEntry>	
+							<#assign entryKey=""+entry.idEntry>
 							<#if entry.title?exists>
-								<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">${entry.title}</label>
-							</#if>	
+								 <strong>${entry.title} </strong>
+							</#if>
 								<#list history.map_id_entry_list_record_field[entryKey] as recordfield>
 									<strong>${entry.getHtmlRecordFieldValue( locale, recordfield, false )}</strong>
-								</#list>	
-						
-						</#if>	
+								</#list>
+						</#if>
 				</#list>
 				</div>
-				<div class="span8">
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3">&nbsp;</label> 
-						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="callout callout-info">
 						${history.resource_history}
-						</div> 
-					</div> 
-				</div> 
-			</div> 
-		</div>
+				</div>
 		</#list>
-	
-		</fieldset>
+		</div>
+		</div>
 	</div>
 </div>
 <script>

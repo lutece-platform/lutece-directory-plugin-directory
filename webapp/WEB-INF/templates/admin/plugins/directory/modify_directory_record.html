@@ -1,84 +1,65 @@
-<#include "/admin/util/editor/editor.html" />
-
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<fieldset>
-	<legend>
-	  	#i18n{directory.modify_directory_record.title}: '${directory.title}'
-		<small>
-	  	<#if directory_record.dateCreation??>- #i18n{directory.viewing_directory_record.date_creation} ${directory_record.dateCreation}</#if>
-	  	<#if directory_record.dateModification??>- #i18n{directory.viewing_directory_record.date_modification} ${directory_record.dateModification}</#if>
-		</small>
-		<#if extendableResourceActionsHtml?? && extendableResourceActionsHtml?has_content>
-			${extendableResourceActionsHtml!}
-		</#if>
-	</legend>
-		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id=""  enctype="multipart/form-data">
-		<input name="page" value="directory" type="hidden" />
-		<input name="id_directory_record" value="${directory_record.idRecord}" type="hidden" />
-		<#list entry_list as entry>	
-	    	<#if entry.entryType.group>	
-	      		<fieldset> 
-					<legend> ${entry.title} </legend> 
-					<#if entry.children?has_content>
-						<#list entry.children as child >
-							<#assign entryKey=""+child.idEntry>
-							<#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
-								${child.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
-							<#else>
-								${child.getHtmlFormEntry( locale,false )}
-							</#if>
-						</#list>
+	<div class="col-xs-12 col-sm-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					#i18n{directory.modify_directory_record.title}: '${directory.title}'
+					<small>
+						<#if directory_record.dateCreation??>- #i18n{directory.viewing_directory_record.date_creation} ${directory_record.dateCreation}</#if>
+						<#if directory_record.dateModification??>- #i18n{directory.viewing_directory_record.date_modification} ${directory_record.dateModification}</#if>
+					</small>
+				</h3>
+				<div class="box-tools">
+					<#if extendableResourceActionsHtml?? && extendableResourceActionsHtml?has_content>
+						${extendableResourceActionsHtml!}
 					</#if>
-							
-				</fieldset>		
-	      	<#else>
-				<#assign entryKey=""+entry.idEntry>
-	      		<#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
-	      			${entry.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
-				<#else>
-	      			${entry.getHtmlFormEntry( locale,false )}
-	      		</#if>
-	      	</#if>
-	    </#list>
-			<div class="form-group">
-	  			<button class="btn btn-primary btn-sm" type="submit" name="save" >
-					<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_directory_record.button_save}
-				</button>
-	  			<button class="btn btn-sm" type="submit" name="cancel" value="cancel">
-					<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.create_directory_record.button_cancel}
-				</button>
-			</div>	
-		</form>
-		</fieldset>
+				</div>
+			</div>
+			<div class="box-body">
+					<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyDirectoryRecord.jsp" method="post" name="" id="form-directory"  enctype="multipart/form-data">
+					<input name="page" value="directory" type="hidden">
+					<input name="id_directory_record" value="${directory_record.idRecord}" type="hidden">
+					<#list entry_list as entry>
+					  	<#if entry.entryType.group>
+								<div class="form-group">
+					    	<label class="control-label col-xs-12 col-sm-2" for="">${entry.title} </label>
+								<div class="col-xs-12 col-sm-9">
+									<#if entry.children?has_content>
+										<#list entry.children as child >
+											<#assign entryKey=""+child.idEntry>
+											<#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
+												${child.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+											<#else>
+												${child.getHtmlFormEntry( locale,false )}
+											</#if>
+										</#list>
+									</#if>
+								</div>
+							</div>
+						<#else>
+							<#assign entryKey=""+entry.idEntry>
+					  		<#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
+					  			${entry.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+								<#else>
+					  			${entry.getHtmlFormEntry( locale,false )}
+					  		</#if>
+					  </#if>
+					</#list>
+					<div class="col-xs-12 col-sm-offset-2 col-sm-9">
+				  		<button class="btn btn-primary btn-flat" type="submit" name="save" >
+								<i class="fa fa-check"></i> #i18n{directory.create_directory_record.button_save}
+							</button>
+				  			<button class="btn btn-defautl btn-flat" type="submit" name="cancel" value="cancel">
+								<i class="fa fa-remove"></i> #i18n{directory.create_directory_record.button_cancel}
+							</button>
+						</div>
+					</form>
+			</div>
+		</div>
 	</div>
 </div>
-
-<@initEditor />
-
 <script src="js/plugins/directory/uploadify/jquery.uploadify.v2.1.4.min.js" type="text/javascript"></script>
 <script src="js/plugins/directory/uploadify/swfobject.js" type="text/javascript"></script>
 <script src="js/plugins/directory/directoryupload.js" type="text/javascript"></script>
-<script src="js/jquery/plugins/ui/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
-<script>
-//for datepicker questions
-$(document).ready(function (){
-	/*var locale = "en-US";
-	if( $("#locale").html != null ){	locale = $("#locale").html;}*/
-
-	$.datepicker.setDefaults({
-		/*showOn: 'button', 
-		buttonImageOnly: true, 
-		buttonImage: 'js/jquery/plugins/ui/datepicker/calendar.png', 
-		buttonText: 'Calendar', 
-		showAnim: 'slideDown', 
-		speed: 'fast'*/
-	});
-
-	$( ".datepicker-element" ).each(function( i ){
-		/*$(this).datepicker($.extend({showStatus: true}, $.datepicker.regional[locale]));*/
-		$( this ).datepicker();
-	});
-});
-</script>
+<#include "/admin/util/editor/editor.html" />
+<@initEditor />

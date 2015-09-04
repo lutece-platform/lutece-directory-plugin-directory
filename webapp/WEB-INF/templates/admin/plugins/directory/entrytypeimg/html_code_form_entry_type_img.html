@@ -1,15 +1,19 @@
 <#include "/admin/plugins/directory/commons.html" />
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"> 
-		<input type="hidden" name="_directory_upload_maxLength_directory_${entry.idEntry}" id="_directory_upload_maxLength_directory_${entry.idEntry}" value="${getFileMaxSize( entry )}" />
-		<input type="hidden" name="_directory_upload_fileTypes_directory_${entry.idEntry}" id="_directory_upload_fileTypes_directory_${entry.idEntry}" value="${getFileTypes( entry )}" />
-		<input type="file" name="directory_${entry.idEntry}" id="directory_${entry.idEntry}" >&nbsp;
-		<button type="submit" class="btn btn-primary btn-sm" id="_directory_upload_submit_directory_${entry.idEntry}" name="_directory_upload_submit_directory_${entry.idEntry}">
-			<i class="glyphicon glyphicon-upload"></i>&nbsp;#i18n{directory.action.send.name}
-		</button>
+ <label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
+<div class="col-xs-12 col-sm-9">
+		<input type="hidden" name="_directory_upload_maxLength_directory_${entry.idEntry}" id="_directory_upload_maxLength_directory_${entry.idEntry}" value="${getFileMaxSize( entry )}">
+		<input type="hidden" name="_directory_upload_fileTypes_directory_${entry.idEntry}" id="_directory_upload_fileTypes_directory_${entry.idEntry}" value="${getFileTypes( entry )}" >
+		<div class="input-group">
+			<input type="file" class="form-control" name="directory_${entry.idEntry}" id="directory_${entry.idEntry}">
+			<span class="input-group-btn">
+				<button type="submit" class="btn btn-default btn-flat" id="_directory_upload_submit_directory_${entry.idEntry}" name="_directory_upload_submit_directory_${entry.idEntry}">
+					<i class="fa fa-upload"></i> #i18n{directory.action.send.name}
+				</button>
+			</span>
+		</div>
 		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-block">${entry.helpMessage}</p>
+			<span class="help-text">${entry.helpMessage}</span>
 		</#if>
 		<#-- file removing -->
 		<#assign has_files = false>
@@ -31,10 +35,10 @@
 					<#if default_value.file?exists>
 					<span id="_file_deletion_${entry.idEntry}"><label>&nbsp;</label></span>
 					<span id="_filename_directory_${entry.idEntry}">
-					<input type="checkbox" id="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" name="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" value="1" />
+					<input type="checkbox" id="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" name="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" value="1">
 					<#-- Case when the user uploads without JS -->
 					<#if default_value.file.idFile != -1 && default_value.file.idFile != 0>
-						<img src="image?resource_type=directory_entry_img&id=${default_value.file.idFile}" height="40" />
+						<img src="image?resource_type=directory_entry_img&id=${default_value.file.idFile}" class="img-responsive">
 						${default_value.file.title} (${default_value.file.size} O)
 					<#else>
 						${default_value.file.title} (${default_value.file.size} O)
@@ -45,11 +49,13 @@
 				</#if>
 			</#list>
 		</#if>
-		<div class="form-element" id="_file_deletion_button_directory_${entry.idEntry}">
-			<label for="${entry.idEntry}">&nbsp;</label>
-			<button type="submit" class="btn btn-danger btn-sm" name="_directory_upload_delete_directory_${entry.idEntry}">
-				<i class="glyphicon glyphicon-trash"></i>&nbsp;#i18n{directory.action.delete.name}
-			</button> 
-		</div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-2" id="_file_deletion_button_directory_${entry.idEntry}" for="${entry.idEntry}"></label>
+	<div class="col-xs-12 col-sm-9">
+		<button type="submit" class="btn btn-danger btn-xs btn-flat" name="_directory_upload_delete_directory_${entry.idEntry}">
+			<i class="fa fa-trash"></i> #i18n{directory.action.delete.name}
+		</button>
 	</div>
 </div>

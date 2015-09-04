@@ -1,6 +1,8 @@
 <#if list_mass_workflow_actions?? && list_mass_workflow_actions?has_content>
-	<@comboWithParams name="id_action" default_value="" additionalParameters="class=\"input-medium\"" items=list_mass_workflow_actions />
-	<button type="submit" id="mass_workflow_action" value="mass_workflow_action" name="mass_workflow_action"  title="#i18n{directory.action.mass_workflow_action.name}" class="btn btn-primary">
-		<i class="glyphicon glyphicon-ok"></i>
+<div class="btn-group" role="group">
+	<@comboWithParams name="id_action" default_value="" additionalParameters="class=\"input-xs\"" items=list_mass_workflow_actions />
+	<button type="submit" id="mass_workflow_action" value="mass_workflow_action" name="mass_workflow_action"  title="#i18n{directory.action.mass_workflow_action.name}" class="btn btn-primary btn-xs btn-flat">
+		<i class="fa fa-check"></i>
 	</button>
+</div>
 </#if>

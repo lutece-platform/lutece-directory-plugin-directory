@@ -1,21 +1,21 @@
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>*</#if></label>
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>*</#if></label>
+	<div class="col-xs-12 col-sm-9">
 	<#if max_number?exists && !default_values?has_content>
 		<#list entry.fields as field>
 			<#if field.title?exists>
-				<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" value="${max_number}" />${field.title}${max_number}
+				<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" value="${max_number}"> ${field.title} ${max_number}
 			</#if>
 		</#list>
 		<#elseif default_values?has_content>
 			<#list default_values as default_value>
-				<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" value="${default_value.value}" />${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}
-			</#list>	 	
+				<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" value="${default_value.value}"> ${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}
+			</#list>
 		<#else>
-			<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" />#i18n{directory.entry_type_numbering.labelAutomaticNumbering}
+			<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" > #i18n{directory.entry_type_numbering.labelAutomaticNumbering}
 		</#if>
 		 <#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-block">${entry.helpMessage}</p>
+			<span class="help-text">${entry.helpMessage}</span>
 		</#if>
 	</div>
 </div>

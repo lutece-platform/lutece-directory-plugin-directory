@@ -1,60 +1,62 @@
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<fieldset>
-		<legend> #i18n{directory.create_field.title}:'${field.entry.title}'</legend>
-		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoCreateField.jsp#list" method="post" name="" id=""  >
-			<div class="form-group">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="title">#i18n{directory.create_field.label_title} *</label>
-				 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<input type="text" name="title" id="title" class="form-control input-sm" value=""  maxlength="255" />
-				</div>
+	<div class="col-xs-12 col-sm-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title"> #i18n{directory.create_field.title}:'${field.entry.title}'</h3>
 			</div>
-			<div class="form-group">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="value">#i18n{directory.create_field.label_value} *</label>
-				 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<input type="text" name="value" id="value" class="form-control input-sm" value="" />
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for=""></label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<div class="checkbox">
-						<label for="default_value">
-							<input name="default_value" value="1" type="checkbox" >
-							 #i18n{directory.create_field.label_default_value}
-						</label>
+			<div class="box-body">
+				<form class="form-horizontal" action="jsp/admin/plugins/directory/DoCreateField.jsp#list" method="post" name="" id="">
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-2" for="title">#i18n{directory.create_field.label_title} *</label>
+					 <div class="col-xs-12 col-sm-9">
+						<input type="text" name="title" id="title" class="form-control" value=""  maxlength="255">
 					</div>
 				</div>
-			</div>
-			<#if field.entry.roleAssociated && role_list?exists >
-			<div class="form-group">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="role">#i18n{directory.create_field.label_role} : </label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<@comboWithParams name="role_key" default_value="none" items=role_list additionalParameters="class='form-control input-sm'" />
-					<span class="help-block">&nbsp;#i18n{directory.create_field.label_role}</span>
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-2" for="value">#i18n{directory.create_field.label_value} *</label>
+					 <div class="col-xs-12 col-sm-9">
+						<input type="text" name="value" id="value" class="form-control" value="">
+					</div>
 				</div>
-			</div>
-			</#if>
-			<#if field.entry.workgroupAssociated && user_workgroup_list?exists> 
-			<div class="form-group">
-				<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="workgroup">#i18n{directory.create_field.label_workgroup}  : </label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<@comboWithParams name="workgroup"  items=user_workgroup_list default_value="all" additionalParameters="class='form-control input-sm'" />
-					<span class="help-block">#i18n{directory.create_field.label_workgroup_comment}</span>
+				<div class="form-group">
+					<label class="control-label col-xs-12 col-sm-2" for=""></label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="checkbox">
+							<label  for="default_value">
+								<input name="default_value" id="default_value" value="1" type="checkbox"> #i18n{directory.create_field.label_default_value}
+							</label>
+						</div>
+					</div>
 				</div>
-			</div>
-			</#if>	
-			<div class="form-group">
-				<div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
-					<button type="submit" value="#i18n{directory.create_field.button_save}" title="#i18n{directory.create_field.button_save}" class="btn btn-primary btn-sm" name="save" >
-						<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.create_field.button_save}
+				<#if field.entry.roleAssociated && role_list?exists >
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-2" for="role">#i18n{directory.create_field.label_role} : </label>
+						<div class="col-xs-12 col-sm-9">
+							<@combo name="role_key" default_value="none" items=role_list />
+							<span class="help-text">&nbsp;#i18n{directory.create_field.label_role}</span>
+						</div>
+					</div>
+				</#if>
+				<#if field.entry.workgroupAssociated && user_workgroup_list?exists>
+					<div class="form-group">
+						<label class="control-label col-xs-12 col-sm-2" for="workgroup">#i18n{directory.create_field.label_workgroup}  : </label>
+						<div class="col-xs-12 col-sm-9">
+							<@combo name="workgroup"  items=user_workgroup_list default_value="all" />
+							<span class="help-text">#i18n{directory.create_field.label_workgroup_comment}</span>
+						</div>
+					</div>
+				</#if>
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-offset-2 col-sm-10">
+					<button type="submit" value="#i18n{directory.create_field.button_save}" title="#i18n{directory.create_field.button_save}" class="btn btn-primary btn-flat" name="save" >
+						<i class="fa fa-check"></i> #i18n{directory.create_field.button_save}
 					</button>
-					<button type="submit" class="btn btn-default btn-sm" name="cancel" title="#i18n{directory.create_field.button_cancel}">
-						<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.create_field.button_cancel}
+					<button type="submit" class="btn btn-default btn-flat" name="cancel" title="#i18n{directory.create_field.button_cancel}">
+						<i class="fa fa-remove"></i> #i18n{directory.create_field.button_cancel}
 					</button>
 				</div>
-			</div>
-		</form>
-	</fieldset>
+				</div>
+			</form>
+		</div>
 	</div>
-</div> 
+</div>

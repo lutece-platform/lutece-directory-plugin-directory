@@ -1,7 +1,7 @@
 <#function isSelected nIdField  default_values >
 	<#if default_values?has_content>
 		<#list default_values as default_value>
-			<#if default_value.field?exists && default_value.field.idField=nIdField>  		
+			<#if default_value.field?exists && default_value.field.idField=nIdField>
   				<#return true>
   			</#if>
   		</#list>
@@ -9,16 +9,16 @@
  <#return false>
 </#function>
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3"  for="${entry.idEntry}">${entry.title}</label>
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"> 
-		<select name="${entry.idEntry}"  id="${entry.idEntry}">
+	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}</label>
+	<div class=" col-xs-12 col-sm-9">
+		<select name="${entry.idEntry}" class="form-control" id="${entry.idEntry}">
 		<#if entry.isAddValueAllSearch()>
 			<option value="">${entry.labelValueAllSearch!}</option>
 		</#if>
 		<#list entry.fields as field>
-			<option  value="${field.idField}" <#if  default_values?has_content && isSelected (field.idField,default_values)>selected ="selected"</#if>>${field.title}</option>	
+			<option value="${field.idField}" <#if default_values?has_content && isSelected (field.idField,default_values)>selected ="selected"</#if>>${field.title}</option>
 		</#list>
 		</select>
-	   <#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''><span class="help-block">${entry.helpMessageSearch}</p></#if>	
-	</div>	
-</div>	
+	   <#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''><span class="help-text">${entry.helpMessageSearch}</span></#if>
+	</div>
+</div>

@@ -5,8 +5,8 @@
 		<#if !(record_field.value?has_content) || (record_field.value == '0')>
 			#i18n{directory.message.noGeolocation}
 		<#else>
-			<input type="hidden" name="geolocation" value="${record_field.entry.idEntry}" />
-			<input type="hidden" id="${record_field.entry.idEntry}_x" name="x" value="${record_field.value}"/>
+			<input type="hidden" name="geolocation" value="${record_field.entry.idEntry}">
+			<input type="hidden" id="${record_field.entry.idEntry}_x" name="x" value="${record_field.value}">
 		</#if>
 	<#elseif record_field.field.title == 'Y'>
 		<#if record_field.value?has_content && record_field.value != '0'>

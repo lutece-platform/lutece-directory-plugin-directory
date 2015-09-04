@@ -1,42 +1,19 @@
-<div class="form-element">
-	 <span class="form-label">
-		 <div class="form-group">
-		<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="${entry.idEntry}">	
-				${entry.title}
-				<#if entry.mandatory>
-					*
-				</#if>
-				 : 
-		</label>
-		
-	</span>
-	<span class="form-field-column">
-	 	<#if default_values?has_content>	 
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}</label>
+	<div class="col-xs-12 col-sm-9">
+	 	<#if default_values?has_content>
 			<#list default_values as default_value>
 		 		<#if default_value?exists && default_value.value?exists>
-		 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-	<@combo name=entry.idEntry items=entry.getSqlQueryFields() default_value=default_value.value />
-		</div>
-	</div>
+					<@comboWithParams name=entry.idEntry default_value=default_value.value additionalParameters=" class=\"form-control\" " items=entry.getSqlQueryFields() />
 		 		<#else>
-		 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-	<@combo name=entry.idEntry items=entry.getSqlQueryFields() default_value=-1 />
-		</div>
-	</div>
-		 		</#if>
-		 	</#list>
+					<@comboWithParams name=entry.idEntry default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.getSqlQueryFields() />
+				</#if>
+			</#list>
 		 <#else>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-	<@combo name=entry.idEntry  items=entry.getSqlQueryFields() default_value=-1 />
-		</div>
-	</div>		
-		</#if>	
-	</span>			
-	<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-		<span class="form-help">
-			<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
-				<span><pre> ${entry.helpMessage}</pre></span>
-			</a>
-		</span>
-	</#if>	
-</div>	
+				<@comboWithParams name=entry.idEntry default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.getSqlQueryFields() />
+		</#if>
+		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+			<span class="help-text">${entry.helpMessage}</span>
+		</#if>
+	</div>
+</div>

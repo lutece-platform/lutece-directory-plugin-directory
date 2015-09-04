@@ -1,25 +1,18 @@
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="entry_${entry.idEntry}">	
-		${entry.title}<#if entry.mandatory> * </#if> : 
-	</label>
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-	   	<#list entry.fields as field>
-			<#if field.value?exists && !default_values?has_content>
-				<#assign field_value = field.value/>			
-			<#elseif default_values?has_content>
-				<#assign field_value = default_values[0].entry.convertRecordFieldValueToString(default_values[0],locale,false,false)/>
-		 	<#else>
-				<#assign field_value = ""/>
-			</#if>
-				<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" class="richtext" 
-					style="width:100%" rows="20" cols="90">${field_value}</textarea>
-		 </#list>
-		 <#if entry.helpMessage?exists && entry.helpMessage!=''>
-			<span class="form-help">
-				<a class="info" href="javascript:void;"><img  src="images/admin/skin/plugins/directory/help.gif" />
-					<span><pre>${entry.helpMessage}</pre></span>
-				</a>
-			</span>
-		</#if>	
+	<label class="control-label col-xs-12 col-sm-2" for="entry_${entry.idEntry}">${entry.title}<#if entry.mandatory> * </#if></label>
+	<div class="col-xs-12 col-sm-9">
+		<#list entry.fields as field>
+		<#if field.value?exists && !default_values?has_content>
+			<#assign field_value = field.value/>
+		<#elseif default_values?has_content>
+			<#assign field_value = default_values[0].entry.convertRecordFieldValueToString(default_values[0],locale,false,false)/>
+	 	<#else>
+			<#assign field_value = ""/>
+		</#if>
+		<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" class="richtext form-control" rows="20">${field_value}</textarea>
+		</#list>
+		<#if entry.helpMessage?exists && entry.helpMessage!=''>
+			<span class="help-text">${entry.helpMessage}</span>
+		</#if>
 	</div>
 </div>

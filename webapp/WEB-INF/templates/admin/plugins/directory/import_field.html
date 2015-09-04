@@ -1,55 +1,68 @@
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<fieldset>
-        <legend> #i18n{directory.import_field.title} : '${entry.title}'</legend>
-		<form class="form-horizontal" method="post" action="jsp/admin/plugins/directory/DoImportField.jsp" enctype="multipart/form-data">
-		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-    	<input type="hidden" name="id_entry" value="${entry.idEntry}" />
+	<div class="col-xs-12 col-sm-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title"> #i18n{directory.import_field.title} : '${entry.title}'</h3>
+			</div>
+			<div class="box-body">
+				<form class="form-horizontal" method="post" action="jsp/admin/plugins/directory/DoImportField.jsp" enctype="multipart/form-data">
+				<input type="hidden" name="id_directory" value="${directory.idDirectory}">
+    		<input type="hidden" name="id_entry" value="${entry.idEntry}">
         <div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="file_import" >#i18n{directory.import_field.label_file} * : </label>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<input type="file" id="file_import" name="file_import" size="60" maxlength="100"/>
-			</div>
-		</div>
-        <div class="form-group">
-			<div class="col-xs-12 col-sm-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6">
-				<button class="btn btn-primary btn-sm" id="save" type="submit" >
-					<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.import_field.button_save}
-				</button>
-				<a class="btn btn-default btn-sm" href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}">
-					<i class="glyphicon glyphicon-edit"></i>&nbsp;#i18n{directory.import_field.button_cancel}</button>
-				</a>
-			</div>
-		</div>
-        </fieldset>
-		</form>
-		<#if finish_import?exists && finish_import>
-			<div class="well" >
-				<p class="lead">#i18n{directory.import_field.label_result}</p>
-				<#if number_lines_imported?exists>
-					<strong>#i18n{directory.import_field.label_number_lines_imported} </strong>: ${number_lines_imported}
-				</#if>	
-				<#if number_lines_error?exists>
-					<strong>#i18n{directory.import_field.label_number_lines_error} </strong>: ${number_lines_error}
+					<label class="control-label col-xs-12 col-sm-2" for="file_import" >#i18n{directory.import_field.label_file} * : </label>
+		      <div class="col-xs-12 col-sm-9">
+						<input type="file" id="file_import" name="file_import" class="form-control" maxlength="100"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-offset-2 col-sm-10">
+						<button class="btn btn-primary btn-flat" id="save" type="submit" >
+							<i class="fa fa-check"></i> #i18n{directory.import_field.button_save}
+						</button>
+						<a class="btn btn-default btn-flat" href="jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}">
+							<i class="fa fa-remove"></i> #i18n{directory.import_field.button_cancel}</button>
+						</a>
+					</div>
+				</div>
+				<#if finish_import?exists && finish_import>
+					<div class="form-group">
+						<label class="control-label col-sm-3">#i18n{directory.import_field.label_result}</label>
+						<div class="col-xs-12 col-sm-9">
+							<div class="callout callout-info" >
+								<#if number_lines_imported?exists>
+									<strong>#i18n{directory.import_field.label_number_lines_imported} </strong>: ${number_lines_imported}
+								</#if>
+								<#if number_lines_error?exists>
+									<div class="callout callout-danger">
+										<strong>#i18n{directory.import_field.label_number_lines_error} </strong>: ${number_lines_error}
+									</div>
+								</#if>
+								<#if str_error?exists && number_lines_error?exists && number_lines_error!=0>
+									<div class="callout callout-danger">${str_error}</div>
+								</#if>
+							</div>
+						</div>
+					</div>
 				</#if>
-				<#if str_error?exists && number_lines_error?exists && number_lines_error!=0>
-					<div class="alert alert-error">${str_error}</div>
-				</#if>
-			</div>
-		</#if>
-		<div id="message">
-			<div class="alert alert-error">
-				<img src="images/local/skin/loadingAnimation.gif" />
-				<strong>#i18n{directory.import_field.message_wait_during_import}...</strong>
+				<div class="form-group" id="message">
+					<label class="control-label col-sm-3" for="" ></label>
+					<div class="col-xs-12 col-sm-9" >
+						<div class="callout callout-warning">
+							<i class="fa fa-spinner fa-pulse"></i>
+							<strong>#i18n{directory.import_directory_record.message_wait_during_import}...</strong>
+						</div>
+					</div>
+				</div>
+				</form>
 			</div>
 		</div>
-    </div>
+	</div>
 </div>
 
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#message").hide();
-	$("#save").click(function () { 
+	$("#save").click(function () {
       $("#message").toggle();
     });
 });

@@ -2,7 +2,7 @@
 	<label class="col-sm-2 col-md-2 control-label" for="form${entry.idEntry}" id="form${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
 		<div class="col-md-10 col-sm-10">
 			<div class="table-responsive">
-				<table class="table table-striped">
+				<table class="table table-hover">
 			<#assign x=entry.numberRow>
 			<#list 1..x+1 as i>
 			  <tr>
@@ -23,12 +23,12 @@
 				  	<#elseif i == 1 && j == 1>
 				  		<b>${entry.comment}</b>
 				  	<#else>
-				  		<input id="field_${i}_${j}" name="field_${i}_${j}" type="text" />
+				  		<input id="field_${i}_${j}" name="field_${i}_${j}" type="text" class="form-control">
 				  	</#if>
 			  	</td>
 			  	</#list>
 			  </tr>
-			</#list>  
+			</#list>
 				</table>
 			</div>
 		</div>

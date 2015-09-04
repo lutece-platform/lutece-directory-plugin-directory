@@ -1,28 +1,36 @@
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<fieldset>
-		<legend>#i18n{directory.mass_print.page_title}</legend>
-		<form class="form-horizontal" method="post" action="jsp/admin/plugins/directory/DoMassPrint.jsp">
-		<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-		 <#list state_list as state>
-		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" >&nbsp;</label>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<label class="checkbox" for="${state.id}">
-						<input class="checkbox" type="checkbox" name="${state.id}" value="${state.id}" />${state.name}
-					</label>
+  <div class="col-md-12">
+    <div class="box box-primary">
+  		<div class="box-header">
+  			<h3 class="box-title">#i18n{directory.mass_print.page_title}</h3>
+  		</div>
+  		<div class="box-body">
+				<form class="form-horizontal" method="post" action="jsp/admin/plugins/directory/DoMassPrint.jsp">
+					<input type="hidden" name="id_directory" value="${directory.idDirectory}" >
+				 	<#list state_list as state>
+						<div class="form-group">
+							<label class="control-label col-md-3" >&nbsp;</label>
+							<div class="col-md-9">
+								<div class="checkbox">
+									<label for="${state.id}">
+										<input class="checkbox" type="checkbox" name="${state.id}" value="${state.id}" />${state.name}
+									</label>
+								</div>
+							</div>
+						</div>
+					</#list>
+					<div class="form-group">
+						<div class="col-md-offset-3 col-md-9">
+							<button class="btn btn-primary" type="submit" >
+								<i class="fa fa-print"></i>&nbsp;#i18n{directory.mass_print.print}
+							</button>
+							<a class="btn btn-default" href="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp?id_directory=${directory.idDirectory!}" >
+							    <i class="fa fa-remove"></i> #i18n{directory.mass_print.button_back}
+							</a>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
-		</#list>
-			<div class="form-group">
-				<button class="btn btn-primary btn-sm" type="submit" >
-					<i class="glyphicon glyphicon-print"></i>&nbsp;#i18n{directory.mass_print.print}
-				</button>
-				<button type="button" class="btn btn-sm" onclick="javascript:window.location.href='jsp/admin/plugins/directory/ManageDirectoryRecord.jsp?id_directory=${directory.idDirectory!}'" >	
-				    <i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{directory.mass_print.button_back}
-				</button>
-		</div>
-		</form>	
-		</fieldset>
 	</div>
 </div>

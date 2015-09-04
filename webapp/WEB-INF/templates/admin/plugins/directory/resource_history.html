@@ -1,115 +1,110 @@
 <#macro display_actions resource_actions >
 	<#if resource_actions.workflow_action_list?exists>
 		<#list resource_actions.workflow_action_list as action>
-			<a href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">	
-				<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}"
-					<#if action.icon.width!=-1>
-						width="${action.icon.width}"
- 					</#if> 
-					<#if action.icon.height!=-1>
-						height="${action.icon.height}"
-					</#if> 
-					title="${action.name}" alt="${action.name}"
-				/>
+			<a class="btn btn-primary btn-xs btn-flat" href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">
+				<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}"	<#if action.icon.width!=-1>	width="${action.icon.width}"</#if><#if action.icon.height!=-1> height="${action.icon.height}"</#if>	title="${action.name}" alt="${action.name}">
 			</a>
 		</#list>
 	</#if>
 	<#list resource_actions.record.actions as action>
 		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
-	 		<a href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}" title="${action.description}" class="btn btn-sm <#if action.nameKey="directory.action.delete.name" || action.nameKey=="directory.action.disable.name" >btn-danger<#elseif action.nameKey="directory.action.enable.name">btn-success<#else>btn-primary</#if>">
-	  			<i class="glyphicon glyphicon-white ${action.iconUrl}" alt="${action.name}">&nbsp;</i>
+	 		<a  href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}" title="${action.description}" class="btn btn-xs btn-flat <#if action.nameKey="directory.action.delete.name" || action.nameKey=="directory.action.disable.name" >btn-danger<#elseif action.nameKey="directory.action.enable.name">btn-success<#else>btn-primary</#if>">
+	  			<i class="${action.iconUrl}" alt="${action.name}"></i>
 	  		</a>
 		</#if>
 	</#list>
 </#macro>
 <div class="row">
-	<div class="span4">
-		<fieldset>
-		<legend>#i18n{directory.resource_history.labelRecord} ${record.idRecord}</legend>
-			<table class="table table-striped table-condensed">
-				<tr>
-					<th>#i18n{directory.resource_history.labelDirectory}</th>
-				</tr>
-				<tr>
-					<td>${directory.title}</td>
-				</tr>
-				<#if resource_actions.workflow_state?exists>
+	<div class="col-xs-12 col-sm-4">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">#i18n{directory.resource_history.labelRecord} ${record.idRecord}</h3>
+			</div>
+			<div class="box-body">
+				<table class="table table-hover table-condensed">
 					<tr>
-						<th>#i18n{directory.resource_history.labelState}</th>
+						<th>#i18n{directory.resource_history.labelDirectory}</th>
 					</tr>
 					<tr>
-						<td>${resource_actions.workflow_state.name}</td>
+						<td>${directory.title}</td>
 					</tr>
-				</#if>
-				<tr>
-					<th>#i18n{directory.resource_history.actions}</th>
-				</tr>
-				<tr>
-					<td>
-						<#if item_navigator??>
-							<@item_navigation item_navigator=item_navigator />
-						</#if>
-						<@display_actions resource_actions/>
-					</td>
-				</tr>
-			</table>
-		</fieldset>
-	</div>
-	<div class="span8">
-		<fieldset>
-		<legend>
-			#i18n{directory.resource_history.title}
-			<#if date_creation?? > - #i18n{directory.resource_history.date_creation} ${date_creation}</#if>
-			<#if date_modification?? > - #i18n{directory.resource_history.date_modification} ${date_modification}</#if>
-		</legend>
-		<#list entry_list as entry>	
-		   	<#if entry.entryType.group>	
-		   	  	<p>&nbsp;${entry.title}</p> 
-				<#if entry.children?has_content>
-					<#list entry.children as child >
-						<div class="form-group">
-						<#if child.title?exists>
-							<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="">${child.title} : </label>
-		 				</#if>
-		 				<#assign entryKey=""+child.idEntry>
-		 				<#assign first = true>
-		 				<#list map_id_entry_list_record_field[entryKey] as recordfield>
-							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-		 					<#if !first>
-									<label>&nbsp;</label>
-							</#if>
-		 					${child.getHtmlRecordFieldValue( locale, recordfield, false )}
-							<#assign first = false>
-							</div>
-						</#list>
-						</div>
-					</#list>
-				</#if>
-			<#else>
-				<#assign entryKey=""+entry.idEntry>
-				<#assign first = true>
-					<#if entry.title?exists>
-						<p>${entry.title}</p>
+					<#if resource_actions.workflow_state?exists>
+						<tr>
+							<th>#i18n{directory.resource_history.labelState}</th>
+						</tr>
+						<tr>
+							<td>${resource_actions.workflow_state.name}</td>
+						</tr>
 					</#if>
-					<#list map_id_entry_list_record_field[entryKey] as recordfield>
-						<div class="form-group">
-						<#if !first>
-							<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" > &nbsp;</label>
-						</#if>
-							${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
-						</div>
-						<#assign first = false>
+					<tr>
+						<th>#i18n{directory.resource_history.actions}</th>
+					</tr>
+					<tr>
+						<td>
+							<#if item_navigator??>
+								<@item_navigation item_navigator=item_navigator />
+							</#if>
+							<@display_actions resource_actions/>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-8">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">#i18n{directory.resource_history.title} <#if date_creation?? > - #i18n{directory.resource_history.date_creation} ${date_creation}</#if> <#if date_modification?? > - #i18n{directory.resource_history.date_modification} ${date_modification}</#if></h3>
+				<div class="box-body">
+					<#list entry_list as entry>
+					 	<#if entry.entryType.group>
+					 		<p>&nbsp;${entry.title}</p>
+							<#if entry.children?has_content>
+								<p>
+								<#list entry.children as child >
+									<#if child.title?exists>
+										<strong>${child.title} : </strong>
+					 				</#if>
+					 				<#assign entryKey=""+child.idEntry>
+					 				<#assign first = true>
+									<#list map_id_entry_list_record_field[entryKey] as recordfield>
+											<#if !first>
+													&nbsp;
+											</#if>
+					 						${child.getHtmlRecordFieldValue( locale, recordfield, false )}
+											<#assign first = false>
+									</#list>
+								</#list>
+							</p>
+							</#if>
+						<#else>
+							<#assign entryKey=""+entry.idEntry>
+							<#assign first = true>
+								<#if entry.title?exists>
+									<p>${entry.title}</p>
+								</#if>
+								<p>
+								<#list map_id_entry_list_record_field[entryKey] as recordfield>
+								<#if !first>
+										&nbsp;
+									</#if>
+										<strong>
+										${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
+									</strong>
+									<#assign first = false>
+								</#list>
+								</p>
+							</#if>
 					</#list>
-				</#if>
-			</#list>
-			<div class="well">${resource_history}</div> 
-			<form class="form" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="get">
-				<input type="hidden" name="id_directory" value="${directory.idDirectory}" />
-				<input type="hidden" name="session" value="session" />
-				<button class="btn btn-primary" type="submit" >
-					<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{directory.resource_history.buttonBack}
-				</button>
-			</form>
-	  	</fieldset>
+					<div class="callout callout-info">${resource_history}</div>
+					<form class="form-inline" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="get">
+						<input type="hidden" name="id_directory" value="${directory.idDirectory}">
+						<input type="hidden" name="session" value="session">
+						<button class="btn btn-primary btn-flat" type="submit">
+							<i class="fa fa-check"></i>&nbsp;#i18n{directory.resource_history.buttonBack}
+						</button>
+					</form>
+			</div>
+		</div>
 	</div>
 </div>

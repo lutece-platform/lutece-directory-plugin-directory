@@ -1,26 +1,36 @@
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<ul class="nav nav-tabs">
-			<li class="active">
-				<a href="jsp/admin/plugins/directory/ManageAdvancedParameters.jsp">
-					#i18n{directory.manage_advanced_parameters.pageTitle}
-				</a>
-			</li>
-			<#if right_xsl?exists && right_xsl>
-			<li>
-				<a href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory">
-					#i18n{directory.manage_directory_xsl.title}
-				</a>
-			</li>
-			</#if>
-			<#if permission_index_all_directory?exists && permission_index_all_directory>
-			<li>
-				<a href="jsp/admin/plugins/directory/IndexAllDirectory.jsp?plugin_name=directory" >
-					#i18n{directory.index_all_directory.title}
-				</a>
-			</li>
-			</#if>
-		</ul>
-		<#include "advanced_parameters.html" />
+	<div class="col-sm-12">
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="jsp/admin/plugins/directory/ManageAdvancedParameters.jsp" title="#i18n{directory.manage_advanced_parameters.title}">
+						<i class="fa fa-cogs"></i> <span class="hidden-xs">#i18n{directory.manage_advanced_parameters.pageTitle}</span>
+					</a>
+				</li>
+				<#if right_xsl?exists && right_xsl>
+				<li>
+					<a href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory" title="#i18n{directory.manage_directory_xsl.title}">
+						<i class="fa fa-file-code-o"></i> <span class="hidden-xs"> #i18n{directory.manage_directory_xsl.title}</span>
+					</a>
+				</li>
+				</#if>
+				<#if permission_index_all_directory?exists && permission_index_all_directory>
+				<li class="pull-right">
+					<form class="form-inline" method="post" action="jsp/admin/plugins/directory/ConfirmIndexAllDirectory.jsp" >
+						<button class="btn btn-primary btn-xs" type="submit" >
+								<i class="fa fa-flash fa-fw"></i> #i18n{directory.index_all_directory.label_begin_process}
+						</button>
+					</form>
+				</li>
+				</#if>
+
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" >
+					<#include "advanced_parameters.html" />
+				</div>
+
+			</div>
+		</div>
 	</div>
 </div>

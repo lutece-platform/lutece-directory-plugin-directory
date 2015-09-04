@@ -1,17 +1,17 @@
 <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
- 	<#if default_values?has_content>	 
+	<label class="control-label col-xs-12 col-sm-2"  for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
+	<div class="col-xs-12 col-sm-9">
+ 	<#if default_values?has_content>
 		<#list default_values as default_value>
 	 		<#if default_value?exists && default_value.value?exists>
-				<@combo name=entry.idEntry items=entry.getSelectListRecordAssociate( false ) default_value=default_value.value />
+				<@comboWithParams name=entry.idEntry default_value=default_value.value?string additionalParameters=" class=\"form-control\" " items=entry.getSelectListRecordAssociate( false )  />
 			<#else>
-				<@combo name=entry.idEntry items=entry.getSelectListRecordAssociate( false ) default_value=-1 />
+				<@comboWithParams name=entry.idEntry default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.getSelectListRecordAssociate( false ) />
 			</#if>
 		</#list>
 	 <#else>
-		<@combo name=entry.idEntry  items=entry.getSelectListRecordAssociate( false ) default_value=-1 />
-	</#if>	
-	<#if entry.helpMessage?exists&&entry.helpMessage!=''><p class="help-block">${entry.helpMessage}</p></#if>
+		<@comboWithParams name=entry.idEntry default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.getSelectListRecordAssociate( false )  />
+	</#if>
+	<#if entry.helpMessage?exists&&entry.helpMessage!=''><span class="help-test">${entry.helpMessage}</span></#if>
 	</div>
-</div>		
+</div>

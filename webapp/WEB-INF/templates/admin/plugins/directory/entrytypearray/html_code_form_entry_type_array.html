@@ -1,39 +1,43 @@
-<div class="table-responsive">
-	<table class="table table-striped">
-		<#assign x=entry.numberRow>
-		<#list 1..x+1 as i>
-		  <tr>
-			<#assign y=entry.numberColumn>
-			<#list 1..y+1 as j>
-		  	<td>
-				<#assign title="">
-				<#list entry.fields as field>
-					<#assign value=i+"_"+j>
-					<#if field.value == value>
-						<#assign title=field.title!>
-					</#if>
-				</#list>
-				<#if title == "" && default_values?has_content>
-					<#list default_values as default_value>
-						<#assign value=i+"_"+j>
-						<#if default_value.field.value == value>
-							<#assign title=default_value.value!>
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
+	<div class="col-xs-12 col-sm-9">
+		<div class="table-responsive">
+			<table class="table table-hover table-condensed">
+				<#assign x=entry.numberRow>
+				<#list 1..x+1 as i>
+				  <tr>
+					<#assign y=entry.numberColumn>
+					<#list 1..y+1 as j>
+				  	<td>
+						<#assign title="">
+						<#list entry.fields as field>
+							<#assign value=i+"_"+j>
+							<#if field.value == value>
+								<#assign title=field.title!>
+							</#if>
+						</#list>
+						<#if title == "" && default_values?has_content>
+							<#list default_values as default_value>
+								<#assign value=i+"_"+j>
+								<#if default_value.field.value == value>
+									<#assign title=default_value.value!>
+								</#if>
+							</#list>
 						</#if>
-					</#list>
-				</#if>
-		  		<#if j==1 && i!=1>
-				    ${title!}
-			  	<#elseif i == 1 && j != 1>
-				    ${title!}
-			  	<#elseif i == 1 && j == 1>
-			  		<b>${entry.comment!}</b>
-			  	<#else>
-				    <input type="text" id="field_${i}_${j}" name="field_${i}_${j}" class="form-control" value="${title!}" >
-			  	</#if>
-		  	</td>
-		  	</#list>
-		  </tr>
-		</#list>  
-	</table>
+				  		<#if j==1 && i!=1>
+						    ${title!}
+					  	<#elseif i == 1 && j != 1>
+						    ${title!}
+					  	<#elseif i == 1 && j == 1>
+					  		<b>${entry.comment!}</b>
+					  	<#else>
+						    <input type="text" id="field_${i}_${j}" name="field_${i}_${j}" class="form-control" value="${title!}" >
+					  	</#if>
+				  	</td>
+				  	</#list>
+				  </tr>
+				</#list>
+			</table>
+		</div>
+	</div>
 </div>
-

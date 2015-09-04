@@ -1,27 +1,33 @@
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<fieldset>
-		<legend> #i18n{directory.tasks_form_workflow.title}</legend>
-		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoSaveTasksFormWorkflow.jsp?plugin_name=directory" method="post" name="" id=""  enctype="multipart/form-data" >
-		<input name="id_action" value="${id_action}" type="hidden" />
-	   	<#if list_ids_directory_record?? && list_ids_directory_record?has_content>
-	   		<#list list_ids_directory_record as id_directory_record>
-	   			<input name="id_directory_record" value="${id_directory_record}" type="hidden" />
-	   		</#list>
-	   	</#if>
-	   	<#if show_action_result??>
-			<input type="hidden" name="show_action_result" value="1" />
-	   	</#if>
-		${tasks_form}
-	   	<div class="form-group">
-	  		<button class="btn btn-sm btn-primary" type="submit" name="save">
-				<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{workflow.tasks_form_test_workflow.button_save}
-			</button>
-	  		<button class="btn btn-sm" type="submit" name="cancel" >
-				<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;#i18n{workflow.tasks_form_test_workflow.button_cancel}
-			</button>
+  <div class="col-sm-12">
+    <div class="box box-primary">
+  		<div class="box-header">
+  			<h3 class="box-title">#i18n{directory.tasks_form_workflow.title}</h3>
+  		</div>
+  		<div class="box-body">
+				<form class="form-horizontal" action="jsp/admin/plugins/directory/DoSaveTasksFormWorkflow.jsp?plugin_name=directory" method="post" name="" id="" enctype="multipart/form-data" >
+					<input name="id_action" value="${id_action}" type="hidden">
+			   	<#if list_ids_directory_record?? && list_ids_directory_record?has_content>
+			   		<#list list_ids_directory_record as id_directory_record>
+			   			<input name="id_directory_record" value="${id_directory_record}" type="hidden">
+			   		</#list>
+			   	</#if>
+			   	<#if show_action_result??>
+						<input type="hidden" name="show_action_result" value="1">
+			   	</#if>
+					${tasks_form}
+			   	<div class="form-group">
+				   	<div class="col-xs-12 col-sm-offset-3 col-sm-9">
+				  		<button class="btn btn-primary" type="submit" name="save">
+								<i class="fa fa-check"></i> #i18n{workflow.tasks_form_test_workflow.button_save}
+							</button>
+				  		<button class="btn btn-default" type="submit" name="cancel" >
+								<i class="fa fa-removee"></i>&nbsp;#i18n{workflow.tasks_form_test_workflow.button_cancel}
+							</button>
+						</div>
+					</div>
+			    </form>
+			</div>
 		</div>
-	    </form>	  
-   	</fieldset>
 	</div>
  </div>

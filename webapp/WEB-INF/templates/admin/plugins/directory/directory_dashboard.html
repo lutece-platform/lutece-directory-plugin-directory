@@ -1,20 +1,19 @@
 <div class="box box-solid box-success">
-	<div class="box-header" >
+	<div class="box-header box-widget" >
 		<h3 class="box-title">#i18n{directory.dashboard.directoryList}</h3>
 		<div class="box-tools pull-right">
-			<#if permission_create>
-				<a class="btn btn-xs btn-flat btn-primary" href="jsp/admin/plugins/directory/CreateDirectory.jsp" title="#i18n{directory.dashboard.addDirectory}" >
-	                <i class="fa fa-plus"></i>
-	            </a>
-			</#if>
+
+
+			<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
 		</div>
     </div>
-   <div class="box-body table-responsive no-padding">
+   <div class="box-body box-of table-responsive no-padding">
 		<table class="table table-hover table-condensed">
 			<thead>
 			   	<tr>
 			   		<th>#i18n{directory.dashboard.columnTitleLabel}</th>
-			   		<th>#i18n{directory.dashboard.columnTitleActions}</th>  
+			   		<th>#i18n{directory.dashboard.columnTitleActions}</th>
 			   	</tr>
 			</thead>
 			<tbody>
@@ -41,21 +40,26 @@
 							</#if>
 							<#if authorized_directory_modification_list?seq_contains(directory.idDirectory)>
 								<a class="btn btn-xs btn-flat btn-primary" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${directory.idDirectory}&plugin_name=directory">
-									<i class="glyphicon glyphicon-edit"></i>
+									<i class="fa fa-pencil"></i>
 								</a>
 							</#if>
 								<a class="btn btn-xs btn-flat btn-default" href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" title="#i18n{directory.dashboard.view_directory}" target="_blank">
-								<i class="glyphicon glyphicon-eye-open" title="#i18n{directory.dashboard.view_directory} ${directory.title}"></i>
-							</a>							
-			            </td>   
+								<i class="fa fa-eye" title="#i18n{directory.dashboard.view_directory} ${directory.title}"></i>
+							</a>
+			            </td>
 			    	</tr>
 			    </#list>
 			</tbody>
 		</table>
    </div><!-- /.box-body -->
     <div class="box-footer text-center">
-		<a href="${url}" title="#i18n{directory.dashboard.directoryList}">
-			#i18n{directory.dashboard.directoryList} <i class="fa fa-arrow-circle-right"></i>
-		</a>	
+			<#if permission_create>
+				<a class="btn btn-link btn-xs btn-flat spaced"  href="jsp/admin/plugins/directory/CreateDirectory.jsp" title="#i18n{directory.dashboard.addDirectory}" >
+					<i class="fa fa-plus"></i> #i18n{directory.dashboard.addDirectory}
+				</a>
+			</#if>
+			<a class="btn btn-link btn-flat btn-xs spaced"  href="${url}" title="#i18n{directory.dashboard.directoryList}">
+				#i18n{directory.dashboard.directoryList} <i class="fa fa-arrow-circle-right"></i>
+			</a>
 	</div><!-- /.box-footer-->
 </div>
