@@ -2,8 +2,6 @@
 	<div class="box-header box-widget" >
 		<h3 class="box-title">#i18n{directory.dashboard.directoryList}</h3>
 		<div class="box-tools pull-right">
-
-
 			<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 			<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
 		</div>
@@ -21,9 +19,9 @@
 			    	<tr>
 						<td>
 							<strong><#if directory.enabled>
-								<span class="label label-success" title="#i18n{directory.dashboard.row_state}"><i class="glyphicon glyphicon-ok-sign"></i></span>
+								<span class="label label-success" title="#i18n{directory.dashboard.row_state}"><i class="fa fa-check-circle"></i></span>
 							<#else>
-								<span class="label label-important" title="#i18n{directory.dashboard.row_state}"><i class="glyphicon glyphicon-remove-sign"></i></span>
+								<span class="label label-danger" title="#i18n{directory.dashboard.row_state}"><i class="fa fa-remove"></i></span>
 							</#if>&nbsp;${directory.title}</strong>
 							<br>
 							#i18n{directory.dashboard.nb_records} <strong>${record_count_list[directory.idDirectory?string]}</strong>
@@ -44,9 +42,9 @@
 								</a>
 							</#if>
 								<a class="btn btn-xs btn-flat btn-default" href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" title="#i18n{directory.dashboard.view_directory}" target="_blank">
-								<i class="fa fa-eye" title="#i18n{directory.dashboard.view_directory} ${directory.title}"></i>
+									<i class="fa fa-external-link" title="#i18n{directory.dashboard.view_directory} ${directory.title}"></i>
 							</a>
-			            </td>
+			      </td>
 			    	</tr>
 			    </#list>
 			</tbody>
