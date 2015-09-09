@@ -1,6 +1,6 @@
 <#include "include_records_list_header.html">
 <div class="row">
-	<div class="col-xs-12 col-sm-12" id="main">
+	<div class="col-xs-12 col-sm-12">
 		<form class="form-horizontal" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="post" id="searchForm" >
 			<input type="hidden" name="id_directory" value="${directory.idDirectory}" >
 			<input type="hidden" name="session" value="session" >
@@ -9,52 +9,45 @@
 			<div class="box box-primary">
 				<div class="box-header">
 					<h3 class="box-title">	${directory.title}</h3>
-					<div class="box-tools pull-right">
+					<div class="box-tools">
 							<#include "include_directory_actions.html">
 					</div>
 				</div>
-				<div class="box-body">
-					<div class="row">
-						<div class="col-xs-12 col-sm-12">
-							<#include "include_records_list_search.html">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12 col-sm-12">
-							<#include "include_records_list.html">
-						</div>
-					</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<#include "include_records_list_search.html">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<#include "include_records_list.html">
 				</div>
 			</div>
 		</form>
 	</div>
 </div>
-<script src="js/jquery/plugins/ui/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
 <script>
  $.fn.clearForm = function()
 	{
-		return this.each(function()
-		{
-			var type = this.type, tag = this.tagName.toLowerCase();
-			if (tag == 'form')
-				return $(':input',this).clearForm();
-
-			if (type == 'text' || type == 'password' || tag == 'textarea')
-				  this.value = '';
-			else if (type == 'checkbox' || type == 'radio')
-				this.checked = false;
-			else if (tag == 'select')
-				this.selectedIndex = 0;
+	return this.each(function()
+	{
+		var type = this.type, tag = this.tagName.toLowerCase();
+		if (tag == 'form')
+			return $(':input',this).clearForm();
+		if (type == 'text' || type == 'password' || tag == 'textarea')
+		  this.value = '';
+		else if (type == 'checkbox' || type == 'radio')
+			this.checked = false;
+		else if (tag == 'select')
+			this.selectedIndex = 0;
 	  });
 	};
 
 	$(document).ready(function () {
 		$("#reset").click(function() {
-
 			$("#searchForm").clearForm();
 		});
-		/*$("#myModalSearch").addClass("modal fade");*/
 
 		$("#advanced-search").toggle();
 		$("#toggleAdvSearch").click(function() {
@@ -73,7 +66,6 @@
 			}
 		} );
 
-	 	 $( ".datepicker-element" ).datepicker();
 	});
 
 	$('#searchForm').keypress(function(e) {
@@ -84,5 +76,7 @@
 		return false;
 		}
 	});
+
+
 
 </script>

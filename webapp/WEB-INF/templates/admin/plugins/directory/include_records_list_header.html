@@ -20,7 +20,7 @@
    <#if resource_actions.workflow_action_list?exists>
     <#list resource_actions.workflow_action_list as action>
   		<a class="btn btn-xs btn-flat btn-primary" href="jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp?id_action=${action.id}&amp;id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}">
-				<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}" <#if action.icon.width!=-1> width="${action.icon.width}" </#if><#if action.icon.height!=-1> height="${action.icon.height}"	</#if> title="${action.name}" alt="${action.name}"	/>
+				<img src="image?resource_type=workflow_icon_img&id=${action.icon.id}" <#if action.icon.width!=-1> width="${action.icon.width}" </#if><#if action.icon.height!=-1> height="${action.icon.height}"	</#if> title="${action.name}" alt="${action.name}">
 			</a>
   	</#list>
      </#if>
