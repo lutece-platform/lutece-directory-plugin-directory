@@ -87,7 +87,7 @@
 							<table class="table table-hover table-condensed table-sortable" >
 								<thead>
 									<tr>
-										<th><input type="checkbox" name="selectAll" id="selectAll" value="selectAll" title="#i18n{directory.modify_directory.selectAll}" /></th>
+										<th><input type="checkbox" name="selectAll" id="selectAll" value="selectAll" title="#i18n{directory.modify_directory.selectAll}" ></th>
 										<th>#i18n{directory.modify_directory.manage_entry.row_title}</th>
 										<th>#i18n{directory.modify_directory.manage_entry.row_type}</th>
 										<th>#i18n{directory.modify_directory.order}</th>
@@ -98,15 +98,11 @@
 								<#if entry_list?has_content>
 								<#list entry_list as entry>
 									<tr class="tr-sortable">
-										<td style="width:10px;">
+										<td >
 											<!--  add checkbox if entry isn't a group -->
 											<#if !entry.entryType.group>
-												<div class="checkbox">
-													<label>
-														<input type="checkbox" name="id_entry" value="${entry.idEntry!}" title="#i18n{directory.modify_directory.select}">
-													</label>
-												</div>
-												</#if>
+												<input type="checkbox" name="id_entry" class="checkbox-entry"  value="${entry.idEntry!}" title="#i18n{directory.modify_directory.select}">
+											</#if>
 											</td>
 											<#if entry.entryType.group>
 												<td>
@@ -124,18 +120,18 @@
 										</td>
 										<!--  Change the order of the attribute -->
 										<#if entry.parent?exists>
-											<td>
+											<td  style="width:6%;">
 												<div class="input-group">
-														<@comboOrders name="order_id_${entry.idEntry!}" default_value=entry.position idParent=entry.parent.idEntry />
-														<span class="input-group-btn">
-															<button class="btn btn-primary btn-xs btn-flat" type="submit" title="#i18n{directory.modify_directory.move}" name="move_${entry.idEntry!}" value="${entry.idEntry!}">
-																<i class="fa fa-sort"></i>
-															</button>
-														</span>
-													</div>
+													<@comboOrders name="order_id_${entry.idEntry!}" default_value=entry.position idParent=entry.parent.idEntry />
+													<span class="input-group-btn">
+														<button class="btn btn-primary btn-xs btn-flat" type="submit" title="#i18n{directory.modify_directory.move}" name="move_${entry.idEntry!}" value="${entry.idEntry!}">
+															<i class="fa fa-sort"></i>
+														</button>
+													</span>
+												</div>
 											</td>
 										<#else>
-											<td>
+											<td  style="width:6%;">
 												<div class="input-group">
 												<@comboOrders name="order_id_${entry.idEntry!}" default_value=entry.position idParent=0 />
 												<span class="input-group-btn">
@@ -546,18 +542,15 @@ $(function() {
 		if( $("#show_multiple_search_fields").attr("data")=="no"){
 			$("#show_multiple_search_fields").hide();
 		}
+
 		if( $("#date_modification_show_multiple_search_fields").attr("data")=="no"){
 			$("#date_modification_show_multiple_search_fields").hide();
 		}
-		$("#selectAll").change( function() {
-    	if ( $(this).attr("checked") ){
-				// check all
-        $("input[name='id_entry']").prop( "checked", "checked");
-			} else {
-        // uncheck all
-        $("input[name='id_entry']").prop( "checked", "");
-			}
-    });
+
+		// For multi selection
+		$("#selectAll").change(function(){
+		  $(".checkbox-entry").prop('checked', $(this).prop("checked"));
+		});
 
 		$("#indexed").click(function () {
 			$("#show_multiple_search_fields").toggle();
@@ -573,13 +566,13 @@ $(function() {
 <@getDatePickerBootstrap idField="date_limite" language=locale />
 
 <#macro comboOrders name default_value idParent >
-<select id="${name}" name="${name}" class="input-xs form-control" >
+	<select id="${name}" name="${name}" class="input-xs form-control">
 	<#list mapChild[idParent!?string] as i>
     <#if default_value == i>
 		<option selected="selected" value="${i}" >${i}</option>
 	<#else>
 		<option value="${i}" >${i}</option>
      </#if>
-</#list>
-</select>
+	</#list>
+	</select>
 </#macro>

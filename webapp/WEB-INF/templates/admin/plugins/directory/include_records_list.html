@@ -2,14 +2,14 @@
 	<div class="box-header">
   	<h3 class="box-title"></h3>
 			<div class="box-tools">
-				<@paginationAdmin paginator=paginator combo=1 form=0 />
+				<@paginationAdmin paginator=paginator combo=0 form=0 showcount=0 />
 			</div>
   	</div>
   	<div class="box-body table-responsive">
 			<table name="results_list" id="results_list" class="table table-hover table-condensed">
 				<thead>
 			    <tr>
-				    	<#-- selection column -->
+				  	<#-- selection column -->
 						<th><input type="checkbox" id="select-ids" name="select-ids" value=""></th>
 						<#list entry_list_search_result as entry>
 							<#compress>
@@ -58,7 +58,6 @@
 											<#elseif isEntryTypeMyLuteceUser(entry)>
 								   				<#if record_field?? && record_field.record?? && permission_visualisation_mylutece_user>
 								   					<#assign id_directory_record = record_field.record.idRecord>
-
 								   					<a class="btn btn-default" href="jsp/admin/plugins/directory/DoVisualisationMyLuteceUser.jsp?id_directory_record=${id_directory_record}&amp;id_entry=${record_field.entry.idEntry}"  title="${record_field.value}" >
 															<i class="fa fa-user"></i> ${record_field.value}
 														</a>
@@ -109,6 +108,6 @@
 					</#if>
 				</#list>
 			</#if>
-			<@paginationAdmin paginator=paginator form=0 />
+			<@paginationAdmin paginator=paginator combo=1 form=0 />
 	</div>
 </div>

@@ -44,9 +44,9 @@
                 <tr>
                   <td>
                     <#if directory.enabled>
-                      <span class="label label-success"><i class="fa fa-check fa-fw"></i></span>
+                      <span class="label label-success"><i class="fa fa-check"></i></span>
                     <#else>
-                      <span class="label label-important"><i class="fa fa-trash-o fa-fw"></i></span>
+                      <span class="label label-danger"><i class="fa fa-remove"></i></span>
                     </#if>
                   ${directory.title}
                   <a href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" target="_blank">

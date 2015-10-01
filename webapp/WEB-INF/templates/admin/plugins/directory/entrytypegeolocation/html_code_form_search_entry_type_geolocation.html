@@ -12,9 +12,9 @@
 	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}_address">${entry.title}</label>
 	<div class="col-xs-12 col-sm-9">
 	<#if address??>
-		<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${address}"/>
+		<input type="text" class="form-control" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${address}">
 	<#else>
-		<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value=""/>
+		<input type="text" class="form-control" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="">
 	</#if>
 	<#if entry.helpMessage?exists&&entry.helpMessage!=''>
 		<span class="help-text">${entry.helpMessage}</span>

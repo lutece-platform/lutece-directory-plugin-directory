@@ -28,55 +28,48 @@
 	</div>
 </div>
 <script>
- $.fn.clearForm = function()
-	{
-	return this.each(function()
-	{
-		var type = this.type, tag = this.tagName.toLowerCase();
-		if (tag == 'form')
-			return $(':input',this).clearForm();
-		if (type == 'text' || type == 'password' || tag == 'textarea')
-		  this.value = '';
-		else if (type == 'checkbox' || type == 'radio')
-			this.checked = false;
-		else if (tag == 'select')
-			this.selectedIndex = 0;
-	  });
-	};
+$(document).ready(function () {
 
-	$(document).ready(function () {
+	$.fn.clearForm = function()
+ 	{
+ 	return this.each(function()
+ 	{
+ 		var type = this.type, tag = this.tagName.toLowerCase();
+ 		if (tag == 'form')
+ 			return $(':input',this).clearForm();
+ 		if (type == 'text' || type == 'password' || tag == 'textarea')
+ 		  this.value = '';
+ 		else if (type == 'checkbox' || type == 'radio')
+ 			this.checked = false;
+ 		else if (tag == 'select')
+ 			this.selectedIndex = 0;
+ 	  });
+ 	};
+
+	// For multi selection
+	$("#select-ids").change(function(){
+		$(".selected-id").prop('checked', $(this).prop("checked"));
+	});
+
 		$("#reset").click(function() {
 			$("#searchForm").clearForm();
 		});
 
 		$("#advanced-search").toggle();
-		$("#toggleAdvSearch").click(function() {
+
+		$("#advSearch").click(function() {
 			$("#advanced-search").toggle();
-			$(this).toggleClass("fa fa-chevron-down");
-			$(this).toggleClass("fa fa-chevron-up");
+			$("#advSearch-icon").toggleClass("fa fa-chevron-down");
+			$("#advSearch-icon").toggleClass("fa fa-chevron-up");
 		});
 
-
-		// For multi selection
-		$( 'input[type="checkbox"]#select-ids' ).click( function(  ) {
-			if ( $( this ).attr( 'checked' ) ) {
-				$( 'input[type="checkbox"].selected-id' ).attr( 'checked', true );
-			} else {
-				$( 'input[type="checkbox"].selected-id' ).attr( 'checked', false );
+		$('#searchForm').keypress(function(e) {
+		if(e.keyCode == 13) {
+			// add input hidden to add search into the request
+			$('#searchForm').append('<input type="hidden" name="search" value="Rechercher" />');
+			$("#searchForm").submit();
+			return false;
 			}
-		} );
-
-	});
-
-	$('#searchForm').keypress(function(e) {
-	if(e.keyCode == 13) {
-		// add input hidden to add search into the request
-		$('#searchForm').append('<input type="hidden" name="search" value="Rechercher" />');
-		$("#searchForm").submit();
-		return false;
-		}
-	});
-
-
-
+		});
+});
 </script>

@@ -9,7 +9,7 @@
 				<div class="box-tools  pull-right">
 					<a class="btn btn-primary btn-xs" id="tgAdvancedSettings" href="#">
 						<i class="fa fa-cogs"></i>
-						<span class="hidden-Xs"> #i18n{directory.create_directory.label_advancedsettings}</span>
+						<span class="hidden-xs"> #i18n{directory.create_directory.label_advancedsettings}</span>
 					</a>
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 								<span class="help-block"> #i18n{directory.create_directory.label_number_record_per_page_comment}</span>
 							</div>
 						</div>
-						<#if workflow_list?size &gt; 1 >
+						<#if workflow_list?has_content && workflow_list?size &gt; 1 >
 							<div class="form-group">
 								<label class="control-label col-xs-12 col-sm-3 col-md-3" for="id_workflow_list">#i18n{directory.create_directory.label_worflow_list} : </label>
 								<div class="col-xs-12 col-sm-8 col-md-8">
@@ -119,10 +119,10 @@
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-md-offset-3 col-xs-12 col-sm-8 col-md-8">
 							<button type="submit" class="btn btn-primary btn-sm btn-flat" name="save" >
-								<i class="fa fa-check"></i>&nbsp;#i18n{directory.create_directory.button_save}
+								<i class="fa fa-check"></i> #i18n{directory.create_directory.button_save}
 							</button>
 							<a type="button" class="btn btn-default btn-sm btn-flat" href="jsp/admin/plugins/directory/ManageDirectory.jsp" >
-								<i class="fa fa-times"></i>&nbsp;#i18n{directory.create_directory.button_cancel}
+								<i class="fa fa-times"></i> #i18n{directory.create_directory.button_cancel}
 							</a>
 						</div>
 					</div>

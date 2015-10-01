@@ -18,7 +18,7 @@
 			<label class="checkbox-inline">
 		<#else>
 			<div class="checkbox">
-				<label for="${entry.idEntry}"
+				<label for="${entry.idEntry}">
 		</#if>
 		<input type="checkbox" name="${entry.idEntry}" id="${entry.idEntry}" title="${entry.helpMessageSearch!}" value="${field.idField}" <#if ( field.defaultValue && !default_values?has_content )||( default_values?has_content && isSelected (field.idField,default_values))>checked="checked" </#if> />${field.title}
 		<#if entry.fieldInLine>
