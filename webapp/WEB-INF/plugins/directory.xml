@@ -3,7 +3,7 @@
     <!-- Plugin Informations -->
     <name>directory</name>
     <class>fr.paris.lutece.plugins.directory.service.DirectoryPlugin</class>
-    <version>4.0.2-SNAPSHOT</version>
+    <version>4.0.2</version>
     <description>directory.plugin.description</description>
     <documentation/>
     <installation/>
