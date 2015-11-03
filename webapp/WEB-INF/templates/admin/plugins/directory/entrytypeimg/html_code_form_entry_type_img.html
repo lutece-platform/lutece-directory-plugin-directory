@@ -28,10 +28,11 @@
 			<span id="_filename_directory_${entry.idEntry}">&nbsp;</span>
 		</div>
 		<#assign file_index = 0>
+		<div id="_file_deletion_directory_${entry.idEntry}">
 			<#if has_files>
 			<#list default_values as default_value>
-				<div id="_file_deletion_directory_${entry.idEntry}">
 				<#if !default_value.isLittleThumbnail() && !default_value.isBigThumbnail()>
+				<div>
 					<#if default_value.file?exists>
 					<span id="_file_deletion_${entry.idEntry}"><label>&nbsp;</label></span>
 					<span id="_filename_directory_${entry.idEntry}">
@@ -49,6 +50,7 @@
 				</#if>
 			</#list>
 		</#if>
+		</div>
 	</div>
 </div>
 <div class="form-group">
