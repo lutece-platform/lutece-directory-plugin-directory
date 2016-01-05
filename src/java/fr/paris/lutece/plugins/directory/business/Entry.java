@@ -45,7 +45,6 @@ import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.xml.XmlUtil;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringEscapeUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1141,7 +1140,7 @@ public class Entry implements IEntry
             model.put( Entry.ATTRIBUTE_IS_SORTABLE, Boolean.toString( this.isSortable(  ) ) );
 
             XmlUtil.beginElement( strXml, TAG_ENTRY, model );
-            XmlUtil.addElementHtml( strXml, TAG_TITLE, StringEscapeUtils.escapeXml( this.getTitle(  ) ) );
+            XmlUtil.addElementHtml( strXml, TAG_TITLE, DirectoryUtils.substituteSpecialCaractersForExport( this.getTitle(  ) ) );
 
             if ( this.getEntryType(  ).getGroup(  ) && ( this.getChildren(  ) != null ) )
             {

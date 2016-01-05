@@ -47,8 +47,6 @@ import fr.paris.lutece.portal.service.workgroup.WorkgroupRemovalListenerService;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 import java.sql.Timestamp;
 
 import java.util.HashMap;
@@ -916,7 +914,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
         HashMap<String, Object> model = new HashMap<String, Object>(  );
         model.put( ATTRIBUTE_ID, String.valueOf( getIdDirectory(  ) ) );
         XmlUtil.beginElement( strXml, TAG_DIRECTORY, model );
-        XmlUtil.addElement( strXml, TAG_TITLE, StringEscapeUtils.escapeXml( getTitle(  ) ) );
+        XmlUtil.addElementHtml( strXml, TAG_TITLE, DirectoryUtils.substituteSpecialCaractersForExport( getTitle(  ) ) );
         XmlUtil.addElement( strXml, TAG_CREATION_DATE, DateUtil.getDateString( getDateCreation(  ), locale ) );
         XmlUtil.beginElement( strXml, TAG_LIST_ENTRY );
         strXml.append( strListEntry );
