@@ -238,6 +238,7 @@
 		</div>
 	</form>
 </div>
+<#if regular_expression_list??>
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-sm-12" id="main">
 		<div class="box box-primary">
@@ -259,7 +260,6 @@
 				</div>
 			</div>
 			<div class="box-body">
-				<#if regular_expression_list??>
 					<@paginationAdmin paginator=paginator combo=1 />
 			    <a name="list" id="list"></a>
 		      <table class="table table-hover table-condensed">
@@ -287,12 +287,11 @@
 				</tbody>
 		    </table>
 		        <@paginationAdmin paginator=paginator />
-		  	</#if>
-			</div>
 			</div>
 		</div>
 	</div>
 </div>
+</#if>
 
 <script>
 function thumbnail( c, thumb ){
