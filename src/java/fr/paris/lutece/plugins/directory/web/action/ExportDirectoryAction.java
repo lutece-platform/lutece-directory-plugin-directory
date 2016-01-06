@@ -74,6 +74,7 @@ import fr.paris.lutece.portal.web.pluginaction.IPluginActionResult;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.UniqueIDGenerator;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
+import fr.paris.lutece.util.filesystem.UploadUtil;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
 
@@ -218,7 +219,7 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
 
         String strFileExtension = directoryXsl.getExtension(  );
         String strFileName = directory.getTitle(  ) + "." + strFileExtension;
-        strFileName = StringUtil.replaceAccent( strFileName ).replace( " ", "_" );
+        strFileName = UploadUtil.cleanFileName( strFileName );
 
         boolean bIsCsvExport = strFileExtension.equals( EXPORT_CSV_EXT );
         boolean bDisplayDateCreation = directory.isDateShownInExport(  );
