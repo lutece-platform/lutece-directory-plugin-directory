@@ -296,7 +296,9 @@ public class EntryTypeSQL extends Entry
             {
                 if ( daoUtil.getString( 1 ).equals( recordField.getValue(  ) ) )
                 {
-                    return daoUtil.getString( 2 );
+                    String result = daoUtil.getString( 2 );
+                    daoUtil.free(  );
+                    return result ;
                 }
             }
 
