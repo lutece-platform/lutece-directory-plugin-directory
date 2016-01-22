@@ -299,6 +299,9 @@ public class EntryTypeSQL extends Entry
                     return daoUtil.getString( 2 );
                 }
             }
+
+            daoUtil.free(  );
+
         }
 
         return DirectoryUtils.EMPTY_STRING;
