@@ -522,10 +522,11 @@ public final class DirectoryUtils
      *            the id of the record
      * @param plugin
      *            plugin
+     * @param mapFieldEntry a map containing all fields associated to the list of entry           
      * @return a map
      */
     public static Map<String, List<RecordField>> getSpecificMapIdEntryListRecordField( List<IEntry> lisEntry,
-        int nIdRecord, Plugin plugin )
+        int nIdRecord, Plugin plugin ,Map<Integer,Field> mapFieldEntry )
     {
         Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>(  );
 
@@ -544,7 +545,7 @@ public final class DirectoryUtils
             }
         }
 
-        List<RecordField> lRF = RecordFieldHome.getRecordFieldSpecificList( listIdEntry, nIdRecord, plugin );
+        List<RecordField> lRF = RecordFieldHome.getRecordFieldSpecificList( listIdEntry, nIdRecord, plugin,mapFieldEntry );
         Map<Integer, List<RecordField>> tt = new HashMap<Integer, List<RecordField>>(  );
 
         for ( RecordField rf : lRF )
@@ -1562,4 +1563,35 @@ public final class DirectoryUtils
 
         return mapAttributes;
     }
+    
+    
+    /**
+     * return a map containing all fields containing in the list of entry 
+     * @param listEntry the entyList
+     * @param plugin the plugin
+     * @return a map of fields associated
+     */
+    public static Map<Integer,Field>  getMapFieldsOfListEntry(List<IEntry> listEntry,Plugin plugin)
+    {
+    	
+    	 Map<Integer,Field> mapFieldEntry=new HashMap<Integer, Field>();
+         
+         for ( IEntry entry : listEntry )
+         {    
+        	 
+        	 
+        	 List<Field> listField=FieldHome.getFieldListByIdEntry(entry.getIdEntry(), plugin);
+         	for(Field field:listField)
+         	{
+         		mapFieldEntry.put(field.getIdField(), field);
+         	}
+      
+         }
+        
+         return mapFieldEntry;
+    }
+    
+    
+    
+    
 }

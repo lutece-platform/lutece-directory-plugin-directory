@@ -40,6 +40,7 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -268,9 +269,10 @@ public final class RecordFieldHome
      * @param lEntryId List entry to load
      * @param nIdRecord the record Id
      * @param plugin the plugin
+     * @param mapFieldEntry a map containing all fields associated to the list of entry
      * @return list of record
      */
-    public static List<RecordField> getRecordFieldSpecificList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin )
+    public static List<RecordField> getRecordFieldSpecificList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin,Map<Integer,Field> mapFieldEntry )
     {
         List<RecordField> listRecordField = _dao.selectSpecificList( lEntryId, nIdRecord, plugin );
 
@@ -278,7 +280,7 @@ public final class RecordFieldHome
         {
             if ( recordField.getField(  ) != null )
             {
-                recordField.setField( FieldHome.findByPrimaryKey( recordField.getField(  ).getIdField(  ), plugin ) );
+                recordField.setField( mapFieldEntry.get( recordField.getField(  ).getIdField(  )) );
             }
         }
 

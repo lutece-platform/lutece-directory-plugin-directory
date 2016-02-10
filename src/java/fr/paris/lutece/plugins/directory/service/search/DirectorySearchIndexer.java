@@ -46,6 +46,7 @@ import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.service.record.IRecordService;
 import fr.paris.lutece.plugins.directory.service.record.RecordService;
+import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.content.XPageAppService;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -415,7 +416,7 @@ public class DirectorySearchIndexer implements SearchIndexer
         StringBuffer sb = new StringBuffer(  );
 
         List<RecordField> listField = RecordFieldHome.getRecordFieldSpecificList( listIdEntry, record.getIdRecord(  ),
-                plugin );
+                plugin,DirectoryUtils.getMapFieldsOfListEntry(listEntry, plugin) );
 
         for ( RecordField field : listField )
         {

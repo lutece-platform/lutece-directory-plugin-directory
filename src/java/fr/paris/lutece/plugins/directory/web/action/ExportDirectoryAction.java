@@ -42,6 +42,7 @@ import fr.paris.lutece.plugins.directory.business.DirectoryXslHome;
 import fr.paris.lutece.plugins.directory.business.Entry;
 import fr.paris.lutece.plugins.directory.business.EntryFilter;
 import fr.paris.lutece.plugins.directory.business.EntryHome;
+import fr.paris.lutece.plugins.directory.business.Field;
 import fr.paris.lutece.plugins.directory.business.File;
 import fr.paris.lutece.plugins.directory.business.FileHome;
 import fr.paris.lutece.plugins.directory.business.IEntry;
@@ -264,7 +265,10 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
         entryFilter.setIsComment( EntryFilter.FILTER_FALSE );
         entryFilter.setIsShownInExport( EntryFilter.FILTER_TRUE );
 
-        List<IEntry> listEntryResultSearch = EntryHome.getEntryList( entryFilter, getPlugin(  ) );
+        List<IEntry> listEntryResultSearch = EntryHome.getEntryList( entryFilter, getPlugin(  ));
+        
+        Map<Integer,Field> hashFields=DirectoryUtils.getMapFieldsOfListEntry(listEntryResultSearch,  getPlugin(  )) ;
+
         StringBuffer strBufferListRecordXml = null;
 
         java.io.File tmpFile = null;
@@ -463,13 +467,13 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                     {
                         strBufferListRecordXml.append( record.getXmlForCsvExport( plugin, locale, false, state,
                                 listEntryResultSearch, false, false, true, bDisplayDateCreation,
-                                bDisplayDateModification ) );
+                                bDisplayDateModification,hashFields) );
                     }
                     else
                     {
                         strBufferListRecordXml.append( record.getXml( plugin, locale, false, state,
                                 listEntryResultSearch, false, false, true, bDisplayDateCreation,
-                                bDisplayDateModification ) );
+                                bDisplayDateModification,hashFields ) );
                     }
                 }
 
@@ -496,12 +500,12 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                 if ( bIsCsvExport )
                 {
                     strBufferListRecordXml.append( record.getXmlForCsvExport( plugin, locale, false, state,
-                            listEntryResultSearch, false, false, true, bDisplayDateCreation, bDisplayDateModification ) );
+                            listEntryResultSearch, false, false, true, bDisplayDateCreation, bDisplayDateModification,hashFields) );
                 }
                 else
                 {
                     strBufferListRecordXml.append( record.getXml( plugin, locale, false, state, listEntryResultSearch,
-                            false, false, true, bDisplayDateCreation, bDisplayDateModification ) );
+                            false, false, true, bDisplayDateCreation, bDisplayDateModification,hashFields ) );
                 }
             }
 
@@ -548,12 +552,12 @@ public class ExportDirectoryAction extends AbstractPluginAction<DirectoryAdminSe
                 if ( bIsCsvExport )
                 {
                     strBufferListRecordXml.append( record.getXmlForCsvExport( plugin, locale, false, state,
-                            listEntryResultSearch, false, false, true, bDisplayDateCreation, bDisplayDateModification ) );
+                            listEntryResultSearch, false, false, true, bDisplayDateCreation, bDisplayDateModification,hashFields ) );
                 }
                 else
                 {
                     strBufferListRecordXml.append( record.getXml( plugin, locale, false, state, listEntryResultSearch,
-                            false, false, true, bDisplayDateCreation, bDisplayDateModification ) );
+                            false, false, true, bDisplayDateCreation, bDisplayDateModification,hashFields ) );
                 }
             }
 

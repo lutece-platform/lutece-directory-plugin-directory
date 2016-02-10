@@ -264,14 +264,15 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @param bDisplayFront true if template front or false if template back
      * @param bDisplayExport true if it must be displayed in export
      * @param bDisplayDateCreation true if the date creation must be displayed
+     * @param mapFieldEntry a map containing all fields associated to the list of entry
      * @return xml
      */
     public StringBuffer getXml( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
         List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
-        boolean bDisplayExport, boolean bDisplayDateCreation )
+        boolean bDisplayExport, boolean bDisplayDateCreation,Map<Integer,Field> mapFieldEntry )
     {
         return getXml( plugin, locale, bWithHtmlCode, state, listEntryResultSearch, bDisplayTitleEntryTypeSelect,
-            bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
+            bDisplayFront, bDisplayExport, bDisplayDateCreation, false ,mapFieldEntry );
     }
 
     /**
@@ -289,11 +290,12 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @param bDisplayDateCreation true if the date creation must be displayed
      * @param bDisplayDateModification true if the modification date must be
      *            displayed, false otherwise
+     * @param mapFieldEntry a map containing all fields associated to the list of entry           
      * @return xml
      */
     public StringBuffer getXml( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
         List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
-        boolean bDisplayExport, boolean bDisplayDateCreation, boolean bDisplayDateModification )
+        boolean bDisplayExport, boolean bDisplayDateCreation, boolean bDisplayDateModification,Map<Integer,Field> mapFieldEntry  )
     {
         StringBuffer strXml = new StringBuffer(  );
         Map<String, String> model = new HashMap<String, String>(  );
@@ -321,7 +323,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
         XmlUtil.beginElement( strXml, Entry.TAG_LIST_ENTRY );
 
         Map<String, List<RecordField>> mapEntryRecordFields = DirectoryUtils.getSpecificMapIdEntryListRecordField( listEntryResultSearch,
-                this.getIdRecord(  ), plugin );
+                this.getIdRecord(  ), plugin, mapFieldEntry );
 
         for ( IEntry entry : listEntryResultSearch )
         {
@@ -489,14 +491,15 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @param bDisplayFront true if template front or false if template back
      * @param bDisplayExport true if it must be displayed in export
      * @param bDisplayDateCreation true if the date creation must be displayed
+     * @param mapFieldEntry a map containing all fields associated to the list of entry
      * @return xml
      */
     public StringBuffer getXmlForCsvExport( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
         List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
-        boolean bDisplayExport, boolean bDisplayDateCreation )
+        boolean bDisplayExport, boolean bDisplayDateCreation,Map<Integer,Field> mapFieldEntry  )
     {
         return getXmlForCsvExport( plugin, locale, bWithHtmlCode, state, listEntryResultSearch,
-            bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport, bDisplayDateCreation, false );
+            bDisplayTitleEntryTypeSelect, bDisplayFront, bDisplayExport, bDisplayDateCreation, false,mapFieldEntry);
     }
 
     /**
@@ -514,11 +517,12 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @param bDisplayDateCreation true if the date creation must be displayed
      * @param bDisplayDateModification true if the modification date must be
      *            displayed, false otherwise
+     * @param mapFieldEntry a map containing all fields associated to the list of entry
      * @return xml
      */
     public StringBuffer getXmlForCsvExport( Plugin plugin, Locale locale, boolean bWithHtmlCode, State state,
         List<IEntry> listEntryResultSearch, boolean bDisplayTitleEntryTypeSelect, boolean bDisplayFront,
-        boolean bDisplayExport, boolean bDisplayDateCreation, boolean bDisplayDateModification )
+        boolean bDisplayExport, boolean bDisplayDateCreation, boolean bDisplayDateModification,Map<Integer,Field> mapFieldEntry   )
     {
         StringBuffer strXml = new StringBuffer(  );
         Map<String, String> model = new HashMap<String, String>(  );
@@ -535,7 +539,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
         XmlUtil.beginElement( strXml, Entry.TAG_LIST_ENTRY );
 
         Map<String, List<RecordField>> mapEntryRecordFields = DirectoryUtils.getSpecificMapIdEntryListRecordField( listEntryResultSearch,
-                this.getIdRecord(  ), plugin );
+                this.getIdRecord(  ), plugin ,mapFieldEntry);
 
         if ( bDisplayDateCreation )
         {

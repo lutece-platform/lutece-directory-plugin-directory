@@ -33,6 +33,19 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryFilter;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
@@ -40,6 +53,7 @@ import fr.paris.lutece.plugins.directory.business.DirectoryXsl;
 import fr.paris.lutece.plugins.directory.business.DirectoryXslHome;
 import fr.paris.lutece.plugins.directory.business.EntryFilter;
 import fr.paris.lutece.plugins.directory.business.EntryHome;
+import fr.paris.lutece.plugins.directory.business.Field;
 import fr.paris.lutece.plugins.directory.business.File;
 import fr.paris.lutece.plugins.directory.business.FileHome;
 import fr.paris.lutece.plugins.directory.business.IEntry;
@@ -82,19 +96,6 @@ import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.http.SecurityUtil;
 import fr.paris.lutece.util.url.UrlItem;
 import fr.paris.lutece.util.xml.XmlUtil;
-
-import org.apache.commons.lang.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 /**
@@ -663,17 +664,14 @@ public class DirectoryApp implements XPageApplication
 
         List<IEntry> listEntrySearchResult = EntryHome.getEntryList( entryFilter, plugin );
 
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+        Map<Integer,Field> hashFields=DirectoryUtils.getMapFieldsOfListEntry(listEntrySearchResult, plugin) ;
 
         for ( Record record : listRecord )
         {
-            recordFieldFilter.setIdRecord( record.getIdRecord(  ) );
-            recordFieldFilter.setIsEntryShownInResultList( RecordFieldFilter.FILTER_TRUE );
-            record.setListRecordField( RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin ) );
-
+          
             State state = null;
 
-            if ( WorkflowService.getInstance(  ).isAvailable(  ) )
+            if ( directory.getIdWorkflow()!=DirectoryUtils.CONSTANT_ID_NULL && WorkflowService.getInstance(  ).isAvailable(  ) )
             {
                 state = WorkflowService.getInstance(  )
                                        .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
@@ -681,7 +679,7 @@ public class DirectoryApp implements XPageApplication
             }
 
             strBufferListRecordXml.append( record.getXml( plugin, locale, false, state, listEntrySearchResult, true,
-                    true, false, true ) );
+                    true, false, true, hashFields));
         }
 
         for ( IEntry entry : listEntrySearchResult )
@@ -782,7 +780,7 @@ public class DirectoryApp implements XPageApplication
         }
 
         StringBuffer strBufferListRecordXml = new StringBuffer(  );
-        strBufferListRecordXml.append( record.getXml( plugin, locale, false, null, listEntry, true, true, false, true ) );
+        strBufferListRecordXml.append( record.getXml( plugin, locale, false, null, listEntry, true, true, false, true ,DirectoryUtils.getMapFieldsOfListEntry(listEntry, plugin)) );
 
         StringBuilder strBufferXml = new StringBuilder(  );
         strBufferXml.append( XmlUtil.getXmlHeader(  ) );
