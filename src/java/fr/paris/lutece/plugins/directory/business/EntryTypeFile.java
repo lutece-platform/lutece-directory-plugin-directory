@@ -73,6 +73,7 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
     private final String _template_html_code_entry_value = "admin/plugins/directory/entrytypefile/html_code_entry_value_type_file.html";
     private final String _template_html_front_code_form_entry = "skin/plugins/directory/entrytypefile/html_code_form_entry_type_file.html";
     private final String _template_html_front_code_entry_value = "skin/plugins/directory/entrytypefile/html_code_entry_value_type_file.html";
+    private final String PREFIX_ENTRY_ID = "directory_";
 
     /**
      * {@inheritDoc}
@@ -223,9 +224,10 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
             //if asynchronous file items is empty get the file in the multipart request
             if ( CollectionUtils.isEmpty( fileItems ) )
             {
-                FileItem fileItem = ( (MultipartHttpServletRequest) request ).getFile( DirectoryUtils.EMPTY_STRING +
+                FileItem fileItem = ( (MultipartHttpServletRequest) request ).getFile( PREFIX_ENTRY_ID+
                         this.getIdEntry(  ) );
 
+                
                 if ( fileItem != null )
                 {
                     fileItems = new ArrayList<FileItem>(  );
