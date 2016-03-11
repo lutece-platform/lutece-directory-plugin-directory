@@ -52,6 +52,7 @@ import fr.paris.lutece.util.filesystem.FileSystemUtil;
 import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.image.ImageUtil;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
 
@@ -60,6 +61,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -97,6 +99,7 @@ public class EntryTypeImg extends AbstractEntryTypeUpload
     private static final String FIELD_IMAGE = "image_full_size";
     private static final String FIELD_THUMBNAIL = "little_thumbnail";
     private static final String FIELD_BIG_THUMBNAIL = "big_thumbnail";
+    private final String PREFIX_ENTRY_ID = "directory_";
     private static final int INTEGER_QUALITY_MAXIMUM = 1;
     private final String _template_create = "admin/plugins/directory/entrytypeimg/create_entry_type_img.html";
     private final String _template_modify = "admin/plugins/directory/entrytypeimg/modify_entry_type_img.html";
@@ -248,20 +251,34 @@ public class EntryTypeImg extends AbstractEntryTypeUpload
     {
         if ( request instanceof MultipartHttpServletRequest )
         {
-            List<FileItem> asynchronousFileItem = getFileSources( request );
+            List<FileItem> fileItems = getFileSources( request );
+            
+            //if asynchronous file items is empty get the file in the multipart request
+            if ( CollectionUtils.isEmpty( fileItems ) )
+            {
+                FileItem fileItem = ( (MultipartHttpServletRequest) request ).getFile( PREFIX_ENTRY_ID+
+                        this.getIdEntry(  ) );
 
-            if ( ( asynchronousFileItem != null ) && !asynchronousFileItem.isEmpty(  ) )
+                
+                if ( fileItem != null )
+                {
+                    fileItems = new ArrayList<FileItem>(  );
+                    fileItems.add( fileItem );
+                }
+            }
+
+            if ( ( fileItems != null ) && !fileItems.isEmpty(  ) )
             {
                 // Checks
                 if ( bTestDirectoryError )
                 {
-                    this.checkRecordFieldData( asynchronousFileItem, locale );
+                    this.checkRecordFieldData( fileItems, locale );
                 }
 
                 // The index is used to distinguish the thumbnails of one image from another
                 int nIndex = 0;
 
-                for ( FileItem fileItem : asynchronousFileItem )
+                for ( FileItem fileItem : fileItems )
                 {
                     String strFilename = ( fileItem != null ) ? FileUploadService.getFileNameOnly( fileItem )
                                                               : StringUtils.EMPTY;
@@ -373,7 +390,7 @@ public class EntryTypeImg extends AbstractEntryTypeUpload
             }
 
             if ( bTestDirectoryError && this.isMandatory(  ) &&
-                    ( ( asynchronousFileItem == null ) || asynchronousFileItem.isEmpty(  ) ) )
+                    ( ( fileItems == null ) || fileItems.isEmpty(  ) ) )
             {
                 RecordField recordField = new RecordField(  );
                 recordField.setEntry( this );
