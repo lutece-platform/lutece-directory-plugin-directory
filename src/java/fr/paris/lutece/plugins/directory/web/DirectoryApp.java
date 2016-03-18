@@ -106,7 +106,8 @@ public class DirectoryApp implements XPageApplication
     /**
      * Serial version UID
      */
-    private static final long serialVersionUID = 3679144166666894465L;
+   
+	private static final long serialVersionUID = 3679144166666894465L;
 
     // templates
     private static final String TEMPLATE_XPAGE_FRAME_DIRECTORY = "skin/plugins/directory/directory_frame.html";
