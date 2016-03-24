@@ -40,6 +40,42 @@
 								</#if>
 							</div>
 						</div>
+						<!-- champs mode d’édition (suggestPOI, Point, line, polygon)  -->
+						<div class="form-group">
+							<label class="control-label col-xs-12 col-sm-3" for="map_provider">#i18n{directory.create_entry.label_edit_mode} : </label>
+						 	<div class="col-xs-12 col-sm-9">
+						 		<#assign editModeValue = "">
+							 	<#if entry.fields?? && entry.fields?has_content>
+									<#list entry.fields as field>
+										<#if field?? && field.title = "editMode">
+											<#assign editModeValue = field.value >
+											<#break>
+										</#if>
+									</#list>
+								</#if>
+								<#if editModeValue?has_content >
+									<@comboWithParams name="edit_mode" default_value="${editModeValue}" additionalParameters=" class=\"form-control\" " items=entry.editModesRefList />
+								<#else>
+									<@comboWithParams name="edit_mode" default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.editModesRefList />
+								</#if>
+							</div>
+						</div>
+						<#-- view number -->
+						<#assign viewNumberValue = "">
+						<#if entry.fields?? && entry.fields?has_content>
+							<#list entry.fields as field>
+								<#if field?? && field.title = "viewNumber">
+									<#assign viewNumberValue = field.value >
+									<#break>
+								</#if>
+							</#list>
+						</#if>
+						<div class="form-group">
+							<label class="control-label col-xs-12 col-sm-3" for="edit_mode">#i18n{directory.create_entry.label_view_number} : </label>
+							<div class="col-xs-12 col-sm-9">
+								<input type="text" name="view_number" id="view_number" value="${viewNumberValue}" maxlength="255" class="form-control">
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="control-label col-xs-12 col-sm-3" for=""></label>
 							<div class="col-xs-12 col-sm-9">

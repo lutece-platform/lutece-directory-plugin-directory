@@ -190,4 +190,10 @@ public class MapProvider implements IMapProvider
     {
         _bMapListSupported = bMapListSupported;
     }
+
+	@Override
+	public Object getParameter( int nKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -31,7 +31,7 @@
 				<tbody>
 					<#list resource_actions_list as resource_actions>
 					<tr>
-						<td><input class="selected-id" type="checkbox" name="selected_record" value="${resource_actions.record.idRecord}"></td>
+						<td><input id = "selected_record_${resource_actions.record.idRecord}" class="selected-id" type="checkbox" name="selected_record" value="${resource_actions.record.idRecord}"></td>
 						<#assign first_entry = true />
 						<#list entry_list_search_result as entry>
 							<#assign entryKey = "" + entry.idEntry>
@@ -40,6 +40,7 @@
 							<#compress>
 							<#if listRecordField?has_content>
 									<#assign first_record_field = true />
+									<#assign compt = 0 />
 						      		<#list listRecordField as record_field>
 										<#if isEntryTypeGeolocation(entry) && first_record_field>
 											<#assign first_record_field = false />
@@ -100,13 +101,61 @@
 				</tbody>
 			</table>
 			<#if entry_list_geolocation?has_content>
-				<#list entry_list_geolocation as entry>
-					<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
-						<#-- several results -->
-						<button type="button" class="btn btn-primary" id="${entry.idEntry}_map-button">#i18n{directory.show_on_map} &quot;${entry.title}&quot;</button>
-						<#include entry.mapProvider.backListHtmlCode />
+				<!-- WS -->
+				<#assign list_record_field_ws = "">
+				<#assign nb_record_field_ws = 0>
+				<#list resource_actions_list as resource_actions>
+					<#list entry_list_search_result as entry>
+						<#assign entryKey = "" + entry.idEntry>
+						<#assign listRecordField = resource_actions.map_id_entry_list_record_field[entryKey]>
+						<#if listRecordField?has_content>
+							<#list listRecordField as record_field>
+								<#if nb_record_field_ws = 0>
+									<#assign list_record_field_ws = list_record_field_ws + record_field.idRecordField> 
+								<#else>
+									<#assign list_record_field_ws = list_record_field_ws + "," + record_field.idRecordField>
+								</#if>
+								<#assign nb_record_field_ws = nb_record_field_ws + 1>
+							</#list>
+						
+						</#if>							
+					</#list>
+				</#list>
+				<#assign url_ws = webapp_url + "rest/directory-gismap/listRecordField/" + list_record_field_ws> 
+				<#list entry_list_search_result as entry>
+					<#assign viewNumberValue = "">
+					<#if entry.fields?? && entry.fields?has_content>
+						<#list entry.fields as field>
+							<#if field?? && field.title?has_content && field.title == "viewNumber">
+								<#assign viewNumberValue = field.value >
+								<#break>
+							</#if>
+						</#list>
 					</#if>
 				</#list>
+				<#list entry_list_geolocation as entry>
+					<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
+						<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
+							<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).mapParameter??>
+								<#assign map_parameter = entry.mapProvider.getParameter(viewNumberValue?number).mapParameter >
+							</#if>
+							
+							<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).addressParam??>
+								<#assign add_parameter = entry.mapProvider.getParameter(viewNumberValue?number).addressParam >
+							</#if>
+						</#if>
+						<#-- several results -->
+						<#if entry.mapProvider.key?has_content && entry.mapProvider.key != "gismap" >
+							<button type="button" class="btn btn-primary" id="${entry.idEntry}_map-button">#i18n{directory.show_on_map} &quot;${entry.title}&quot;</button>
+							<#include entry.mapProvider.backListHtmlCode />
+						<#else>
+							<#include entry.mapProvider.backListHtmlCode />
+						</#if>
+						
+					</#if>
+				</#list>
+				
+				
 			</#if>
 			<@paginationAdmin paginator=paginator combo=1 form=0 />
 	</div>

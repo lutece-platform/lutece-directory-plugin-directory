@@ -7,29 +7,72 @@
 				<#assign yField = tmpField />
 			<#elseif tmpField.field.title == "address">
 				<#assign addressField = tmpField />
+			<#elseif tmpField.field.title == "additionalAddress">
+				<#assign addAddressField = tmpField />
+			<#elseif tmpField.field.title == "geometry">
+				<#assign geometryField = tmpField />
 			</#if>
+		</#if>
+	</#list>
+</#if>
+<#assign editModeValue = "">
+<#if entry.fields?? && entry.fields?has_content>
+	<#list entry.fields as field>
+		<#if field?? && field.title = "editMode">
+			<#assign editModeValue = field.value >
+			<#break>
+		</#if>
+	</#list>
+</#if>
+<#assign viewNumberValue = "">
+<#if entry.fields?? && entry.fields?has_content>
+	<#list entry.fields as field>
+		<#if field?? && field.title = "viewNumber">
+			<#assign viewNumberValue = field.value >
+			<#break>
 		</#if>
 	</#list>
 </#if>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}_address">${entry.title}<#if entry.mandatory>	*</#if></label>
 	<div class="col-xs-12 col-sm-9">
-	<#if xField?has_content && xField.value?has_content>
-  	<input type="hidden" id="${entry.idEntry}_x" name="${entry.idEntry}_x" value="${xField.value}">
-  <#else>
-		<input type="hidden" id="${entry.idEntry}_x" name="${entry.idEntry}_x" value="">
-  </#if>
-	<#if yField?has_content && yField.value?has_content>
-  	<input type="hidden" id="${entry.idEntry}_y" name="${entry.idEntry}_y" value="${yField.value}" />
-  <#else>
-  	<input type="hidden" id="${entry.idEntry}_y" name="${entry.idEntry}_y" value="" />
-  </#if>
-  <#if addressField?has_content && addressField.value?has_content>
-	  <input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${addressField.value}" size="50" maxlength="255"  class="form-control">
-	<#else>
-  	<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="" size="50" maxlength="255" class="form-control">
-	</#if>
-	<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+		<#if xField?has_content && xField.value?has_content>
+	  		<input type="hidden" id="${entry.idEntry}_x" name="${entry.idEntry}_x" value="${xField.value}">
+	  	<#else>
+			<input type="hidden" id="${entry.idEntry}_x" name="${entry.idEntry}_x" value="">
+	  	</#if>
+		<#if yField?has_content && yField.value?has_content>
+	  		<input type="hidden" id="${entry.idEntry}_y" name="${entry.idEntry}_y" value="${yField.value}" />
+	  	<#else>
+	  		<input type="hidden" id="${entry.idEntry}_y" name="${entry.idEntry}_y" value="" />
+	  	</#if>
+	  	<!-- Address -->
+	  	<#if addressField?has_content && addressField.value?has_content>
+	  		<#if editModeValue == "" || editModeValue == "Address" || editModeValue == "Adresse">
+	  			<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${addressField.value}" size="50" maxlength="255"  class="form-control">
+	  		<#else>
+	  			<input type="hidden" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${addressField.value}" size="50" maxlength="255"  class="form-control">
+	  		</#if>
+		<#else>
+			<#if editModeValue == "" || editModeValue == "Address" || editModeValue == "Adresse">
+				<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="" size="50" maxlength="255" class="form-control">
+			<#else>
+				<input type="hidden" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="" size="50" maxlength="255" class="form-control">
+			</#if>
+		</#if>
+		<!-- Additional Address -->
+	  	<#if addAddressField?has_content && addAddressField.value?has_content>
+	  		<input type="hidden" id="${entry.idEntry}_additional_address" name="${entry.idEntry}_additional_address" value="${addAddressField.value}" />
+	  	<#else>
+	  		<input type="hidden" id="${entry.idEntry}_additional_address" name="${entry.idEntry}_additional_address" value="" />
+	  	</#if>
+		<!-- Geometry -->
+	  	<#if geometryField?has_content && geometryField.value?has_content>
+	  		<input type="hidden" id="${entry.idEntry}_geometry" name="${entry.idEntry}_geometry" value="${geometryField.value}" />
+	  	<#else>
+	  		<input type="hidden" id="${entry.idEntry}_geometry" name="${entry.idEntry}_geometry" value="" />
+	  	</#if>
+		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
 			<span class="help-text">${entry.helpMessage}</span>
 		</#if>
 	</div>
@@ -42,11 +85,24 @@
 		</div>
 	</div>
 </#if>
+
+
 <#if entry.mapProvider?has_content>
 <div class="form-group">
 	<label class="control-label col-xs-12 col-sm-2" for=""></label>
 	<div class="col-xs-12 col-sm-9">
-			<#include entry.mapProvider.htmlCode />
+		<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
+			<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).mapParameter??>
+				<#assign map_parameter = entry.mapProvider.getParameter(viewNumberValue?number).mapParameter >
+			</#if>
+			
+			<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).addressParam??>
+				<#assign add_parameter = entry.mapProvider.getParameter(viewNumberValue?number).addressParam >
+			</#if>
+		</#if>
+		
+		<#include entry.mapProvider.htmlCode />
+			
 	</div>
 </div>
 </#if>

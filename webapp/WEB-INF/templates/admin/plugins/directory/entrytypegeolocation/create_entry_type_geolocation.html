@@ -37,6 +37,20 @@
 								<@comboWithParams name="map_provider" default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.mapProvidersRefList />
 							</div>
 						</div>
+						<#-- edit mode -->
+						<div class="form-group">
+							<label class="control-label col-xs-12 col-sm-3" for="edit_mode">#i18n{directory.create_entry.label_edit_mode} : </label>
+							<div class="col-xs-12 col-sm-9">
+								<@comboWithParams name="edit_mode" default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.editModesRefList />
+							</div>
+						</div>
+						<#-- view number -->
+						<div class="form-group">
+							<label class="control-label col-xs-12 col-sm-3" for="edit_mode">#i18n{directory.create_entry.label_view_number} : </label>
+							<div class="col-xs-12 col-sm-9">
+								<input type="text" name="view_number" id="view_number" value="" maxlength="255" class="form-control">
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="control-label col-xs-12 col-sm-3" for=""></label>
 							<div class="col-xs-12 col-sm-9">

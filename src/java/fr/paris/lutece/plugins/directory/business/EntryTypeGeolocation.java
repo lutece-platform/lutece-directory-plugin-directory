@@ -41,6 +41,7 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.xml.XmlUtil;
 
@@ -69,6 +70,14 @@ public class EntryTypeGeolocation extends Entry
     public static final String PARAMETER_SUFFIX_Y = "_y";
     public static final String PARAMETER_SUFFIX_MAP_PROVIDER = "_map_provider";
     public static final String PARAMETER_SUFFIX_ADDRESS = "_address";
+    
+    // PARAMETERS OF GISMAP ATTRIBUTS
+    public static final String PARAMETER_EDIT_MODE = "edit_mode";
+    public static final String PARAMETER_VIEW_NUMBER = "view_number";
+    public static final String PARAMETER_SUFFIX_ADDITIONAL_ADDRESS = "_additional_address";
+    public static final String PARAMETER_SUFFIX_GEOMETRY = "_geometry";
+    
+    public static final String PARAMETER_EDIT_MODE_LIST = "gismap.edit.mode.list";
 
     // PUBLIC COSNTANTS
     public static final String CONSTANT_ADDRESS = "address";
@@ -76,13 +85,20 @@ public class EntryTypeGeolocation extends Entry
     public static final String CONSTANT_Y = "Y";
     public static final String CONSTANT_PROVIDER = "provider";
     public static final String CONSTANT_SHOWXY = "showxy";
-
+    // PUBLIC COSNTANTS OF GISMAP ATTRIBUTS
+    public static final String CONSTANT_EDIT_MODE = "editMode";
+    public static final String CONSTANT_VIEW_NUMBER = "viewNumber";
+    public static final String CONSTANT_ADDITIONAL_ADDRESS = "additionalAddress";
+    public static final String CONSTANT_GEOMETRY = "geometry";
+ 
     // PRIVATE CONSTANTS
     private static final int CONSTANT_POSITION_X = 0;
     private static final int CONSTANT_POSITION_Y = 1;
     private static final int CONSTANT_POSITION_MAP_PROVIDER = 2;
     private static final int CONSTANT_POSITION_ADDRESS = 3;
-    private static final int CONSTANT_FIELDS_COUNT = 4;
+    private static final int CONSTANT_POSITION_ADDITIONAL_ADDRESS = 4;
+    private static final int CONSTANT_POSITION_GEOMETRY = 5;
+    private static final int CONSTANT_FIELDS_COUNT = 6;
 
     // TEMPLATES
     private static final String TEMPLATE_CREATE = "admin/plugins/directory/entrytypegeolocation/create_entry_type_geolocation.html";
@@ -186,6 +202,8 @@ public class EntryTypeGeolocation extends Entry
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
         String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
         String strShowXY = request.getParameter( PARAMETER_SHOWXY );
+        String strEditMode = request.getParameter( PARAMETER_EDIT_MODE );
+        String strViewNumber = request.getParameter( PARAMETER_VIEW_NUMBER );
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
@@ -245,6 +263,26 @@ public class EntryTypeGeolocation extends Entry
 
         addressField.setEntry( this );
         addressField.setTitle( CONSTANT_ADDRESS );
+        
+        Field additionalAddressField = findField( CONSTANT_ADDITIONAL_ADDRESS, getFields(  ) );
+
+        if ( additionalAddressField == null )
+        {
+        	additionalAddressField = new Field(  );
+        }
+
+        additionalAddressField.setEntry( this );
+        additionalAddressField.setTitle( CONSTANT_ADDITIONAL_ADDRESS );
+        
+        Field geometryField = findField( CONSTANT_GEOMETRY, getFields(  ) );
+
+        if ( geometryField == null )
+        {
+        	geometryField = new Field(  );
+        }
+
+        geometryField.setEntry( this );
+        geometryField.setTitle( CONSTANT_GEOMETRY );
 
         Field showXYField = findField( CONSTANT_SHOWXY, getFields(  ) );
 
@@ -256,13 +294,39 @@ public class EntryTypeGeolocation extends Entry
         showXYField.setEntry( this );
         showXYField.setTitle( CONSTANT_SHOWXY );
         showXYField.setValue( StringUtils.isNotBlank( strShowXY ) ? Boolean.TRUE.toString(  ) : Boolean.FALSE.toString(  ) );
+        
+        Field editModeField = findField( CONSTANT_EDIT_MODE, getFields(  ) );
+
+        if ( editModeField == null )
+        {
+        	editModeField = new Field(  );
+        }
+
+        editModeField.setEntry( this );
+        editModeField.setTitle( CONSTANT_EDIT_MODE );
+        editModeField.setValue( strEditMode );
+        
+        Field viewNumberField = findField( CONSTANT_VIEW_NUMBER, getFields(  ) );
+
+        if ( viewNumberField == null )
+        {
+        	viewNumberField = new Field(  );
+        }
+
+        viewNumberField.setEntry( this );
+        viewNumberField.setTitle( CONSTANT_VIEW_NUMBER );
+        viewNumberField.setValue( strViewNumber );
 
         List<Field> listFields = new ArrayList<Field>(  );
         listFields.add( xField );
         listFields.add( yField );
         listFields.add( mapProviderField );
         listFields.add( addressField );
+        listFields.add( additionalAddressField );
+        listFields.add( geometryField );
         listFields.add( showXYField );
+        listFields.add( editModeField );
+        listFields.add( viewNumberField );
         this.setFields( listFields );
 
         this.setTitle( strTitle );
@@ -302,6 +366,28 @@ public class EntryTypeGeolocation extends Entry
 
         return refList;
     }
+    
+    /**
+     * Builds the {@link ReferenceList} of all available edit modes
+     * @return the {@link ReferenceList}
+     */
+    public ReferenceList getEditModesRefList(  )
+    {
+    	String strEditModeListProperty = AppPropertiesService.getProperty( PARAMETER_EDIT_MODE_LIST );
+    	ReferenceList refList = new ReferenceList(  );
+    	refList.addItem( StringUtils.EMPTY, StringUtils.EMPTY );
+    	if(strEditModeListProperty!=null)
+    	{
+    		String[] strEditModeListPropertyArray = strEditModeListProperty.split(",");
+            
+            for(int i=0;i<strEditModeListPropertyArray.length;i++)
+            {
+            	refList.addItem( strEditModeListPropertyArray[i], strEditModeListPropertyArray[i] );
+            }
+    	}
+    	        
+        return refList;
+    }
 
     /**
      *
@@ -317,10 +403,14 @@ public class EntryTypeGeolocation extends Entry
         String strYValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_Y );
         String strMapProviderValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_MAP_PROVIDER );
         String strAddressValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_ADDRESS );
+        String strAdditionalAddressValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_ADDITIONAL_ADDRESS );
+        String strGeometryValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_GEOMETRY );
         listValue.add( strXValue );
         listValue.add( strYValue );
         listValue.add( strMapProviderValue );
         listValue.add( strAddressValue );
+        listValue.add( strAdditionalAddressValue );
+        listValue.add( strGeometryValue );
 
         getRecordFieldData( record, listValue, bTestDirectoryError, addNewValue, listRecordField, locale );
     }
@@ -366,6 +456,8 @@ public class EntryTypeGeolocation extends Entry
         String strYValue = lstValue.get( CONSTANT_POSITION_Y );
         String strMapProviderValue = lstValue.get( CONSTANT_POSITION_MAP_PROVIDER );
         String strAddressValue = lstValue.get( CONSTANT_POSITION_ADDRESS );
+        String strAdditionalAddressValue = lstValue.get( CONSTANT_POSITION_ADDITIONAL_ADDRESS );
+        String strGeometryValue = lstValue.get( CONSTANT_POSITION_GEOMETRY );
 
         Field xField = findField( CONSTANT_X, getFields(  ) );
         Field yField = findField( CONSTANT_Y, getFields(  ) );
@@ -421,6 +513,22 @@ public class EntryTypeGeolocation extends Entry
         recordFieldAddress.setValue( strAddressValue );
         recordFieldAddress.setField( addressField );
         listRecordField.add( recordFieldAddress );
+        
+        RecordField recordFieldAddtionalAddress = new RecordField(  );
+        Field additionalAddressField = findField( CONSTANT_ADDITIONAL_ADDRESS, getFields(  ) );
+
+        recordFieldAddtionalAddress.setEntry( this );
+        recordFieldAddtionalAddress.setValue( strAdditionalAddressValue );
+        recordFieldAddtionalAddress.setField( additionalAddressField );
+        listRecordField.add( recordFieldAddtionalAddress );
+        
+        RecordField recordFieldGeometry = new RecordField(  );
+        Field geometryField = findField( CONSTANT_GEOMETRY, getFields(  ) );
+
+        recordFieldGeometry.setEntry( this );
+        recordFieldGeometry.setValue( strGeometryValue );
+        recordFieldGeometry.setField( geometryField );
+        listRecordField.add( recordFieldGeometry );
     }
 
     /**
