@@ -101,6 +101,29 @@ ${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
 				<input type="hidden" name="id_directory" value="${directory.idDirectory}">
 				<input type="hidden" name="session" value="session">
 			<#list entry_list as entry>
+			
+			<#assign editModeValue = "">
+			
+			<#assign viewNumberValue = "1">
+			<#if entry.fields?? && entry.fields?has_content>
+				<#list entry.fields as field>
+					<#if field?? && field.title?has_content && field.title == "viewNumber">
+						<#assign viewNumberValue = field.value >
+						<#break>
+					</#if>
+				</#list>
+			</#if>
+			<#if entry.mapProvider?has_content>
+					<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
+						<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).mapParameter??>
+							<#assign map_parameter = entry.mapProvider.getParameter(viewNumberValue?number).mapParameter >
+						</#if>
+						
+						<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).addressParam??>
+							<#assign add_parameter = entry.mapProvider.getParameter(viewNumberValue?number).addressParam >
+						</#if>
+					</#if>
+			</#if>
 					<#if entry.entryType.group>
 						<fieldset>
 							<legend>${entry.title} </legend>
@@ -109,7 +132,11 @@ ${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
 								<div class="control-group">
 									<label class="control-label" for=""><#if child.title?exists>${child.title}</#if></label>
 									<div class="controls">
-										<#assign entryKey=""+child.idEntry><#assign first = true><#list map_id_entry_list_record_field[entryKey] as recordfield><@getRecordFieldHtml entry=child recordfield=recordfield first=first /><#assign first = false></#list>
+										
+										<#assign entryKey=""+child.idEntry><#assign first = true>
+										<#list map_id_entry_list_record_field[entryKey] as recordfield>
+											<@getRecordFieldHtml entry=child recordfield=recordfield first=first /><#assign first = false>
+										</#list>
 									</div>
 								</div>
 								</#list>

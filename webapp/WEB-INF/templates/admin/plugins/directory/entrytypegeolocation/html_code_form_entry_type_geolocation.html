@@ -18,16 +18,16 @@
 <#assign editModeValue = "">
 <#if entry.fields?? && entry.fields?has_content>
 	<#list entry.fields as field>
-		<#if field?? && field.title = "editMode">
+		<#if field?? && field.title == "editMode">
 			<#assign editModeValue = field.value >
 			<#break>
 		</#if>
 	</#list>
 </#if>
-<#assign viewNumberValue = "">
+<#assign viewNumberValue = "1">
 <#if entry.fields?? && entry.fields?has_content>
 	<#list entry.fields as field>
-		<#if field?? && field.title = "viewNumber">
+		<#if field?? && field.title == "viewNumber">
 			<#assign viewNumberValue = field.value >
 			<#break>
 		</#if>
@@ -85,7 +85,6 @@
 		</div>
 	</div>
 </#if>
-
 
 <#if entry.mapProvider?has_content>
 <div class="form-group">

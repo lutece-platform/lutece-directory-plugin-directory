@@ -7,9 +7,31 @@
 				<#assign yField = tmpField />
 			<#elseif tmpField.field.title == "address">
 				<#assign addressField = tmpField />
+			<#elseif tmpField.field.title == "additionalAddress">
+				<#assign addAddressField = tmpField />
+			<#elseif tmpField.field.title == "geometry">
+				<#assign geometryField = tmpField />
 			</#if>
 		</#if>
-	</#list> 
+	</#list>
+</#if>
+<#assign editModeValue = "">
+<#if entry.fields?? && entry.fields?has_content>
+	<#list entry.fields as field>
+		<#if field?? && field.title = "editMode">
+			<#assign editModeValue = field.value >
+			<#break>
+		</#if>
+	</#list>
+</#if>
+<#assign viewNumberValue = "1">
+<#if entry.fields?? && entry.fields?has_content>
+	<#list entry.fields as field>
+		<#if field?? && field.title = "viewNumber">
+			<#assign viewNumberValue = field.value >
+			<#break>
+		</#if>
+	</#list>
 </#if>
 <div class="form-element">
 	
@@ -35,9 +57,9 @@
    		</#if>
    		<span class="form-field-column">
 			<#if addressField?has_content && addressField.value?has_content>
-    			<div class="controls">
-	<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${addressField.value}" size="50" maxlength="255" />
-		</div>
+    		<div class="controls">
+				<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${addressField.value}" size="50" maxlength="255" />
+			</div>
 	</div>
     		<#else>
     			<div class="controls">
@@ -65,8 +87,18 @@
 	</span>
 </div>
 </#if>
+
+
 <#if entry.mapProvider?has_content>
 <div class="form-element">
-<#include entry.mapProvider.htmlCode />
+	<#if entry.mapProvider.parameter?? && entry.mapProvider.parameter.mapParameter??>
+		<#assign map_parameter = entry.mapProvider.parameter.mapParameter >
+	</#if>
+	
+	<#if entry.mapProvider.parameter?? && entry.mapProvider.parameter.addressParam??>
+		<#assign add_parameter = entry.mapProvider.parameter.addressParam >
+	</#if>
+	
+	<#include entry.mapProvider.htmlCode />
 </div>
 </#if>
