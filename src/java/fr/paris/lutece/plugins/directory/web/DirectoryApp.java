@@ -344,6 +344,16 @@ public class DirectoryApp implements XPageApplication
 
                     String strDirectoryRecord = getHtmlResultRecord( directory, record, request.getLocale(  ), plugin,
                             session );
+                    
+                    List<Integer> lIdRecordList = new ArrayList<Integer>();
+                    
+                    lIdRecordList.add(record.getIdRecord());
+                   
+                    if( lIdRecordList.size() > 0 )
+                    {
+                    	List<RecordField> lRecordField = RecordFieldHome.getRecordFieldListByRecordIdList(lIdRecordList, plugin);
+                    	model.put( MARK_RESULT_RECORD_FIELD_LIST, lRecordField );
+                    }
                     model.put( MARK_STR_RESULT_RECORD, strDirectoryRecord );
                 }
                 else

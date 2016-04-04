@@ -32,19 +32,18 @@
 	<#if str_result_record?has_content>
 		<#-- single result -->
 		<#if entry_list_geolocation?has_content>
-			<#assign editModeValue = "">
+			<#if result_record_field_list?has_content>
+				<#list result_record_field_list as record_field>
+					<#if record_field.field?? && record_field.field.title?? && record_field.field.title == 'geometry' && record_field.value?has_content>
+						<input type="hidden" id="${record_field.entry.idEntry}_geometry" name="${record_field.entry.idEntry}_geometry" value="${record_field.value}" />
+					</#if>
+				</#list>
+			</#if>							
+		
+			<#assign editModeValue = "ReadOnly">
 			<#assign viewNumberValue = "1">
 			<#list entry_list_geolocation as entry>
 			
-				<#if entry.fields?? && entry.fields?has_content>
-					<#list entry.fields as field>
-						<#if field?? && field.title == "editMode">
-							<#assign editModeValue = field.value >
-							<#break>
-						</#if>
-					</#list>
-				</#if>
-				
 				<#if entry.fields?? && entry.fields?has_content>
 					<#list entry.fields as field>
 						<#if field?? && field.title == "viewNumber">
@@ -68,6 +67,7 @@
 		
 					<#include entry.mapProvider.frontHtmlCode />
 				</#if>
+				
 			</#list>
 		</#if>
 	</#if>
@@ -89,15 +89,6 @@
 			<#assign editModeValue = "">
 			<#assign viewNumberValue = "1">
 			<#list entry_list_geolocation as entry>
-			
-			<#if entry.fields?? && entry.fields?has_content>
-				<#list entry.fields as field>
-					<#if field?? && field.title == "editMode">
-						<#assign editModeValue = field.value >
-						<#break>
-					</#if>
-				</#list>
-			</#if>
 			
 			<#if entry.fields?? && entry.fields?has_content>
 				<#list entry.fields as field>
