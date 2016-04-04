@@ -122,8 +122,8 @@
 					</#list>
 				</#list>
 				<#assign url_ws = webapp_url + "rest/directory-gismap/listRecordField/" + list_record_field_ws> 
+				<#assign viewNumberValue = "1">
 				<#list entry_list_search_result as entry>
-					<#assign viewNumberValue = "">
 					<#if entry.fields?? && entry.fields?has_content>
 						<#list entry.fields as field>
 							<#if field?? && field.title?has_content && field.title == "viewNumber">

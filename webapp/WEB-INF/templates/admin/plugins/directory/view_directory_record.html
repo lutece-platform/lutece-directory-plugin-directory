@@ -33,17 +33,21 @@
 -- @return the HTLM code of the record field
 -->
 <#macro getRecordFieldHtml entry recordfield first>
-<#if isEntryTypeGeolocation( entry )>
-${entry.getHtmlRecordFieldValue( locale, recordfield, false )}<#if recordfield.field?? && recordfield.field.title?? && recordfield.field.title == 'address' && recordfield.value?has_content><#include "../../../skin/plugins/directory/" + entry.mapProvider.frontHtmlCode /></#if>
-<#else>
-<#if !first>
-</#if>
-<#if isEntryTypeImage( entry )>
-<#if recordfield.field?? & recordfield.field.isShownInResultRecord(  )>${entry.getHtmlRecordFieldValue( locale, recordfield, false )}</#if>
-<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>${record_field.value}<#else>
-${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
-</#if>
-</#if>
+	<#if isEntryTypeGeolocation( entry )>
+		${entry.getHtmlRecordFieldValue( locale, recordfield, false )}
+		<#if recordfield.field?? && recordfield.field.title?? && recordfield.field.title == 'address' >
+			<#include "../../../skin/plugins/directory/" + entry.mapProvider.frontHtmlCode />
+		</#if>
+			
+	<#else>
+		<#if !first>
+		</#if>
+		<#if isEntryTypeImage( entry )>
+			<#if recordfield.field?? & recordfield.field.isShownInResultRecord(  )>${entry.getHtmlRecordFieldValue( locale, recordfield, false )}</#if>
+			<#elseif isEntryTypeMyLuteceUser(entry) && !permission_visualisation_mylutece_user>${record_field.value}<#else>
+			${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
+		</#if>
+	</#if>
 </#macro>
 
 <#--
@@ -100,11 +104,13 @@ ${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
 				<input name="page" value="directory" type="hidden" >
 				<input type="hidden" name="id_directory" value="${directory.idDirectory}">
 				<input type="hidden" name="session" value="session">
-			<#list entry_list as entry>
-			
-			<#assign editModeValue = "">
+			<#assign editModeValue = "ReadOnly">
 			
 			<#assign viewNumberValue = "1">
+			
+			<#list entry_list as entry>
+			
+			
 			<#if entry.fields?? && entry.fields?has_content>
 				<#list entry.fields as field>
 					<#if field?? && field.title?has_content && field.title == "viewNumber">
@@ -148,6 +154,11 @@ ${entry.getHtmlRecordFieldValue( locale,recordfield, false )}
 							<#if entry.title?exists>
 								<label class="control-label col-xs-12 col-sm-2" for="">${entry.title}</label>
 							</#if>
+							<#list map_id_entry_list_record_field[entryKey] as recordfield>
+								<#if recordfield.field?? && recordfield.field.title?? && recordfield.field.title == 'geometry' && recordfield.value?has_content>
+									<input type="hidden" id="${entry.idEntry}_geometry" name="${entry.idEntry}_geometry" value="${recordfield.value}" />
+								</#if>
+							</#list>
 							<#list map_id_entry_list_record_field[entryKey] as recordfield>
 								<div class="col-xs-12 col-sm-9">
 									<@getRecordFieldHtml entry=entry recordfield=recordfield first=first />

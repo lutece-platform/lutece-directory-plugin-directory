@@ -1,3 +1,4 @@
+
 <div class="row">
 	<div class="span12">
 		<#if unavailability_message?exists>
@@ -31,8 +32,40 @@
 	<#if str_result_record?has_content>
 		<#-- single result -->
 		<#if entry_list_geolocation?has_content>
+			<#assign editModeValue = "">
+			<#assign viewNumberValue = "1">
 			<#list entry_list_geolocation as entry>
+			
+				<#if entry.fields?? && entry.fields?has_content>
+					<#list entry.fields as field>
+						<#if field?? && field.title == "editMode">
+							<#assign editModeValue = field.value >
+							<#break>
+						</#if>
+					</#list>
+				</#if>
+				
+				<#if entry.fields?? && entry.fields?has_content>
+					<#list entry.fields as field>
+						<#if field?? && field.title == "viewNumber">
+							<#assign viewNumberValue = field.value >
+							<#break>
+						</#if>
+					</#list>
+				</#if>
+			
 				<#if entry.mapProvider?has_content>
+				
+					<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
+						<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).mapParameter??>
+							<#assign map_parameter = entry.mapProvider.getParameter(viewNumberValue?number).mapParameter >
+						</#if>
+						
+						<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).addressParam??>
+							<#assign add_parameter = entry.mapProvider.getParameter(viewNumberValue?number).addressParam >
+						</#if>
+					</#if>
+		
 					<#include entry.mapProvider.frontHtmlCode />
 				</#if>
 			</#list>
@@ -40,13 +73,62 @@
 	</#if>
 	<#if str_result_list?has_content>
 		<#if entry_list_geolocation?has_content>
+			<!-- WS -->
+			<#assign list_record_field_ws = "">
+			<#assign nb_record_field_ws = 0>
+			<#list result_record_field_list as record_field>
+				<#if nb_record_field_ws = 0>
+					<#assign list_record_field_ws = list_record_field_ws + record_field.idRecordField> 
+				<#else>
+					<#assign list_record_field_ws = list_record_field_ws + "," + record_field.idRecordField>
+				</#if>
+				<#assign nb_record_field_ws = nb_record_field_ws + 1>
+			</#list>
+			<#assign url_ws = webapp_url + "rest/directory-gismap/listRecordField/" + list_record_field_ws> 
+			
+			<#assign editModeValue = "">
+			<#assign viewNumberValue = "1">
 			<#list entry_list_geolocation as entry>
+			
+			<#if entry.fields?? && entry.fields?has_content>
+				<#list entry.fields as field>
+					<#if field?? && field.title == "editMode">
+						<#assign editModeValue = field.value >
+						<#break>
+					</#if>
+				</#list>
+			</#if>
+			
+			<#if entry.fields?? && entry.fields?has_content>
+				<#list entry.fields as field>
+					<#if field?? && field.title == "viewNumber">
+						<#assign viewNumberValue = field.value >
+						<#break>
+					</#if>
+				</#list>
+			</#if>
+			
 				<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
+					
+					<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
+						<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).mapParameter??>
+							<#assign map_parameter = entry.mapProvider.getParameter(viewNumberValue?number).mapParameter >
+						</#if>
+						
+						<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).addressParam??>
+							<#assign add_parameter = entry.mapProvider.getParameter(viewNumberValue?number).addressParam >
+						</#if>
+					</#if>
+					
 					<#-- several results -->
-					<button type="button" class="btn btn-primary btn-small" id="${entry.idEntry}_map-button" >
-						#i18n{directory.show_on_map} &quot;${entry.title}&quot;
-					</button>
-					<#include entry.mapProvider.frontListHtmlCode />
+					<#if entry.mapProvider.key?has_content && entry.mapProvider.key != "gismap" >
+						<button type="button" class="btn btn-primary btn-small" id="${entry.idEntry}_map-button" >
+							#i18n{directory.show_on_map} &quot;${entry.title}&quot;
+						</button>
+						<#include entry.mapProvider.frontListHtmlCode />
+					<#else>
+						<#include entry.mapProvider.frontListHtmlCode />
+					</#if>
 				</#if>
 			</#list>
 		</#if>
