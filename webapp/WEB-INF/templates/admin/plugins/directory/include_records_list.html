@@ -6,6 +6,62 @@
 			</div>
   	</div>
   	<div class="box-body table-responsive">
+  	
+  		<#if entry_list_geolocation?has_content>
+				<!-- WS -->
+				<#assign list_record_field_ws = "">
+				<#assign nb_record_field_ws = 0>
+				<#list resource_actions_list as resource_actions>
+					<#list entry_list_search_result as entry>
+						<#assign entryKey = "" + entry.idEntry>
+						<#assign listRecordField = resource_actions.map_id_entry_list_record_field[entryKey]>
+						<#if listRecordField?has_content>
+							<#list listRecordField as record_field>
+								<#if nb_record_field_ws = 0>
+									<#assign list_record_field_ws = list_record_field_ws + record_field.idRecordField> 
+								<#else>
+									<#assign list_record_field_ws = list_record_field_ws + "," + record_field.idRecordField>
+								</#if>
+								<#assign nb_record_field_ws = nb_record_field_ws + 1>
+							</#list>
+						
+						</#if>							
+					</#list>
+				</#list>
+				<#assign url_ws = webapp_url + "rest/directory-gismap/listRecordField/" + list_record_field_ws> 
+				<#assign viewNumberGesValue = "1">
+				<#list entry_list_search_result as entry>
+					<#if entry.fields?? && entry.fields?has_content>
+						<#list entry.fields as field>
+							<#if field?? && field.title?has_content && field.title == "viewNumberGes">
+								<#assign viewNumberGesValue = field.value >
+								<#break>
+							</#if>
+						</#list>
+					</#if>
+				</#list>
+				<#list entry_list_geolocation as entry>
+					<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
+						<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
+							<#if entry.mapProvider.getParameter(viewNumberGesValue?number)?? && entry.mapProvider.getParameter(viewNumberGesValue?number).mapParameter??>
+								<#assign map_parameter = entry.mapProvider.getParameter(viewNumberGesValue?number).mapParameter >
+							</#if>
+							
+							<#if entry.mapProvider.getParameter(viewNumberGesValue?number)?? && entry.mapProvider.getParameter(viewNumberGesValue?number).addressParam??>
+								<#assign add_parameter = entry.mapProvider.getParameter(viewNumberGesValue?number).addressParam >
+							</#if>
+						</#if>
+						<#-- several results -->
+						<#if entry.mapProvider.key?has_content && entry.mapProvider.key != "gismap" >
+							<button type="button" class="btn btn-primary" id="${entry.idEntry}_map-button">#i18n{directory.show_on_map} &quot;${entry.title}&quot;</button>
+							<#include entry.mapProvider.backListHtmlCode />
+						<#else>
+							<#include entry.mapProvider.backListHtmlCode />
+						</#if>
+					</#if>
+				</#list>
+			</#if>
+  	
 			<table name="results_list" id="results_list" class="table table-hover table-condensed">
 				<thead>
 			    <tr>
@@ -100,63 +156,7 @@
 					</#list>
 				</tbody>
 			</table>
-			<#if entry_list_geolocation?has_content>
-				<!-- WS -->
-				<#assign list_record_field_ws = "">
-				<#assign nb_record_field_ws = 0>
-				<#list resource_actions_list as resource_actions>
-					<#list entry_list_search_result as entry>
-						<#assign entryKey = "" + entry.idEntry>
-						<#assign listRecordField = resource_actions.map_id_entry_list_record_field[entryKey]>
-						<#if listRecordField?has_content>
-							<#list listRecordField as record_field>
-								<#if nb_record_field_ws = 0>
-									<#assign list_record_field_ws = list_record_field_ws + record_field.idRecordField> 
-								<#else>
-									<#assign list_record_field_ws = list_record_field_ws + "," + record_field.idRecordField>
-								</#if>
-								<#assign nb_record_field_ws = nb_record_field_ws + 1>
-							</#list>
-						
-						</#if>							
-					</#list>
-				</#list>
-				<#assign url_ws = webapp_url + "rest/directory-gismap/listRecordField/" + list_record_field_ws> 
-				<#assign viewNumberGesValue = "1">
-				<#list entry_list_search_result as entry>
-					<#if entry.fields?? && entry.fields?has_content>
-						<#list entry.fields as field>
-							<#if field?? && field.title?has_content && field.title == "viewNumberGes">
-								<#assign viewNumberGesValue = field.value >
-								<#break>
-							</#if>
-						</#list>
-					</#if>
-				</#list>
-				<#list entry_list_geolocation as entry>
-					<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
-						<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
-							<#if entry.mapProvider.getParameter(viewNumberGesValue?number)?? && entry.mapProvider.getParameter(viewNumberGesValue?number).mapParameter??>
-								<#assign map_parameter = entry.mapProvider.getParameter(viewNumberGesValue?number).mapParameter >
-							</#if>
-							
-							<#if entry.mapProvider.getParameter(viewNumberGesValue?number)?? && entry.mapProvider.getParameter(viewNumberGesValue?number).addressParam??>
-								<#assign add_parameter = entry.mapProvider.getParameter(viewNumberGesValue?number).addressParam >
-							</#if>
-						</#if>
-						<#-- several results -->
-						<#if entry.mapProvider.key?has_content && entry.mapProvider.key != "gismap" >
-							<button type="button" class="btn btn-primary" id="${entry.idEntry}_map-button">#i18n{directory.show_on_map} &quot;${entry.title}&quot;</button>
-							<#include entry.mapProvider.backListHtmlCode />
-						<#else>
-							<#include entry.mapProvider.backListHtmlCode />
-						</#if>
-						
-					</#if>
-				</#list>
-				
-				
-			</#if>
+			
 			<@paginationAdmin paginator=paginator combo=1 form=0 />
 	</div>
 </div>
