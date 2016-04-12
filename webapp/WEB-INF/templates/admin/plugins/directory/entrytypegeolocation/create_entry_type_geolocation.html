@@ -44,13 +44,22 @@
 								<@comboWithParams name="edit_mode" default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.editModesRefList />
 							</div>
 						</div>
-						<#-- view number -->
+						<#-- view number att -->
 						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="edit_mode">#i18n{directory.create_entry.label_view_number} : </label>
+							<label class="control-label col-xs-12 col-sm-3" for="edit_mode">#i18n{directory.create_entry.label_view_number_att} : </label>
 							<div class="col-xs-12 col-sm-9">
-								<input type="text" name="view_number" id="view_number" value="" maxlength="255" class="form-control">
+								<input type="text" name="view_number_att" id="view_number_att" value="" maxlength="255" class="form-control">
 							</div>
 						</div>
+						
+						<#-- view number ges -->
+						<div class="form-group">
+							<label class="control-label col-xs-12 col-sm-3" for="edit_mode">#i18n{directory.create_entry.label_view_number_ges} : </label>
+							<div class="col-xs-12 col-sm-9">
+								<input type="text" name="view_number_ges" id="view_number_ges" value="" maxlength="255" class="form-control">
+							</div>
+						</div>
+						
 						<div class="form-group">
 							<label class="control-label col-xs-12 col-sm-3" for=""></label>
 							<div class="col-xs-12 col-sm-9">

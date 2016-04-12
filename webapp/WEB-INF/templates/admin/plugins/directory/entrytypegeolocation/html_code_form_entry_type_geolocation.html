@@ -24,11 +24,11 @@
 		</#if>
 	</#list>
 </#if>
-<#assign viewNumberValue = "1">
+<#assign viewNumberAttValue = "1">
 <#if entry.fields?? && entry.fields?has_content>
 	<#list entry.fields as field>
-		<#if field?? && field.title == "viewNumber">
-			<#assign viewNumberValue = field.value >
+		<#if field?? && field.title == "viewNumberAtt">
+			<#assign viewNumberAttValue = field.value >
 			<#break>
 		</#if>
 	</#list>
@@ -91,12 +91,12 @@
 	<label class="control-label col-xs-12 col-sm-2" for=""></label>
 	<div class="col-xs-12 col-sm-9">
 		<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
-			<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).mapParameter??>
-				<#assign map_parameter = entry.mapProvider.getParameter(viewNumberValue?number).mapParameter >
+			<#if entry.mapProvider.getParameter(viewNumberAttValue?number)?? && entry.mapProvider.getParameter(viewNumberAttValue?number).mapParameter??>
+				<#assign map_parameter = entry.mapProvider.getParameter(viewNumberAttValue?number).mapParameter >
 			</#if>
 			
-			<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).addressParam??>
-				<#assign add_parameter = entry.mapProvider.getParameter(viewNumberValue?number).addressParam >
+			<#if entry.mapProvider.getParameter(viewNumberAttValue?number)?? && entry.mapProvider.getParameter(viewNumberAttValue?number).addressParam??>
+				<#assign add_parameter = entry.mapProvider.getParameter(viewNumberAttValue?number).addressParam >
 			</#if>
 		</#if>
 		

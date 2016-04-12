@@ -24,11 +24,21 @@
 		</#if>
 	</#list>
 </#if>
-<#assign viewNumberValue = "1">
+<#assign viewNumberAttValue = "1">
 <#if entry.fields?? && entry.fields?has_content>
 	<#list entry.fields as field>
-		<#if field?? && field.title = "viewNumber">
-			<#assign viewNumberValue = field.value >
+		<#if field?? && field.title = "viewNumberAtt">
+			<#assign viewNumberAttValue = field.value >
+			<#break>
+		</#if>
+	</#list>
+</#if>
+
+<#assign viewNumberGesValue = "1">
+<#if entry.fields?? && entry.fields?has_content>
+	<#list entry.fields as field>
+		<#if field?? && field.title = "viewNumberGes">
+			<#assign viewNumberGesValue = field.value >
 			<#break>
 		</#if>
 	</#list>

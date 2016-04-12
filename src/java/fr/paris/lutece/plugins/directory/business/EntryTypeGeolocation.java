@@ -73,7 +73,8 @@ public class EntryTypeGeolocation extends Entry
     
     // PARAMETERS OF GISMAP ATTRIBUTS
     public static final String PARAMETER_EDIT_MODE = "edit_mode";
-    public static final String PARAMETER_VIEW_NUMBER = "view_number";
+    public static final String PARAMETER_VIEW_NUMBER_ATT = "view_number_att";
+    public static final String PARAMETER_VIEW_NUMBER_GES = "view_number_ges";
     public static final String PARAMETER_SUFFIX_ADDITIONAL_ADDRESS = "_additional_address";
     public static final String PARAMETER_SUFFIX_GEOMETRY = "_geometry";
     
@@ -87,7 +88,8 @@ public class EntryTypeGeolocation extends Entry
     public static final String CONSTANT_SHOWXY = "showxy";
     // PUBLIC COSNTANTS OF GISMAP ATTRIBUTS
     public static final String CONSTANT_EDIT_MODE = "editMode";
-    public static final String CONSTANT_VIEW_NUMBER = "viewNumber";
+    public static final String CONSTANT_VIEW_NUMBER_ATT = "viewNumberAtt";
+    public static final String CONSTANT_VIEW_NUMBER_GES = "viewNumberGes";
     public static final String CONSTANT_ADDITIONAL_ADDRESS = "additionalAddress";
     public static final String CONSTANT_GEOMETRY = "geometry";
  
@@ -203,7 +205,8 @@ public class EntryTypeGeolocation extends Entry
         String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
         String strShowXY = request.getParameter( PARAMETER_SHOWXY );
         String strEditMode = request.getParameter( PARAMETER_EDIT_MODE );
-        String strViewNumber = request.getParameter( PARAMETER_VIEW_NUMBER );
+        String strViewNumberAtt = request.getParameter( PARAMETER_VIEW_NUMBER_ATT );
+        String strViewNumberGes = request.getParameter( PARAMETER_VIEW_NUMBER_GES );
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
@@ -306,16 +309,27 @@ public class EntryTypeGeolocation extends Entry
         editModeField.setTitle( CONSTANT_EDIT_MODE );
         editModeField.setValue( strEditMode );
         
-        Field viewNumberField = findField( CONSTANT_VIEW_NUMBER, getFields(  ) );
+        Field viewNumberAttField = findField( CONSTANT_VIEW_NUMBER_ATT, getFields(  ) );
 
-        if ( viewNumberField == null )
+        if ( viewNumberAttField == null )
         {
-        	viewNumberField = new Field(  );
+        	viewNumberAttField = new Field(  );
         }
 
-        viewNumberField.setEntry( this );
-        viewNumberField.setTitle( CONSTANT_VIEW_NUMBER );
-        viewNumberField.setValue( strViewNumber );
+        viewNumberAttField.setEntry( this );
+        viewNumberAttField.setTitle( CONSTANT_VIEW_NUMBER_ATT );
+        viewNumberAttField.setValue( strViewNumberAtt );
+        
+        Field viewNumberGesField = findField( CONSTANT_VIEW_NUMBER_GES, getFields(  ) );
+
+        if ( viewNumberGesField == null )
+        {
+        	viewNumberGesField = new Field(  );
+        }
+
+        viewNumberGesField.setEntry( this );
+        viewNumberGesField.setTitle( CONSTANT_VIEW_NUMBER_GES );
+        viewNumberGesField.setValue( strViewNumberGes );
 
         List<Field> listFields = new ArrayList<Field>(  );
         listFields.add( xField );
@@ -326,7 +340,8 @@ public class EntryTypeGeolocation extends Entry
         listFields.add( geometryField );
         listFields.add( showXYField );
         listFields.add( editModeField );
-        listFields.add( viewNumberField );
+        listFields.add( viewNumberAttField );
+        listFields.add( viewNumberGesField );
         this.setFields( listFields );
 
         this.setTitle( strTitle );

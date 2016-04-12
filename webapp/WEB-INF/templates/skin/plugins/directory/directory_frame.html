@@ -41,13 +41,13 @@
 			</#if>							
 		
 			<#assign editModeValue = "ReadOnly">
-			<#assign viewNumberValue = "1">
+			<#assign viewNumberAttValue = "1">
 			<#list entry_list_geolocation as entry>
 			
 				<#if entry.fields?? && entry.fields?has_content>
 					<#list entry.fields as field>
-						<#if field?? && field.title == "viewNumber">
-							<#assign viewNumberValue = field.value >
+						<#if field?? && field.title == "viewNumberAtt">
+							<#assign viewNumberAttValue = field.value >
 							<#break>
 						</#if>
 					</#list>
@@ -56,12 +56,12 @@
 				<#if entry.mapProvider?has_content>
 				
 					<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
-						<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).mapParameter??>
-							<#assign map_parameter = entry.mapProvider.getParameter(viewNumberValue?number).mapParameter >
+						<#if entry.mapProvider.getParameter(viewNumberAttValue?number)?? && entry.mapProvider.getParameter(viewNumberAttValue?number).mapParameter??>
+							<#assign map_parameter = entry.mapProvider.getParameter(viewNumberAttValue?number).mapParameter >
 						</#if>
 						
-						<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).addressParam??>
-							<#assign add_parameter = entry.mapProvider.getParameter(viewNumberValue?number).addressParam >
+						<#if entry.mapProvider.getParameter(viewNumberAttValue?number)?? && entry.mapProvider.getParameter(viewNumberAttValue?number).addressParam??>
+							<#assign add_parameter = entry.mapProvider.getParameter(viewNumberAttValue?number).addressParam >
 						</#if>
 					</#if>
 		
@@ -87,13 +87,13 @@
 			<#assign url_ws = webapp_url + "rest/directory-gismap/listRecordField/" + list_record_field_ws> 
 			
 			<#assign editModeValue = "">
-			<#assign viewNumberValue = "1">
+			<#assign viewNumberGesValue = "1">
 			<#list entry_list_geolocation as entry>
 			
 			<#if entry.fields?? && entry.fields?has_content>
 				<#list entry.fields as field>
-					<#if field?? && field.title == "viewNumber">
-						<#assign viewNumberValue = field.value >
+					<#if field?? && field.title == "viewNumberGes">
+						<#assign viewNumberGesValue = field.value >
 						<#break>
 					</#if>
 				</#list>
@@ -102,12 +102,12 @@
 				<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
 					
 					<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
-						<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).mapParameter??>
-							<#assign map_parameter = entry.mapProvider.getParameter(viewNumberValue?number).mapParameter >
+						<#if entry.mapProvider.getParameter(viewNumberGesValue?number)?? && entry.mapProvider.getParameter(viewNumberGesValue?number).mapParameter??>
+							<#assign map_parameter = entry.mapProvider.getParameter(viewNumberGesValue?number).mapParameter >
 						</#if>
 						
-						<#if entry.mapProvider.getParameter(viewNumberValue?number)?? && entry.mapProvider.getParameter(viewNumberValue?number).addressParam??>
-							<#assign add_parameter = entry.mapProvider.getParameter(viewNumberValue?number).addressParam >
+						<#if entry.mapProvider.getParameter(viewNumberGesValue?number)?? && entry.mapProvider.getParameter(viewNumberGesValue?number).addressParam??>
+							<#assign add_parameter = entry.mapProvider.getParameter(viewNumberGesValue?number).addressParam >
 						</#if>
 					</#if>
 					

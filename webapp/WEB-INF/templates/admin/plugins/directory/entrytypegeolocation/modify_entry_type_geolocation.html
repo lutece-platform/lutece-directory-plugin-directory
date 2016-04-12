@@ -60,22 +60,40 @@
 								</#if>
 							</div>
 						</div>
-						<#-- view number -->
-						<#assign viewNumberValue = "">
+						<#-- view number att -->
+						<#assign viewNumberAttValue = "">
 						<#if entry.fields?? && entry.fields?has_content>
 							<#list entry.fields as field>
-								<#if field?? && field.title = "viewNumber">
-									<#assign viewNumberValue = field.value >
+								<#if field?? && field.title = "viewNumberAtt">
+									<#assign viewNumberAttValue = field.value >
 									<#break>
 								</#if>
 							</#list>
 						</#if>
 						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="edit_mode">#i18n{directory.create_entry.label_view_number} : </label>
+							<label class="control-label col-xs-12 col-sm-3" for="edit_mode">#i18n{directory.create_entry.label_view_number_att} : </label>
 							<div class="col-xs-12 col-sm-9">
-								<input type="text" name="view_number" id="view_number" value="${viewNumberValue}" maxlength="255" class="form-control">
+								<input type="text" name="view_number_att" id="view_number_att" value="${viewNumberAttValue}" maxlength="255" class="form-control">
 							</div>
 						</div>
+						
+						<#-- view number ges -->
+						<#assign viewNumberGesValue = "">
+						<#if entry.fields?? && entry.fields?has_content>
+							<#list entry.fields as field>
+								<#if field?? && field.title = "viewNumberGes">
+									<#assign viewNumberGesValue = field.value >
+									<#break>
+								</#if>
+							</#list>
+						</#if>
+						<div class="form-group">
+							<label class="control-label col-xs-12 col-sm-3" for="edit_mode">#i18n{directory.create_entry.label_view_number_ges} : </label>
+							<div class="col-xs-12 col-sm-9">
+								<input type="text" name="view_number_ges" id="view_number_ges" value="${viewNumberGesValue}" maxlength="255" class="form-control">
+							</div>
+						</div>
+						
 						<div class="form-group">
 							<label class="control-label col-xs-12 col-sm-3" for=""></label>
 							<div class="col-xs-12 col-sm-9">
