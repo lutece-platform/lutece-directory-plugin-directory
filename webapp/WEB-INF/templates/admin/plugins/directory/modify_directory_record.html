@@ -30,6 +30,7 @@
 											<#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
 												${child.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
 											<#else>
+												<input type="hidden" id="webapp_url" name="webapp_url" value="${webapp_url}"/>
 												${child.getHtmlFormEntry( locale,false )}
 											</#if>
 										</#list>
