@@ -2994,6 +2994,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_LOCALE, getLocale(  ) );
         model.put( MARK_IS_WORKFLOW_ENABLED, bWorkflowServiceEnable );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
+        //HttpSession session = request.getSession( false );
+        //session.setAttribute("aaaa", "aaaa");
+        //model.put( "session", session );
 
         if ( directory.isDisplayComplementarySearchState(  ) || directory.isDisplaySearchState(  ) )
         {
