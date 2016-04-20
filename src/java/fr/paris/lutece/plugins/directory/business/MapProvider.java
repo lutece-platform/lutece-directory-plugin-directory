@@ -33,6 +33,9 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import fr.paris.lutece.util.ReferenceItem;
 
 
@@ -196,4 +199,12 @@ public class MapProvider implements IMapProvider
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public HttpSession getHttpSession(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }
