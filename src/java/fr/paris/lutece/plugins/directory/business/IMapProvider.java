@@ -33,6 +33,9 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import fr.paris.lutece.util.ReferenceItem;
 
 
@@ -96,4 +99,6 @@ public interface IMapProvider
      * @return the Parameter 
      */
     Object getParameter( int nKey );
+    
+    HttpSession getHttpSession(HttpServletRequest request);
 }
