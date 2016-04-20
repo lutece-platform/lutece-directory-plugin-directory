@@ -99,6 +99,4 @@ public interface IMapProvider
      * @return the Parameter 
      */
     Object getParameter( int nKey );
-    
-    HttpSession getHttpSession(HttpServletRequest request);
 }

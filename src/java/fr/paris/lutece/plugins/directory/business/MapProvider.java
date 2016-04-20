@@ -199,12 +199,4 @@ public class MapProvider implements IMapProvider
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public HttpSession getHttpSession(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 }
