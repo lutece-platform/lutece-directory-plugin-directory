@@ -8,6 +8,8 @@
   	<div class="box-body table-responsive">
   	
   		<#if entry_list_geolocation?has_content>
+  				
+  				
 				<!-- WS -->
 				<#assign list_record_field_ws = "">
 				<#assign nb_record_field_ws = 0>
@@ -42,6 +44,7 @@
 				</#list>
 				<#list entry_list_geolocation as entry>
 					<#if entry.mapProvider?has_content && entry.mapProvider.mapListSupported>
+						
 						<#if entry.mapProvider.key?has_content && entry.mapProvider.key == "gismap" >
 							<#if entry.mapProvider.getParameter(viewNumberGesValue?number)?? && entry.mapProvider.getParameter(viewNumberGesValue?number).mapParameter??>
 								<#assign map_parameter = entry.mapProvider.getParameter(viewNumberGesValue?number).mapParameter >

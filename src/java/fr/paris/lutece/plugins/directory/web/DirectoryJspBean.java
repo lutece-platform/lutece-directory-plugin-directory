@@ -259,6 +259,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_ID_DIRECTORY = "idDirectory";
     private static final String MARK_ID_STATE = "idState";
     private static final String MARK_WEBAPP_URL = "webapp_url";
+    private static final String MARK_EXTENT_CURRENT = "extent_current_val";
+    private static final String MARK_VISIBLE_LAYER = "visible_layer_val";
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_PAGINATOR = "paginator";
     private static final String MARK_USER_WORKGROUP_REF_LIST = "user_workgroup_list";
@@ -2804,7 +2806,18 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
      */
     public IPluginActionResult getManageDirectoryRecord( HttpServletRequest request, HttpServletResponse response )
         throws AccessDeniedException
-    {
+    { 
+    	String strExtentCurrent = request.getParameter(  MARK_EXTENT_CURRENT ) == null ? "" : request.getParameter(  MARK_EXTENT_CURRENT ); 
+        String strVisibleLayer = request.getParameter(  MARK_VISIBLE_LAYER ) == null ? "" : request.getParameter(  MARK_VISIBLE_LAYER );
+        
+        HttpSession session = request.getSession( false );
+        
+        if(!strExtentCurrent.isEmpty() && !strVisibleLayer.isEmpty())
+        {
+        	session.setAttribute(MARK_EXTENT_CURRENT, strExtentCurrent);
+            session.setAttribute(MARK_VISIBLE_LAYER, strVisibleLayer);
+        }
+        
         // fill the selected records
         String[] selectedRecords = request.getParameterValues( PARAMETER_SELECTED_RECORD );
         List<String> listSelectedRecords;
@@ -3008,10 +3021,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_LOCALE, getLocale(  ) );
         model.put( MARK_IS_WORKFLOW_ENABLED, bWorkflowServiceEnable );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-        //HttpSession session = request.getSession( false );
-        //session.setAttribute("aaaa", "aaaa");
-        //model.put( "session", session );
-
+        
+        model.put( MARK_EXTENT_CURRENT, session.getAttribute(MARK_EXTENT_CURRENT) );
+        model.put( MARK_VISIBLE_LAYER, session.getAttribute(MARK_VISIBLE_LAYER) );
+        
         if ( directory.isDisplayComplementarySearchState(  ) || directory.isDisplaySearchState(  ) )
         {
             ReferenceList referenceList = new ReferenceList(  );
