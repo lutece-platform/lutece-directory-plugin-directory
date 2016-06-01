@@ -63,7 +63,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EntryTypeGeolocation extends Entry
 {
+	private Entry _entryAdditionalAddress;
+	
     // PARAMETERS
+	public static final String PARAMETER_ID_ENTRY = "idEntry";
+	public static final String PARAMETER_ID_DIRECTORY = "idDirectory";
     public static final String PARAMETER_MAP_PROVIDER = "map_provider";
     public static final String PARAMETER_SHOWXY = "showxy";
     public static final String PARAMETER_SUFFIX_X = "_x";
@@ -75,7 +79,7 @@ public class EntryTypeGeolocation extends Entry
     public static final String PARAMETER_EDIT_MODE = "edit_mode";
     public static final String PARAMETER_VIEW_NUMBER_ATT = "view_number_att";
     public static final String PARAMETER_VIEW_NUMBER_GES = "view_number_ges";
-    public static final String PARAMETER_SUFFIX_ADDITIONAL_ADDRESS = "_additional_address";
+    //public static final String PARAMETER_SUFFIX_ADDITIONAL_ADDRESS = "_additional_address";
     public static final String PARAMETER_SUFFIX_GEOMETRY = "_geometry";
     
     public static final String PARAMETER_EDIT_MODE_LIST = "gismap.edit.mode.list";
@@ -90,7 +94,7 @@ public class EntryTypeGeolocation extends Entry
     public static final String CONSTANT_EDIT_MODE = "editMode";
     public static final String CONSTANT_VIEW_NUMBER_ATT = "viewNumberAtt";
     public static final String CONSTANT_VIEW_NUMBER_GES = "viewNumberGes";
-    public static final String CONSTANT_ADDITIONAL_ADDRESS = "additionalAddress";
+    //public static final String CONSTANT_ADDITIONAL_ADDRESS = "additionalAddress";
     public static final String CONSTANT_GEOMETRY = "geometry";
  
     // PRIVATE CONSTANTS
@@ -98,9 +102,9 @@ public class EntryTypeGeolocation extends Entry
     private static final int CONSTANT_POSITION_Y = 1;
     private static final int CONSTANT_POSITION_MAP_PROVIDER = 2;
     private static final int CONSTANT_POSITION_ADDRESS = 3;
-    private static final int CONSTANT_POSITION_ADDITIONAL_ADDRESS = 4;
-    private static final int CONSTANT_POSITION_GEOMETRY = 5;
-    private static final int CONSTANT_FIELDS_COUNT = 6;
+    //private static final int CONSTANT_POSITION_ADDITIONAL_ADDRESS = 4;
+    private static final int CONSTANT_POSITION_GEOMETRY = 4;
+    private static final int CONSTANT_FIELDS_COUNT = 5;
 
     // TEMPLATES
     private static final String TEMPLATE_CREATE = "admin/plugins/directory/entrytypegeolocation/create_entry_type_geolocation.html";
@@ -115,7 +119,22 @@ public class EntryTypeGeolocation extends Entry
     // SQL
     private static final String SQL_JOIN_DIRECTORY_RECORD_FIELD = " JOIN directory_record_field drf ON drf.id_record = dr.id_record AND drf.id_entry = ? JOIN directory_field df ON df.id_entry = drf.id_entry AND df.id_field = drf.id_field AND title=? ";
 
+    
     /**
+	 * @return the _entryAdditionalAddress
+	 */
+	public Entry getEntryAdditionalAddress() {
+		return _entryAdditionalAddress;
+	}
+
+	/**
+	 * @param _entryAdditionalAddress the _entryAdditionalAddress to set
+	 */
+	public void setEntryAdditionalAddress(Entry entryAdditionalAddress) {
+		this._entryAdditionalAddress = entryAdditionalAddress;
+	}
+
+	/**
      *
      * {@inheritDoc}
      */
@@ -207,6 +226,12 @@ public class EntryTypeGeolocation extends Entry
         String strEditMode = request.getParameter( PARAMETER_EDIT_MODE );
         String strViewNumberAtt = request.getParameter( PARAMETER_VIEW_NUMBER_ATT );
         String strViewNumberGes = request.getParameter( PARAMETER_VIEW_NUMBER_GES );
+        
+        String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
+        int nIdEntry = Integer.parseInt(strIdEntry);
+        
+        String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+        int nIdDirectory = Integer.parseInt(strIdDirectory);
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
@@ -267,7 +292,7 @@ public class EntryTypeGeolocation extends Entry
         addressField.setEntry( this );
         addressField.setTitle( CONSTANT_ADDRESS );
         
-        Field additionalAddressField = findField( CONSTANT_ADDITIONAL_ADDRESS, getFields(  ) );
+        /*Field additionalAddressField = findField( CONSTANT_ADDITIONAL_ADDRESS, getFields(  ) );
 
         if ( additionalAddressField == null )
         {
@@ -275,7 +300,7 @@ public class EntryTypeGeolocation extends Entry
         }
 
         additionalAddressField.setEntry( this );
-        additionalAddressField.setTitle( CONSTANT_ADDITIONAL_ADDRESS );
+        additionalAddressField.setTitle( CONSTANT_ADDITIONAL_ADDRESS );*/
         
         Field geometryField = findField( CONSTANT_GEOMETRY, getFields(  ) );
 
@@ -336,7 +361,7 @@ public class EntryTypeGeolocation extends Entry
         listFields.add( yField );
         listFields.add( mapProviderField );
         listFields.add( addressField );
-        listFields.add( additionalAddressField );
+        //listFields.add( additionalAddressField );
         listFields.add( geometryField );
         listFields.add( showXYField );
         listFields.add( editModeField );
@@ -360,7 +385,22 @@ public class EntryTypeGeolocation extends Entry
         this.setMapProvider( MapProviderManager.getMapProvider( strMapProvider ) );
         this.setShownInExport( strShowInExport != null );
         this.setShownInCompleteness( strShowInCompleteness != null );
-
+        
+        IEntry entry = EntryHome.findByPrimaryKey(nIdEntry, DirectoryUtils.getPlugin());
+        boolean update = false;
+        if(entry != null)
+        {
+        	update = true;
+        	getAdditionalAddressEntry (6, entry, locale, update);
+        }
+        else
+        {
+        	entry =  new Entry();
+        	Directory directory = DirectoryHome.findByPrimaryKey(nIdDirectory, DirectoryUtils.getPlugin());
+        	entry.setDirectory(directory);
+        	getAdditionalAddressEntry (6, entry, locale, update);
+        }
+        
         return null;
     }
 
@@ -418,13 +458,13 @@ public class EntryTypeGeolocation extends Entry
         String strYValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_Y );
         String strMapProviderValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_MAP_PROVIDER );
         String strAddressValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_ADDRESS );
-        String strAdditionalAddressValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_ADDITIONAL_ADDRESS );
+        //String strAdditionalAddressValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_ADDITIONAL_ADDRESS );
         String strGeometryValue = request.getParameter( this.getIdEntry(  ) + PARAMETER_SUFFIX_GEOMETRY );
         listValue.add( strXValue );
         listValue.add( strYValue );
         listValue.add( strMapProviderValue );
         listValue.add( strAddressValue );
-        listValue.add( strAdditionalAddressValue );
+        //listValue.add( strAdditionalAddressValue );
         listValue.add( strGeometryValue );
 
         getRecordFieldData( record, listValue, bTestDirectoryError, addNewValue, listRecordField, locale );
@@ -471,7 +511,7 @@ public class EntryTypeGeolocation extends Entry
         String strYValue = lstValue.get( CONSTANT_POSITION_Y );
         String strMapProviderValue = lstValue.get( CONSTANT_POSITION_MAP_PROVIDER );
         String strAddressValue = lstValue.get( CONSTANT_POSITION_ADDRESS );
-        String strAdditionalAddressValue = lstValue.get( CONSTANT_POSITION_ADDITIONAL_ADDRESS );
+        //String strAdditionalAddressValue = lstValue.get( CONSTANT_POSITION_ADDITIONAL_ADDRESS );
         String strGeometryValue = lstValue.get( CONSTANT_POSITION_GEOMETRY );
 
         Field xField = findField( CONSTANT_X, getFields(  ) );
@@ -529,13 +569,13 @@ public class EntryTypeGeolocation extends Entry
         recordFieldAddress.setField( addressField );
         listRecordField.add( recordFieldAddress );
         
-        RecordField recordFieldAddtionalAddress = new RecordField(  );
+        /*RecordField recordFieldAddtionalAddress = new RecordField(  );
         Field additionalAddressField = findField( CONSTANT_ADDITIONAL_ADDRESS, getFields(  ) );
 
         recordFieldAddtionalAddress.setEntry( this );
         recordFieldAddtionalAddress.setValue( strAdditionalAddressValue );
         recordFieldAddtionalAddress.setField( additionalAddressField );
-        listRecordField.add( recordFieldAddtionalAddress );
+        listRecordField.add( recordFieldAddtionalAddress );*/
         
         RecordField recordFieldGeometry = new RecordField(  );
         Field geometryField = findField( CONSTANT_GEOMETRY, getFields(  ) );
@@ -831,5 +871,80 @@ public class EntryTypeGeolocation extends Entry
         XmlUtil.beginElement( strXml, TAG_ENTRY, model );
         XmlUtil.addElementHtml( strXml, TAG_TITLE, this.getTitle(  ) );
         XmlUtil.endElement( strXml, TAG_ENTRY );
+    }
+    
+    public void getAdditionalAddressEntry (int nIdEntryType, IEntry entry, Locale locale, boolean update)
+    {
+    	EntryType entryType = EntryTypeHome.findByPrimaryKey( nIdEntryType, DirectoryUtils.getPlugin(  ) );
+        IEntry entryAdditionalAddress = DirectoryUtils.createEntryByType( nIdEntryType, DirectoryUtils.getPlugin(  ) );
+
+        if ( entryAdditionalAddress != null )
+        {
+        	entryAdditionalAddress.setEntryType( entryType );
+
+            
+        	entryAdditionalAddress.setDirectory( entry.getDirectory() );
+            
+            entryAdditionalAddress.setTitle( I18nService.getLocalizedString( "directory.additional_address.title", locale) );
+            entryAdditionalAddress.setHelpMessage( "" );
+            entryAdditionalAddress.setHelpMessageSearch( "" );
+            entryAdditionalAddress.setComment( "" );
+
+            
+            if ( entryAdditionalAddress.getFields(  ) == null )
+            {
+                ArrayList<Field> listFields = new ArrayList<Field>(  );
+                Field field = new Field(  );
+                field.setTitle( "additionalAddress" );
+                field.setValue( "" );
+                //FieldHome.create(field, pluginDirectory);
+                listFields.add( field );
+                entryAdditionalAddress.setFields( listFields );
+            }
+
+            entryAdditionalAddress.getFields(  ).get( 0 ).setWidth( 50 );
+            entryAdditionalAddress.getFields(  ).get( 0 ).setMaxSizeEnter( 50 );
+            entryAdditionalAddress.setMandatory( false );
+            entryAdditionalAddress.setIndexed( false );
+            entryAdditionalAddress.setIndexedAsTitle( false );
+            entryAdditionalAddress.setIndexedAsSummary( false );
+            entryAdditionalAddress.setShownInAdvancedSearch( false );
+            entryAdditionalAddress.setShownInResultList( true );
+            entryAdditionalAddress.setShownInResultRecord( true );
+            entryAdditionalAddress.setShownInHistory( true );
+            entryAdditionalAddress.setAutocompleteEntry( false );
+            entryAdditionalAddress.setShownInExport( true );
+            entryAdditionalAddress.setShownInCompleteness( false );
+            
+            if(update)
+            {
+            	EntryHome.update( entryAdditionalAddress, DirectoryUtils.getPlugin(  ) );
+                
+                if ( entryAdditionalAddress.getFields(  ) != null )
+                {
+                    for ( Field field : entryAdditionalAddress.getFields(  ) )
+                    {
+                        field.setEntry( entryAdditionalAddress );
+                        FieldHome.update( field, DirectoryUtils.getPlugin(  ) );
+                    }
+                }
+            }
+            else
+            {
+            	EntryHome.create( entryAdditionalAddress, DirectoryUtils.getPlugin(  ) );
+                
+                if ( entryAdditionalAddress.getFields(  ) != null )
+                {
+                    for ( Field field : entryAdditionalAddress.getFields(  ) )
+                    {
+                        field.setEntry( entryAdditionalAddress );
+                        FieldHome.create( field, DirectoryUtils.getPlugin(  ) );
+                    }
+                }
+            }
+
+            
+           
+        }
     }
 }

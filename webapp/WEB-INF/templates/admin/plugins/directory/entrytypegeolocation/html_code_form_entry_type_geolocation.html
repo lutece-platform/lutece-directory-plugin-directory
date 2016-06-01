@@ -60,12 +60,7 @@
 				<input type="hidden" id="${entry.idEntry}_address" name="${entry.idEntry}_address"  size="50" maxlength="255" class="form-control">
 			</#if>
 		</#if>
-		<!-- Additional Address -->
-	  	<#if addAddressField?has_content && addAddressField.value?has_content>
-	  		<input type="hidden" id="${entry.idEntry}_additional_address" name="${entry.idEntry}_additional_address" value="${addAddressField.value}" />
-	  	<#else>
-	  		<input type="hidden" id="${entry.idEntry}_additional_address" name="${entry.idEntry}_additional_address"  />
-	  	</#if>
+		
 		<!-- Geometry -->
 	  	<#if geometryField?has_content && geometryField.value?has_content>
 	  		<input type="hidden" id="${entry.idEntry}_geometry" name="${entry.idEntry}_geometry" value="${geometryField.value}" />

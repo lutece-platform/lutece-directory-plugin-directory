@@ -11,6 +11,8 @@
 			<div class="box-body">
 				<form class="form-horizontal" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id="">
 				<input name="id_type" value="${entry.entryType.idType}" type="hidden">
+				<input type="hidden" name="idEntry" id="idEntry" value="${entry.idEntry}" >
+				<input type="hidden" name="idDirectory" id="idDirectory" value="${entry.directory.idDirectory}" >
 				<div class="row">
 					<div class="col-xs-12 col-sm-7">
 						<div class="form-group">
