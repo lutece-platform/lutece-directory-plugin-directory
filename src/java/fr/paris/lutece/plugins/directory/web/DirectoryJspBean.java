@@ -47,6 +47,7 @@ import fr.paris.lutece.plugins.directory.business.Entry;
 import fr.paris.lutece.plugins.directory.business.EntryFilter;
 import fr.paris.lutece.plugins.directory.business.EntryHome;
 import fr.paris.lutece.plugins.directory.business.EntryRemovalListenerService;
+import fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl;
 import fr.paris.lutece.plugins.directory.business.EntryTypeHome;
 import fr.paris.lutece.plugins.directory.business.Field;
 import fr.paris.lutece.plugins.directory.business.FieldHome;
@@ -319,6 +320,13 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_DATE_MODIFICATION_BEGIN_SEARCH = "date_modification_begin_search";
     private static final String MARK_DATE_MODIFICATION_END_SEARCH = "date_modification_end_search";
     private static final String MARK_MAP_CHILD = "mapChild";
+  
+    /**mark for gru*/
+    private static final String MARK_POSITION_GRU_FIRST_NAME= "pfn";
+    private static final String MARK_POSITION_GRU_LAST_NAME= "pln";
+    private static final String MARK_POSITION_GRU_GUID= "pguid";
+    private static final String MARK_POSITION_GRU_CID= "pcid";
+    private static final String MARK_POSITION_GRU_EMAIL= "pem";
 
     //private static final String MARK_URL_ACTION = "url_action";
     private static final String MARK_STR_ERROR = "str_error";
@@ -436,6 +444,14 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_SELECTED_RECORD = "selected_record";
     private static final String PARAMETER_ANCHOR_LIST = "list";
     private static final String PARAMETER_IS_SEARCH_OPERATOR_OR = "is_search_operator_or";
+/**parames for gru*/
+    private static final String PARAMETER_GRU_FIRST_NAME= "fn";
+    private static final String PARAMETER_GRU_LAST_NAME= "ln";
+    private static final String PARAMETER_GRU_GUID= "guid";
+    private static final String PARAMETER_GRU_CID= "cid";
+    private static final String PARAMETER_GRU_EMAIL= "em";
+    
+ //   fn=abdou&cid=302714&ln=fall&guid=680a9e86-ffdc-45e6-a3c6-e3020b487624&ph=0858812641&em=fallphenix1987@gmail.com
 
     //private static final String PARAMETER_NUMBER_LINES_IMPORTED = "number_lines_imported";
     //private static final String PARAMETER_NUMBER_LINES_ERROR = "number_lines_error";
@@ -3393,6 +3409,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         List<IEntry> listEntry = DirectoryUtils.getFormEntries( nIdDirectory, getPlugin(  ), getUser(  ) );
+     
         model.put( MARK_ENTRY_LIST, listEntry );
 
         if ( SecurityService.isAuthenticationEnable(  ) )
@@ -3409,6 +3426,116 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         return getAdminPage( template.getHtml(  ) );
     }
+    
+    
+    /**
+     * Gets the creates the directory record with initial values.
+     *
+     * @param request the request
+     * @return the creates the directory record with initial values
+     * @throws AccessDeniedException the access denied exception
+     */
+    @SuppressWarnings( "unchecked" )
+	public String getCreateDirectoryRecordWithInitialValues( HttpServletRequest request )
+            throws AccessDeniedException
+        {
+            String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+            int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+            Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+
+            if ( ( directory == null ) ||
+                    !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
+                        DirectoryResourceIdService.PERMISSION_CREATE_RECORD, getUser(  ) ) )
+            {
+                throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
+            }
+
+            Map<String, Object> model = new HashMap<String, Object>(  );
+
+            /**
+             * Map of <idEntry, RecordFields>
+             * 1) The user has uploaded/deleted a file
+             * - The updated map is stored in the session
+             * 2) The user has not uploaded/delete a file
+             * - The map is filled with the data from the database
+             * - The asynchronous uploaded files map is reinitialized
+             */
+            Map<String, List<RecordField>> map = null;
+
+            // Get the map of <idEntry, RecordFields from session if it exists : 
+            /**
+             * 1) Case when the user has uploaded a file, the the map is stored in
+             * the session
+             */
+            HttpSession session = request.getSession( false );
+
+            if ( session != null )
+            {
+                map = (Map<String, List<RecordField>>) session.getAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
+
+                if ( map != null )
+                {
+                    model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, map );
+                    // IMPORTANT : Remove the map from the session
+                    session.removeAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
+                }
+            }
+
+            // Get the map <idEntry, RecordFields> classically from the database
+            /** 2) The user has not uploaded/delete a file */
+            if ( map == null )
+            {
+                // Remove asynchronous uploaded file from session
+                DirectoryAsynchronousUploadHandler.getHandler(  ).removeSessionFiles( request.getSession(  ).getId(  ) );
+            }
+
+            List<IEntry> listEntry = DirectoryUtils.getFormEntries( nIdDirectory, getPlugin(  ), getUser(  ) );
+         
+            //setValue inital
+            
+// /jsp/admin/plugins/directory/CreateDirectoryRecordWithInitialValues.jsp?id_directory=1&fn=abdou&cid=302714&ln=fall&guid=680a9e86-ffdc-45e6-a3c6-e3020b487624&ph=0858812641&em=fallphenix1987@gmail.com
+            //&pfn=1&pln=2&pem=3&pguid=4&pcid=5
+          
+            String fn = request.getParameter( PARAMETER_GRU_FIRST_NAME );
+            String ln = request.getParameter( PARAMETER_GRU_LAST_NAME );
+            String em = request.getParameter( PARAMETER_GRU_EMAIL );
+            String guid = request.getParameter( PARAMETER_GRU_GUID );
+            String cid = request.getParameter( PARAMETER_GRU_CID );
+            
+            int pfn = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_FIRST_NAME ) ) )? Integer.parseInt( request.getParameter( MARK_POSITION_GRU_FIRST_NAME ) ) : 1;
+            int pln = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_LAST_NAME ) ) )? Integer.parseInt( request.getParameter( MARK_POSITION_GRU_LAST_NAME ) ) : 2;    
+            int pem = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_EMAIL ) ) )? Integer.parseInt( request.getParameter( MARK_POSITION_GRU_EMAIL ) ) : 3;
+            int pguid = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_GUID ) ) )? Integer.parseInt( request.getParameter( MARK_POSITION_GRU_GUID ) ) : 4;       
+            int pcid = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_CID ) ) )? Integer.parseInt( request.getParameter( MARK_POSITION_GRU_CID ) ) : 5;      
+         
+           
+            listEntry.get( pfn-1 ).getFields( ).get( 0 ).setValue( fn );
+            listEntry.get( pln-1 ).getFields( ).get( 0 ).setValue( ln );
+            listEntry.get( pem-1 ).getFields( ).get( 0 ).setValue( em );
+            listEntry.get( pguid-1 ).getFields( ).get( 0 ).setValue( guid );
+            listEntry.get( pcid-1 ).getFields( ).get( 0 ).setValue( cid );
+         
+
+            model.put( MARK_ENTRY_LIST, listEntry );
+
+            if ( SecurityService.isAuthenticationEnable(  ) )
+            {
+                model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList(  ) );
+            }
+
+            model.put( MARK_DIRECTORY, directory );
+            model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
+            model.put( MARK_LOCALE, getLocale(  ) );
+            setPageTitleProperty( PROPERTY_CREATE_DIRECTORY_RECORD_PAGE_TITLE );
+
+            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_DIRECTORY_RECORD, getLocale(  ), model );
+
+            return getAdminPage( template.getHtml(  ) );
+        }
+
+    
+  
+    
 
     /**
      * Perform the directory record creation
@@ -3567,6 +3694,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         return getAdminPage( template.getHtml(  ) );
     }
 
+ 
     /**
      * Perform the directory record creation
      * @param request The HTTP request
