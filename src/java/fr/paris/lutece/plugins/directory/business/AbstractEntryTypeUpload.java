@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
+import static fr.paris.lutece.plugins.directory.business.Entry.MARK_ENTRY;
 import fr.paris.lutece.plugins.directory.service.upload.DirectoryAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
@@ -42,15 +43,20 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.regularexpression.RegularExpressionService;
+import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.web.upload.IAsynchronousUploadHandler;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
+import fr.paris.lutece.util.html.HtmlTemplate;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -81,7 +87,40 @@ public abstract class AbstractEntryTypeUpload extends Entry
     // FIELDS
     private static final String FIELD_MAX_FILES = "directory.create_entry.label_max_files";
     private static final String FIELD_FILE_MAX_SIZE = "directory.create_entry.label_file_max_size";
+    private static final String MARK_LIST_FILE ="list_fileuploaded";
 
+    public IAsynchronousUploadHandler getAsynchronousUploadHandler( )
+    {
+       return DirectoryAsynchronousUploadHandler.getHandler(  );
+    }
+    
+    public String getHtmlFormEntry( Locale locale, List<RecordField> defaultValues, boolean isDisplayFront )
+    {
+        if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
+        {
+            List<File> listFile = new ArrayList<File>();
+            if(defaultValues!=null && !defaultValues.isEmpty()){
+                for(RecordField r : defaultValues){
+                    if(r.getFile().getMimeType()!=null && !listFile.contains(r.getFile())){
+                        listFile.add(r.getFile());
+                    } 
+                }
+            }
+            Map<String, Object> model = new HashMap<String, Object>(  );
+            model.put( MARK_ENTRY, this );
+            model.put( MARK_LOCALE, locale );
+            model.put( MARK_DEFAULT_VALUES, defaultValues );
+            model.put(MARK_LIST_FILE,listFile);
+            
+            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale,
+                    model );
+
+            return template.getHtml(  );
+        }
+
+        return null;
+    }
+    
     /**
      * Set the fields
      * @param request the HTTP request

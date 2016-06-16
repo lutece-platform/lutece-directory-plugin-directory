@@ -33,8 +33,10 @@
  */
 package fr.paris.lutece.plugins.directory.service.upload;
 
+import fr.paris.lutece.plugins.asynchronousupload.service.AbstractAsynchronousUploadHandler;
 import fr.paris.lutece.plugins.blobstore.service.BlobStoreClientException;
 import fr.paris.lutece.plugins.blobstore.service.IBlobStoreClientService;
+import fr.paris.lutece.plugins.directory.business.Entry;
 import fr.paris.lutece.plugins.directory.business.EntryHome;
 import fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl;
 import fr.paris.lutece.plugins.directory.business.File;
@@ -48,6 +50,7 @@ import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
 import fr.paris.lutece.plugins.directory.utils.DirectoryErrorException;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+import static fr.paris.lutece.plugins.directory.utils.DirectoryUtils.getPlugin;
 import fr.paris.lutece.plugins.directory.utils.JSONUtils;
 import fr.paris.lutece.plugins.directory.utils.UrlUtils;
 import fr.paris.lutece.portal.service.fileupload.FileUploadService;
@@ -81,6 +84,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,7 +100,7 @@ import javax.servlet.http.HttpSession;
  * The uploaded files are deleted by SubForm when filling fields.
  *
  */
-public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHandler
+public class DirectoryAsynchronousUploadHandler extends AbstractAsynchronousUploadHandler
 {
     /** contains uploaded file items */
     /**
@@ -104,7 +109,9 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     public static Map<String, Map<String, List<FileItem>>> _mapAsynchronousUpload = new ConcurrentHashMap<String, Map<String, List<FileItem>>>(  );
     private static final String BEAN_DIRECTORY_ASYNCHRONOUS_UPLOAD_HANDLER = "directory.asynchronousUploadHandler";
     private static final String PREFIX_ENTRY_ID = "directory_";
-
+    
+    private static final String HANDLER_NAME = "DirectoryAsynchronousUploadHandler";
+    
     // UPLOAD
     private static final String UPLOAD_SUBMIT_PREFIX = "_directory_upload_submit_directory_";
     private static final String UPLOAD_DELETE_PREFIX = "_directory_upload_delete_directory_";
@@ -114,12 +121,15 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     private static final String PARAMETER_BLOB_KEY = "blob_key";
     private static final String PARAMETER_BLOBSTORE = "blobstore";
     private static final String PARAMETER_PLUGIN_NAME = "plugin_name";
-    private static final String PARAMETER_FIELD_NAME = "field_name";
+    private static final String PARAMETER_FIELD_NAME = "fieldname";
     private static final String PARAMETER_JSESSION_ID = "jsessionid";
 
     // PROPERTIES
     private static final String PROPERTY_MESSAGE_ERROR_UPLOADING_FILE_SESSION_LOST = "directory.message.error.uploading_file.session_lost";
     private IBlobStoreClientService _blobStoreClientService;
+    
+    //Error messages
+     private static final String ERROR_MESSAGE_UNKNOWN_ERROR = "directory.message.unknownError";
 
     /**
      * Private constructor
@@ -152,7 +162,8 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     @Override
     public boolean isInvoked( HttpServletRequest request )
     {
-        return DirectoryPlugin.PLUGIN_NAME.equals( request.getParameter( PARAMETER_PLUGIN_NAME ) );
+        return true;
+        //return DirectoryPlugin.PLUGIN_NAME.equals( request.getParameter( PARAMETER_PLUGIN_NAME ) );
     }
 
     /**
@@ -164,58 +175,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         return _blobStoreClientService != null;
     }
 
-    /**
-     * {@inheritDoc}
-     * @category CALLED_BY_JS (directoryupload.js)
-     */
-    @Override
-    public void process( HttpServletRequest request, HttpServletResponse response, JSONObject mainObject,
-        List<FileItem> listFileItemsToUpload )
-    {
-        // prevent 0 or multiple uploads for the same field
-        if ( ( listFileItemsToUpload == null ) || listFileItemsToUpload.isEmpty(  ) )
-        {
-            throw new AppException( "No file uploaded" );
-        }
-
-        String strIdSession = request.getParameter( PARAMETER_JSESSION_ID );
-
-        if ( StringUtils.isNotBlank( strIdSession ) )
-        {
-            String strFieldName = request.getParameter( PARAMETER_FIELD_NAME );
-
-            if ( StringUtils.isBlank( strFieldName ) )
-            {
-                throw new AppException( "id entry is not provided for the current file upload" );
-            }
-
-            initMap( strIdSession, strFieldName );
-
-            // find session-related files in the map
-            Map<String, List<FileItem>> mapFileItemsSession = _mapAsynchronousUpload.get( strIdSession );
-
-            List<FileItem> fileItemsSession = mapFileItemsSession.get( strFieldName );
-
-            if ( canUploadFiles( strFieldName, fileItemsSession, listFileItemsToUpload, mainObject,
-                        request.getLocale(  ) ) )
-            {
-                fileItemsSession.addAll( listFileItemsToUpload );
-
-                JSONObject jsonListFileItems = JSONUtils.getUploadedFileJSON( fileItemsSession );
-                mainObject.accumulateAll( jsonListFileItems );
-                // add entry id to json
-                JSONUtils.buildJsonSuccess( strFieldName, mainObject );
-            }
-        }
-        else
-        {
-            AppLogService.error( DirectoryAsynchronousUploadHandler.class.getName(  ) + " : Session does not exists" );
-
-            String strMessage = I18nService.getLocalizedString( PROPERTY_MESSAGE_ERROR_UPLOADING_FILE_SESSION_LOST,
-                    request.getLocale(  ) );
-            JSONUtils.buildJsonError( mainObject, strMessage );
-        }
-    }
+    
 
     /**
      * Do upload a file in the blobstore webapp
@@ -787,6 +747,118 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
                 entry.canUploadFiles( listUploadedFileItems, listFileItemsToUpload, locale );
             }
         }
+    }
+
+    @Override
+    public String canUploadFiles(HttpServletRequest request, String strFieldName, List<FileItem> listFileItemsToUpload, Locale locale) {
+        if( StringUtils.isNotBlank( strFieldName )&&( strFieldName.length( ) > PREFIX_ENTRY_ID.length( ) ) )
+        {
+            String strIdEntry = strFieldName.substring( PREFIX_ENTRY_ID.length(  ) );
+            int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
+            IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, DirectoryUtils.getPlugin(  ) );
+            
+            List<FileItem> listUploadedFileItems = getListUploadedFiles( strFieldName, request.getSession(  ) );
+            
+            if ( entry != null )
+            {
+                try
+                {
+                    entry.canUploadFiles( listUploadedFileItems, listFileItemsToUpload, locale );
+                }
+                catch ( DirectoryErrorException ex )
+                {
+                    Logger.getLogger(DirectoryAsynchronousUploadHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return null;
+            }
+        }
+        return I18nService.getLocalizedString( ERROR_MESSAGE_UNKNOWN_ERROR, locale );
+    }
+
+    @Override
+    public List<FileItem> getListUploadedFiles(String strFieldName, HttpSession session) {
+        if ( StringUtils.isBlank( strFieldName ) )
+        {
+            throw new AppException( "id field name is not provided for the current file upload" );
+        }
+
+        initMap( session.getId(  ), strFieldName );
+
+        // find session-related files in the map
+        Map<String, List<FileItem>> mapFileItemsSession = _mapAsynchronousUpload.get( session.getId(  ) );
+
+        return mapFileItemsSession.get( strFieldName );
+    }
+
+    @Override
+    public void removeFileItem(String strFieldName, HttpSession session, int nIndex) {
+        // Remove the file (this will also delete the file physically)
+        List<FileItem> uploadedFiles = getListUploadedFiles( strFieldName, session );
+
+        if ( ( uploadedFiles != null ) && !uploadedFiles.isEmpty(  ) && ( uploadedFiles.size(  ) > nIndex ) )
+        {
+            // Remove the object from the Hashmap
+            FileItem fileItem = uploadedFiles.remove( nIndex );
+            fileItem.delete(  );
+        }
+    }
+
+    @Override
+    public void addFileItemToUploadedFilesList(FileItem fileItem, String strFieldName, HttpServletRequest request) {
+        // This is the name that will be displayed in the form. We keep
+        // the original name, but clean it to make it cross-platform.
+        String strFileName = UploadUtil.cleanFileName( fileItem.getName(  ).trim(  ) );
+
+        initMap( request.getSession(  ).getId(  ), buildFieldName( strFieldName ) );
+
+        // Check if this file has not already been uploaded
+        List<FileItem> uploadedFiles = getListUploadedFiles( strFieldName, request.getSession(  ) );
+
+        if ( uploadedFiles != null )
+        {
+            boolean bNew = true;
+
+            if ( !uploadedFiles.isEmpty(  ) )
+            {
+                Iterator<FileItem> iterUploadedFiles = uploadedFiles.iterator(  );
+
+                while ( bNew && iterUploadedFiles.hasNext(  ) )
+                {
+                    FileItem uploadedFile = iterUploadedFiles.next(  );
+                    String strUploadedFileName = UploadUtil.cleanFileName( uploadedFile.getName(  ).trim(  ) );
+                    // If we find a file with the same name and the same
+                    // length, we consider that the current file has
+                    // already been uploaded
+                    bNew = !( StringUtils.equals( strUploadedFileName, strFileName ) &&
+                        ( uploadedFile.getSize(  ) == fileItem.getSize(  ) ) );
+                }
+            }
+
+            if ( bNew )
+            {
+                uploadedFiles.add( fileItem );
+            }
+        }
+    }
+
+    @Override
+    public String getHandlerName() {
+        return HANDLER_NAME;
+    }
+    
+    /**
+     * Get the id of the entry associated with a given field name
+     * @param strFieldName The name of the field
+     * @return The id of the entry
+     */
+    protected String getEntryIdFromFieldName( String strFieldName )
+    {
+        if ( StringUtils.isEmpty( strFieldName ) || ( strFieldName.length(  ) < PREFIX_ENTRY_ID.length(  ) ) )
+        {
+            return null;
+        }
+
+        return strFieldName.substring( PREFIX_ENTRY_ID.length(  ) );
     }
 
     /**
