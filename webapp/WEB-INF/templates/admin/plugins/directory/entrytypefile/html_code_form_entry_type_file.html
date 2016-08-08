@@ -1,59 +1,14 @@
-<#include "/admin/plugins/directory/commons.html" />
-<div class="form-group">
-  <label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
-  <div class="col-xs-12 col-sm-9">
-    <#list entry.fields as field>
-      <#if !field.title??>
-        <input type="hidden" name="_directory_upload_maxLength_directory_${entry.idEntry}" id="_directory_upload_maxLength_directory_${entry.idEntry}" value="${getFileMaxSize( entry )}">
-        <input type="hidden" name="_directory_upload_fileTypes_directory_${entry.idEntry}" id="_directory_upload_fileTypes_directory_${entry.idEntry}" value="${getFileTypes( entry )}">
-        <input type="file" name="directory_${entry.idEntry}" id="directory_${entry.idEntry}" size="${field.width}">
-        <button class="btn btn-primary btn-xs bnt-flat" type="button" id="_directory_upload_submit_directory_${entry.idEntry}" name="_directory_upload_submit_directory_${entry.idEntry}">
-          <i class="fa fa-upload"></i> #i18n{directory.action.send.name}
-        </button>
-      </#if>
-    </#list>
-    <#if entry.helpMessage?exists&&entry.helpMessage!=''>
-      <span class="help-text">${entry.helpMessage}</span>
-    </#if>
-    <#-- file removing -->
-    <#assign has_files = false>
-    <#if default_values?? && default_values?has_content>
-      <#assign record_field_error = default_values[0]>
-      <#if record_field_error.entry.idEntry == entry.idEntry>
-        <#assign has_files = true>
-      </#if>
-    </#if>
-    <label for="delete_${entry.idEntry}">#i18n{directory.create_directory_record.file.uploadedFile}</label>
-    <div id="_file_deletion_label_directory_${entry.idEntry}">
-      <span id="_filename_directory_${entry.idEntry}"></span>
+<#include "/skin/plugins/asynchronousupload/upload_commons.html" />
+    <div class="col-xs-12 col-sm-9">
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-2" for="directory_${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
+            <#if list_fileuploaded?has_content>
+                <#assign listFiles = list_fileuploaded>
+            <#else>
+            <#assign listFiles = ''>
+            </#if>
+            
+            <@addFileInputAndfilesBox fieldName="directory_${entry.idEntry}" handler=entry.asynchronousUploadHandler listUploadedFiles=listFiles inputCssClass="" multiple=false />
+        </div>
     </div>
-    <#assign file_index = 0>
-    <div id="_file_deletion_directory_${entry.idEntry}">
-      <#if has_files>
-        <#list default_values as default_value>
-          <#if default_value.file?exists>
-            <div class="checkbox" id="_file_deletion_${entry.idEntry}">
-              <label id="_filename_directory_${entry.idEntry}">
-              <input type="checkbox" id="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" name="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" value="1">
-              <#-- Case when the user uploads without JS -->
-              <#if default_value.file.idFile != -1 && default_value.file.idFile != 0>
-                <a href="jsp/site/plugins/directory/DoDownloadFile.jsp?id_file=${default_value.file.idFile}" >
-                  ${default_value.file.title} (${default_value.file.size} O)
-                </a>
-              <#else>
-                ${default_value.file.title} (${default_value.file.size} O)
-              </#if>
-              </label>
-            </div>
-          </#if>
-          <#assign file_index = file_index + 1>
-        </#list>
-      </#if>
-    </div>
-    <div id="_file_deletion_button_directory_${entry.idEntry}">
-      <button class="btn btn-danger btn-xs bnt-flat" name="_directory_upload_delete_directory_${entry.idEntry}" type="submit">
-        <i class="fa fa-trash"></i> #i18n{directory.action.delete.name}
-      </button>
-    </div>
-  </div>
-</div>
+    <script type="text/javascript" src="jsp/site/plugins/asynchronousupload/GetMainUploadJs.jsp?handler=DirectoryAsynchronousUploadHandler" ></script>

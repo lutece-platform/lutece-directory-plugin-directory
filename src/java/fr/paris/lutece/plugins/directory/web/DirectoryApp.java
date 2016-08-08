@@ -155,6 +155,8 @@ public class DirectoryApp implements XPageApplication
     private static final String MARK_DIRECTORY = "directory";
     private static final String MARK_STR_FORM_SEARCH = "str_form_search";
     private static final String MARK_STR_RESULT_LIST = "str_result_list";
+    private static final String MARK_RESULT_RECORD_FIELD_LIST = "result_record_field_list";
+    private static final String MARK_WEBAPP_URL = "webapp_url";
     private static final String MARK_STR_RESULT_RECORD = "str_result_record";
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_PAGINATOR = "paginator";
@@ -342,6 +344,16 @@ public class DirectoryApp implements XPageApplication
 
                     String strDirectoryRecord = getHtmlResultRecord( directory, record, request.getLocale(  ), plugin,
                             session );
+                    
+                    List<Integer> lIdRecordList = new ArrayList<Integer>();
+                    
+                    lIdRecordList.add(record.getIdRecord());
+                   
+                    if( lIdRecordList.size() > 0 )
+                    {
+                    	List<RecordField> lRecordField = RecordFieldHome.getRecordFieldListByRecordIdList(lIdRecordList, plugin);
+                    	model.put( MARK_RESULT_RECORD_FIELD_LIST, lRecordField );
+                    }
                     model.put( MARK_STR_RESULT_RECORD, strDirectoryRecord );
                 }
                 else
@@ -494,11 +506,24 @@ public class DirectoryApp implements XPageApplication
                             model.put( MARK_PAGINATOR, paginator );
 
                             List<Record> lRecord = recordService.loadListByListId( paginator.getPageItems(  ), plugin );
-
+                            
                             if ( lRecord.size(  ) > 0 )
                             {
                                 String strResultList = getHtmlResultList( directory, lRecord, request.getLocale(  ),
                                         plugin );
+                                
+                                List<Integer> lIdRecordList = new ArrayList<Integer>();
+                                for( Record elementlRecord : lRecord )
+                                {
+                                	lIdRecordList.add(elementlRecord.getIdRecord());
+                                }
+                                if( lIdRecordList.size() > 0 )
+                                {
+                                	List<RecordField> lRecordField = RecordFieldHome.getRecordFieldListByRecordIdList(lIdRecordList, plugin);
+                                	model.put( MARK_RESULT_RECORD_FIELD_LIST, lRecordField );
+                                }
+                                //getRecordFieldListByRecordIdList( List<Integer> lIdRecordList, Plugin plugin )
+
                                 model.put( MARK_STR_RESULT_LIST, strResultList );
                             }
                         }
@@ -538,6 +563,7 @@ public class DirectoryApp implements XPageApplication
 
             List<IEntry> entriesGeolocationList = EntryHome.getEntryList( filterGeolocation, plugin );
             model.put( MARK_ENTRY_LIST_GEOLOCATION, entriesGeolocationList );
+            model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
 
             HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_XPAGE_FRAME_DIRECTORY,
                     request.getLocale(  ), model );
