@@ -29,6 +29,7 @@
               <#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
                 ${entry.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
               <#else>
+              	<input type="hidden" id="webapp_url" name="webapp_url" value="${webapp_url}"/>
                 ${entry.getHtmlFormEntry( locale,false )}
               </#if>
             </#if>
@@ -51,22 +52,4 @@
 
 <@initEditor />
 <script src="js/plugins/directory/uploadify/jquery.uploadify.v2.1.4.min.js" type="text/javascript"></script>
-<script src="js/plugins/directory/uploadify/swfobject.js" type="text/javascript"></script>
-<script src="js/plugins/directory/directoryupload.js" type="text/javascript"></script>
-<script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
-<script type="text/javascript">
-    //for datepicker questions
-    $(document).ready(function ()
-    {
-        var locale = "en-US";
-        if(document.getElementById("locale") != null)
-        {
-            locale = document.getElementById("locale").innerHTML;
-        }
 
-        $( ".datepicker-element" ).each(function( i ){
-            $(this).datepicker($.extend({showStatus: true}, $.datepicker.regional[locale]));
-            /*$(this).datepicker();*/
-        });
-    });
-</script>

@@ -148,6 +148,8 @@ public final class DirectoryUtils
 
     // JSP
     public static final String JSP_MANAGE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ManageDirectoryRecord.jsp";
+    private static final String JSP_CREATE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/CreateDirectoryRecord.jsp";
+    private static final String JSP_MODIFY_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ModifyDirectoryRecord.jsp";
 
     // SESSION
     public static final String SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS = "directory_list_submitted_record_fields";
@@ -163,6 +165,7 @@ public final class DirectoryUtils
     private static final String CONSTANTE_CHARACTER_RETURN = "\r";
     private static final String REGEX_ID = "^[\\d]+$";
 
+   
     /**
      * DirectoryUtils
      *
@@ -1322,6 +1325,19 @@ public final class DirectoryUtils
         }
 
         return urlItem.getUrl(  );
+    }
+    
+    /**
+     * return url of the jsp create directory record
+     * @param request the HTTP request
+     * @param nIdDirectory the directory id 
+     * @return url of jsp create directory record
+     */
+    public static String getJspModifyDirectoryRecord(HttpServletRequest request, int nIdDirectory, int nIdDirectoryRecord) {
+        UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY_RECORD );
+        urlItem.addParameter( PARAMETER_ID_DIRECTORY, nIdDirectory );
+        urlItem.addParameter( PARAMETER_ID_DIRECTORY_RECORD, nIdDirectoryRecord);
+        return urlItem.getUrl();
     }
 
     /**

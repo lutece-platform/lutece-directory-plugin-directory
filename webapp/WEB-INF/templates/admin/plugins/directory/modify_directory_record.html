@@ -40,6 +40,7 @@
 							<#assign entryKey=""+entry.idEntry>
 					  		<#if map_id_entry_list_record_field?? && map_id_entry_list_record_field[entryKey]??>
 					  			${entry.getHtmlFormEntry( locale,map_id_entry_list_record_field[entryKey],false )}
+					  			<input type="hidden" id="webapp_url" name="webapp_url" value="${webapp_url}"/>
 								<#else>
 					  			${entry.getHtmlFormEntry( locale,false )}
 					  		</#if>
@@ -59,7 +60,5 @@
 	</div>
 </div>
 <script src="js/plugins/directory/uploadify/jquery.uploadify.v2.1.4.min.js" type="text/javascript"></script>
-<script src="js/plugins/directory/uploadify/swfobject.js" type="text/javascript"></script>
-<script src="js/plugins/directory/directoryupload.js" type="text/javascript"></script>
 <#include "/admin/util/editor/editor.html" />
 <@initEditor />

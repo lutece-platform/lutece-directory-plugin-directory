@@ -52,7 +52,13 @@
             <artifactId>library-image</artifactId>
             <version>[1.0.0,)</version>
         </dependency>
-        <!-- Blobstore -->
+        <dependency>
+           <groupId>fr.paris.lutece.plugins</groupId>
+           <artifactId>plugin-asynchronousupload</artifactId>
+           <version>1.0.5-SNAPSHOT</version>
+           <type>lutece-plugin</type>
+        </dependency>
+		<!-- Blobstore -->
         <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>library-blobstore</artifactId>
