@@ -1,0 +1,141 @@
+<#include "/admin/plugins/directory/commons.html" />
+<#assign width= 320>
+<#assign height= 261>
+<#assign has_files = false>
+<#if default_values?? && default_values?has_content>
+	<#assign record_field_error = default_values[0]>
+	<#if record_field_error.entry.idEntry == entry.idEntry>
+		<#assign has_files = true>
+
+	</#if>
+	</#if>	
+	<#if has_files>
+	<#list default_values as default_value>
+
+		<#if !default_value.isLittleThumbnail() && !default_value.isBigThumbnail()>
+			<#if default_value.file?exists>
+				<#assign idFile=default_value.file.idFile>
+			</#if>
+	
+		</#if>
+	</#list>
+</#if>
+
+<#if entry.displayHeight &gt; 0> 
+	<#assign height= entry.displayHeight>
+</#if>
+<#if entry.displayWidth &gt; 0> 
+	<#assign width= entry.displayWidth>
+</#if>
+<div class="form-group">
+<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
+<div class="col-xs-12 col-sm-9">					
+	<div>
+		<video id="video" width="0" height="0" autoplay ></video>
+
+	</div>
+	<div>
+		<button align="" type="button" id="snap${entry.idEntry}" class="btn btn-primary btn-sm" ><i class="glyphicon glyphicon-camera" ></i> #i18n{directory.html_code_form_snap_photo}</button>
+		<button align="" type="button" id="clear${entry.idEntry}" class="btn btn-primary btn-sm" ><i class="glyphicon glyphicon-remove-circle" ></i> #i18n{directory.html_code_form_remove_photo}</button>	
+		
+	</div>
+	<div>
+		<canvas id="canvas${entry.idEntry}" width="${width}" height="${height}" class="camera" ></canvas>
+		<input type="hidden"  id="attribute${entry.idEntry}" name="directory_${entry.idEntry}"  />
+	</div>
+</div>	
+</div>    			
+<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+	<span class="help-block">${entry.helpMessage}</span>
+</#if>
+
+<script>
+	   // Put event listeners into place
+            window.addEventListener("DOMContentLoaded", function() {
+
+
+	   // Grab elements, create settings, etc.
+            var canvas${entry.idEntry} = document.getElementById('canvas${entry.idEntry}');
+            var context${entry.idEntry} = canvas${entry.idEntry}.getContext('2d'); 
+	   
+	    var video = document.getElementById('video');
+	    var	photo${entry.idEntry} = document.querySelector('#attribute${entry.idEntry}');
+	    var oImg=document.createElement("img");
+	    if(photo${entry.idEntry}.value != ""){
+		 oImg.src = photo${entry.idEntry}.value;
+	    }else{	
+		 oImg.src="image?resource_type=directory_entry_img&id=${idFile!}";
+	    }
+	    oImg.onload = function() {
+	    	context${entry.idEntry}.drawImage(oImg, 0, 0, ${width}, ${height});
+		photo${entry.idEntry}.value= canvas${entry.idEntry}.toDataURL('image/png');
+	    }
+	   
+
+            var mediaConfig${entry.idEntry} =  { video: true };
+	    var camActive= false;
+	  
+            var errBack = function(e) {
+            	console.log('An error has occurred!', e)
+            };
+	
+		
+
+			// Put video listeners into place
+            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia(mediaConfig${entry.idEntry}).then(function(stream) {
+                    video.src = window.URL.createObjectURL(stream);
+		    video.setAttribute('width',${width});
+	            video.setAttribute('height',${height});
+                    video.play();
+
+                });
+            }
+
+            /* Legacy code below! */
+            else if(navigator.getUserMedia) { // Standard
+		navigator.getUserMedia(mediaConfig${entry.idEntry}, function(stream) {
+	 		video.src = stream;
+			video.setAttribute('width',${width});
+  			video.setAttribute('height',${height});
+			video.play();
+
+		}, errBack);
+	    } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+		navigator.webkitGetUserMedia(mediaConfig${entry.idEntry}, function(stream){
+			video.src = window.webkitURL.createObjectURL(stream);
+			video.setAttribute('width',${width});
+	        	video.setAttribute('height',${height});
+			video.play();
+		}, errBack);
+	    } else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+		navigator.mozGetUserMedia(mediaConfig${entry.idEntry}, function(stream){
+			video.src = window.URL.createObjectURL(stream);
+			video.setAttribute('width',${width});
+	      		video.setAttribute('height',${height});
+			video.play();
+
+		}, errBack);
+	    }
+
+	    // Trigger photo take
+   	    document.getElementById('snap${entry.idEntry}').addEventListener('click', function(ev) {
+		context${entry.idEntry}.drawImage(video, 0, 0, ${width}, ${height});
+		var data${entry.idEntry} = canvas${entry.idEntry}.toDataURL('image/png');
+		if(video.src != null && video.src !="" ){
+			 photo${entry.idEntry}.value= data${entry.idEntry};
+		}
+			ev.preventDefault();
+            });
+	   
+	   // Trigger photo remove
+   	    document.getElementById('clear${entry.idEntry}').addEventListener('click', function(ev) {
+		context${entry.idEntry}.clearRect( 0, 0, ${width}, ${height});
+		photo${entry.idEntry}.value="";
+		ev.preventDefault();
+            });
+
+		
+	}, false);
+
+</script>

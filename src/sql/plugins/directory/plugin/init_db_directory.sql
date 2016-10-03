@@ -23,6 +23,7 @@ insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylute
 insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(20,'directory.entry_type_download_url.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeDownloadUrl');
 insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(21,'directory.entry_type_remote_mylutece_user.title',0,0,1,'fr.paris.lutece.plugins.directory.business.EntryTypeRemoteMyLuteceUser');
 insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(22,'directory.entry_type_array.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeArray');
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(23,'directory.entry_type_camera.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeCamera');
 
 /*==============================================================*/
 /*	Init  table directory_category								*/

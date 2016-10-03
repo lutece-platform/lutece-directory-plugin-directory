@@ -1,0 +1,1 @@
+insert into directory_entry_type(id_type,title_key,is_group,is_comment,is_mylutece_user,class_name) values(23,'directory.entry_type_camera.title',0,0,0,'fr.paris.lutece.plugins.directory.business.EntryTypeCamera');
