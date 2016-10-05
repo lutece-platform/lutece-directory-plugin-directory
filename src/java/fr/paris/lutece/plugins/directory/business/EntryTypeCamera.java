@@ -42,6 +42,7 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.regularexpression.RegularExpressionService;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.web.upload.MultipartHttpServletRequest;
 import fr.paris.lutece.portal.web.util.LocalizedPaginator;
 import fr.paris.lutece.util.ReferenceList;
@@ -52,17 +53,14 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
 
 import java.awt.image.BufferedImage;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 import javax.imageio.ImageIO;
-
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -73,6 +71,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EntryTypeCamera extends AbstractEntryTypeUpload
 {
+	private String PROPERTY_IMAGE_TITLE = AppPropertiesService.getProperty( "directory.image.prefix.title",
+            "default" );
     protected static final String FIELD_THUMBNAIL_WIDTH = "directory.create_entry.label_width";
     protected static final String FIELD_THUMBNAIL_HEIGHT = "directory.create_entry.label_width";
     protected static final String FIELD_BIG_THUMBNAIL_WIDTH = "directory.create_entry.label_width";
@@ -245,8 +245,16 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
 
                 File file = new File(  );
                 Calendar c = Calendar.getInstance(  );
-                file.setTitle( this.getTitle(  ) + "_" + c.getTime(  ) );
-
+                String fileName = request.getParameter( PROPERTY_IMAGE_TITLE );
+               
+                if( fileName != null ){
+                	
+                	file.setTitle( fileName + "_" + c.getTime(  ) );
+                
+                }else{
+                
+                	file.setTitle( this.getTitle( ) + "_" + c.getTime(  ) );
+                }
                 PhysicalFile physicalFile = new PhysicalFile(  );
                 String base64Image = sourceImage.split( "," )[1];
                 byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary( base64Image );
