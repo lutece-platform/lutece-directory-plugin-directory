@@ -64,6 +64,7 @@ public class Field implements AdminWorkgroupResource
     private List<RegularExpression> _listRegularExpressionList;
     private String _strRoleKey;
     private String _strWorkgroupKey;
+    private String _strImageType;
 
     /**
      *
@@ -338,5 +339,24 @@ public class Field implements AdminWorkgroupResource
     public void setWorkgroup( String workGroup )
     {
         _strWorkgroupKey = workGroup;
+    }
+    /**
+     * Gets the field ImageType
+     * @return field ImageType as a String
+     *
+     */
+    public String getImageType(  )
+    {
+        return _strImageType;
+    }
+
+    /**
+     * Sets the field's ImageType
+     * @param ImageType The Image Type
+     *
+     */
+    public void setImageType( String strImageType )
+    {
+    	_strImageType = strImageType;
     }
 }

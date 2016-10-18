@@ -81,6 +81,7 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
     protected static final String ERROR_FIELD_BIG_THUMBNAIL = "directory.create_entry.label_error_big_thumbnail";
     private static final String PARAMETER_IMAGE_SHOWN_IN_RESULT_LIST = "image_shown_in_result_list";
     private static final String PARAMETER_IMAGE_SHOWN_IN_RESULT_RECORD = "image_shown_in_result_record";
+    private static final String PARAMETER_IMAGE_TYPE = "image_type";
     private static final String MESSAGE_ERROR_NOT_AN_IMAGE = "directory.message.error.notAnImage";
     private static final String FIELD_IMAGE = "image_full_size";
     private final String PREFIX_ENTRY_ID = "directory_";
@@ -233,6 +234,7 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
     {
         if ( request instanceof MultipartHttpServletRequest )
         {
+        	
             String sourceImage = request.getParameter( PREFIX_ENTRY_ID + this.getIdEntry(  ) );
 
             if ( ( sourceImage != null ) && StringUtils.isNotEmpty( sourceImage ) )
@@ -260,7 +262,8 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
                 byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary( base64Image );
                 physicalFile.setValue( imageBytes );
                 file.setPhysicalFile( physicalFile );
-                file.setTitle( file.getTitle(  ) );
+                file.setTitle( this.getFields().get(2).getImageType( )!=null?file.getTitle(  )+
+                		"."+this.getFields().get(2).getImageType( ):file.getTitle(  )+"" );
                 file.setMimeType( FileSystemUtil.getMIMEType( file.getTitle(  ) ) );
 
                 ByteArrayInputStream bis = new ByteArrayInputStream( imageBytes );
@@ -269,7 +272,7 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
                 try
                 {
                     BufferedImage image = ImageIO.read( bis );
-                    ImageIO.write( image, "png", tmp );
+                    ImageIO.write( image, this.getFields().get(2).getImageType( )!=null?this.getFields().get(2).getImageType( ):"png", tmp );
                     bis.close(  );
                     tmp.close(  );
                     file.setSize( tmp.size(  ) );
@@ -492,9 +495,12 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
         {
             fieldFullImage.setShownInResultRecord( false );
         }
-
+        if(request.getParameter( PARAMETER_IMAGE_TYPE ) != null){
+        	fieldFullImage.setImageType(request.getParameter( PARAMETER_IMAGE_TYPE ));
+        }
         fieldFullImage.setEntry( this );
         fieldFullImage.setValue( FIELD_IMAGE );
+        
 
         return fieldFullImage;
     }

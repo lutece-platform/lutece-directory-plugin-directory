@@ -36,6 +36,25 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3" for="image_type">#i18n{directory.createEntry.labelImageType} : </label>
+							<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+							
+								<select name="image_type">
+								 <#list entry.fields as field>
+								  <#if field.imageType?? && field.imageType="jpeg" && (field.value = "image_full_size" || field.value = "image_full_size_1") >
+									  <option value="png" > png </option> 
+									  <option value="jpeg" selected> jpeg </option>
+								  <#break>
+								  <#elseif field.value = "image_full_size" || field.value = "image_full_size_1" >
+									  <option value="png" selected> png </option> 
+									  <option value="jpeg" > jpeg </option>
+							          <#break>
+ 								  </#if>
+								</#list>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
 
 							<div class="col-xs-12 col-sm-2">
 								<input type="hidden" maxlength="2" value="${getMaxFiles(entry)}" class="form-control" name="max_files">

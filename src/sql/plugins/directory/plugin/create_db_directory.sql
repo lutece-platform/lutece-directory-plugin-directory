@@ -115,6 +115,7 @@ CREATE TABLE directory_field (
   workgroup_key VARCHAR(255) DEFAULT NULL,
   is_shown_in_result_list SMALLINT DEFAULT 0,
   is_shown_in_result_record SMALLINT DEFAULT 0,
+  image_type VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY  (id_field)
 ) ;
 

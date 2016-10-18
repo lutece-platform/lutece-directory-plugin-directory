@@ -27,6 +27,13 @@
 <#if entry.displayWidth &gt; 0> 
 	<#assign width= entry.displayWidth>
 </#if>
+<#list entry.fields as field>
+		   			<#if field.imageType?? >
+		   				<#assign imageType= field.imageType>
+		   			<#else>
+		   				<#assign imageType= "png">
+		   			</#if>
+</#list>
 <div class="form-group">
 <label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
 <div class="col-xs-12 col-sm-9">					
@@ -68,7 +75,7 @@
 	    }
 	    oImg.onload = function() {
 	    	context${entry.idEntry}.drawImage(oImg, 0, 0, ${width}, ${height});
-		photo${entry.idEntry}.value= canvas${entry.idEntry}.toDataURL('image/png');
+		photo${entry.idEntry}.value= canvas${entry.idEntry}.toDataURL('image/${imageType}',1);
 	    }
 	   
 
@@ -121,7 +128,7 @@
 	    // Trigger photo take
    	    document.getElementById('snap${entry.idEntry}').addEventListener('click', function(ev) {
 		context${entry.idEntry}.drawImage(video, 0, 0, ${width}, ${height});
-		var data${entry.idEntry} = canvas${entry.idEntry}.toDataURL('image/png');
+		var data${entry.idEntry} = canvas${entry.idEntry}.toDataURL('image/${imageType}',1);
 		if(video.src != null && video.src !="" ){
 			 photo${entry.idEntry}.value= data${entry.idEntry};
 		}

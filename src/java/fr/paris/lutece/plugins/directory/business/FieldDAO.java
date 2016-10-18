@@ -51,24 +51,24 @@ public final class FieldDAO implements IFieldDAO
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_field ) FROM directory_field";
     private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_field,id_entry,title,default_value,height,width," +
         "is_default_value,max_size_enter,field_position,value_type_date,role_key,workgroup_key" +
-        ",is_shown_in_result_list,is_shown_in_result_record " + " FROM directory_field WHERE id_field = ? ";
+        ",is_shown_in_result_list,is_shown_in_result_record,image_type " + " FROM directory_field WHERE id_field = ? ";
     private static final String SQL_QUERY_FIND_BY_VALUE = "SELECT id_field,id_entry,title,default_value,height,width," +
         "is_default_value,max_size_enter,field_position,value_type_date,role_key,workgroup_key" +
-        ",is_shown_in_result_list,is_shown_in_result_record " +
+        ",is_shown_in_result_list,is_shown_in_result_record, image_type" +
         " FROM directory_field WHERE id_entry=? and default_value = ? ";
     private static final String SQL_QUERY_INSERT = "INSERT INTO directory_field(id_field,id_entry,title,default_value,height," +
         "width,is_default_value,max_size_enter,field_position,value_type_date,role_key,workgroup_key,is_shown_in_result_list," +
-        "is_shown_in_result_record )" + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        " is_shown_in_result_record, image_type)" + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_field WHERE id_field = ? ";
     private static final String SQL_QUERY_INSERT_VERIF_BY = "INSERT INTO directory_verify_by(id_field,id_expression) VALUES(?,?) ";
     private static final String SQL_QUERY_DELETE_VERIF_BY = "DELETE FROM directory_verify_by WHERE id_field = ? and id_expression= ?";
     private static final String SQL_QUERY_UPDATE = "UPDATE directory_field SET " +
         "id_field=?,id_entry=?,title=?,default_value=?,height=?,width=?,is_default_value=?,max_size_enter=?, " +
-        "field_position=?,value_type_date=?,role_key=?,workgroup_key=?,is_shown_in_result_list=?,is_shown_in_result_record=?" +
+        "field_position=?,value_type_date=?,role_key=?,workgroup_key=?,is_shown_in_result_list=?,is_shown_in_result_record=?, image_type=?" +
         "  WHERE id_field = ?";
     private static final String SQL_QUERY_SELECT_FIELD_BY_ID_ENTRY = "SELECT id_field,id_entry,title,default_value,height,width,is_default_value," +
         "max_size_enter,field_position,value_type_date,role_key,workgroup_key,is_shown_in_result_list" +
-        ",is_shown_in_result_record FROM directory_field  WHERE id_entry = ? ORDER BY field_position";
+        ",is_shown_in_result_record, image_type FROM directory_field  WHERE id_entry = ? ORDER BY field_position";
     private static final String SQL_QUERY_NEW_POSITION = "SELECT MAX(field_position)" + " FROM directory_field ";
     private static final String SQL_QUERY_SELECT_REGULAR_EXPRESSION_BY_ID_FIELD = "SELECT id_expression " +
         " FROM directory_verify_by where id_field=?";
@@ -150,7 +150,8 @@ public final class FieldDAO implements IFieldDAO
         daoUtil.setString( 12, field.getWorkgroup(  ) );
         daoUtil.setBoolean( 13, field.isShownInResultList(  ) );
         daoUtil.setBoolean( 14, field.isShownInResultRecord(  ) );
-
+        daoUtil.setString( 15, field.getImageType( ) );
+        
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
 
@@ -190,6 +191,7 @@ public final class FieldDAO implements IFieldDAO
             field.setWorkgroup( daoUtil.getString( 12 ) );
             field.setShownInResultList( daoUtil.getBoolean( 13 ) );
             field.setShownInResultRecord( daoUtil.getBoolean( 14 ) );
+            field.setImageType(daoUtil.getString( 15 ));
         }
 
         daoUtil.free(  );
@@ -231,6 +233,7 @@ public final class FieldDAO implements IFieldDAO
             field.setWorkgroup( daoUtil.getString( 12 ) );
             field.setShownInResultList( daoUtil.getBoolean( 13 ) );
             field.setShownInResultRecord( daoUtil.getBoolean( 14 ) );
+            field.setImageType( daoUtil.getString( 15 ) );
         }
 
         daoUtil.free(  );
@@ -272,7 +275,8 @@ public final class FieldDAO implements IFieldDAO
         daoUtil.setString( 12, field.getWorkgroup(  ) );
         daoUtil.setBoolean( 13, field.isShownInResultList(  ) );
         daoUtil.setBoolean( 14, field.isShownInResultRecord(  ) );
-        daoUtil.setInt( 15, field.getIdField(  ) );
+        daoUtil.setString( 15, field.getImageType( ) );
+        daoUtil.setInt( 16, field.getIdField(  ) );
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
     }
@@ -311,7 +315,9 @@ public final class FieldDAO implements IFieldDAO
             field.setWorkgroup( daoUtil.getString( 12 ) );
             field.setShownInResultList( daoUtil.getBoolean( 13 ) );
             field.setShownInResultRecord( daoUtil.getBoolean( 14 ) );
+            field.setImageType( daoUtil.getString( 15 ) );
 
+            
             fieldList.add( field );
         }
 
