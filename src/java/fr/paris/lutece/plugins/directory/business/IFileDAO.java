@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.directory.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
-
 /**
  *
  * IFileDAO
@@ -46,7 +45,8 @@ public interface IFileDAO
     /**
      * Generates a new primary key
      *
-     * @param plugin the plugin
+     * @param plugin
+     *            the plugin
      * @return The new primary key
      */
     int newPrimaryKey( Plugin plugin );
@@ -54,8 +54,10 @@ public interface IFileDAO
     /**
      * Insert a new record in the table.
      *
-     * @param file instance of the File object to insert
-     * @param plugin the plugin
+     * @param file
+     *            instance of the File object to insert
+     * @param plugin
+     *            the plugin
      * @return the id of the new file
      */
     int insert( File file, Plugin plugin );
@@ -63,8 +65,10 @@ public interface IFileDAO
     /**
      * Load the data of the File from the table
      *
-     * @param nId The identifier of the file
-     * @param plugin the plugin
+     * @param nId
+     *            The identifier of the file
+     * @param plugin
+     *            the plugin
      * @return the instance of the File
      */
     File load( int nId, Plugin plugin );
@@ -72,16 +76,20 @@ public interface IFileDAO
     /**
      * Delete a record from the table
      *
-     * @param nIdFile The identifier of the file
-     * @param plugin the plugin
+     * @param nIdFile
+     *            The identifier of the file
+     * @param plugin
+     *            the plugin
      */
     void delete( int nIdFile, Plugin plugin );
 
     /**
      * Update the file in the table
      *
-     * @param file instance of the File object to update
-     * @param plugin the plugin
+     * @param file
+     *            instance of the File object to update
+     * @param plugin
+     *            the plugin
      */
     void store( File file, Plugin plugin );
 }

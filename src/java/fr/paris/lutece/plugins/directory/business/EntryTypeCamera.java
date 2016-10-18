@@ -63,7 +63,6 @@ import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * class EntryTypeCamera
@@ -71,8 +70,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EntryTypeCamera extends AbstractEntryTypeUpload
 {
-	private String PROPERTY_IMAGE_TITLE = AppPropertiesService.getProperty( "directory.image.prefix.title",
-            "default" );
+    private String PROPERTY_IMAGE_TITLE = AppPropertiesService.getProperty( "directory.image.prefix.title", "default" );
     protected static final String FIELD_THUMBNAIL_WIDTH = "directory.create_entry.label_width";
     protected static final String FIELD_THUMBNAIL_HEIGHT = "directory.create_entry.label_width";
     protected static final String FIELD_BIG_THUMBNAIL_WIDTH = "directory.create_entry.label_width";
@@ -127,8 +125,7 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim(  ) : null;
+        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim( ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
@@ -172,7 +169,7 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
         this.setShownInResultRecord( strShowInResultRecord != null );
         this.setShownInHistory( strShowInHistory != null );
         this.setShownInCompleteness( strShowInCompleteness != null );
-        //image can't be exported in csv
+        // image can't be exported in csv
         this.setShownInExport( false );
 
         return null;
@@ -182,7 +179,7 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return _template_create;
     }
@@ -191,7 +188,7 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return _template_modify;
     }
@@ -200,12 +197,11 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError, boolean bAddNewValue, List<RecordField> listRecordField,
+            Locale locale ) throws DirectoryErrorException
     {
-        //add Empty recordField(Use for data import)
-        RecordField recordField = new RecordField(  );
+        // add Empty recordField(Use for data import)
+        RecordField recordField = new RecordField( );
         recordField.setEntry( this );
         listRecordField.add( recordField );
     }
@@ -214,12 +210,11 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError, List<RecordField> listRecordField, Locale locale )
+            throws DirectoryErrorException
     {
         // add Empty recordField
-        RecordField recordField = new RecordField(  );
+        RecordField recordField = new RecordField( );
         recordField.setEntry( this );
         listRecordField.add( recordField );
     }
@@ -228,14 +223,13 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError, boolean bAddNewValue,
+            List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
         if ( request instanceof MultipartHttpServletRequest )
         {
-        	
-            String sourceImage = request.getParameter( PREFIX_ENTRY_ID + this.getIdEntry(  ) );
+
+            String sourceImage = request.getParameter( PREFIX_ENTRY_ID + this.getIdEntry( ) );
 
             if ( ( sourceImage != null ) && StringUtils.isNotEmpty( sourceImage ) )
             {
@@ -245,78 +239,79 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
                     this.checkRecordFieldData( sourceImage, locale );
                 }
 
-                File file = new File(  );
-                Calendar c = Calendar.getInstance(  );
+                File file = new File( );
+                Calendar c = Calendar.getInstance( );
                 String fileName = request.getParameter( PROPERTY_IMAGE_TITLE );
-               
-                if( fileName != null ){
-                	
-                	file.setTitle( fileName + "_" + c.getTime(  ) );
-                
-                }else{
-                
-                	file.setTitle( this.getTitle( ) + "_" + c.getTime(  ) );
+
+                if ( fileName != null )
+                {
+
+                    file.setTitle( fileName + "_" + c.getTime( ) );
+
                 }
-                PhysicalFile physicalFile = new PhysicalFile(  );
-                String base64Image = sourceImage.split( "," )[1];
-                byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary( base64Image );
+                else
+                {
+
+                    file.setTitle( this.getTitle( ) + "_" + c.getTime( ) );
+                }
+                PhysicalFile physicalFile = new PhysicalFile( );
+                String base64Image = sourceImage.split( "," ) [1];
+                byte [ ] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary( base64Image );
                 physicalFile.setValue( imageBytes );
                 file.setPhysicalFile( physicalFile );
-                file.setTitle( this.getFields().get(2).getImageType( )!=null?file.getTitle(  )+
-                		"."+this.getFields().get(2).getImageType( ):file.getTitle(  )+"" );
-                file.setMimeType( FileSystemUtil.getMIMEType( file.getTitle(  ) ) );
+                file.setTitle( this.getFields( ).get( 2 ).getImageType( ) != null ? file.getTitle( ) + "." + this.getFields( ).get( 2 ).getImageType( ) : file
+                        .getTitle( ) + "" );
+                file.setMimeType( FileSystemUtil.getMIMEType( file.getTitle( ) ) );
 
                 ByteArrayInputStream bis = new ByteArrayInputStream( imageBytes );
-                ByteArrayOutputStream tmp = new ByteArrayOutputStream(  );
+                ByteArrayOutputStream tmp = new ByteArrayOutputStream( );
 
                 try
                 {
                     BufferedImage image = ImageIO.read( bis );
-                    ImageIO.write( image, this.getFields().get(2).getImageType( )!=null?this.getFields().get(2).getImageType( ):"png", tmp );
-                    bis.close(  );
-                    tmp.close(  );
-                    file.setSize( tmp.size(  ) );
+                    ImageIO.write( image, this.getFields( ).get( 2 ).getImageType( ) != null ? this.getFields( ).get( 2 ).getImageType( ) : "png", tmp );
+                    bis.close( );
+                    tmp.close( );
+                    file.setSize( tmp.size( ) );
                 }
-                catch ( IOException e )
+                catch( IOException e )
                 {
                     AppLogService.error( e );
-                    throw new DirectoryErrorException( this.getTitle(  ) );
+                    throw new DirectoryErrorException( this.getTitle( ) );
                 }
 
-                //Add the image to the record fields list
-                RecordField recordField = new RecordField(  );
+                // Add the image to the record fields list
+                RecordField recordField = new RecordField( );
                 recordField.setEntry( this );
                 recordField.setValue( FIELD_IMAGE + DirectoryUtils.CONSTANT_UNDERSCORE + 1 );
                 recordField.setFile( file );
                 listRecordField.add( recordField );
             }
 
-            if ( bTestDirectoryError && this.isMandatory(  ) &&
-                    ( ( sourceImage == null ) || StringUtils.isEmpty( sourceImage ) ) )
+            if ( bTestDirectoryError && this.isMandatory( ) && ( ( sourceImage == null ) || StringUtils.isEmpty( sourceImage ) ) )
             {
-                RecordField recordField = new RecordField(  );
+                RecordField recordField = new RecordField( );
                 recordField.setEntry( this );
                 recordField.setValue( FIELD_IMAGE );
                 listRecordField.add( recordField );
 
-                throw new DirectoryErrorException( this.getTitle(  ) );
+                throw new DirectoryErrorException( this.getTitle( ) );
             }
         }
-        else if ( bTestDirectoryError )
-        {
-            throw new DirectoryErrorException( this.getTitle(  ) );
-        }
+        else
+            if ( bTestDirectoryError )
+            {
+                throw new DirectoryErrorException( this.getTitle( ) );
+            }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex )
+    public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName, String strPageIndex )
     {
-        return new Paginator( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage, strBaseUrl,
-            strPageIndexParameterName, strPageIndex );
+        return new Paginator( this.getFields( ).get( 0 ).getRegularExpressionList( ), nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex );
     }
 
     /**
@@ -327,19 +322,17 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
     {
         ReferenceList refListRegularExpression = null;
 
-        if ( RegularExpressionService.getInstance(  ).isAvailable(  ) )
+        if ( RegularExpressionService.getInstance( ).isAvailable( ) )
         {
-            refListRegularExpression = new ReferenceList(  );
+            refListRegularExpression = new ReferenceList( );
 
-            List<RegularExpression> listRegularExpression = RegularExpressionService.getInstance(  )
-                                                                                    .getAllRegularExpression(  );
+            List<RegularExpression> listRegularExpression = RegularExpressionService.getInstance( ).getAllRegularExpression( );
 
             for ( RegularExpression regularExpression : listRegularExpression )
             {
-                if ( !entry.getFields(  ).get( 0 ).getRegularExpressionList(  ).contains( regularExpression ) )
+                if ( !entry.getFields( ).get( 0 ).getRegularExpressionList( ).contains( regularExpression ) )
                 {
-                    refListRegularExpression.addItem( regularExpression.getIdExpression(  ),
-                        regularExpression.getTitle(  ) );
+                    refListRegularExpression.addItem( regularExpression.getIdExpression( ), regularExpression.getTitle( ) );
                 }
             }
         }
@@ -351,11 +344,10 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
      * {@inheritDoc}
      */
     @Override
-    public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex, Locale locale )
+    public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName, String strPageIndex, Locale locale )
     {
-        return new LocalizedPaginator( this.getFields(  ).get( 0 ).getRegularExpressionList(  ), nItemPerPage,
-            strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
+        return new LocalizedPaginator( this.getFields( ).get( 0 ).getRegularExpressionList( ), nItemPerPage, strBaseUrl, strPageIndexParameterName,
+                strPageIndex, locale );
     }
 
     // PROTECTED METHODS
@@ -386,37 +378,39 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
 
             if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
             {
-                Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+                Object [ ] tabRequiredFields = {
+                    I18nService.getLocalizedString( strFieldError, locale )
+                };
 
-                return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                    AdminMessage.TYPE_STOP );
+                return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
             }
 
-            if ( ( strWidth != null ) && ( !strWidth.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) ) &&
-                    ( nWidth == DirectoryUtils.CONSTANT_ID_NULL ) )
+            if ( ( strWidth != null ) && ( !strWidth.trim( ).equals( DirectoryUtils.EMPTY_STRING ) ) && ( nWidth == DirectoryUtils.CONSTANT_ID_NULL ) )
             {
                 strFieldError = FIELD_WIDTH;
             }
-            else if ( ( strHeight != null ) && ( !strHeight.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) ) &&
-                    ( nHeight == DirectoryUtils.CONSTANT_ID_NULL ) )
-            {
-                strFieldError = FIELD_HEIGHT;
-            }
+            else
+                if ( ( strHeight != null ) && ( !strHeight.trim( ).equals( DirectoryUtils.EMPTY_STRING ) ) && ( nHeight == DirectoryUtils.CONSTANT_ID_NULL ) )
+                {
+                    strFieldError = FIELD_HEIGHT;
+                }
 
             if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
             {
-                Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+                Object [ ] tabRequiredFields = {
+                    I18nService.getLocalizedString( strFieldError, locale )
+                };
 
-                return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields,
-                    AdminMessage.TYPE_STOP );
+                return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
             }
 
             if ( StringUtils.isNotBlank( strFieldError ) )
             {
-                Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+                Object [ ] tabRequiredFields = {
+                    I18nService.getLocalizedString( strFieldError, locale )
+                };
 
-                return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                    AdminMessage.TYPE_STOP );
+                return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
             }
         }
 
@@ -432,33 +426,32 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
         listFields.add( buildFieldFullSize( request ) );
     }
 
-    private void checkRecordFieldData( String imageSource, Locale locale )
-        throws DirectoryErrorException
+    private void checkRecordFieldData( String imageSource, Locale locale ) throws DirectoryErrorException
     {
         BufferedImage image = null;
 
         if ( ( imageSource != null ) && ( imageSource.split( "," ).length > 1 ) )
         {
-            String base64Image = imageSource.split( "," )[1];
-            byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary( base64Image );
+            String base64Image = imageSource.split( "," ) [1];
+            byte [ ] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary( base64Image );
             ByteArrayInputStream bis = new ByteArrayInputStream( imageBytes );
 
             try
             {
                 image = ImageIO.read( bis );
-                bis.close(  );
+                bis.close( );
             }
-            catch ( IOException e )
+            catch( IOException e )
             {
                 String strErrorMessage = I18nService.getLocalizedString( MESSAGE_ERROR_NOT_AN_IMAGE, locale );
-                throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
+                throw new DirectoryErrorException( this.getTitle( ), strErrorMessage );
             }
         }
 
         if ( ( image == null ) && StringUtils.isNotBlank( imageSource ) )
         {
             String strErrorMessage = I18nService.getLocalizedString( MESSAGE_ERROR_NOT_AN_IMAGE, locale );
-            throw new DirectoryErrorException( this.getTitle(  ), strErrorMessage );
+            throw new DirectoryErrorException( this.getTitle( ), strErrorMessage );
         }
     }
 
@@ -466,16 +459,18 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
 
     /**
      * Build the field full size
-     * @param request the HTTP request
+     * 
+     * @param request
+     *            the HTTP request
      * @return the field
      */
     private Field buildFieldFullSize( HttpServletRequest request )
     {
-        Field fieldFullImage = DirectoryUtils.findFieldByValueInTheList( FIELD_IMAGE, getFields(  ) );
+        Field fieldFullImage = DirectoryUtils.findFieldByValueInTheList( FIELD_IMAGE, getFields( ) );
 
         if ( fieldFullImage == null )
         {
-            fieldFullImage = new Field(  );
+            fieldFullImage = new Field( );
         }
 
         if ( request.getParameter( PARAMETER_IMAGE_SHOWN_IN_RESULT_LIST ) != null )
@@ -495,19 +490,18 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
         {
             fieldFullImage.setShownInResultRecord( false );
         }
-        if(request.getParameter( PARAMETER_IMAGE_TYPE ) != null){
-        	fieldFullImage.setImageType(request.getParameter( PARAMETER_IMAGE_TYPE ));
+        if ( request.getParameter( PARAMETER_IMAGE_TYPE ) != null )
+        {
+            fieldFullImage.setImageType( request.getParameter( PARAMETER_IMAGE_TYPE ) );
         }
         fieldFullImage.setEntry( this );
         fieldFullImage.setValue( FIELD_IMAGE );
-        
 
         return fieldFullImage;
     }
 
     @Override
-    protected void checkRecordFieldData( FileItem fileItem, Locale locale )
-        throws DirectoryErrorException
+    protected void checkRecordFieldData( FileItem fileItem, Locale locale ) throws DirectoryErrorException
     {
     }
 }

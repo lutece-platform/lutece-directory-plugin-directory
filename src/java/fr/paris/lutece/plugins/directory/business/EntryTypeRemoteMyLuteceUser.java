@@ -57,7 +57,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * class EntryTypeRemoteMyLuteceUser
@@ -89,7 +88,7 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return TEMPLATE_CREATE;
     }
@@ -98,7 +97,7 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return TEMPLATE_MODIFY;
     }
@@ -152,10 +151,9 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim(  ) : null;
-        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim(  ) : null;
+        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim( ) : null;
+        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH )
+                .trim( ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
@@ -176,17 +174,18 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_TITLE;
         }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         this.setTitle( strTitle );
@@ -215,10 +214,10 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
             this.setLabelValueAllSearch( null );
         }
 
-        if ( ( this.getFields(  ) == null ) || ( this.getFields(  ).size(  ) == 0 ) )
+        if ( ( this.getFields( ) == null ) || ( this.getFields( ).size( ) == 0 ) )
         {
-            List<Field> listFields = new ArrayList<Field>(  );
-            Field field = new Field(  );
+            List<Field> listFields = new ArrayList<Field>( );
+            Field field = new Field( );
             field.setEntry( this );
             listFields.add( field );
             this.setFields( listFields );
@@ -226,7 +225,7 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
 
         // IMPORTANT !!!
         // The flag to show every information is stored in the database directory_field.DEFAULT_value
-        this.getFields(  ).get( 0 ).setDefaultValue( strShowFullInfo != null );
+        this.getFields( ).get( 0 ).setDefaultValue( strShowFullInfo != null );
 
         return null;
     }
@@ -235,15 +234,14 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError, boolean bAddNewValue, List<RecordField> listRecordField,
+            Locale locale ) throws DirectoryErrorException
     {
-        if ( ( lstValue != null ) && ( lstValue.size(  ) > 0 ) )
+        if ( ( lstValue != null ) && ( lstValue.size( ) > 0 ) )
         {
             String strUserLogin = lstValue.get( CONSTANT_POSITION_MYLUTECE_USER_LOGIN );
 
-            RecordField recordField = new RecordField(  );
+            RecordField recordField = new RecordField( );
             recordField.setEntry( this );
             recordField.setValue( strUserLogin );
             listRecordField.add( recordField );
@@ -251,32 +249,31 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
     }
 
     /**
-         * {@inheritDoc}
-         */
+     * {@inheritDoc}
+     */
     @Override
     public String getHtmlRecordFieldValue( Locale locale, RecordField recordField, boolean isDisplayFront )
     {
         if ( getTemplateHtmlRecordFieldValue( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
             model.put( MARK_ENTRY, this );
             model.put( MARK_RECORD_FIELD, recordField );
             model.put( MARK_LOCALE, locale );
 
-            if ( showAllInfo(  ) )
+            if ( showAllInfo( ) )
             {
-                int nIdRecord = recordField.getRecord(  ).getIdRecord(  );
-                String strUserGuid = DirectoryService.getInstance(  ).getUserGuid( nIdRecord, getIdEntry(  ) );
-                ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfos( strUserGuid, getIdEntry(  ) );
+                int nIdRecord = recordField.getRecord( ).getIdRecord( );
+                String strUserGuid = DirectoryService.getInstance( ).getUserGuid( nIdRecord, getIdEntry( ) );
+                ReferenceList listUserInfos = DirectoryService.getInstance( ).getUserInfos( strUserGuid, getIdEntry( ) );
 
                 model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
                 model.put( MARK_MYLUTECE_USER_LOGIN, strUserGuid );
             }
 
-            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlRecordFieldValue( isDisplayFront ),
-                    locale, model );
+            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlRecordFieldValue( isDisplayFront ), locale, model );
 
-            return template.getHtml(  );
+            return template.getHtml( );
         }
 
         return null;
@@ -286,42 +283,38 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-        boolean bExportDirectory )
+    public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront, boolean bExportDirectory )
     {
         String strValue = StringUtils.EMPTY;
 
-        if ( ( recordField != null ) && StringUtils.isNotBlank( recordField.getValue(  ) ) &&
-                ( recordField.getRecord(  ) != null ) )
+        if ( ( recordField != null ) && StringUtils.isNotBlank( recordField.getValue( ) ) && ( recordField.getRecord( ) != null ) )
         {
             if ( bExportDirectory )
             {
-                int nIdRecord = recordField.getRecord(  ).getIdRecord(  );
-                String strUserGuid = DirectoryService.getInstance(  ).getUserGuid( nIdRecord, getIdEntry(  ) );
-                ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfos( strUserGuid, getIdEntry(  ) );
+                int nIdRecord = recordField.getRecord( ).getIdRecord( );
+                String strUserGuid = DirectoryService.getInstance( ).getUserGuid( nIdRecord, getIdEntry( ) );
+                ReferenceList listUserInfos = DirectoryService.getInstance( ).getUserInfos( strUserGuid, getIdEntry( ) );
 
-                if ( showAllInfo(  ) && StringUtils.isNotBlank( strUserGuid ) && ( listUserInfos != null ) )
+                if ( showAllInfo( ) && StringUtils.isNotBlank( strUserGuid ) && ( listUserInfos != null ) )
                 {
-                    StringBuilder sbValue = new StringBuilder(  );
-                    sbValue.append( I18nService.getLocalizedString( PROPERTY_USER_LOGIN, locale ) + SPACE + TWO_POINTS +
-                        SPACE + strUserGuid );
+                    StringBuilder sbValue = new StringBuilder( );
+                    sbValue.append( I18nService.getLocalizedString( PROPERTY_USER_LOGIN, locale ) + SPACE + TWO_POINTS + SPACE + strUserGuid );
 
                     for ( ReferenceItem userInfo : listUserInfos )
                     {
                         sbValue.append( COMMA );
-                        sbValue.append( I18nService.getLocalizedString( PROPERTY_USER_INFO_PREFIX +
-                                userInfo.getCode(  ), locale ) );
+                        sbValue.append( I18nService.getLocalizedString( PROPERTY_USER_INFO_PREFIX + userInfo.getCode( ), locale ) );
                         sbValue.append( SPACE + TWO_POINTS + SPACE );
-                        sbValue.append( userInfo.getName(  ) );
+                        sbValue.append( userInfo.getName( ) );
                     }
 
-                    strValue = sbValue.toString(  );
+                    strValue = sbValue.toString( );
                 }
             }
 
             if ( StringUtils.isBlank( strValue ) )
             {
-                strValue = recordField.getValue(  );
+                strValue = recordField.getValue( );
             }
         }
 
@@ -342,24 +335,25 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
      * {@inheritDoc}
      */
     @Override
-    public boolean isSortable(  )
+    public boolean isSortable( )
     {
         return true;
     }
 
     /**
      * Check if it must show every information of the user or not
+     * 
      * @return true if it must show every information, false otherwise
      */
-    private boolean showAllInfo(  )
+    private boolean showAllInfo( )
     {
         boolean bShow = false;
-        List<Field> listFields = getFields(  );
+        List<Field> listFields = getFields( );
 
-        if ( ( listFields == null ) || listFields.isEmpty(  ) )
+        if ( ( listFields == null ) || listFields.isEmpty( ) )
         {
             Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-            listFields = FieldHome.getFieldListByIdEntry( getIdEntry(  ), plugin );
+            listFields = FieldHome.getFieldListByIdEntry( getIdEntry( ), plugin );
         }
 
         if ( listFields != null )
@@ -368,7 +362,7 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
 
             if ( field != null )
             {
-                bShow = field.isDefaultValue(  );
+                bShow = field.isDefaultValue( );
             }
         }
 

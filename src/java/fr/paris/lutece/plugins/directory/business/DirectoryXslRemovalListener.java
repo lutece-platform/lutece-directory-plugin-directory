@@ -42,19 +42,20 @@ import fr.paris.lutece.portal.service.util.RemovalListener;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
- * class  DirectoryXslRemovalListener
+ * class DirectoryXslRemovalListener
  */
 public class DirectoryXslRemovalListener implements RemovalListener
 {
     private static final String PROPERTY_WORKGROUP_CANNOT_BE_REMOVED = "directory.message.directory_xsl_is_use";
 
     /**
-    * Check if the object can be safely removed
-    * @param strId The object id
-    * @return true if the object can be removed otherwise false
-    */
+     * Check if the object can be safely removed
+     * 
+     * @param strId
+     *            The object id
+     * @return true if the object can be removed otherwise false
+     */
     public boolean canBeRemoved( String strId )
     {
         int nId = DirectoryUtils.convertStringToInt( strId );
@@ -64,13 +65,12 @@ public class DirectoryXslRemovalListener implements RemovalListener
             return true;
         }
 
-        List<Directory> listDirectory = DirectoryHome.getDirectoryList( new DirectoryFilter(  ),
-                PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+        List<Directory> listDirectory = DirectoryHome.getDirectoryList( new DirectoryFilter( ), PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
 
         for ( Directory directory : listDirectory )
         {
-            if ( ( nId == directory.getIdFormSearchTemplate(  ) ) || ( nId == directory.getIdResultListTemplate(  ) ) ||
-                    ( nId == directory.getIdResultRecordTemplate(  ) ) )
+            if ( ( nId == directory.getIdFormSearchTemplate( ) ) || ( nId == directory.getIdResultListTemplate( ) )
+                    || ( nId == directory.getIdResultRecordTemplate( ) ) )
             {
                 return false;
             }
@@ -81,13 +81,16 @@ public class DirectoryXslRemovalListener implements RemovalListener
 
     /**
      * Gives a message explaining why the object can't be removed
-     * @param strId The object id
-     * @param locale The current locale
+     * 
+     * @param strId
+     *            The object id
+     * @param locale
+     *            The current locale
      * @return The message
      */
     public String getRemovalRefusedMessage( String strId, Locale locale )
     {
-        // Build a message 
+        // Build a message
         return I18nService.getLocalizedString( PROPERTY_WORKGROUP_CANNOT_BE_REMOVED, locale );
     }
 }

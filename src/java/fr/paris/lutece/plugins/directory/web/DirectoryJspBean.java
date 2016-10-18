@@ -132,10 +132,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
- * This class provides the user interface to manage form features ( manage,
- * create, modify, remove)
+ * This class provides the user interface to manage form features ( manage, create, modify, remove)
  */
 public class DirectoryJspBean extends PluginAdminPageJspBean
 {
@@ -193,7 +191,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MESSAGE_ACCESS_DENIED = "Acces denied";
     private static final String MESSAGE_NO_DIRECTORY_STATE = "directory.message.no_automatic_record_removal";
 
-    //private static final String MESSAGE_CANNOT_CREATE_ENTRY_DIRECTORY_IS_NOT_EMPTY = "directory.message.can_not_create_entry_directory_is_not_empty";
+    // private static final String MESSAGE_CANNOT_CREATE_ENTRY_DIRECTORY_IS_NOT_EMPTY = "directory.message.can_not_create_entry_directory_is_not_empty";
     private static final String MESSAGE_CANNOT_REMOVE_ENTRY_DIRECTORY_IS_NOT_EMPTY = "directory.message.can_not_remove_entry_directory_is_not_empty";
     private static final String MESSAGE_CANNOT_REMOVE_FIELD_DIRECTORY_IS_NOT_EMPTY = "directory.message.can_not_remove_field_directory_is_not_empty";
     private static final String MESSAGE_CONFIRM_INDEX_ALL_DIRECTORY = "directory.message.confirm_index_all_directory";
@@ -203,7 +201,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MESSAGE_ERROR_GENERIC_MESSAGE = "directory.message.error.genericMessage";
     private static final String FIELD_TITLE = "directory.create_directory.label_title";
 
-    //    private static final String FIELD_FRONT_OFFICE_TITLE = "directory.create_directory.label_title_front";
+    // private static final String FIELD_FRONT_OFFICE_TITLE = "directory.create_directory.label_title_front";
     private static final String FIELD_DESCRIPTION = "directory.create_directory.label_description";
     private static final String FIELD_TITLE_FIELD = "directory.create_field.label_title";
     private static final String FIELD_VALUE_FIELD = "directory.create_field.label_value";
@@ -217,7 +215,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String FIELD_BIG_THUMBNAIL = "big_thumbnail";
     private static final String FIELD_IMAGE = "image_full_size";
 
-    //properties
+    // properties
     private static final String PROPERTY_ALL = "directory.manage_directory.select.all";
     private static final String PROPERTY_YES = "directory.manage_directory.select.yes";
     private static final String PROPERTY_NO = "directory.manage_directory.select.no";
@@ -254,7 +252,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PROPERTY_IMPORT_FIELD_PAGE_TITLE = "directory.import_field.page_title";
     private static final String PROPERTY_FIRST_ITEM_ENTRY_GROUP = "directory.modify_directory.entryGroup.firstItem";
 
-    //Markers
+    // Markers
     private static final String MARK_HISTORY_LIST = "history_list";
     private static final String MARK_ID_DIRECTORY = "idDirectory";
     private static final String MARK_ID_STATE = "idState";
@@ -280,7 +278,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_IS_USER_ATTRIBUTES_SERVICE_ENABLE = "is_user_attributes_service_enable";
     private static final String MARK_SORT_ORDER = "asc_sort";
 
-    //private static final String MARK_DIRECTORY_RECORD_LIST = "directory_record_list";
+    // private static final String MARK_DIRECTORY_RECORD_LIST = "directory_record_list";
     private static final String MARK_DIRECTORY = "directory";
     private static final String MARK_DIRECTORY_RECORD = "directory_record";
     private static final String MARK_PERMISSION_CREATE_DIRECTORY = "permission_create_directory";
@@ -320,15 +318,15 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String MARK_DATE_MODIFICATION_BEGIN_SEARCH = "date_modification_begin_search";
     private static final String MARK_DATE_MODIFICATION_END_SEARCH = "date_modification_end_search";
     private static final String MARK_MAP_CHILD = "mapChild";
-  
-    /**mark for gru*/
-    private static final String MARK_POSITION_GRU_FIRST_NAME= "pfn";
-    private static final String MARK_POSITION_GRU_LAST_NAME= "pln";
-    private static final String MARK_POSITION_GRU_GUID= "pguid";
-    private static final String MARK_POSITION_GRU_CID= "pcid";
-    private static final String MARK_POSITION_GRU_EMAIL= "pem";
 
-    //private static final String MARK_URL_ACTION = "url_action";
+    /** mark for gru */
+    private static final String MARK_POSITION_GRU_FIRST_NAME = "pfn";
+    private static final String MARK_POSITION_GRU_LAST_NAME = "pln";
+    private static final String MARK_POSITION_GRU_GUID = "pguid";
+    private static final String MARK_POSITION_GRU_CID = "pcid";
+    private static final String MARK_POSITION_GRU_EMAIL = "pem";
+
+    // private static final String MARK_URL_ACTION = "url_action";
     private static final String MARK_STR_ERROR = "str_error";
     private static final String MARK_NUMBER_LINES_IMPORTED = "number_lines_imported";
     private static final String MARK_NUMBER_LINES_ERROR = "number_lines_error";
@@ -394,7 +392,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String JSP_MODIFY_DIRECTORY_RECORD = "jsp/admin/plugins/directory/ModifyDirectoryRecord.jsp";
     private static final String JSP_CREATE_DIRECTORY_RECORD = "jsp/admin/plugins/directory/CreateDirectoryRecord.jsp";
 
-    //Parameters
+    // Parameters
     private static final String PARAMETER_ID_DIRECTORY = DirectoryUtils.PARAMETER_ID_DIRECTORY;
     private static final String PARAMETER_ID_DIRECTORY_RECORD = "id_directory_record";
     private static final String PARAMETER_TITLE = "title";
@@ -444,17 +442,17 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     private static final String PARAMETER_SELECTED_RECORD = "selected_record";
     private static final String PARAMETER_ANCHOR_LIST = "list";
     private static final String PARAMETER_IS_SEARCH_OPERATOR_OR = "is_search_operator_or";
-/**parames for gru*/
-    private static final String PARAMETER_GRU_FIRST_NAME= "fn";
-    private static final String PARAMETER_GRU_LAST_NAME= "ln";
-    private static final String PARAMETER_GRU_GUID= "guid";
-    private static final String PARAMETER_GRU_CID= "cid";
-    private static final String PARAMETER_GRU_EMAIL= "em";
-    
- //   fn=abdou&cid=302714&ln=fall&guid=680a9e86-ffdc-45e6-a3c6-e3020b487624&ph=0858812641&em=fallphenix1987@gmail.com
+    /** parames for gru */
+    private static final String PARAMETER_GRU_FIRST_NAME = "fn";
+    private static final String PARAMETER_GRU_LAST_NAME = "ln";
+    private static final String PARAMETER_GRU_GUID = "guid";
+    private static final String PARAMETER_GRU_CID = "cid";
+    private static final String PARAMETER_GRU_EMAIL = "em";
 
-    //private static final String PARAMETER_NUMBER_LINES_IMPORTED = "number_lines_imported";
-    //private static final String PARAMETER_NUMBER_LINES_ERROR = "number_lines_error";
+    // fn=abdou&cid=302714&ln=fall&guid=680a9e86-ffdc-45e6-a3c6-e3020b487624&ph=0858812641&em=fallphenix1987@gmail.com
+
+    // private static final String PARAMETER_NUMBER_LINES_IMPORTED = "number_lines_imported";
+    // private static final String PARAMETER_NUMBER_LINES_ERROR = "number_lines_error";
     private static final String PARAMETER_FILE_IMPORT = "file_import";
     private static final String PARAMETER_WORKFLOW = "id_workflow_list";
     private static final String PARAMETER_WORKFLOW_STATE = "id_workflow_state";
@@ -476,28 +474,31 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     // Import
     private static final int IMPORT_FIELD_NB_COLUMN_MAX = 2;
 
-    //defaults
+    // defaults
     private String DEFAULT_TYPE_IMAGE = "10";
 
-    //session fields    
-    private DirectoryAdminSearchFields _searchFields = new DirectoryAdminSearchFields(  );
-    private DirectoryActionResult _directoryActionResult = new DirectoryActionResult(  );
+    // session fields
+    private DirectoryAdminSearchFields _searchFields = new DirectoryAdminSearchFields( );
+    private DirectoryActionResult _directoryActionResult = new DirectoryActionResult( );
     private IRecordService _recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
     /*-------------------------------MANAGEMENT  DIRECTORY-----------------------------*/
 
     /**
      * Gets the DirectoryAdminSearchFields
+     * 
      * @return searchFields
      */
-    public DirectoryAdminSearchFields getSearchFields(  )
+    public DirectoryAdminSearchFields getSearchFields( )
     {
         return _searchFields;
     }
 
     /**
      * Return management directory ( list of directory )
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return Html directory
      */
     public String getManageDirectory( HttpServletRequest request )
@@ -510,9 +511,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strWorkGroup = request.getParameter( PARAMETER_WORKGROUP );
         String strActive = request.getParameter( PARAMETER_ACTIVE );
         _searchFields.setCurrentPageIndexDirectory( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
-                _searchFields.getCurrentPageIndexDirectory(  ) ) );
+                _searchFields.getCurrentPageIndexDirectory( ) ) );
         _searchFields.setItemsPerPageDirectory( Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE,
-                _searchFields.getItemsPerPageDirectory(  ), _searchFields.getDefaultItemsPerPage(  ) ) );
+                _searchFields.getItemsPerPageDirectory( ), _searchFields.getDefaultItemsPerPage( ) ) );
 
         if ( ( strActive != null ) && !strActive.equals( DirectoryUtils.EMPTY_STRING ) )
         {
@@ -524,28 +525,25 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             _searchFields.setWorkGroup( strWorkGroup );
         }
 
-        //build Filter
-        DirectoryFilter filter = new DirectoryFilter(  );
-        filter.setIsDisabled( _searchFields.getIdActive(  ) );
-        filter.setWorkGroup( _searchFields.getWorkGroup(  ) );
+        // build Filter
+        DirectoryFilter filter = new DirectoryFilter( );
+        filter.setIsDisabled( _searchFields.getIdActive( ) );
+        filter.setWorkGroup( _searchFields.getWorkGroup( ) );
         filter.setOrder( request.getParameter( MARK_SORT_ORDER ) );
 
-        List<Directory> listDirectory = DirectoryHome.getDirectoryList( filter, getPlugin(  ) );
-        listDirectory = (List<Directory>) AdminWorkgroupService.getAuthorizedCollection( listDirectory, getUser(  ) );
+        List<Directory> listDirectory = DirectoryHome.getDirectoryList( filter, getPlugin( ) );
+        listDirectory = (List<Directory>) AdminWorkgroupService.getAuthorizedCollection( listDirectory, getUser( ) );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
-        LocalizedPaginator<Directory> paginator = new LocalizedPaginator<Directory>( listDirectory,
-                _searchFields.getItemsPerPageDirectory(  ), getJspManageDirectory( request ), PARAMETER_PAGE_INDEX,
-                _searchFields.getCurrentPageIndexDirectory(  ), getLocale(  ) );
+        Map<String, Object> model = new HashMap<String, Object>( );
+        LocalizedPaginator<Directory> paginator = new LocalizedPaginator<Directory>( listDirectory, _searchFields.getItemsPerPageDirectory( ),
+                getJspManageDirectory( request ), PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexDirectory( ), getLocale( ) );
 
-        listActionsForDirectoryEnable = DirectoryActionHome.selectActionsByFormState( Directory.STATE_ENABLE,
-                getPlugin(  ), getLocale(  ) );
-        listActionsForDirectoryDisable = DirectoryActionHome.selectActionsByFormState( Directory.STATE_DISABLE,
-                getPlugin(  ), getLocale(  ) );
+        listActionsForDirectoryEnable = DirectoryActionHome.selectActionsByFormState( Directory.STATE_ENABLE, getPlugin( ), getLocale( ) );
+        listActionsForDirectoryDisable = DirectoryActionHome.selectActionsByFormState( Directory.STATE_DISABLE, getPlugin( ), getLocale( ) );
 
-        for ( Directory directory : paginator.getPageItems(  ) )
+        for ( Directory directory : paginator.getPageItems( ) )
         {
-            if ( directory.isEnabled(  ) )
+            if ( directory.isEnabled( ) )
             {
                 listActions = listActionsForDirectoryEnable;
             }
@@ -554,41 +552,41 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 listActions = listActionsForDirectoryDisable;
             }
 
-            listActions = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActions, directory,
-                    getUser(  ) );
+            listActions = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActions, directory, getUser( ) );
             directory.setActions( listActions );
         }
 
-        boolean bPermissionAdvancedParameter = RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS,
-                getUser(  ) );
+        boolean bPermissionAdvancedParameter = RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
+                DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, getUser( ) );
 
         model.put( MARK_PAGINATOR, paginator );
-        model.put( MARK_NB_ITEMS_PER_PAGE, Integer.toString( _searchFields.getItemsPerPageDirectory(  ) ) );
-        model.put( MARK_USER_WORKGROUP_REF_LIST, AdminWorkgroupService.getUserWorkgroups( getUser(  ), getLocale(  ) ) );
-        model.put( MARK_USER_WORKGROUP_SELECTED, _searchFields.getWorkGroup(  ) );
-        model.put( MARK_ACTIVE_REF_LIST, getRefListActive( getLocale(  ) ) );
-        model.put( MARK_ACTIVE_SELECTED, _searchFields.getIdActive(  ) );
-        model.put( MARK_DIRECTORY_LIST, paginator.getPageItems(  ) );
+        model.put( MARK_NB_ITEMS_PER_PAGE, Integer.toString( _searchFields.getItemsPerPageDirectory( ) ) );
+        model.put( MARK_USER_WORKGROUP_REF_LIST, AdminWorkgroupService.getUserWorkgroups( getUser( ), getLocale( ) ) );
+        model.put( MARK_USER_WORKGROUP_SELECTED, _searchFields.getWorkGroup( ) );
+        model.put( MARK_ACTIVE_REF_LIST, getRefListActive( getLocale( ) ) );
+        model.put( MARK_ACTIVE_SELECTED, _searchFields.getIdActive( ) );
+        model.put( MARK_DIRECTORY_LIST, paginator.getPageItems( ) );
         model.put( MARK_PERMISSION_CREATE_DIRECTORY,
-            RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                DirectoryResourceIdService.PERMISSION_CREATE, getUser(  ) ) );
+                RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_CREATE, getUser( ) ) );
         model.put( MARK_PERMISSION_MANAGE_ADVANCED_PARAMETERS, bPermissionAdvancedParameter );
 
         setPageTitleProperty( PROPERTY_MANAGE_DIRECTORY_PAGE_TITLE );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_DIRECTORY, getLocale(  ), model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_DIRECTORY, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
-     * Get the request data and if there is no error insert the data in the
-     * directory specified in parameter.
-     * return null if there is no error or else return the error page url
-     * @param request the request
-     * @param directory directory
-     * @param locale the locale
+     * Get the request data and if there is no error insert the data in the directory specified in parameter. return null if there is no error or else return
+     * the error page url
+     * 
+     * @param request
+     *            the request
+     * @param directory
+     *            directory
+     * @param locale
+     *            the locale
      * @return null if there is no error or else return the error page url
      */
     private String getDirectoryData( HttpServletRequest request, Directory directory, Locale locale )
@@ -616,7 +614,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strIsIndexed = request.getParameter( PARAMETER_IS_INDEXED );
         String strSearchOperatorOr = request.getParameter( PARAMETER_IS_SEARCH_OPERATOR_OR );
 
-        //creation date field
+        // creation date field
         String strShowDateInResultList = request.getParameter( PARAMETER_DATE_SHOWN_IN_RESULT_LIST );
         String strShowDateInResultRecord = request.getParameter( PARAMETER_DATE_SHOWN_IN_RESULT_RECORD );
         String strShowDateInHistory = request.getParameter( PARAMETER_DATE_SHOWN_IN_HISTORY );
@@ -625,7 +623,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strShowDateInMultiSearch = request.getParameter( PARAMETER_DATE_SHOWN_IN_MULTI_SEARCH );
         String strShowDateInExport = request.getParameter( PARAMETER_DATE_SHOWN_IN_EXPORT );
 
-        //creation date field
+        // creation date field
         String strShowDateModificationInResultList = request.getParameter( PARAMETER_DATE_MODIFICATION_SHOWN_IN_RESULT_LIST );
         String strShowDateModificationInResultRecord = request.getParameter( PARAMETER_DATE_MODIFICATION_SHOWN_IN_RESULT_RECORD );
         String strShowDateModificationInHistory = request.getParameter( PARAMETER_DATE_MODIFICATION_SHOWN_IN_HISTORY );
@@ -643,46 +641,51 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_TITLE;
         }
 
-        else if ( ( strDescription == null ) || strDescription.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
-        {
-            strFieldError = FIELD_DESCRIPTION;
-        }
+        else
+            if ( ( strDescription == null ) || strDescription.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
+            {
+                strFieldError = FIELD_DESCRIPTION;
+            }
 
-        else if ( ( strUnavailabilityMessage == null ) ||
-                strUnavailabilityMessage.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
-        {
-            strFieldError = FIELD_UNAVAILABILITY_MESSAGE;
-        }
-        else if ( nIdFormSearchTemplate == DirectoryUtils.CONSTANT_ID_NULL )
-        {
-            strFieldError = FIELD_ID_FORM_SEARCH_TEMPLATE;
-        }
+            else
+                if ( ( strUnavailabilityMessage == null ) || strUnavailabilityMessage.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
+                {
+                    strFieldError = FIELD_UNAVAILABILITY_MESSAGE;
+                }
+                else
+                    if ( nIdFormSearchTemplate == DirectoryUtils.CONSTANT_ID_NULL )
+                    {
+                        strFieldError = FIELD_ID_FORM_SEARCH_TEMPLATE;
+                    }
 
-        else if ( nIdResultListTemplate == DirectoryUtils.CONSTANT_ID_NULL )
-        {
-            strFieldError = FIELD_ID_RESULT_LIST_TEMPLATE;
-        }
-        else if ( nIdResultRecordTemplate == DirectoryUtils.CONSTANT_ID_NULL )
-        {
-            strFieldError = FIELD_ID_RESULT_RECORD_TEMPLATE;
-        }
-        else if ( ( strNumberRecordPerPage == null ) ||
-                strNumberRecordPerPage.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
-        {
-            strFieldError = FIELD_NUMBER_RECORD_PER_PAGE;
-        }
+                    else
+                        if ( nIdResultListTemplate == DirectoryUtils.CONSTANT_ID_NULL )
+                        {
+                            strFieldError = FIELD_ID_RESULT_LIST_TEMPLATE;
+                        }
+                        else
+                            if ( nIdResultRecordTemplate == DirectoryUtils.CONSTANT_ID_NULL )
+                            {
+                                strFieldError = FIELD_ID_RESULT_RECORD_TEMPLATE;
+                            }
+                            else
+                                if ( ( strNumberRecordPerPage == null ) || strNumberRecordPerPage.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
+                                {
+                                    strFieldError = FIELD_NUMBER_RECORD_PER_PAGE;
+                                }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, getLocale(  ) ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, getLocale( ) )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         if ( nNumberRecordPerPage == -1 )
@@ -692,18 +695,19 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
-        RecordFieldFilter recordFilter = new RecordFieldFilter(  );
-        recordFilter.setIdDirectory( directory.getIdDirectory(  ) );
+        RecordFieldFilter recordFilter = new RecordFieldFilter( );
+        recordFilter.setIdDirectory( directory.getIdDirectory( ) );
 
-        int nCountRecord = _recordService.getCountRecord( recordFilter, getPlugin(  ) );
+        int nCountRecord = _recordService.getCountRecord( recordFilter, getPlugin( ) );
 
-        if ( ( directory.getIdWorkflow(  ) != nIdWorkflow ) && ( nCountRecord != 0 ) )
+        if ( ( directory.getIdWorkflow( ) != nIdWorkflow ) && ( nCountRecord != 0 ) )
         {
             return AdminMessageService.getMessageUrl( request, MESSAGE_WORKFLOW_CHANGE, AdminMessage.TYPE_STOP );
         }
@@ -735,24 +739,23 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             directory.setIdWorkflowStateToRemove( DirectoryUtils.CONSTANT_ID_NULL );
         }
 
-        if ( ( strDisplaySearchStateWorkflow != null ) &&
-                strDisplaySearchStateWorkflow.equals( IS_DISPLAY_STATE_SEARCH ) )
+        if ( ( strDisplaySearchStateWorkflow != null ) && strDisplaySearchStateWorkflow.equals( IS_DISPLAY_STATE_SEARCH ) )
         {
             directory.setDisplayComplementarySearchState( false );
             directory.setDisplaySearchState( true );
         }
-        else if ( ( strDisplaySearchStateWorkflow != null ) &&
-                strDisplaySearchStateWorkflow.equals( IS_DISPLAY_STATE_SEARCH_COMPLEMENTARY ) )
-        {
-            directory.setDisplayComplementarySearchState( true );
-            directory.setDisplaySearchState( false );
-        }
-        else if ( ( strDisplaySearchStateWorkflow != null ) &&
-                strDisplaySearchStateWorkflow.equals( IS_NOT_DISPLAY_STATE_SEARCH ) )
-        {
-            directory.setDisplayComplementarySearchState( false );
-            directory.setDisplaySearchState( false );
-        }
+        else
+            if ( ( strDisplaySearchStateWorkflow != null ) && strDisplaySearchStateWorkflow.equals( IS_DISPLAY_STATE_SEARCH_COMPLEMENTARY ) )
+            {
+                directory.setDisplayComplementarySearchState( true );
+                directory.setDisplaySearchState( false );
+            }
+            else
+                if ( ( strDisplaySearchStateWorkflow != null ) && strDisplaySearchStateWorkflow.equals( IS_NOT_DISPLAY_STATE_SEARCH ) )
+                {
+                    directory.setDisplayComplementarySearchState( false );
+                    directory.setDisplaySearchState( false );
+                }
 
         directory.setDateShownInResultList( strShowDateInResultList != null );
         directory.setDateShownInResultRecord( strShowDateInResultRecord != null );
@@ -799,55 +802,56 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Gets the directory creation page
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The directory creation page
      */
-    public String getCreateDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getCreateDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
-        AdminUser adminUser = getUser(  );
-        Locale locale = getLocale(  );
+        AdminUser adminUser = getUser( );
+        Locale locale = getLocale( );
 
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryResourceIdService.PERMISSION_CREATE, adminUser ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_CREATE, adminUser ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        DirectoryXslFilter filter = new DirectoryXslFilter(  );
+        DirectoryXslFilter filter = new DirectoryXslFilter( );
 
         filter.setIdCategory( Category.ID_CATEGORY_STYLE_FORM_SEARCH );
 
-        ReferenceList refListStyleFormSearch = DirectoryXslHome.getRefList( filter, getPlugin(  ) );
+        ReferenceList refListStyleFormSearch = DirectoryXslHome.getRefList( filter, getPlugin( ) );
 
         filter.setIdCategory( Category.ID_CATEGORY_STYLE_RESULT_LIST );
 
-        ReferenceList refListStyleResultList = DirectoryXslHome.getRefList( filter, getPlugin(  ) );
+        ReferenceList refListStyleResultList = DirectoryXslHome.getRefList( filter, getPlugin( ) );
 
         filter.setIdCategory( Category.ID_CATEGORY_STYLE_RESULT_RECORD );
 
-        ReferenceList refListStyleResultRecord = DirectoryXslHome.getRefList( filter, getPlugin(  ) );
+        ReferenceList refListStyleResultRecord = DirectoryXslHome.getRefList( filter, getPlugin( ) );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_USER_WORKGROUP_REF_LIST, AdminWorkgroupService.getUserWorkgroups( adminUser, locale ) );
 
-        if ( WorkflowService.getInstance(  ).isAvailable(  ) )
+        if ( WorkflowService.getInstance( ).isAvailable( ) )
         {
-            model.put( MARK_WORKFLOW_REF_LIST, WorkflowService.getInstance(  ).getWorkflowsEnabled( adminUser, locale ) );
+            model.put( MARK_WORKFLOW_REF_LIST, WorkflowService.getInstance( ).getWorkflowsEnabled( adminUser, locale ) );
             model.put( MARK_WORKFLOW_STATE_SEARCH_SELECTED, IS_NOT_DISPLAY_STATE_SEARCH );
         }
 
-        if ( SecurityService.isAuthenticationEnable(  ) )
+        if ( SecurityService.isAuthenticationEnable( ) )
         {
-            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList(  ) );
+            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList( ) );
         }
 
         // Default Values
-        ReferenceList listParamDefaultValues = DirectoryParameterService.getService(  ).findDefaultValueParameters(  );
+        ReferenceList listParamDefaultValues = DirectoryParameterService.getService( ).findDefaultValueParameters( );
 
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-        model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage(  ) );
+        model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_FORM_SEARCH_TEMPLATE_LIST, refListStyleFormSearch );
         model.put( MARK_RESULT_LIST_TEMPLATE_LIST, refListStyleResultList );
         model.put( MARK_RESULT_RECORD_TEMPLATE_LIST, refListStyleResultRecord );
@@ -857,36 +861,37 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_DIRECTORY, locale, model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Perform the directory creation
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doCreateDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doCreateDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryResourceIdService.PERMISSION_CREATE, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_CREATE, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         if ( ( request.getParameter( PARAMETER_CANCEL ) == null ) )
         {
-            Plugin plugin = getPlugin(  );
-            Directory directory = new Directory(  );
-            String strError = getDirectoryData( request, directory, getLocale(  ) );
+            Plugin plugin = getPlugin( );
+            Directory directory = new Directory( );
+            String strError = getDirectoryData( request, directory, getLocale( ) );
 
             if ( strError != null )
             {
                 return strError;
             }
 
-            directory.setDateCreation( DirectoryUtils.getCurrentTimestamp(  ) );
+            directory.setDateCreation( DirectoryUtils.getCurrentTimestamp( ) );
             DirectoryHome.create( directory, plugin );
         }
 
@@ -895,14 +900,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Gets the directory modification page
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The directory modification page
      */
-    public String getModifyDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getModifyDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
-        List<IEntry> listEntry = new ArrayList<IEntry>(  );
+        List<IEntry> listEntry = new ArrayList<IEntry>( );
         List<IEntry> listEntryFirstLevel;
         int nNumberField;
         EntryFilter filter;
@@ -912,52 +919,51 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         if ( nIdDirectory != -1 )
         {
-            directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+            directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
             _searchFields.setIdDirectory( nIdDirectory );
         }
 
-        if ( ( directory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_MODIFY, getUser(  ) ) )
+        if ( ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        filter = new EntryFilter(  );
+        filter = new EntryFilter( );
 
         filter.setIdDirectory( nIdDirectory );
         filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
-        listEntryFirstLevel = EntryHome.getEntryList( filter, getPlugin(  ) );
+        listEntryFirstLevel = EntryHome.getEntryList( filter, getPlugin( ) );
 
         filter.setIsEntryParentNull( EntryFilter.ALL_INT );
         filter.setIsComment( EntryFilter.FILTER_FALSE );
         filter.setIsGroup( EntryFilter.FILTER_FALSE );
 
-        nNumberField = EntryHome.getNumberEntryByFilter( filter, getPlugin(  ) );
+        nNumberField = EntryHome.getNumberEntryByFilter( filter, getPlugin( ) );
 
-        if ( listEntryFirstLevel.size(  ) != 0 )
+        if ( listEntryFirstLevel.size( ) != 0 )
         {
             listEntryFirstLevel.get( 0 ).setFirstInTheList( true );
-            listEntryFirstLevel.get( listEntryFirstLevel.size(  ) - 1 ).setLastInTheList( true );
+            listEntryFirstLevel.get( listEntryFirstLevel.size( ) - 1 ).setLastInTheList( true );
         }
 
         for ( IEntry entry : listEntryFirstLevel )
         {
             listEntry.add( entry );
 
-            if ( entry.getEntryType(  ).getGroup(  ) )
+            if ( entry.getEntryType( ).getGroup( ) )
             {
-                filter = new EntryFilter(  );
-                filter.setIdEntryParent( entry.getIdEntry(  ) );
-                entry.setChildren( EntryHome.getEntryList( filter, getPlugin(  ) ) );
+                filter = new EntryFilter( );
+                filter.setIdEntryParent( entry.getIdEntry( ) );
+                entry.setChildren( EntryHome.getEntryList( filter, getPlugin( ) ) );
 
-                if ( !entry.getChildren(  ).isEmpty(  ) )
+                if ( !entry.getChildren( ).isEmpty( ) )
                 {
-                    entry.getChildren(  ).get( 0 ).setFirstInTheList( true );
-                    entry.getChildren(  ).get( entry.getChildren(  ).size(  ) - 1 ).setLastInTheList( true );
+                    entry.getChildren( ).get( 0 ).setFirstInTheList( true );
+                    entry.getChildren( ).get( entry.getChildren( ).size( ) - 1 ).setLastInTheList( true );
                 }
 
-                for ( IEntry entryChild : entry.getChildren(  ) )
+                for ( IEntry entryChild : entry.getChildren( ) )
                 {
                     listEntry.add( entryChild );
                 }
@@ -965,113 +971,108 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         // Get ReferenceList of entry group for mass actions
-        filter = new EntryFilter(  );
+        filter = new EntryFilter( );
         filter.setIdDirectory( nIdDirectory );
         filter.setIsGroup( EntryFilter.FILTER_TRUE );
 
-        List<IEntry> listEntryGroup = EntryHome.getEntryList( filter, getPlugin(  ) );
+        List<IEntry> listEntryGroup = EntryHome.getEntryList( filter, getPlugin( ) );
         ReferenceList entryGroupReferenceList = ReferenceList.convert( listEntryGroup, "idEntry", "title", true );
-        ReferenceItem emptyItem = new ReferenceItem(  );
+        ReferenceItem emptyItem = new ReferenceItem( );
         emptyItem.setCode( "-1" );
-        emptyItem.setName( StringEscapeUtils.escapeHtml( I18nService.getLocalizedString( 
-                    PROPERTY_FIRST_ITEM_ENTRY_GROUP, getLocale(  ) ) ) );
+        emptyItem.setName( StringEscapeUtils.escapeHtml( I18nService.getLocalizedString( PROPERTY_FIRST_ITEM_ENTRY_GROUP, getLocale( ) ) ) );
         entryGroupReferenceList.add( 0, emptyItem );
 
-        ///////////////
-        Map<String, List<Integer>> mapIdParentOrdersChildren = new HashMap<String, List<Integer>>(  );
+        // /////////////
+        Map<String, List<Integer>> mapIdParentOrdersChildren = new HashMap<String, List<Integer>>( );
 
         // List of entry first level order
-        List<Integer> listOrderEntryFirstLevel = new ArrayList<Integer>(  );
-        List<IEntry> listEntryFirstLevelMap = new ArrayList<IEntry>(  );
+        List<Integer> listOrderEntryFirstLevel = new ArrayList<Integer>( );
+        List<IEntry> listEntryFirstLevelMap = new ArrayList<IEntry>( );
         listEntryFirstLevelMap.addAll( listEntryFirstLevel );
         initOrderFirstLevel( listEntryFirstLevelMap, listOrderEntryFirstLevel );
 
         mapIdParentOrdersChildren.put( "0", listOrderEntryFirstLevel );
 
-        if ( listEntryFirstLevelMap.size(  ) != 0 )
+        if ( listEntryFirstLevelMap.size( ) != 0 )
         {
             listEntryFirstLevelMap.get( 0 ).setFirstInTheList( true );
-            listEntryFirstLevelMap.get( listEntryFirstLevelMap.size(  ) - 1 ).setLastInTheList( true );
+            listEntryFirstLevelMap.get( listEntryFirstLevelMap.size( ) - 1 ).setLastInTheList( true );
         }
 
-        //fillEntryListWithEntryFirstLevel( plugin, listEntry, listEntryFirstLevelMap );
+        // fillEntryListWithEntryFirstLevel( plugin, listEntry, listEntryFirstLevelMap );
         populateEntryMap( listEntry, mapIdParentOrdersChildren );
 
-        _searchFields.setCurrentPageIndexEntry( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
-                _searchFields.getCurrentPageIndexEntry(  ) ) );
+        _searchFields.setCurrentPageIndexEntry( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexEntry( ) ) );
 
-        _searchFields.setItemsPerPageEntry( Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE,
-                _searchFields.getItemsPerPageEntry(  ), _searchFields.getDefaultItemsPerPage(  ) ) );
+        _searchFields.setItemsPerPageEntry( Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _searchFields.getItemsPerPageEntry( ),
+                _searchFields.getDefaultItemsPerPage( ) ) );
 
-        LocalizedPaginator<IEntry> paginator = new LocalizedPaginator<IEntry>( listEntry,
-                _searchFields.getItemsPerPageEntry(  ),
-                AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY + "?id_directory=" + nIdDirectory,
-                PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexEntry(  ), getLocale(  ) );
+        LocalizedPaginator<IEntry> paginator = new LocalizedPaginator<IEntry>( listEntry, _searchFields.getItemsPerPageEntry( ),
+                AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY + "?id_directory=" + nIdDirectory, PARAMETER_PAGE_INDEX,
+                _searchFields.getCurrentPageIndexEntry( ), getLocale( ) );
 
-        AdminUser adminUser = getUser(  );
+        AdminUser adminUser = getUser( );
 
-        Locale locale = getLocale(  );
+        Locale locale = getLocale( );
         ReferenceList refListWorkGroups;
         ReferenceList refMailingList;
 
         refListWorkGroups = AdminWorkgroupService.getUserWorkgroups( adminUser, locale );
 
-        refMailingList = new ReferenceList(  );
+        refMailingList = new ReferenceList( );
 
         String strNothing = I18nService.getLocalizedString( PROPERTY_NOTHING, locale );
         refMailingList.addItem( -1, strNothing );
         refMailingList.addAll( AdminMailingListService.getMailingLists( adminUser ) );
 
-        DirectoryXslFilter directoryXslFilter = new DirectoryXslFilter(  );
+        DirectoryXslFilter directoryXslFilter = new DirectoryXslFilter( );
 
         directoryXslFilter.setIdCategory( Category.ID_CATEGORY_STYLE_FORM_SEARCH );
 
-        ReferenceList refListStyleFormSearch = DirectoryXslHome.getRefList( directoryXslFilter, getPlugin(  ) );
+        ReferenceList refListStyleFormSearch = DirectoryXslHome.getRefList( directoryXslFilter, getPlugin( ) );
 
         directoryXslFilter.setIdCategory( Category.ID_CATEGORY_STYLE_RESULT_LIST );
 
-        ReferenceList refListStyleResultList = DirectoryXslHome.getRefList( directoryXslFilter, getPlugin(  ) );
+        ReferenceList refListStyleResultList = DirectoryXslHome.getRefList( directoryXslFilter, getPlugin( ) );
 
         directoryXslFilter.setIdCategory( Category.ID_CATEGORY_STYLE_RESULT_RECORD );
 
-        ReferenceList refListStyleResultRecord = DirectoryXslHome.getRefList( directoryXslFilter, getPlugin(  ) );
+        ReferenceList refListStyleResultRecord = DirectoryXslHome.getRefList( directoryXslFilter, getPlugin( ) );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_PAGINATOR, paginator );
-        model.put( MARK_NB_ITEMS_PER_PAGE, DirectoryUtils.EMPTY_STRING + _searchFields.getItemsPerPageEntry(  ) );
+        model.put( MARK_NB_ITEMS_PER_PAGE, DirectoryUtils.EMPTY_STRING + _searchFields.getItemsPerPageEntry( ) );
         model.put( MARK_USER_WORKGROUP_REF_LIST, refListWorkGroups );
 
-        if ( SecurityService.isAuthenticationEnable(  ) )
+        if ( SecurityService.isAuthenticationEnable( ) )
         {
-            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList(  ) );
+            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList( ) );
         }
 
-        if ( WorkflowService.getInstance(  ).isAvailable(  ) )
+        if ( WorkflowService.getInstance( ).isAvailable( ) )
         {
-            ReferenceList referenceList = WorkflowService.getInstance(  ).getWorkflowsEnabled( adminUser, locale );
+            ReferenceList referenceList = WorkflowService.getInstance( ).getWorkflowsEnabled( adminUser, locale );
             model.put( MARK_WORKFLOW_REF_LIST, referenceList );
-            model.put( MARK_WORKFLOW_SELECTED, directory.getIdWorkflow(  ) );
+            model.put( MARK_WORKFLOW_SELECTED, directory.getIdWorkflow( ) );
 
-            ReferenceList refListWorkflowState = new ReferenceList(  );
-            ReferenceItem refItem = new ReferenceItem(  );
+            ReferenceList refListWorkflowState = new ReferenceList( );
+            ReferenceItem refItem = new ReferenceItem( );
             refItem.setCode( Integer.toString( DirectoryUtils.CONSTANT_ID_NULL ) );
-            refItem.setName( I18nService.getLocalizedString( MESSAGE_NO_DIRECTORY_STATE,
-                    AdminUserService.getLocale( request ) ) );
+            refItem.setName( I18nService.getLocalizedString( MESSAGE_NO_DIRECTORY_STATE, AdminUserService.getLocale( request ) ) );
             refListWorkflowState.add( refItem );
 
-            if ( directory.getIdWorkflow(  ) > DirectoryUtils.CONSTANT_ID_NULL )
+            if ( directory.getIdWorkflow( ) > DirectoryUtils.CONSTANT_ID_NULL )
             {
-                Collection<State> listWorkflowState = WorkflowService.getInstance(  )
-                                                                     .getAllStateByWorkflow( directory.getIdWorkflow(  ),
+                Collection<State> listWorkflowState = WorkflowService.getInstance( ).getAllStateByWorkflow( directory.getIdWorkflow( ),
                         AdminUserService.getAdminUser( request ) );
 
-                if ( ( listWorkflowState != null ) && ( listWorkflowState.size(  ) > 0 ) )
+                if ( ( listWorkflowState != null ) && ( listWorkflowState.size( ) > 0 ) )
                 {
                     for ( State state : listWorkflowState )
                     {
-                        refItem = new ReferenceItem(  );
-                        refItem.setCode( Integer.toString( state.getId(  ) ) );
-                        refItem.setName( state.getName(  ) );
+                        refItem = new ReferenceItem( );
+                        refItem.setCode( Integer.toString( state.getId( ) ) );
+                        refItem.setName( state.getName( ) );
                         refListWorkflowState.add( refItem );
                     }
                 }
@@ -1079,61 +1080,61 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
             model.put( MARK_WORKFLOW_STATE_REF_LIST, refListWorkflowState );
 
-            if ( !referenceList.isEmpty(  ) )
+            if ( !referenceList.isEmpty( ) )
             {
                 model.put( MARK_WORKFLOW_STATE_SEARCH, true );
 
                 /*
-                 * ReferenceList referenceList=new ReferenceList();
-                 * referenceList.addItem(1, strName)
+                 * ReferenceList referenceList=new ReferenceList(); referenceList.addItem(1, strName)
                  */
-                if ( directory.isDisplaySearchState(  ) )
+                if ( directory.isDisplaySearchState( ) )
                 {
                     model.put( MARK_WORKFLOW_STATE_SEARCH_SELECTED, IS_DISPLAY_STATE_SEARCH );
                 }
-                else if ( directory.isDisplayComplementarySearchState(  ) )
-                {
-                    model.put( MARK_WORKFLOW_STATE_SEARCH_SELECTED, IS_DISPLAY_STATE_SEARCH_COMPLEMENTARY );
-                }
                 else
-                {
-                    model.put( MARK_WORKFLOW_STATE_SEARCH_SELECTED, IS_NOT_DISPLAY_STATE_SEARCH );
-                }
+                    if ( directory.isDisplayComplementarySearchState( ) )
+                    {
+                        model.put( MARK_WORKFLOW_STATE_SEARCH_SELECTED, IS_DISPLAY_STATE_SEARCH_COMPLEMENTARY );
+                    }
+                    else
+                    {
+                        model.put( MARK_WORKFLOW_STATE_SEARCH_SELECTED, IS_NOT_DISPLAY_STATE_SEARCH );
+                    }
             }
         }
 
         model.put( MARK_FORM_SEARCH_TEMPLATE_LIST, refListStyleFormSearch );
         model.put( MARK_RESULT_LIST_TEMPLATE_LIST, refListStyleResultList );
         model.put( MARK_RESULT_RECORD_TEMPLATE_LIST, refListStyleResultRecord );
-        model.put( MARK_ENTRY_TYPE_LIST, EntryTypeHome.getList( getPlugin(  ) ) );
+        model.put( MARK_ENTRY_TYPE_LIST, EntryTypeHome.getList( getPlugin( ) ) );
         model.put( MARK_DIRECTORY, directory );
-        model.put( MARK_ENTRY_LIST, paginator.getPageItems(  ) );
+        model.put( MARK_ENTRY_LIST, paginator.getPageItems( ) );
         model.put( MARK_ENTRY_GROUP_LIST, entryGroupReferenceList );
         model.put( MARK_NUMBER_FIELD, nNumberField );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-        model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage(  ) );
+        model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_IS_ACTIVE_MYLUTECE_AUTHENTIFICATION, PluginService.isPluginEnable( MYLUTECE_PLUGIN ) );
-        model.put( MARK_IS_USER_ATTRIBUTES_SERVICE_ENABLE, DirectoryUserAttributesManager.getManager(  ).isEnabled(  ) );
-        model.put( MARK_ID_ENTRY_TYPE_MYLUTECE_USER,
-            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) );
-        model.put( MARK_ID_ENTRY_TYPE_REMOTE_MYLUTECE_USER,
-            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER, 21 ) );
+        model.put( MARK_IS_USER_ATTRIBUTES_SERVICE_ENABLE, DirectoryUserAttributesManager.getManager( ).isEnabled( ) );
+        model.put( MARK_ID_ENTRY_TYPE_MYLUTECE_USER, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) );
+        model.put( MARK_ID_ENTRY_TYPE_REMOTE_MYLUTECE_USER, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_REMOTE_MYLUTECE_USER, 21 ) );
         setPageTitleProperty( PROPERTY_MODIFY_DIRECTORY_TITLE );
         model.put( MARK_MAP_CHILD, mapIdParentOrdersChildren );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_DIRECTORY, locale, model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Perform the directory modification
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doModifyDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doModifyDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
         if ( request.getParameter( PARAMETER_CANCEL ) == null )
         {
@@ -1143,17 +1144,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
             if ( nIdDirectory != -1 )
             {
-                directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+                directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-                if ( ( directory == null ) ||
-                        !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                            DirectoryResourceIdService.PERMISSION_MODIFY, getUser(  ) ) )
+                if ( ( directory == null )
+                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
                 {
                     throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
                 }
 
-                int nOldIdWorkflow = directory.getIdWorkflow(  );
-                String strError = getDirectoryData( request, directory, getLocale(  ) );
+                int nOldIdWorkflow = directory.getIdWorkflow( );
+                String strError = getDirectoryData( request, directory, getLocale( ) );
 
                 if ( strError != null )
                 {
@@ -1161,13 +1161,13 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 }
 
                 // If the directory has changed, then we reset the workflow state to remove records
-                if ( nOldIdWorkflow != directory.getIdWorkflow(  ) )
+                if ( nOldIdWorkflow != directory.getIdWorkflow( ) )
                 {
                     directory.setIdWorkflowStateToRemove( DirectoryUtils.CONSTANT_ID_NULL );
                 }
 
                 directory.setIdDirectory( nIdDirectory );
-                DirectoryHome.update( directory, getPlugin(  ) );
+                DirectoryHome.update( directory, getPlugin( ) );
 
                 if ( request.getParameter( PARAMETER_APPLY ) != null )
                 {
@@ -1181,13 +1181,15 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Change the attribute's order (move up or move down in the list)
-     * @param request the request
+     * 
+     * @param request
+     *            the request
      * @return The URL of the form management page
      */
     public String doChangeOrderEntry( HttpServletRequest request )
     {
-        //gets the entry which needs to be changed (order)
-        Plugin plugin = getPlugin(  );
+        // gets the entry which needs to be changed (order)
+        Plugin plugin = getPlugin( );
 
         String strEntryId = StringUtils.EMPTY;
         String strOrderToSet = StringUtils.EMPTY;
@@ -1198,8 +1200,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         IEntry entry;
 
         // To execute mass action "Move into"
-        if ( ( request.getParameter( PARAMETER_MOVE_BUTTON + ".x" ) != null ) ||
-                ( request.getParameter( PARAMETER_MOVE_BUTTON ) != null ) )
+        if ( ( request.getParameter( PARAMETER_MOVE_BUTTON + ".x" ) != null ) || ( request.getParameter( PARAMETER_MOVE_BUTTON ) != null ) )
         {
             String strIdNewParent = request.getParameter( PARAMETER_ID_ENTRY_GROUP );
             Integer nIdNewParent = 0;
@@ -1210,27 +1211,26 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
 
             // gets the entries which needs to be changed
-            String[] entryToMoveList = request.getParameterValues( PARAMETER_ID_ENTRY );
+            String [ ] entryToMoveList = request.getParameterValues( PARAMETER_ID_ENTRY );
 
             IEntry entryParent = EntryHome.findByPrimaryKey( nIdNewParent, plugin );
-            List<IEntry> listEntry = new ArrayList<IEntry>(  );
+            List<IEntry> listEntry = new ArrayList<IEntry>( );
 
             if ( entryParent == null )
             {
-                EntryFilter filter = new EntryFilter(  );
+                EntryFilter filter = new EntryFilter( );
                 filter.setIdDirectory( nIdDirectory );
                 listEntry = EntryHome.getEntryList( filter, plugin );
             }
 
-            Integer nListEntrySize = listEntry.size(  );
+            Integer nListEntrySize = listEntry.size( );
 
             if ( entryToMoveList != null )
             {
                 // for each entry, move it into selected group
                 for ( String strIdEntryToMove : entryToMoveList )
                 {
-                    IEntry entryToMove = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( 
-                                strIdEntryToMove ), plugin );
+                    IEntry entryToMove = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( strIdEntryToMove ), plugin );
                     entryParent = EntryHome.findByPrimaryKey( nIdNewParent, plugin );
 
                     if ( ( entryToMove == null ) )
@@ -1239,19 +1239,19 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                     }
 
                     // if entryParent is null, move out selected entries
-                    if ( ( entryParent == null ) && ( entryToMove.getParent(  ) != null ) )
+                    if ( ( entryParent == null ) && ( entryToMove.getParent( ) != null ) )
                     {
                         doMoveOutEntry( plugin, nIdDirectory, nListEntrySize, entryToMove );
                     }
 
                     // Move entry into group if not allready in
-                    else if ( ( entryParent != null ) &&
-                            ( ( entryToMove.getParent(  ) == null ) ||
-                            ( ( entryToMove.getParent(  ) != null ) &&
-                            ( entryToMove.getParent(  ).getIdEntry(  ) != entryParent.getIdEntry(  ) ) ) ) )
-                    {
-                        this.doMoveEntryIntoGroup( plugin, entryToMove, entryParent );
-                    }
+                    else
+                        if ( ( entryParent != null )
+                                && ( ( entryToMove.getParent( ) == null ) || ( ( entryToMove.getParent( ) != null ) && ( entryToMove.getParent( ).getIdEntry( ) != entryParent
+                                        .getIdEntry( ) ) ) ) )
+                        {
+                            this.doMoveEntryIntoGroup( plugin, entryToMove, entryParent );
+                        }
                 }
             }
         }
@@ -1259,22 +1259,22 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         // To change order of one entry
         else
         {
-            EntryFilter filter = new EntryFilter(  );
+            EntryFilter filter = new EntryFilter( );
             filter.setIdDirectory( nIdDirectory );
 
-            List<IEntry> entryList = EntryHome.getEntryList( filter, getPlugin(  ) );
+            List<IEntry> entryList = EntryHome.getEntryList( filter, getPlugin( ) );
 
-            for ( int i = 0; i < entryList.size(  ); i++ )
+            for ( int i = 0; i < entryList.size( ); i++ )
             {
                 entry = entryList.get( i );
-                nEntryId = entry.getIdEntry(  );
-                strEntryId = request.getParameter( PARAMETER_MOVE_BUTTON + "_" + nEntryId.toString(  ) );
+                nEntryId = entry.getIdEntry( );
+                strEntryId = request.getParameter( PARAMETER_MOVE_BUTTON + "_" + nEntryId.toString( ) );
 
                 if ( StringUtils.isNotBlank( strEntryId ) )
                 {
-                    strEntryId = nEntryId.toString(  );
-                    strOrderToSet = request.getParameter( PARAMETER_ORDER_ID + "_" + nEntryId.toString(  ) );
-                    i = entryList.size(  );
+                    strEntryId = nEntryId.toString( );
+                    strOrderToSet = request.getParameter( PARAMETER_ORDER_ID + "_" + nEntryId.toString( ) );
+                    i = entryList.size( );
                 }
             }
 
@@ -1289,23 +1289,21 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
 
             IEntry entryToChangeOrder = EntryHome.findByPrimaryKey( nEntryId, plugin );
-            int nActualOrder = entryToChangeOrder.getPosition(  );
+            int nActualOrder = entryToChangeOrder.getPosition( );
 
             // does nothing if the order to set is equal to the actual order
             if ( nOrderToSet != nActualOrder )
             {
-                // entry goes up in the list 
-                if ( nOrderToSet < entryToChangeOrder.getPosition(  ) )
+                // entry goes up in the list
+                if ( nOrderToSet < entryToChangeOrder.getPosition( ) )
                 {
-                    moveUpEntryOrder( plugin, nOrderToSet, entryToChangeOrder,
-                        entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
+                    moveUpEntryOrder( plugin, nOrderToSet, entryToChangeOrder, entryToChangeOrder.getDirectory( ).getIdDirectory( ) );
                 }
 
                 // entry goes down in the list
                 else
                 {
-                    moveDownEntryOrder( plugin, nOrderToSet, entryToChangeOrder,
-                        entryToChangeOrder.getDirectory(  ).getIdDirectory(  ) );
+                    moveDownEntryOrder( plugin, nOrderToSet, entryToChangeOrder, entryToChangeOrder.getDirectory( ).getIdDirectory( ) );
                 }
             }
         }
@@ -1314,15 +1312,20 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         url.addParameter( PARAMETER_ID_DIRECTORY, nIdDirectory );
         url.setAnchor( PARAMETER_ANCHOR_LIST );
 
-        return url.getUrl(  );
+        return url.getUrl( );
     }
 
     /**
      * Move out entry (no parent)
-     * @param plugin the plugin
-     * @param nIdDirectory the id directory
-     * @param nListEntrySize the number of entry
-     * @param entryToMove the entry to move
+     * 
+     * @param plugin
+     *            the plugin
+     * @param nIdDirectory
+     *            the id directory
+     * @param nListEntrySize
+     *            the number of entry
+     * @param entryToMove
+     *            the entry to move
      */
     private void doMoveOutEntry( Plugin plugin, int nIdDirectory, Integer nListEntrySize, IEntry entryToMove )
     {
@@ -1333,84 +1336,87 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Gets the confirmation page of delete directory
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the confirmation page of delete directory
      */
-    public String getConfirmRemoveDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getConfirmRemoveDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         String strMessage;
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
 
-        if ( ( strIdDirectory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_DELETE, getUser(  ) ) )
+        if ( ( strIdDirectory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_DELETE, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+        RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
         recordFieldFilter.setIdDirectory( nIdDirectory );
 
-        int nNumberRecord = _recordService.getCountRecord( recordFieldFilter, getPlugin(  ) );
-        strMessage = ( nNumberRecord == 0 ) ? MESSAGE_CONFIRM_REMOVE_DIRECTORY
-                                            : MESSAGE_CONFIRM_REMOVE_DIRECTORY_WITH_RECORD;
+        int nNumberRecord = _recordService.getCountRecord( recordFieldFilter, getPlugin( ) );
+        strMessage = ( nNumberRecord == 0 ) ? MESSAGE_CONFIRM_REMOVE_DIRECTORY : MESSAGE_CONFIRM_REMOVE_DIRECTORY_WITH_RECORD;
 
         UrlItem url = new UrlItem( JSP_DO_REMOVE_DIRECTORY );
         url.addParameter( PARAMETER_ID_DIRECTORY, strIdDirectory );
 
-        return AdminMessageService.getMessageUrl( request, strMessage, url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+        return AdminMessageService.getMessageUrl( request, strMessage, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
     }
 
     /**
      * Perform the directory suppression
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doRemoveDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doRemoveDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
-        ArrayList<String> listErrors = new ArrayList<String>(  );
+        ArrayList<String> listErrors = new ArrayList<String>( );
 
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
 
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_DELETE, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_DELETE, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        if ( !DirectoryRemovalListenerService.getService(  ).checkForRemoval( strIdDirectory, listErrors, getLocale(  ) ) )
+        if ( !DirectoryRemovalListenerService.getService( ).checkForRemoval( strIdDirectory, listErrors, getLocale( ) ) )
         {
-            String strCause = AdminMessageService.getFormattedList( listErrors, getLocale(  ) );
-            Object[] args = { strCause };
+            String strCause = AdminMessageService.getFormattedList( listErrors, getLocale( ) );
+            Object [ ] args = {
+                strCause
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_DIRECTORY, args,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_DIRECTORY, args, AdminMessage.TYPE_STOP );
         }
 
-        DirectoryHome.remove( nIdDirectory, getPlugin(  ) );
+        DirectoryHome.remove( nIdDirectory, getPlugin( ) );
 
         return getJspManageDirectory( request );
     }
 
     /**
      * Gets the confirmation page of remove all Directory Record
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the confirmation page of delete all Directory Record
      */
-    public String getConfirmRemoveAllDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getConfirmRemoveAllDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
 
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_DELETE_ALL_RECORD, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_DELETE_ALL_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -1418,30 +1424,30 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         UrlItem url = new UrlItem( JSP_DO_REMOVE_ALL_DIRECTORY_RECORD );
         url.addParameter( PARAMETER_ID_DIRECTORY, strIdDirectory );
 
-        return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_ALL_DIRECTORY_RECORD, url.getUrl(  ),
-            AdminMessage.TYPE_CONFIRMATION );
+        return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_ALL_DIRECTORY_RECORD, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
     }
 
     /**
      * Remove all directory record of the directory
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doRemoveAllDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doRemoveAllDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
 
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_DELETE_ALL_RECORD, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_DELETE_ALL_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        RecordFieldFilter recordFilter = new RecordFieldFilter(  );
+        RecordFieldFilter recordFilter = new RecordFieldFilter( );
         recordFilter.setIdDirectory( nIdDirectory );
 
         for ( Integer nRecordId : _recordService.getListRecordId( recordFilter, plugin ) )
@@ -1456,29 +1462,31 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * copy the directory whose key is specified in the Http request
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doCopyDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doCopyDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         Directory directory;
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
         directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( directory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_COPY, getUser(  ) ) )
+        if ( ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_COPY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        Object[] tabFormTitleCopy = { directory.getTitle(  ) };
-        String strTitleCopyForm = I18nService.getLocalizedString( PROPERTY_COPY_DIRECTORY_TITLE, tabFormTitleCopy,
-                getLocale(  ) );
+        Object [ ] tabFormTitleCopy = {
+            directory.getTitle( )
+        };
+        String strTitleCopyForm = I18nService.getLocalizedString( PROPERTY_COPY_DIRECTORY_TITLE, tabFormTitleCopy, getLocale( ) );
 
         if ( strTitleCopyForm != null )
         {
@@ -1492,57 +1500,57 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Gets the entry creation page
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The entry creation page
      */
-    public String getCreateEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getCreateEntry( HttpServletRequest request ) throws AccessDeniedException
     {
         Directory directory;
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         IEntry entry;
         entry = DirectoryUtils.createEntryByType( request, plugin );
 
         boolean bAssociationEntryWorkgroup;
         boolean bAssociationEntryRole;
 
-        if ( ( entry == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( entry == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        directory = DirectoryHome.findByPrimaryKey( _searchFields.getIdDirectory(  ), plugin );
+        directory = DirectoryHome.findByPrimaryKey( _searchFields.getIdDirectory( ), plugin );
         entry.setDirectory( directory );
 
-        //test if an entry is already asoociated with a role or a workgroup
-        EntryFilter filter = new EntryFilter(  );
-        filter.setIdDirectory( _searchFields.getIdDirectory(  ) );
+        // test if an entry is already asoociated with a role or a workgroup
+        EntryFilter filter = new EntryFilter( );
+        filter.setIdDirectory( _searchFields.getIdDirectory( ) );
         filter.setIsRoleAssociated( EntryFilter.FILTER_TRUE );
         bAssociationEntryRole = ( EntryHome.getNumberEntryByFilter( filter, plugin ) != 0 );
         filter.setIsRoleAssociated( EntryFilter.ALL_INT );
         filter.setIsWorkgroupAssociated( EntryFilter.FILTER_TRUE );
         bAssociationEntryWorkgroup = ( EntryHome.getNumberEntryByFilter( filter, plugin ) != 0 );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
-        //For Entry Type Directory
+        // For Entry Type Directory
         String strAutorizeEntryType = AppPropertiesService.getProperty( PROPERTY_ENTRY_AUTORIZE_FOR_ENTRY_DIRECTORY );
-        String[] strTabAutorizeEntryType = strAutorizeEntryType.split( "," );
+        String [ ] strTabAutorizeEntryType = strAutorizeEntryType.split( "," );
 
-        ReferenceList listEntryAssociateWithoutJavascript = new ReferenceList(  );
-        List<List<IEntry>> listEntryWithJavascript = new ArrayList<List<IEntry>>(  );
+        ReferenceList listEntryAssociateWithoutJavascript = new ReferenceList( );
+        List<List<IEntry>> listEntryWithJavascript = new ArrayList<List<IEntry>>( );
 
         for ( ReferenceItem item : DirectoryHome.getDirectoryList( plugin ) )
         {
-            List<IEntry> listEntry = new ArrayList<IEntry>(  );
-            Directory directoryTmp = DirectoryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( 
-                        item.getCode(  ) ), plugin );
-            EntryFilter entryFilter = new EntryFilter(  );
-            entryFilter.setIdDirectory( directoryTmp.getIdDirectory(  ) );
+            List<IEntry> listEntry = new ArrayList<IEntry>( );
+            Directory directoryTmp = DirectoryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( item.getCode( ) ), plugin );
+            EntryFilter entryFilter = new EntryFilter( );
+            entryFilter.setIdDirectory( directoryTmp.getIdDirectory( ) );
 
             for ( IEntry entryTmp : EntryHome.getEntryList( entryFilter, plugin ) )
             {
@@ -1550,8 +1558,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
                 for ( int i = 0; ( i < strTabAutorizeEntryType.length ) && !bEntryAutorize; i++ )
                 {
-                    if ( entryTmp.getEntryType(  ).getIdType(  ) == DirectoryUtils.convertStringToInt( 
-                                strTabAutorizeEntryType[i] ) )
+                    if ( entryTmp.getEntryType( ).getIdType( ) == DirectoryUtils.convertStringToInt( strTabAutorizeEntryType [i] ) )
                     {
                         bEntryAutorize = true;
                     }
@@ -1559,8 +1566,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
                 if ( bEntryAutorize )
                 {
-                    listEntryAssociateWithoutJavascript.addItem( entryTmp.getIdEntry(  ),
-                        directoryTmp.getTitle(  ) + " - " + entryTmp.getTitle(  ) );
+                    listEntryAssociateWithoutJavascript.addItem( entryTmp.getIdEntry( ), directoryTmp.getTitle( ) + " - " + entryTmp.getTitle( ) );
                     listEntry.add( entryTmp );
                 }
             }
@@ -1569,7 +1575,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         // Default Values
-        ReferenceList listParamDefaultValues = EntryParameterService.getService(  ).findAll(  );
+        ReferenceList listParamDefaultValues = EntryParameterService.getService( ).findAll( );
 
         model.put( MARK_DIRECTORY_ENTRY_LIST_ASSOCIATE, listEntryAssociateWithoutJavascript );
         model.put( MARK_DIRECTORY_LIST_ASSOCIATE, DirectoryHome.getDirectoryList( plugin ) );
@@ -1577,13 +1583,13 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         model.put( MARK_ENTRY, entry );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-        model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage(  ) );
+        model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_IS_ASSOCIATION_ENTRY_WORKGROUP, bAssociationEntryWorkgroup );
         model.put( MARK_IS_ASSOCIATION_ENTRY_ROLE, bAssociationEntryRole );
-        model.put( MARK_IS_AUTHENTIFICATION_ENABLED, SecurityService.isAuthenticationEnable(  ) );
+        model.put( MARK_IS_AUTHENTIFICATION_ENABLED, SecurityService.isAuthenticationEnable( ) );
         model.put( MARK_LIST_PARAM_DEFAULT_VALUES, listParamDefaultValues );
 
-        if ( entry.getEntryType(  ).getComment(  ) )
+        if ( entry.getEntryType( ).getComment( ) )
         {
             setPageTitleProperty( PROPERTY_CREATE_ENTRY_COMMENT_PAGE_TITLE );
         }
@@ -1592,149 +1598,151 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             setPageTitleProperty( PROPERTY_CREATE_ENTRY_FIELD_PAGE_TITLE );
         }
 
-        HtmlTemplate template = AppTemplateService.getTemplate( entry.getTemplateCreate(  ), getLocale(  ), model );
+        HtmlTemplate template = AppTemplateService.getTemplate( entry.getTemplateCreate( ), getLocale( ), model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Perform the entry creation
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doCreateEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doCreateEntry( HttpServletRequest request ) throws AccessDeniedException
     {
         IEntry entry;
         Directory directory;
 
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_MODIFY, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         if ( ( request.getParameter( PARAMETER_CANCEL ) == null ) )
         {
-            entry = DirectoryUtils.createEntryByType( request, getPlugin(  ) );
+            entry = DirectoryUtils.createEntryByType( request, getPlugin( ) );
 
             if ( entry == null )
             {
                 return getJspManageDirectory( request );
             }
 
-            String strError = entry.getEntryData( request, getLocale(  ) );
+            String strError = entry.getEntryData( request, getLocale( ) );
 
             if ( strError != null )
             {
                 return strError;
             }
 
-            directory = new Directory(  );
-            directory.setIdDirectory( _searchFields.getIdDirectory(  ) );
+            directory = new Directory( );
+            directory.setIdDirectory( _searchFields.getIdDirectory( ) );
             entry.setDirectory( directory );
-            entry.setIdEntry( EntryHome.create( entry, getPlugin(  ) ) );
+            entry.setIdEntry( EntryHome.create( entry, getPlugin( ) ) );
 
-            if ( entry.getFields(  ) != null )
+            if ( entry.getFields( ) != null )
             {
-                for ( Field field : entry.getFields(  ) )
+                for ( Field field : entry.getFields( ) )
                 {
                     field.setEntry( entry );
-                    FieldHome.create( field, getPlugin(  ) );
+                    FieldHome.create( field, getPlugin( ) );
                 }
             }
 
             if ( request.getParameter( PARAMETER_APPLY ) != null )
             {
-                return getJspModifyEntry( request, entry.getIdEntry(  ) );
+                return getJspModifyEntry( request, entry.getIdEntry( ) );
             }
         }
 
-        return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
+        return getJspModifyDirectory( request, _searchFields.getIdDirectory( ) );
     }
 
     /**
      * Gets the entry modification page
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The entry modification page
      */
-    public String getModifyEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getModifyEntry( HttpServletRequest request ) throws AccessDeniedException
     {
         boolean bAssociationEntryWorkgroup;
         boolean bAssociationEntryRole;
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         IEntry entry;
         ReferenceList refListRegularExpression;
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
         entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
 
-        if ( ( entry == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( entry == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         _searchFields.setIdEntry( nIdEntry );
 
-        List<Field> listField = new ArrayList<Field>(  );
+        List<Field> listField = new ArrayList<Field>( );
 
-        for ( Field field : entry.getFields(  ) )
+        for ( Field field : entry.getFields( ) )
         {
-            field = FieldHome.findByPrimaryKey( field.getIdField(  ), plugin );
+            field = FieldHome.findByPrimaryKey( field.getIdField( ), plugin );
             listField.add( field );
         }
 
         entry.setFields( listField );
 
-        HashMap<String, Object> model = new HashMap<String, Object>(  );
+        HashMap<String, Object> model = new HashMap<String, Object>( );
 
-        int nIdTypeImage = DirectoryUtils.convertStringToInt( AppPropertiesService.getProperty( 
-                    PROPERTY_ENTRY_TYPE_IMAGE, DEFAULT_TYPE_IMAGE ) );
+        int nIdTypeImage = DirectoryUtils.convertStringToInt( AppPropertiesService.getProperty( PROPERTY_ENTRY_TYPE_IMAGE, DEFAULT_TYPE_IMAGE ) );
 
-        if ( entry.getEntryType(  ).getIdType(  ) == nIdTypeImage )
+        if ( entry.getEntryType( ).getIdType( ) == nIdTypeImage )
         {
-            for ( Field field : entry.getFields(  ) )
+            for ( Field field : entry.getFields( ) )
             {
-                if ( ( field.getValue(  ) != null ) && ( field.getValue(  ).equals( FIELD_THUMBNAIL ) ) )
+                if ( ( field.getValue( ) != null ) && ( field.getValue( ).equals( FIELD_THUMBNAIL ) ) )
                 {
                     model.put( MARK_THUMBNAIL_FIELD, field );
                     model.put( MARK_HAS_THUMBNAIL, true );
                 }
 
-                else if ( ( field.getValue(  ) != null ) && ( field.getValue(  ).equals( FIELD_BIG_THUMBNAIL ) ) )
-                {
-                    model.put( MARK_BIG_THUMBNAIL_FIELD, field );
-                    model.put( MARK_HAS_BIG_THUMBNAIL, true );
-                }
+                else
+                    if ( ( field.getValue( ) != null ) && ( field.getValue( ).equals( FIELD_BIG_THUMBNAIL ) ) )
+                    {
+                        model.put( MARK_BIG_THUMBNAIL_FIELD, field );
+                        model.put( MARK_HAS_BIG_THUMBNAIL, true );
+                    }
 
-                else if ( ( field.getValue(  ) != null ) && ( field.getValue(  ).equals( FIELD_IMAGE ) ) )
-                {
-                    model.put( MARK_IMAGE_FIELD, field );
-                }
+                    else
+                        if ( ( field.getValue( ) != null ) && ( field.getValue( ).equals( FIELD_IMAGE ) ) )
+                        {
+                            model.put( MARK_IMAGE_FIELD, field );
+                        }
             }
         }
 
         model.put( MARK_ENTRY, entry );
-        _searchFields.setCurrentPageIndex( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
-                _searchFields.getCurrentPageIndex(  ) ) );
-        _searchFields.setItemsPerPage( Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE,
-                _searchFields.getItemsPerPage(  ), _searchFields.getDefaultItemsPerPage(  ) ) );
+        _searchFields.setCurrentPageIndex( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndex( ) ) );
+        _searchFields.setItemsPerPage( Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _searchFields.getItemsPerPage( ),
+                _searchFields.getDefaultItemsPerPage( ) ) );
 
-        LocalizedPaginator paginator = entry.getPaginator( _searchFields.getItemsPerPage(  ),
-                AppPathService.getBaseUrl( request ) + JSP_MODIFY_ENTRY + "?id_entry=" + nIdEntry,
-                PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndex(  ), getLocale(  ) );
+        LocalizedPaginator paginator = entry.getPaginator( _searchFields.getItemsPerPage( ), AppPathService.getBaseUrl( request ) + JSP_MODIFY_ENTRY
+                + "?id_entry=" + nIdEntry, PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndex( ), getLocale( ) );
 
         if ( paginator != null )
         {
-            model.put( MARK_NB_ITEMS_PER_PAGE, DirectoryUtils.EMPTY_STRING + _searchFields.getItemsPerPage(  ) );
-            model.put( MARK_NUMBER_ITEMS, paginator.getItemsCount(  ) );
-            model.put( MARK_LIST, paginator.getPageItems(  ) );
+            model.put( MARK_NB_ITEMS_PER_PAGE, DirectoryUtils.EMPTY_STRING + _searchFields.getItemsPerPage( ) );
+            model.put( MARK_NUMBER_ITEMS, paginator.getItemsCount( ) );
+            model.put( MARK_LIST, paginator.getPageItems( ) );
             model.put( MARK_PAGINATOR, paginator );
         }
 
@@ -1746,44 +1754,44 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
 
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-        model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage(  ) );
+        model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
 
-        if ( entry.getEntryType(  ).getComment(  ) )
+        if ( entry.getEntryType( ).getComment( ) )
         {
             setPageTitleProperty( PROPERTY_MODIFY_ENTRY_COMMENT_PAGE_TITLE );
         }
-        else if ( entry.getEntryType(  ).getGroup(  ) )
-        {
-            setPageTitleProperty( PROPERTY_MODIFY_ENTRY_GROUP_PAGE_TITLE );
-        }
         else
-        {
-            setPageTitleProperty( PROPERTY_MODIFY_ENTRY_FIELD_PAGE_TITLE );
-        }
+            if ( entry.getEntryType( ).getGroup( ) )
+            {
+                setPageTitleProperty( PROPERTY_MODIFY_ENTRY_GROUP_PAGE_TITLE );
+            }
+            else
+            {
+                setPageTitleProperty( PROPERTY_MODIFY_ENTRY_FIELD_PAGE_TITLE );
+            }
 
-        //test if an entry is already asoociated with a role or a workgroup
-        EntryFilter filter = new EntryFilter(  );
-        filter.setIdDirectory( _searchFields.getIdDirectory(  ) );
+        // test if an entry is already asoociated with a role or a workgroup
+        EntryFilter filter = new EntryFilter( );
+        filter.setIdDirectory( _searchFields.getIdDirectory( ) );
         filter.setIsRoleAssociated( EntryFilter.FILTER_TRUE );
         bAssociationEntryRole = ( EntryHome.getNumberEntryByFilter( filter, plugin ) != 0 );
         filter.setIsRoleAssociated( EntryFilter.ALL_INT );
         filter.setIsWorkgroupAssociated( EntryFilter.FILTER_TRUE );
         bAssociationEntryWorkgroup = ( EntryHome.getNumberEntryByFilter( filter, plugin ) != 0 );
 
-        //For Entry Type Directory
+        // For Entry Type Directory
         String strAutorizeEntryType = AppPropertiesService.getProperty( PROPERTY_ENTRY_AUTORIZE_FOR_ENTRY_DIRECTORY );
-        String[] strTabAutorizeEntryType = strAutorizeEntryType.split( "," );
+        String [ ] strTabAutorizeEntryType = strAutorizeEntryType.split( "," );
 
-        ReferenceList listEntryAssociateWithoutJavascript = new ReferenceList(  );
-        List<List<IEntry>> listEntryWithJavascript = new ArrayList<List<IEntry>>(  );
+        ReferenceList listEntryAssociateWithoutJavascript = new ReferenceList( );
+        List<List<IEntry>> listEntryWithJavascript = new ArrayList<List<IEntry>>( );
 
         for ( ReferenceItem item : DirectoryHome.getDirectoryList( plugin ) )
         {
-            List<IEntry> listEntry = new ArrayList<IEntry>(  );
-            Directory directoryTmp = DirectoryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( 
-                        item.getCode(  ) ), plugin );
-            EntryFilter entryFilter = new EntryFilter(  );
-            entryFilter.setIdDirectory( directoryTmp.getIdDirectory(  ) );
+            List<IEntry> listEntry = new ArrayList<IEntry>( );
+            Directory directoryTmp = DirectoryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( item.getCode( ) ), plugin );
+            EntryFilter entryFilter = new EntryFilter( );
+            entryFilter.setIdDirectory( directoryTmp.getIdDirectory( ) );
 
             for ( IEntry entryTmp : EntryHome.getEntryList( entryFilter, plugin ) )
             {
@@ -1791,8 +1799,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
                 for ( int i = 0; ( i < strTabAutorizeEntryType.length ) && !bEntryAutorize; i++ )
                 {
-                    if ( entryTmp.getEntryType(  ).getIdType(  ) == DirectoryUtils.convertStringToInt( 
-                                strTabAutorizeEntryType[i] ) )
+                    if ( entryTmp.getEntryType( ).getIdType( ) == DirectoryUtils.convertStringToInt( strTabAutorizeEntryType [i] ) )
                     {
                         bEntryAutorize = true;
                     }
@@ -1800,8 +1807,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
                 if ( bEntryAutorize )
                 {
-                    listEntryAssociateWithoutJavascript.addItem( entryTmp.getIdEntry(  ),
-                        directoryTmp.getTitle(  ) + " - " + entryTmp.getTitle(  ) );
+                    listEntryAssociateWithoutJavascript.addItem( entryTmp.getIdEntry( ), directoryTmp.getTitle( ) + " - " + entryTmp.getTitle( ) );
                     listEntry.add( entryTmp );
                 }
             }
@@ -1812,42 +1818,41 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_DIRECTORY_ENTRY_LIST_ASSOCIATE, listEntryAssociateWithoutJavascript );
         model.put( MARK_DIRECTORY_LIST_ASSOCIATE, DirectoryHome.getDirectoryList( plugin ) );
 
-        if ( ( entry.getEntryAssociate(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                ( EntryHome.findByPrimaryKey( entry.getEntryAssociate(  ), plugin ) != null ) )
+        if ( ( entry.getEntryAssociate( ) != DirectoryUtils.CONSTANT_ID_NULL ) && ( EntryHome.findByPrimaryKey( entry.getEntryAssociate( ), plugin ) != null ) )
         {
-            model.put( MARK_DIRECTORY_ASSOCIATE,
-                EntryHome.findByPrimaryKey( entry.getEntryAssociate(  ), plugin ).getDirectory(  ).getIdDirectory(  ) );
+            model.put( MARK_DIRECTORY_ASSOCIATE, EntryHome.findByPrimaryKey( entry.getEntryAssociate( ), plugin ).getDirectory( ).getIdDirectory( ) );
         }
 
         model.put( MARK_ENTRY_LIST_ASSOCIATE, listEntryWithJavascript );
         model.put( MARK_IS_ASSOCIATION_ENTRY_WORKGROUP, bAssociationEntryWorkgroup );
         model.put( MARK_IS_ASSOCIATION_ENTRY_ROLE, bAssociationEntryRole );
-        model.put( MARK_IS_AUTHENTIFICATION_ENABLED, SecurityService.isAuthenticationEnable(  ) );
-        model.put( MARK_ID_DIRECTORY, _searchFields.getIdDirectory(  ) );
+        model.put( MARK_IS_AUTHENTIFICATION_ENABLED, SecurityService.isAuthenticationEnable( ) );
+        model.put( MARK_ID_DIRECTORY, _searchFields.getIdDirectory( ) );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( entry.getTemplateModify(  ), getLocale(  ), model );
+        HtmlTemplate template = AppTemplateService.getTemplate( entry.getTemplateModify( ), getLocale( ), model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Perform the entry modification
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doModifyEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doModifyEntry( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         IEntry entry;
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
 
-        if ( ( nIdEntry == -1 ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( nIdEntry == -1 )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -1856,7 +1861,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         if ( request.getParameter( PARAMETER_CANCEL ) == null )
         {
-            String strError = entry.getEntryData( request, getLocale(  ) );
+            String strError = entry.getEntryData( request, getLocale( ) );
 
             if ( strError != null )
             {
@@ -1865,12 +1870,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
             EntryHome.update( entry, plugin );
 
-            if ( entry.getFields(  ) != null )
+            if ( entry.getFields( ) != null )
             {
-                for ( Field field : entry.getFields(  ) )
+                for ( Field field : entry.getFields( ) )
                 {
                     // Check if the field already exists in the database
-                    Field fieldStored = FieldHome.findByPrimaryKey( field.getIdField(  ), plugin );
+                    Field fieldStored = FieldHome.findByPrimaryKey( field.getIdField( ), plugin );
 
                     if ( fieldStored != null )
                     {
@@ -1888,7 +1893,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         if ( request.getParameter( PARAMETER_APPLY ) == null )
         {
-            return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
+            return getJspModifyDirectory( request, _searchFields.getIdDirectory( ) );
         }
 
         return getJspModifyEntry( request, nIdEntry );
@@ -1896,33 +1901,33 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Gets the confirmation page of delete entry
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the confirmation page of delete entry
      */
-    public String getConfirmRemoveEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getConfirmRemoveEntry( HttpServletRequest request ) throws AccessDeniedException
     {
         IEntry entry;
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         String strMessage;
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
 
-        if ( ( nIdEntry == -1 ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( nIdEntry == -1 )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
 
-        if ( entry.getEntryType(  ).getGroup(  ) )
+        if ( entry.getEntryType( ).getGroup( ) )
         {
-            strMessage = ( !entry.getChildren(  ).isEmpty(  ) ) ? MESSAGE_CONFIRM_REMOVE_GROUP_WITH_ENTRY
-                                                                : MESSAGE_CONFIRM_REMOVE_GROUP_WITH_ANY_ENTRY;
+            strMessage = ( !entry.getChildren( ).isEmpty( ) ) ? MESSAGE_CONFIRM_REMOVE_GROUP_WITH_ENTRY : MESSAGE_CONFIRM_REMOVE_GROUP_WITH_ANY_ENTRY;
         }
         else
         {
@@ -1932,89 +1937,94 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         UrlItem url = new UrlItem( JSP_DO_REMOVE_ENTRY );
         url.addParameter( PARAMETER_ID_ENTRY, strIdEntry + "#list" );
 
-        return AdminMessageService.getMessageUrl( request, strMessage, url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+        return AdminMessageService.getMessageUrl( request, strMessage, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
     }
 
     /**
      * Perform the entry supression
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doRemoveEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doRemoveEntry( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
-        ArrayList<String> listErrors = new ArrayList<String>(  );
+        ArrayList<String> listErrors = new ArrayList<String>( );
 
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
-        IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, getPlugin(  ) );
+        IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, getPlugin( ) );
 
-        if ( ( entry == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( entry == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-        recordFieldFilter.setIdDirectory( _searchFields.getIdDirectory(  ) );
+        RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
+        recordFieldFilter.setIdDirectory( _searchFields.getIdDirectory( ) );
 
-        if ( !EntryRemovalListenerService.getService(  ).checkForRemoval( strIdEntry, listErrors, getLocale(  ) ) )
+        if ( !EntryRemovalListenerService.getService( ).checkForRemoval( strIdEntry, listErrors, getLocale( ) ) )
         {
-            String strCause = AdminMessageService.getFormattedList( listErrors, getLocale(  ) );
-            Object[] args = { strCause };
+            String strCause = AdminMessageService.getFormattedList( listErrors, getLocale( ) );
+            Object [ ] args = {
+                strCause
+            };
 
             return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_ENTRY, args, AdminMessage.TYPE_STOP );
         }
 
-        //remove all recordField associated
-        RecordFieldFilter filterField = new RecordFieldFilter(  );
+        // remove all recordField associated
+        RecordFieldFilter filterField = new RecordFieldFilter( );
         filterField.setIdEntry( nIdEntry );
         RecordFieldHome.removeByFilter( filterField, true, plugin );
 
-        //remove entry
+        // remove entry
         List<IEntry> listEntry;
-        EntryFilter filter = new EntryFilter(  );
-        filter.setIdDirectory( entry.getDirectory(  ).getIdDirectory(  ) );
+        EntryFilter filter = new EntryFilter( );
+        filter.setIdDirectory( entry.getDirectory( ).getIdDirectory( ) );
         listEntry = EntryHome.getEntryList( filter, plugin );
-        this.moveDownEntryOrder( plugin, listEntry.size(  ), entry, entry.getDirectory(  ).getIdDirectory(  ) );
+        this.moveDownEntryOrder( plugin, listEntry.size( ), entry, entry.getDirectory( ).getIdDirectory( ) );
         EntryHome.remove( nIdEntry, plugin );
 
-        return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
+        return getJspModifyDirectory( request, _searchFields.getIdDirectory( ) );
     }
 
     /**
      * copy the entry whose key is specified in the Http request
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doCopyEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doCopyEntry( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         IEntry entry;
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
         entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
 
-        if ( ( entry == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( entry == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-        recordFieldFilter.setIdDirectory( _searchFields.getIdDirectory(  ) );
+        RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
+        recordFieldFilter.setIdDirectory( _searchFields.getIdDirectory( ) );
 
-        Object[] tabEntryTitleCopy = { entry.getTitle(  ) };
-        String strTitleCopyEntry = I18nService.getLocalizedString( PROPERTY_COPY_ENTRY_TITLE, tabEntryTitleCopy,
-                getLocale(  ) );
+        Object [ ] tabEntryTitleCopy = {
+            entry.getTitle( )
+        };
+        String strTitleCopyEntry = I18nService.getLocalizedString( PROPERTY_COPY_ENTRY_TITLE, tabEntryTitleCopy, getLocale( ) );
 
         if ( strTitleCopyEntry != null )
         {
@@ -2023,19 +2033,21 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         EntryHome.copy( entry, plugin );
 
-        return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
+        return getJspModifyDirectory( request, _searchFields.getIdDirectory( ) );
     }
 
     /**
      * Gets the list of questions group
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the list of questions group
      */
-    public String getMoveEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getMoveEntry( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         IEntry entry;
         List<IEntry> listGroup;
         EntryFilter filter;
@@ -2043,55 +2055,56 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
         entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
 
-        if ( ( entry == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( entry == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         _searchFields.setIdEntry( nIdEntry );
 
-        //recup group
-        filter = new EntryFilter(  );
-        filter.setIdDirectory( entry.getDirectory(  ).getIdDirectory(  ) );
+        // recup group
+        filter = new EntryFilter( );
+        filter.setIdDirectory( entry.getDirectory( ).getIdDirectory( ) );
         filter.setIsGroup( EntryFilter.FILTER_TRUE );
         listGroup = EntryHome.getEntryList( filter, plugin );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_ENTRY, entry );
         model.put( MARK_ENTRY_LIST, listGroup );
 
         setPageTitleProperty( DirectoryUtils.EMPTY_STRING );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MOVE_ENTRY, getLocale(  ), model );
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MOVE_ENTRY, getLocale( ), model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Move the entry in the questions group specified in parameter
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doMoveEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doMoveEntry( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         IEntry entryToMove;
         IEntry entryGroup;
         String strIdEntryGroup = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdEntryGroup = DirectoryUtils.convertStringToInt( strIdEntryGroup );
 
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_MODIFY, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        entryToMove = EntryHome.findByPrimaryKey( _searchFields.getIdEntry(  ), plugin );
+        entryToMove = EntryHome.findByPrimaryKey( _searchFields.getIdEntry( ), plugin );
         entryGroup = EntryHome.findByPrimaryKey( nIdEntryGroup, plugin );
 
         if ( ( entryToMove == null ) || ( entryGroup == null ) )
@@ -2101,32 +2114,36 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         doMoveEntryIntoGroup( plugin, entryToMove, entryGroup );
 
-        return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
+        return getJspModifyDirectory( request, _searchFields.getIdDirectory( ) );
     }
 
     /**
      * Move EntryToMove into entryGroup
-     * @param plugin the plugin
-     * @param entryToMove the entry to move
-     * @param entryGroup the entry parent
+     * 
+     * @param plugin
+     *            the plugin
+     * @param entryToMove
+     *            the entry to move
+     * @param entryGroup
+     *            the entry parent
      */
     private void doMoveEntryIntoGroup( Plugin plugin, IEntry entryToMove, IEntry entryGroup )
     {
         int nPosition;
 
-        //        if ( ( entryGroup.getChildren( ) != null ) && ( !entryGroup.getChildren( ).isEmpty( ) ) )
-        //        {
-        //            nPosition = entryGroup.getPosition( ) + entryGroup.getChildren( ).size( ) + 1;
-        //        }
-        if ( entryToMove.getPosition(  ) < entryGroup.getPosition(  ) )
+        // if ( ( entryGroup.getChildren( ) != null ) && ( !entryGroup.getChildren( ).isEmpty( ) ) )
+        // {
+        // nPosition = entryGroup.getPosition( ) + entryGroup.getChildren( ).size( ) + 1;
+        // }
+        if ( entryToMove.getPosition( ) < entryGroup.getPosition( ) )
         {
-            nPosition = entryGroup.getPosition(  );
-            this.moveDownEntryOrder( plugin, nPosition, entryToMove, entryToMove.getDirectory(  ).getIdDirectory(  ) );
+            nPosition = entryGroup.getPosition( );
+            this.moveDownEntryOrder( plugin, nPosition, entryToMove, entryToMove.getDirectory( ).getIdDirectory( ) );
         }
         else
         {
-            nPosition = entryGroup.getPosition(  ) + entryGroup.getChildren(  ).size(  ) + 1;
-            this.moveUpEntryOrder( plugin, nPosition, entryToMove, entryToMove.getDirectory(  ).getIdDirectory(  ) );
+            nPosition = entryGroup.getPosition( ) + entryGroup.getChildren( ).size( ) + 1;
+            this.moveUpEntryOrder( plugin, nPosition, entryToMove, entryToMove.getDirectory( ).getIdDirectory( ) );
         }
 
         entryToMove.setParent( entryGroup );
@@ -2135,35 +2152,36 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Move up the entry
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doMoveUpEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doMoveUpEntry( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         IEntry entry;
 
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
         entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
 
-        if ( ( entry == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( entry == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         List<IEntry> listEntry;
-        EntryFilter filter = new EntryFilter(  );
-        filter.setIdDirectory( entry.getDirectory(  ).getIdDirectory(  ) );
+        EntryFilter filter = new EntryFilter( );
+        filter.setIdDirectory( entry.getDirectory( ).getIdDirectory( ) );
 
-        if ( entry.getParent(  ) != null )
+        if ( entry.getParent( ) != null )
         {
-            filter.setIdEntryParent( entry.getParent(  ).getIdEntry(  ) );
+            filter.setIdEntryParent( entry.getParent( ).getIdEntry( ) );
         }
         else
         {
@@ -2179,49 +2197,50 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             int nNewPosition;
             IEntry entryToInversePosition;
             entryToInversePosition = listEntry.get( nIndexEntry - 1 );
-            entryToInversePosition = EntryHome.findByPrimaryKey( entryToInversePosition.getIdEntry(  ), plugin );
+            entryToInversePosition = EntryHome.findByPrimaryKey( entryToInversePosition.getIdEntry( ), plugin );
 
-            nNewPosition = entryToInversePosition.getPosition(  );
-            entryToInversePosition.setPosition( entry.getPosition(  ) );
+            nNewPosition = entryToInversePosition.getPosition( );
+            entryToInversePosition.setPosition( entry.getPosition( ) );
             entry.setPosition( nNewPosition );
             EntryHome.update( entry, plugin );
             EntryHome.update( entryToInversePosition, plugin );
         }
 
-        return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
+        return getJspModifyDirectory( request, _searchFields.getIdDirectory( ) );
     }
 
     /**
      * Move down the entry
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doMoveDownEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doMoveDownEntry( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         IEntry entry;
 
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
         entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
 
-        if ( ( entry == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( entry == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         List<IEntry> listEntry;
-        EntryFilter filter = new EntryFilter(  );
-        filter.setIdDirectory( entry.getDirectory(  ).getIdDirectory(  ) );
+        EntryFilter filter = new EntryFilter( );
+        filter.setIdDirectory( entry.getDirectory( ).getIdDirectory( ) );
 
-        if ( entry.getParent(  ) != null )
+        if ( entry.getParent( ) != null )
         {
-            filter.setIdEntryParent( entry.getParent(  ).getIdEntry(  ) );
+            filter.setIdEntryParent( entry.getParent( ).getIdEntry( ) );
         }
         else
         {
@@ -2232,74 +2251,76 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         int nIndexEntry = DirectoryUtils.getIndexEntryInTheEntryList( nIdEntry, listEntry );
 
-        if ( nIndexEntry != ( listEntry.size(  ) - 1 ) )
+        if ( nIndexEntry != ( listEntry.size( ) - 1 ) )
         {
             int nNewPosition;
             IEntry entryToInversePosition;
             entryToInversePosition = listEntry.get( nIndexEntry + 1 );
-            entryToInversePosition = EntryHome.findByPrimaryKey( entryToInversePosition.getIdEntry(  ), plugin );
+            entryToInversePosition = EntryHome.findByPrimaryKey( entryToInversePosition.getIdEntry( ), plugin );
 
-            nNewPosition = entryToInversePosition.getPosition(  );
-            entryToInversePosition.setPosition( entry.getPosition(  ) );
+            nNewPosition = entryToInversePosition.getPosition( );
+            entryToInversePosition.setPosition( entry.getPosition( ) );
             entry.setPosition( nNewPosition );
             EntryHome.update( entry, plugin );
             EntryHome.update( entryToInversePosition, plugin );
         }
 
-        return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
+        return getJspModifyDirectory( request, _searchFields.getIdDirectory( ) );
     }
 
     /**
      * Move out the entry
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doMoveOutEntry( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doMoveOutEntry( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         IEntry entry;
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
         entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
 
-        if ( ( entry == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( entry == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         List<IEntry> listEntry;
-        EntryFilter filter = new EntryFilter(  );
-        filter.setIdDirectory( entry.getDirectory(  ).getIdDirectory(  ) );
+        EntryFilter filter = new EntryFilter( );
+        filter.setIdDirectory( entry.getDirectory( ).getIdDirectory( ) );
         listEntry = EntryHome.getEntryList( filter, plugin );
 
-        Integer nListEntrySize = listEntry.size(  );
+        Integer nListEntrySize = listEntry.size( );
 
-        this.doMoveOutEntry( plugin, entry.getDirectory(  ).getIdDirectory(  ), nListEntrySize, entry );
+        this.doMoveOutEntry( plugin, entry.getDirectory( ).getIdDirectory( ), nListEntrySize, entry );
 
-        return getJspModifyDirectory( request, _searchFields.getIdDirectory(  ) );
+        return getJspModifyDirectory( request, _searchFields.getIdDirectory( ) );
     }
 
     /**
      * Gets the confirmation page of disable directory
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the confirmation page of disable directory
      */
-    public String getConfirmDisableDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getConfirmDisableDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
         String strMessage;
 
-        if ( ( nIdDirectory == DirectoryUtils.CONSTANT_ID_NULL ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_CHANGE_STATE, getUser(  ) ) )
+        if ( ( nIdDirectory == DirectoryUtils.CONSTANT_ID_NULL )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_CHANGE_STATE, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2309,170 +2330,176 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         UrlItem url = new UrlItem( JSP_DO_DISABLE_DIRECTORY );
         url.addParameter( PARAMETER_ID_DIRECTORY, strIdDirectory );
 
-        return AdminMessageService.getMessageUrl( request, strMessage, url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+        return AdminMessageService.getMessageUrl( request, strMessage, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
     }
 
     /**
      * Perform disable directory
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doDisableDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doDisableDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
         Directory directory;
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
         directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( directory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_CHANGE_STATE, getUser(  ) ) )
+        if ( ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_CHANGE_STATE, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         directory.setEnabled( false );
-        DirectoryHome.update( directory, getPlugin(  ) );
+        DirectoryHome.update( directory, getPlugin( ) );
 
         return getJspManageDirectory( request );
     }
 
     /**
      * Perform enable directory
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doEnableDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doEnableDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
         Directory directory;
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
         directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( directory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_CHANGE_STATE, getUser(  ) ) )
+        if ( ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_CHANGE_STATE, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         directory.setEnabled( true );
-        DirectoryHome.update( directory, getPlugin(  ) );
+        DirectoryHome.update( directory, getPlugin( ) );
 
         return getJspManageDirectory( request );
     }
 
     /**
      * Gets the field creation page
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the field creation page
      */
-    public String getCreateField( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getCreateField( HttpServletRequest request ) throws AccessDeniedException
     {
-        Field field = new Field(  );
-        IEntry entry = EntryHome.findByPrimaryKey( _searchFields.getIdEntry(  ), getPlugin(  ) );
+        Field field = new Field( );
+        IEntry entry = EntryHome.findByPrimaryKey( _searchFields.getIdEntry( ), getPlugin( ) );
 
-        if ( ( entry == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( entry == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         field.setEntry( entry );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
-        Locale locale = getLocale(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
+        Locale locale = getLocale( );
         model.put( MARK_FIELD, field );
-        model.put( MARK_USER_WORKGROUP_REF_LIST, AdminWorkgroupService.getUserWorkgroups( getUser(  ), locale ) );
+        model.put( MARK_USER_WORKGROUP_REF_LIST, AdminWorkgroupService.getUserWorkgroups( getUser( ), locale ) );
 
-        if ( SecurityService.isAuthenticationEnable(  ) )
+        if ( SecurityService.isAuthenticationEnable( ) )
         {
-            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList(  ) );
+            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList( ) );
         }
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_FIELD, locale, model );
         setPageTitleProperty( PROPERTY_CREATE_FIELD_PAGE_TITLE );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Gets the field modification page
-     * @param request The HTTP request
-     * @param bWithConditionalQuestion true if the field is associate to
-     *            conditionals questions
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @param bWithConditionalQuestion
+     *            true if the field is associate to conditionals questions
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the field modification page
      */
-    public String getModifyField( HttpServletRequest request, boolean bWithConditionalQuestion )
-        throws AccessDeniedException
+    public String getModifyField( HttpServletRequest request, boolean bWithConditionalQuestion ) throws AccessDeniedException
     {
         Field field = null;
         IEntry entry = null;
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         String strIdField = request.getParameter( PARAMETER_ID_FIELD );
         int nIdField = DirectoryUtils.convertStringToInt( strIdField );
-        field = FieldHome.findByPrimaryKey( nIdField, getPlugin(  ) );
+        field = FieldHome.findByPrimaryKey( nIdField, getPlugin( ) );
 
-        if ( ( field == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( field == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        entry = EntryHome.findByPrimaryKey( field.getEntry(  ).getIdEntry(  ), plugin );
+        entry = EntryHome.findByPrimaryKey( field.getEntry( ).getIdEntry( ), plugin );
 
         field.setEntry( entry );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
-        Locale locale = getLocale(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
+        Locale locale = getLocale( );
         model.put( MARK_FIELD, field );
-        model.put( MARK_USER_WORKGROUP_REF_LIST, AdminWorkgroupService.getUserWorkgroups( getUser(  ), locale ) );
+        model.put( MARK_USER_WORKGROUP_REF_LIST, AdminWorkgroupService.getUserWorkgroups( getUser( ), locale ) );
 
-        if ( SecurityService.isAuthenticationEnable(  ) )
+        if ( SecurityService.isAuthenticationEnable( ) )
         {
-            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList(  ) );
+            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList( ) );
         }
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_FIELD, locale, model );
         setPageTitleProperty( PROPERTY_MODIFY_FIELD_PAGE_TITLE );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Perform creation field
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doCreateField( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doCreateField( HttpServletRequest request ) throws AccessDeniedException
     {
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_MODIFY, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         if ( request.getParameter( PARAMETER_CANCEL ) == null )
         {
-            IEntry entry = new Entry(  );
-            entry.setIdEntry( _searchFields.getIdEntry(  ) );
+            IEntry entry = new Entry( );
+            entry.setIdEntry( _searchFields.getIdEntry( ) );
 
-            Field field = new Field(  );
+            Field field = new Field( );
             field.setEntry( entry );
 
             String strError = getFieldData( request, field );
@@ -2482,31 +2509,32 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 return strError;
             }
 
-            FieldHome.create( field, getPlugin(  ) );
+            FieldHome.create( field, getPlugin( ) );
         }
 
-        return getJspModifyEntry( request, _searchFields.getIdEntry(  ) );
+        return getJspModifyEntry( request, _searchFields.getIdEntry( ) );
     }
 
     /**
      * Perform modification field
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doModifyField( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doModifyField( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         Field field = null;
         String strIdField = request.getParameter( PARAMETER_ID_FIELD );
         int nIdField = DirectoryUtils.convertStringToInt( strIdField );
         field = FieldHome.findByPrimaryKey( nIdField, plugin );
 
-        if ( ( field == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( field == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2520,23 +2548,25 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 return strError;
             }
 
-            FieldHome.update( field, getPlugin(  ) );
+            FieldHome.update( field, getPlugin( ) );
         }
 
         if ( request.getParameter( PARAMETER_APPLY ) == null )
         {
-            return getJspModifyEntry( request, field.getEntry(  ).getIdEntry(  ) );
+            return getJspModifyEntry( request, field.getEntry( ).getIdEntry( ) );
         }
 
         return getJspModifyField( request, nIdField );
     }
 
     /**
-     * Get the request data and if there is no error insert the data in the
-     * field specified in parameter.
-     * return null if there is no error or else return the error page url
-     * @param request the request
-     * @param field field
+     * Get the request data and if there is no error insert the data in the field specified in parameter. return null if there is no error or else return the
+     * error page url
+     * 
+     * @param request
+     *            the request
+     * @param field
+     *            field
      * @return null if there is no error or else return the error page url
      */
     private String getFieldData( HttpServletRequest request, Field field )
@@ -2551,24 +2581,27 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         {
             strFieldError = FIELD_TITLE_FIELD;
         }
-        else if ( ( strValue == null ) || DirectoryUtils.EMPTY_STRING.equals( strValue ) )
-        {
-            strFieldError = FIELD_VALUE_FIELD;
-        }
-        else if ( !StringUtil.checkCodeKey( strValue ) )
-        {
-            return AdminMessageService.getMessageUrl( request, MESSAGE_FIELD_VALUE_FIELD, AdminMessage.TYPE_STOP );
-        }
+        else
+            if ( ( strValue == null ) || DirectoryUtils.EMPTY_STRING.equals( strValue ) )
+            {
+                strFieldError = FIELD_VALUE_FIELD;
+            }
+            else
+                if ( !StringUtil.checkCodeKey( strValue ) )
+                {
+                    return AdminMessageService.getMessageUrl( request, MESSAGE_FIELD_VALUE_FIELD, AdminMessage.TYPE_STOP );
+                }
 
         String strRoleKey = request.getParameter( PARAMETER_ROLE_KEY );
         String strWorkgroupKey = request.getParameter( PARAMETER_WORKGROUP );
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, getLocale(  ) ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, getLocale( ) )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         field.setTitle( strTitle );
@@ -2582,17 +2615,18 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Gets the confirmation page of delete field
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the confirmation page of delete field
      */
-    public String getConfirmRemoveField( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getConfirmRemoveField( HttpServletRequest request ) throws AccessDeniedException
     {
-        if ( ( request.getParameter( PARAMETER_ID_FIELD ) == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( request.getParameter( PARAMETER_ID_FIELD ) == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2601,69 +2635,69 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         UrlItem url = new UrlItem( JSP_DO_REMOVE_FIELD );
         url.addParameter( PARAMETER_ID_FIELD, strIdField + "#list" );
 
-        return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_FIELD, url.getUrl(  ),
-            AdminMessage.TYPE_CONFIRMATION );
+        return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_FIELD, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
     }
 
     /**
      * Perform suppression field
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doRemoveField( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doRemoveField( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdField = request.getParameter( PARAMETER_ID_FIELD );
         int nIdField = DirectoryUtils.convertStringToInt( strIdField );
 
-        if ( ( nIdField == -1 ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( nIdField == -1 )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+        RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
         recordFieldFilter.setIdField( nIdField );
 
-        if ( ( RecordFieldHome.getCountRecordField( recordFieldFilter, getPlugin(  ) ) != 0 ) )
+        if ( ( RecordFieldHome.getCountRecordField( recordFieldFilter, getPlugin( ) ) != 0 ) )
         {
-            return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_FIELD_DIRECTORY_IS_NOT_EMPTY,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_FIELD_DIRECTORY_IS_NOT_EMPTY, AdminMessage.TYPE_STOP );
         }
 
-        FieldHome.remove( nIdField, getPlugin(  ) );
+        FieldHome.remove( nIdField, getPlugin( ) );
 
-        return getJspModifyEntry( request, _searchFields.getIdEntry(  ) );
+        return getJspModifyEntry( request, _searchFields.getIdEntry( ) );
     }
 
     /**
      * Move up the field
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doMoveUpField( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doMoveUpField( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         List<Field> listField;
         Field field;
         String strIdField = request.getParameter( PARAMETER_ID_FIELD );
         int nIdField = DirectoryUtils.convertStringToInt( strIdField );
         field = FieldHome.findByPrimaryKey( nIdField, plugin );
 
-        if ( ( field == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( field == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        listField = FieldHome.getFieldListByIdEntry( field.getEntry(  ).getIdEntry(  ), plugin );
+        listField = FieldHome.getFieldListByIdEntry( field.getEntry( ).getIdEntry( ), plugin );
 
         int nIndexField = DirectoryUtils.getIndexFieldInTheFieldList( nIdField, listField );
 
@@ -2672,168 +2706,177 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             int nNewPosition;
             Field fieldToInversePosition;
             fieldToInversePosition = listField.get( nIndexField - 1 );
-            nNewPosition = fieldToInversePosition.getPosition(  );
-            fieldToInversePosition.setPosition( field.getPosition(  ) );
+            nNewPosition = fieldToInversePosition.getPosition( );
+            fieldToInversePosition.setPosition( field.getPosition( ) );
             field.setPosition( nNewPosition );
             FieldHome.update( field, plugin );
             FieldHome.update( fieldToInversePosition, plugin );
         }
 
-        return getJspModifyEntry( request, _searchFields.getIdEntry(  ) );
+        return getJspModifyEntry( request, _searchFields.getIdEntry( ) );
     }
 
     /**
      * Move down the field
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doMoveDownField( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doMoveDownField( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         List<Field> listField;
         Field field;
         String strIdField = request.getParameter( PARAMETER_ID_FIELD );
         int nIdField = DirectoryUtils.convertStringToInt( strIdField );
         field = FieldHome.findByPrimaryKey( nIdField, plugin );
 
-        if ( ( field == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) )
+        if ( ( field == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        listField = FieldHome.getFieldListByIdEntry( field.getEntry(  ).getIdEntry(  ), plugin );
+        listField = FieldHome.getFieldListByIdEntry( field.getEntry( ).getIdEntry( ), plugin );
 
         int nIndexField = DirectoryUtils.getIndexFieldInTheFieldList( nIdField, listField );
 
-        if ( nIndexField != ( listField.size(  ) - 1 ) )
+        if ( nIndexField != ( listField.size( ) - 1 ) )
         {
             int nNewPosition;
             Field fieldToInversePosition;
             fieldToInversePosition = listField.get( nIndexField + 1 );
-            nNewPosition = fieldToInversePosition.getPosition(  );
-            fieldToInversePosition.setPosition( field.getPosition(  ) );
+            nNewPosition = fieldToInversePosition.getPosition( );
+            fieldToInversePosition.setPosition( field.getPosition( ) );
             field.setPosition( nNewPosition );
             FieldHome.update( field, plugin );
             FieldHome.update( fieldToInversePosition, plugin );
         }
 
-        return getJspModifyEntry( request, _searchFields.getIdEntry(  ) );
+        return getJspModifyEntry( request, _searchFields.getIdEntry( ) );
     }
 
     /**
      * Delete association between field and regular expression
-     * @param request the Http Request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            the Http Request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doRemoveRegularExpression( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doRemoveRegularExpression( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdExpression = request.getParameter( PARAMETER_ID_EXPRESSION );
         String strIdField = request.getParameter( PARAMETER_ID_FIELD );
         int nIdField = DirectoryUtils.convertStringToInt( strIdField );
         int nIdExpression = DirectoryUtils.convertStringToInt( strIdExpression );
 
-        if ( ( nIdExpression == DirectoryUtils.CONSTANT_ID_NULL ) || ( nIdField == DirectoryUtils.CONSTANT_ID_NULL ) ||
-                ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) ) )
+        if ( ( nIdExpression == DirectoryUtils.CONSTANT_ID_NULL )
+                || ( nIdField == DirectoryUtils.CONSTANT_ID_NULL )
+                || ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        FieldHome.removeVerifyBy( nIdField, nIdExpression, getPlugin(  ) );
+        FieldHome.removeVerifyBy( nIdField, nIdExpression, getPlugin( ) );
 
-        return getJspModifyEntry( request, _searchFields.getIdEntry(  ) );
+        return getJspModifyEntry( request, _searchFields.getIdEntry( ) );
     }
 
     /**
      * insert association between field and regular expression
-     * @param request the Http Request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            the Http Request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doInsertRegularExpression( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doInsertRegularExpression( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdExpression = request.getParameter( PARAMETER_ID_EXPRESSION );
         String strIdField = request.getParameter( PARAMETER_ID_FIELD );
         int nIdField = DirectoryUtils.convertStringToInt( strIdField );
         int nIdExpression = DirectoryUtils.convertStringToInt( strIdExpression );
 
-        if ( ( nIdExpression == DirectoryUtils.CONSTANT_ID_NULL ) || ( nIdField == DirectoryUtils.CONSTANT_ID_NULL ) ||
-                ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( _searchFields.getIdDirectory(  ) ), DirectoryResourceIdService.PERMISSION_MODIFY,
-                    getUser(  ) ) ) )
+        if ( ( nIdExpression == DirectoryUtils.CONSTANT_ID_NULL )
+                || ( nIdField == DirectoryUtils.CONSTANT_ID_NULL )
+                || ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( _searchFields.getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        FieldHome.createVerifyBy( nIdField, nIdExpression, getPlugin(  ) );
+        FieldHome.createVerifyBy( nIdField, nIdExpression, getPlugin( ) );
 
-        return getJspModifyEntry( request, _searchFields.getIdEntry(  ) );
+        return getJspModifyEntry( request, _searchFields.getIdEntry( ) );
     }
 
     /**
      * Get the map query and return on manage directory record
-     * @param request the Http Request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            the Http Request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
-     * @deprecated Use fr.paris.lutece.plugins.directory.web.action.
-     *             SearchRecordDirectoryAction instead
+     * @deprecated Use fr.paris.lutece.plugins.directory.web.action. SearchRecordDirectoryAction instead
      */
     @Deprecated
-    public String doSearchDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doSearchDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
-        AppLogService.error( 
-            "Calling doSearchDirectoryRecord which no longer work. Use fr.paris.lutece.plugins.directory.web.action.SearchRecordDirectoryAction instead." );
+        AppLogService
+                .error( "Calling doSearchDirectoryRecord which no longer work. Use fr.paris.lutece.plugins.directory.web.action.SearchRecordDirectoryAction instead." );
 
         return null;
     }
 
     /**
      * Return management of directory record ( list of directory record ).
-     * @param request The Http request
-     * @param response the Http response
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The Http request
+     * @param response
+     *            the Http response
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return IPluginActionResult
      */
-    public IPluginActionResult getManageDirectoryRecord( HttpServletRequest request, HttpServletResponse response )
-        throws AccessDeniedException
-    { 
-    	String strExtentCurrent = request.getParameter(  MARK_EXTENT_CURRENT ) == null ? "" : request.getParameter(  MARK_EXTENT_CURRENT ); 
-        String strVisibleLayer = request.getParameter(  MARK_VISIBLE_LAYER ) == null ? "" : request.getParameter(  MARK_VISIBLE_LAYER );
-        
+    public IPluginActionResult getManageDirectoryRecord( HttpServletRequest request, HttpServletResponse response ) throws AccessDeniedException
+    {
+        String strExtentCurrent = request.getParameter( MARK_EXTENT_CURRENT ) == null ? "" : request.getParameter( MARK_EXTENT_CURRENT );
+        String strVisibleLayer = request.getParameter( MARK_VISIBLE_LAYER ) == null ? "" : request.getParameter( MARK_VISIBLE_LAYER );
+
         HttpSession session = request.getSession( false );
-        
-        if(!strExtentCurrent.isEmpty() && !strVisibleLayer.isEmpty())
+
+        if ( !strExtentCurrent.isEmpty( ) && !strVisibleLayer.isEmpty( ) )
         {
-        	session.setAttribute(MARK_EXTENT_CURRENT, strExtentCurrent);
-            session.setAttribute(MARK_VISIBLE_LAYER, strVisibleLayer);
+            session.setAttribute( MARK_EXTENT_CURRENT, strExtentCurrent );
+            session.setAttribute( MARK_VISIBLE_LAYER, strVisibleLayer );
         }
-        
+
         // fill the selected records
-        String[] selectedRecords = request.getParameterValues( PARAMETER_SELECTED_RECORD );
+        String [ ] selectedRecords = request.getParameterValues( PARAMETER_SELECTED_RECORD );
         List<String> listSelectedRecords;
 
         if ( selectedRecords != null )
         {
             listSelectedRecords = Arrays.asList( selectedRecords );
 
-            if ( AppLogService.isDebugEnabled(  ) )
+            if ( AppLogService.isDebugEnabled( ) )
             {
                 AppLogService.debug( "List selected record : " + listSelectedRecords );
             }
         }
         else
         {
-            listSelectedRecords = new ArrayList<String>(  );
+            listSelectedRecords = new ArrayList<String>( );
         }
 
         _searchFields.setSelectedRecords( listSelectedRecords );
@@ -2843,65 +2886,62 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         if ( action != null )
         {
-            if ( AppLogService.isDebugEnabled(  ) )
+            if ( AppLogService.isDebugEnabled( ) )
             {
-                AppLogService.debug( "Processing directory action " + action.getName(  ) );
+                AppLogService.debug( "Processing directory action " + action.getName( ) );
             }
 
-            return action.process( request, response, getUser(  ), _searchFields );
+            return action.process( request, response, getUser( ), _searchFields );
         }
 
         // display could have been an action but it's the default one an will always be here...
-        DefaultPluginActionResult result = new DefaultPluginActionResult(  );
+        DefaultPluginActionResult result = new DefaultPluginActionResult( );
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-        boolean bWorkflowServiceEnable = WorkflowService.getInstance(  ).isAvailable(  );
-        AdminUser adminUser = getUser(  );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        boolean bWorkflowServiceEnable = WorkflowService.getInstance( ).isAvailable( );
+        AdminUser adminUser = getUser( );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( directory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_MANAGE_RECORD, getUser(  ) ) )
+        if ( ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_MANAGE_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        if ( ( request.getParameter( PARAMETER_SESSION ) == null ) ||
-                Boolean.parseBoolean( request.getParameter( PARAMETER_RESET_SEARCH ) ) )
+        if ( ( request.getParameter( PARAMETER_SESSION ) == null ) || Boolean.parseBoolean( request.getParameter( PARAMETER_RESET_SEARCH ) ) )
         {
-            reInitDirectoryRecordFilter(  );
+            reInitDirectoryRecordFilter( );
         }
 
         _searchFields.setRedirectUrl( request );
-        _searchFields.setCurrentPageIndexDirectoryRecord( Paginator.getPageIndex( request,
-                Paginator.PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexDirectoryRecord(  ) ) );
-        _searchFields.setItemsPerPageDirectoryRecord( Paginator.getItemsPerPage( request,
-                Paginator.PARAMETER_ITEMS_PER_PAGE, _searchFields.getItemsPerPageDirectoryRecord(  ),
-                _searchFields.getDefaultItemsPerPage(  ) ) );
+        _searchFields.setCurrentPageIndexDirectoryRecord( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
+                _searchFields.getCurrentPageIndexDirectoryRecord( ) ) );
+        _searchFields.setItemsPerPageDirectoryRecord( Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE,
+                _searchFields.getItemsPerPageDirectoryRecord( ), _searchFields.getDefaultItemsPerPage( ) ) );
 
-        //build entryFilter
-        EntryFilter entryFilter = new EntryFilter(  );
-        entryFilter.setIdDirectory( directory.getIdDirectory(  ) );
+        // build entryFilter
+        EntryFilter entryFilter = new EntryFilter( );
+        entryFilter.setIdDirectory( directory.getIdDirectory( ) );
         entryFilter.setIsGroup( EntryFilter.FILTER_FALSE );
         entryFilter.setIsComment( EntryFilter.FILTER_FALSE );
 
-        List<IEntry> listEntryFormMainSearch = new ArrayList<IEntry>(  );
-        List<IEntry> listEntryFormComplementarySearch = new ArrayList<IEntry>(  );
-        List<IEntry> listEntryResultSearch = new ArrayList<IEntry>(  );
-        List<IEntry> listEntryGeolocation = new ArrayList<IEntry>(  );
+        List<IEntry> listEntryFormMainSearch = new ArrayList<IEntry>( );
+        List<IEntry> listEntryFormComplementarySearch = new ArrayList<IEntry>( );
+        List<IEntry> listEntryResultSearch = new ArrayList<IEntry>( );
+        List<IEntry> listEntryGeolocation = new ArrayList<IEntry>( );
 
-        for ( IEntry entry : EntryHome.getEntryList( entryFilter, getPlugin(  ) ) )
+        for ( IEntry entry : EntryHome.getEntryList( entryFilter, getPlugin( ) ) )
         {
-            IEntry entryTmp = EntryHome.findByPrimaryKey( entry.getIdEntry(  ), getPlugin(  ) );
+            IEntry entryTmp = EntryHome.findByPrimaryKey( entry.getIdEntry( ), getPlugin( ) );
 
-            if ( entryTmp.isWorkgroupAssociated(  ) )
+            if ( entryTmp.isWorkgroupAssociated( ) )
             {
-                entryTmp.setFields( DirectoryUtils.getAuthorizedFieldsByWorkgroup( entryTmp.getFields(  ), getUser(  ) ) );
+                entryTmp.setFields( DirectoryUtils.getAuthorizedFieldsByWorkgroup( entryTmp.getFields( ), getUser( ) ) );
             }
 
-            if ( entryTmp.isIndexed(  ) )
+            if ( entryTmp.isIndexed( ) )
             {
-                if ( !entryTmp.isShownInAdvancedSearch(  ) )
+                if ( !entryTmp.isShownInAdvancedSearch( ) )
                 {
                     listEntryFormMainSearch.add( entryTmp );
                 }
@@ -2911,55 +2951,51 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 }
             }
 
-            if ( entry.isShownInResultList(  ) )
+            if ( entry.isShownInResultList( ) )
             {
                 listEntryResultSearch.add( entryTmp );
 
                 // add geolocation entries
-                if ( entry.getEntryType(  ).getIdType(  ) == AppPropertiesService.getPropertyInt( 
-                            PROPERTY_ENTRY_TYPE_GEOLOCATION, 16 ) )
+                if ( entry.getEntryType( ).getIdType( ) == AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_GEOLOCATION, 16 ) )
                 {
                     listEntryGeolocation.add( entry );
                 }
             }
         }
 
-        _searchFields.setSortParameters( request, directory, getPlugin(  ) );
+        _searchFields.setSortParameters( request, directory, getPlugin( ) );
 
-        List<Integer> listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable,
-                true, _searchFields, getUser(  ), getLocale(  ) );
+        List<Integer> listResultRecordId = DirectoryUtils.getListResults( request, directory, bWorkflowServiceEnable, true, _searchFields, getUser( ),
+                getLocale( ) );
 
         // Store the list of id records in session
         _searchFields.setListIdsResultRecord( listResultRecordId );
 
         // HACK : We copy the list so workflow does not clear the paginator list.
-        LocalizedPaginator<Integer> paginator = new LocalizedPaginator<Integer>( new ArrayList<Integer>( 
-                    listResultRecordId ), _searchFields.getItemsPerPageDirectoryRecord(  ),
-                DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory ), PARAMETER_PAGE_INDEX,
-                _searchFields.getCurrentPageIndexDirectoryRecord(  ), getLocale(  ) );
+        LocalizedPaginator<Integer> paginator = new LocalizedPaginator<Integer>( new ArrayList<Integer>( listResultRecordId ),
+                _searchFields.getItemsPerPageDirectoryRecord( ), DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory ), PARAMETER_PAGE_INDEX,
+                _searchFields.getCurrentPageIndexDirectoryRecord( ), getLocale( ) );
 
         // get only record for page items.
-        List<Record> lRecord = _recordService.loadListByListId( paginator.getPageItems(  ), getPlugin(  ) );
+        List<Record> lRecord = _recordService.loadListByListId( paginator.getPageItems( ), getPlugin( ) );
 
-        boolean bHistoryEnabled = WorkflowService.getInstance(  ).isAvailable(  ) &&
-            ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
+        boolean bHistoryEnabled = WorkflowService.getInstance( ).isAvailable( ) && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL );
+        RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
         recordFieldFilter.setIsEntryShownInResultList( RecordFieldFilter.FILTER_TRUE );
 
-        bWorkflowServiceEnable = ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-            bWorkflowServiceEnable;
+        bWorkflowServiceEnable = ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) && bWorkflowServiceEnable;
 
-        List<Map<String, Object>> listResourceActions = new ArrayList<Map<String, Object>>( lRecord.size(  ) );
+        List<Map<String, Object>> listResourceActions = new ArrayList<Map<String, Object>>( lRecord.size( ) );
 
-        List<DirectoryAction> listActionsForDirectoryEnable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_ENABLE,
-                getPlugin(  ), getLocale(  ) );
-        List<DirectoryAction> listActionsForDirectoryDisable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_DISABLE,
-                getPlugin(  ), getLocale(  ) );
+        List<DirectoryAction> listActionsForDirectoryEnable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_ENABLE, getPlugin( ),
+                getLocale( ) );
+        List<DirectoryAction> listActionsForDirectoryDisable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_DISABLE, getPlugin( ),
+                getLocale( ) );
 
-        listActionsForDirectoryEnable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryEnable,
-                directory, getUser(  ) );
-        listActionsForDirectoryDisable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryDisable,
-                directory, getUser(  ) );
+        listActionsForDirectoryEnable = (List<DirectoryAction>) RBACService
+                .getAuthorizedActionsCollection( listActionsForDirectoryEnable, directory, getUser( ) );
+        listActionsForDirectoryDisable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryDisable, directory,
+                getUser( ) );
 
         // Get asynchronous file names put at false for better performance
         // since it must call a webservice to get the file name
@@ -2967,77 +3003,67 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         for ( Record record : lRecord )
         {
-            listResourceActions.add( DirectoryService.getInstance(  )
-                                                     .getResourceAction( record, directory, listEntryResultSearch,
-                    adminUser, listActionsForDirectoryEnable, listActionsForDirectoryDisable, bGetFileName,
-                    getPlugin(  ) ) );
+            listResourceActions.add( DirectoryService.getInstance( ).getResourceAction( record, directory, listEntryResultSearch, adminUser,
+                    listActionsForDirectoryEnable, listActionsForDirectoryDisable, bGetFileName, getPlugin( ) ) );
         }
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
-        model.put( MARK_SHOW_DATE_CREATION_RESULT, directory.isDateShownInResultList(  ) );
-        model.put( MARK_SHOW_DATE_MODIFICATION_RESULT, directory.isDateModificationShownInResultList(  ) );
+        model.put( MARK_SHOW_DATE_CREATION_RESULT, directory.isDateShownInResultList( ) );
+        model.put( MARK_SHOW_DATE_MODIFICATION_RESULT, directory.isDateModificationShownInResultList( ) );
         model.put( MARK_ID_ENTRY_TYPE_IMAGE, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_IMAGE, 10 ) );
-        model.put( MARK_ID_ENTRY_TYPE_DIRECTORY,
-            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_DIRECTORY, 12 ) );
-        model.put( MARK_ID_ENTRY_TYPE_GEOLOCATION,
-            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_GEOLOCATION, 16 ) );
-        model.put( MARK_ID_ENTRY_TYPE_MYLUTECE_USER,
-            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) );
-        model.put( MARK_ID_ENTRY_TYPE_NUMBERING,
-            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_NUMBERING, 11 ) );
+        model.put( MARK_ID_ENTRY_TYPE_DIRECTORY, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_DIRECTORY, 12 ) );
+        model.put( MARK_ID_ENTRY_TYPE_GEOLOCATION, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_GEOLOCATION, 16 ) );
+        model.put( MARK_ID_ENTRY_TYPE_MYLUTECE_USER, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) );
+        model.put( MARK_ID_ENTRY_TYPE_NUMBERING, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_NUMBERING, 11 ) );
         model.put( MARK_ENTRY_LIST_GEOLOCATION, listEntryGeolocation );
-        model.put( MARK_WORKFLOW_STATE_SEARCH_DEFAULT, _searchFields.get_nIdWorkflowSate(  ) );
+        model.put( MARK_WORKFLOW_STATE_SEARCH_DEFAULT, _searchFields.get_nIdWorkflowSate( ) );
         model.put( MARK_PAGINATOR, paginator );
-        model.put( MARK_NB_ITEMS_PER_PAGE, Integer.toString( _searchFields.getItemsPerPageDirectoryRecord(  ) ) );
+        model.put( MARK_NB_ITEMS_PER_PAGE, Integer.toString( _searchFields.getItemsPerPageDirectoryRecord( ) ) );
         model.put( MARK_ENTRY_LIST_FORM_MAIN_SEARCH, listEntryFormMainSearch );
         model.put( MARK_ENTRY_LIST_FORM_COMPLEMENTARY_SEARCH, listEntryFormComplementarySearch );
         model.put( MARK_ENTRY_LIST_SEARCH_RESULT, listEntryResultSearch );
 
-        model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, _searchFields.getMapQuery(  ) );
-        model.put( MARK_DATE_CREATION_SEARCH, _searchFields.getDateCreationRecord(  ) );
-        model.put( MARK_DATE_CREATION_BEGIN_SEARCH, _searchFields.getDateCreationBeginRecord(  ) );
-        model.put( MARK_DATE_CREATION_END_SEARCH, _searchFields.getDateCreationEndRecord(  ) );
-        model.put( MARK_DATE_MODIFICATION_SEARCH, _searchFields.getDateModificationRecord(  ) );
-        model.put( MARK_DATE_MODIFICATION_BEGIN_SEARCH, _searchFields.getDateModificationBeginRecord(  ) );
-        model.put( MARK_DATE_MODIFICATION_END_SEARCH, _searchFields.getDateModificationEndRecord(  ) );
+        model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, _searchFields.getMapQuery( ) );
+        model.put( MARK_DATE_CREATION_SEARCH, _searchFields.getDateCreationRecord( ) );
+        model.put( MARK_DATE_CREATION_BEGIN_SEARCH, _searchFields.getDateCreationBeginRecord( ) );
+        model.put( MARK_DATE_CREATION_END_SEARCH, _searchFields.getDateCreationEndRecord( ) );
+        model.put( MARK_DATE_MODIFICATION_SEARCH, _searchFields.getDateModificationRecord( ) );
+        model.put( MARK_DATE_MODIFICATION_BEGIN_SEARCH, _searchFields.getDateModificationBeginRecord( ) );
+        model.put( MARK_DATE_MODIFICATION_END_SEARCH, _searchFields.getDateModificationEndRecord( ) );
 
         model.put( MARK_DIRECTORY, directory );
-        //model.put( MARK_DIRECTORY_RECORD_LIST, listRecordResult );
-        //model.put( MARK_NUMBER_RECORD, paginator.getItemsCount(  ) );
-        model.put( MARK_NUMBER_RECORD, listResultRecordId.size(  ) );
+        // model.put( MARK_DIRECTORY_RECORD_LIST, listRecordResult );
+        // model.put( MARK_NUMBER_RECORD, paginator.getItemsCount( ) );
+        model.put( MARK_NUMBER_RECORD, listResultRecordId.size( ) );
         model.put( MARK_RESOURCE_ACTIONS_LIST, listResourceActions );
         model.put( MARK_HISTORY_WORKFLOW_ENABLED, bHistoryEnabled );
         model.put( MARK_PERMISSION_CREATE_RECORD,
-            RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                DirectoryResourceIdService.PERMISSION_CREATE_RECORD, getUser(  ) ) );
+                RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_CREATE_RECORD, getUser( ) ) );
         model.put( MARK_PERMISSION_MASS_PRINT,
-            RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                DirectoryResourceIdService.PERMISSION_MASS_PRINT, getUser(  ) ) );
-        model.put( MARK_PERMISSION_VISUALISATION_MYLUTECE_USER,
-            RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                DirectoryResourceIdService.PERMISSION_VISUALISATION_MYLUTECE_USER, getUser(  ) ) );
+                RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_MASS_PRINT, getUser( ) ) );
+        model.put( MARK_PERMISSION_VISUALISATION_MYLUTECE_USER, RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
+                DirectoryResourceIdService.PERMISSION_VISUALISATION_MYLUTECE_USER, getUser( ) ) );
 
-        model.put( MARK_LOCALE, getLocale(  ) );
+        model.put( MARK_LOCALE, getLocale( ) );
         model.put( MARK_IS_WORKFLOW_ENABLED, bWorkflowServiceEnable );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-        
-        model.put( MARK_EXTENT_CURRENT, session.getAttribute(MARK_EXTENT_CURRENT) );
-        model.put( MARK_VISIBLE_LAYER, session.getAttribute(MARK_VISIBLE_LAYER) );
-        
-        if ( directory.isDisplayComplementarySearchState(  ) || directory.isDisplaySearchState(  ) )
+
+        model.put( MARK_EXTENT_CURRENT, session.getAttribute( MARK_EXTENT_CURRENT ) );
+        model.put( MARK_VISIBLE_LAYER, session.getAttribute( MARK_VISIBLE_LAYER ) );
+
+        if ( directory.isDisplayComplementarySearchState( ) || directory.isDisplaySearchState( ) )
         {
-            ReferenceList referenceList = new ReferenceList(  );
+            ReferenceList referenceList = new ReferenceList( );
             referenceList.addItem( -1, "" );
 
-            Collection<State> colState = WorkflowService.getInstance(  )
-                                                        .getAllStateByWorkflow( directory.getIdWorkflow(  ), adminUser );
+            Collection<State> colState = WorkflowService.getInstance( ).getAllStateByWorkflow( directory.getIdWorkflow( ), adminUser );
 
             if ( colState != null )
             {
                 for ( State stateWorkflow : colState )
                 {
-                    referenceList.addItem( stateWorkflow.getId(  ), stateWorkflow.getName(  ) );
+                    referenceList.addItem( stateWorkflow.getId( ), stateWorkflow.getName( ) );
                 }
             }
 
@@ -3048,230 +3074,226 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         setPageTitleProperty( PROPERTY_MANAGE_DIRECTORY_RECORD_PAGE_TITLE );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_DIRECTORY_RECORD, getLocale(  ),
-                model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_DIRECTORY_RECORD, getLocale( ), model );
 
-        result.setHtmlContent( getAdminPage( templateList.getHtml(  ) ) );
+        result.setHtmlContent( getAdminPage( templateList.getHtml( ) ) );
 
         return result;
     }
 
     /**
      * Export Directory record
-     * @param request the Http Request
-     * @param response the Http response
-     * @throws AccessDeniedException the {@link AccessDeniedException}
-     * @deprecated use
-     *             fr.paris.lutece.plugins.directory.web.action.
-     *             ExportDirectoryAction
-     *             instead
+     * 
+     * @param request
+     *            the Http Request
+     * @param response
+     *            the Http response
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
+     * @deprecated use fr.paris.lutece.plugins.directory.web.action. ExportDirectoryAction instead
      */
     @Deprecated
-    public void doExportDirectoryRecord( HttpServletRequest request, HttpServletResponse response )
-        throws AccessDeniedException
+    public void doExportDirectoryRecord( HttpServletRequest request, HttpServletResponse response ) throws AccessDeniedException
     {
-        AppLogService.error( 
-            "Calling doExportDirectoryRecord which no longer work. Use fr.paris.lutece.plugins.directory.web.action.ExportDirectoryAction instead." );
+        AppLogService
+                .error( "Calling doExportDirectoryRecord which no longer work. Use fr.paris.lutece.plugins.directory.web.action.ExportDirectoryAction instead." );
     }
 
     /**
      * Return the interface for import directory record
-     * @param request The Http request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The Http request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return Html directory
      *
      */
-    public String getImportDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getImportDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
 
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( directory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_IMPORT_RECORD, getUser(  ) ) )
+        if ( ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_IMPORT_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
         if ( request.getParameter( PARAMETER_SESSION ) != null )
         {
-            if ( _searchFields.getError(  ) != null )
+            if ( _searchFields.getError( ) != null )
             {
-                model.put( MARK_STR_ERROR, _searchFields.getError(  ).toString(  ) );
+                model.put( MARK_STR_ERROR, _searchFields.getError( ).toString( ) );
             }
 
-            model.put( MARK_NUMBER_LINES_ERROR, _searchFields.getCountLineFailure(  ) );
-            model.put( MARK_NUMBER_LINES_IMPORTED,
-                _searchFields.getCountLine(  ) - _searchFields.getCountLineFailure(  ) );
+            model.put( MARK_NUMBER_LINES_ERROR, _searchFields.getCountLineFailure( ) );
+            model.put( MARK_NUMBER_LINES_IMPORTED, _searchFields.getCountLine( ) - _searchFields.getCountLineFailure( ) );
             model.put( MARK_FINISH_IMPORT, true );
             _searchFields.setCountLine( 0 );
             _searchFields.setCountLineFailure( 0 );
             _searchFields.setError( null );
         }
 
-        model.put( MARK_LOCALE, getLocale(  ) );
+        model.put( MARK_LOCALE, getLocale( ) );
         model.put( MARK_DIRECTORY, directory );
         setPageTitleProperty( PROPERTY_IMPORT_DIRECTORY_RECORD_PAGE_TITLE );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_IMPORT_DIRECTORY_RECORD, getLocale(  ),
-                model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_IMPORT_DIRECTORY_RECORD, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
      * ImportDirectory record
-     * @param request the Http Request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            the Http Request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doImportDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doImportDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         FileItem fileItem = multipartRequest.getFile( PARAMETER_FILE_IMPORT );
         String strMimeType = FileSystemUtil.getMIMEType( FileUploadService.getFileNameOnly( fileItem ) );
 
-        if ( ( fileItem == null ) || ( fileItem.getName(  ) == null ) ||
-                DirectoryUtils.EMPTY_STRING.equals( fileItem.getName(  ) ) )
+        if ( ( fileItem == null ) || ( fileItem.getName( ) == null ) || DirectoryUtils.EMPTY_STRING.equals( fileItem.getName( ) ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( FIELD_FILE_IMPORT, getLocale(  ) ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( FIELD_FILE_IMPORT, getLocale( ) )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
-        if ( ( !strMimeType.equals( CONSTANT_MIME_TYPE_CSV ) && !strMimeType.equals( CONSTANT_MIME_TYPE_OCTETSTREAM ) &&
-                !strMimeType.equals( CONSTANT_MIME_TYPE_TEXT_CSV ) ) ||
-                !fileItem.getName(  ).toLowerCase(  ).endsWith( CONSTANT_EXTENSION_CSV_FILE ) )
+        if ( ( !strMimeType.equals( CONSTANT_MIME_TYPE_CSV ) && !strMimeType.equals( CONSTANT_MIME_TYPE_OCTETSTREAM ) && !strMimeType
+                .equals( CONSTANT_MIME_TYPE_TEXT_CSV ) ) || !fileItem.getName( ).toLowerCase( ).endsWith( CONSTANT_EXTENSION_CSV_FILE ) )
         {
             return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_CSV_FILE_IMPORT, AdminMessage.TYPE_STOP );
         }
 
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( directory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_MANAGE_RECORD, getUser(  ) ) )
+        if ( ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_MANAGE_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         Character strCsvSeparator = AppPropertiesService.getProperty( PROPERTY_IMPORT_CSV_DELIMITER ).charAt( 0 );
-        _searchFields.setError( new StringBuffer(  ) );
+        _searchFields.setError( new StringBuffer( ) );
 
-        EntryFilter filter = new EntryFilter(  );
+        EntryFilter filter = new EntryFilter( );
         filter.setIdDirectory( nIdDirectory );
         filter.setIsComment( EntryFilter.FILTER_FALSE );
         filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
 
-        List<IEntry> listEntry = new ArrayList<IEntry>(  );
+        List<IEntry> listEntry = new ArrayList<IEntry>( );
 
-        List<IEntry> listEntryFirstLevel = EntryHome.getEntryList( filter, getPlugin(  ) );
+        List<IEntry> listEntryFirstLevel = EntryHome.getEntryList( filter, getPlugin( ) );
 
         filter.setIsEntryParentNull( EntryFilter.ALL_INT );
 
         for ( IEntry entry : listEntryFirstLevel )
         {
-            if ( !entry.getEntryType(  ).getGroup(  ) )
+            if ( !entry.getEntryType( ).getGroup( ) )
             {
-                listEntry.add( EntryHome.findByPrimaryKey( entry.getIdEntry(  ), getPlugin(  ) ) );
+                listEntry.add( EntryHome.findByPrimaryKey( entry.getIdEntry( ), getPlugin( ) ) );
             }
 
-            filter.setIdEntryParent( entry.getIdEntry(  ) );
+            filter.setIdEntryParent( entry.getIdEntry( ) );
 
-            List<IEntry> listChildren = EntryHome.getEntryList( filter, getPlugin(  ) );
+            List<IEntry> listChildren = EntryHome.getEntryList( filter, getPlugin( ) );
 
             for ( IEntry entryChild : listChildren )
             {
-                listEntry.add( EntryHome.findByPrimaryKey( entryChild.getIdEntry(  ), getPlugin(  ) ) );
+                listEntry.add( EntryHome.findByPrimaryKey( entryChild.getIdEntry( ), getPlugin( ) ) );
             }
         }
 
-        Object[] tabEntry = listEntry.toArray(  );
+        Object [ ] tabEntry = listEntry.toArray( );
 
         try
         {
-            InputStreamReader inputStreamReader = new InputStreamReader( fileItem.getInputStream(  ) );
+            InputStreamReader inputStreamReader = new InputStreamReader( fileItem.getInputStream( ) );
             CSVReader csvReader = new CSVReader( inputStreamReader, strCsvSeparator, '\"' );
 
-            String[] nextLine;
+            String [ ] nextLine;
 
             _searchFields.setCountLine( 0 );
             _searchFields.setCountLineFailure( 0 );
 
-            while ( ( nextLine = csvReader.readNext(  ) ) != null )
+            while ( ( nextLine = csvReader.readNext( ) ) != null )
             {
-                _searchFields.setCountLine( _searchFields.getCountLine(  ) + 1 );
+                _searchFields.setCountLine( _searchFields.getCountLine( ) + 1 );
 
                 if ( nextLine.length != tabEntry.length )
                 {
-                    _searchFields.getError(  ).append( I18nService.getLocalizedString( PROPERTY_LINE, getLocale(  ) ) );
-                    _searchFields.getError(  ).append( _searchFields.getCountLine(  ) );
-                    _searchFields.getError(  ).append( " > " );
-                    _searchFields.getError(  )
-                                 .append( I18nService.getLocalizedString( MESSAGE_ERROR_CSV_NUMBER_SEPARATOR,
-                            getLocale(  ) ) );
-                    _searchFields.getError(  ).append( "<br/>" );
-                    _searchFields.setCountLineFailure( _searchFields.getCountLineFailure(  ) + 1 );
+                    _searchFields.getError( ).append( I18nService.getLocalizedString( PROPERTY_LINE, getLocale( ) ) );
+                    _searchFields.getError( ).append( _searchFields.getCountLine( ) );
+                    _searchFields.getError( ).append( " > " );
+                    _searchFields.getError( ).append( I18nService.getLocalizedString( MESSAGE_ERROR_CSV_NUMBER_SEPARATOR, getLocale( ) ) );
+                    _searchFields.getError( ).append( "<br/>" );
+                    _searchFields.setCountLineFailure( _searchFields.getCountLineFailure( ) + 1 );
                 }
                 else
                 {
-                    Record record = new Record(  );
+                    Record record = new Record( );
                     record.setDirectory( directory );
 
-                    List<RecordField> listRecordField = new ArrayList<RecordField>(  );
+                    List<RecordField> listRecordField = new ArrayList<RecordField>( );
 
                     try
                     {
                         for ( int i = 0; i < nextLine.length; i++ )
                         {
-                            ( (IEntry) tabEntry[i] ).getImportRecordFieldData( record, nextLine[i], true,
-                                listRecordField, getLocale(  ) );
+                            ( (IEntry) tabEntry [i] ).getImportRecordFieldData( record, nextLine [i], true, listRecordField, getLocale( ) );
                         }
 
                         record.setListRecordField( listRecordField );
-                        record.setDateCreation( DirectoryUtils.getCurrentTimestamp(  ) );
-                        //Autopublication
+                        record.setDateCreation( DirectoryUtils.getCurrentTimestamp( ) );
+                        // Autopublication
                         record.setEnabled( true );
-                        _recordService.create( record, getPlugin(  ) );
+                        _recordService.create( record, getPlugin( ) );
                     }
-                    catch ( DirectoryErrorException error )
+                    catch( DirectoryErrorException error )
                     {
-                        _searchFields.getError(  ).append( I18nService.getLocalizedString( PROPERTY_LINE, getLocale(  ) ) );
-                        _searchFields.getError(  ).append( _searchFields.getCountLine(  ) );
-                        _searchFields.getError(  ).append( " > " );
+                        _searchFields.getError( ).append( I18nService.getLocalizedString( PROPERTY_LINE, getLocale( ) ) );
+                        _searchFields.getError( ).append( _searchFields.getCountLine( ) );
+                        _searchFields.getError( ).append( " > " );
 
-                        if ( error.isMandatoryError(  ) )
+                        if ( error.isMandatoryError( ) )
                         {
-                            Object[] tabRequiredFields = { error.getTitleField(  ) };
-                            _searchFields.getError(  )
-                                         .append( I18nService.getLocalizedString( 
-                                    MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, getLocale(  ) ) );
+                            Object [ ] tabRequiredFields = {
+                                error.getTitleField( )
+                            };
+                            _searchFields.getError( ).append(
+                                    I18nService.getLocalizedString( MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, getLocale( ) ) );
                         }
                         else
                         {
-                            Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
-                            _searchFields.getError(  )
-                                         .append( I18nService.getLocalizedString( MESSAGE_DIRECTORY_ERROR,
-                                    tabRequiredFields, getLocale(  ) ) );
+                            Object [ ] tabRequiredFields = {
+                                    error.getTitleField( ), error.getErrorMessage( )
+                            };
+                            _searchFields.getError( ).append( I18nService.getLocalizedString( MESSAGE_DIRECTORY_ERROR, tabRequiredFields, getLocale( ) ) );
                         }
 
-                        _searchFields.getError(  ).append( "<br/>" );
-                        _searchFields.setCountLineFailure( _searchFields.getCountLineFailure(  ) + 1 );
+                        _searchFields.getError( ).append( "<br/>" );
+                        _searchFields.setCountLineFailure( _searchFields.getCountLineFailure( ) + 1 );
                     }
                 }
             }
         }
 
-        catch ( IOException e )
+        catch( IOException e )
         {
             AppLogService.error( e );
         }
@@ -3281,69 +3303,74 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Return the interface for index all directory
-     * @param request The Http request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The Http request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return Html directory
      */
-    public String getIndexAllDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getIndexAllDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryResourceIdService.PERMISSION_INDEX_ALL_DIRECTORY, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_INDEX_ALL_DIRECTORY,
+                getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
-        model.put( MARK_LOCALE, getLocale(  ) );
+        model.put( MARK_LOCALE, getLocale( ) );
 
         setPageTitleProperty( PROPERTY_INDEX_ALL_DIRECTORY_PAGE_TITLE );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_INDEX_ALL_DIRECTORY, getLocale(  ), model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_INDEX_ALL_DIRECTORY, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
      * Gets the confirmation page of indexing all directory
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the confirmation page of delete directory record
      */
-    public String getConfirmIndexAllDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getConfirmIndexAllDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryResourceIdService.PERMISSION_INDEX_ALL_DIRECTORY, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_INDEX_ALL_DIRECTORY,
+                getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         UrlItem url = new UrlItem( JSP_DO_INDEX_ALL_DIRECTORY );
 
-        return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_INDEX_ALL_DIRECTORY, url.getUrl(  ),
-            AdminMessage.TYPE_CONFIRMATION );
+        return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_INDEX_ALL_DIRECTORY, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
     }
 
     /**
      * Start indexing
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doIndexAllDirectory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doIndexAllDirectory( HttpServletRequest request ) throws AccessDeniedException
     {
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryResourceIdService.PERMISSION_INDEX_ALL_DIRECTORY, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_INDEX_ALL_DIRECTORY,
+                getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         if ( request.getParameter( PARAMETER_CANCEL ) == null )
         {
-            DirectorySearchService.getInstance(  ).processIndexing( true );
+            DirectorySearchService.getInstance( ).processIndexing( true );
         }
 
         return getHomeUrl( request );
@@ -3351,40 +3378,36 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Return management of directory record ( list of directory record )
-     * @param request The Http request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The Http request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return Html directory
      */
-    public String getCreateDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getCreateDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( directory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_CREATE_RECORD, getUser(  ) ) )
+        if ( ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_CREATE_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
         /**
-         * Map of <idEntry, RecordFields>
-         * 1) The user has uploaded/deleted a file
-         * - The updated map is stored in the session
-         * 2) The user has not uploaded/delete a file
-         * - The map is filled with the data from the database
-         * - The asynchronous uploaded files map is reinitialized
+         * Map of <idEntry, RecordFields> 1) The user has uploaded/deleted a file - The updated map is stored in the session 2) The user has not uploaded/delete
+         * a file - The map is filled with the data from the database - The asynchronous uploaded files map is reinitialized
          */
         Map<String, List<RecordField>> map = null;
 
-        // Get the map of <idEntry, RecordFields from session if it exists : 
+        // Get the map of <idEntry, RecordFields from session if it exists :
         /**
-         * 1) Case when the user has uploaded a file, the the map is stored in
-         * the session
+         * 1) Case when the user has uploaded a file, the the map is stored in the session
          */
         HttpSession session = request.getSession( false );
 
@@ -3405,161 +3428,155 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         if ( map == null )
         {
             // Remove asynchronous uploaded file from session
-            DirectoryAsynchronousUploadHandler.getHandler(  ).removeSessionFiles( request.getSession(  ).getId(  ) );
+            DirectoryAsynchronousUploadHandler.getHandler( ).removeSessionFiles( request.getSession( ).getId( ) );
         }
 
-        List<IEntry> listEntry = DirectoryUtils.getFormEntries( nIdDirectory, getPlugin(  ), getUser(  ) );
-     
+        List<IEntry> listEntry = DirectoryUtils.getFormEntries( nIdDirectory, getPlugin( ), getUser( ) );
+
         model.put( MARK_ENTRY_LIST, listEntry );
 
-        if ( SecurityService.isAuthenticationEnable(  ) )
+        if ( SecurityService.isAuthenticationEnable( ) )
         {
-            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList(  ) );
+            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList( ) );
         }
 
         model.put( MARK_DIRECTORY, directory );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-        model.put( MARK_LOCALE, getLocale(  ) );
+        model.put( MARK_LOCALE, getLocale( ) );
         setPageTitleProperty( PROPERTY_CREATE_DIRECTORY_RECORD_PAGE_TITLE );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_DIRECTORY_RECORD, getLocale(  ), model );
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_DIRECTORY_RECORD, getLocale( ), model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
-    
-    
+
     /**
      * Gets the creates the directory record with initial values.
      *
-     * @param request the request
+     * @param request
+     *            the request
      * @return the creates the directory record with initial values
-     * @throws AccessDeniedException the access denied exception
+     * @throws AccessDeniedException
+     *             the access denied exception
      */
     @SuppressWarnings( "unchecked" )
-	public String getCreateDirectoryRecordWithInitialValues( HttpServletRequest request )
-            throws AccessDeniedException
-        {
-            String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
-            int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-            Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
-
-            if ( ( directory == null ) ||
-                    !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                        DirectoryResourceIdService.PERMISSION_CREATE_RECORD, getUser(  ) ) )
-            {
-                throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
-            }
-
-            Map<String, Object> model = new HashMap<String, Object>(  );
-
-            /**
-             * Map of <idEntry, RecordFields>
-             * 1) The user has uploaded/deleted a file
-             * - The updated map is stored in the session
-             * 2) The user has not uploaded/delete a file
-             * - The map is filled with the data from the database
-             * - The asynchronous uploaded files map is reinitialized
-             */
-            Map<String, List<RecordField>> map = null;
-
-            // Get the map of <idEntry, RecordFields from session if it exists : 
-            /**
-             * 1) Case when the user has uploaded a file, the the map is stored in
-             * the session
-             */
-            HttpSession session = request.getSession( false );
-
-            if ( session != null )
-            {
-                map = (Map<String, List<RecordField>>) session.getAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
-
-                if ( map != null )
-                {
-                    model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, map );
-                    // IMPORTANT : Remove the map from the session
-                    session.removeAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
-                }
-            }
-
-            // Get the map <idEntry, RecordFields> classically from the database
-            /** 2) The user has not uploaded/delete a file */
-            if ( map == null )
-            {
-                // Remove asynchronous uploaded file from session
-                DirectoryAsynchronousUploadHandler.getHandler(  ).removeSessionFiles( request.getSession(  ).getId(  ) );
-            }
-
-            List<IEntry> listEntry = DirectoryUtils.getFormEntries( nIdDirectory, getPlugin(  ), getUser(  ) );
-         
-            //setValue inital
-            
-// /jsp/admin/plugins/directory/CreateDirectoryRecordWithInitialValues.jsp?id_directory=1&fn=abdou&cid=302714&ln=fall&guid=680a9e86-ffdc-45e6-a3c6-e3020b487624&ph=0858812641&em=fallphenix1987@gmail.com
-            //&pfn=1&pln=2&pem=3&pguid=4&pcid=5
-          
-            String fn = request.getParameter( PARAMETER_GRU_FIRST_NAME );
-            String ln = request.getParameter( PARAMETER_GRU_LAST_NAME );
-            String em = request.getParameter( PARAMETER_GRU_EMAIL );
-            String guid = request.getParameter( PARAMETER_GRU_GUID );
-            String cid = request.getParameter( PARAMETER_GRU_CID );
-            
-            int pfn = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_FIRST_NAME ) ) )? Integer.parseInt( request.getParameter( MARK_POSITION_GRU_FIRST_NAME ) ) : 1;
-            int pln = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_LAST_NAME ) ) )? Integer.parseInt( request.getParameter( MARK_POSITION_GRU_LAST_NAME ) ) : 2;    
-            int pem = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_EMAIL ) ) )? Integer.parseInt( request.getParameter( MARK_POSITION_GRU_EMAIL ) ) : 3;
-            int pguid = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_GUID ) ) )? Integer.parseInt( request.getParameter( MARK_POSITION_GRU_GUID ) ) : 4;       
-            int pcid = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_CID ) ) )? Integer.parseInt( request.getParameter( MARK_POSITION_GRU_CID ) ) : 5;      
-         
-           
-            listEntry.get( pfn-1 ).getFields( ).get( 0 ).setValue( fn );
-            listEntry.get( pln-1 ).getFields( ).get( 0 ).setValue( ln );
-            listEntry.get( pem-1 ).getFields( ).get( 0 ).setValue( em );
-            listEntry.get( pguid-1 ).getFields( ).get( 0 ).setValue( guid );
-            listEntry.get( pcid-1 ).getFields( ).get( 0 ).setValue( cid );
-         
-
-            model.put( MARK_ENTRY_LIST, listEntry );
-
-            if ( SecurityService.isAuthenticationEnable(  ) )
-            {
-                model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList(  ) );
-            }
-
-            model.put( MARK_DIRECTORY, directory );
-            model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-            model.put( MARK_LOCALE, getLocale(  ) );
-            setPageTitleProperty( PROPERTY_CREATE_DIRECTORY_RECORD_PAGE_TITLE );
-
-            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_DIRECTORY_RECORD, getLocale(  ), model );
-
-            return getAdminPage( template.getHtml(  ) );
-        }
-
-    
-  
-    
-
-    /**
-     * Perform the directory record creation
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
-     * @return The URL to go after performing the action
-     */
-    public String doCreateDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getCreateDirectoryRecordWithInitialValues( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( directory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_CREATE_RECORD, getUser(  ) ) )
+        if ( ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_CREATE_RECORD, getUser( ) ) )
+        {
+            throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
+        }
+
+        Map<String, Object> model = new HashMap<String, Object>( );
+
+        /**
+         * Map of <idEntry, RecordFields> 1) The user has uploaded/deleted a file - The updated map is stored in the session 2) The user has not uploaded/delete
+         * a file - The map is filled with the data from the database - The asynchronous uploaded files map is reinitialized
+         */
+        Map<String, List<RecordField>> map = null;
+
+        // Get the map of <idEntry, RecordFields from session if it exists :
+        /**
+         * 1) Case when the user has uploaded a file, the the map is stored in the session
+         */
+        HttpSession session = request.getSession( false );
+
+        if ( session != null )
+        {
+            map = (Map<String, List<RecordField>>) session.getAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
+
+            if ( map != null )
+            {
+                model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, map );
+                // IMPORTANT : Remove the map from the session
+                session.removeAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
+            }
+        }
+
+        // Get the map <idEntry, RecordFields> classically from the database
+        /** 2) The user has not uploaded/delete a file */
+        if ( map == null )
+        {
+            // Remove asynchronous uploaded file from session
+            DirectoryAsynchronousUploadHandler.getHandler( ).removeSessionFiles( request.getSession( ).getId( ) );
+        }
+
+        List<IEntry> listEntry = DirectoryUtils.getFormEntries( nIdDirectory, getPlugin( ), getUser( ) );
+
+        // setValue inital
+
+        // /jsp/admin/plugins/directory/CreateDirectoryRecordWithInitialValues.jsp?id_directory=1&fn=abdou&cid=302714&ln=fall&guid=680a9e86-ffdc-45e6-a3c6-e3020b487624&ph=0858812641&em=fallphenix1987@gmail.com
+        // &pfn=1&pln=2&pem=3&pguid=4&pcid=5
+
+        String fn = request.getParameter( PARAMETER_GRU_FIRST_NAME );
+        String ln = request.getParameter( PARAMETER_GRU_LAST_NAME );
+        String em = request.getParameter( PARAMETER_GRU_EMAIL );
+        String guid = request.getParameter( PARAMETER_GRU_GUID );
+        String cid = request.getParameter( PARAMETER_GRU_CID );
+
+        int pfn = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_FIRST_NAME ) ) ) ? Integer.parseInt( request
+                .getParameter( MARK_POSITION_GRU_FIRST_NAME ) ) : 1;
+        int pln = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_LAST_NAME ) ) ) ? Integer.parseInt( request
+                .getParameter( MARK_POSITION_GRU_LAST_NAME ) ) : 2;
+        int pem = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_EMAIL ) ) ) ? Integer.parseInt( request
+                .getParameter( MARK_POSITION_GRU_EMAIL ) ) : 3;
+        int pguid = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_GUID ) ) ) ? Integer.parseInt( request
+                .getParameter( MARK_POSITION_GRU_GUID ) ) : 4;
+        int pcid = ( StringUtils.isNumeric( request.getParameter( MARK_POSITION_GRU_CID ) ) ) ? Integer
+                .parseInt( request.getParameter( MARK_POSITION_GRU_CID ) ) : 5;
+
+        listEntry.get( pfn - 1 ).getFields( ).get( 0 ).setValue( fn );
+        listEntry.get( pln - 1 ).getFields( ).get( 0 ).setValue( ln );
+        listEntry.get( pem - 1 ).getFields( ).get( 0 ).setValue( em );
+        listEntry.get( pguid - 1 ).getFields( ).get( 0 ).setValue( guid );
+        listEntry.get( pcid - 1 ).getFields( ).get( 0 ).setValue( cid );
+
+        model.put( MARK_ENTRY_LIST, listEntry );
+
+        if ( SecurityService.isAuthenticationEnable( ) )
+        {
+            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList( ) );
+        }
+
+        model.put( MARK_DIRECTORY, directory );
+        model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
+        model.put( MARK_LOCALE, getLocale( ) );
+        setPageTitleProperty( PROPERTY_CREATE_DIRECTORY_RECORD_PAGE_TITLE );
+
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_DIRECTORY_RECORD, getLocale( ), model );
+
+        return getAdminPage( template.getHtml( ) );
+    }
+
+    /**
+     * Perform the directory record creation
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
+     * @return The URL to go after performing the action
+     */
+    public String doCreateDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
+    {
+        String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
+        int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
+
+        if ( ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_CREATE_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         if ( request.getParameter( PARAMETER_CANCEL ) == null )
         {
-            Record record = new Record(  );
+            Record record = new Record( );
             record.setDirectory( directory );
 
             String strRedirectUrl = getDirectoryRecordData( record, request );
@@ -3569,35 +3586,32 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 return strRedirectUrl;
             }
 
-            record.setDateCreation( DirectoryUtils.getCurrentTimestamp(  ) );
-            //Autopublication
-            record.setEnabled( directory.isRecordActivated(  ) );
+            record.setDateCreation( DirectoryUtils.getCurrentTimestamp( ) );
+            // Autopublication
+            record.setEnabled( directory.isRecordActivated( ) );
 
-            TransactionManager.beginTransaction( getPlugin(  ) );
+            TransactionManager.beginTransaction( getPlugin( ) );
 
             try
             {
-                _recordService.create( record, getPlugin(  ) );
+                _recordService.create( record, getPlugin( ) );
 
-                if ( WorkflowService.getInstance(  ).isAvailable(  ) &&
-                        ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
+                if ( WorkflowService.getInstance( ).isAvailable( ) && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) )
                 {
-                    WorkflowService.getInstance(  )
-                                   .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
-                    WorkflowService.getInstance(  )
-                                   .executeActionAutomatic( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
+                    WorkflowService.getInstance( ).getState( record.getIdRecord( ), Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ),
+                            Integer.valueOf( directory.getIdDirectory( ) ) );
+                    WorkflowService.getInstance( ).executeActionAutomatic( record.getIdRecord( ), Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ),
+                            Integer.valueOf( directory.getIdDirectory( ) ) );
                 }
 
-                TransactionManager.commitTransaction( getPlugin(  ) );
+                TransactionManager.commitTransaction( getPlugin( ) );
             }
-            catch ( Exception ex )
+            catch( Exception ex )
             {
                 // something very wrong happened... a database check might be needed
-                AppLogService.error( ex.getMessage(  ) + " for Record " + record.getIdRecord(  ), ex );
+                AppLogService.error( ex.getMessage( ) + " for Record " + record.getIdRecord( ), ex );
                 // revert
-                TransactionManager.rollBack( getPlugin(  ) );
+                TransactionManager.rollBack( getPlugin( ) );
 
                 // throw a message to the user
                 return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
@@ -3609,43 +3623,38 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Return management of directory record ( list of directory record )
-     * @param request The Http request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The Http request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return Html directory
      */
-    public String getModifyDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getModifyDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-        if ( ( record == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    record.getDirectory(  ).getIdDirectory(  ) + DirectoryUtils.EMPTY_STRING,
-                    DirectoryResourceIdService.PERMISSION_MODIFY_RECORD, getUser(  ) ) )
+        if ( ( record == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, record.getDirectory( ).getIdDirectory( ) + DirectoryUtils.EMPTY_STRING,
+                        DirectoryResourceIdService.PERMISSION_MODIFY_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         // List of entries to display
-        List<IEntry> listEntry = DirectoryUtils.getFormEntries( record.getDirectory(  ).getIdDirectory(  ),
-                getPlugin(  ), getUser(  ) );
+        List<IEntry> listEntry = DirectoryUtils.getFormEntries( record.getDirectory( ).getIdDirectory( ), getPlugin( ), getUser( ) );
 
         /**
-         * Map of <idEntry, RecordFields>
-         * 1) The user has uploaded/deleted a file
-         * - The updated map is stored in the session
-         * 2) The user has not uploaded/delete a file
-         * - The map is filled with the data from the database
-         * - The asynchronous uploaded files map is reinitialized
+         * Map of <idEntry, RecordFields> 1) The user has uploaded/deleted a file - The updated map is stored in the session 2) The user has not uploaded/delete
+         * a file - The map is filled with the data from the database - The asynchronous uploaded files map is reinitialized
          */
         Map<String, List<RecordField>> map = null;
 
-        // Get the map of <idEntry, RecordFields from session if it exists : 
+        // Get the map of <idEntry, RecordFields from session if it exists :
         /**
-         * 1) Case when the user has uploaded a file, the the map is stored in
-         * the session
+         * 1) Case when the user has uploaded a file, the the map is stored in the session
          */
         HttpSession session = request.getSession( false );
 
@@ -3660,58 +3669,58 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         /** 2) The user has not uploaded/delete a file */
         if ( map == null )
         {
-            map = DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdDirectoryRecord, getPlugin(  ) );
+            map = DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdDirectoryRecord, getPlugin( ) );
             // Reinit the asynchronous uploaded file map
-            DirectoryAsynchronousUploadHandler.getHandler(  ).reinitMap( request, map, getPlugin(  ) );
+            DirectoryAsynchronousUploadHandler.getHandler( ).reinitMap( request, map, getPlugin( ) );
         }
 
-        Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory(  ).getIdDirectory(  ), getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory( ).getIdDirectory( ), getPlugin( ) );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
         model.put( MARK_ENTRY_LIST, listEntry );
         model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, map );
         model.put( MARK_DIRECTORY, directory );
 
-        if ( PortalService.isExtendActivated(  ) )
+        if ( PortalService.isExtendActivated( ) )
         {
-            ExtendableResourcePluginActionManager.fillModel( request, AdminUserService.getAdminUser( request ), model,
-                record.getIdExtendableResource(  ), record.getExtendableResourceType(  ) );
+            ExtendableResourcePluginActionManager.fillModel( request, AdminUserService.getAdminUser( request ), model, record.getIdExtendableResource( ),
+                    record.getExtendableResourceType( ) );
         }
 
-        if ( SecurityService.isAuthenticationEnable(  ) )
+        if ( SecurityService.isAuthenticationEnable( ) )
         {
-            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList(  ) );
+            model.put( MARK_ROLE_REF_LIST, RoleHome.getRolesList( ) );
         }
 
         model.put( MARK_DIRECTORY_RECORD, record );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-        model.put( MARK_LOCALE, getLocale(  ) );
+        model.put( MARK_LOCALE, getLocale( ) );
         setPageTitleProperty( PROPERTY_MODIFY_DIRECTORY_RECORD_PAGE_TITLE );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_DIRECTORY_RECORD, getLocale(  ), model );
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_DIRECTORY_RECORD, getLocale( ), model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
- 
     /**
      * Perform the directory record creation
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doModifyDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doModifyDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-        if ( ( record == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    record.getDirectory(  ).getIdDirectory(  ) + DirectoryUtils.EMPTY_STRING,
-                    DirectoryResourceIdService.PERMISSION_MODIFY_RECORD, getUser(  ) ) )
+        if ( ( record == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, record.getDirectory( ).getIdDirectory( ) + DirectoryUtils.EMPTY_STRING,
+                        DirectoryResourceIdService.PERMISSION_MODIFY_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -3727,12 +3736,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
             try
             {
-                _recordService.updateWidthRecordField( record, getPlugin(  ) );
+                _recordService.updateWidthRecordField( record, getPlugin( ) );
             }
-            catch ( Exception ex )
+            catch( Exception ex )
             {
                 // something very wrong happened... a database check might be needed
-                AppLogService.error( ex.getMessage(  ) + " when updating Record " + record.getIdRecord(  ), ex );
+                AppLogService.error( ex.getMessage( ) + " when updating Record " + record.getIdRecord( ), ex );
 
                 // throw a message to the user
                 return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
@@ -3744,27 +3753,29 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Gets the confirmation page of delete directory record
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the confirmation page of delete directory record
      */
-    public String getConfirmRemoveDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getConfirmRemoveDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
-        String[] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
+        String [ ] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
 
         if ( ( listIdsDirectoryRecord != null ) && ( listIdsDirectoryRecord.length > 0 ) )
         {
             String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
 
             // If the id directory is not in the parameter, then fetch it from the first record
-            // assuming all records are from the same directory 
+            // assuming all records are from the same directory
             if ( StringUtils.isBlank( strIdDirectory ) || !StringUtils.isNumeric( strIdDirectory ) )
             {
-                String strIdDirectoryRecord = listIdsDirectoryRecord[0];
+                String strIdDirectoryRecord = listIdsDirectoryRecord [0];
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
-                strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
+                strIdDirectory = Integer.toString( record.getDirectory( ).getIdDirectory( ) );
             }
 
             int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
@@ -3775,12 +3786,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
             {
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-                if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
-                        !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                            Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                            DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser(  ) ) )
+                if ( ( record == null )
+                        || ( record.getDirectory( ).getIdDirectory( ) != nIdDirectory )
+                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                                DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser( ) ) )
                 {
                     throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
                 }
@@ -3788,8 +3799,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, nIdDirectoryRecord );
             }
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_DIRECTORY_RECORD, url.getUrl(  ),
-                AdminMessage.TYPE_CONFIRMATION );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_DIRECTORY_RECORD, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
         }
 
         return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
@@ -3797,60 +3807,60 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Perform the directory record supression
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doRemoveDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doRemoveDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
-        String[] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
+        String [ ] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
 
         if ( ( listIdsDirectoryRecord != null ) && ( listIdsDirectoryRecord.length > 0 ) )
         {
             String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
             int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-            List<String> listErrors = new ArrayList<String>(  );
+            List<String> listErrors = new ArrayList<String>( );
 
             for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
             {
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-                if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
-                        !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                            Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                            DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser(  ) ) )
+                if ( ( record == null )
+                        || ( record.getDirectory( ).getIdDirectory( ) != nIdDirectory )
+                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                                DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser( ) ) )
                 {
                     throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
                 }
 
-                if ( !RecordRemovalListenerService.getService(  )
-                                                      .checkForRemoval( strIdDirectoryRecord, listErrors, getLocale(  ) ) )
+                if ( !RecordRemovalListenerService.getService( ).checkForRemoval( strIdDirectoryRecord, listErrors, getLocale( ) ) )
                 {
-                    String strCause = AdminMessageService.getFormattedList( listErrors, getLocale(  ) );
-                    Object[] args = { strCause };
+                    String strCause = AdminMessageService.getFormattedList( listErrors, getLocale( ) );
+                    Object [ ] args = {
+                        strCause
+                    };
 
-                    return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_RECORD, args,
-                        AdminMessage.TYPE_STOP );
+                    return AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_RECORD, args, AdminMessage.TYPE_STOP );
                 }
 
                 try
                 {
-                    _recordService.remove( nIdDirectoryRecord, getPlugin(  ) );
+                    _recordService.remove( nIdDirectoryRecord, getPlugin( ) );
                 }
-                catch ( Exception ex )
+                catch( Exception ex )
                 {
                     // something very wrong happened... a database check might be needed
-                    AppLogService.error( ex.getMessage(  ) + " when deleting Record " + record.getIdRecord(  ), ex );
+                    AppLogService.error( ex.getMessage( ) + " when deleting Record " + record.getIdRecord( ), ex );
 
                     // throw a message to the user
-                    return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE,
-                        AdminMessage.TYPE_STOP );
+                    return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
                 }
 
-                WorkflowService.getInstance(  )
-                               .doRemoveWorkFlowResource( nIdDirectoryRecord, Record.WORKFLOW_RESOURCE_TYPE );
+                WorkflowService.getInstance( ).doRemoveWorkFlowResource( nIdDirectoryRecord, Record.WORKFLOW_RESOURCE_TYPE );
             }
 
             return DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory );
@@ -3861,54 +3871,52 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * copy the directory whose key is specified in the Http request
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doCopyDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doCopyDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-        if ( ( record == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_COPY_RECORD, getUser(  ) ) )
+        if ( ( record == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_COPY_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        record.setDateCreation( DirectoryUtils.getCurrentTimestamp(  ) );
+        record.setDateCreation( DirectoryUtils.getCurrentTimestamp( ) );
 
         try
         {
-            _recordService.copy( record, getPlugin(  ) );
+            _recordService.copy( record, getPlugin( ) );
         }
-        catch ( Exception ex )
+        catch( Exception ex )
         {
             // something very wrong happened... a database check might be needed
-            AppLogService.error( ex.getMessage(  ) + " when copying Record " + record.getIdRecord(  ), ex );
+            AppLogService.error( ex.getMessage( ) + " when copying Record " + record.getIdRecord( ), ex );
 
             // Revert
-            _recordService.remove( record.getIdRecord(  ), getPlugin(  ) );
+            _recordService.remove( record.getIdRecord( ), getPlugin( ) );
 
             // throw a message to the user
             return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
         }
 
-        Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory(  ).getIdDirectory(  ), getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory( ).getIdDirectory( ), getPlugin( ) );
 
-        if ( WorkflowService.getInstance(  ).isAvailable(  ) &&
-                ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
+        if ( WorkflowService.getInstance( ).isAvailable( ) && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) )
         {
-            WorkflowService.getInstance(  )
-                           .getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
-            WorkflowService.getInstance(  )
-                           .executeActionAutomatic( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
+            WorkflowService.getInstance( ).getState( record.getIdRecord( ), Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ),
+                    Integer.valueOf( directory.getIdDirectory( ) ) );
+            WorkflowService.getInstance( ).executeActionAutomatic( record.getIdRecord( ), Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ),
+                    Integer.valueOf( directory.getIdDirectory( ) ) );
         }
 
         return getRedirectUrl( request );
@@ -3916,22 +3924,23 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Gets the confirmation page of disable directory record
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the confirmation page of disable directory record
      */
-    public String getConfirmDisableDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getConfirmDisableDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
         String strMessage;
 
-        if ( ( record == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser(  ) ) )
+        if ( ( record == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -3941,26 +3950,27 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         UrlItem url = new UrlItem( JSP_DO_DISABLE_DIRECTORY_RECORD );
         url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, strIdDirectoryRecord );
 
-        return AdminMessageService.getMessageUrl( request, strMessage, url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+        return AdminMessageService.getMessageUrl( request, strMessage, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
     }
 
     /**
      * Perform disable directory record
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doDisableDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doDisableDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-        if ( ( record == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser(  ) ) )
+        if ( ( record == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -3969,12 +3979,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         try
         {
-            _recordService.update( record, getPlugin(  ) );
+            _recordService.update( record, getPlugin( ) );
         }
-        catch ( Exception ex )
+        catch( Exception ex )
         {
             // something very wrong happened... a database check might be needed
-            AppLogService.error( ex.getMessage(  ) + " when disabling Record " + record.getIdRecord(  ), ex );
+            AppLogService.error( ex.getMessage( ) + " when disabling Record " + record.getIdRecord( ), ex );
 
             // throw a message to the user
             return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
@@ -3985,21 +3995,22 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Perform enable directory record
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doEnableDirectoryRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doEnableDirectoryRecord( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectoryRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-        if ( ( record == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser(  ) ) )
+        if ( ( record == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -4008,12 +4019,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         try
         {
-            _recordService.update( record, getPlugin(  ) );
+            _recordService.update( record, getPlugin( ) );
         }
-        catch ( Exception ex )
+        catch( Exception ex )
         {
             // something very wrong happened... a database check might be needed
-            AppLogService.error( ex.getMessage(  ) + " when enabling Record " + record.getIdRecord(  ), ex );
+            AppLogService.error( ex.getMessage( ) + " when enabling Record " + record.getIdRecord( ), ex );
 
             // throw a message to the user
             return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_GENERIC_MESSAGE, AdminMessage.TYPE_STOP );
@@ -4024,32 +4035,31 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return the tasks form
-     * @param request the request
+     * 
+     * @param request
+     *            the request
      * @return the tasks form
      */
     public String getTasksForm( HttpServletRequest request )
     {
-        String[] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
+        String [ ] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
         String strIdAction = request.getParameter( PARAMETER_ID_ACTION );
 
-        if ( ( listIdsDirectoryRecord != null ) && ( listIdsDirectoryRecord.length > 0 ) &&
-                StringUtils.isNotBlank( strIdAction ) && StringUtils.isNumeric( strIdAction ) )
+        if ( ( listIdsDirectoryRecord != null ) && ( listIdsDirectoryRecord.length > 0 ) && StringUtils.isNotBlank( strIdAction )
+                && StringUtils.isNumeric( strIdAction ) )
         {
             int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
 
             /*
-             * DIRECTORY-126 : Add new direction action : Mass Workflow action
-             * Only the first record task form is displayed because the id
-             * resource is not
+             * DIRECTORY-126 : Add new direction action : Mass Workflow action Only the first record task form is displayed because the id resource is not
              * relevant when displaying the task form.
              */
-            String strIdDirectoryRecord = listIdsDirectoryRecord[0];
+            String strIdDirectoryRecord = listIdsDirectoryRecord [0];
             int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-            String strHtmlTasksForm = WorkflowService.getInstance(  )
-                                                     .getDisplayTasksForm( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE,
-                    nIdAction, request, getLocale(  ) );
+            String strHtmlTasksForm = WorkflowService.getInstance( ).getDisplayTasksForm( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction, request,
+                    getLocale( ) );
 
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
 
             model.put( MARK_TASKS_FORM, strHtmlTasksForm );
             model.put( MARK_ID_ACTION, nIdAction );
@@ -4058,10 +4068,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
             setPageTitleProperty( PROPERTY_TASKS_FORM_WORKFLOW_PAGE_TITLE );
 
-            HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_TASKS_FORM_WORKFLOW, getLocale(  ),
-                    model );
+            HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_TASKS_FORM_WORKFLOW, getLocale( ), model );
 
-            return getAdminPage( templateList.getHtml(  ) );
+            return getAdminPage( templateList.getHtml( ) );
         }
 
         return getManageDirectory( request );
@@ -4069,25 +4078,27 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * save the tasks form
-     * @param request the httpRequest
+     * 
+     * @param request
+     *            the httpRequest
      * @return The URL to go after performing the action
      */
     public String doSaveTasksForm( HttpServletRequest request )
     {
-        String[] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
+        String [ ] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
 
         if ( ( listIdsDirectoryRecord != null ) && ( listIdsDirectoryRecord.length > 0 ) )
         {
             String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
 
             // If the id directory is not in the parameter, then fetch it from the first record
-            // assuming all records are from the same directory 
+            // assuming all records are from the same directory
             if ( StringUtils.isBlank( strIdDirectory ) || !StringUtils.isNumeric( strIdDirectory ) )
             {
-                String strIdDirectoryRecord = listIdsDirectoryRecord[0];
+                String strIdDirectoryRecord = listIdsDirectoryRecord [0];
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
-                strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
+                strIdDirectory = Integer.toString( record.getDirectory( ).getIdDirectory( ) );
             }
 
             int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
@@ -4098,23 +4109,22 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 boolean bShowActionResult = StringUtils.isNotBlank( strShowActionResult );
 
                 // Case when the user is uploading a file
-                String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+                String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler( ).getUploadAction( request );
 
                 if ( StringUtils.isNotBlank( strUploadAction ) )
                 {
                     Map<String, List<RecordField>> mapRecordFields = null;
 
                     /**
-                     * 1) Case when the user has uploaded a file, the the map is
-                     * stored in the session
+                     * 1) Case when the user has uploaded a file, the the map is stored in the session
                      */
-                    HttpSession session = request.getSession(  );
+                    HttpSession session = request.getSession( );
                     mapRecordFields = (Map<String, List<RecordField>>) session.getAttribute( DirectoryUtils.SESSION_DIRECTORY_TASKS_SUBMITTED_RECORD_FIELDS );
 
                     /** 2) The user has not uploaded/delete a file */
                     if ( mapRecordFields == null )
                     {
-                        mapRecordFields = new HashMap<String, List<RecordField>>(  );
+                        mapRecordFields = new HashMap<String, List<RecordField>>( );
                     }
 
                     String strIdAction = request.getParameter( PARAMETER_ID_ACTION );
@@ -4122,33 +4132,33 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
                     try
                     {
-                        DirectoryAsynchronousUploadHandler.getHandler(  )
-                                                          .doUploadAction( request, strUploadAction, mapRecordFields,
-                            null, getPlugin(  ) );
+                        DirectoryAsynchronousUploadHandler.getHandler( ).doUploadAction( request, strUploadAction, mapRecordFields, null, getPlugin( ) );
                     }
-                    catch ( DirectoryErrorException error )
+                    catch( DirectoryErrorException error )
                     {
                         String strErrorMessage = DirectoryUtils.EMPTY_STRING;
 
-                        if ( error.isMandatoryError(  ) )
+                        if ( error.isMandatoryError( ) )
                         {
-                            Object[] tabRequiredFields = { error.getTitleField(  ) };
-                            strErrorMessage = AdminMessageService.getMessageUrl( request,
-                                    MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
+                            Object [ ] tabRequiredFields = {
+                                error.getTitleField( )
+                            };
+                            strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields,
+                                    AdminMessage.TYPE_STOP );
                         }
                         else
                         {
-                            Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
-                            strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR,
-                                    tabRequiredFields, AdminMessage.TYPE_STOP );
+                            Object [ ] tabRequiredFields = {
+                                    error.getTitleField( ), error.getErrorMessage( )
+                            };
+                            strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR, tabRequiredFields, AdminMessage.TYPE_STOP );
                         }
 
                         return strErrorMessage;
                     }
 
                     // Store the map in the session
-                    session.setAttribute( DirectoryUtils.SESSION_DIRECTORY_TASKS_SUBMITTED_RECORD_FIELDS,
-                        mapRecordFields );
+                    session.setAttribute( DirectoryUtils.SESSION_DIRECTORY_TASKS_SUBMITTED_RECORD_FIELDS, mapRecordFields );
 
                     return getJspTasksForm( request, listIdsDirectoryRecord, nIdAction, bShowActionResult );
                 }
@@ -4156,8 +4166,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
                 int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
 
-                String strError = _directoryActionResult.doSaveTaskForm( nIdDirectory, nIdAction,
-                        listIdsDirectoryRecord, getPlugin(  ), getLocale(  ), request );
+                String strError = _directoryActionResult.doSaveTaskForm( nIdDirectory, nIdAction, listIdsDirectoryRecord, getPlugin( ), getLocale( ), request );
 
                 if ( StringUtils.isNotBlank( strError ) )
                 {
@@ -4178,184 +4187,177 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return the resource history
-     * @param request the httpRequest
-     * @throws AccessDeniedException AccessDeniedException
+     * 
+     * @param request
+     *            the httpRequest
+     * @throws AccessDeniedException
+     *             AccessDeniedException
      * @return the resource history
      */
-    public String getResourceHistory( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getResourceHistory( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
 
-        Record record = _recordService.findByPrimaryKey( nIdRecord, getPlugin(  ) );
-        int nIdDirectory = record.getDirectory(  ).getIdDirectory(  );
-        int nIdWorkflow = ( DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) ) ).getIdWorkflow(  );
+        Record record = _recordService.findByPrimaryKey( nIdRecord, getPlugin( ) );
+        int nIdDirectory = record.getDirectory( ).getIdDirectory( );
+        int nIdWorkflow = ( DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) ) ).getIdWorkflow( );
 
         // Get asynchronous file names
         boolean bGetFileName = true;
 
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_HISTORY_RECORD, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                DirectoryResourceIdService.PERMISSION_HISTORY_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         EntryFilter filter;
-        filter = new EntryFilter(  );
-        filter.setIdDirectory( record.getDirectory(  ).getIdDirectory(  ) );
+        filter = new EntryFilter( );
+        filter.setIdDirectory( record.getDirectory( ).getIdDirectory( ) );
         filter.setIsShownInHistory( EntryFilter.FILTER_TRUE );
 
-        List<IEntry> listEntry = EntryHome.getEntryList( filter, getPlugin(  ) );
+        List<IEntry> listEntry = EntryHome.getEntryList( filter, getPlugin( ) );
 
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
         // List directory actions
-        List<DirectoryAction> listActionsForDirectoryEnable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_ENABLE,
-                getPlugin(  ), getLocale(  ) );
-        List<DirectoryAction> listActionsForDirectoryDisable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_DISABLE,
-                getPlugin(  ), getLocale(  ) );
+        List<DirectoryAction> listActionsForDirectoryEnable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_ENABLE, getPlugin( ),
+                getLocale( ) );
+        List<DirectoryAction> listActionsForDirectoryDisable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_DISABLE, getPlugin( ),
+                getLocale( ) );
 
         listActionsForDirectoryEnable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryEnable,
-                record.getDirectory(  ), getUser(  ) );
+                record.getDirectory( ), getUser( ) );
         listActionsForDirectoryDisable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryDisable,
-                record.getDirectory(  ), getUser(  ) );
+                record.getDirectory( ), getUser( ) );
 
         _searchFields.setRedirectUrl( request );
         _searchFields.setItemNavigatorHistory( nIdRecord, AppPathService.getBaseUrl( request ) + JSP_RESOURCE_HISTORY,
-            DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
+                DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
 
-        boolean bHistoryEnabled = WorkflowService.getInstance(  ).isAvailable(  ) &&
-            ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );
+        boolean bHistoryEnabled = WorkflowService.getInstance( ).isAvailable( ) && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
         if ( directory != null )
         {
-            if ( directory.isDateShownInHistory(  ) )
+            if ( directory.isDateShownInHistory( ) )
             {
-                model.put( MARK_RECORD_DATE_CREATION, record.getDateCreation(  ) );
+                model.put( MARK_RECORD_DATE_CREATION, record.getDateCreation( ) );
             }
 
-            if ( directory.isDateModificationShownInHistory(  ) )
+            if ( directory.isDateModificationShownInHistory( ) )
             {
-                model.put( MARK_RECORD_DATE_MODIFICATION, record.getDateModification(  ) );
+                model.put( MARK_RECORD_DATE_MODIFICATION, record.getDateModification( ) );
             }
         }
 
         model.put( MARK_RECORD, record );
         model.put( MARK_ENTRY_LIST, listEntry );
         model.put( MARK_DIRECTORY, directory );
-        model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
-            DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ), bGetFileName ) );
+        model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin( ), bGetFileName ) );
 
         model.put( MARK_RESOURCE_HISTORY,
-            WorkflowService.getInstance(  )
-                           .getDisplayDocumentHistory( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdWorkflow, request,
-                getLocale(  ) ) );
-        model.put( MARK_RESOURCE_ACTIONS,
-            DirectoryService.getInstance(  )
-                            .getResourceAction( record, directory, listEntry, getUser(  ),
-                listActionsForDirectoryEnable, listActionsForDirectoryDisable, bGetFileName, getPlugin(  ) ) );
-        model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorHistory(  ) );
+                WorkflowService.getInstance( ).getDisplayDocumentHistory( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdWorkflow, request, getLocale( ) ) );
+        model.put(
+                MARK_RESOURCE_ACTIONS,
+                DirectoryService.getInstance( ).getResourceAction( record, directory, listEntry, getUser( ), listActionsForDirectoryEnable,
+                        listActionsForDirectoryDisable, bGetFileName, getPlugin( ) ) );
+        model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorHistory( ) );
         model.put( MARK_HISTORY_WORKFLOW_ENABLED, bHistoryEnabled );
 
         setPageTitleProperty( PROPERTY_RESOURCE_HISTORY_PAGE_TITLE );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_RESOURCE_HISTORY, getLocale(  ), model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_RESOURCE_HISTORY, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
      * return the record visualisation
-     * @param request the Http request
+     * 
+     * @param request
+     *            the Http request
      * @return the record visualisation
-     * @throws AccessDeniedException AccessDeniedException
+     * @throws AccessDeniedException
+     *             AccessDeniedException
      */
-    public String getRecordVisualisation( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getRecordVisualisation( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
         EntryFilter filter;
 
-        Record record = _recordService.findByPrimaryKey( nIdRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdRecord, getPlugin( ) );
 
-        if ( ( record == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_VISUALISATION_RECORD, getUser(  ) ) )
+        if ( ( record == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_VISUALISATION_RECORD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        filter = new EntryFilter(  );
-        filter.setIdDirectory( record.getDirectory(  ).getIdDirectory(  ) );
+        filter = new EntryFilter( );
+        filter.setIdDirectory( record.getDirectory( ).getIdDirectory( ) );
         filter.setIsGroup( EntryFilter.FILTER_TRUE );
 
-        List<IEntry> listEntry = DirectoryUtils.getFormEntries( record.getDirectory(  ).getIdDirectory(  ),
-                getPlugin(  ), getUser(  ) );
-        int nIdDirectory = record.getDirectory(  ).getIdDirectory(  );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        List<IEntry> listEntry = DirectoryUtils.getFormEntries( record.getDirectory( ).getIdDirectory( ), getPlugin( ), getUser( ) );
+        int nIdDirectory = record.getDirectory( ).getIdDirectory( );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
         // List directory actions
-        List<DirectoryAction> listActionsForDirectoryEnable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_ENABLE,
-                getPlugin(  ), getLocale(  ) );
-        List<DirectoryAction> listActionsForDirectoryDisable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_DISABLE,
-                getPlugin(  ), getLocale(  ) );
+        List<DirectoryAction> listActionsForDirectoryEnable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_ENABLE, getPlugin( ),
+                getLocale( ) );
+        List<DirectoryAction> listActionsForDirectoryDisable = DirectoryActionHome.selectActionsRecordByFormState( Directory.STATE_DISABLE, getPlugin( ),
+                getLocale( ) );
 
-        listActionsForDirectoryEnable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryEnable,
-                directory, getUser(  ) );
-        listActionsForDirectoryDisable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryDisable,
-                directory, getUser(  ) );
+        listActionsForDirectoryEnable = (List<DirectoryAction>) RBACService
+                .getAuthorizedActionsCollection( listActionsForDirectoryEnable, directory, getUser( ) );
+        listActionsForDirectoryDisable = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActionsForDirectoryDisable, directory,
+                getUser( ) );
 
         _searchFields.setRedirectUrl( request );
-        _searchFields.setItemNavigatorViewRecords( nIdRecord,
-            AppPathService.getBaseUrl( request ) + JSP_DO_VISUALISATION_RECORD,
-            DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
+        _searchFields.setItemNavigatorViewRecords( nIdRecord, AppPathService.getBaseUrl( request ) + JSP_DO_VISUALISATION_RECORD,
+                DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
 
-        boolean bHistoryEnabled = WorkflowService.getInstance(  ).isAvailable(  ) &&
-            ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL );
+        boolean bHistoryEnabled = WorkflowService.getInstance( ).isAvailable( ) && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL );
 
         // Get asynchronous file names
         boolean bGetFileName = true;
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
         model.put( MARK_RECORD, record );
         model.put( MARK_ENTRY_LIST, listEntry );
         model.put( MARK_DIRECTORY, directory );
-        model.put( MARK_LOCALE, getLocale(  ) );
-        model.put( MARK_ID_ENTRY_TYPE_GEOLOCATION,
-            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_GEOLOCATION, 16 ) );
+        model.put( MARK_LOCALE, getLocale( ) );
+        model.put( MARK_ID_ENTRY_TYPE_GEOLOCATION, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_GEOLOCATION, 16 ) );
         model.put( MARK_ID_ENTRY_TYPE_IMAGE, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_IMAGE, 10 ) );
-        model.put( MARK_ID_ENTRY_TYPE_MYLUTECE_USER,
-            AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) );
-        model.put( MARK_PERMISSION_VISUALISATION_MYLUTECE_USER,
-            RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
-                DirectoryResourceIdService.PERMISSION_VISUALISATION_MYLUTECE_USER, getUser(  ) ) );
-        model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
-            DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ) ) );
+        model.put( MARK_ID_ENTRY_TYPE_MYLUTECE_USER, AppPropertiesService.getPropertyInt( PROPERTY_ENTRY_TYPE_MYLUTECE_USER, 19 ) );
+        model.put( MARK_PERMISSION_VISUALISATION_MYLUTECE_USER, RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                DirectoryResourceIdService.PERMISSION_VISUALISATION_MYLUTECE_USER, getUser( ) ) );
+        model.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin( ) ) );
 
-        model.put( MARK_SHOW_DATE_CREATION_RECORD, directory.isDateShownInResultRecord(  ) );
-        model.put( MARK_SHOW_DATE_MODIFICATION_RECORD, directory.isDateModificationShownInResultRecord(  ) );
-        model.put( MARK_RESOURCE_ACTIONS,
-            DirectoryService.getInstance(  )
-                            .getResourceAction( record, directory, listEntry, getUser(  ),
-                listActionsForDirectoryEnable, listActionsForDirectoryDisable, bGetFileName, getPlugin(  ) ) );
-        model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorViewRecords(  ) );
+        model.put( MARK_SHOW_DATE_CREATION_RECORD, directory.isDateShownInResultRecord( ) );
+        model.put( MARK_SHOW_DATE_MODIFICATION_RECORD, directory.isDateModificationShownInResultRecord( ) );
+        model.put(
+                MARK_RESOURCE_ACTIONS,
+                DirectoryService.getInstance( ).getResourceAction( record, directory, listEntry, getUser( ), listActionsForDirectoryEnable,
+                        listActionsForDirectoryDisable, bGetFileName, getPlugin( ) ) );
+        model.put( MARK_ITEM_NAVIGATOR, _searchFields.getItemNavigatorViewRecords( ) );
         model.put( MARK_HISTORY_WORKFLOW_ENABLED, bHistoryEnabled );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_VIEW_DIRECTORY_RECORD, getLocale(  ), model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_VIEW_DIRECTORY_RECORD, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
      * Get the html for action result
-     * @param request the HTTP request
+     * 
+     * @param request
+     *            the HTTP request
      * @return the html code
      */
     public String getActionResult( HttpServletRequest request )
@@ -4363,15 +4365,15 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
         String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
 
-        if ( StringUtils.isNotBlank( strIdDirectory ) && StringUtils.isNumeric( strIdDirectory ) &&
-                StringUtils.isNotBlank( strIdAction ) && StringUtils.isNumeric( strIdAction ) )
+        if ( StringUtils.isNotBlank( strIdDirectory ) && StringUtils.isNumeric( strIdDirectory ) && StringUtils.isNotBlank( strIdAction )
+                && StringUtils.isNumeric( strIdAction ) )
         {
             int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
             int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
 
             // Add directory to the model
-            Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+            Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
             if ( directory == null )
             {
@@ -4381,9 +4383,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             model.put( MARK_DIRECTORY, directory );
 
             // Add the action to the model
-            for ( Action action : WorkflowService.getInstance(  ).getMassActions( directory.getIdWorkflow(  ) ) )
+            for ( Action action : WorkflowService.getInstance( ).getMassActions( directory.getIdWorkflow( ) ) )
             {
-                if ( action.getId(  ) == nIdAction )
+                if ( action.getId( ) == nIdAction )
                 {
                     model.put( MARK_ACTION, action );
 
@@ -4392,22 +4394,22 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
 
             // Add the entries list to show in the model
-            EntryFilter entryFilter = new EntryFilter(  );
+            EntryFilter entryFilter = new EntryFilter( );
             entryFilter.setIdDirectory( nIdDirectory );
             entryFilter.setIsGroup( EntryFilter.FILTER_FALSE );
             entryFilter.setIsComment( EntryFilter.FILTER_FALSE );
             entryFilter.setIsShownInResultList( EntryFilter.FILTER_TRUE );
 
-            List<IEntry> listEntries = EntryHome.getEntryList( entryFilter, getPlugin(  ) );
+            List<IEntry> listEntries = EntryHome.getEntryList( entryFilter, getPlugin( ) );
             model.put( MARK_ENTRY_LIST, listEntries );
 
-            _directoryActionResult.fillModel( model, listEntries, getPlugin(  ), getUser(  ), directory );
+            _directoryActionResult.fillModel( model, listEntries, getPlugin( ), getUser( ), directory );
 
-            model.put( MARK_LOCALE, request.getLocale(  ) );
+            model.put( MARK_LOCALE, request.getLocale( ) );
 
-            HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_ACTION_RESULT, getLocale(  ), model );
+            HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_ACTION_RESULT, getLocale( ), model );
 
-            return getAdminPage( templateList.getHtml(  ) );
+            return getAdminPage( templateList.getHtml( ) );
         }
 
         return getManageDirectory( request );
@@ -4415,7 +4417,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return url of the jsp manage directory
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return url of the jsp manage directory
      */
     private String getJspManageDirectory( HttpServletRequest request )
@@ -4425,20 +4429,25 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return url of the jsp modify directory
-     * @param request The HTTP request
-     * @param nIdDirectory the key of directory to modify
+     * 
+     * @param request
+     *            The HTTP request
+     * @param nIdDirectory
+     *            the key of directory to modify
      * @return return url of the jsp modify directorys
      */
     private String getJspModifyDirectory( HttpServletRequest request, int nIdDirectory )
     {
-        return AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY + "?" + PARAMETER_ID_DIRECTORY + "=" +
-        nIdDirectory;
+        return AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY + "?" + PARAMETER_ID_DIRECTORY + "=" + nIdDirectory;
     }
 
     /**
      * return url of the jsp modify entry
-     * @param request The HTTP request
-     * @param nIdEntry the key of the entry to modify
+     * 
+     * @param request
+     *            The HTTP request
+     * @param nIdEntry
+     *            the key of the entry to modify
      * @return return url of the jsp modify entry
      */
     private String getJspModifyEntry( HttpServletRequest request, int nIdEntry )
@@ -4448,8 +4457,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return url of the jsp modify field
-     * @param request The HTTP request
-     * @param nIdField the key of the field to modify
+     * 
+     * @param request
+     *            The HTTP request
+     * @param nIdField
+     *            the key of the field to modify
      * @return return url of the jsp modify field
      */
     private String getJspModifyField( HttpServletRequest request, int nIdField )
@@ -4459,32 +4471,41 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return url of the jsp print mass
-     * @param request The HTTP request
-     * @param nIdDirectory the directory id
-     * @param strIdStateList the list of id state
+     * 
+     * @param request
+     *            The HTTP request
+     * @param nIdDirectory
+     *            the directory id
+     * @param strIdStateList
+     *            the list of id state
      * @return url of the jsp print mass
      */
     private String getJspPrintMass( HttpServletRequest request, int nIdDirectory, String strIdStateList )
     {
-        return AppPathService.getBaseUrl( request ) + JSP_DISPLAY_PRINT_HISTORY + "?" + PARAMETER_ID_DIRECTORY + "=" +
-        nIdDirectory + "&" + PARAMETER_ID_STATE + "=" + strIdStateList;
+        return AppPathService.getBaseUrl( request ) + JSP_DISPLAY_PRINT_HISTORY + "?" + PARAMETER_ID_DIRECTORY + "=" + nIdDirectory + "&" + PARAMETER_ID_STATE
+                + "=" + strIdStateList;
     }
 
     /**
      * return url of the jsp import directory record
-     * @param request The HTTP request
-     * @param nIdDirectory the directory id
+     * 
+     * @param request
+     *            The HTTP request
+     * @param nIdDirectory
+     *            the directory id
      * @return url of the jsp import directory record
      */
     private String getJspImportDirectoryRecord( HttpServletRequest request, int nIdDirectory )
     {
-        return AppPathService.getBaseUrl( request ) + JSP_IMPORT_DIRECTORY_RECORD + "?" + PARAMETER_ID_DIRECTORY + "=" +
-        nIdDirectory + "&" + PARAMETER_SESSION + "=" + PARAMETER_SESSION;
+        return AppPathService.getBaseUrl( request ) + JSP_IMPORT_DIRECTORY_RECORD + "?" + PARAMETER_ID_DIRECTORY + "=" + nIdDirectory + "&" + PARAMETER_SESSION
+                + "=" + PARAMETER_SESSION;
     }
 
     /**
      * return url of the jsp manage directory
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return url of the jsp manage directory
      */
     private String getJspManageAdvancedParameters( HttpServletRequest request )
@@ -4494,9 +4515,13 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Return url of the jsp action results
-     * @param request the HTTP request
-     * @param nIdDirectory the id directory
-     * @param nIdAction the id action
+     * 
+     * @param request
+     *            the HTTP request
+     * @param nIdDirectory
+     *            the id directory
+     * @param nIdAction
+     *            the id action
      * @return the JSP
      */
     private String getJspActionResults( HttpServletRequest request, int nIdDirectory, int nIdAction )
@@ -4505,42 +4530,50 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, nIdDirectory );
         url.addParameter( PARAMETER_ID_ACTION, nIdAction );
 
-        return url.getUrl(  );
+        return url.getUrl( );
     }
 
     /**
      * return url of the jsp create directory record
-     * @param request The HTTP request
-     * @param nIdDirectory the key of directory
+     * 
+     * @param request
+     *            The HTTP request
+     * @param nIdDirectory
+     *            the key of directory
      * @return return url of the jsp create directory record
      */
     private String getJspCreateDirectoryRecord( HttpServletRequest request, int nIdDirectory )
     {
-        return AppPathService.getBaseUrl( request ) + JSP_CREATE_DIRECTORY_RECORD + "?" + PARAMETER_ID_DIRECTORY + "=" +
-        nIdDirectory;
+        return AppPathService.getBaseUrl( request ) + JSP_CREATE_DIRECTORY_RECORD + "?" + PARAMETER_ID_DIRECTORY + "=" + nIdDirectory;
     }
 
     /**
      * return url of the jsp modify directory record
-     * @param request The HTTP request
-     * @param nIdDirectory the key of directory
-     * @param nIdDirectoryRecord the key of directory record to modify
+     * 
+     * @param request
+     *            The HTTP request
+     * @param nIdDirectory
+     *            the key of directory
+     * @param nIdDirectoryRecord
+     *            the key of directory record to modify
      * @return return url of the jsp modify directory record
      */
     private String getJspModifyDirectoryRecord( HttpServletRequest request, int nIdDirectory, int nIdDirectoryRecord )
     {
-        return AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY_RECORD + "?" + PARAMETER_ID_DIRECTORY + "=" +
-        nIdDirectory + "&" + PARAMETER_ID_DIRECTORY_RECORD + "=" + nIdDirectoryRecord;
+        return AppPathService.getBaseUrl( request ) + JSP_MODIFY_DIRECTORY_RECORD + "?" + PARAMETER_ID_DIRECTORY + "=" + nIdDirectory + "&"
+                + PARAMETER_ID_DIRECTORY_RECORD + "=" + nIdDirectoryRecord;
     }
 
     /**
      * return a reference list wich contains the different state of directory
-     * @param locale the locale
+     * 
+     * @param locale
+     *            the locale
      * @return reference list of directory state
      */
     private ReferenceList getRefListActive( Locale locale )
     {
-        ReferenceList refListState = new ReferenceList(  );
+        ReferenceList refListState = new ReferenceList( );
         String strAll = I18nService.getLocalizedString( PROPERTY_ALL, locale );
         String strYes = I18nService.getLocalizedString( PROPERTY_YES, locale );
         String strNo = I18nService.getLocalizedString( PROPERTY_NO, locale );
@@ -4555,7 +4588,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     /**
      * reinit directory recordFilter
      */
-    private void reInitDirectoryRecordFilter(  )
+    private void reInitDirectoryRecordFilter( )
     {
         _searchFields.setItemsPerPageDirectoryRecord( 0 );
         _searchFields.setCurrentPageIndexDirectory( null );
@@ -4568,12 +4601,14 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Do process the workflow actions
-     * @param request the HTTP request
+     * 
+     * @param request
+     *            the HTTP request
      * @return the JSP return
      */
     public String doProcessAction( HttpServletRequest request )
     {
-        String[] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
+        String [ ] listIdsDirectoryRecord = request.getParameterValues( DirectoryUtils.PARAMETER_ID_DIRECTORY_RECORD );
 
         if ( ( listIdsDirectoryRecord != null ) && ( listIdsDirectoryRecord.length > 0 ) )
         {
@@ -4583,7 +4618,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
             int nIdAction = DirectoryUtils.convertStringToInt( strIdAction );
 
-            if ( WorkflowService.getInstance(  ).isDisplayTasksForm( nIdAction, getLocale(  ) ) )
+            if ( WorkflowService.getInstance( ).isDisplayTasksForm( nIdAction, getLocale( ) ) )
             {
                 return getJspTasksForm( request, listIdsDirectoryRecord, nIdAction, bShowActionResult );
             }
@@ -4591,19 +4626,18 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
 
             // If the id directory is not in the parameter, then fetch it from the first record
-            // assuming all records are from the same directory 
+            // assuming all records are from the same directory
             if ( StringUtils.isBlank( strIdDirectory ) || !StringUtils.isNumeric( strIdDirectory ) )
             {
-                String strIdDirectoryRecord = listIdsDirectoryRecord[0];
+                String strIdDirectoryRecord = listIdsDirectoryRecord [0];
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
-                strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
+                strIdDirectory = Integer.toString( record.getDirectory( ).getIdDirectory( ) );
             }
 
             int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
 
-            _directoryActionResult.doProcessAction( nIdDirectory, nIdAction, listIdsDirectoryRecord, getPlugin(  ),
-                getLocale(  ), request );
+            _directoryActionResult.doProcessAction( nIdDirectory, nIdAction, listIdsDirectoryRecord, getPlugin( ), getLocale( ), request );
 
             if ( bShowActionResult )
             {
@@ -4618,15 +4652,18 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return url of the jsp manage commentaire
-     * @param request The HTTP request
-     * @param listIdsTestResource the list if id resource
-     * @param nIdAction the id action
-     * @param bShowActionResult true if it must show the action result, false
-     *            otherwise
+     * 
+     * @param request
+     *            The HTTP request
+     * @param listIdsTestResource
+     *            the list if id resource
+     * @param nIdAction
+     *            the id action
+     * @param bShowActionResult
+     *            true if it must show the action result, false otherwise
      * @return url of the jsp manage commentaire
      */
-    private String getJspTasksForm( HttpServletRequest request, String[] listIdsTestResource, int nIdAction,
-        boolean bShowActionResult )
+    private String getJspTasksForm( HttpServletRequest request, String [ ] listIdsTestResource, int nIdAction, boolean bShowActionResult )
     {
         UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_TASKS_FORM_WORKFLOW );
         url.addParameter( DirectoryUtils.PARAMETER_ID_ACTION, nIdAction );
@@ -4644,35 +4681,35 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
         }
 
-        String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+        String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler( ).getUploadAction( request );
 
         if ( StringUtils.isNotBlank( strUploadAction ) )
         {
             url.addParameter( strUploadAction, strUploadAction );
         }
 
-        return url.getUrl(  );
+        return url.getUrl( );
     }
 
     /**
      * Display the states for print mass
-     * @param request la requete
+     * 
+     * @param request
+     *            la requete
      * @return The URL to go after performing the action
-     * @throws AccessDeniedException AccessDeniedException
+     * @throws AccessDeniedException
+     *             AccessDeniedException
      */
-    public String getMassPrint( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getMassPrint( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
-        if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                WorkflowService.getInstance(  ).isAvailable(  ) )
+        if ( ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) && WorkflowService.getInstance( ).isAvailable( ) )
         {
-            Collection<State> listState = WorkflowService.getInstance(  )
-                                                         .getAllStateByWorkflow( directory.getIdWorkflow(  ),
+            Collection<State> listState = WorkflowService.getInstance( ).getAllStateByWorkflow( directory.getIdWorkflow( ),
                     AdminUserService.getAdminUser( request ) );
             model.put( MARK_STATE_LIST, listState );
         }
@@ -4680,52 +4717,53 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_DIRECTORY, directory );
         setPageTitleProperty( PROPERTY_MASS_PRINT_PAGE_TITLE );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MANAGE_MASS_PRINT, getLocale(  ), model );
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MANAGE_MASS_PRINT, getLocale( ), model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Verify Print Mass
-     * @param request la requete
+     * 
+     * @param request
+     *            la requete
      * @return The URL to go after performing the action
-     * @throws AccessDeniedException AccessDeniedException
+     * @throws AccessDeniedException
+     *             AccessDeniedException
      */
-    public String doMassPrint( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doMassPrint( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
-        Map<String, String> mapIdState = request.getParameterMap(  );
-        WorkflowService workflowService = WorkflowService.getInstance(  );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
+        Map<String, String> mapIdState = request.getParameterMap( );
+        WorkflowService workflowService = WorkflowService.getInstance( );
 
-        List<State> listAllState = (List<State>) workflowService.getAllStateByWorkflow( directory.getIdWorkflow(  ),
-                AdminUserService.getAdminUser( request ) );
+        List<State> listAllState = (List<State>) workflowService.getAllStateByWorkflow( directory.getIdWorkflow( ), AdminUserService.getAdminUser( request ) );
 
-        List<State> listState = new ArrayList<State>(  );
+        List<State> listState = new ArrayList<State>( );
 
         for ( State state : listAllState )
         {
-            if ( mapIdState.containsKey( Integer.toString( state.getId(  ) ) ) )
+            if ( mapIdState.containsKey( Integer.toString( state.getId( ) ) ) )
             {
                 listState.add( state );
             }
         }
 
-        if ( mapIdState.isEmpty(  ) )
+        if ( mapIdState.isEmpty( ) )
         {
             return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_NOT_SELECTED_STATE, AdminMessage.TYPE_STOP );
         }
 
-        Iterator<State> it = listState.iterator(  );
+        Iterator<State> it = listState.iterator( );
         boolean bFind = false;
-        Integer nIntIdDirectory = Integer.valueOf( directory.getIdDirectory(  ) );
+        Integer nIntIdDirectory = Integer.valueOf( directory.getIdDirectory( ) );
 
-        while ( !bFind && it.hasNext(  ) )
+        while ( !bFind && it.hasNext( ) )
         {
-            bFind = ( workflowService.getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), it.next(  ).getId(  ), nIntIdDirectory, getUser(  ) ).size(  ) > 0 );
+            bFind = ( workflowService.getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ), it.next( ).getId( ),
+                    nIntIdDirectory, getUser( ) ).size( ) > 0 );
         }
 
         if ( !bFind )
@@ -4738,108 +4776,109 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return url of the jsp
-     * @param request The HTTP request
-     * @param listState A state list
-     * @param nIdDirectory The directory id
+     * 
+     * @param request
+     *            The HTTP request
+     * @param listState
+     *            A state list
+     * @param nIdDirectory
+     *            The directory id
      * @return url of the jsp
      */
     private String getJspPrintHistory( HttpServletRequest request, List<State> listState, int nIdDirectory )
     {
-        String strIdState = new String(  );
+        String strIdState = new String( );
 
         for ( State state : listState )
         {
-            strIdState = strIdState.concat( state.getId(  ) + "," );
+            strIdState = strIdState.concat( state.getId( ) + "," );
         }
 
-        if ( strIdState.length(  ) > 0 )
+        if ( strIdState.length( ) > 0 )
         {
-            strIdState = strIdState.substring( 0, strIdState.length(  ) - 1 );
+            strIdState = strIdState.substring( 0, strIdState.length( ) - 1 );
         }
 
-        return AppPathService.getBaseUrl( request ) + JSP_DISPLAY_PRINT_HISTORY + "?" + PARAMETER_ID_DIRECTORY + "=" +
-        nIdDirectory + "&" + PARAMETER_ID_STATE + "=" + strIdState;
+        return AppPathService.getBaseUrl( request ) + JSP_DISPLAY_PRINT_HISTORY + "?" + PARAMETER_ID_DIRECTORY + "=" + nIdDirectory + "&" + PARAMETER_ID_STATE
+                + "=" + strIdState;
     }
 
     /**
      * Display Print Mass
-     * @param request la requete
+     * 
+     * @param request
+     *            la requete
      * @return The URL to go after performing the action
-     * @throws AccessDeniedException AccessDeniedException
+     * @throws AccessDeniedException
+     *             AccessDeniedException
      */
-    public String getDisplayMassPrint( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getDisplayMassPrint( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
         String strIdState = request.getParameter( PARAMETER_ID_STATE );
-        String[] tabIdState = strIdState.split( "," );
+        String [ ] tabIdState = strIdState.split( "," );
 
-        WorkflowService workflowService = WorkflowService.getInstance(  );
+        WorkflowService workflowService = WorkflowService.getInstance( );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
         List<Integer> recordList;
 
         List<String> listStrIdState = Arrays.asList( tabIdState );
 
-        List<State> listAllState = (List<State>) workflowService.getAllStateByWorkflow( directory.getIdWorkflow(  ),
-                AdminUserService.getAdminUser( request ) );
+        List<State> listAllState = (List<State>) workflowService.getAllStateByWorkflow( directory.getIdWorkflow( ), AdminUserService.getAdminUser( request ) );
 
-        List<Integer> listIdState = new ArrayList<Integer>(  );
+        List<Integer> listIdState = new ArrayList<Integer>( );
 
         for ( State state : listAllState )
         {
-            if ( listStrIdState.contains( Integer.toString( state.getId(  ) ) ) )
+            if ( listStrIdState.contains( Integer.toString( state.getId( ) ) ) )
             {
-                listIdState.add( Integer.valueOf( state.getId(  ) ) );
+                listIdState.add( Integer.valueOf( state.getId( ) ) );
             }
         }
 
-        RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-        recordFieldFilter.setIdDirectory( directory.getIdDirectory(  ) );
+        RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
+        recordFieldFilter.setIdDirectory( directory.getIdDirectory( ) );
 
-        List<Integer> listResultRecordId = DirectorySearchService.getInstance(  )
-                                                                 .getSearchResults( directory,
-                _searchFields.getMapQuery(  ), _searchFields.getDateCreationRecord(  ),
-                _searchFields.getDateCreationBeginRecord(  ), _searchFields.getDateCreationEndRecord(  ),
-                _searchFields.getDateModificationRecord(  ), _searchFields.getDateModificationBeginRecord(  ),
-                _searchFields.getDateModificationEndRecord(  ), recordFieldFilter, getPlugin(  ) );
+        List<Integer> listResultRecordId = DirectorySearchService.getInstance( ).getSearchResults( directory, _searchFields.getMapQuery( ),
+                _searchFields.getDateCreationRecord( ), _searchFields.getDateCreationBeginRecord( ), _searchFields.getDateCreationEndRecord( ),
+                _searchFields.getDateModificationRecord( ), _searchFields.getDateModificationBeginRecord( ), _searchFields.getDateModificationEndRecord( ),
+                recordFieldFilter, getPlugin( ) );
 
-        List<Integer> listTmpResultRecordId = workflowService.getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
-                directory.getIdWorkflow(  ), listIdState, Integer.valueOf( directory.getIdDirectory(  ) ), getUser(  ) );
+        List<Integer> listTmpResultRecordId = workflowService.getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ),
+                listIdState, Integer.valueOf( directory.getIdDirectory( ) ), getUser( ) );
         List<Integer> lListResult = DirectoryUtils.retainAll( listResultRecordId, listTmpResultRecordId );
 
         _searchFields.setCurrentPageIndexPrintMass( Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
-                _searchFields.getCurrentPageIndexPrintMass(  ) ) );
+                _searchFields.getCurrentPageIndexPrintMass( ) ) );
         _searchFields.setItemsPerPagePrintMass( Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE,
-                _searchFields.getItemsPerPagePrintMass(  ), _searchFields.getDefaultItemsPerPage(  ) ) );
+                _searchFields.getItemsPerPagePrintMass( ), _searchFields.getDefaultItemsPerPage( ) ) );
 
-        LocalizedPaginator<Integer> paginator = new LocalizedPaginator<Integer>( lListResult,
-                _searchFields.getItemsPerPagePrintMass(  ), getJspPrintMass( request, nIdDirectory, strIdState ),
-                PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexPrintMass(  ), getLocale(  ) );
+        LocalizedPaginator<Integer> paginator = new LocalizedPaginator<Integer>( lListResult, _searchFields.getItemsPerPagePrintMass( ), getJspPrintMass(
+                request, nIdDirectory, strIdState ), PARAMETER_PAGE_INDEX, _searchFields.getCurrentPageIndexPrintMass( ), getLocale( ) );
 
-        recordList = paginator.getPageItems(  );
+        recordList = paginator.getPageItems( );
 
         EntryFilter filter;
-        filter = new EntryFilter(  );
+        filter = new EntryFilter( );
         filter.setIdDirectory( nIdDirectory );
         filter.setIsShownInHistory( EntryFilter.FILTER_TRUE );
 
-        List<IEntry> listEntry = EntryHome.getEntryList( filter, getPlugin(  ) );
+        List<IEntry> listEntry = EntryHome.getEntryList( filter, getPlugin( ) );
 
-        List<Map<String, Object>> listRecordHistory = new ArrayList<Map<String, Object>>(  );
+        List<Map<String, Object>> listRecordHistory = new ArrayList<Map<String, Object>>( );
 
         for ( Integer nIdRecord : recordList )
         {
-            Map<String, Object> resource = new HashMap<String, Object>(  );
-            resource.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
-                DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin(  ), false ) );
+            Map<String, Object> resource = new HashMap<String, Object>( );
+            resource.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD, DirectoryUtils.getMapIdEntryListRecordField( listEntry, nIdRecord, getPlugin( ), false ) );
 
-            resource.put( MARK_RESOURCE_HISTORY,
-                WorkflowService.getInstance(  )
-                               .getDisplayDocumentHistory( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), request, getLocale(  ) ) );
+            resource.put(
+                    MARK_RESOURCE_HISTORY,
+                    WorkflowService.getInstance( ).getDisplayDocumentHistory( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ), request,
+                            getLocale( ) ) );
             listRecordHistory.add( resource );
         }
 
@@ -4850,58 +4889,60 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         model.put( MARK_ID_STATE, strIdState );
 
         model.put( MARK_PAGINATOR, paginator );
-        model.put( MARK_NB_ITEMS_PER_PAGE, Integer.toString( _searchFields.getItemsPerPagePrintMass(  ) ) );
+        model.put( MARK_NB_ITEMS_PER_PAGE, Integer.toString( _searchFields.getItemsPerPagePrintMass( ) ) );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_DISPLAY_MASS_PRINT, getLocale(  ), model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_DISPLAY_MASS_PRINT, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
      * Returns advanced parameters form
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return Html form
      */
     public String getManageAdvancedParameters( HttpServletRequest request )
     {
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS,
+                getUser( ) ) )
         {
             return getManageDirectory( request );
         }
 
-        Map<String, Object> model = DirectoryService.getInstance(  ).getManageAdvancedParameters( getUser(  ) );
+        Map<String, Object> model = DirectoryService.getInstance( ).getManageAdvancedParameters( getUser( ) );
 
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-        model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage(  ) );
+        model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MANAGE_ADVANCED_PARAMETERS, getLocale(  ),
-                model );
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MANAGE_ADVANCED_PARAMETERS, getLocale( ), model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Modify directory parameter default values
-     * @param request HttpServletRequest
+     * 
+     * @param request
+     *            HttpServletRequest
      * @return JSP return
-     * @throws AccessDeniedException AccessDeniedException
+     * @throws AccessDeniedException
+     *             AccessDeniedException
      */
-    public String doModifyDirectoryParameterDefaultValues( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doModifyDirectoryParameterDefaultValues( HttpServletRequest request ) throws AccessDeniedException
     {
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS,
+                getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        ReferenceList listParams = DirectoryParameterService.getService(  ).findDefaultValueParameters(  );
+        ReferenceList listParams = DirectoryParameterService.getService( ).findDefaultValueParameters( );
 
         for ( ReferenceItem param : listParams )
         {
-            String strParamValue = request.getParameter( param.getCode(  ) );
+            String strParamValue = request.getParameter( param.getCode( ) );
 
             if ( StringUtils.isBlank( strParamValue ) )
             {
@@ -4909,7 +4950,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
 
             param.setName( strParamValue );
-            DirectoryParameterService.getService(  ).update( param );
+            DirectoryParameterService.getService( ).update( param );
         }
 
         return getJspManageAdvancedParameters( request );
@@ -4917,24 +4958,26 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Modify entry parameter default values
-     * @param request HttpServletRequest
+     * 
+     * @param request
+     *            HttpServletRequest
      * @return JSP return
-     * @throws AccessDeniedException AccessDeniedException
+     * @throws AccessDeniedException
+     *             AccessDeniedException
      */
-    public String doModifyEntryParameterDefaultValues( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doModifyEntryParameterDefaultValues( HttpServletRequest request ) throws AccessDeniedException
     {
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS,
+                getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        ReferenceList listParams = EntryParameterService.getService(  ).findAll(  );
+        ReferenceList listParams = EntryParameterService.getService( ).findAll( );
 
         for ( ReferenceItem param : listParams )
         {
-            String strParamValue = request.getParameter( param.getCode(  ) );
+            String strParamValue = request.getParameter( param.getCode( ) );
 
             if ( StringUtils.isBlank( strParamValue ) )
             {
@@ -4942,7 +4985,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
 
             param.setName( strParamValue );
-            EntryParameterService.getService(  ).update( param );
+            EntryParameterService.getService( ).update( param );
         }
 
         return getJspManageAdvancedParameters( request );
@@ -4950,24 +4993,26 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Modify directory parameter default values
-     * @param request HttpServletRequest
+     * 
+     * @param request
+     *            HttpServletRequest
      * @return JSP return
-     * @throws AccessDeniedException AccessDeniedException
+     * @throws AccessDeniedException
+     *             AccessDeniedException
      */
-    public String doModifyExportEncodingParameters( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doModifyExportEncodingParameters( HttpServletRequest request ) throws AccessDeniedException
     {
-        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, getUser(  ) ) )
+        if ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS,
+                getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        ReferenceList listParams = DirectoryParameterService.getService(  ).findExportEncodingParameters(  );
+        ReferenceList listParams = DirectoryParameterService.getService( ).findExportEncodingParameters( );
 
         for ( ReferenceItem param : listParams )
         {
-            String strParamValue = request.getParameter( param.getCode(  ) );
+            String strParamValue = request.getParameter( param.getCode( ) );
 
             if ( StringUtils.isNotBlank( strParamValue ) )
             {
@@ -4976,12 +5021,13 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 {
                     strParamValue.getBytes( strParamValue );
                 }
-                catch ( UnsupportedEncodingException e )
+                catch( UnsupportedEncodingException e )
                 {
-                    Object[] tabRequiredFields = { strParamValue };
+                    Object [ ] tabRequiredFields = {
+                        strParamValue
+                    };
 
-                    return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_EXPORT_ENCODING_NOT_SUPPORTED,
-                        tabRequiredFields, AdminMessage.TYPE_STOP );
+                    return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_EXPORT_ENCODING_NOT_SUPPORTED, tabRequiredFields, AdminMessage.TYPE_STOP );
                 }
             }
             else
@@ -4990,7 +5036,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
 
             param.setName( strParamValue );
-            DirectoryParameterService.getService(  ).update( param );
+            DirectoryParameterService.getService( ).update( param );
         }
 
         return getJspManageAdvancedParameters( request );
@@ -4998,233 +5044,234 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * return the record visualisation
-     * @param request the Http request
+     * 
+     * @param request
+     *            the Http request
      * @return the record visualisation
-     * @throws AccessDeniedException AccessDeniedException
+     * @throws AccessDeniedException
+     *             AccessDeniedException
      */
-    public String getMyLuteceUserVisualisation( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getMyLuteceUserVisualisation( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdRecord = request.getParameter( PARAMETER_ID_DIRECTORY_RECORD );
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdRecord = DirectoryUtils.convertStringToInt( strIdRecord );
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
-        Record record = _recordService.findByPrimaryKey( nIdRecord, getPlugin(  ) );
+        Record record = _recordService.findByPrimaryKey( nIdRecord, getPlugin( ) );
 
-        if ( ( record == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                    Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                    DirectoryResourceIdService.PERMISSION_VISUALISATION_MYLUTECE_USER, getUser(  ) ) )
+        if ( ( record == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                        DirectoryResourceIdService.PERMISSION_VISUALISATION_MYLUTECE_USER, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        String strUserGuid = DirectoryService.getInstance(  ).getUserGuid( nIdRecord, nIdEntry );
-        ReferenceList listUserInfos = DirectoryService.getInstance(  ).getUserInfos( strUserGuid, nIdEntry );
+        String strUserGuid = DirectoryService.getInstance( ).getUserGuid( nIdRecord, nIdEntry );
+        ReferenceList listUserInfos = DirectoryService.getInstance( ).getUserInfos( strUserGuid, nIdEntry );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_MYLUTECE_USER_LOGIN, strUserGuid );
         model.put( MARK_MYLUTECE_USER_INFOS_LIST, listUserInfos );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_VIEW_MYLUTECE_USER, getLocale(  ), model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_VIEW_MYLUTECE_USER, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
      * Return the interface for import field
-     * @param request The Http request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The Http request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return Html directory
      */
-    public String getImportField( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getImportField( HttpServletRequest request ) throws AccessDeniedException
     {
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
-        IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, getPlugin(  ) );
+        IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, getPlugin( ) );
 
-        if ( ( directory == null ) || ( entry == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_IMPORT_FIELD, getUser(  ) ) )
+        if ( ( directory == null ) || ( entry == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_IMPORT_FIELD, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
         if ( request.getParameter( PARAMETER_SESSION ) != null )
         {
-            if ( _searchFields.getError(  ) != null )
+            if ( _searchFields.getError( ) != null )
             {
-                model.put( MARK_STR_ERROR, _searchFields.getError(  ).toString(  ) );
+                model.put( MARK_STR_ERROR, _searchFields.getError( ).toString( ) );
             }
 
-            model.put( MARK_NUMBER_LINES_ERROR, _searchFields.getCountLineFailure(  ) );
-            model.put( MARK_NUMBER_LINES_IMPORTED,
-                _searchFields.getCountLine(  ) - _searchFields.getCountLineFailure(  ) );
+            model.put( MARK_NUMBER_LINES_ERROR, _searchFields.getCountLineFailure( ) );
+            model.put( MARK_NUMBER_LINES_IMPORTED, _searchFields.getCountLine( ) - _searchFields.getCountLineFailure( ) );
             model.put( MARK_FINISH_IMPORT, true );
             _searchFields.setCountLine( 0 );
             _searchFields.setCountLineFailure( 0 );
             _searchFields.setError( null );
         }
 
-        model.put( MARK_LOCALE, getLocale(  ) );
+        model.put( MARK_LOCALE, getLocale( ) );
         model.put( MARK_DIRECTORY, directory );
         model.put( MARK_ENTRY, entry );
         setPageTitleProperty( PROPERTY_IMPORT_FIELD_PAGE_TITLE );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_IMPORT_FIELD, getLocale(  ), model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_IMPORT_FIELD, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
      * ImportDirectory record
-     * @param request the Http Request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            the Http Request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doImportField( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doImportField( HttpServletRequest request ) throws AccessDeniedException
     {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         FileItem fileItem = multipartRequest.getFile( PARAMETER_FILE_IMPORT );
         String strMimeType = FileSystemUtil.getMIMEType( FileUploadService.getFileNameOnly( fileItem ) );
 
-        if ( ( fileItem == null ) || ( fileItem.getName(  ) == null ) ||
-                DirectoryUtils.EMPTY_STRING.equals( fileItem.getName(  ) ) )
+        if ( ( fileItem == null ) || ( fileItem.getName( ) == null ) || DirectoryUtils.EMPTY_STRING.equals( fileItem.getName( ) ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( FIELD_FILE_IMPORT, getLocale(  ) ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( FIELD_FILE_IMPORT, getLocale( ) )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
-        if ( ( !strMimeType.equals( CONSTANT_MIME_TYPE_CSV ) && !strMimeType.equals( CONSTANT_MIME_TYPE_OCTETSTREAM ) &&
-                !strMimeType.equals( CONSTANT_MIME_TYPE_TEXT_CSV ) ) ||
-                !fileItem.getName(  ).toLowerCase(  ).endsWith( CONSTANT_EXTENSION_CSV_FILE ) )
+        if ( ( !strMimeType.equals( CONSTANT_MIME_TYPE_CSV ) && !strMimeType.equals( CONSTANT_MIME_TYPE_OCTETSTREAM ) && !strMimeType
+                .equals( CONSTANT_MIME_TYPE_TEXT_CSV ) ) || !fileItem.getName( ).toLowerCase( ).endsWith( CONSTANT_EXTENSION_CSV_FILE ) )
         {
             return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_CSV_FILE_IMPORT, AdminMessage.TYPE_STOP );
         }
 
         String strIdEntry = request.getParameter( PARAMETER_ID_ENTRY );
         int nIdEntry = DirectoryUtils.convertStringToInt( strIdEntry );
-        IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, getPlugin(  ) );
+        IEntry entry = EntryHome.findByPrimaryKey( nIdEntry, getPlugin( ) );
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( entry == null ) || ( directory == null ) ||
-                !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                    DirectoryResourceIdService.PERMISSION_MODIFY, getUser(  ) ) )
+        if ( ( entry == null ) || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
 
         Character strCsvSeparator = AppPropertiesService.getProperty( PROPERTY_IMPORT_CSV_DELIMITER ).charAt( 0 );
-        _searchFields.setError( new StringBuffer(  ) );
+        _searchFields.setError( new StringBuffer( ) );
 
         try
         {
-            InputStreamReader inputStreamReader = new InputStreamReader( fileItem.getInputStream(  ) );
+            InputStreamReader inputStreamReader = new InputStreamReader( fileItem.getInputStream( ) );
             CSVReader csvReader = new CSVReader( inputStreamReader, strCsvSeparator, '\"' );
 
-            String[] nextLine;
+            String [ ] nextLine;
 
             _searchFields.setCountLine( 0 );
             _searchFields.setCountLineFailure( 0 );
 
-            while ( ( nextLine = csvReader.readNext(  ) ) != null )
+            while ( ( nextLine = csvReader.readNext( ) ) != null )
             {
-                _searchFields.setCountLine( _searchFields.getCountLine(  ) + 1 );
+                _searchFields.setCountLine( _searchFields.getCountLine( ) + 1 );
 
                 if ( nextLine.length != IMPORT_FIELD_NB_COLUMN_MAX )
                 {
-                    _searchFields.getError(  ).append( I18nService.getLocalizedString( PROPERTY_LINE, getLocale(  ) ) );
-                    _searchFields.getError(  ).append( _searchFields.getCountLine(  ) );
-                    _searchFields.getError(  ).append( " > " );
-                    _searchFields.getError(  )
-                                 .append( I18nService.getLocalizedString( MESSAGE_ERROR_CSV_NUMBER_SEPARATOR,
-                            getLocale(  ) ) );
-                    _searchFields.getError(  ).append( "<br/>" );
-                    _searchFields.setCountLineFailure( _searchFields.getCountLineFailure(  ) + 1 );
+                    _searchFields.getError( ).append( I18nService.getLocalizedString( PROPERTY_LINE, getLocale( ) ) );
+                    _searchFields.getError( ).append( _searchFields.getCountLine( ) );
+                    _searchFields.getError( ).append( " > " );
+                    _searchFields.getError( ).append( I18nService.getLocalizedString( MESSAGE_ERROR_CSV_NUMBER_SEPARATOR, getLocale( ) ) );
+                    _searchFields.getError( ).append( "<br/>" );
+                    _searchFields.setCountLineFailure( _searchFields.getCountLineFailure( ) + 1 );
                 }
                 else
                 {
-                    Field field = new Field(  );
+                    Field field = new Field( );
                     field.setEntry( entry );
 
                     try
                     {
                         getImportFieldData( request, field, nextLine );
-                        FieldHome.create( field, getPlugin(  ) );
+                        FieldHome.create( field, getPlugin( ) );
                     }
-                    catch ( DirectoryErrorException error )
+                    catch( DirectoryErrorException error )
                     {
-                        _searchFields.getError(  ).append( I18nService.getLocalizedString( PROPERTY_LINE, getLocale(  ) ) );
-                        _searchFields.getError(  ).append( _searchFields.getCountLine(  ) );
-                        _searchFields.getError(  ).append( " > " );
+                        _searchFields.getError( ).append( I18nService.getLocalizedString( PROPERTY_LINE, getLocale( ) ) );
+                        _searchFields.getError( ).append( _searchFields.getCountLine( ) );
+                        _searchFields.getError( ).append( " > " );
 
-                        if ( error.isMandatoryError(  ) )
+                        if ( error.isMandatoryError( ) )
                         {
-                            Object[] tabRequiredFields = { error.getTitleField(  ) };
-                            _searchFields.getError(  )
-                                         .append( I18nService.getLocalizedString( 
-                                    MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, getLocale(  ) ) );
+                            Object [ ] tabRequiredFields = {
+                                error.getTitleField( )
+                            };
+                            _searchFields.getError( ).append(
+                                    I18nService.getLocalizedString( MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, getLocale( ) ) );
                         }
                         else
                         {
-                            Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
-                            _searchFields.getError(  )
-                                         .append( I18nService.getLocalizedString( MESSAGE_DIRECTORY_ERROR,
-                                    tabRequiredFields, getLocale(  ) ) );
+                            Object [ ] tabRequiredFields = {
+                                    error.getTitleField( ), error.getErrorMessage( )
+                            };
+                            _searchFields.getError( ).append( I18nService.getLocalizedString( MESSAGE_DIRECTORY_ERROR, tabRequiredFields, getLocale( ) ) );
                         }
 
-                        _searchFields.getError(  ).append( "<br/>" );
-                        _searchFields.setCountLineFailure( _searchFields.getCountLineFailure(  ) + 1 );
+                        _searchFields.getError( ).append( "<br/>" );
+                        _searchFields.setCountLineFailure( _searchFields.getCountLineFailure( ) + 1 );
                     }
                 }
             }
         }
 
-        catch ( IOException e )
+        catch( IOException e )
         {
             AppLogService.error( e );
         }
 
-        return AppPathService.getBaseUrl( request ) + JSP_IMPORT_FIELD + DirectoryUtils.CONSTANT_INTERROGATION_MARK +
-        PARAMETER_ID_DIRECTORY + DirectoryUtils.CONSTANT_EQUAL + nIdDirectory + DirectoryUtils.CONSTANT_AMPERSAND +
-        PARAMETER_ID_ENTRY + DirectoryUtils.CONSTANT_EQUAL + nIdEntry + DirectoryUtils.CONSTANT_AMPERSAND +
-        PARAMETER_SESSION + "=" + PARAMETER_SESSION;
+        return AppPathService.getBaseUrl( request ) + JSP_IMPORT_FIELD + DirectoryUtils.CONSTANT_INTERROGATION_MARK + PARAMETER_ID_DIRECTORY
+                + DirectoryUtils.CONSTANT_EQUAL + nIdDirectory + DirectoryUtils.CONSTANT_AMPERSAND + PARAMETER_ID_ENTRY + DirectoryUtils.CONSTANT_EQUAL
+                + nIdEntry + DirectoryUtils.CONSTANT_AMPERSAND + PARAMETER_SESSION + "=" + PARAMETER_SESSION;
     }
 
     /**
      * Gets the confirmation page of changing the state of the records
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return the confirmation page of changing the state of the records
      */
-    public String getConfirmChangeStatesRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String getConfirmChangeStatesRecord( HttpServletRequest request ) throws AccessDeniedException
     {
-        String[] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
+        String [ ] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
 
         if ( ( listIdsDirectoryRecord != null ) && ( listIdsDirectoryRecord.length > 0 ) )
         {
             String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
 
             // If the id directory is not in the parameter, then fetch it from the first record
-            // assuming all records are from the same directory 
+            // assuming all records are from the same directory
             if ( StringUtils.isBlank( strIdDirectory ) || !StringUtils.isNumeric( strIdDirectory ) )
             {
-                String strIdDirectoryRecord = listIdsDirectoryRecord[0];
+                String strIdDirectoryRecord = listIdsDirectoryRecord [0];
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
-                strIdDirectory = Integer.toString( record.getDirectory(  ).getIdDirectory(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
+                strIdDirectory = Integer.toString( record.getDirectory( ).getIdDirectory( ) );
             }
 
             int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
@@ -5235,12 +5282,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
             {
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-                if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
-                        !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                            Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                            DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser(  ) ) )
+                if ( ( record == null )
+                        || ( record.getDirectory( ).getIdDirectory( ) != nIdDirectory )
+                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                                DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) ) )
                 {
                     throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
                 }
@@ -5248,8 +5295,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, nIdDirectoryRecord );
             }
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_CHANGE_STATES_RECORD, url.getUrl(  ),
-                AdminMessage.TYPE_CONFIRMATION );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_CHANGE_STATES_RECORD, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
         }
 
         return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
@@ -5257,14 +5303,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Perform the directory record supression
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String doChangeStatesRecord( HttpServletRequest request )
-        throws AccessDeniedException
+    public String doChangeStatesRecord( HttpServletRequest request ) throws AccessDeniedException
     {
-        String[] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
+        String [ ] listIdsDirectoryRecord = request.getParameterValues( PARAMETER_ID_DIRECTORY_RECORD );
 
         if ( ( listIdsDirectoryRecord != null ) && ( listIdsDirectoryRecord.length > 0 ) )
         {
@@ -5274,18 +5322,18 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
             {
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
-                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin(  ) );
+                Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-                if ( ( record == null ) || ( record.getDirectory(  ).getIdDirectory(  ) != nIdDirectory ) ||
-                        !RBACService.isAuthorized( Directory.RESOURCE_TYPE,
-                            Integer.toString( record.getDirectory(  ).getIdDirectory(  ) ),
-                            DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser(  ) ) )
+                if ( ( record == null )
+                        || ( record.getDirectory( ).getIdDirectory( ) != nIdDirectory )
+                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( record.getDirectory( ).getIdDirectory( ) ),
+                                DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) ) )
                 {
                     throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
                 }
 
-                record.setEnabled( !record.isEnabled(  ) );
-                _recordService.update( record, getPlugin(  ) );
+                record.setEnabled( !record.isEnabled( ) );
+                _recordService.update( record, getPlugin( ) );
             }
 
             return DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory );
@@ -5295,33 +5343,38 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
     }
 
     /**
-     * Get the request data and if there is no error insert the data in the
-     * field specified in parameter.
-     * return null if there is no error or else return the error page url
-     * @param request the request
-     * @param field field
-     * @param listImportValue the list of imports values
-     * @throws DirectoryErrorException DirectoryErrorException
+     * Get the request data and if there is no error insert the data in the field specified in parameter. return null if there is no error or else return the
+     * error page url
+     * 
+     * @param request
+     *            the request
+     * @param field
+     *            field
+     * @param listImportValue
+     *            the list of imports values
+     * @throws DirectoryErrorException
+     *             DirectoryErrorException
      */
-    private void getImportFieldData( HttpServletRequest request, Field field, String[] listImportValue )
-        throws DirectoryErrorException
+    private void getImportFieldData( HttpServletRequest request, Field field, String [ ] listImportValue ) throws DirectoryErrorException
     {
-        String strTitle = listImportValue[0];
-        String strValue = listImportValue[1];
+        String strTitle = listImportValue [0];
+        String strValue = listImportValue [1];
 
         if ( ( strTitle == null ) || DirectoryUtils.EMPTY_STRING.equals( strTitle ) )
         {
-            throw new DirectoryErrorException( I18nService.getLocalizedString( FIELD_TITLE_FIELD, getLocale(  ) ) );
+            throw new DirectoryErrorException( I18nService.getLocalizedString( FIELD_TITLE_FIELD, getLocale( ) ) );
         }
-        else if ( ( strValue == null ) || DirectoryUtils.EMPTY_STRING.equals( strValue ) )
-        {
-            throw new DirectoryErrorException( I18nService.getLocalizedString( FIELD_VALUE_FIELD, getLocale(  ) ) );
-        }
-        else if ( !StringUtil.checkCodeKey( strValue ) )
-        {
-            throw new DirectoryErrorException( I18nService.getLocalizedString( FIELD_VALUE_FIELD, getLocale(  ) ),
-                I18nService.getLocalizedString( MESSAGE_FIELD_VALUE_FIELD, getLocale(  ) ) );
-        }
+        else
+            if ( ( strValue == null ) || DirectoryUtils.EMPTY_STRING.equals( strValue ) )
+            {
+                throw new DirectoryErrorException( I18nService.getLocalizedString( FIELD_VALUE_FIELD, getLocale( ) ) );
+            }
+            else
+                if ( !StringUtil.checkCodeKey( strValue ) )
+                {
+                    throw new DirectoryErrorException( I18nService.getLocalizedString( FIELD_VALUE_FIELD, getLocale( ) ), I18nService.getLocalizedString(
+                            MESSAGE_FIELD_VALUE_FIELD, getLocale( ) ) );
+                }
 
         field.setTitle( strTitle );
         field.setValue( strValue );
@@ -5330,14 +5383,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Get the redirect url
-     * @param request the http servlet request
+     * 
+     * @param request
+     *            the http servlet request
      * @return the redirect url
      */
     public String getRedirectUrl( HttpServletRequest request )
     {
-        if ( StringUtils.isNotBlank( _searchFields.getRedirectUrl(  ) ) )
+        if ( StringUtils.isNotBlank( _searchFields.getRedirectUrl( ) ) )
         {
-            return _searchFields.getRedirectUrl(  );
+            return _searchFields.getRedirectUrl( );
         }
 
         return getJspManageDirectory( request );
@@ -5345,37 +5400,42 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Fill the directory record with data
-     * @param record the record to fill
-     * @param request the HTTP request
-     * @return empty string if there is no redirect (in error cases or upload
-     *         file cases), an url to redirect otherwise
+     * 
+     * @param record
+     *            the record to fill
+     * @param request
+     *            the HTTP request
+     * @return empty string if there is no redirect (in error cases or upload file cases), an url to redirect otherwise
      */
     private String getDirectoryRecordData( Record record, HttpServletRequest request )
     {
-        String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+        String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler( ).getUploadAction( request );
 
         try
         {
-            DirectoryUtils.getDirectoryRecordData( request, record, getPlugin(  ), getLocale(  ) );
+            DirectoryUtils.getDirectoryRecordData( request, record, getPlugin( ), getLocale( ) );
         }
-        catch ( DirectoryErrorException error )
+        catch( DirectoryErrorException error )
         {
             // Case if the user does not upload a file, then throw the error message
             if ( StringUtils.isBlank( strUploadAction ) )
             {
                 String strErrorMessage = DirectoryUtils.EMPTY_STRING;
 
-                if ( error.isMandatoryError(  ) )
+                if ( error.isMandatoryError( ) )
                 {
-                    Object[] tabRequiredFields = { error.getTitleField(  ) };
-                    strErrorMessage = AdminMessageService.getMessageUrl( request,
-                            MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
+                    Object [ ] tabRequiredFields = {
+                        error.getTitleField( )
+                    };
+                    strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields,
+                            AdminMessage.TYPE_STOP );
                 }
                 else
                 {
-                    Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
-                    strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR,
-                            tabRequiredFields, AdminMessage.TYPE_STOP );
+                    Object [ ] tabRequiredFields = {
+                            error.getTitleField( ), error.getErrorMessage( )
+                    };
+                    strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR, tabRequiredFields, AdminMessage.TYPE_STOP );
                 }
 
                 return strErrorMessage;
@@ -5391,43 +5451,41 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             // Upload the file
             try
             {
-                DirectoryAsynchronousUploadHandler.getHandler(  )
-                                                  .doUploadAction( request, strUploadAction, mapListRecordFields,
-                    record, getPlugin(  ) );
+                DirectoryAsynchronousUploadHandler.getHandler( ).doUploadAction( request, strUploadAction, mapListRecordFields, record, getPlugin( ) );
             }
-            catch ( DirectoryErrorException error )
+            catch( DirectoryErrorException error )
             {
                 String strErrorMessage = DirectoryUtils.EMPTY_STRING;
 
-                if ( error.isMandatoryError(  ) )
+                if ( error.isMandatoryError( ) )
                 {
-                    Object[] tabRequiredFields = { error.getTitleField(  ) };
-                    strErrorMessage = AdminMessageService.getMessageUrl( request,
-                            MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
+                    Object [ ] tabRequiredFields = {
+                        error.getTitleField( )
+                    };
+                    strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields,
+                            AdminMessage.TYPE_STOP );
                 }
                 else
                 {
-                    Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
-                    strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR,
-                            tabRequiredFields, AdminMessage.TYPE_STOP );
+                    Object [ ] tabRequiredFields = {
+                            error.getTitleField( ), error.getErrorMessage( )
+                    };
+                    strErrorMessage = AdminMessageService.getMessageUrl( request, MESSAGE_DIRECTORY_ERROR, tabRequiredFields, AdminMessage.TYPE_STOP );
                 }
 
                 return strErrorMessage;
             }
 
             // Put the map <idEntry, RecordFields> in the session
-            request.getSession(  )
-                   .setAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS, mapListRecordFields );
+            request.getSession( ).setAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS, mapListRecordFields );
 
             // Check whether it is an update or a creation
-            if ( ( record.getIdRecord(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                    ( record.getIdRecord(  ) != DirectoryUtils.CONSTANT_ID_ZERO ) )
+            if ( ( record.getIdRecord( ) != DirectoryUtils.CONSTANT_ID_NULL ) && ( record.getIdRecord( ) != DirectoryUtils.CONSTANT_ID_ZERO ) )
             {
-                return getJspModifyDirectoryRecord( request, record.getDirectory(  ).getIdDirectory(  ),
-                    record.getIdRecord(  ) );
+                return getJspModifyDirectoryRecord( request, record.getDirectory( ).getIdDirectory( ), record.getIdRecord( ) );
             }
 
-            return getJspCreateDirectoryRecord( request, record.getDirectory(  ).getIdDirectory(  ) );
+            return getJspCreateDirectoryRecord( request, record.getDirectory( ).getIdDirectory( ) );
         }
 
         return StringUtils.EMPTY;
@@ -5435,57 +5493,61 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Init the list of the attribute's orders (first level only)
-     * @param listEntryFirstLevel the list of all the attributes of the first
-     *            level
-     * @param orderFirstLevel the list to set
+     * 
+     * @param listEntryFirstLevel
+     *            the list of all the attributes of the first level
+     * @param orderFirstLevel
+     *            the list to set
      */
     private void initOrderFirstLevel( List<IEntry> listEntryFirstLevel, List<Integer> orderFirstLevel )
     {
         for ( IEntry entry : listEntryFirstLevel )
         {
-            orderFirstLevel.add( entry.getPosition(  ) );
+            orderFirstLevel.add( entry.getPosition( ) );
         }
     }
 
-    //    /**
-    //     * @param plugin the plugin
-    //     * @param listEntry the list of all entry
-    //     * @param listEntryFirstLevel the list of entry first level
-    //     */
-    //    private void fillEntryListWithEntryFirstLevel( Plugin plugin, List<IEntry> listEntry,
-    //            List<IEntry> listEntryFirstLevel )
-    //    {
-    //        EntryFilter filter;
+    // /**
+    // * @param plugin the plugin
+    // * @param listEntry the list of all entry
+    // * @param listEntryFirstLevel the list of entry first level
+    // */
+    // private void fillEntryListWithEntryFirstLevel( Plugin plugin, List<IEntry> listEntry,
+    // List<IEntry> listEntryFirstLevel )
+    // {
+    // EntryFilter filter;
     //
-    //        for ( IEntry entry : listEntryFirstLevel )
-    //        {
-    //            listEntry.add( entry );
+    // for ( IEntry entry : listEntryFirstLevel )
+    // {
+    // listEntry.add( entry );
     //
-    //            if ( entry.getEntryType( ).getGroup( ) )
-    //            {
-    //                filter = new EntryFilter( );
-    //                filter.setIdEntryParent( entry.getIdEntry( ) );
-    //                entry.setChildren( EntryHome.getEntryList( filter, plugin ) );
+    // if ( entry.getEntryType( ).getGroup( ) )
+    // {
+    // filter = new EntryFilter( );
+    // filter.setIdEntryParent( entry.getIdEntry( ) );
+    // entry.setChildren( EntryHome.getEntryList( filter, plugin ) );
     //
-    //                if ( entry.getChildren( ).size( ) != 0 )
-    //                {
-    //                    entry.getChildren( ).get( 0 ).setFirstInTheList( true );
-    //                    entry.getChildren( ).get( entry.getChildren( ).size( ) - 1 ).setLastInTheList( true );
-    //                }
+    // if ( entry.getChildren( ).size( ) != 0 )
+    // {
+    // entry.getChildren( ).get( 0 ).setFirstInTheList( true );
+    // entry.getChildren( ).get( entry.getChildren( ).size( ) - 1 ).setLastInTheList( true );
+    // }
     //
-    //                for ( IEntry entryChild : entry.getChildren( ) )
-    //                {
-    //                    listEntry.add( entryChild );
-    //                }
-    //            }
-    //        }
-    //    }
+    // for ( IEntry entryChild : entry.getChildren( ) )
+    // {
+    // listEntry.add( entryChild );
+    // }
+    // }
+    // }
+    // }
 
     /**
-     * Populate map with ( idParent : List<Orders> ) except for entry with
-     * parent null
-     * @param listEntry the list of all entry
-     * @param mapIdParentOrdersChildren map with (idParent : List<Orders>)
+     * Populate map with ( idParent : List<Orders> ) except for entry with parent null
+     * 
+     * @param listEntry
+     *            the list of all entry
+     * @param mapIdParentOrdersChildren
+     *            map with (idParent : List<Orders>)
      */
     private void populateEntryMap( List<IEntry> listEntry, Map<String, List<Integer>> mapIdParentOrdersChildren )
     {
@@ -5493,20 +5555,20 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         for ( IEntry entry : listEntry )
         {
-            if ( entry.getParent(  ) != null )
+            if ( entry.getParent( ) != null )
             {
-                Integer key = Integer.valueOf( entry.getParent(  ).getIdEntry(  ) );
-                String strKey = key.toString(  );
+                Integer key = Integer.valueOf( entry.getParent( ).getIdEntry( ) );
+                String strKey = key.toString( );
 
                 if ( mapIdParentOrdersChildren.get( strKey ) != null )
                 {
-                    mapIdParentOrdersChildren.get( key.toString(  ) ).add( entry.getPosition(  ) );
+                    mapIdParentOrdersChildren.get( key.toString( ) ).add( entry.getPosition( ) );
                 }
                 else
                 {
-                    listOrder = new ArrayList<Integer>(  );
-                    listOrder.add( entry.getPosition(  ) );
-                    mapIdParentOrdersChildren.put( key.toString(  ), listOrder );
+                    listOrder = new ArrayList<Integer>( );
+                    listOrder.add( entry.getPosition( ) );
+                    mapIdParentOrdersChildren.put( key.toString( ), listOrder );
                 }
             }
         }
@@ -5514,43 +5576,47 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Change the attribute's order to a greater one (move down in the list)
-     * @param plugin the plugin
-     * @param nOrderToSet the new order for the attribute
-     * @param entryToChangeOrder the attribute which will change
-     * @param nIdDirectory the id of the directory
+     * 
+     * @param plugin
+     *            the plugin
+     * @param nOrderToSet
+     *            the new order for the attribute
+     * @param entryToChangeOrder
+     *            the attribute which will change
+     * @param nIdDirectory
+     *            the id of the directory
      */
     private void moveDownEntryOrder( Plugin plugin, int nOrderToSet, IEntry entryToChangeOrder, int nIdDirectory )
     {
-        if ( entryToChangeOrder.getParent(  ) == null )
+        if ( entryToChangeOrder.getParent( ) == null )
         {
             int nNbChild = 0;
             int nNewOrder = 0;
 
             List<IEntry> listEntryFirstLevel = EntryHome.findEntriesWithoutParent( plugin, nIdDirectory );
 
-            List<Integer> orderFirstLevel = new ArrayList<Integer>(  );
+            List<Integer> orderFirstLevel = new ArrayList<Integer>( );
             initOrderFirstLevel( listEntryFirstLevel, orderFirstLevel );
 
             Integer nbChildEntryToChangeOrder = 0;
 
-            if ( entryToChangeOrder.getChildren(  ) != null )
+            if ( entryToChangeOrder.getChildren( ) != null )
             {
-                nbChildEntryToChangeOrder = entryToChangeOrder.getChildren(  ).size(  );
+                nbChildEntryToChangeOrder = entryToChangeOrder.getChildren( ).size( );
             }
 
             for ( IEntry entry : listEntryFirstLevel )
             {
-                for ( int i = 0; i < orderFirstLevel.size(  ); i++ )
+                for ( int i = 0; i < orderFirstLevel.size( ); i++ )
                 {
-                    if ( ( orderFirstLevel.get( i ) == entry.getPosition(  ) ) &&
-                            ( entry.getPosition(  ) > entryToChangeOrder.getPosition(  ) ) &&
-                            ( entry.getPosition(  ) <= nOrderToSet ) )
+                    if ( ( orderFirstLevel.get( i ) == entry.getPosition( ) ) && ( entry.getPosition( ) > entryToChangeOrder.getPosition( ) )
+                            && ( entry.getPosition( ) <= nOrderToSet ) )
                     {
                         if ( nNbChild == 0 )
                         {
                             nNewOrder = orderFirstLevel.get( i - 1 );
 
-                            if ( orderFirstLevel.get( i - 1 ) != entryToChangeOrder.getPosition(  ) )
+                            if ( orderFirstLevel.get( i - 1 ) != entryToChangeOrder.getPosition( ) )
                             {
                                 nNewOrder -= nbChildEntryToChangeOrder;
                             }
@@ -5564,9 +5630,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                         EntryHome.update( entry, plugin );
                         nNbChild = 0;
 
-                        if ( entry.getChildren(  ) != null )
+                        if ( entry.getChildren( ) != null )
                         {
-                            for ( IEntry child : entry.getChildren(  ) )
+                            for ( IEntry child : entry.getChildren( ) )
                             {
                                 nNbChild++;
                                 child.setPosition( nNewOrder + nNbChild );
@@ -5581,26 +5647,25 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             EntryHome.update( entryToChangeOrder, plugin );
             nNbChild = 0;
 
-            for ( IEntry child : entryToChangeOrder.getChildren(  ) )
+            for ( IEntry child : entryToChangeOrder.getChildren( ) )
             {
                 nNbChild++;
-                child.setPosition( entryToChangeOrder.getPosition(  ) + nNbChild );
+                child.setPosition( entryToChangeOrder.getPosition( ) + nNbChild );
                 EntryHome.update( child, plugin );
             }
         }
         else
         {
-            EntryFilter filter = new EntryFilter(  );
+            EntryFilter filter = new EntryFilter( );
             filter.setIdDirectory( nIdDirectory );
 
             List<IEntry> listAllEntry = EntryHome.getEntryList( filter, plugin );
 
             for ( IEntry entry : listAllEntry )
             {
-                if ( ( entry.getPosition(  ) > entryToChangeOrder.getPosition(  ) ) &&
-                        ( entry.getPosition(  ) <= nOrderToSet ) )
+                if ( ( entry.getPosition( ) > entryToChangeOrder.getPosition( ) ) && ( entry.getPosition( ) <= nOrderToSet ) )
                 {
-                    entry.setPosition( entry.getPosition(  ) - 1 );
+                    entry.setPosition( entry.getPosition( ) - 1 );
                     EntryHome.update( entry, plugin );
                 }
             }
@@ -5612,46 +5677,51 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Change the attribute's order to a lower one (move up in the list)
-     * @param plugin the plugin
-     * @param nOrderToSet the new order for the attribute
-     * @param entryToChangeOrder the attribute which will change
-     * @param nIdDirectory the id of the form
+     * 
+     * @param plugin
+     *            the plugin
+     * @param nOrderToSet
+     *            the new order for the attribute
+     * @param entryToChangeOrder
+     *            the attribute which will change
+     * @param nIdDirectory
+     *            the id of the form
      */
     private void moveUpEntryOrder( Plugin plugin, int nOrderToSet, IEntry entryToChangeOrder, int nIdDirectory )
     {
-        if ( entryToChangeOrder.getParent(  ) == null )
+        if ( entryToChangeOrder.getParent( ) == null )
         {
-            List<Integer> orderFirstLevel = new ArrayList<Integer>(  );
+            List<Integer> orderFirstLevel = new ArrayList<Integer>( );
 
             int nNbChild = 0;
             int nNewOrder = nOrderToSet;
-            int nEntryToMoveOrder = entryToChangeOrder.getPosition(  );
+            int nEntryToMoveOrder = entryToChangeOrder.getPosition( );
 
-            EntryFilter filter = new EntryFilter(  );
+            EntryFilter filter = new EntryFilter( );
             filter.setIdDirectory( nIdDirectory );
 
             List<IEntry> listEntryFirstLevel = EntryHome.findEntriesWithoutParent( plugin, nIdDirectory );
-            //the list of all the orders in the first level
+            // the list of all the orders in the first level
             initOrderFirstLevel( listEntryFirstLevel, orderFirstLevel );
 
             for ( IEntry entry : listEntryFirstLevel )
             {
-                Integer entryInitialPosition = entry.getPosition(  );
+                Integer entryInitialPosition = entry.getPosition( );
 
-                for ( int i = 0; i < orderFirstLevel.size(  ); i++ )
+                for ( int i = 0; i < orderFirstLevel.size( ); i++ )
                 {
-                    if ( ( orderFirstLevel.get( i ) == entryInitialPosition ) &&
-                            ( entryInitialPosition < nEntryToMoveOrder ) && ( entryInitialPosition >= nOrderToSet ) )
+                    if ( ( orderFirstLevel.get( i ) == entryInitialPosition ) && ( entryInitialPosition < nEntryToMoveOrder )
+                            && ( entryInitialPosition >= nOrderToSet ) )
                     {
-                        if ( entryToChangeOrder.getPosition(  ) == nEntryToMoveOrder )
+                        if ( entryToChangeOrder.getPosition( ) == nEntryToMoveOrder )
                         {
                             entryToChangeOrder.setPosition( nNewOrder );
                             EntryHome.update( entryToChangeOrder, plugin );
 
-                            for ( IEntry child : entryToChangeOrder.getChildren(  ) )
+                            for ( IEntry child : entryToChangeOrder.getChildren( ) )
                             {
                                 nNbChild++;
-                                child.setPosition( entryToChangeOrder.getPosition(  ) + nNbChild );
+                                child.setPosition( entryToChangeOrder.getPosition( ) + nNbChild );
                                 EntryHome.update( child, plugin );
                             }
                         }
@@ -5661,9 +5731,9 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                         EntryHome.update( entry, plugin );
                         nNbChild = 0;
 
-                        if ( entry.getChildren(  ) != null )
+                        if ( entry.getChildren( ) != null )
                         {
-                            for ( IEntry child : entry.getChildren(  ) )
+                            for ( IEntry child : entry.getChildren( ) )
                             {
                                 nNbChild++;
                                 child.setPosition( nNewOrder + nNbChild );
@@ -5676,17 +5746,16 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         }
         else
         {
-            EntryFilter filter = new EntryFilter(  );
+            EntryFilter filter = new EntryFilter( );
             filter.setIdDirectory( nIdDirectory );
 
             List<IEntry> listAllEntry = EntryHome.getEntryList( filter, plugin );
 
             for ( IEntry entry : listAllEntry )
             {
-                if ( ( entry.getPosition(  ) < entryToChangeOrder.getPosition(  ) ) &&
-                        ( entry.getPosition(  ) >= nOrderToSet ) )
+                if ( ( entry.getPosition( ) < entryToChangeOrder.getPosition( ) ) && ( entry.getPosition( ) >= nOrderToSet ) )
                 {
-                    entry.setPosition( entry.getPosition(  ) + 1 );
+                    entry.setPosition( entry.getPosition( ) + 1 );
                     EntryHome.update( entry, plugin );
                 }
             }
@@ -5698,18 +5767,20 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Updates the entries position for a directory
-     * @param request The HTTP request
-     * @throws AccessDeniedException the {@link AccessDeniedException}
+     * 
+     * @param request
+     *            The HTTP request
+     * @throws AccessDeniedException
+     *             the {@link AccessDeniedException}
      * @return The URL to go after performing the action
      */
-    public String updateEntryOrder( HttpServletRequest request )
-        throws AccessDeniedException
+    public String updateEntryOrder( HttpServletRequest request ) throws AccessDeniedException
     {
-        Plugin plugin = getPlugin(  );
+        Plugin plugin = getPlugin( );
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
 
-        EntryFilter filter = new EntryFilter(  );
+        EntryFilter filter = new EntryFilter( );
         filter.setIdDirectory( nIdDirectory );
         filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
 
@@ -5723,8 +5794,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             EntryHome.update( entry, plugin );
             position++;
 
-            EntryFilter filterSecondLevel = new EntryFilter(  );
-            filterSecondLevel.setIdEntryParent( entry.getIdEntry(  ) );
+            EntryFilter filterSecondLevel = new EntryFilter( );
+            filterSecondLevel.setIdEntryParent( entry.getIdEntry( ) );
 
             List<IEntry> listEntrySecondLevel = EntryHome.getEntryList( filterSecondLevel, plugin );
 

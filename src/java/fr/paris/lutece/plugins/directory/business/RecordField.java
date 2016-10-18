@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.directory.business;
 
 import org.apache.commons.lang.StringUtils;
 
-
 /**
  *
  * class RecordField
@@ -55,12 +54,14 @@ public class RecordField
 
     /**
      * This attribute is used for EntryTypeDownloadURL
+     * 
      * @see {@link EntryTypeDownloadUrl}
      */
     private String _strFileName;
 
     /**
      * This attribute is used for EntryTypeDownloadURL
+     * 
      * @see {@link EntryTypeDownloadUrl}
      */
     private String _strFileExtension;
@@ -69,14 +70,16 @@ public class RecordField
      *
      * @return the record associate to the field
      */
-    public Record getRecord(  )
+    public Record getRecord( )
     {
         return _record;
     }
 
     /**
      * the record associate to the field
-     * @param record the record
+     * 
+     * @param record
+     *            the record
      */
     public void setRecord( Record record )
     {
@@ -87,14 +90,16 @@ public class RecordField
      *
      * @return the entry associate to the field
      */
-    public IEntry getEntry(  )
+    public IEntry getEntry( )
     {
         return _entry;
     }
 
     /**
      * set the entry associate to the field
-     * @param entry the entry associate to the field
+     * 
+     * @param entry
+     *            the entry associate to the field
      */
     public void setEntry( IEntry entry )
     {
@@ -105,14 +110,16 @@ public class RecordField
      *
      * @return the id of the response
      */
-    public int getIdRecordField(  )
+    public int getIdRecordField( )
     {
         return _nIdRecordField;
     }
 
     /**
      * set the id of the record field
-     * @param idRecordField the id of the record field
+     * 
+     * @param idRecordField
+     *            the id of the record field
      */
     public void setIdRecordField( int idRecordField )
     {
@@ -123,14 +130,16 @@ public class RecordField
      *
      * @return the value of the record field
      */
-    public String getValue(  )
+    public String getValue( )
     {
         return _strValue;
     }
 
     /**
      * set the value of the record field
-     * @param valueRecordField the value of the record field
+     * 
+     * @param valueRecordField
+     *            the value of the record field
      */
     public void setValue( String valueRecordField )
     {
@@ -139,16 +148,19 @@ public class RecordField
 
     /**
      * get the field associate to the response
+     * 
      * @return the field associate to the response
      */
-    public Field getField(  )
+    public Field getField( )
     {
         return _field;
     }
 
     /**
      * set the field associate to the response
-     * @param field field
+     * 
+     * @param field
+     *            field
      */
     public void setField( Field field )
     {
@@ -159,14 +171,16 @@ public class RecordField
      *
      * @return the file associate to the record field
      */
-    public File getFile(  )
+    public File getFile( )
     {
         return _file;
     }
 
     /**
      * set the file associate to the record field
-     * @param file the file
+     * 
+     * @param file
+     *            the file
      */
     public void setFile( File file )
     {
@@ -175,10 +189,10 @@ public class RecordField
 
     /**
      * Check if this record field represents a little thumbnail
-     * @return True if this record field represents a little thumbnail, false
-     *         otherwise
+     * 
+     * @return True if this record field represents a little thumbnail, false otherwise
      */
-    public boolean isLittleThumbnail(  )
+    public boolean isLittleThumbnail( )
     {
         if ( StringUtils.isNotBlank( _strValue ) && ( _strValue.startsWith( CONSTANT_LITTLE_THUMBNAIL ) ) )
         {
@@ -190,10 +204,10 @@ public class RecordField
 
     /**
      * Check if this record field represents a big thumbnail
-     * @return True if this record field represents a big thumbnail, false
-     *         otherwise
+     * 
+     * @return True if this record field represents a big thumbnail, false otherwise
      */
-    public boolean isBigThumbnail(  )
+    public boolean isBigThumbnail( )
     {
         if ( StringUtils.isNotBlank( _strValue ) && ( _strValue.startsWith( CONSTANT_BIG_THUMBNAIL ) ) )
         {
@@ -205,30 +219,32 @@ public class RecordField
 
     /**
      * Converts this record field into a string
+     * 
      * @return the value of the recordField
      */
     @Override
-    public String toString(  )
+    public String toString( )
     {
         return _strValue;
     }
 
     /**
-     * Get the file extensions
-     * This attribute is used for EntryTypeDownloadURL
+     * Get the file extensions This attribute is used for EntryTypeDownloadURL
+     * 
      * @see {@link EntryTypeDownloadUrl}
      * @return the file extension if the response value is a file
      */
-    public String getFileExtension(  )
+    public String getFileExtension( )
     {
         return _strFileExtension;
     }
 
     /**
-     * Set the file extension if the response value is a file
-     * This attribute is used for EntryTypeDownloadURL
+     * Set the file extension if the response value is a file This attribute is used for EntryTypeDownloadURL
+     * 
      * @see {@link EntryTypeDownloadUrl}
-     * @param fileExtension the file extension if the response value is a file
+     * @param fileExtension
+     *            the file extension if the response value is a file
      */
     public void setFileExtension( String fileExtension )
     {
@@ -236,21 +252,22 @@ public class RecordField
     }
 
     /**
-     * The file name if the response value is a file
-     * This attribute is used for EntryTypeDownloadURL
+     * The file name if the response value is a file This attribute is used for EntryTypeDownloadURL
+     * 
      * @see {@link EntryTypeDownloadUrl}
      * @return the file name if the response value is a file
      */
-    public String getFileName(  )
+    public String getFileName( )
     {
         return _strFileName;
     }
 
     /**
-     * The file name if the response value is a file
-     * This attribute is used for EntryTypeDownloadURL
+     * The file name if the response value is a file This attribute is used for EntryTypeDownloadURL
+     * 
      * @see {@link EntryTypeDownloadUrl}
-     * @param fileName the file name if the response value is a file
+     * @param fileName
+     *            the file name if the response value is a file
      */
     public void setFileName( String fileName )
     {

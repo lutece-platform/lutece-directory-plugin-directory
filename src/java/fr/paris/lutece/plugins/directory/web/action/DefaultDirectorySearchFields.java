@@ -51,7 +51,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  * DefaultDirectorySearchFields
  */
@@ -83,119 +82,108 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getCurrentPageIndex()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getCurrentPageIndex()
      */
-    public String getCurrentPageIndex(  )
+    public String getCurrentPageIndex( )
     {
         return _strCurrentPageIndex;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getDateCreationBeginRecord()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getDateCreationBeginRecord()
      */
-    public Date getDateCreationBeginRecord(  )
+    public Date getDateCreationBeginRecord( )
     {
         return _dateCreationBeginRecord;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getDateCreationEndRecord()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getDateCreationEndRecord()
      */
-    public Date getDateCreationEndRecord(  )
+    public Date getDateCreationEndRecord( )
     {
         return _dateCreationEndRecord;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getDateCreationRecord()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getDateCreationRecord()
      */
-    public Date getDateCreationRecord(  )
+    public Date getDateCreationRecord( )
     {
         return _dateCreationRecord;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getDefaultItemsPerPage()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getDefaultItemsPerPage()
      */
-    public int getDefaultItemsPerPage(  )
+    public int getDefaultItemsPerPage( )
     {
         return _nDefaultItemsPerPage;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getIdDirectory()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getIdDirectory()
      */
-    public int getIdDirectory(  )
+    public int getIdDirectory( )
     {
         return _nIdDirectory;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getIdEntry()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getIdEntry()
      */
-    public int getIdEntry(  )
+    public int getIdEntry( )
     {
         return _nIdEntry;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getMapQuery()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getMapQuery()
      */
-    public HashMap<String, List<RecordField>> getMapQuery(  )
+    public HashMap<String, List<RecordField>> getMapQuery( )
     {
         return _mapQuery;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getSortEntry()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getSortEntry()
      */
-    public IEntry getSortEntry(  )
+    public IEntry getSortEntry( )
     {
         return _sortEntry;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getSortOrder()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getSortOrder()
      */
-    public int getSortOrder(  )
+    public int getSortOrder( )
     {
         return _nSortOrder;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setCurrentPageIndex(java.lang.String)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setCurrentPageIndex(java.lang.String)
      */
     public void setCurrentPageIndex( String strCurrentPageIndex )
     {
@@ -204,9 +192,8 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setDateCreationBeginRecord(java.util.Date)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setDateCreationBeginRecord(java.util.Date)
      */
     public void setDateCreationBeginRecord( Date dateCreationBeginRecord )
     {
@@ -215,9 +202,8 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setDateCreationEndRecord(java.util.Date)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setDateCreationEndRecord(java.util.Date)
      */
     public void setDateCreationEndRecord( Date dateCreationEndRecord )
     {
@@ -226,9 +212,8 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setDateCreationRecord(java.util.Date)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setDateCreationRecord(java.util.Date)
      */
     public void setDateCreationRecord( Date dateCreationRecord )
     {
@@ -237,9 +222,8 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setDefaultItemsPerPage(int)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setDefaultItemsPerPage(int)
      */
     public void setDefaultItemsPerPage( int nDefaultItemsPerPage )
     {
@@ -248,9 +232,8 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setIdDirectory(int)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setIdDirectory(int)
      */
     public void setIdDirectory( int nIdDirectory )
     {
@@ -259,9 +242,8 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setIdEntry(int)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setIdEntry(int)
      */
     public void setIdEntry( int nIdEntry )
     {
@@ -270,9 +252,8 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setMapQuery(java.util.HashMap)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setMapQuery(java.util.HashMap)
      */
     public void setMapQuery( HashMap<String, List<RecordField>> mapQuery )
     {
@@ -281,9 +262,8 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setSortEntry(fr.paris.lutece.plugins.directory.business.IEntry)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setSortEntry(fr.paris.lutece.plugins.directory.business.IEntry)
      */
     public void setSortEntry( IEntry sortEntry )
     {
@@ -292,9 +272,8 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setSortOrder(int)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setSortOrder(int)
      */
     public void setSortOrder( int nSortOrder )
     {
@@ -303,11 +282,9 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setSortParameters(javax.servlet.http.HttpServletRequest,
-     * fr.paris.lutece.plugins.directory.business.Directory,
-     * fr.paris.lutece.portal.service.plugin.Plugin)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setSortParameters(javax.servlet.http.HttpServletRequest,
+     * fr.paris.lutece.plugins.directory.business.Directory, fr.paris.lutece.portal.service.plugin.Plugin)
      */
     public void setSortParameters( HttpServletRequest request, Directory directory, Plugin plugin )
     {
@@ -325,15 +302,16 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
             {
                 // IMPORTANT : date creation is default filter
             }
-            else if ( DirectoryUtils.PARAMETER_DATEMODIFICATION.equals( strSortedAttributeName ) )
-            {
-                _bIsSortByDateModification = true;
-            }
             else
-            {
-                int nSortedEntryId = Integer.parseInt( strSortedAttributeName );
-                _sortEntry = EntryHome.findByPrimaryKey( nSortedEntryId, plugin );
-            }
+                if ( DirectoryUtils.PARAMETER_DATEMODIFICATION.equals( strSortedAttributeName ) )
+                {
+                    _bIsSortByDateModification = true;
+                }
+                else
+                {
+                    int nSortedEntryId = Integer.parseInt( strSortedAttributeName );
+                    _sortEntry = EntryHome.findByPrimaryKey( nSortedEntryId, plugin );
+                }
 
             strAscSort = request.getParameter( Parameters.SORTED_ASC );
 
@@ -361,20 +339,18 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getItemsPerPage()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getItemsPerPage()
      */
-    public int getItemsPerPage(  )
+    public int getItemsPerPage( )
     {
         return _nItemsPerPage;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setItemsPerPage(int)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setItemsPerPage(int)
      */
     public void setItemsPerPage( int nItemsPerPage )
     {
@@ -383,9 +359,8 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * setIsDisabled(int)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# setIsDisabled(int)
      */
     public void setIsDisabled( int nIdIsDisabled )
     {
@@ -394,30 +369,25 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getIsDisabled()
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getIsDisabled()
      */
-    public int getIsDisabled(  )
+    public int getIsDisabled( )
     {
         return _nIsDisabled;
     }
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * getDefaultIdSortEntry
-     * (fr.paris.lutece.plugins.directory.business.Directory)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# getDefaultIdSortEntry (fr.paris.lutece.plugins.directory.business.Directory)
      */
     public abstract String getDefaultIdSortEntry( Directory directory );
 
     /*
      * (non-Javadoc)
-     *
-     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields#
-     * isDefaultAscendingSort
-     * (fr.paris.lutece.plugins.directory.business.Directory)
+     * 
+     * @see fr.paris.lutece.plugins.directory.web.action.IDirectorySearchFields# isDefaultAscendingSort (fr.paris.lutece.plugins.directory.business.Directory)
      */
     public abstract boolean isDefaultAscendingSort( Directory directory );
 
@@ -432,7 +402,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
     /**
      * {@inheritDoc}
      */
-    public Date getDateModificationBeginRecord(  )
+    public Date getDateModificationBeginRecord( )
     {
         return _dateModificationBeginRecord;
     }
@@ -448,7 +418,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
     /**
      * {@inheritDoc}
      */
-    public Date getDateModificationEndRecord(  )
+    public Date getDateModificationEndRecord( )
     {
         return _dateModificationEndRecord;
     }
@@ -464,7 +434,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
     /**
      * {@inheritDoc}
      */
-    public Date getDateModificationRecord(  )
+    public Date getDateModificationRecord( )
     {
         return _dateModificationRecord;
     }
@@ -480,7 +450,7 @@ public abstract class DefaultDirectorySearchFields implements IDirectorySearchFi
     /**
      * {@inheritDoc}
      */
-    public boolean isSortByDateModification(  )
+    public boolean isSortByDateModification( )
     {
         return _bIsSortByDateModification;
     }

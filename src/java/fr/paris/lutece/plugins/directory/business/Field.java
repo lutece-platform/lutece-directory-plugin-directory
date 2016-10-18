@@ -39,7 +39,6 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupResource;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  *
  * class Field
@@ -70,14 +69,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return the id of the field
      */
-    public int getIdField(  )
+    public int getIdField( )
     {
         return _nIdField;
     }
 
     /**
      * set the id of the field
-     * @param idField the id of the field
+     * 
+     * @param idField
+     *            the id of the field
      */
     public void setIdField( int idField )
     {
@@ -88,14 +89,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return the position of the field in the list of the entry's fields
      */
-    public int getPosition(  )
+    public int getPosition( )
     {
         return _nPosition;
     }
 
     /**
      * set the position of the field in the list of the entry's fields
-     * @param position the position of the field in the list of fields
+     * 
+     * @param position
+     *            the position of the field in the list of fields
      */
     public void setPosition( int position )
     {
@@ -106,14 +109,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return the entry of the field
      */
-    public IEntry getEntry(  )
+    public IEntry getEntry( )
     {
         return _entry;
     }
 
     /**
      * set the entry of the field
-     * @param entry the entry of the field
+     * 
+     * @param entry
+     *            the entry of the field
      */
     public void setEntry( IEntry entry )
     {
@@ -124,15 +129,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return a list of regular expression which is associate to the field
      */
-    public List<RegularExpression> getRegularExpressionList(  )
+    public List<RegularExpression> getRegularExpressionList( )
     {
         return _listRegularExpressionList;
     }
 
     /**
      * set a list of regular expression which is associate to the field
-     * @param regularExpressionList a list of regular expression which is
-     *            associate to the field
+     * 
+     * @param regularExpressionList
+     *            a list of regular expression which is associate to the field
      */
     public void setRegularExpressionList( List<RegularExpression> regularExpressionList )
     {
@@ -143,14 +149,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return the title of the field
      */
-    public String getTitle(  )
+    public String getTitle( )
     {
         return _strTitle;
     }
 
     /**
      * set the title of the field
-     * @param title the title of the field
+     * 
+     * @param title
+     *            the title of the field
      */
     public void setTitle( String title )
     {
@@ -161,14 +169,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return the value of the field
      */
-    public String getValue(  )
+    public String getValue( )
     {
         return _strValue;
     }
 
     /**
      * set the value of the field
-     * @param value the value of the field
+     * 
+     * @param value
+     *            the value of the field
      */
     public void setValue( String value )
     {
@@ -179,14 +189,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return the width of the field
      */
-    public int getWidth(  )
+    public int getWidth( )
     {
         return _nWidth;
     }
 
     /**
      * set the width of the field
-     * @param width the width of the field
+     * 
+     * @param width
+     *            the width of the field
      */
     public void setWidth( int width )
     {
@@ -197,14 +209,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return the height of the field
      */
-    public int getHeight(  )
+    public int getHeight( )
     {
         return _nHeight;
     }
 
     /**
      * set the height of the field
-     * @param height the height of the field
+     * 
+     * @param height
+     *            the height of the field
      */
     public void setHeight( int height )
     {
@@ -215,14 +229,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return true if the field is a default field of the entry
      */
-    public boolean isDefaultValue(  )
+    public boolean isDefaultValue( )
     {
         return _bDefaultValue;
     }
 
     /**
      * set true if the field is a default field of the entry
-     * @param defaultValue true if the field is a default field of the entry
+     * 
+     * @param defaultValue
+     *            true if the field is a default field of the entry
      */
     public void setDefaultValue( boolean defaultValue )
     {
@@ -233,15 +249,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return true if the field is shown in result list
      */
-    public boolean isShownInResultList(  )
+    public boolean isShownInResultList( )
     {
         return _bShownInResultList;
     }
 
     /**
      * set true if the field is shown in result list
-     * @param bShown True if the field is shown in the result list, false
-     *            otherwise
+     * 
+     * @param bShown
+     *            True if the field is shown in the result list, false otherwise
      */
     public void setShownInResultList( boolean bShown )
     {
@@ -252,15 +269,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return true if the field is shown in result record
      */
-    public boolean isShownInResultRecord(  )
+    public boolean isShownInResultRecord( )
     {
         return _bShownInResultRecord;
     }
 
     /**
      * set true if the field is shown in result record
-     * @param bShown True if the field is shown in the result list, false
-     *            otherwise
+     * 
+     * @param bShown
+     *            True if the field is shown in the result list, false otherwise
      */
     public void setShownInResultRecord( boolean bShown )
     {
@@ -271,14 +289,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return the max size of enter user
      */
-    public int getMaxSizeEnter(  )
+    public int getMaxSizeEnter( )
     {
         return _nMaxSizeEnter;
     }
 
     /**
      * set the max size of enter user
-     * @param maxSizeEnter the max size of enter user
+     * 
+     * @param maxSizeEnter
+     *            the max size of enter user
      */
     public void setMaxSizeEnter( int maxSizeEnter )
     {
@@ -289,14 +309,16 @@ public class Field implements AdminWorkgroupResource
      *
      * @return the value of type Date
      */
-    public Date getValueTypeDate(  )
+    public Date getValueTypeDate( )
     {
         return _tValueTypeDate;
     }
 
     /**
      * set the value of type Date
-     * @param defaultValueTypeDate the value of type Date
+     * 
+     * @param defaultValueTypeDate
+     *            the value of type Date
      */
     public void setValueTypeDate( Date defaultValueTypeDate )
     {
@@ -305,17 +327,20 @@ public class Field implements AdminWorkgroupResource
 
     /**
      * Gets the field role
+     * 
      * @return field role as a String
      *
      */
-    public String getRoleKey(  )
+    public String getRoleKey( )
     {
         return _strRoleKey;
     }
 
     /**
      * Sets the field's role
-     * @param strRole The role
+     * 
+     * @param strRole
+     *            The role
      *
      */
     public void setRoleKey( String strRole )
@@ -327,36 +352,42 @@ public class Field implements AdminWorkgroupResource
      * {@inheritDoc}
      */
     @Override
-    public String getWorkgroup(  )
+    public String getWorkgroup( )
     {
         return _strWorkgroupKey;
     }
 
     /**
      * set the work group associate to the field
-     * @param workGroup the work group associate to the field
+     * 
+     * @param workGroup
+     *            the work group associate to the field
      */
     public void setWorkgroup( String workGroup )
     {
         _strWorkgroupKey = workGroup;
     }
+
     /**
      * Gets the field ImageType
+     * 
      * @return field ImageType as a String
      *
      */
-    public String getImageType(  )
+    public String getImageType( )
     {
         return _strImageType;
     }
 
     /**
      * Sets the field's ImageType
-     * @param ImageType The Image Type
+     * 
+     * @param ImageType
+     *            The Image Type
      *
      */
     public void setImageType( String strImageType )
     {
-    	_strImageType = strImageType;
+        _strImageType = strImageType;
     }
 }

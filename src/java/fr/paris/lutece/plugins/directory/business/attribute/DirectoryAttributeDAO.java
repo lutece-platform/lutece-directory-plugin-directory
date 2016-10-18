@@ -39,7 +39,6 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  *
  * DirectoryAttributeDAO
@@ -57,12 +56,12 @@ public class DirectoryAttributeDAO implements IDirectoryAttributeDAO
     @Override
     public Map<String, Object> load( int nIdDirectory, Plugin plugin )
     {
-        Map<String, Object> mapAttributes = new HashMap<String, Object>(  );
+        Map<String, Object> mapAttributes = new HashMap<String, Object>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         daoUtil.setInt( 1, nIdDirectory );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             int nIndex = 1;
             String strAttributeKey = daoUtil.getString( nIndex++ );
@@ -70,7 +69,7 @@ public class DirectoryAttributeDAO implements IDirectoryAttributeDAO
             mapAttributes.put( strAttributeKey, attributeValue );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return mapAttributes;
     }
@@ -85,11 +84,11 @@ public class DirectoryAttributeDAO implements IDirectoryAttributeDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
         daoUtil.setInt( nIndex++, nIdDirectory );
         daoUtil.setString( nIndex++, strAttributeKey );
-        daoUtil.setString( nIndex++, attributeValue.toString(  ) );
+        daoUtil.setString( nIndex++, attributeValue.toString( ) );
 
-        daoUtil.executeUpdate(  );
+        daoUtil.executeUpdate( );
 
-        daoUtil.free(  );
+        daoUtil.free( );
     }
 
     /**
@@ -101,8 +100,8 @@ public class DirectoryAttributeDAO implements IDirectoryAttributeDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdDirectory );
 
-        daoUtil.executeUpdate(  );
+        daoUtil.executeUpdate( );
 
-        daoUtil.free(  );
+        daoUtil.free( );
     }
 }

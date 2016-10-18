@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
  * This class provides Data Access methods for record objects
  */
@@ -55,21 +54,20 @@ public final class RecordDAO implements IRecordDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT MAX( id_record ) FROM directory_record";
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key,date_modification " +
-        "FROM directory_record WHERE id_record=? ";
-    private static final String SQL_QUERY_FIND_BY_LIST_PRIMARY_KEY = "SELECT id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key,date_modification " +
-        "FROM directory_record WHERE id_record IN ( ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_record ( " +
-        "id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key,date_modification ) VALUES(?,?,?,?,?,?,?)";
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key,date_modification "
+            + "FROM directory_record WHERE id_record=? ";
+    private static final String SQL_QUERY_FIND_BY_LIST_PRIMARY_KEY = "SELECT id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key,date_modification "
+            + "FROM directory_record WHERE id_record IN ( ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_record ( "
+            + "id_record,date_creation,id_directory,is_enabled,role_key,workgroup_key,date_modification ) VALUES(?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_record WHERE id_record = ? ";
     private static final String SQL_QUERY_DELETE_BY_ID_DIRECTORY = "DELETE FROM directory_record WHERE id_directory = ?";
-    private static final String SQL_QUERY_UPDATE = "UPDATE directory_record SET " +
-        "id_record=?,date_creation=?,id_directory=?,is_enabled=?,role_key=?,workgroup_key=?,date_modification=? WHERE id_record=?";
-    private static final String SQL_QUERY_SELECT_RECORD_BY_FILTER = "SELECT dr.id_record,dr.date_creation,dr.id_directory,dr.is_enabled,dr.role_key,dr.workgroup_key,dr.date_modification " +
-        "FROM directory_record dr ";
+    private static final String SQL_QUERY_UPDATE = "UPDATE directory_record SET "
+            + "id_record=?,date_creation=?,id_directory=?,is_enabled=?,role_key=?,workgroup_key=?,date_modification=? WHERE id_record=?";
+    private static final String SQL_QUERY_SELECT_RECORD_BY_FILTER = "SELECT dr.id_record,dr.date_creation,dr.id_directory,dr.is_enabled,dr.role_key,dr.workgroup_key,dr.date_modification "
+            + "FROM directory_record dr ";
     private static final String SQL_QUERY_SELECT_RECORD_ID_BY_FILTER = "SELECT dr.id_record FROM directory_record dr ";
-    private static final String SQL_QUERY_SELECT_COUNT_BY_FILTER = "SELECT COUNT(dr.id_record) " +
-        "FROM directory_record dr  ";
+    private static final String SQL_QUERY_SELECT_COUNT_BY_FILTER = "SELECT COUNT(dr.id_record) " + "FROM directory_record dr  ";
     private static final String SQL_QUERY_SELECT_DIRECTORY_ID = "SELECT id_directory FROM directory_record WHERE id_record=?";
     private static final String SQL_QUERY_SELECT_COUNT_DIRECYTORY_RECORD_HAS_WORKFLOW = "SELECT COUNT(*) FROM directory_record WHERE id_directory = ? AND workgroup_key IS NOT NULL";
     private static final String SQL_FILTER_ID_DIRECTORY = "	 dr.id_directory = ? ";
@@ -91,24 +89,25 @@ public final class RecordDAO implements IRecordDAO
     /**
      * Generates a new primary key
      *
-     * @param plugin the plugin
+     * @param plugin
+     *            the plugin
      * @return The new primary key
      */
     private int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nKey;
 
-        if ( !daoUtil.next(  ) )
+        if ( !daoUtil.next( ) )
         {
             // if the table is empty
             nKey = 1;
         }
 
         nKey = daoUtil.getInt( 1 ) + 1;
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
@@ -122,18 +121,18 @@ public final class RecordDAO implements IRecordDAO
         record.setIdRecord( newPrimaryKey( plugin ) );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
-        daoUtil.setInt( 1, record.getIdRecord(  ) );
-        daoUtil.setTimestamp( 2, record.getDateCreation(  ) );
-        daoUtil.setInt( 3, record.getDirectory(  ).getIdDirectory(  ) );
-        daoUtil.setBoolean( 4, record.isEnabled(  ) );
-        daoUtil.setString( 5, record.getRoleKey(  ) );
-        daoUtil.setString( 6, record.getWorkgroup(  ) );
-        daoUtil.setTimestamp( 7, record.getDateModification(  ) );
+        daoUtil.setInt( 1, record.getIdRecord( ) );
+        daoUtil.setTimestamp( 2, record.getDateCreation( ) );
+        daoUtil.setInt( 3, record.getDirectory( ).getIdDirectory( ) );
+        daoUtil.setBoolean( 4, record.isEnabled( ) );
+        daoUtil.setString( 5, record.getRoleKey( ) );
+        daoUtil.setString( 6, record.getWorkgroup( ) );
+        daoUtil.setTimestamp( 7, record.getDateModification( ) );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
 
-        return record.getIdRecord(  );
+        return record.getIdRecord( );
     }
 
     /**
@@ -146,14 +145,14 @@ public final class RecordDAO implements IRecordDAO
         Directory directory;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
         daoUtil.setInt( 1, nIdRecord );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            record = new Record(  );
+            record = new Record( );
             record.setIdRecord( daoUtil.getInt( 1 ) );
             record.setDateCreation( daoUtil.getTimestamp( 2 ) );
-            directory = new Directory(  );
+            directory = new Directory( );
             directory.setIdDirectory( daoUtil.getInt( 3 ) );
             record.setDirectory( directory );
             record.setEnabled( daoUtil.getBoolean( 4 ) );
@@ -162,7 +161,7 @@ public final class RecordDAO implements IRecordDAO
             record.setDateModification( daoUtil.getTimestamp( 7 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return record;
     }
@@ -178,9 +177,9 @@ public final class RecordDAO implements IRecordDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_COUNT_DIRECYTORY_RECORD_HAS_WORKFLOW, plugin );
         daoUtil.setInt( 1, nIdDirectory );
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             int nNb = daoUtil.getInt( 1 );
 
@@ -194,7 +193,7 @@ public final class RecordDAO implements IRecordDAO
             }
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return bResult;
     }
@@ -206,13 +205,13 @@ public final class RecordDAO implements IRecordDAO
     public List<Record> loadList( List<Integer> listId, Plugin plugin )
     {
         List<Record> lRecord;
-        int nSize = listId.size(  );
+        int nSize = listId.size( );
 
         if ( nSize > 0 )
         {
             // array to keep order from listId
             // because we have no way to keep it with a query
-            Record[] tabRecords = new Record[nSize];
+            Record [ ] tabRecords = new Record [ nSize];
 
             Directory directory;
 
@@ -225,18 +224,18 @@ public final class RecordDAO implements IRecordDAO
 
             sb.append( SQL_FILTER_CLOSE_PARENTHESIS );
 
-            DAOUtil daoUtil = new DAOUtil( sb.toString(  ), plugin );
+            DAOUtil daoUtil = new DAOUtil( sb.toString( ), plugin );
 
             for ( int i = 0; i < nSize; i++ )
             {
                 daoUtil.setInt( 1 + i, listId.get( i ) );
             }
 
-            daoUtil.executeQuery(  );
+            daoUtil.executeQuery( );
 
-            while ( daoUtil.next(  ) )
+            while ( daoUtil.next( ) )
             {
-                Record record = new Record(  );
+                Record record = new Record( );
                 record.setIdRecord( daoUtil.getInt( 1 ) );
 
                 if ( daoUtil.getTimestamp( 2 ) == null )
@@ -248,7 +247,7 @@ public final class RecordDAO implements IRecordDAO
                     record.setDateCreation( daoUtil.getTimestamp( 2 ) );
                 }
 
-                directory = new Directory(  );
+                directory = new Directory( );
                 directory.setIdDirectory( daoUtil.getInt( 3 ) );
                 record.setDirectory( directory );
                 record.setEnabled( daoUtil.getBoolean( 4 ) );
@@ -265,17 +264,17 @@ public final class RecordDAO implements IRecordDAO
                 }
 
                 // keep id order
-                tabRecords[listId.indexOf( record.getIdRecord(  ) )] = record;
+                tabRecords [listId.indexOf( record.getIdRecord( ) )] = record;
             }
 
-            daoUtil.free(  );
+            daoUtil.free( );
 
             // get list from array
             lRecord = Arrays.asList( tabRecords );
         }
         else
         {
-            lRecord = new ArrayList<Record>(  );
+            lRecord = new ArrayList<Record>( );
         }
 
         return lRecord;
@@ -289,8 +288,8 @@ public final class RecordDAO implements IRecordDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdRecord );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -301,8 +300,8 @@ public final class RecordDAO implements IRecordDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_ID_DIRECTORY, plugin );
         daoUtil.setInt( 1, nDirectoryId );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -312,17 +311,17 @@ public final class RecordDAO implements IRecordDAO
     public void store( Record record, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
-        daoUtil.setInt( 1, record.getIdRecord(  ) );
-        daoUtil.setTimestamp( 2, record.getDateCreation(  ) );
-        daoUtil.setInt( 3, record.getDirectory(  ).getIdDirectory(  ) );
-        daoUtil.setBoolean( 4, record.isEnabled(  ) );
-        daoUtil.setString( 5, record.getRoleKey(  ) );
-        daoUtil.setString( 6, record.getWorkgroup(  ) );
-        daoUtil.setTimestamp( 7, record.getDateModification(  ) );
+        daoUtil.setInt( 1, record.getIdRecord( ) );
+        daoUtil.setTimestamp( 2, record.getDateCreation( ) );
+        daoUtil.setInt( 3, record.getDirectory( ).getIdDirectory( ) );
+        daoUtil.setBoolean( 4, record.isEnabled( ) );
+        daoUtil.setString( 5, record.getRoleKey( ) );
+        daoUtil.setString( 6, record.getWorkgroup( ) );
+        daoUtil.setTimestamp( 7, record.getDateModification( ) );
 
-        daoUtil.setInt( 8, record.getIdRecord(  ) );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.setInt( 8, record.getIdRecord( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -331,27 +330,26 @@ public final class RecordDAO implements IRecordDAO
     @Override
     public List<Record> selectListByFilter( RecordFieldFilter filter, Plugin plugin )
     {
-        List<Record> recordList = new ArrayList<Record>(  );
+        List<Record> recordList = new ArrayList<Record>( );
         Record record;
         Directory directory;
 
         List<String> listStrFilter = buildFilterQueryHeader( filter );
 
-        String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_SELECT_RECORD_BY_FILTER, listStrFilter,
-                SQL_ORDER_BY_DEFAULT_ASC );
+        String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_SELECT_RECORD_BY_FILTER, listStrFilter, SQL_ORDER_BY_DEFAULT_ASC );
 
         DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
 
         daoUtil = buildFilterQueryFooter( daoUtil, filter, 1 );
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            record = new Record(  );
+            record = new Record( );
             record.setIdRecord( daoUtil.getInt( 1 ) );
             record.setDateCreation( daoUtil.getTimestamp( 2 ) );
-            directory = new Directory(  );
+            directory = new Directory( );
             directory.setIdDirectory( daoUtil.getInt( 3 ) );
             record.setDirectory( directory );
             record.setEnabled( daoUtil.getBoolean( 4 ) );
@@ -362,7 +360,7 @@ public final class RecordDAO implements IRecordDAO
             recordList.add( record );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return recordList;
     }
@@ -377,14 +375,14 @@ public final class RecordDAO implements IRecordDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_DIRECTORY_ID, plugin );
 
         daoUtil.setInt( 1, nRecordId );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nResult = daoUtil.getInt( 1 );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nResult;
     }
@@ -404,14 +402,14 @@ public final class RecordDAO implements IRecordDAO
 
         daoUtil = buildFilterQueryFooter( daoUtil, filter, 1 );
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nIdCount = daoUtil.getInt( 1 );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nIdCount;
     }
@@ -422,20 +420,20 @@ public final class RecordDAO implements IRecordDAO
     @Override
     public List<Integer> selectListIdByFilter( RecordFieldFilter filter, Plugin plugin )
     {
-        List<Integer> recordList = new ArrayList<Integer>(  );
+        List<Integer> recordList = new ArrayList<Integer>( );
         List<String> listFilter = buildFilterQueryHeader( filter );
 
         StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_RECORD_ID_BY_FILTER );
 
         // check if filter contains entry to sort the result with.
-        if ( filter.containsSortEntry(  ) )
+        if ( filter.containsSortEntry( ) )
         {
-            sbSQL.append( filter.getSortEntry(  ).getSQLJoin(  ) );
+            sbSQL.append( filter.getSortEntry( ).getSQLJoin( ) );
         }
 
         String strOrderBy = StringUtils.EMPTY;
 
-        if ( filter.isOrderByDateModification(  ) )
+        if ( filter.isOrderByDateModification( ) )
         {
             strOrderBy = getOrderByQuery( filter, SQL_ORDER_BY_DATE_MODIFICATION );
         }
@@ -450,32 +448,34 @@ public final class RecordDAO implements IRecordDAO
 
         daoUtil = buildFilterQueryFooter( daoUtil, filter, 1 );
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             recordList.add( daoUtil.getInt( 1 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return recordList;
     }
 
     /**
-     * Builds an order by query using the given filter.
-     * Uses the default order query if filter does not contains order data.
-     * @param filter the filter
-     * @param strDefaultOrderQuery the default order query
+     * Builds an order by query using the given filter. Uses the default order query if filter does not contains order data.
+     * 
+     * @param filter
+     *            the filter
+     * @param strDefaultOrderQuery
+     *            the default order query
      * @return the order by query
      */
     private String getOrderByQuery( RecordFieldFilter filter, String strDefaultOrderQuery )
     {
         String strOrderBy;
 
-        if ( filter.containsSortEntry(  ) )
+        if ( filter.containsSortEntry( ) )
         {
-            strOrderBy = filter.getSortEntry(  ).getSQLOrderBy(  );
+            strOrderBy = filter.getSortEntry( ).getSQLOrderBy( );
         }
         else
         {
@@ -483,7 +483,7 @@ public final class RecordDAO implements IRecordDAO
             strOrderBy = strDefaultOrderQuery;
         }
 
-        if ( filter.getSortOrder(  ) == RecordFieldFilter.ORDER_ASC )
+        if ( filter.getSortOrder( ) == RecordFieldFilter.ORDER_ASC )
         {
             strOrderBy += SQL_ORDER_ASC;
         }
@@ -497,51 +497,52 @@ public final class RecordDAO implements IRecordDAO
 
     /**
      * Build beginning SQL query by given filter
-     * @param filter the filter to apply
+     * 
+     * @param filter
+     *            the filter to apply
      * @return List of string to add to the SQL query
      */
     private List<String> buildFilterQueryHeader( RecordFieldFilter filter )
     {
-        List<String> listStrFilter = new ArrayList<String>(  );
+        List<String> listStrFilter = new ArrayList<String>( );
 
-        if ( filter.containsIdDirectory(  ) )
+        if ( filter.containsIdDirectory( ) )
         {
             listStrFilter.add( SQL_FILTER_ID_DIRECTORY );
         }
 
-        if ( filter.containsIsDisabled(  ) )
+        if ( filter.containsIsDisabled( ) )
         {
             listStrFilter.add( SQL_FILTER_IS_ENABLED );
         }
 
-        if ( filter.containsWorkgroupKeyList(  ) )
+        if ( filter.containsWorkgroupKeyList( ) )
         {
-            StringBuffer sbWorkgroupFilter = new StringBuffer(  );
+            StringBuffer sbWorkgroupFilter = new StringBuffer( );
 
             boolean bContaintsAll = false;
-            List<String> lWorkgroupKey = new ArrayList<String>(  );
+            List<String> lWorkgroupKey = new ArrayList<String>( );
 
-            for ( ReferenceItem rWorkgroupKey : filter.getWorkgroupKeyList(  ) )
+            for ( ReferenceItem rWorkgroupKey : filter.getWorkgroupKeyList( ) )
             {
-                //FIXME : Hack for workgroup filter
-                if ( AdminWorkgroupService.ALL_GROUPS.equals( rWorkgroupKey.getCode(  ) ) )
+                // FIXME : Hack for workgroup filter
+                if ( AdminWorkgroupService.ALL_GROUPS.equals( rWorkgroupKey.getCode( ) ) )
                 {
                     bContaintsAll = true;
                 }
                 else
                 {
-                    lWorkgroupKey.add( rWorkgroupKey.getCode(  ) );
+                    lWorkgroupKey.add( rWorkgroupKey.getCode( ) );
                 }
             }
 
-            int nWorkgroupKeySize = lWorkgroupKey.size(  );
+            int nWorkgroupKeySize = lWorkgroupKey.size( );
 
             if ( bContaintsAll )
             {
                 if ( nWorkgroupKeySize > 0 )
                 {
-                    sbWorkgroupFilter.append( SQL_FILTER_OPEN_PARENTHESIS + SQL_FILTER_WORKGROUP_IS_NULL +
-                        SQL_FILTER_OR );
+                    sbWorkgroupFilter.append( SQL_FILTER_OPEN_PARENTHESIS + SQL_FILTER_WORKGROUP_IS_NULL + SQL_FILTER_OR );
                 }
                 else
                 {
@@ -571,17 +572,17 @@ public final class RecordDAO implements IRecordDAO
                 sbWorkgroupFilter.append( SQL_FILTER_CLOSE_PARENTHESIS );
             }
 
-            listStrFilter.add( sbWorkgroupFilter.toString(  ) );
+            listStrFilter.add( sbWorkgroupFilter.toString( ) );
         }
 
-        if ( filter.containsRoleKeyList(  ) )
+        if ( filter.containsRoleKeyList( ) )
         {
-            List<String> lRoleKeyList = filter.getRoleKeyList(  );
-            int nSize = lRoleKeyList.size(  );
+            List<String> lRoleKeyList = filter.getRoleKeyList( );
+            int nSize = lRoleKeyList.size( );
 
-            StringBuffer sbRoleKeyFilter = new StringBuffer(  );
+            StringBuffer sbRoleKeyFilter = new StringBuffer( );
 
-            if ( filter.includeRoleNull(  ) )
+            if ( filter.includeRoleNull( ) )
             {
                 if ( nSize > 0 )
                 {
@@ -610,12 +611,12 @@ public final class RecordDAO implements IRecordDAO
                 sbRoleKeyFilter.append( SQL_FILTER_CLOSE_PARENTHESIS );
             }
 
-            if ( filter.includeRoleNull(  ) && ( nSize > 0 ) )
+            if ( filter.includeRoleNull( ) && ( nSize > 0 ) )
             {
                 sbRoleKeyFilter.append( SQL_FILTER_CLOSE_PARENTHESIS );
             }
 
-            listStrFilter.add( sbRoleKeyFilter.toString(  ) );
+            listStrFilter.add( sbRoleKeyFilter.toString( ) );
         }
 
         return listStrFilter;
@@ -623,7 +624,9 @@ public final class RecordDAO implements IRecordDAO
 
     /**
      * Build ending SQL query by given filter
-     * @param filter the filter to apply
+     * 
+     * @param filter
+     *            the filter to apply
      * @param nIndex
      * @return List of string to add to the SQL query
      */
@@ -633,9 +636,9 @@ public final class RecordDAO implements IRecordDAO
         int nIndex = nDefaultIndex;
 
         // sort parameters
-        if ( filter.containsSortEntry(  ) )
+        if ( filter.containsSortEntry( ) )
         {
-            for ( Object oValue : filter.getSortEntry(  ).getSQLParametersValues(  ) )
+            for ( Object oValue : filter.getSortEntry( ).getSQLParametersValues( ) )
             {
                 // try to use setInt if possible, use setString otherwise.
                 if ( oValue instanceof Integer )
@@ -644,39 +647,39 @@ public final class RecordDAO implements IRecordDAO
                 }
                 else
                 {
-                    result.setString( nIndex++, oValue.toString(  ) );
+                    result.setString( nIndex++, oValue.toString( ) );
                 }
             }
         }
 
-        if ( filter.containsIdDirectory(  ) )
+        if ( filter.containsIdDirectory( ) )
         {
-            result.setInt( nIndex, filter.getIdDirectory(  ) );
+            result.setInt( nIndex, filter.getIdDirectory( ) );
             nIndex++;
         }
 
-        if ( filter.containsIsDisabled(  ) )
+        if ( filter.containsIsDisabled( ) )
         {
-            result.setInt( nIndex, filter.getIsDisabled(  ) );
+            result.setInt( nIndex, filter.getIsDisabled( ) );
             nIndex++;
         }
 
-        if ( filter.containsWorkgroupKeyList(  ) )
+        if ( filter.containsWorkgroupKeyList( ) )
         {
-            for ( ReferenceItem rWorkgroupKey : filter.getWorkgroupKeyList(  ) )
+            for ( ReferenceItem rWorkgroupKey : filter.getWorkgroupKeyList( ) )
             {
-                //FIXME : Hack for workgroup filter
-                if ( !AdminWorkgroupService.ALL_GROUPS.equals( rWorkgroupKey.getCode(  ) ) )
+                // FIXME : Hack for workgroup filter
+                if ( !AdminWorkgroupService.ALL_GROUPS.equals( rWorkgroupKey.getCode( ) ) )
                 {
-                    result.setString( nIndex, rWorkgroupKey.getCode(  ) );
+                    result.setString( nIndex, rWorkgroupKey.getCode( ) );
                     nIndex++;
                 }
             }
         }
 
-        if ( filter.containsRoleKeyList(  ) )
+        if ( filter.containsRoleKeyList( ) )
         {
-            for ( String strRole : filter.getRoleKeyList(  ) )
+            for ( String strRole : filter.getRoleKeyList( ) )
             {
                 result.setString( nIndex, strRole );
                 nIndex++;

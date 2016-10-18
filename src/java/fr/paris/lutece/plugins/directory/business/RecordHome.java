@@ -45,9 +45,8 @@ import fr.paris.lutece.util.sql.TransactionManager;
 
 import java.util.List;
 
-
 /**
- *class RecordHome
+ * class RecordHome
  */
 public final class RecordHome
 {
@@ -58,21 +57,23 @@ public final class RecordHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private RecordHome(  )
+    private RecordHome( )
     {
     }
 
     /**
      * Creation of an instance of record
      *
-     * @param record The instance of the record which contains the informations to store
-     * @param plugin the Plugin
+     * @param record
+     *            The instance of the record which contains the informations to store
+     * @param plugin
+     *            the Plugin
      * @return the id of the new record
      *
      */
     public static int create( Record record, Plugin plugin )
     {
-        record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
+        record.setDateModification( DirectoryUtils.getCurrentTimestamp( ) );
 
         TransactionManager.beginTransaction( plugin );
 
@@ -80,10 +81,9 @@ public final class RecordHome
         {
             record.setIdRecord( _dao.insert( record, plugin ) );
 
-            DirectorySearchService.getInstance(  )
-                                  .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_CREATE, plugin );
+            DirectorySearchService.getInstance( ).addIndexerAction( record.getIdRecord( ), IndexerAction.TASK_CREATE, plugin );
 
-            for ( RecordField recordField : record.getListRecordField(  ) )
+            for ( RecordField recordField : record.getListRecordField( ) )
             {
                 recordField.setRecord( record );
                 RecordFieldHome.create( recordField, plugin );
@@ -91,29 +91,31 @@ public final class RecordHome
 
             TransactionManager.commitTransaction( plugin );
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
             TransactionManager.rollBack( plugin );
-            throw new AppException( e.getMessage(  ), e );
+            throw new AppException( e.getMessage( ), e );
         }
 
-        return record.getIdRecord(  );
+        return record.getIdRecord( );
     }
 
     /**
      * Copy an instance of record
      *
-     * @param record The instance of the record who must copy
-     * @param plugin the Plugin
+     * @param record
+     *            The instance of the record who must copy
+     * @param plugin
+     *            the Plugin
      * @return the id of the record
      *
      */
     public static int copy( Record record, Plugin plugin )
     {
-        record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
+        record.setDateModification( DirectoryUtils.getCurrentTimestamp( ) );
 
-        RecordFieldFilter filter = new RecordFieldFilter(  );
-        filter.setIdRecord( record.getIdRecord(  ) );
+        RecordFieldFilter filter = new RecordFieldFilter( );
+        filter.setIdRecord( record.getIdRecord( ) );
         record.setListRecordField( RecordFieldHome.getRecordFieldList( filter, plugin ) );
 
         TransactionManager.beginTransaction( plugin );
@@ -122,29 +124,27 @@ public final class RecordHome
         {
             record.setIdRecord( _dao.insert( record, plugin ) );
 
-            DirectorySearchService.getInstance(  )
-                                  .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_CREATE, plugin );
+            DirectorySearchService.getInstance( ).addIndexerAction( record.getIdRecord( ), IndexerAction.TASK_CREATE, plugin );
 
-            for ( RecordField recordField : record.getListRecordField(  ) )
+            for ( RecordField recordField : record.getListRecordField( ) )
             {
                 recordField.setRecord( record );
 
-                //we don't copy numbering entry
-                if ( !recordField.getEntry(  ).getEntryType(  ).getClassName(  )
-                                     .equals( EntryTypeNumbering.class.getName(  ) ) )
+                // we don't copy numbering entry
+                if ( !recordField.getEntry( ).getEntryType( ).getClassName( ).equals( EntryTypeNumbering.class.getName( ) ) )
                 {
                     RecordFieldHome.copy( recordField, plugin );
                 }
                 else
                 {
-                    //update the number
-                    IEntry entryNumbering = EntryHome.findByPrimaryKey( recordField.getEntry(  ).getIdEntry(  ), plugin );
-                    int numbering = DirectoryService.getInstance(  ).getMaxNumber( entryNumbering );
+                    // update the number
+                    IEntry entryNumbering = EntryHome.findByPrimaryKey( recordField.getEntry( ).getIdEntry( ), plugin );
+                    int numbering = DirectoryService.getInstance( ).getMaxNumber( entryNumbering );
 
                     if ( numbering != DirectoryUtils.CONSTANT_ID_NULL )
                     {
-                        entryNumbering.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
-                        FieldHome.update( entryNumbering.getFields(  ).get( 0 ), plugin );
+                        entryNumbering.getFields( ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
+                        FieldHome.update( entryNumbering.getFields( ).get( 0 ), plugin );
                         recordField.setValue( String.valueOf( numbering ) );
                         RecordFieldHome.create( recordField, plugin );
                     }
@@ -153,28 +153,30 @@ public final class RecordHome
 
             TransactionManager.commitTransaction( plugin );
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
             TransactionManager.rollBack( plugin );
-            throw new AppException( e.getMessage(  ), e );
+            throw new AppException( e.getMessage( ), e );
         }
 
-        return record.getIdRecord(  );
+        return record.getIdRecord( );
     }
 
     /**
      * Update of the record which is specified in parameter
      *
-     * @param record The instance of the record which contains the informations to update
-     * @param plugin the Plugin
+     * @param record
+     *            The instance of the record which contains the informations to update
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void updateWidthRecordField( Record record, Plugin plugin )
     {
-        record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
+        record.setDateModification( DirectoryUtils.getCurrentTimestamp( ) );
 
-        RecordFieldFilter filter = new RecordFieldFilter(  );
-        filter.setIdRecord( record.getIdRecord(  ) );
+        RecordFieldFilter filter = new RecordFieldFilter( );
+        filter.setIdRecord( record.getIdRecord( ) );
 
         TransactionManager.beginTransaction( plugin );
 
@@ -182,14 +184,13 @@ public final class RecordHome
         {
             _dao.store( record, plugin );
 
-            DirectorySearchService.getInstance(  )
-                                  .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_MODIFY, plugin );
+            DirectorySearchService.getInstance( ).addIndexerAction( record.getIdRecord( ), IndexerAction.TASK_MODIFY, plugin );
 
-            //delete all record field in database associate
+            // delete all record field in database associate
             RecordFieldHome.removeByFilter( filter, plugin );
 
-            //insert the new record Field
-            for ( RecordField recordField : record.getListRecordField(  ) )
+            // insert the new record Field
+            for ( RecordField recordField : record.getListRecordField( ) )
             {
                 recordField.setRecord( record );
                 RecordFieldHome.create( recordField, plugin );
@@ -197,33 +198,36 @@ public final class RecordHome
 
             TransactionManager.commitTransaction( plugin );
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
             TransactionManager.rollBack( plugin );
-            throw new AppException( e.getMessage(  ), e );
+            throw new AppException( e.getMessage( ), e );
         }
     }
 
     /**
      * Update of the record
      *
-     * @param record The instance of the record which contains the informations to update
-     * @param plugin the Plugin
+     * @param record
+     *            The instance of the record which contains the informations to update
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void update( Record record, Plugin plugin )
     {
-        record.setDateModification( DirectoryUtils.getCurrentTimestamp(  ) );
+        record.setDateModification( DirectoryUtils.getCurrentTimestamp( ) );
         _dao.store( record, plugin );
-        DirectorySearchService.getInstance(  )
-                              .addIndexerAction( record.getIdRecord(  ), IndexerAction.TASK_MODIFY, plugin );
+        DirectorySearchService.getInstance( ).addIndexerAction( record.getIdRecord( ), IndexerAction.TASK_MODIFY, plugin );
     }
 
     /**
      * Remove the record whose identifier is specified in parameter
      *
-     * @param nIdRecord The recordId
-     * @param plugin the Plugin
+     * @param nIdRecord
+     *            The recordId
+     * @param plugin
+     *            the Plugin
      */
     public static void remove( int nIdRecord, Plugin plugin )
     {
@@ -231,43 +235,46 @@ public final class RecordHome
 
         try
         {
-            DirectorySearchService.getInstance(  ).addIndexerAction( nIdRecord, IndexerAction.TASK_DELETE, plugin );
-            WorkflowService.getInstance(  ).doRemoveWorkFlowResource( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE );
+            DirectorySearchService.getInstance( ).addIndexerAction( nIdRecord, IndexerAction.TASK_DELETE, plugin );
+            WorkflowService.getInstance( ).doRemoveWorkFlowResource( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE );
 
-            //delete all record field in database associate
-            RecordFieldFilter filter = new RecordFieldFilter(  );
+            // delete all record field in database associate
+            RecordFieldFilter filter = new RecordFieldFilter( );
             filter.setIdRecord( nIdRecord );
             RecordFieldHome.removeByFilter( filter, true, plugin );
             _dao.delete( nIdRecord, plugin );
             TransactionManager.commitTransaction( plugin );
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
             TransactionManager.rollBack( plugin );
-            throw new AppException( e.getMessage(  ), e );
+            throw new AppException( e.getMessage( ), e );
         }
     }
 
     /**
      * Remove directory and workflow record by directory Id
-     * @param nIdDirectory The directory id
-     * @param plugin The plugin
+     * 
+     * @param nIdDirectory
+     *            The directory id
+     * @param plugin
+     *            The plugin
      * @deprecated This function does not remove the associated files
      */
     public static void removeByIdDirectory( Integer nIdDirectory, Plugin plugin )
     {
-        WorkflowService workflowService = WorkflowService.getInstance(  );
-        boolean nWorkFlowServiceIsAvaible = workflowService.isAvailable(  );
+        WorkflowService workflowService = WorkflowService.getInstance( );
+        boolean nWorkFlowServiceIsAvaible = workflowService.isAvailable( );
 
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        RecordFieldFilter recordFilter = new RecordFieldFilter(  );
+        RecordFieldFilter recordFilter = new RecordFieldFilter( );
         recordFilter.setIdDirectory( nIdDirectory );
 
         List<Integer> listRecordId = RecordHome.getListRecordId( recordFilter, plugin );
 
         // --- Suppress record fields & workflow resources ---
-        int nListRecordIdSize = listRecordId.size(  );
+        int nListRecordIdSize = listRecordId.size( );
 
         if ( nListRecordIdSize > STEP_DELETE )
         {
@@ -282,8 +289,7 @@ public final class RecordHome
 
                 if ( nWorkFlowServiceIsAvaible )
                 {
-                    workflowService.doRemoveWorkFlowResourceByListId( subList, Record.WORKFLOW_RESOURCE_TYPE,
-                        directory.getIdWorkflow(  ) );
+                    workflowService.doRemoveWorkFlowResourceByListId( subList, Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ) );
                 }
 
                 nIndex = i;
@@ -294,8 +300,7 @@ public final class RecordHome
 
             if ( nWorkFlowServiceIsAvaible )
             {
-                workflowService.doRemoveWorkFlowResourceByListId( subList, Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ) );
+                workflowService.doRemoveWorkFlowResourceByListId( subList, Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ) );
             }
         }
         else
@@ -304,8 +309,7 @@ public final class RecordHome
 
             if ( nWorkFlowServiceIsAvaible )
             {
-                workflowService.doRemoveWorkFlowResourceByListId( listRecordId, Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ) );
+                workflowService.doRemoveWorkFlowResourceByListId( listRecordId, Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ) );
             }
         }
 
@@ -319,14 +323,16 @@ public final class RecordHome
         DirectoryIndexer.appendListRecordToDelete( listRecordId );
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Returns an instance of a recordwhose identifier is specified in parameter
      *
-     * @param nKey The formResponse primary key
-     * @param plugin the Plugin
+     * @param nKey
+     *            The formResponse primary key
+     * @param plugin
+     *            the Plugin
      * @return an instance of FormResponse
      */
     public static Record findByPrimaryKey( int nKey, Plugin plugin )
@@ -336,8 +342,11 @@ public final class RecordHome
 
     /**
      * Test if the given directory record list has a worflow
-     * @param nIdDirectory directory Id
-     * @param plugin the plugin
+     * 
+     * @param nIdDirectory
+     *            directory Id
+     * @param plugin
+     *            the plugin
      * @return true if has at least one
      */
     public static Boolean direcytoryRecordListHasWorkflow( int nIdDirectory, Plugin plugin )
@@ -347,8 +356,11 @@ public final class RecordHome
 
     /**
      * Load a list of record
-     * @param lIdList list of record id
-     * @param plugin the plugin
+     * 
+     * @param lIdList
+     *            list of record id
+     * @param plugin
+     *            the plugin
      * @return list of Record
      */
     public static List<Record> loadListByListId( List<Integer> lIdList, Plugin plugin )
@@ -357,11 +369,14 @@ public final class RecordHome
     }
 
     /**
-        * Load the data of all the record who verify the filter and returns them in a  list
-        * @param filter the filter
-        * @param plugin the plugin
-        * @return  the list of record
-        */
+     * Load the data of all the record who verify the filter and returns them in a list
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of record
+     */
     public static List<Record> getListRecord( RecordFieldFilter filter, Plugin plugin )
     {
         return _dao.selectListByFilter( filter, plugin );
@@ -369,9 +384,12 @@ public final class RecordHome
 
     /**
      * Count record who verify the filter
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the number of record
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the number of record
      */
     public static int getCountRecord( RecordFieldFilter filter, Plugin plugin )
     {
@@ -379,10 +397,13 @@ public final class RecordHome
     }
 
     /**
-     * Load the data of all the record who verify the filter and returns them in a  list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the list of record
+     * Load the data of all the record who verify the filter and returns them in a list
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of record
      */
     public static List<Integer> getListRecordId( RecordFieldFilter filter, Plugin plugin )
     {
@@ -391,8 +412,11 @@ public final class RecordHome
 
     /**
      * Get directory id by by record id
-     * @param nRecordId the record id
-     * @param plugin the plugin
+     * 
+     * @param nRecordId
+     *            the record id
+     * @param plugin
+     *            the plugin
      * @return the directory id
      */
     public static Integer getDirectoryIdByRecordId( Integer nRecordId, Plugin plugin )

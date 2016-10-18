@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.directory.business;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
-
 /**
  * This class provides Data Access methods for Field objects
  */
@@ -44,13 +43,11 @@ public final class PhysicalFileDAO implements IPhysicalFileDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_physical_file ) FROM directory_physical_file";
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_physical_file,file_value" +
-        " FROM directory_physical_file WHERE id_physical_file = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_physical_file(id_physical_file,file_value)" +
-        " VALUES(?,?)";
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_physical_file,file_value"
+            + " FROM directory_physical_file WHERE id_physical_file = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_physical_file(id_physical_file,file_value)" + " VALUES(?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_physical_file WHERE id_physical_file = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE  directory_physical_file SET " +
-        "id_physical_file=?,file_value=? WHERE id_physical_file = ?";
+    private static final String SQL_QUERY_UPDATE = "UPDATE  directory_physical_file SET " + "id_physical_file=?,file_value=? WHERE id_physical_file = ?";
 
     /**
      * {@inheritDoc}
@@ -59,18 +56,18 @@ public final class PhysicalFileDAO implements IPhysicalFileDAO
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nKey;
 
-        if ( !daoUtil.next(  ) )
+        if ( !daoUtil.next( ) )
         {
             // if the table is empty
             nKey = 1;
         }
 
         nKey = daoUtil.getInt( 1 ) + 1;
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
@@ -84,13 +81,13 @@ public final class PhysicalFileDAO implements IPhysicalFileDAO
         physicalFile.setIdPhysicalFile( newPrimaryKey( plugin ) );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
-        daoUtil.setInt( 1, physicalFile.getIdPhysicalFile(  ) );
-        daoUtil.setBytes( 2, physicalFile.getValue(  ) );
-        daoUtil.executeUpdate(  );
+        daoUtil.setInt( 1, physicalFile.getIdPhysicalFile( ) );
+        daoUtil.setBytes( 2, physicalFile.getValue( ) );
+        daoUtil.executeUpdate( );
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
-        return physicalFile.getIdPhysicalFile(  );
+        return physicalFile.getIdPhysicalFile( );
     }
 
     /**
@@ -101,18 +98,18 @@ public final class PhysicalFileDAO implements IPhysicalFileDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
         daoUtil.setInt( 1, nId );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         PhysicalFile physicalFile = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            physicalFile = new PhysicalFile(  );
+            physicalFile = new PhysicalFile( );
             physicalFile.setIdPhysicalFile( daoUtil.getInt( 1 ) );
             physicalFile.setValue( daoUtil.getBytes( 2 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return physicalFile;
     }
@@ -125,8 +122,8 @@ public final class PhysicalFileDAO implements IPhysicalFileDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdPhysicalFile );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -136,10 +133,10 @@ public final class PhysicalFileDAO implements IPhysicalFileDAO
     public void store( PhysicalFile physicalFile, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
-        daoUtil.setInt( 1, physicalFile.getIdPhysicalFile(  ) );
-        daoUtil.setBytes( 2, physicalFile.getValue(  ) );
-        daoUtil.setInt( 3, physicalFile.getIdPhysicalFile(  ) );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.setInt( 1, physicalFile.getIdPhysicalFile( ) );
+        daoUtil.setBytes( 2, physicalFile.getValue( ) );
+        daoUtil.setInt( 3, physicalFile.getIdPhysicalFile( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 }

@@ -41,7 +41,6 @@ import fr.paris.lutece.util.ReferenceList;
 
 import java.util.List;
 
-
 /**
  * This class provides instances management methods (create, find, ...) for ExportFormat objects
  */
@@ -54,15 +53,17 @@ public final class DirectoryXslHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private DirectoryXslHome(  )
+    private DirectoryXslHome( )
     {
     }
 
     /**
      * Creation of an instance of Directory Xsl
      *
-     * @param directoryXsl The instance of the directoryXsl which contains the informations to store
-     * @param plugin the Plugin
+     * @param directoryXsl
+     *            The instance of the directoryXsl which contains the informations to store
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void create( DirectoryXsl directoryXsl, Plugin plugin )
@@ -73,45 +74,51 @@ public final class DirectoryXslHome
     /**
      * Update of the DirectoryXsl which is specified in parameter
      *
-     * @param directoryXsl The instance of the directoryXsl which contains the informations to update
-     * @param plugin the Plugin
+     * @param directoryXsl
+     *            The instance of the directoryXsl which contains the informations to update
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void update( DirectoryXsl directoryXsl, Plugin plugin )
     {
         _dao.store( directoryXsl, plugin );
-        XmlTransformerService.clearXslCache(  );
+        XmlTransformerService.clearXslCache( );
     }
 
     /**
      * Remove the DirectoryXsl whose identifier is specified in parameter
      *
-     * @param nIdDirectoryXsl The DirectoryXsl Id
-     * @param plugin the Plugin
+     * @param nIdDirectoryXsl
+     *            The DirectoryXsl Id
+     * @param plugin
+     *            the Plugin
      */
     public static void remove( int nIdDirectoryXsl, Plugin plugin )
     {
         _dao.delete( nIdDirectoryXsl, plugin );
-        XmlTransformerService.clearXslCache(  );
+        XmlTransformerService.clearXslCache( );
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Returns an instance of a DirectoryXsl whose identifier is specified in parameter
      *
-     * @param nKey The directoryXsl primary key
-     * @param plugin the Plugin
+     * @param nKey
+     *            The directoryXsl primary key
+     * @param plugin
+     *            the Plugin
      * @return an instance of DirectoryXsl
      */
     public static DirectoryXsl findByPrimaryKey( int nKey, Plugin plugin )
     {
         DirectoryXsl directoryXsl = _dao.load( nKey, plugin );
 
-        if ( ( directoryXsl != null ) && ( directoryXsl.getFile(  ) != null ) )
+        if ( ( directoryXsl != null ) && ( directoryXsl.getFile( ) != null ) )
         {
-            directoryXsl.setFile( FileHome.findByPrimaryKey( directoryXsl.getFile(  ).getIdFile(  ), plugin ) );
+            directoryXsl.setFile( FileHome.findByPrimaryKey( directoryXsl.getFile( ).getIdFile( ), plugin ) );
         }
 
         return directoryXsl;
@@ -119,8 +126,11 @@ public final class DirectoryXslHome
 
     /**
      * Loads the data of all the DirectoryXsl who verify the filter and returns them in a list
-     * @param filter the filter
-     * @param plugin the Plugin
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the Plugin
      * @return the list which contains the data of all the Directory Xsl
      */
     public static List<DirectoryXsl> getList( DirectoryXslFilter filter, Plugin plugin )
@@ -130,34 +140,37 @@ public final class DirectoryXslHome
 
     /**
      * Loads in the reference list the data of all the DirectoryXsl who verify the filter and returns them in a list
-     * @param filter the filter
-     * @param plugin the Plugin
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the Plugin
      * @return the list which contains the data of all the Directory Xsl
      */
     public static ReferenceList getRefList( DirectoryXslFilter filter, Plugin plugin )
     {
-        ReferenceList refList = new ReferenceList(  );
+        ReferenceList refList = new ReferenceList( );
 
         List<DirectoryXsl> xslList = getList( filter, plugin );
         int index = -1;
 
         for ( DirectoryXsl directoryXsl : xslList )
         {
-            if ( directoryXsl.getExtension(  ).equals( CSV ) )
+            if ( directoryXsl.getExtension( ).equals( CSV ) )
             {
                 index = xslList.indexOf( directoryXsl );
             }
             else
             {
-                refList.addItem( directoryXsl.getIdDirectoryXsl(  ), directoryXsl.getTitle(  ) );
+                refList.addItem( directoryXsl.getIdDirectoryXsl( ), directoryXsl.getTitle( ) );
             }
         }
 
         if ( index != -1 )
         {
-            ReferenceItem referenceItem = new ReferenceItem(  );
-            referenceItem.setCode( String.valueOf( xslList.get( index ).getIdDirectoryXsl(  ) ) );
-            referenceItem.setName( xslList.get( index ).getTitle(  ) );
+            ReferenceItem referenceItem = new ReferenceItem( );
+            referenceItem.setCode( String.valueOf( xslList.get( index ).getIdDirectoryXsl( ) ) );
+            referenceItem.setName( xslList.get( index ).getTitle( ) );
             refList.add( 0, referenceItem );
         }
 

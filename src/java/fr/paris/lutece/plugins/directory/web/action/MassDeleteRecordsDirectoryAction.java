@@ -54,14 +54,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  *
  * Redirects to jsp/admin/plugins/directory/ConfirmRemoveDirectoryRecord.jsp
  *
  */
-public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
-    implements IDirectoryAction
+public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
 {
     // ACTIONS
     private static final String ACTION_NAME = "Mass Remove Records";
@@ -86,14 +84,13 @@ public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<Direc
     {
         String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
         model.put( MARK_PERMISSION_DELETE_RECORD,
-            RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                DirectoryResourceIdService.PERMISSION_DELETE_RECORD, adminUser ) );
+                RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_DELETE_RECORD, adminUser ) );
     }
 
     /**
      * {@inheritDoc}
      */
-    public String getButtonTemplate(  )
+    public String getButtonTemplate( )
     {
         return TEMPLATE_BUTTON;
     }
@@ -101,7 +98,7 @@ public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<Direc
     /**
      * {@inheritDoc}
      */
-    public String getName(  )
+    public String getName( )
     {
         return ACTION_NAME;
     }
@@ -117,20 +114,20 @@ public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<Direc
     /**
      * Redirects to {@link #JSP_DIRECTORY_MASS_REMOVE_RECORDS}
      */
-    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
-        DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser, DirectoryAdminSearchFields sessionFields )
+            throws AccessDeniedException
     {
-        IPluginActionResult result = new DefaultPluginActionResult(  );
+        IPluginActionResult result = new DefaultPluginActionResult( );
 
         String strRedirect = StringUtils.EMPTY;
 
-        if ( ( sessionFields.getSelectedRecords(  ) != null ) && !sessionFields.getSelectedRecords(  ).isEmpty(  ) )
+        if ( ( sessionFields.getSelectedRecords( ) != null ) && !sessionFields.getSelectedRecords( ).isEmpty( ) )
         {
             String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
             UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DIRECTORY_MASS_REMOVE_RECORDS );
             url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
 
-            for ( String strIdRecord : sessionFields.getSelectedRecords(  ) )
+            for ( String strIdRecord : sessionFields.getSelectedRecords( ) )
             {
                 if ( StringUtils.isNotBlank( strIdRecord ) && StringUtils.isNumeric( strIdRecord ) )
                 {
@@ -138,12 +135,11 @@ public class MassDeleteRecordsDirectoryAction extends AbstractPluginAction<Direc
                 }
             }
 
-            strRedirect = url.getUrl(  );
+            strRedirect = url.getUrl( );
         }
         else
         {
-            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS,
-                    AdminMessage.TYPE_INFO );
+            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS, AdminMessage.TYPE_INFO );
         }
 
         result.setRedirect( strRedirect );

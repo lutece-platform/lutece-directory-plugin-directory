@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.directory.business.parameter;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * DirectoryParameterFilter
@@ -50,29 +49,32 @@ public class DirectoryParameterFilter
     /**
      * Constructor
      */
-    public DirectoryParameterFilter(  )
+    public DirectoryParameterFilter( )
     {
         _bExcludeParameterKeys = false;
     }
 
     /**
      * Check if the filter contains a list of parameters keys
+     * 
      * @return true if it contains a list of parameter keys
      */
-    public boolean containsListParameterKeys(  )
+    public boolean containsListParameterKeys( )
     {
         return _listParameterKeys != null;
     }
 
     /**
      * Add a parameter key to the list to filter
-     * @param strParameterKey the parameter key
+     * 
+     * @param strParameterKey
+     *            the parameter key
      */
     public void addParameterKey( String strParameterKey )
     {
         if ( _listParameterKeys == null )
         {
-            _listParameterKeys = new ArrayList<String>(  );
+            _listParameterKeys = new ArrayList<String>( );
         }
 
         _listParameterKeys.add( strParameterKey );
@@ -80,25 +82,29 @@ public class DirectoryParameterFilter
 
     /**
      * Get the list of parameter keys
+     * 
      * @return the list of parameter keys
      */
-    public List<String> getListParameterKeys(  )
+    public List<String> getListParameterKeys( )
     {
         return _listParameterKeys;
     }
 
     /**
      * Check if the filter must exclude the list of parameter keys
+     * 
      * @return true if the filter must exclude the list of parameter keys, false otherwise
      */
-    public boolean excludeParameterKeys(  )
+    public boolean excludeParameterKeys( )
     {
         return _bExcludeParameterKeys;
     }
 
     /**
      * Set true if the filter must exclude the list of parameter keys, false otherwise
-     * @param bExcludeParameterKeys true if the filter must exclude the list of parameter keys, false otherwise
+     * 
+     * @param bExcludeParameterKeys
+     *            true if the filter must exclude the list of parameter keys, false otherwise
      */
     public void setExcludeParameterKeys( boolean bExcludeParameterKeys )
     {

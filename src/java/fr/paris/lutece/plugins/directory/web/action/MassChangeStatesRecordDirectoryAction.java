@@ -54,13 +54,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * Redirects to jsp/admin/plugins/directory/ConfirmChangeStatesRecord.jsp
  *
  */
-public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
-    implements IDirectoryAction
+public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
 {
     // ACTIONS
     private static final String ACTION_NAME = "Mass Change States record";
@@ -85,14 +83,13 @@ public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<
     {
         String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
         model.put( MARK_PERMISSION_CHANGE_STATE_RECORD,
-            RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory,
-                DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, adminUser ) );
+                RBACService.isAuthorized( Directory.RESOURCE_TYPE, strIdDirectory, DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, adminUser ) );
     }
 
     /**
      * {@inheritDoc}
      */
-    public String getButtonTemplate(  )
+    public String getButtonTemplate( )
     {
         return TEMPLATE_BUTTON;
     }
@@ -100,7 +97,7 @@ public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<
     /**
      * {@inheritDoc}
      */
-    public String getName(  )
+    public String getName( )
     {
         return ACTION_NAME;
     }
@@ -116,20 +113,20 @@ public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<
     /**
      * Redirects to {@link #JSP_DIRECTORY_MASS_CHANGE_STATES_RECORD}
      */
-    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
-        DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser, DirectoryAdminSearchFields sessionFields )
+            throws AccessDeniedException
     {
-        IPluginActionResult result = new DefaultPluginActionResult(  );
+        IPluginActionResult result = new DefaultPluginActionResult( );
 
         String strRedirect = StringUtils.EMPTY;
 
-        if ( ( sessionFields.getSelectedRecords(  ) != null ) && !sessionFields.getSelectedRecords(  ).isEmpty(  ) )
+        if ( ( sessionFields.getSelectedRecords( ) != null ) && !sessionFields.getSelectedRecords( ).isEmpty( ) )
         {
             String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
             UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DIRECTORY_MASS_CHANGE_STATES_RECORD );
             url.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
 
-            for ( String strIdRecord : sessionFields.getSelectedRecords(  ) )
+            for ( String strIdRecord : sessionFields.getSelectedRecords( ) )
             {
                 if ( StringUtils.isNotBlank( strIdRecord ) && StringUtils.isNumeric( strIdRecord ) )
                 {
@@ -137,12 +134,11 @@ public class MassChangeStatesRecordDirectoryAction extends AbstractPluginAction<
                 }
             }
 
-            strRedirect = url.getUrl(  );
+            strRedirect = url.getUrl( );
         }
         else
         {
-            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS,
-                    AdminMessage.TYPE_INFO );
+            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS, AdminMessage.TYPE_INFO );
         }
 
         result.setRedirect( strRedirect );

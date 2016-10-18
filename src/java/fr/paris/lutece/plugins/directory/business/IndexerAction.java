@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-
 /**
  *
  * IndexerAction
@@ -50,16 +49,19 @@ public class IndexerAction
 
     /**
      * Get the id of the action
+     * 
      * @return the action id
      */
-    public int getIdAction(  )
+    public int getIdAction( )
     {
         return _nIdAction;
     }
 
     /**
      * set the action id
-     * @param idAction idAction
+     * 
+     * @param idAction
+     *            idAction
      */
     public void setIdAction( int idAction )
     {
@@ -68,16 +70,19 @@ public class IndexerAction
 
     /**
      * Get the id of the record
+     * 
      * @return the record Id
      */
-    public int getIdRecord(  )
+    public int getIdRecord( )
     {
         return _nIdRecord;
     }
 
     /**
      * set the recordId
-     * @param idRecord  record if
+     * 
+     * @param idRecord
+     *            record if
      */
     public void setIdRecord( int idRecord )
     {
@@ -86,16 +91,19 @@ public class IndexerAction
 
     /**
      * get the task id
+     * 
      * @return the task id
      */
-    public int getIdTask(  )
+    public int getIdTask( )
     {
         return _nIdTask;
     }
 
     /**
      * set the task id
-     * @param idTask the task id
+     * 
+     * @param idTask
+     *            the task id
      */
     public void setIdTask( int idTask )
     {

@@ -38,7 +38,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 
-
 /**
  *
  * EntryParameterHome
@@ -52,13 +51,15 @@ public final class EntryParameterHome
     /**
      * Private constructor
      */
-    private EntryParameterHome(  )
+    private EntryParameterHome( )
     {
     }
 
     /**
      * Load all the default values
-     * @param plugin Plugin
+     * 
+     * @param plugin
+     *            Plugin
      * @return a list of ReferenceItem
      */
     public static ReferenceList findAll( Plugin plugin )
@@ -68,8 +69,11 @@ public final class EntryParameterHome
 
     /**
      * Load the parameter value
-     * @param strParameterKey the parameter key
-     * @param plugin The plugin
+     * 
+     * @param strParameterKey
+     *            the parameter key
+     * @param plugin
+     *            The plugin
      * @return The parameter value
      */
     public static ReferenceItem findByKey( String strParameterKey, Plugin plugin )
@@ -79,8 +83,11 @@ public final class EntryParameterHome
 
     /**
      * Update the parameter value
-     * @param param The parameter
-     * @param plugin The plugin
+     * 
+     * @param param
+     *            The parameter
+     * @param plugin
+     *            The plugin
      */
     public static void update( ReferenceItem param, Plugin plugin )
     {

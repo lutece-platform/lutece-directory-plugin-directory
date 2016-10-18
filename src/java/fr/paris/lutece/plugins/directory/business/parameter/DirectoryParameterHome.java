@@ -38,7 +38,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 
-
 /**
  *
  * DirectoryParameterHome
@@ -52,13 +51,15 @@ public final class DirectoryParameterHome
     /**
      * Private constructor
      */
-    private DirectoryParameterHome(  )
+    private DirectoryParameterHome( )
     {
     }
 
     /**
      * Load all the parameter default values
-     * @param plugin Plugin
+     * 
+     * @param plugin
+     *            Plugin
      * @return a list of ReferenceItem
      */
     public static ReferenceList findAll( Plugin plugin )
@@ -68,8 +69,11 @@ public final class DirectoryParameterHome
 
     /**
      * Load the parameter value
-     * @param strParameterKey the parameter key
-     * @param plugin the plugin
+     * 
+     * @param strParameterKey
+     *            the parameter key
+     * @param plugin
+     *            the plugin
      * @return The parameter value
      */
     public static ReferenceItem findByKey( String strParameterKey, Plugin plugin )
@@ -79,8 +83,11 @@ public final class DirectoryParameterHome
 
     /**
      * Update the parameter value
-     * @param param The parameter
-     * @param plugin the plugin
+     * 
+     * @param param
+     *            The parameter
+     * @param plugin
+     *            the plugin
      */
     public static void update( ReferenceItem param, Plugin plugin )
     {
@@ -89,8 +96,11 @@ public final class DirectoryParameterHome
 
     /**
      * Load parameters by filter
-     * @param filter the filter
-     * @param plugin the plugin
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
      * @return a {@link ReferenceList}
      */
     public static ReferenceList findByFilter( DirectoryParameterFilter filter, Plugin plugin )

@@ -41,7 +41,6 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 
-
 /**
  *
  * DirectoryParameterService
@@ -60,74 +59,83 @@ public final class DirectoryParameterService
 
     /**
      * Get the instance of the service
+     * 
      * @return the instance of the service
      */
-    public static DirectoryParameterService getService(  )
+    public static DirectoryParameterService getService( )
     {
         return SpringContextService.getBean( BEAN_DIRECTORY_PARAMETER_SERVICE );
     }
 
     /**
      * Find all directory parameters
+     * 
      * @return a {@link ReferenceList}
      */
-    public ReferenceList findAll(  )
+    public ReferenceList findAll( )
     {
-        return DirectoryParameterHome.findAll( DirectoryUtils.getPlugin(  ) );
+        return DirectoryParameterHome.findAll( DirectoryUtils.getPlugin( ) );
     }
 
     /**
      * Find the default value parameters of the directory
+     * 
      * @return a {@link ReferenceList}
      */
-    public ReferenceList findDefaultValueParameters(  )
+    public ReferenceList findDefaultValueParameters( )
     {
-        DirectoryParameterFilter filter = new DirectoryParameterFilter(  );
+        DirectoryParameterFilter filter = new DirectoryParameterFilter( );
         filter.setExcludeParameterKeys( true );
         filter.addParameterKey( PARAMETER_EXPORT_CSV_ENCODING );
         filter.addParameterKey( PARAMETER_EXPORT_XML_ENCODING );
 
-        return DirectoryParameterHome.findByFilter( filter, DirectoryUtils.getPlugin(  ) );
+        return DirectoryParameterHome.findByFilter( filter, DirectoryUtils.getPlugin( ) );
     }
 
     /**
      * Find the export parameters
+     * 
      * @return a {@link ReferenceList}
      */
-    public ReferenceList findExportEncodingParameters(  )
+    public ReferenceList findExportEncodingParameters( )
     {
-        DirectoryParameterFilter filter = new DirectoryParameterFilter(  );
+        DirectoryParameterFilter filter = new DirectoryParameterFilter( );
         filter.setExcludeParameterKeys( false );
         filter.addParameterKey( PARAMETER_EXPORT_CSV_ENCODING );
         filter.addParameterKey( PARAMETER_EXPORT_XML_ENCODING );
 
-        return DirectoryParameterHome.findByFilter( filter, DirectoryUtils.getPlugin(  ) );
+        return DirectoryParameterHome.findByFilter( filter, DirectoryUtils.getPlugin( ) );
     }
 
     /**
-    * Load the parameter value
-    * @param strParameterKey the parameter key
-    * @return The parameter value
-    */
+     * Load the parameter value
+     * 
+     * @param strParameterKey
+     *            the parameter key
+     * @return The parameter value
+     */
     public ReferenceItem findByKey( String strParameterKey )
     {
-        return DirectoryParameterHome.findByKey( strParameterKey, DirectoryUtils.getPlugin(  ) );
+        return DirectoryParameterHome.findByKey( strParameterKey, DirectoryUtils.getPlugin( ) );
     }
 
     /**
      * Update the parameter value
-     * @param param The parameter
+     * 
+     * @param param
+     *            The parameter
      */
     public void update( ReferenceItem param )
     {
-        DirectoryParameterHome.update( param, DirectoryUtils.getPlugin(  ) );
+        DirectoryParameterHome.update( param, DirectoryUtils.getPlugin( ) );
     }
 
     /**
      * Get the encoding for export CSV
+     * 
      * @return the encoding for export CSV
      */
-    public String getExportCSVEncoding(  )
+    public String getExportCSVEncoding( )
     {
         ReferenceItem param = findByKey( PARAMETER_EXPORT_CSV_ENCODING );
 
@@ -136,14 +144,15 @@ public final class DirectoryParameterService
             return AppPropertiesService.getProperty( PROPERTY_DEFAULT_EXPORT_ENCODING );
         }
 
-        return param.getName(  );
+        return param.getName( );
     }
 
     /**
      * Get the encoding for export XML
+     * 
      * @return the encoding for export XML
      */
-    public String getExportXMLEncoding(  )
+    public String getExportXMLEncoding( )
     {
         ReferenceItem param = findByKey( PARAMETER_EXPORT_XML_ENCODING );
 
@@ -152,6 +161,6 @@ public final class DirectoryParameterService
             return AppPropertiesService.getProperty( PROPERTY_DEFAULT_EXPORT_ENCODING );
         }
 
-        return param.getName(  );
+        return param.getName( );
     }
 }

@@ -41,7 +41,6 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * This class provides Data Access methods for Response objects
  */
@@ -49,49 +48,48 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT MAX( id_record_field ) FROM directory_record_field";
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT " +
-        "drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,ent.id_entry,ent.title,ent.display_width,ent.display_height, " +
-        "drf.id_field,drf.id_file FROM directory_record_field drf,directory_entry ent,directory_entry_type type  " +
-        "WHERE drf.id_record_field=? and drf.id_entry =ent.id_entry and ent.id_type=type.id_type ";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_record_field( " +
-        "id_record_field,id_record,record_field_value,id_entry,id_field,id_file) VALUES(?,?,?,?,?,?)";
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT "
+            + "drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,ent.id_entry,ent.title,ent.display_width,ent.display_height, "
+            + "drf.id_field,drf.id_file FROM directory_record_field drf,directory_entry ent,directory_entry_type type  "
+            + "WHERE drf.id_record_field=? and drf.id_entry =ent.id_entry and ent.id_type=type.id_type ";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_record_field( "
+            + "id_record_field,id_record,record_field_value,id_entry,id_field,id_file) VALUES(?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_record_field WHERE id_record_field = ? ";
     private static final String SQL_QUERY_DELETE_BY_LIST_RECORD_ID = "DELETE FROM directory_record_field WHERE id_record IN ( ?";
-    private static final String SQL_QUERY_UPDATE = "UPDATE  directory_record_field SET " +
-        "id_record_field=?,id_record=?,record_field_value=?,id_entry=?,id_field=?,id_file=? WHERE id_record_field=?";
-    private static final String SQL_QUERY_SELECT_RECORD_FIELD_BY_FILTER = "SELECT " +
-        "drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,type.id_type,ent.id_entry,ent.title,ent.display_width" +
-        ",ent.display_height,drf.id_field,drf.id_file " +
-        "FROM directory_record_field drf,directory_entry ent,directory_entry_type type ";
-    private static final String SQL_QUERY_SELECT_FULL_RECORD_FIELD_LIST = "SELECT drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,ent.id_entry,ent.title,ent.display_width,ent.display_height," +
-        " fil.id_file,fil.title,fil.id_physical_file,fil.file_size,fil.mime_type," +
-        " dfield.id_field,dfield.id_entry,dfield.title,dfield.default_value,dfield.height,dfield.width,dfield.is_default_value,dfield.max_size_enter,dfield.field_position,dfield.value_type_date,dfield.role_key,dfield.workgroup_key" +
-        " FROM directory_record_field drf " + " INNER JOIN directory_entry ent ON (drf.id_entry=ent.id_entry)" +
-        " INNER JOIN directory_entry_type type ON (ent.id_type=type.id_type) " +
-        " LEFT JOIN directory_file fil ON (drf.id_file=fil.id_file)" +
-        " LEFT JOIN directory_field dfield ON (drf.id_field=dfield.id_field) ";
+    private static final String SQL_QUERY_UPDATE = "UPDATE  directory_record_field SET "
+            + "id_record_field=?,id_record=?,record_field_value=?,id_entry=?,id_field=?,id_file=? WHERE id_record_field=?";
+    private static final String SQL_QUERY_SELECT_RECORD_FIELD_BY_FILTER = "SELECT "
+            + "drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,type.id_type,ent.id_entry,ent.title,ent.display_width"
+            + ",ent.display_height,drf.id_field,drf.id_file " + "FROM directory_record_field drf,directory_entry ent,directory_entry_type type ";
+    private static final String SQL_QUERY_SELECT_FULL_RECORD_FIELD_LIST = "SELECT drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,ent.id_entry,ent.title,ent.display_width,ent.display_height,"
+            + " fil.id_file,fil.title,fil.id_physical_file,fil.file_size,fil.mime_type,"
+            + " dfield.id_field,dfield.id_entry,dfield.title,dfield.default_value,dfield.height,dfield.width,dfield.is_default_value,dfield.max_size_enter,dfield.field_position,dfield.value_type_date,dfield.role_key,dfield.workgroup_key"
+            + " FROM directory_record_field drf "
+            + " INNER JOIN directory_entry ent ON (drf.id_entry=ent.id_entry)"
+            + " INNER JOIN directory_entry_type type ON (ent.id_type=type.id_type) "
+            + " LEFT JOIN directory_file fil ON (drf.id_file=fil.id_file)"
+            + " LEFT JOIN directory_field dfield ON (drf.id_field=dfield.id_field) ";
     private static final String SQL_QUERY_SELECT_VALUES_RECORD_FIELD_LIST = "SELECT id_record_field, record_field_value FROM directory_record_field drf ";
-    private static final String SQL_QUERY_SELECT_FULL_RECORD_FIELD_LIST_WITH_RECORD = "SELECT drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,ent.id_entry,ent.title,ent.display_width,ent.display_height," +
-        " fil.id_file,fil.title,fil.id_physical_file,fil.file_size,fil.mime_type," +
-        " dfield.id_field,dfield.id_entry,dfield.title,dfield.default_value,dfield.height,dfield.width,dfield.is_default_value,dfield.max_size_enter,dfield.field_position,dfield.value_type_date,dfield.role_key,dfield.workgroup_key," +
-        " dr.date_creation, dr.id_directory, dr.is_enabled, dr.role_key, dr.workgroup_key, dr.date_modification " +
-        " FROM directory_record_field drf " + " INNER JOIN directory_entry ent ON (drf.id_entry=ent.id_entry)" +
-        " INNER JOIN directory_entry_type type ON (ent.id_type=type.id_type) " +
-        " INNER JOIN directory_record dr ON (dr.id_record = drf.id_record) " +
-        " LEFT JOIN directory_file fil ON (drf.id_file=fil.id_file)" +
-        " LEFT JOIN directory_field dfield ON (drf.id_field=dfield.id_field) ";
-    private static final String SQL_QUERY_COUNT_RECORD_FIELD_BY_FILTER = "SELECT COUNT(drf.id_record_field) " +
-        "FROM directory_record_field drf,directory_entry ent,directory_entry_type type ";
+    private static final String SQL_QUERY_SELECT_FULL_RECORD_FIELD_LIST_WITH_RECORD = "SELECT drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,ent.id_entry,ent.title,ent.display_width,ent.display_height,"
+            + " fil.id_file,fil.title,fil.id_physical_file,fil.file_size,fil.mime_type,"
+            + " dfield.id_field,dfield.id_entry,dfield.title,dfield.default_value,dfield.height,dfield.width,dfield.is_default_value,dfield.max_size_enter,dfield.field_position,dfield.value_type_date,dfield.role_key,dfield.workgroup_key,"
+            + " dr.date_creation, dr.id_directory, dr.is_enabled, dr.role_key, dr.workgroup_key, dr.date_modification "
+            + " FROM directory_record_field drf "
+            + " INNER JOIN directory_entry ent ON (drf.id_entry=ent.id_entry)"
+            + " INNER JOIN directory_entry_type type ON (ent.id_type=type.id_type) "
+            + " INNER JOIN directory_record dr ON (dr.id_record = drf.id_record) "
+            + " LEFT JOIN directory_file fil ON (drf.id_file=fil.id_file)"
+            + " LEFT JOIN directory_field dfield ON (drf.id_field=dfield.id_field) ";
+    private static final String SQL_QUERY_COUNT_RECORD_FIELD_BY_FILTER = "SELECT COUNT(drf.id_record_field) "
+            + "FROM directory_record_field drf,directory_entry ent,directory_entry_type type ";
 
     // Special query in order to sort numerically and not alphabetically (thus avoiding list like 1, 10, 11, 2, ... instead of 1, 2, ..., 10, 11)
-    private static final String SQL_QUERY_SELECT_MAX_NUMBER = " SELECT drf.record_field_value FROM directory_record_field drf " +
-        " INNER JOIN directory_record dr ON drf.id_record = dr.id_record " +
-        " INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry " +
-        " WHERE ent.id_entry = ? AND dr.id_directory = ? ORDER BY CAST(drf.record_field_value AS DECIMAL) DESC LIMIT 1 ";
-    private static final String SQL_QUERY_SELECT_BY_RECORD_FIELD_VALUE = " SELECT drf.id_record_field FROM directory_record_field drf " +
-        " INNER JOIN directory_record dr ON drf.id_record = dr.id_record " +
-        " INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry " +
-        " WHERE ent.id_entry = ? AND dr.id_directory = ? AND drf.record_field_value = ? ";
+    private static final String SQL_QUERY_SELECT_MAX_NUMBER = " SELECT drf.record_field_value FROM directory_record_field drf "
+            + " INNER JOIN directory_record dr ON drf.id_record = dr.id_record " + " INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry "
+            + " WHERE ent.id_entry = ? AND dr.id_directory = ? ORDER BY CAST(drf.record_field_value AS DECIMAL) DESC LIMIT 1 ";
+    private static final String SQL_QUERY_SELECT_BY_RECORD_FIELD_VALUE = " SELECT drf.id_record_field FROM directory_record_field drf "
+            + " INNER JOIN directory_record dr ON drf.id_record = dr.id_record " + " INNER JOIN directory_entry ent ON drf.id_entry = ent.id_entry "
+            + " WHERE ent.id_entry = ? AND dr.id_directory = ? AND drf.record_field_value = ? ";
     private static final String SQL_FILTER_ID_RECORD = " drf.id_record = ? ";
     private static final String SQL_FILTER_ID_RECORD_IN = " drf.id_record IN ( ? ";
     private static final String SQL_FILTER_ID_FIELD = " drf.id_field = ? ";
@@ -112,24 +110,25 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     /**
      * Generates a new primary key
      *
-     * @param plugin the plugin
+     * @param plugin
+     *            the plugin
      * @return The new primary key
      */
     private int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nKey;
 
-        if ( !daoUtil.next(  ) )
+        if ( !daoUtil.next( ) )
         {
             // if the table is empty
             nKey = 1;
         }
 
         nKey = daoUtil.getInt( 1 ) + 1;
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
@@ -144,33 +143,33 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
 
-        daoUtil.setInt( 1, recordField.getIdRecordField(  ) );
-        daoUtil.setInt( 2, recordField.getRecord(  ).getIdRecord(  ) );
-        daoUtil.setString( 3, recordField.getValue(  ) );
+        daoUtil.setInt( 1, recordField.getIdRecordField( ) );
+        daoUtil.setInt( 2, recordField.getRecord( ).getIdRecord( ) );
+        daoUtil.setString( 3, recordField.getValue( ) );
         // daoUtil.setBytes( 3 , recordField.getValue().getBytes() );
-        daoUtil.setInt( 4, recordField.getEntry(  ).getIdEntry(  ) );
+        daoUtil.setInt( 4, recordField.getEntry( ).getIdEntry( ) );
 
-        if ( recordField.getField(  ) != null )
+        if ( recordField.getField( ) != null )
         {
-            daoUtil.setInt( 5, recordField.getField(  ).getIdField(  ) );
+            daoUtil.setInt( 5, recordField.getField( ).getIdField( ) );
         }
         else
         {
             daoUtil.setIntNull( 5 );
         }
 
-        if ( recordField.getFile(  ) != null )
+        if ( recordField.getFile( ) != null )
         {
-            daoUtil.setInt( 6, recordField.getFile(  ).getIdFile(  ) );
+            daoUtil.setInt( 6, recordField.getFile( ).getIdFile( ) );
         }
         else
         {
             daoUtil.setIntNull( 6 );
         }
 
-        daoUtil.executeUpdate(  );
+        daoUtil.executeUpdate( );
 
-        daoUtil.free(  );
+        daoUtil.free( );
     }
 
     /**
@@ -188,43 +187,40 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         Record record = null;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
         daoUtil.setInt( 1, nIdRecordField );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            recordField = new RecordField(  );
+            recordField = new RecordField( );
             recordField.setIdRecordField( daoUtil.getInt( 1 ) );
-            record = new Record(  );
+            record = new Record( );
             record.setIdRecord( daoUtil.getInt( 2 ) );
             recordField.setRecord( record );
             recordField.setValue( daoUtil.getString( 3 ) );
 
             /**
-            if( daoUtil.getBytes( 3 ) != null )
-                {
-                    recordField.setValue( new String( daoUtil.getBytes( 3 ) ) );
-                }
-                **/
-            entryType = new EntryType(  );
+             * if( daoUtil.getBytes( 3 ) != null ) { recordField.setValue( new String( daoUtil.getBytes( 3 ) ) ); }
+             **/
+            entryType = new EntryType( );
             entryType.setClassName( daoUtil.getString( 4 ) );
 
             try
             {
-                entry = (IEntry) Class.forName( entryType.getClassName(  ) ).newInstance(  );
+                entry = (IEntry) Class.forName( entryType.getClassName( ) ).newInstance( );
             }
-            catch ( ClassNotFoundException e )
+            catch( ClassNotFoundException e )
             {
-                //  class doesn't exist
+                // class doesn't exist
                 AppLogService.error( e );
                 bException = true;
             }
-            catch ( InstantiationException e )
+            catch( InstantiationException e )
             {
-                // Class is abstract or is an  interface or haven't accessible builder
+                // Class is abstract or is an interface or haven't accessible builder
                 AppLogService.error( e );
                 bException = true;
             }
-            catch ( IllegalAccessException e )
+            catch( IllegalAccessException e )
             {
                 // can't access to the class
                 AppLogService.error( e );
@@ -233,7 +229,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
             if ( bException )
             {
-                daoUtil.free(  );
+                daoUtil.free( );
 
                 return null;
             }
@@ -248,20 +244,20 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
             if ( daoUtil.getObject( 9 ) != null )
             {
-                field = new Field(  );
+                field = new Field( );
                 field.setIdField( daoUtil.getInt( 9 ) );
                 recordField.setField( field );
             }
 
             if ( daoUtil.getObject( 10 ) != null )
             {
-                file = new File(  );
+                file = new File( );
                 file.setIdFile( daoUtil.getInt( 10 ) );
                 recordField.setFile( file );
             }
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return recordField;
     }
@@ -274,8 +270,8 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdRecordField );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -284,7 +280,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     @Override
     public void deleteByListRecordId( List<Integer> lListRecordId, Plugin plugin )
     {
-        int nListIdSize = lListRecordId.size(  );
+        int nListIdSize = lListRecordId.size( );
 
         if ( nListIdSize > 0 )
         {
@@ -297,15 +293,15 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
             sbSQL.append( SQL_FILTER_CLOSE_PARENTHESIS );
 
-            DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+            DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
 
             for ( int i = 0; i < nListIdSize; i++ )
             {
                 daoUtil.setInt( i + 1, lListRecordId.get( i ) );
             }
 
-            daoUtil.executeUpdate(  );
-            daoUtil.free(  );
+            daoUtil.executeUpdate( );
+            daoUtil.free( );
         }
     }
 
@@ -317,34 +313,34 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-        daoUtil.setInt( 1, recordField.getIdRecordField(  ) );
-        daoUtil.setInt( 2, recordField.getRecord(  ).getIdRecord(  ) );
-        daoUtil.setString( 3, recordField.getValue(  ) );
+        daoUtil.setInt( 1, recordField.getIdRecordField( ) );
+        daoUtil.setInt( 2, recordField.getRecord( ).getIdRecord( ) );
+        daoUtil.setString( 3, recordField.getValue( ) );
 
-        //daoUtil.setBytes( 3 , recordField.getValue().getBytes() );
-        daoUtil.setInt( 4, recordField.getEntry(  ).getIdEntry(  ) );
+        // daoUtil.setBytes( 3 , recordField.getValue().getBytes() );
+        daoUtil.setInt( 4, recordField.getEntry( ).getIdEntry( ) );
 
-        if ( recordField.getField(  ) != null )
+        if ( recordField.getField( ) != null )
         {
-            daoUtil.setInt( 5, recordField.getField(  ).getIdField(  ) );
+            daoUtil.setInt( 5, recordField.getField( ).getIdField( ) );
         }
         else
         {
             daoUtil.setIntNull( 5 );
         }
 
-        if ( recordField.getFile(  ) != null )
+        if ( recordField.getFile( ) != null )
         {
-            daoUtil.setInt( 6, recordField.getFile(  ).getIdFile(  ) );
+            daoUtil.setInt( 6, recordField.getFile( ).getIdFile( ) );
         }
         else
         {
             daoUtil.setIntNull( 6 );
         }
 
-        daoUtil.setInt( 7, recordField.getIdRecordField(  ) );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.setInt( 7, recordField.getIdRecordField( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -354,8 +350,8 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     public List<RecordField> getRecordFieldListByRecordIdList( List<Integer> lIdRecordList, Plugin plugin )
     {
         boolean bException = false;
-        List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
-        int nIdRecordListSize = lIdRecordList.size(  );
+        List<RecordField> recordFieldList = new ArrayList<RecordField>( );
+        int nIdRecordListSize = lIdRecordList.size( );
 
         if ( nIdRecordListSize > 0 )
         {
@@ -385,25 +381,25 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
             sbSQL.append( SQL_FILTER_CLOSE_PARENTHESIS + SQL_ORDER_BY_ID_RECORD_FIELD );
 
-            DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+            DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
 
             for ( int i = 0; i < nIdRecordListSize; i++ )
             {
                 daoUtil.setInt( i + 1, lIdRecordList.get( i ) );
             }
 
-            daoUtil.executeQuery(  );
+            daoUtil.executeQuery( );
 
-            while ( daoUtil.next(  ) )
+            while ( daoUtil.next( ) )
             {
-                recordField = new RecordField(  );
+                recordField = new RecordField( );
                 recordField.setIdRecordField( daoUtil.getInt( 1 ) ); // drf.id_record_field
-                record = new Record(  );
+                record = new Record( );
                 record.setIdRecord( daoUtil.getInt( 2 ) ); // drf.id_record
 
-                record.setDateCreation( daoUtil.getTimestamp( 26 ) ); // dr.date_creation 
-                directory = new Directory(  );
-                directory.setIdDirectory( daoUtil.getInt( 27 ) ); // dr.id_directory 
+                record.setDateCreation( daoUtil.getTimestamp( 26 ) ); // dr.date_creation
+                directory = new Directory( );
+                directory.setIdDirectory( daoUtil.getInt( 27 ) ); // dr.id_directory
                 record.setDirectory( directory );
                 record.setEnabled( daoUtil.getBoolean( 28 ) ); // dr.is_enabled
                 record.setRoleKey( daoUtil.getString( 29 ) ); // dr.role_key
@@ -413,26 +409,26 @@ public final class RecordFieldDAO implements IRecordFieldDAO
                 recordField.setRecord( record );
                 recordField.setValue( daoUtil.getString( 3 ) ); // drf.record_field_value
 
-                entryType = new EntryType(  );
+                entryType = new EntryType( );
                 entryType.setClassName( daoUtil.getString( 4 ) ); // type.class_name
 
                 try
                 {
-                    entry = (IEntry) Class.forName( entryType.getClassName(  ) ).newInstance(  );
+                    entry = (IEntry) Class.forName( entryType.getClassName( ) ).newInstance( );
                 }
-                catch ( ClassNotFoundException e )
+                catch( ClassNotFoundException e )
                 {
-                    //  class doesn't exist
+                    // class doesn't exist
                     AppLogService.error( e );
                     bException = true;
                 }
-                catch ( InstantiationException e )
+                catch( InstantiationException e )
                 {
-                    // Class is abstract or is an  interface or haven't accessible builder
+                    // Class is abstract or is an interface or haven't accessible builder
                     AppLogService.error( e );
                     bException = true;
                 }
-                catch ( IllegalAccessException e )
+                catch( IllegalAccessException e )
                 {
                     // can't access to rhe class
                     AppLogService.error( e );
@@ -441,7 +437,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
                 if ( bException )
                 {
-                    daoUtil.free(  );
+                    daoUtil.free( );
 
                     return null;
                 }
@@ -455,10 +451,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
                 if ( daoUtil.getObject( 14 ) != null ) // field.id_field
                 {
-                    field = new Field(  );
+                    field = new Field( );
                     field.setIdField( daoUtil.getInt( 14 ) ); // field.id_field
 
-                    Entry entryField = new Entry(  );
+                    Entry entryField = new Entry( );
                     entryField.setIdEntry( daoUtil.getInt( 15 ) ); // field.id_entry
                     field.setEntry( entryField );
 
@@ -478,22 +474,22 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
                 if ( daoUtil.getObject( 9 ) != null ) // fil.id_file
                 {
-                    file = new File(  );
+                    file = new File( );
                     file.setIdFile( daoUtil.getInt( 9 ) ); // fil.id_file
                     file.setTitle( daoUtil.getString( 10 ) ); // fil.title
 
-                    PhysicalFile pf = new PhysicalFile(  );
-                    pf.setIdPhysicalFile( daoUtil.getInt( 11 ) ); //fil.id_physical_file
+                    PhysicalFile pf = new PhysicalFile( );
+                    pf.setIdPhysicalFile( daoUtil.getInt( 11 ) ); // fil.id_physical_file
                     file.setPhysicalFile( pf );
                     file.setSize( daoUtil.getInt( 12 ) ); // fil.file_size
-                    file.setMimeType( daoUtil.getString( 13 ) ); //fil.mime_type
+                    file.setMimeType( daoUtil.getString( 13 ) ); // fil.mime_type
                     recordField.setFile( file );
                 }
 
                 recordFieldList.add( recordField );
             }
 
-            daoUtil.free(  );
+            daoUtil.free( );
         }
 
         return recordFieldList;
@@ -506,7 +502,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     public List<RecordField> selectSpecificList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin )
     {
         boolean bException = false;
-        List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
+        List<RecordField> recordFieldList = new ArrayList<RecordField>( );
         RecordField recordField;
         IEntry entry = null;
         EntryType entryType = null;
@@ -518,7 +514,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
         sbSQL.append( SQL_WHERE + SQL_FILTER_ID_RECORD );
 
-        int nListEntryIdSize = lEntryId.size(  );
+        int nListEntryIdSize = lEntryId.size( );
 
         if ( nListEntryIdSize > 0 )
         {
@@ -539,7 +535,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
         sbSQL.append( SQL_ORDER_BY_ID_RECORD_FIELD + SQL_FILTER_COMMA + SQL_ORDER_BY_FIELD_POSITION );
 
-        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
         daoUtil.setInt( 1, nIdRecord );
 
         if ( nListEntryIdSize > 0 )
@@ -550,37 +546,37 @@ public final class RecordFieldDAO implements IRecordFieldDAO
             }
         }
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            recordField = new RecordField(  );
+            recordField = new RecordField( );
             recordField.setIdRecordField( daoUtil.getInt( 1 ) ); // drf.id_record_field
-            record = new Record(  );
+            record = new Record( );
             record.setIdRecord( daoUtil.getInt( 2 ) ); // drf.id_record
             recordField.setRecord( record );
             recordField.setValue( daoUtil.getString( 3 ) ); // drf.record_field_value
 
-            entryType = new EntryType(  );
+            entryType = new EntryType( );
             entryType.setClassName( daoUtil.getString( 4 ) ); // type.class_name
 
             try
             {
-                entry = (IEntry) Class.forName( entryType.getClassName(  ) ).newInstance(  );
+                entry = (IEntry) Class.forName( entryType.getClassName( ) ).newInstance( );
             }
-            catch ( ClassNotFoundException e )
+            catch( ClassNotFoundException e )
             {
-                //  class doesn't exist
+                // class doesn't exist
                 AppLogService.error( e );
                 bException = true;
             }
-            catch ( InstantiationException e )
+            catch( InstantiationException e )
             {
-                // Class is abstract or is an  interface or haven't accessible builder
+                // Class is abstract or is an interface or haven't accessible builder
                 AppLogService.error( e );
                 bException = true;
             }
-            catch ( IllegalAccessException e )
+            catch( IllegalAccessException e )
             {
                 // can't access to rhe class
                 AppLogService.error( e );
@@ -589,7 +585,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
             if ( bException )
             {
-                daoUtil.free(  );
+                daoUtil.free( );
 
                 return null;
             }
@@ -603,10 +599,10 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
             if ( daoUtil.getObject( 14 ) != null ) // field.id_field
             {
-                field = new Field(  );
+                field = new Field( );
                 field.setIdField( daoUtil.getInt( 14 ) ); // field.id_field
 
-                Entry entryField = new Entry(  );
+                Entry entryField = new Entry( );
                 entryField.setIdEntry( daoUtil.getInt( 15 ) ); // field.id_entry
                 field.setEntry( entryField );
 
@@ -626,22 +622,22 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
             if ( daoUtil.getObject( 9 ) != null ) // fil.id_file
             {
-                file = new File(  );
+                file = new File( );
                 file.setIdFile( daoUtil.getInt( 9 ) ); // fil.id_file
                 file.setTitle( daoUtil.getString( 10 ) ); // fil.title
 
-                PhysicalFile pf = new PhysicalFile(  );
-                pf.setIdPhysicalFile( daoUtil.getInt( 11 ) ); //fil.id_physical_file
+                PhysicalFile pf = new PhysicalFile( );
+                pf.setIdPhysicalFile( daoUtil.getInt( 11 ) ); // fil.id_physical_file
                 file.setPhysicalFile( pf );
                 file.setSize( daoUtil.getInt( 12 ) ); // fil.file_size
-                file.setMimeType( daoUtil.getString( 13 ) ); //fil.mime_type
+                file.setMimeType( daoUtil.getString( 13 ) ); // fil.mime_type
                 recordField.setFile( file );
             }
 
             recordFieldList.add( recordField );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return recordFieldList;
     }
@@ -653,7 +649,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     public List<RecordField> selectListByFilter( RecordFieldFilter filter, Plugin plugin )
     {
         boolean bException = false;
-        List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
+        List<RecordField> recordFieldList = new ArrayList<RecordField>( );
         RecordField recordField;
         IEntry entry = null;
         EntryType entryType = null;
@@ -661,107 +657,103 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         File file = null;
         Record record = null;
 
-        List<String> listStrFilter = new ArrayList<String>(  );
+        List<String> listStrFilter = new ArrayList<String>( );
         listStrFilter.add( SQL_FILTER_ASSOCIATION_ON_ID_ENTRY );
         listStrFilter.add( SQL_FILTER_ASSOCIATION_ON_ID_TYPE );
 
-        if ( filter.containsIdRecord(  ) )
+        if ( filter.containsIdRecord( ) )
         {
             listStrFilter.add( SQL_FILTER_ID_RECORD );
         }
 
-        if ( filter.containsIdField(  ) )
+        if ( filter.containsIdField( ) )
         {
             listStrFilter.add( SQL_FILTER_ID_FIELD );
         }
 
-        if ( filter.containsIdEntry(  ) )
+        if ( filter.containsIdEntry( ) )
         {
             listStrFilter.add( SQL_FILTER_ID_ENTRY );
         }
 
-        if ( filter.containsIsEntryShownInResultList(  ) )
+        if ( filter.containsIsEntryShownInResultList( ) )
         {
             listStrFilter.add( SQL_FILTER_IS_ENTRY_SHOWN_IN_RESULT_LIST );
         }
 
-        if ( filter.containsIsEntryShownInResultRecord(  ) )
+        if ( filter.containsIsEntryShownInResultRecord( ) )
         {
             listStrFilter.add( SQL_FILTER_IS_ENTRY_SHOWN_IN_RESULT_RECORD );
         }
 
-        String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_SELECT_RECORD_FIELD_BY_FILTER, listStrFilter,
-                SQL_ORDER_BY_ID_RECORD_FIELD );
+        String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_SELECT_RECORD_FIELD_BY_FILTER, listStrFilter, SQL_ORDER_BY_ID_RECORD_FIELD );
 
         DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
         int nIndex = 1;
 
-        if ( filter.containsIdRecord(  ) )
+        if ( filter.containsIdRecord( ) )
         {
-            daoUtil.setInt( nIndex, filter.getIdRecord(  ) );
+            daoUtil.setInt( nIndex, filter.getIdRecord( ) );
             nIndex++;
         }
 
-        if ( filter.containsIdField(  ) )
+        if ( filter.containsIdField( ) )
         {
-            daoUtil.setInt( nIndex, filter.getIdField(  ) );
+            daoUtil.setInt( nIndex, filter.getIdField( ) );
             nIndex++;
         }
 
-        if ( filter.containsIdEntry(  ) )
+        if ( filter.containsIdEntry( ) )
         {
-            daoUtil.setInt( nIndex, filter.getIdEntry(  ) );
+            daoUtil.setInt( nIndex, filter.getIdEntry( ) );
             nIndex++;
         }
 
-        if ( filter.containsIsEntryShownInResultList(  ) )
+        if ( filter.containsIsEntryShownInResultList( ) )
         {
-            daoUtil.setBoolean( nIndex, filter.getIsEntryShownInResultList(  ) == RecordFieldFilter.FILTER_TRUE );
+            daoUtil.setBoolean( nIndex, filter.getIsEntryShownInResultList( ) == RecordFieldFilter.FILTER_TRUE );
             nIndex++;
         }
 
-        if ( filter.containsIsEntryShownInResultRecord(  ) )
+        if ( filter.containsIsEntryShownInResultRecord( ) )
         {
-            daoUtil.setBoolean( nIndex, filter.getIsEntryShownInResultRecord(  ) == RecordFieldFilter.FILTER_TRUE );
+            daoUtil.setBoolean( nIndex, filter.getIsEntryShownInResultRecord( ) == RecordFieldFilter.FILTER_TRUE );
             nIndex++;
         }
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            recordField = new RecordField(  );
+            recordField = new RecordField( );
             recordField.setIdRecordField( daoUtil.getInt( 1 ) );
-            record = new Record(  );
+            record = new Record( );
             record.setIdRecord( daoUtil.getInt( 2 ) );
             recordField.setRecord( record );
             recordField.setValue( daoUtil.getString( 3 ) );
             /**
-            if( daoUtil.getBytes( 3 ) != null )
-                {
-                    recordField.setValue( new String( daoUtil.getBytes( 3 ) ) );
-                }
-            **/
-            entryType = new EntryType(  );
+             * if( daoUtil.getBytes( 3 ) != null ) { recordField.setValue( new String( daoUtil.getBytes( 3 ) ) ); }
+             **/
+            entryType = new EntryType( );
             entryType.setClassName( daoUtil.getString( 4 ) );
 
             try
             {
-                entry = (IEntry) Class.forName( entryType.getClassName(  ) ).newInstance(  );
+                entry = (IEntry) Class.forName( entryType.getClassName( ) ).newInstance( );
             }
-            catch ( ClassNotFoundException e )
+            catch( ClassNotFoundException e )
             {
-                //  class doesn't exist
+                // class doesn't exist
                 AppLogService.error( e );
                 bException = true;
             }
-            catch ( InstantiationException e )
+            catch( InstantiationException e )
             {
-                // Class is abstract or is an  interface or haven't accessible builder
+                // Class is abstract or is an interface or haven't accessible builder
                 AppLogService.error( e );
                 bException = true;
             }
-            catch ( IllegalAccessException e )
+            catch( IllegalAccessException e )
             {
                 // can't access to rhe class
                 AppLogService.error( e );
@@ -770,7 +762,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
             if ( bException )
             {
-                daoUtil.free(  );
+                daoUtil.free( );
 
                 return null;
             }
@@ -785,14 +777,14 @@ public final class RecordFieldDAO implements IRecordFieldDAO
 
             if ( daoUtil.getObject( 10 ) != null )
             {
-                field = new Field(  );
+                field = new Field( );
                 field.setIdField( daoUtil.getInt( 10 ) );
                 recordField.setField( field );
             }
 
             if ( daoUtil.getObject( 11 ) != null )
             {
-                file = new File(  );
+                file = new File( );
                 file.setIdFile( daoUtil.getInt( 11 ) );
                 recordField.setFile( file );
             }
@@ -800,7 +792,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
             recordFieldList.add( recordField );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return recordFieldList;
     }
@@ -813,79 +805,78 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     {
         int nCount = 0;
 
-        List<String> listStrFilter = new ArrayList<String>(  );
+        List<String> listStrFilter = new ArrayList<String>( );
         listStrFilter.add( SQL_FILTER_ASSOCIATION_ON_ID_ENTRY );
         listStrFilter.add( SQL_FILTER_ASSOCIATION_ON_ID_TYPE );
 
-        if ( filter.containsIdRecord(  ) )
+        if ( filter.containsIdRecord( ) )
         {
             listStrFilter.add( SQL_FILTER_ID_RECORD );
         }
 
-        if ( filter.containsIdField(  ) )
+        if ( filter.containsIdField( ) )
         {
             listStrFilter.add( SQL_FILTER_ID_FIELD );
         }
 
-        if ( filter.containsIdEntry(  ) )
+        if ( filter.containsIdEntry( ) )
         {
             listStrFilter.add( SQL_FILTER_ID_ENTRY );
         }
 
-        if ( filter.containsIsEntryShownInResultList(  ) )
+        if ( filter.containsIsEntryShownInResultList( ) )
         {
             listStrFilter.add( SQL_FILTER_IS_ENTRY_SHOWN_IN_RESULT_LIST );
         }
 
-        if ( filter.containsIsEntryShownInResultRecord(  ) )
+        if ( filter.containsIsEntryShownInResultRecord( ) )
         {
             listStrFilter.add( SQL_FILTER_IS_ENTRY_SHOWN_IN_RESULT_RECORD );
         }
 
-        String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_COUNT_RECORD_FIELD_BY_FILTER, listStrFilter,
-                null );
+        String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_COUNT_RECORD_FIELD_BY_FILTER, listStrFilter, null );
 
         DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
         int nIndex = 1;
 
-        if ( filter.containsIdRecord(  ) )
+        if ( filter.containsIdRecord( ) )
         {
-            daoUtil.setInt( nIndex, filter.getIdRecord(  ) );
+            daoUtil.setInt( nIndex, filter.getIdRecord( ) );
             nIndex++;
         }
 
-        if ( filter.containsIdField(  ) )
+        if ( filter.containsIdField( ) )
         {
-            daoUtil.setInt( nIndex, filter.getIdField(  ) );
+            daoUtil.setInt( nIndex, filter.getIdField( ) );
             nIndex++;
         }
 
-        if ( filter.containsIdEntry(  ) )
+        if ( filter.containsIdEntry( ) )
         {
-            daoUtil.setInt( nIndex, filter.getIdEntry(  ) );
+            daoUtil.setInt( nIndex, filter.getIdEntry( ) );
             nIndex++;
         }
 
-        if ( filter.containsIsEntryShownInResultList(  ) )
+        if ( filter.containsIsEntryShownInResultList( ) )
         {
-            daoUtil.setBoolean( nIndex, filter.getIsEntryShownInResultList(  ) == RecordFieldFilter.FILTER_TRUE );
+            daoUtil.setBoolean( nIndex, filter.getIsEntryShownInResultList( ) == RecordFieldFilter.FILTER_TRUE );
             nIndex++;
         }
 
-        if ( filter.containsIsEntryShownInResultRecord(  ) )
+        if ( filter.containsIsEntryShownInResultRecord( ) )
         {
-            daoUtil.setBoolean( nIndex, filter.getIsEntryShownInResultRecord(  ) == RecordFieldFilter.FILTER_TRUE );
+            daoUtil.setBoolean( nIndex, filter.getIsEntryShownInResultRecord( ) == RecordFieldFilter.FILTER_TRUE );
             nIndex++;
         }
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nCount = daoUtil.getInt( 1 );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nCount;
     }
@@ -900,16 +891,16 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_MAX_NUMBER, plugin );
         daoUtil.setInt( nIndex++, nIdEntry );
         daoUtil.setInt( nIndex++, nIdDirectory );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nKey = 1;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nKey = daoUtil.getInt( 1 ) + 1;
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
@@ -925,16 +916,16 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         daoUtil.setInt( nIndex++, nIdEntry );
         daoUtil.setInt( nIndex++, nIdDirectory );
         daoUtil.setInt( nIndex++, nNumber );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         boolean isOn = false;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             isOn = true;
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return isOn;
     }
@@ -945,13 +936,13 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     @Override
     public List<RecordField> selectValuesList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin )
     {
-        List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
+        List<RecordField> recordFieldList = new ArrayList<RecordField>( );
         RecordField recordField;
         StringBuffer sbSQL = new StringBuffer( SQL_QUERY_SELECT_VALUES_RECORD_FIELD_LIST );
 
         sbSQL.append( SQL_WHERE + SQL_FILTER_ID_RECORD );
 
-        int nListEntryIdSize = lEntryId.size(  );
+        int nListEntryIdSize = lEntryId.size( );
 
         if ( nListEntryIdSize > 0 )
         {
@@ -970,7 +961,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
             sbSQL.append( SQL_FILTER_CLOSE_PARENTHESIS );
         }
 
-        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
         daoUtil.setInt( 1, nIdRecord );
 
         if ( nListEntryIdSize > 0 )
@@ -981,18 +972,18 @@ public final class RecordFieldDAO implements IRecordFieldDAO
             }
         }
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            recordField = new RecordField(  );
+            recordField = new RecordField( );
             recordField.setIdRecordField( daoUtil.getInt( 1 ) ); // drf.id_record_field
             recordField.setValue( daoUtil.getString( 2 ) ); // drf.record_field_value
 
             recordFieldList.add( recordField );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return recordFieldList;
     }
@@ -1006,7 +997,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         DAOUtil daoUtil = new DAOUtil( SQL_UPDATE_VALUE_RECORD_FIELD, plugin );
         daoUtil.setString( 1, strNewValue );
         daoUtil.setInt( 2, nIdRecordField );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 }

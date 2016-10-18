@@ -48,7 +48,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * DirectoryAdminDashboardComponent
@@ -73,16 +72,16 @@ public class DirectoryAdminDashboardComponent extends AdminDashboardComponent
     @Override
     public String getDashboardData( AdminUser user, HttpServletRequest request )
     {
-        if ( RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS, user ) )
+        if ( RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_MANAGE_ADVANCED_PARAMETERS,
+                user ) )
         {
-            Map<String, Object> model = DirectoryService.getInstance(  ).getManageAdvancedParameters( user );
+            Map<String, Object> model = DirectoryService.getInstance( ).getManageAdvancedParameters( user );
             model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
-            model.put( MARK_LOCALE, user.getLocale(  ) );
+            model.put( MARK_LOCALE, user.getLocale( ) );
 
-            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_ADMIN_DASHBOARD, user.getLocale(  ), model );
+            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_ADMIN_DASHBOARD, user.getLocale( ), model );
 
-            return template.getHtml(  );
+            return template.getHtml( );
         }
 
         return EMPTY_STRING;

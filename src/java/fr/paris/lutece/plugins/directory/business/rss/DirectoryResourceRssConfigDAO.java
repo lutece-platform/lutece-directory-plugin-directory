@@ -39,7 +39,6 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * class DirectoryResourceRssConfigDAO
@@ -47,17 +46,17 @@ import java.util.List;
  */
 public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfigDAO
 {
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_rss,id_directory,id_entry_title,id_entry_description,id_entry_image,id_entry_link,id_entry_filter_1,value_filter_1,id_entry_filter_2,value_filter_2,id_workflow_state " +
-        "FROM directory_rss_cf  WHERE id_rss=?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_rss_cf( " +
-        "id_rss,id_directory,id_entry_title,id_entry_description,id_entry_image,id_entry_link,id_entry_filter_1,value_filter_1,id_entry_filter_2,value_filter_2,id_workflow_state)" +
-        "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_QUERY_UPDATE = "UPDATE directory_rss_cf " +
-        "SET id_rss=?,id_directory=?,id_entry_title=?,id_entry_description=?,id_entry_image=?,id_entry_link=?,id_entry_filter_1=?,value_filter_1=?,id_entry_filter_2=?,value_filter_2=?,id_workflow_state=? " +
-        " WHERE id_rss=?";
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_rss,id_directory,id_entry_title,id_entry_description,id_entry_image,id_entry_link,id_entry_filter_1,value_filter_1,id_entry_filter_2,value_filter_2,id_workflow_state "
+            + "FROM directory_rss_cf  WHERE id_rss=?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_rss_cf( "
+            + "id_rss,id_directory,id_entry_title,id_entry_description,id_entry_image,id_entry_link,id_entry_filter_1,value_filter_1,id_entry_filter_2,value_filter_2,id_workflow_state)"
+            + "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_QUERY_UPDATE = "UPDATE directory_rss_cf "
+            + "SET id_rss=?,id_directory=?,id_entry_title=?,id_entry_description=?,id_entry_image=?,id_entry_link=?,id_entry_filter_1=?,value_filter_1=?,id_entry_filter_2=?,value_filter_2=?,id_workflow_state=? "
+            + " WHERE id_rss=?";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_rss_cf WHERE id_rss=? ";
-    private static final String SQL_QUERY_FIND_ALL = "SELECT id_rss,id_directory,id_entry_title,id_entry_description,id_entry_image,id_entry_link,id_workflow_state,id_entry_filter_1,value_filter_1,id_entry_filter_2,value_filter_2 " +
-        "FROM directory_rss_cf";
+    private static final String SQL_QUERY_FIND_ALL = "SELECT id_rss,id_directory,id_entry_title,id_entry_description,id_entry_image,id_entry_link,id_workflow_state,id_entry_filter_1,value_filter_1,id_entry_filter_2,value_filter_2 "
+            + "FROM directory_rss_cf";
 
     /**
      * {@inheritDoc}
@@ -69,20 +68,20 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
 
         int nPos = 0;
 
-        daoUtil.setInt( ++nPos, config.getIdRss(  ) );
-        daoUtil.setInt( ++nPos, config.getIdDirectory(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryTitle(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryDescription(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryImage(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryLink(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryFilter1(  ) );
-        daoUtil.setString( ++nPos, config.getValueFilter1(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryFilter2(  ) );
-        daoUtil.setString( ++nPos, config.getValueFilter2(  ) );
-        daoUtil.setInt( ++nPos, config.getIdWorkflowState(  ) );
+        daoUtil.setInt( ++nPos, config.getIdRss( ) );
+        daoUtil.setInt( ++nPos, config.getIdDirectory( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryTitle( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryDescription( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryImage( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryLink( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryFilter1( ) );
+        daoUtil.setString( ++nPos, config.getValueFilter1( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryFilter2( ) );
+        daoUtil.setString( ++nPos, config.getValueFilter2( ) );
+        daoUtil.setInt( ++nPos, config.getIdWorkflowState( ) );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -95,21 +94,21 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
 
         int nPos = 0;
 
-        daoUtil.setInt( ++nPos, config.getIdRss(  ) );
-        daoUtil.setInt( ++nPos, config.getIdDirectory(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryTitle(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryDescription(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryImage(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryLink(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryFilter1(  ) );
-        daoUtil.setString( ++nPos, config.getValueFilter1(  ) );
-        daoUtil.setInt( ++nPos, config.getIdEntryFilter2(  ) );
-        daoUtil.setString( ++nPos, config.getValueFilter2(  ) );
-        daoUtil.setInt( ++nPos, config.getIdWorkflowState(  ) );
+        daoUtil.setInt( ++nPos, config.getIdRss( ) );
+        daoUtil.setInt( ++nPos, config.getIdDirectory( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryTitle( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryDescription( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryImage( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryLink( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryFilter1( ) );
+        daoUtil.setString( ++nPos, config.getValueFilter1( ) );
+        daoUtil.setInt( ++nPos, config.getIdEntryFilter2( ) );
+        daoUtil.setString( ++nPos, config.getValueFilter2( ) );
+        daoUtil.setInt( ++nPos, config.getIdWorkflowState( ) );
 
-        daoUtil.setInt( ++nPos, config.getIdRss(  ) );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.setInt( ++nPos, config.getIdRss( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -123,13 +122,13 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
 
         daoUtil.setInt( 1, nIdRss );
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nPos = 0;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            config = new DirectoryResourceRssConfig(  );
+            config = new DirectoryResourceRssConfig( );
             config.setIdRss( daoUtil.getInt( ++nPos ) );
             config.setIdDirectory( daoUtil.getInt( ++nPos ) );
             config.setIdEntryTitle( daoUtil.getInt( ++nPos ) );
@@ -143,7 +142,7 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
             config.setIdWorkflowState( daoUtil.getInt( ++nPos ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return config;
     }
@@ -157,8 +156,8 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
 
         daoUtil.setInt( 1, nIdRss );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -167,16 +166,16 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
     @Override
     public List<DirectoryResourceRssConfig> loadAll( Plugin plugin )
     {
-        List<DirectoryResourceRssConfig> configList = new ArrayList<DirectoryResourceRssConfig>(  );
+        List<DirectoryResourceRssConfig> configList = new ArrayList<DirectoryResourceRssConfig>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_ALL, plugin );
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nPos = 0;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            DirectoryResourceRssConfig config = new DirectoryResourceRssConfig(  );
+            DirectoryResourceRssConfig config = new DirectoryResourceRssConfig( );
             config.setIdRss( daoUtil.getInt( ++nPos ) );
             config.setIdDirectory( daoUtil.getInt( ++nPos ) );
             config.setIdEntryTitle( daoUtil.getInt( ++nPos ) );
@@ -192,7 +191,7 @@ public class DirectoryResourceRssConfigDAO implements IDirectoryResourceRssConfi
             configList.add( config );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return configList;
     }

@@ -41,7 +41,6 @@ import fr.paris.lutece.portal.service.util.RemovalListener;
 
 import java.util.Locale;
 
-
 /**
  * class DirectoryWorkgroupRemovalListener
  */
@@ -62,8 +61,7 @@ public class DirectoryRegularExpressionRemovalListener implements RemovalListene
             return true;
         }
 
-        return !FieldHome.isRegularExpressionIsUse( nIdRegularExpression,
-            PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+        return !FieldHome.isRegularExpressionIsUse( nIdRegularExpression, PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
     }
 
     /**
@@ -72,7 +70,7 @@ public class DirectoryRegularExpressionRemovalListener implements RemovalListene
     @Override
     public String getRemovalRefusedMessage( String strId, Locale locale )
     {
-        // Build a message 
+        // Build a message
         return I18nService.getLocalizedString( PROPERTY_REGULAR_EXPRESSION_CANNOT_BE_REMOVED, locale );
     }
 }

@@ -48,7 +48,6 @@ import fr.paris.lutece.portal.service.workflow.WorkflowService;
 
 import java.util.List;
 
-
 /**
  * Daemon to remove entries of directories that are in a given state
  */
@@ -60,35 +59,34 @@ public class DirectoryWorkflowRecordRemovalDaemon extends Daemon
      * {@inheritDoc}
      */
     @Override
-    public void run(  )
+    public void run( )
     {
-        WorkflowService workflowService = WorkflowService.getInstance(  );
+        WorkflowService workflowService = WorkflowService.getInstance( );
 
-        if ( workflowService.isAvailable(  ) )
+        if ( workflowService.isAvailable( ) )
         {
-            DirectoryFilter filter = new DirectoryFilter(  );
+            DirectoryFilter filter = new DirectoryFilter( );
             Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-            List<Directory> listDirectory = DirectoryHome.getDirectoryList( filter,
-                    PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-            IRecordService recordService = getRecordService(  );
+            List<Directory> listDirectory = DirectoryHome.getDirectoryList( filter, PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+            IRecordService recordService = getRecordService( );
             int nRemovedRecords = 0;
 
             for ( Directory directory : listDirectory )
             {
-                if ( ( directory.getIdWorkflow(  ) > DirectoryUtils.CONSTANT_ID_NULL ) &&
-                        ( directory.getIdWorkflowStateToRemove(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
+                if ( ( directory.getIdWorkflow( ) > DirectoryUtils.CONSTANT_ID_NULL )
+                        && ( directory.getIdWorkflowStateToRemove( ) != DirectoryUtils.CONSTANT_ID_NULL ) )
                 {
-                    List<Integer> listRecordId = workflowService.getResourceIdListByIdState( directory.getIdWorkflowStateToRemove(  ),
+                    List<Integer> listRecordId = workflowService.getResourceIdListByIdState( directory.getIdWorkflowStateToRemove( ),
                             Record.WORKFLOW_RESOURCE_TYPE );
 
-                    if ( ( listRecordId != null ) && ( listRecordId.size(  ) > 0 ) )
+                    if ( ( listRecordId != null ) && ( listRecordId.size( ) > 0 ) )
                     {
                         for ( int nRecordId : listRecordId )
                         {
                             recordService.remove( nRecordId, pluginDirectory );
                         }
 
-                        nRemovedRecords += listRecordId.size(  );
+                        nRemovedRecords += listRecordId.size( );
                     }
                 }
             }
@@ -103,9 +101,10 @@ public class DirectoryWorkflowRecordRemovalDaemon extends Daemon
 
     /**
      * Get the instance of the record service
+     * 
      * @return The instance of the record service
      */
-    private IRecordService getRecordService(  )
+    private IRecordService getRecordService( )
     {
         if ( _recordService == null )
         {

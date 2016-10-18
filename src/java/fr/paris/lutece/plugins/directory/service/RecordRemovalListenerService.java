@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.directory.service;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.RemovalListenerService;
 
-
 /**
  * RecordRemovalListenerService
  */
@@ -47,15 +46,16 @@ public final class RecordRemovalListenerService
     /**
      * Private constructor
      */
-    private RecordRemovalListenerService(  )
+    private RecordRemovalListenerService( )
     {
     }
 
     /**
      * Returns the removal service
+     * 
      * @return The removal service
      */
-    public static RemovalListenerService getService(  )
+    public static RemovalListenerService getService( )
     {
         return SpringContextService.getBean( BEAN_RECORD_REMOVAL_SERVICE );
     }

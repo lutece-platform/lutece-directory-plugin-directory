@@ -39,7 +39,6 @@ import java.sql.Timestamp;
 
 import java.util.List;
 
-
 /**
  *
  * class RecordFieldFilter
@@ -71,16 +70,19 @@ public class RecordFieldFilter
 
     /**
      * Gets the entry that should be used to sort the results
+     * 
      * @return the entry that should be used to sort the results
      */
-    public IEntry getSortEntry(  )
+    public IEntry getSortEntry( )
     {
         return _sortEntry;
     }
 
     /**
      * Set the entry that should be used to sort the results
-     * @param sortEntry the entry to use to sort the results, <code>null</code> to use default sort (creation date).
+     * 
+     * @param sortEntry
+     *            the entry to use to sort the results, <code>null</code> to use default sort (creation date).
      */
     public void setSortEntry( IEntry sortEntry )
     {
@@ -89,28 +91,32 @@ public class RecordFieldFilter
 
     /**
      * <code>true</code> if an entry should be used to sort the results, <code>false</code> otherwise
+     * 
      * @return <code>true</code> if an entry should be used to sort the results, <code>false</code> otherwise.
      */
-    public boolean containsSortEntry(  )
+    public boolean containsSortEntry( )
     {
         return _sortEntry != null;
     }
 
     /**
      * Gets the sort order. Default is {@link #ORDER_NONE}
+     * 
      * @return the sort order
      * @see #ORDER_ASC
      * @see #ORDER_DESC
      * @see #ORDER_NONE
      */
-    public int getSortOrder(  )
+    public int getSortOrder( )
     {
         return _nSortOrder;
     }
 
     /**
      * Sets the sort order. Use it with {@link #setSortEntry(IEntry)}
-     * @param nSortOrder the sort order.
+     * 
+     * @param nSortOrder
+     *            the sort order.
      * @see #ORDER_ASC
      * @see #ORDER_DESC
      * @see #ORDER_NONE
@@ -122,25 +128,28 @@ public class RecordFieldFilter
 
     /**
      * Return <code>true</code> if sort order is not {@link #ORDER_NONE}
+     * 
      * @return <code>true</code> if sort order is not {@link #ORDER_NONE}, <code>false</code> otherwise.
      */
-    public boolean containsSortOrder(  )
+    public boolean containsSortOrder( )
     {
         return this._nSortOrder != ORDER_NONE;
     }
 
     /**
-    *
-    * @return  the id of directory insert in the filter
-    */
-    public int getIdDirectory(  )
+     *
+     * @return the id of directory insert in the filter
+     */
+    public int getIdDirectory( )
     {
         return _nIdDirectory;
     }
 
     /**
-     * set  the id of directory  in the filter
-     * @param idDirectory the id of directory to insert in the filter
+     * set the id of directory in the filter
+     * 
+     * @param idDirectory
+     *            the id of directory to insert in the filter
      */
     public void setIdDirectory( int idDirectory )
     {
@@ -152,23 +161,25 @@ public class RecordFieldFilter
      * @return true if the filter contain an id of directory
      *
      */
-    public boolean containsIdDirectory(  )
+    public boolean containsIdDirectory( )
     {
         return ( _nIdDirectory != ALL_INT );
     }
 
     /**
-    *
-    * @return  the id of record insert in the filter
-    */
-    public int getIdRecord(  )
+     *
+     * @return the id of record insert in the filter
+     */
+    public int getIdRecord( )
     {
         return _nIdRecord;
     }
 
     /**
-     * set  the id of record in the filter
-     * @param idRecord the id of the record to insert in the filter
+     * set the id of record in the filter
+     * 
+     * @param idRecord
+     *            the id of the record to insert in the filter
      */
     public void setIdRecord( int idRecord )
     {
@@ -180,23 +191,25 @@ public class RecordFieldFilter
      * @return true if the filter contain an id of record
      *
      */
-    public boolean containsIdRecord(  )
+    public boolean containsIdRecord( )
     {
         return ( _nIdRecord != ALL_INT );
     }
 
     /**
      *
-     * @return  the id of field insert in the filter
+     * @return the id of field insert in the filter
      */
-    public int getIdField(  )
+    public int getIdField( )
     {
         return _nIdField;
     }
 
     /**
-     * set the id of field depend  in the filter
-     * @param idField the id of field depend to insert in the filter
+     * set the id of field depend in the filter
+     * 
+     * @param idField
+     *            the id of field depend to insert in the filter
      */
     public void setIdField( int idField )
     {
@@ -207,23 +220,25 @@ public class RecordFieldFilter
      *
      * @return true if the filter contain an id of field depend
      */
-    public boolean containsIdField(  )
+    public boolean containsIdField( )
     {
         return ( _nIdField != ALL_INT );
     }
 
     /**
-    *
-    * @return  the id of entry insert in the filter
-    */
-    public int getIdEntry(  )
+     *
+     * @return the id of entry insert in the filter
+     */
+    public int getIdEntry( )
     {
         return _nIdEntry;
     }
 
     /**
-     * set the id of entry depend  in the filter
-     * @param idEntry the id of entry depend to insert in the filter
+     * set the id of entry depend in the filter
+     * 
+     * @param idEntry
+     *            the id of entry depend to insert in the filter
      */
     public void setIdEntry( int idEntry )
     {
@@ -234,23 +249,25 @@ public class RecordFieldFilter
      *
      * @return true if the filter contain an id of entry depend
      */
-    public boolean containsIdEntry(  )
+    public boolean containsIdEntry( )
     {
         return ( _nIdEntry != ALL_INT );
     }
 
     /**
-         *
-         * @return date of the first submit
-         */
-    public Timestamp getDateFirst(  )
+     *
+     * @return date of the first submit
+     */
+    public Timestamp getDateFirst( )
     {
         return _tDateFirst;
     }
 
     /**
      * set the date of the first submit
-     * @param begin date of the first submit
+     * 
+     * @param begin
+     *            date of the first submit
      */
     public void setDateFirst( Timestamp begin )
     {
@@ -258,10 +275,10 @@ public class RecordFieldFilter
     }
 
     /**
-    *
-    * @return true if the filter contain the date of the first submit
-    */
-    public boolean containsDateFirst(  )
+     *
+     * @return true if the filter contain the date of the first submit
+     */
+    public boolean containsDateFirst( )
     {
         return ( _tDateFirst != null );
     }
@@ -270,14 +287,16 @@ public class RecordFieldFilter
      *
      * @return date of the last submit
      */
-    public Timestamp getDateLast(  )
+    public Timestamp getDateLast( )
     {
         return _tDateLast;
     }
 
     /**
      * set the date of the last submit
-     * @param end  the date of the last submit
+     * 
+     * @param end
+     *            the date of the last submit
      */
     public void setDateLast( Timestamp end )
     {
@@ -285,28 +304,29 @@ public class RecordFieldFilter
     }
 
     /**
-    *
-    * @return true if the filter contain the date of the last submit
-    */
-    public boolean containsDateLast(  )
+     *
+     * @return true if the filter contain the date of the last submit
+     */
+    public boolean containsDateLast( )
     {
         return ( _tDateLast != null );
     }
 
     /**
-    *
-    * @return 1 if the entry associate to the record field must be in the result list,
-    *                   O if the entry associate to the record field must not  be in the result list
-    */
-    public int getIsEntryShownInResultList(  )
+     *
+     * @return 1 if the entry associate to the record field must be in the result list, O if the entry associate to the record field must not be in the result
+     *         list
+     */
+    public int getIsEntryShownInResultList( )
     {
         return _nIsEntryShownInResultList;
     }
 
     /**
-     * set 1 if the entry associate to the record field must be in the result list,
-    *                 O if the entry associate to the record field must not  be in the result list
-    *   @param nIsShown     1 if the entry associate to the record field must be in the result list
+     * set 1 if the entry associate to the record field must be in the result list, O if the entry associate to the record field must not be in the result list
+     * 
+     * @param nIsShown
+     *            1 if the entry associate to the record field must be in the result list
      */
     public void setIsEntryShownInResultList( int nIsShown )
     {
@@ -317,25 +337,27 @@ public class RecordFieldFilter
      *
      * @return true if the filter is initialized
      */
-    public boolean containsIsEntryShownInResultList(  )
+    public boolean containsIsEntryShownInResultList( )
     {
         return ( _nIsEntryShownInResultList != ALL_INT );
     }
 
     /**
-    *
-    * @return 1 if the entry associate to the record field must be in the result record,
-    *                   O if the entry associate to the record field must not  be in the result record
-    */
-    public int getIsEntryShownInResultRecord(  )
+     *
+     * @return 1 if the entry associate to the record field must be in the result record, O if the entry associate to the record field must not be in the result
+     *         record
+     */
+    public int getIsEntryShownInResultRecord( )
     {
         return _nIsEntryShownInResultRecord;
     }
 
     /**
-     * set 1 if the entry associate to the record field must be in the result record,
-    *                 O if the entry associate to the record field must not  be in the result record
-    *   @param nIsShown     1 if the entry associate to the record field must be in the result record
+     * set 1 if the entry associate to the record field must be in the result record, O if the entry associate to the record field must not be in the result
+     * record
+     * 
+     * @param nIsShown
+     *            1 if the entry associate to the record field must be in the result record
      */
     public void setIsEntryShownInResultRecord( int nIsShown )
     {
@@ -346,26 +368,25 @@ public class RecordFieldFilter
      *
      * @return true if the filter is initialized
      */
-    public boolean containsIsEntryShownInResultRecord(  )
+    public boolean containsIsEntryShownInResultRecord( )
     {
         return ( _nIsEntryShownInResultRecord != ALL_INT );
     }
 
     /**
-    *
-    * @return 1 if the record return must be enabled
-    *                    0 if the record  return must be disabled
-    */
-    public int getIsDisabled(  )
+     *
+     * @return 1 if the record return must be enabled 0 if the record return must be disabled
+     */
+    public int getIsDisabled( )
     {
         return _nIsDisabled;
     }
 
     /**
-     * Set 1 if the recors return must be enabled
-     *            0 if the record return must be disabled
-     * @param idState  1 if the record return must be enabled
-     *                                      0 if the record return must be disabled
+     * Set 1 if the recors return must be enabled 0 if the record return must be disabled
+     * 
+     * @param idState
+     *            1 if the record return must be enabled 0 if the record return must be disabled
      */
     public void setIsDisabled( int idState )
     {
@@ -376,14 +397,16 @@ public class RecordFieldFilter
      *
      * @return true if the filter contain form state
      */
-    public boolean containsIsDisabled(  )
+    public boolean containsIsDisabled( )
     {
         return ( _nIsDisabled != ALL_INT );
     }
 
     /**
      * The workgroup key list to set
-     * @param workgroupKeyList The workgroup key list
+     * 
+     * @param workgroupKeyList
+     *            The workgroup key list
      */
     public void setWorkgroupKeyList( ReferenceList workgroupKeyList )
     {
@@ -392,9 +415,13 @@ public class RecordFieldFilter
 
     /**
      * Set the role key list
-     * @param roleKeyList The role key list
-     * @param bIncludeRoleNone include role set to "none"
-     * @param bIncludeRoleNull include role set to "null"
+     * 
+     * @param roleKeyList
+     *            The role key list
+     * @param bIncludeRoleNone
+     *            include role set to "none"
+     * @param bIncludeRoleNull
+     *            include role set to "null"
      */
     public void setRoleKeyList( List<String> roleKeyList, boolean bIncludeRoleNone, boolean bIncludeRoleNull )
     {
@@ -409,52 +436,57 @@ public class RecordFieldFilter
     }
 
     /**
-    * Test if the filter contains at least one role key
-    * @return true if the filter contain role key list
-    */
-    public boolean containsRoleKeyList(  )
+     * Test if the filter contains at least one role key
+     * 
+     * @return true if the filter contain role key list
+     */
+    public boolean containsRoleKeyList( )
     {
-        return ( ( _roleKeyList != null ) && ( _roleKeyList.size(  ) > 0 ) );
+        return ( ( _roleKeyList != null ) && ( _roleKeyList.size( ) > 0 ) );
     }
 
     /**
      * Get the role key list
-         * @return the role key list
-         */
-    public List<String> getRoleKeyList(  )
+     * 
+     * @return the role key list
+     */
+    public List<String> getRoleKeyList( )
     {
         return _roleKeyList;
     }
 
     /**
-         * @return the _bIncludeRoleNull
-         */
-    public boolean includeRoleNull(  )
+     * @return the _bIncludeRoleNull
+     */
+    public boolean includeRoleNull( )
     {
         return _bIncludeRoleNull;
     }
 
     /**
      * Get workgroup key list
+     * 
      * @return The workgroup key list
      */
-    public ReferenceList getWorkgroupKeyList(  )
+    public ReferenceList getWorkgroupKeyList( )
     {
         return _workgroupKeyList;
     }
 
     /**
-    *
-    * @return true if the filter contain workgroup key list
-    */
-    public boolean containsWorkgroupKeyList(  )
+     *
+     * @return true if the filter contain workgroup key list
+     */
+    public boolean containsWorkgroupKeyList( )
     {
-        return ( ( _workgroupKeyList != null ) && ( _workgroupKeyList.size(  ) != 0 ) );
+        return ( ( _workgroupKeyList != null ) && ( _workgroupKeyList.size( ) != 0 ) );
     }
 
     /**
      * Set order by date modification
-     * @param bOrderByDateModification true if filter by date modification
+     * 
+     * @param bOrderByDateModification
+     *            true if filter by date modification
      */
     public void setOrderByDateModification( boolean bOrderByDateModification )
     {
@@ -463,9 +495,10 @@ public class RecordFieldFilter
 
     /**
      * Order by date modification
+     * 
      * @return order by date modification
      */
-    public boolean isOrderByDateModification(  )
+    public boolean isOrderByDateModification( )
     {
         return _bOrderByDateModification;
     }

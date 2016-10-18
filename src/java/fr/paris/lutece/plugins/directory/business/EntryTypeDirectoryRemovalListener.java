@@ -42,7 +42,6 @@ import fr.paris.lutece.portal.service.util.RemovalListener;
 
 import java.util.Locale;
 
-
 /**
  * class EntryDirectoryEntryRemovalListener
  */
@@ -64,7 +63,7 @@ public class EntryTypeDirectoryRemovalListener implements RemovalListener
             return true;
         }
 
-        EntryFilter entryFilter = new EntryFilter(  );
+        EntryFilter entryFilter = new EntryFilter( );
         entryFilter.setIdEntryAssociate( nIdEntry );
 
         if ( EntryHome.getNumberEntryByFilter( entryFilter, pluginDirectory ) == 0 )
@@ -81,7 +80,7 @@ public class EntryTypeDirectoryRemovalListener implements RemovalListener
     @Override
     public String getRemovalRefusedMessage( String strId, Locale locale )
     {
-        // Build a message 
+        // Build a message
         return I18nService.getLocalizedString( PROPERTY_ENTRY_TYPE_DIRECTORY_CANNOT_BE_REMOVED, locale );
     }
 }

@@ -45,7 +45,6 @@ import fr.paris.lutece.util.ReferenceList;
 
 import java.util.Locale;
 
-
 /**
  *
  * class DirectoryResourceIdService
@@ -80,10 +79,10 @@ public class DirectoryResourceIdService extends ResourceIdService
     /** Permission for modifying a directory */
     public static final String PERMISSION_MODIFY_RECORD = "MODIFY_RECORD";
 
-    /** Permission for copying a directory*/
+    /** Permission for copying a directory */
     public static final String PERMISSION_COPY = "COPY";
 
-    /** Permission for copying a directory*/
+    /** Permission for copying a directory */
     public static final String PERMISSION_COPY_RECORD = "COPY_RECORD";
 
     /** Permission for indexing all directory */
@@ -137,7 +136,7 @@ public class DirectoryResourceIdService extends ResourceIdService
     private static final String PROPERTY_LABEL_IMPORT_FIELD = "directory.permission.label.import_field";
 
     /** Creates a new instance of DocumentTypeResourceIdService */
-    public DirectoryResourceIdService(  )
+    public DirectoryResourceIdService( )
     {
         setPluginName( DirectoryPlugin.PLUGIN_NAME );
     }
@@ -146,116 +145,116 @@ public class DirectoryResourceIdService extends ResourceIdService
      * {@inheritDoc}
      */
     @Override
-    public void register(  )
+    public void register( )
     {
         // Override the resource type DIRECTORY_DIRECTORY_TYPE
         ResourceType rt = ResourceTypeManager.getResourceType( Directory.RESOURCE_TYPE );
 
         if ( rt == null )
         {
-            rt = new ResourceType(  );
-            rt.setResourceIdServiceClass( DirectoryResourceIdService.class.getName(  ) );
+            rt = new ResourceType( );
+            rt.setResourceIdServiceClass( DirectoryResourceIdService.class.getName( ) );
             rt.setPluginName( DirectoryPlugin.PLUGIN_NAME );
             rt.setResourceTypeKey( Directory.RESOURCE_TYPE );
             rt.setResourceTypeLabelKey( PROPERTY_LABEL_RESOURCE_TYPE );
         }
 
-        Permission p = new Permission(  );
+        Permission p = new Permission( );
         p.setPermissionKey( PERMISSION_CREATE );
         p.setPermissionTitleKey( PROPERTY_LABEL_CREATE );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_MODIFY );
         p.setPermissionTitleKey( PROPERTY_LABEL_MODIFY );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_COPY );
         p.setPermissionTitleKey( PROPERTY_LABEL_COPY );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_MANAGE_RECORD );
         p.setPermissionTitleKey( PROPERTY_LABEL_MANAGE_RECORD );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_DELETE_ALL_RECORD );
         p.setPermissionTitleKey( PROPERTY_LABEL_DELETE_ALL_RECORD );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_CHANGE_STATE );
         p.setPermissionTitleKey( PROPERTY_LABEL_CHANGE_STATE );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_DELETE );
         p.setPermissionTitleKey( PROPERTY_LABEL_DELETE );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_INDEX_ALL_DIRECTORY );
         p.setPermissionTitleKey( PROPERTY_LABEL_INDEX_ALL_DIRECTORY );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_CREATE_RECORD );
         p.setPermissionTitleKey( PROPERTY_LABEL_CREATE_RECORD );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_DELETE_RECORD );
         p.setPermissionTitleKey( PROPERTY_LABEL_DELETE_RECORD );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_MODIFY_RECORD );
         p.setPermissionTitleKey( PROPERTY_LABEL_MODIFY_RECORD );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_COPY_RECORD );
         p.setPermissionTitleKey( PROPERTY_LABEL_COPY_RECORD );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_CHANGE_STATE_RECORD );
         p.setPermissionTitleKey( PROPERTY_LABEL_CHANGE_STATE_RECORD );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_HISTORY_RECORD );
         p.setPermissionTitleKey( PROPERTY_LABEL_HISTORY_RECORD );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_VISUALISATION_RECORD );
         p.setPermissionTitleKey( PROPERTY_LABEL_VISUALISATION_RECORD );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_IMPORT_RECORD );
         p.setPermissionTitleKey( PROPERTY_LABEL_IMPORT_RECORD );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_MASS_PRINT );
         p.setPermissionTitleKey( PROPERTY_LABEL_MASS_PRINT );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_MANAGE_ADVANCED_PARAMETERS );
         p.setPermissionTitleKey( PROPERTY_LABEL_MANAGE_ADVANCED_PARAMETERS );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_VISUALISATION_MYLUTECE_USER );
         p.setPermissionTitleKey( PROPERTY_LABEL_VISUALISATION_MYLUTECE_USER );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_IMPORT_FIELD );
         p.setPermissionTitleKey( PROPERTY_LABEL_IMPORT_FIELD );
         rt.registerPermission( p );
@@ -265,7 +264,9 @@ public class DirectoryResourceIdService extends ResourceIdService
 
     /**
      * Returns a list of directory resource ids
-     * @param locale The current locale
+     * 
+     * @param locale
+     *            The current locale
      * @return A list of resource ids
      */
     @Override
@@ -281,9 +282,8 @@ public class DirectoryResourceIdService extends ResourceIdService
     public String getTitle( String strId, Locale locale )
     {
         int nIdDirectory = DirectoryUtils.convertStringToInt( strId );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory,
-                PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
 
-        return ( directory != null ) ? directory.getTitle(  ) : null;
+        return ( directory != null ) ? directory.getTitle( ) : null;
     }
 }

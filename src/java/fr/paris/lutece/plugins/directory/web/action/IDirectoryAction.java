@@ -42,21 +42,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  *
  * A directory action.
  * <ul>
- * <li>{@link #fillModel(HttpServletRequest, AdminUser, Map)} is called by
- * DirectoryJspBean to add additionnal data in the main model
- * <li>{@link #getButtonTemplate()} is used in manage directory record template
- * to display buttons.
- * <li>{@link #isInvoked(HttpServletRequest)} is used by DirectoryJspBean to
- * detect the invoked action.
+ * <li>{@link #fillModel(HttpServletRequest, AdminUser, Map)} is called by DirectoryJspBean to add additionnal data in the main model
+ * <li>{@link #getButtonTemplate()} is used in manage directory record template to display buttons.
+ * <li>{@link #isInvoked(HttpServletRequest)} is used by DirectoryJspBean to detect the invoked action.
  * <li>
- * {@link #process(HttpServletRequest, HttpServletResponse, AdminUser, DirectoryAdminSearchFields)}
- * is called by DirectoryJspBean. The {@link DefaultPluginActionResult} may
- * contain html content or a redirect url or a noop.
+ * {@link #process(HttpServletRequest, HttpServletResponse, AdminUser, DirectoryAdminSearchFields)} is called by DirectoryJspBean. The
+ * {@link DefaultPluginActionResult} may contain html content or a redirect url or a noop.
  * <li>{@link #getName()} is mainly for debbuging purpose
  * </ul>
  */

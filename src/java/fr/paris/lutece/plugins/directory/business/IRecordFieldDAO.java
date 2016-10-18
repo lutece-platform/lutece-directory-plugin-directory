@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
  *
  * interface IRecordFieldDAO
@@ -48,16 +47,20 @@ public interface IRecordFieldDAO
     /**
      * Insert a new record field in the table.
      *
-     * @param recordField instance of the RecordField object to insert
-     * @param plugin the plugin
+     * @param recordField
+     *            instance of the RecordField object to insert
+     * @param plugin
+     *            the plugin
      */
     void insert( RecordField recordField, Plugin plugin );
 
     /**
      * Load the data of the record field from the table
      *
-     * @param nIdRecordField The identifier of the entry
-     * @param plugin the plugin
+     * @param nIdRecordField
+     *            The identifier of the entry
+     * @param plugin
+     *            the plugin
      * @return the instance of the Record Field
      */
     RecordField load( int nIdRecordField, Plugin plugin );
@@ -65,99 +68,131 @@ public interface IRecordFieldDAO
     /**
      * Delete the record field whose identifier is specified in parameter
      *
-     * @param nIdRecordField The identifier of the record field
-     * @param plugin the plugin
+     * @param nIdRecordField
+     *            The identifier of the record field
+     * @param plugin
+     *            the plugin
      */
     void delete( int nIdRecordField, Plugin plugin );
 
     /**
      * Delete list of record fields by list of record id
-     * @param lListRecordId list of record id
-     * @param plugin the plugin
+     * 
+     * @param lListRecordId
+     *            list of record id
+     * @param plugin
+     *            the plugin
      */
     void deleteByListRecordId( List<Integer> lListRecordId, Plugin plugin );
 
     /**
      * Update the record field in the table
      *
-     * @param recordField instance of the record field object to update
-     * @param plugin the plugin
+     * @param recordField
+     *            instance of the record field object to update
+     * @param plugin
+     *            the plugin
      */
     void store( RecordField recordField, Plugin plugin );
 
     /**
-     * Load the data of all the record field who verify the filter and returns them in a  list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the list of record field
+     * Load the data of all the record field who verify the filter and returns them in a list
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of record field
      */
     List<RecordField> selectListByFilter( RecordFieldFilter filter, Plugin plugin );
 
     /**
-     * Load full record field data (except binary file data) of given list of
-     * Record id
-     * * /!\ include record data
-     * @param lIdRecordList the list of record id
-     * @param plugin the plugin
+     * Load full record field data (except binary file data) of given list of Record id * /!\ include record data
+     * 
+     * @param lIdRecordList
+     *            the list of record id
+     * @param plugin
+     *            the plugin
      * @return list of record
      */
     List<RecordField> getRecordFieldListByRecordIdList( List<Integer> lIdRecordList, Plugin plugin );
 
     /**
-     * Load full record field data (except binary file data)
-     * /!\ record data is NOT load, only the id
-     * @param lEntryId List entry to load
-     * @param nIdRecord the record Id
-     * @param plugin the plugin
+     * Load full record field data (except binary file data) /!\ record data is NOT load, only the id
+     * 
+     * @param lEntryId
+     *            List entry to load
+     * @param nIdRecord
+     *            the record Id
+     * @param plugin
+     *            the plugin
      * @return list of record
      */
     List<RecordField> selectSpecificList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin );
 
     /**
-     *  return the number of record field who verify the filter
-     * @param filter  the filter
-     * @param plugin the plugin
+     * return the number of record field who verify the filter
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
      * @return the number of record field who verify the filter
      */
     int getCountByFilter( RecordFieldFilter filter, Plugin plugin );
 
     /**
      * Get the max number from a given id directory
-     * @param nIdEntry the id of the entry
-     * @param nIdDirectory the id directory
-     * @param plugin {@link Plugin}
+     * 
+     * @param nIdEntry
+     *            the id of the entry
+     * @param nIdDirectory
+     *            the id directory
+     * @param plugin
+     *            {@link Plugin}
      * @return the max number
      */
     int getMaxNumber( int nIdEntry, int nIdDirectory, Plugin plugin );
 
     /**
-     * Check if the given number is already on a record field or not.
-     * <br />
-     * In other words, this method serves the purpose of checking the given number
-     * before creating a new record field since the entry type numbering should
-     * have unique number.
-     * @param nIdEntry the id entry
-     * @param nIdDirectory the id directory
-     * @param nNumber the number to check
-     * @param plugin {@link Plugin}
+     * Check if the given number is already on a record field or not. <br />
+     * In other words, this method serves the purpose of checking the given number before creating a new record field since the entry type numbering should have
+     * unique number.
+     * 
+     * @param nIdEntry
+     *            the id entry
+     * @param nIdDirectory
+     *            the id directory
+     * @param nNumber
+     *            the number to check
+     * @param plugin
+     *            {@link Plugin}
      * @return true if it is already on, false otherwise
      */
     boolean isNumberOnARecordField( int nIdEntry, int nIdDirectory, int nNumber, Plugin plugin );
 
     /**
      * Load values of record field
-     * @param lEntryId List entry to load
-     * @param nIdRecord The record Id
-     * @param plugin The plugin
+     * 
+     * @param lEntryId
+     *            List entry to load
+     * @param nIdRecord
+     *            The record Id
+     * @param plugin
+     *            The plugin
      * @return list of record
      */
     List<RecordField> selectValuesList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin );
 
     /**
      * Update the value of a record field
-     * @param strNewValue The new value
-     * @param nIdRecordField The id of the record field to update
-     * @param plugin The plugin
+     * 
+     * @param strNewValue
+     *            The new value
+     * @param nIdRecordField
+     *            The id of the record field to update
+     * @param plugin
+     *            The plugin
      */
     void updateValue( String strNewValue, Integer nIdRecordField, Plugin plugin );
 }

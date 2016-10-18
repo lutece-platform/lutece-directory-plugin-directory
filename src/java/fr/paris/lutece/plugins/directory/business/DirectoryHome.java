@@ -49,7 +49,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * This class provides instances management methods (create, find, ...) for Directory objects
  */
@@ -61,15 +60,17 @@ public final class DirectoryHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private DirectoryHome(  )
+    private DirectoryHome( )
     {
     }
 
     /**
      * Creation of an instance of directory
      *
-     * @param directory The instance of the Directory which contains the informations to store
-     * @param plugin the Plugin
+     * @param directory
+     *            The instance of the Directory which contains the informations to store
+     * @param plugin
+     *            the Plugin
      * @return The primary key of the new directory.
      */
     public static int create( Directory directory, Plugin plugin )
@@ -86,24 +87,26 @@ public final class DirectoryHome
     /**
      * Copy of an instance of directory
      *
-     * @param directory The instance of the directory who must copy
-     * @param plugin the Plugin
+     * @param directory
+     *            The instance of the directory who must copy
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void copy( Directory directory, Plugin plugin )
     {
         List<IEntry> listEntry;
-        EntryFilter filter = new EntryFilter(  );
-        filter.setIdDirectory( directory.getIdDirectory(  ) );
+        EntryFilter filter = new EntryFilter( );
+        filter.setIdDirectory( directory.getIdDirectory( ) );
         filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
         listEntry = EntryHome.getEntryList( filter, plugin );
 
-        directory.setDateCreation( DirectoryUtils.getCurrentTimestamp(  ) );
+        directory.setDateCreation( DirectoryUtils.getCurrentTimestamp( ) );
         directory.setIdDirectory( create( directory, plugin ) );
 
         for ( IEntry entry : listEntry )
         {
-            entry = EntryHome.findByPrimaryKey( entry.getIdEntry(  ), plugin );
+            entry = EntryHome.findByPrimaryKey( entry.getIdEntry( ), plugin );
             entry.setDirectory( directory );
             EntryHome.copy( entry, plugin );
         }
@@ -112,18 +115,20 @@ public final class DirectoryHome
     /**
      * Update of the directory which is specified in parameter
      *
-     * @param directory The instance of the directory which contains the informations to update
-     * @param plugin the Plugin
+     * @param directory
+     *            The instance of the directory which contains the informations to update
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void update( Directory directory, Plugin plugin )
     {
         // Remove directory attributes associated to the directory
-        DirectoryAttributeHome.remove( directory.getIdDirectory(  ) );
+        DirectoryAttributeHome.remove( directory.getIdDirectory( ) );
 
         // Add directory Attribute
         Map<String, Object> mapAttributes = DirectoryUtils.depopulate( directory );
-        DirectoryAttributeHome.create( directory.getIdDirectory(  ), mapAttributes );
+        DirectoryAttributeHome.create( directory.getIdDirectory( ), mapAttributes );
 
         _dao.store( directory, plugin );
     }
@@ -131,13 +136,15 @@ public final class DirectoryHome
     /**
      * Remove the directory whose identifier is specified in parameter
      *
-     * @param nIdDirectory The directory Id
-     * @param plugin the Plugin
+     * @param nIdDirectory
+     *            The directory Id
+     * @param plugin
+     *            the Plugin
      */
     public static void remove( int nIdDirectory, Plugin plugin )
     {
         // Remove records associated to the directory
-        RecordFieldFilter recordFilter = new RecordFieldFilter(  );
+        RecordFieldFilter recordFilter = new RecordFieldFilter( );
         recordFilter.setIdDirectory( nIdDirectory );
 
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
@@ -146,34 +153,36 @@ public final class DirectoryHome
 
         for ( Record record : listRecord )
         {
-            recordService.remove( record.getIdRecord(  ), plugin );
+            recordService.remove( record.getIdRecord( ), plugin );
         }
 
         // Remove directory attributes associated to the directory
         DirectoryAttributeHome.remove( nIdDirectory );
 
         // Remove entries associated to the directory
-        EntryFilter entryFilter = new EntryFilter(  );
+        EntryFilter entryFilter = new EntryFilter( );
         entryFilter.setIdDirectory( nIdDirectory );
 
         List<IEntry> listEntry = EntryHome.getEntryList( entryFilter, plugin );
 
         for ( IEntry entry : listEntry )
         {
-            EntryHome.remove( entry.getIdEntry(  ), plugin );
+            EntryHome.remove( entry.getIdEntry( ), plugin );
         }
 
         // Remove the directory
         _dao.delete( nIdDirectory, plugin );
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
     /**
      * Returns an instance of a directory whose identifier is specified in parameter
      *
-     * @param nKey The entry primary key
-     * @param plugin the Plugin
+     * @param nKey
+     *            The entry primary key
+     * @param plugin
+     *            the Plugin
      * @return an instance of directory
      */
     public static Directory findByPrimaryKey( int nKey, Plugin plugin )
@@ -185,11 +194,11 @@ public final class DirectoryHome
         {
             BeanUtils.populate( directory, mapAttributes );
         }
-        catch ( IllegalAccessException e )
+        catch( IllegalAccessException e )
         {
             AppLogService.error( e );
         }
-        catch ( InvocationTargetException e )
+        catch( InvocationTargetException e )
         {
             AppLogService.error( e );
         }
@@ -198,10 +207,13 @@ public final class DirectoryHome
     }
 
     /**
-     * Load the data of all the directory who verify the filter and returns them in a  list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the list of form
+     * Load the data of all the directory who verify the filter and returns them in a list
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of form
      */
     public static List<Directory> getDirectoryList( DirectoryFilter filter, Plugin plugin )
     {
@@ -209,17 +221,17 @@ public final class DirectoryHome
 
         for ( Directory directory : listDirectories )
         {
-            Map<String, Object> mapAttributes = DirectoryAttributeHome.findByPrimaryKey( directory.getIdDirectory(  ) );
+            Map<String, Object> mapAttributes = DirectoryAttributeHome.findByPrimaryKey( directory.getIdDirectory( ) );
 
             try
             {
                 BeanUtils.populate( directory, mapAttributes );
             }
-            catch ( IllegalAccessException e )
+            catch( IllegalAccessException e )
             {
                 AppLogService.error( e );
             }
-            catch ( InvocationTargetException e )
+            catch( InvocationTargetException e )
             {
                 AppLogService.error( e );
             }
@@ -229,9 +241,11 @@ public final class DirectoryHome
     }
 
     /**
-     * Load the data of all enable directory  returns them in a  reference list
-     * @param plugin the plugin
-     * @return  a  reference list of enable directory
+     * Load the data of all enable directory returns them in a reference list
+     * 
+     * @param plugin
+     *            the plugin
+     * @return a reference list of enable directory
      */
     public static ReferenceList getDirectoryList( Plugin plugin )
     {

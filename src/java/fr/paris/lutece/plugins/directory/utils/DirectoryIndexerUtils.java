@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.utils;
 
-
 /**
  *
  * DirectoryIndexerUtils
@@ -49,7 +48,7 @@ public final class DirectoryIndexerUtils
     /**
      * Private constructor
      */
-    private DirectoryIndexerUtils(  )
+    private DirectoryIndexerUtils( )
     {
     }
 }

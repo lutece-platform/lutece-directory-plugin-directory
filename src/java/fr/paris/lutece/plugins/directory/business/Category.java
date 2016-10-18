@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-
 /**
  *
  * class Category
@@ -52,14 +51,16 @@ public class Category
      *
      * @return the id of the category
      */
-    public int getIdCategory(  )
+    public int getIdCategory( )
     {
         return _nIdCategory;
     }
 
     /**
      * set the id of the category
-     * @param idCategory the id of the category
+     * 
+     * @param idCategory
+     *            the id of the category
      */
     public void setIdCategory( int idCategory )
     {
@@ -70,14 +71,16 @@ public class Category
      *
      * @return the title key of the category
      */
-    public String getTitleI18nKey(  )
+    public String getTitleI18nKey( )
     {
         return _strTitleI18nKey;
     }
 
     /**
      * set the title key of the category
-     * @param title the title key of the category
+     * 
+     * @param title
+     *            the title key of the category
      */
     public void setTitleI18nKey( String title )
     {

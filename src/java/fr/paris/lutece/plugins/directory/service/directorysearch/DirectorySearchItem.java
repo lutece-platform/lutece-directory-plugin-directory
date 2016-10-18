@@ -37,7 +37,6 @@ import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 
 import org.apache.lucene.document.Document;
 
-
 /**
  * DirectorySearchItem
  */
@@ -65,7 +64,9 @@ public class DirectorySearchItem
 
     /**
      * Create DirectorySearchItem object
-     * @param document lucene document
+     * 
+     * @param document
+     *            lucene document
      */
     public DirectorySearchItem( Document document )
     {
@@ -75,13 +76,14 @@ public class DirectorySearchItem
     /**
      * @return the id of the directory record
      */
-    public int getIdDirectoryRecord(  )
+    public int getIdDirectoryRecord( )
     {
         return _nIdDirectoryRecord;
     }
 
     /**
-     * @param idDirectoryRecord the id of the directory record
+     * @param idDirectoryRecord
+     *            the id of the directory record
      */
     public void setIdDirectoryRecord( int idDirectoryRecord )
     {

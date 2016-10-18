@@ -41,7 +41,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 /**
  *
  * IRecordService
@@ -52,8 +51,10 @@ public interface IRecordService
     /**
      * Creation of an instance of record
      *
-     * @param record The instance of the record which contains the informations to store
-     * @param plugin the Plugin
+     * @param record
+     *            The instance of the record which contains the informations to store
+     * @param plugin
+     *            the Plugin
      * @return the id of the new record
      */
     @Transactional( "directory.transactionManager" )
@@ -62,8 +63,10 @@ public interface IRecordService
     /**
      * Copy an instance of record
      *
-     * @param record The instance of the record who must copy
-     * @param plugin the Plugin
+     * @param record
+     *            The instance of the record who must copy
+     * @param plugin
+     *            the Plugin
      * @return the id of the record
      */
     @Transactional( "directory.transactionManager" )
@@ -72,8 +75,10 @@ public interface IRecordService
     /**
      * Update of the record which is specified in parameter
      *
-     * @param record The instance of the record which contains the informations to update
-     * @param plugin the Plugin
+     * @param record
+     *            The instance of the record which contains the informations to update
+     * @param plugin
+     *            the Plugin
      */
     @Transactional( "directory.transactionManager" )
     void updateWidthRecordField( Record record, Plugin plugin );
@@ -81,8 +86,10 @@ public interface IRecordService
     /**
      * Update of the record
      *
-     * @param record The instance of the record which contains the informations to update
-     * @param plugin the Plugin
+     * @param record
+     *            The instance of the record which contains the informations to update
+     * @param plugin
+     *            the Plugin
      */
     @Transactional( "directory.transactionManager" )
     void update( Record record, Plugin plugin );
@@ -90,68 +97,90 @@ public interface IRecordService
     /**
      * Remove the record whose identifier is specified in parameter
      *
-     * @param nIdRecord The recordId
-     * @param plugin the Plugin
+     * @param nIdRecord
+     *            The recordId
+     * @param plugin
+     *            the Plugin
      */
     @Transactional( "directory.transactionManager" )
     void remove( int nIdRecord, Plugin plugin );
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Returns an instance of a recordwhose identifier is specified in parameter
      *
-     * @param nKey The formResponse primary key
-     * @param plugin the Plugin
+     * @param nKey
+     *            The formResponse primary key
+     * @param plugin
+     *            the Plugin
      * @return an instance of FormResponse
      */
     Record findByPrimaryKey( int nKey, Plugin plugin );
 
     /**
      * Test if the given directory record list has a worflow
-     * @param nIdDirectory directory Id
-     * @param plugin the plugin
+     * 
+     * @param nIdDirectory
+     *            directory Id
+     * @param plugin
+     *            the plugin
      * @return true if has at least one
      */
     Boolean directoryRecordListHasWorkflow( int nIdDirectory, Plugin plugin );
 
     /**
      * Load a list of record
-     * @param lIdList list of record id
-     * @param plugin the plugin
+     * 
+     * @param lIdList
+     *            list of record id
+     * @param plugin
+     *            the plugin
      * @return list of Record
      */
     List<Record> loadListByListId( List<Integer> lIdList, Plugin plugin );
 
     /**
-     * Load the data of all the record who verify the filter and returns them in a  list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the list of record
+     * Load the data of all the record who verify the filter and returns them in a list
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of record
      */
     List<Record> getListRecord( RecordFieldFilter filter, Plugin plugin );
 
     /**
      * Count record who verify the filter
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the number of record
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the number of record
      */
     int getCountRecord( RecordFieldFilter filter, Plugin plugin );
 
     /**
-     * Load the data of all the record who verify the filter and returns them in a  list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the list of record
+     * Load the data of all the record who verify the filter and returns them in a list
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of record
      */
     List<Integer> getListRecordId( RecordFieldFilter filter, Plugin plugin );
 
     /**
      * Get directory id by by record id
-     * @param nRecordId the record id
-     * @param plugin the plugin
+     * 
+     * @param nRecordId
+     *            the record id
+     * @param plugin
+     *            the plugin
      * @return the directory id
      */
     Integer getDirectoryIdByRecordId( Integer nRecordId, Plugin plugin );

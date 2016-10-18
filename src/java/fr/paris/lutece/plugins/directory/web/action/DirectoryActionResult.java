@@ -60,7 +60,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * DirectoryActionResult
@@ -82,18 +81,24 @@ public class DirectoryActionResult
 
     /**
      * Do process the workflow action
-     * @param nIdDirectory the id directory
-     * @param nIdAction the id action
-     * @param listIdsDirectoryRecord the list of ids record to execute the action
-     * @param plugin the plugin
-     * @param locale the locale
-     * @param request the HTTP request
+     * 
+     * @param nIdDirectory
+     *            the id directory
+     * @param nIdAction
+     *            the id action
+     * @param listIdsDirectoryRecord
+     *            the list of ids record to execute the action
+     * @param plugin
+     *            the plugin
+     * @param locale
+     *            the locale
+     * @param request
+     *            the HTTP request
      */
-    public void doProcessAction( int nIdDirectory, int nIdAction, String[] listIdsDirectoryRecord, Plugin plugin,
-        Locale locale, HttpServletRequest request )
+    public void doProcessAction( int nIdDirectory, int nIdAction, String [ ] listIdsDirectoryRecord, Plugin plugin, Locale locale, HttpServletRequest request )
     {
-        _listIdsSuccessRecord = new ArrayList<Integer>(  );
-        _mapFailRecords = new HashMap<String, String>(  );
+        _listIdsSuccessRecord = new ArrayList<Integer>( );
+        _mapFailRecords = new HashMap<String, String>( );
 
         for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
         {
@@ -111,16 +116,14 @@ public class DirectoryActionResult
 
                 try
                 {
-                    WorkflowService.getInstance(  )
-                                   .doProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdActionToExecute,
-                        nIdDirectory, request, locale, false );
+                    WorkflowService.getInstance( ).doProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdActionToExecute, nIdDirectory, request,
+                            locale, false );
                     bHasSucceed = true;
                 }
-                catch ( Exception e )
+                catch( Exception e )
                 {
-                    AppLogService.error( "Error processing action for id record '" + nIdRecord + "' - cause : " +
-                        e.getMessage(  ), e );
-                    _mapFailRecords.put( strIdDirectoryRecord, e.getMessage(  ) );
+                    AppLogService.error( "Error processing action for id record '" + nIdRecord + "' - cause : " + e.getMessage( ), e );
+                    _mapFailRecords.put( strIdDirectoryRecord, e.getMessage( ) );
                 }
 
                 if ( bHasSucceed )
@@ -142,35 +145,38 @@ public class DirectoryActionResult
 
     /**
      * Do save the task form
-     * @param nIdDirectory the id directory
-     * @param nIdAction the id action
-     * @param listIdsDirectoryRecord the list of id records
-     * @param plugin the plugin
-     * @param locale the locale
-     * @param request the HTTP request
+     * 
+     * @param nIdDirectory
+     *            the id directory
+     * @param nIdAction
+     *            the id action
+     * @param listIdsDirectoryRecord
+     *            the list of id records
+     * @param plugin
+     *            the plugin
+     * @param locale
+     *            the locale
+     * @param request
+     *            the HTTP request
      * @return an error message if there is an error, null otherwise
      */
-    public String doSaveTaskForm( int nIdDirectory, int nIdAction, String[] listIdsDirectoryRecord, Plugin plugin,
-        Locale locale, HttpServletRequest request )
+    public String doSaveTaskForm( int nIdDirectory, int nIdAction, String [ ] listIdsDirectoryRecord, Plugin plugin, Locale locale, HttpServletRequest request )
     {
-        _listIdsSuccessRecord = new ArrayList<Integer>(  );
-        _mapFailRecords = new HashMap<String, String>(  );
+        _listIdsSuccessRecord = new ArrayList<Integer>( );
+        _mapFailRecords = new HashMap<String, String>( );
 
         for ( String strIdDirectoryRecord : listIdsDirectoryRecord )
         {
             int nIdRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
 
-            if ( WorkflowService.getInstance(  )
-                                    .canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction,
-                        nIdDirectory, request, false ) )
+            if ( WorkflowService.getInstance( ).canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction, nIdDirectory, request, false ) )
             {
                 boolean bHasSucceed = false;
 
                 try
                 {
-                    String strError = WorkflowService.getInstance(  )
-                                                     .doSaveTasksForm( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE,
-                            nIdAction, nIdDirectory, request, locale );
+                    String strError = WorkflowService.getInstance( ).doSaveTasksForm( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction, nIdDirectory,
+                            request, locale );
 
                     if ( strError != null )
                     {
@@ -179,11 +185,10 @@ public class DirectoryActionResult
 
                     bHasSucceed = true;
                 }
-                catch ( Exception e )
+                catch( Exception e )
                 {
                     String strExceptionError = buildErrorMessage( e );
-                    AppLogService.error( "Error processing action for id record '" + nIdRecord + "' - cause : " +
-                        strExceptionError, e );
+                    AppLogService.error( "Error processing action for id record '" + nIdRecord + "' - cause : " + strExceptionError, e );
                     _mapFailRecords.put( strIdDirectoryRecord, strExceptionError );
                 }
 
@@ -210,33 +215,38 @@ public class DirectoryActionResult
 
     /**
      * Fill the model with the success and fail records
-     * @param model the model to fill
-     * @param listEntries the list of entries
-     * @param plugin the plugin
-     * @param user the current user
-     * @param directory the directory
+     * 
+     * @param model
+     *            the model to fill
+     * @param listEntries
+     *            the list of entries
+     * @param plugin
+     *            the plugin
+     * @param user
+     *            the current user
+     * @param directory
+     *            the directory
      */
-    public void fillModel( Map<String, Object> model, List<IEntry> listEntries, Plugin plugin, AdminUser user,
-        Directory directory )
+    public void fillModel( Map<String, Object> model, List<IEntry> listEntries, Plugin plugin, AdminUser user, Directory directory )
     {
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         // Add the success records to the model
-        if ( ( _listIdsSuccessRecord != null ) && !_listIdsSuccessRecord.isEmpty(  ) )
+        if ( ( _listIdsSuccessRecord != null ) && !_listIdsSuccessRecord.isEmpty( ) )
         {
             List<Record> listRecords = recordService.loadListByListId( _listIdsSuccessRecord, plugin );
-            List<Map<String, Object>> listMapRecords = new ArrayList<Map<String, Object>>( _listIdsSuccessRecord.size(  ) );
+            List<Map<String, Object>> listMapRecords = new ArrayList<Map<String, Object>>( _listIdsSuccessRecord.size( ) );
 
             for ( Record record : listRecords )
             {
-                Map<String, Object> mapRecord = new HashMap<String, Object>(  );
+                Map<String, Object> mapRecord = new HashMap<String, Object>( );
                 mapRecord.put( MARK_RECORD, record );
                 mapRecord.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
-                    DirectoryUtils.getMapIdEntryListRecordField( listEntries, record.getIdRecord(  ), plugin, false ) );
+                        DirectoryUtils.getMapIdEntryListRecordField( listEntries, record.getIdRecord( ), plugin, false ) );
 
-                WorkflowService workflowService = WorkflowService.getInstance(  );
-                State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
+                WorkflowService workflowService = WorkflowService.getInstance( );
+                State state = workflowService.getState( record.getIdRecord( ), Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ),
+                        Integer.valueOf( directory.getIdDirectory( ) ) );
                 mapRecord.put( MARK_WORKFLOW_STATE, state );
                 listMapRecords.add( mapRecord );
             }
@@ -245,28 +255,28 @@ public class DirectoryActionResult
         }
 
         // Add the fail records to the model
-        if ( ( _mapFailRecords != null ) && !_mapFailRecords.isEmpty(  ) )
+        if ( ( _mapFailRecords != null ) && !_mapFailRecords.isEmpty( ) )
         {
-            List<Integer> listIdsFailRecord = new ArrayList<Integer>(  );
+            List<Integer> listIdsFailRecord = new ArrayList<Integer>( );
 
-            for ( String strIdRecord : _mapFailRecords.keySet(  ) )
+            for ( String strIdRecord : _mapFailRecords.keySet( ) )
             {
                 listIdsFailRecord.add( DirectoryUtils.convertStringToInt( strIdRecord ) );
             }
 
             List<Record> listRecords = recordService.loadListByListId( listIdsFailRecord, plugin );
-            List<Map<String, Object>> listMapRecords = new ArrayList<Map<String, Object>>( listIdsFailRecord.size(  ) );
+            List<Map<String, Object>> listMapRecords = new ArrayList<Map<String, Object>>( listIdsFailRecord.size( ) );
 
             for ( Record record : listRecords )
             {
-                Map<String, Object> mapRecord = new HashMap<String, Object>(  );
+                Map<String, Object> mapRecord = new HashMap<String, Object>( );
                 mapRecord.put( MARK_RECORD, record );
                 mapRecord.put( MARK_MAP_ID_ENTRY_LIST_RECORD_FIELD,
-                    DirectoryUtils.getMapIdEntryListRecordField( listEntries, record.getIdRecord(  ), plugin, false ) );
+                        DirectoryUtils.getMapIdEntryListRecordField( listEntries, record.getIdRecord( ), plugin, false ) );
 
-                WorkflowService workflowService = WorkflowService.getInstance(  );
-                State state = workflowService.getState( record.getIdRecord(  ), Record.WORKFLOW_RESOURCE_TYPE,
-                        directory.getIdWorkflow(  ), Integer.valueOf( directory.getIdDirectory(  ) ) );
+                WorkflowService workflowService = WorkflowService.getInstance( );
+                State state = workflowService.getState( record.getIdRecord( ), Record.WORKFLOW_RESOURCE_TYPE, directory.getIdWorkflow( ),
+                        Integer.valueOf( directory.getIdDirectory( ) ) );
                 mapRecord.put( MARK_WORKFLOW_STATE, state );
                 listMapRecords.add( mapRecord );
             }
@@ -279,43 +289,47 @@ public class DirectoryActionResult
 
     /**
      * Build the error message for action results
-     * @param e the exception
+     * 
+     * @param e
+     *            the exception
      * @return the error message
      */
     private String buildErrorMessage( Exception e )
     {
-        String strError = e.getMessage(  );
+        String strError = e.getMessage( );
 
-        if ( StringUtils.isBlank( strError ) && ( e.getStackTrace(  ) != null ) && ( e.getStackTrace(  ).length > 0 ) )
+        if ( StringUtils.isBlank( strError ) && ( e.getStackTrace( ) != null ) && ( e.getStackTrace( ).length > 0 ) )
         {
-            StringBuilder sbError = new StringBuilder(  );
+            StringBuilder sbError = new StringBuilder( );
 
-            for ( StackTraceElement ele : e.getStackTrace(  ) )
+            for ( StackTraceElement ele : e.getStackTrace( ) )
             {
-                sbError.append( ele.toString(  ) );
+                sbError.append( ele.toString( ) );
                 sbError.append( "\n" );
             }
 
-            strError = sbError.toString(  );
+            strError = sbError.toString( );
         }
 
         return strError;
     }
 
     /**
-     * Get the ID action to execute. It may not be the one given in
-     * the parameters, but one of the linked actions of the given ID action.
-     * @param nIdDirectory the id directory
-     * @param nIdAction the id action
-     * @param nIdRecord the id record
-     * @param request the HTTP request
+     * Get the ID action to execute. It may not be the one given in the parameters, but one of the linked actions of the given ID action.
+     * 
+     * @param nIdDirectory
+     *            the id directory
+     * @param nIdAction
+     *            the id action
+     * @param nIdRecord
+     *            the id record
+     * @param request
+     *            the HTTP request
      * @return the ID action to execute
      */
     private int getIdActionToExecute( int nIdDirectory, int nIdAction, int nIdRecord, HttpServletRequest request )
     {
-        if ( WorkflowService.getInstance(  )
-                                .canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction, nIdDirectory,
-                    request, false ) )
+        if ( WorkflowService.getInstance( ).canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdAction, nIdDirectory, request, false ) )
         {
             return nIdAction;
         }
@@ -323,13 +337,11 @@ public class DirectoryActionResult
         IActionService actionService = SpringContextService.getBean( ActionService.BEAN_SERVICE );
         Collection<Integer> listIdsLinkedAction = actionService.getListIdsLinkedAction( nIdAction );
 
-        if ( ( listIdsLinkedAction != null ) && !listIdsLinkedAction.isEmpty(  ) )
+        if ( ( listIdsLinkedAction != null ) && !listIdsLinkedAction.isEmpty( ) )
         {
             for ( int nIdLinkedAction : listIdsLinkedAction )
             {
-                if ( WorkflowService.getInstance(  )
-                                        .canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdLinkedAction,
-                            nIdDirectory, request, false ) )
+                if ( WorkflowService.getInstance( ).canProcessAction( nIdRecord, Record.WORKFLOW_RESOURCE_TYPE, nIdLinkedAction, nIdDirectory, request, false ) )
                 {
                     return nIdLinkedAction;
                 }

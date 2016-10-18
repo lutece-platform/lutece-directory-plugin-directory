@@ -39,7 +39,6 @@ import fr.paris.lutece.util.xml.XmlUtil;
 import java.util.HashMap;
 import java.util.Locale;
 
-
 /**
  *
  * class File
@@ -66,14 +65,16 @@ public class File
      *
      * @return the id of the file
      */
-    public int getIdFile(  )
+    public int getIdFile( )
     {
         return _nIdFile;
     }
 
     /**
      * set the id of the file
-     * @param idFile id of the file
+     * 
+     * @param idFile
+     *            id of the file
      */
     public void setIdFile( int idFile )
     {
@@ -81,17 +82,19 @@ public class File
     }
 
     /**
-    *
-    * @return the title of the file
-    */
-    public String getTitle(  )
+     *
+     * @return the title of the file
+     */
+    public String getTitle( )
     {
         return _strTitle;
     }
 
     /**
      * set the title of the file
-     * @param title the title of the file
+     * 
+     * @param title
+     *            the title of the file
      */
     public void setTitle( String title )
     {
@@ -99,17 +102,19 @@ public class File
     }
 
     /**
-      *
-      * @return the size of the file
-      */
-    public int getSize(  )
+     *
+     * @return the size of the file
+     */
+    public int getSize( )
     {
         return _nSize;
     }
 
     /**
      * set the size of the file
-     * @param size the size of the file
+     * 
+     * @param size
+     *            the size of the file
      */
     public void setSize( int size )
     {
@@ -120,14 +125,16 @@ public class File
      *
      * @return the extension of the file
      */
-    public String getExtension(  )
+    public String getExtension( )
     {
         return _strExtension;
     }
 
     /**
      * set the extension of the file
-     * @param extension the title of the file
+     * 
+     * @param extension
+     *            the title of the file
      */
     public void setExtension( String extension )
     {
@@ -135,17 +142,19 @@ public class File
     }
 
     /**
-    *
-    * @return the extension of the file
-    */
-    public String getMimeType(  )
+     *
+     * @return the extension of the file
+     */
+    public String getMimeType( )
     {
         return _strMimeType;
     }
 
     /**
      * set the mime type of the file
-     * @param mimeType the mime type of the file
+     * 
+     * @param mimeType
+     *            the mime type of the file
      */
     public void setMimeType( String mimeType )
     {
@@ -156,14 +165,16 @@ public class File
      *
      * @return the PhysicalFile associate to the file
      */
-    public PhysicalFile getPhysicalFile(  )
+    public PhysicalFile getPhysicalFile( )
     {
         return _physicalFile;
     }
 
     /**
      * set the PhysicalFile associate to the file
-     * @param file PhysicalFile
+     * 
+     * @param file
+     *            PhysicalFile
      */
     public void setPhysicalFile( PhysicalFile file )
     {
@@ -172,23 +183,29 @@ public class File
 
     /**
      * return the xml of file
-     * @param plugin the plugin
-     * @param locale the locale
-     * @param nTypeEntry The entry type
-     * @param nWidth The width
-     * @param nHeight The height
+     * 
+     * @param plugin
+     *            the plugin
+     * @param locale
+     *            the locale
+     * @param nTypeEntry
+     *            The entry type
+     * @param nWidth
+     *            The width
+     * @param nHeight
+     *            The height
      * @return The produced xml
      */
     public StringBuffer getXml( Plugin plugin, Locale locale, int nTypeEntry, int nWidth, int nHeight )
     {
-        StringBuffer strXml = new StringBuffer(  );
-        HashMap<String, Object> model = new HashMap<String, Object>(  );
-        model.put( ATTRIBUTE_FILE_ID, String.valueOf( getIdFile(  ) ) );
+        StringBuffer strXml = new StringBuffer( );
+        HashMap<String, Object> model = new HashMap<String, Object>( );
+        model.put( ATTRIBUTE_FILE_ID, String.valueOf( getIdFile( ) ) );
         model.put( ATTRIBUTE_TYPE_ENTRY, String.valueOf( nTypeEntry ) );
         XmlUtil.beginElement( strXml, TAG_FILE, model );
-        XmlUtil.addElementHtml( strXml, TAG_TITLE, getTitle(  ) );
-        XmlUtil.addElement( strXml, TAG_SIZE, getSize(  ) );
-        XmlUtil.addElement( strXml, TAG_MIME_TYPE, getMimeType(  ) );
+        XmlUtil.addElementHtml( strXml, TAG_TITLE, getTitle( ) );
+        XmlUtil.addElement( strXml, TAG_SIZE, getSize( ) );
+        XmlUtil.addElement( strXml, TAG_MIME_TYPE, getMimeType( ) );
         XmlUtil.addElement( strXml, TAG_WIDTH, nWidth );
         XmlUtil.addElement( strXml, TAG_HEIGHT, nHeight );
         XmlUtil.endElement( strXml, TAG_FILE );

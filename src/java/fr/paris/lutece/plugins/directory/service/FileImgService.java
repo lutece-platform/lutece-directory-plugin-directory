@@ -46,27 +46,26 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.web.constants.Parameters;
 import fr.paris.lutece.util.url.UrlItem;
 
-
 /**
  * Service for Url entry types. Provide ImageResource managemenent
  *
  */
 public class FileImgService implements ImageResourceProvider
 {
-    private static FileImgService _singleton = new FileImgService(  );
+    private static FileImgService _singleton = new FileImgService( );
     private static final String IMAGE_RESOURCE_TYPE_ID = "directory_entry_img";
 
     /**
      * Creates a new instance of FileImgService
      */
-    FileImgService(  )
+    FileImgService( )
     {
     }
 
     /**
      * Initializes the service
      */
-    public void register(  )
+    public void register( )
     {
         ImageResourceManager.registerProvider( this );
     }
@@ -76,29 +75,31 @@ public class FileImgService implements ImageResourceProvider
      *
      * @return The unique instance
      */
-    public static FileImgService getInstance(  )
+    public static FileImgService getInstance( )
     {
         return _singleton;
     }
 
     /**
-    * Return the Resource id
-    * @param nIdResource The resource identifier
-    * @return The Resource Image
-    */
+     * Return the Resource id
+     * 
+     * @param nIdResource
+     *            The resource identifier
+     * @return The Resource Image
+     */
     @Override
     public ImageResource getImageResource( int nIdResource )
     {
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         File file = FileHome.findByPrimaryKey( nIdResource, plugin );
-        PhysicalFile physicalFile = ( file.getPhysicalFile(  ) != null )
-            ? PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile(  ).getIdPhysicalFile(  ), plugin ) : null;
+        PhysicalFile physicalFile = ( file.getPhysicalFile( ) != null ) ? PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile( ).getIdPhysicalFile( ),
+                plugin ) : null;
 
         if ( physicalFile != null )
         {
-            ImageResource imageResource = new ImageResource(  );
-            imageResource.setImage( physicalFile.getValue(  ) );
-            imageResource.setMimeType( file.getMimeType(  ) );
+            ImageResource imageResource = new ImageResource( );
+            imageResource.setImage( physicalFile.getValue( ) );
+            imageResource.setMimeType( file.getMimeType( ) );
 
             return imageResource;
         }
@@ -108,17 +109,20 @@ public class FileImgService implements ImageResourceProvider
 
     /**
      * Return the Resource Type id
+     * 
      * @return The Resource Type Id
      */
     @Override
-    public String getResourceTypeId(  )
+    public String getResourceTypeId( )
     {
         return IMAGE_RESOURCE_TYPE_ID;
     }
 
     /**
      * Management of the image associated to the {@link EntryTypeUrl}
-     * @param nEntryUrl The {@link EntryTypeUrl} identifier
+     * 
+     * @param nEntryUrl
+     *            The {@link EntryTypeUrl} identifier
      * @return The url of the resource without HTML escape characters
      */
     public static String getResourceImageEntryUrlWhitoutEntities( int nEntryUrl )
@@ -128,18 +132,20 @@ public class FileImgService implements ImageResourceProvider
 
     /**
      * Management of the image associated to the {@link EntryUrl}
-     * @param nEntryUrl The {@link EntryUrl} identifier
-     * @param bWithEntities True to get the URL with HTML escape characters,
-     *            false otherwise
+     * 
+     * @param nEntryUrl
+     *            The {@link EntryUrl} identifier
+     * @param bWithEntities
+     *            True to get the URL with HTML escape characters, false otherwise
      * @return The url of the resource
      */
     private static String getResourceImageEntryUrl( int nEntryUrl, boolean bWithEntities )
     {
-        String strResourceType = FileImgService.getInstance(  ).getResourceTypeId(  );
+        String strResourceType = FileImgService.getInstance( ).getResourceTypeId( );
         UrlItem url = new UrlItem( Parameters.IMAGE_SERVLET );
         url.addParameter( Parameters.RESOURCE_TYPE, strResourceType );
         url.addParameter( Parameters.RESOURCE_ID, Integer.toString( nEntryUrl ) );
 
-        return bWithEntities ? url.getUrlWithEntity(  ) : url.getUrl(  );
+        return bWithEntities ? url.getUrlWithEntity( ) : url.getUrl( );
     }
 }

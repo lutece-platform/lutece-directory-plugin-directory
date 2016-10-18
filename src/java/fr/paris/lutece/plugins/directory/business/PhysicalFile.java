@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-
 /**
  *
  * class PhysicalFile
@@ -42,21 +41,22 @@ package fr.paris.lutece.plugins.directory.business;
 public class PhysicalFile
 {
     private int _nIdPhysicalFile;
-    private byte[] _byValue;
+    private byte [ ] _byValue;
 
     /**
      *
      * @return the id of the physical file
      */
-    public int getIdPhysicalFile(  )
+    public int getIdPhysicalFile( )
     {
         return _nIdPhysicalFile;
     }
 
     /**
-    *
-    * @param nIdPhysicalFile the id of the physical file
-    */
+     *
+     * @param nIdPhysicalFile
+     *            the id of the physical file
+     */
     public void setIdPhysicalFile( int nIdPhysicalFile )
     {
         _nIdPhysicalFile = nIdPhysicalFile;
@@ -66,16 +66,18 @@ public class PhysicalFile
      *
      * @return the value of the file
      */
-    public byte[] getValue(  )
+    public byte [ ] getValue( )
     {
         return _byValue;
     }
 
     /**
      * set the value of the file
-     * @param value the value of the file
+     * 
+     * @param value
+     *            the value of the file
      */
-    public void setValue( byte[] value )
+    public void setValue( byte [ ] value )
     {
         _byValue = value;
     }

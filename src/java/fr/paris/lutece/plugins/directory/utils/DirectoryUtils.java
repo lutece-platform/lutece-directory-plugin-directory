@@ -97,7 +97,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  *
  * class DirectoryUtils
@@ -167,7 +166,7 @@ public final class DirectoryUtils
      * DirectoryUtils
      *
      */
-    private DirectoryUtils(  )
+    private DirectoryUtils( )
     {
     }
 
@@ -176,9 +175,9 @@ public final class DirectoryUtils
      *
      * @return return current Timestamp
      */
-    public static Timestamp getCurrentTimestamp(  )
+    public static Timestamp getCurrentTimestamp( )
     {
-        return new Timestamp( GregorianCalendar.getInstance(  ).getTimeInMillis(  ) );
+        return new Timestamp( GregorianCalendar.getInstance( ).getTimeInMillis( ) );
     }
 
     /**
@@ -217,21 +216,21 @@ public final class DirectoryUtils
         {
             try
             {
-                entry = (IEntry) Class.forName( entryType.getClassName(  ) ).newInstance(  );
+                entry = (IEntry) Class.forName( entryType.getClassName( ) ).newInstance( );
                 entry.setEntryType( entryType );
             }
-            catch ( ClassNotFoundException e )
+            catch( ClassNotFoundException e )
             {
                 // class doesn't exist
                 AppLogService.error( e );
             }
-            catch ( InstantiationException e )
+            catch( InstantiationException e )
             {
                 // Class is abstract or is an interface or haven't accessible
                 // builder
                 AppLogService.error( e );
             }
-            catch ( IllegalAccessException e )
+            catch( IllegalAccessException e )
             {
                 // can't access to rhe class
                 AppLogService.error( e );
@@ -242,15 +241,13 @@ public final class DirectoryUtils
     }
 
     /**
-     * return the index in the list of the entry whose key is specified in
-     * parameter
+     * return the index in the list of the entry whose key is specified in parameter
      *
      * @param nIdEntry
      *            the key of the entry
      * @param listEntry
      *            the list of the entry
-     * @return the index in the list of the entry whose key is specified in
-     *         parameter
+     * @return the index in the list of the entry whose key is specified in parameter
      */
     public static int getIndexEntryInTheEntryList( int nIdEntry, List<IEntry> listEntry )
     {
@@ -258,7 +255,7 @@ public final class DirectoryUtils
 
         for ( IEntry entry : listEntry )
         {
-            if ( entry.getIdEntry(  ) == nIdEntry )
+            if ( entry.getIdEntry( ) == nIdEntry )
             {
                 return nIndex;
             }
@@ -270,15 +267,13 @@ public final class DirectoryUtils
     }
 
     /**
-     * return the index in the list of the field whose key is specified in
-     * parameter
+     * return the index in the list of the field whose key is specified in parameter
      *
      * @param nIdField
      *            the key of the field
      * @param listField
      *            the list of field
-     * @return the index in the list of the field whose key is specified in
-     *         parameter
+     * @return the index in the list of the field whose key is specified in parameter
      */
     public static int getIndexFieldInTheFieldList( int nIdField, List<Field> listField )
     {
@@ -286,7 +281,7 @@ public final class DirectoryUtils
 
         for ( Field field : listField )
         {
-            if ( field.getIdField(  ) == nIdField )
+            if ( field.getIdField( ) == nIdField )
             {
                 return nIndex;
             }
@@ -311,38 +306,36 @@ public final class DirectoryUtils
     public static List<IEntry> getFormEntries( int nIdDirectory, Plugin plugin, AdminUser user )
     {
         IEntry entryFistLevel;
-        EntryFilter filter = new EntryFilter(  );
+        EntryFilter filter = new EntryFilter( );
         filter.setIdDirectory( nIdDirectory );
         filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
 
         List<IEntry> listEntryFirstLevel = EntryHome.getEntryList( filter, plugin );
         List<IEntry> listEntryChildren;
-        List<IEntry> listEntryImbricate = new ArrayList<IEntry>(  );
+        List<IEntry> listEntryImbricate = new ArrayList<IEntry>( );
 
         for ( IEntry entry : listEntryFirstLevel )
         {
-            entryFistLevel = EntryHome.findByPrimaryKey( entry.getIdEntry(  ), plugin );
+            entryFistLevel = EntryHome.findByPrimaryKey( entry.getIdEntry( ), plugin );
 
-            if ( entryFistLevel.isWorkgroupAssociated(  ) )
+            if ( entryFistLevel.isWorkgroupAssociated( ) )
             {
-                entryFistLevel.setFields( DirectoryUtils.getAuthorizedFieldsByWorkgroup( entryFistLevel.getFields(  ),
-                        user ) );
+                entryFistLevel.setFields( DirectoryUtils.getAuthorizedFieldsByWorkgroup( entryFistLevel.getFields( ), user ) );
             }
 
-            if ( entryFistLevel.getEntryType(  ).getGroup(  ) )
+            if ( entryFistLevel.getEntryType( ).getGroup( ) )
             {
-                filter = new EntryFilter(  );
-                filter.setIdEntryParent( entryFistLevel.getIdEntry(  ) );
-                listEntryChildren = new ArrayList<IEntry>(  );
+                filter = new EntryFilter( );
+                filter.setIdEntryParent( entryFistLevel.getIdEntry( ) );
+                listEntryChildren = new ArrayList<IEntry>( );
 
                 for ( IEntry entryChildren : EntryHome.getEntryList( filter, plugin ) )
                 {
-                    IEntry entryTmp = EntryHome.findByPrimaryKey( entryChildren.getIdEntry(  ), plugin );
+                    IEntry entryTmp = EntryHome.findByPrimaryKey( entryChildren.getIdEntry( ), plugin );
 
-                    if ( entryTmp.isWorkgroupAssociated(  ) )
+                    if ( entryTmp.isWorkgroupAssociated( ) )
                     {
-                        entryTmp.setFields( DirectoryUtils.getAuthorizedFieldsByWorkgroup( 
-                                entryFistLevel.getFields(  ), user ) );
+                        entryTmp.setFields( DirectoryUtils.getAuthorizedFieldsByWorkgroup( entryFistLevel.getFields( ), user ) );
                     }
 
                     listEntryChildren.add( entryTmp );
@@ -373,23 +366,23 @@ public final class DirectoryUtils
 
         List<IEntry> listEntryFirstLevel = EntryHome.getEntryList( filter, plugin );
         List<IEntry> listEntryChildren;
-        List<IEntry> listEntryImbricate = new ArrayList<IEntry>(  );
+        List<IEntry> listEntryImbricate = new ArrayList<IEntry>( );
 
         for ( IEntry entry : listEntryFirstLevel )
         {
-            entryFistLevel = EntryHome.findByPrimaryKey( entry.getIdEntry(  ), plugin );
+            entryFistLevel = EntryHome.findByPrimaryKey( entry.getIdEntry( ), plugin );
 
-            if ( entryFistLevel.getEntryType(  ).getGroup(  ) )
+            if ( entryFistLevel.getEntryType( ).getGroup( ) )
             {
-                EntryFilter entryFilter = new EntryFilter(  );
-                entryFilter.setIdEntryParent( entryFistLevel.getIdEntry(  ) );
+                EntryFilter entryFilter = new EntryFilter( );
+                entryFilter.setIdEntryParent( entryFistLevel.getIdEntry( ) );
                 entryFilter.setIsComment( EntryFilter.FILTER_FALSE );
                 entryFilter.setIsShownInResultRecord( EntryFilter.FILTER_TRUE );
-                listEntryChildren = new ArrayList<IEntry>(  );
+                listEntryChildren = new ArrayList<IEntry>( );
 
                 for ( IEntry entryChildren : EntryHome.getEntryList( entryFilter, plugin ) )
                 {
-                    IEntry entryTmp = EntryHome.findByPrimaryKey( entryChildren.getIdEntry(  ), plugin );
+                    IEntry entryTmp = EntryHome.findByPrimaryKey( entryChildren.getIdEntry( ), plugin );
                     listEntryChildren.add( entryTmp );
                 }
 
@@ -403,8 +396,7 @@ public final class DirectoryUtils
     }
 
     /**
-     * get a Map which contains for each entry the list of recordField object
-     * associated
+     * get a Map which contains for each entry the list of recordField object associated
      *
      * @param lisEntry
      *            the list of entry associate to the record
@@ -414,15 +406,13 @@ public final class DirectoryUtils
      *            plugin
      * @return a map
      */
-    public static Map<String, List<RecordField>> getMapIdEntryListRecordField( List<IEntry> lisEntry, int nIdRecord,
-        Plugin plugin )
+    public static Map<String, List<RecordField>> getMapIdEntryListRecordField( List<IEntry> lisEntry, int nIdRecord, Plugin plugin )
     {
         return getMapIdEntryListRecordField( lisEntry, nIdRecord, plugin, true );
     }
 
     /**
-     * get a Map which contains for each entry the list of recordField object
-     * associated
+     * get a Map which contains for each entry the list of recordField object associated
      *
      * @param lisEntry
      *            the list of entry associate to the record
@@ -432,23 +422,21 @@ public final class DirectoryUtils
      *            plugin
      * @param bGetFileName
      *            true if it must get the file name, false otherwise <br />
-     *            Warning : The file name is fetch by a webservice call. Beware
-     *            of performance.
+     *            Warning : The file name is fetch by a webservice call. Beware of performance.
      * @return a map
      */
-    public static Map<String, List<RecordField>> getMapIdEntryListRecordField( List<IEntry> lisEntry, int nIdRecord,
-        Plugin plugin, boolean bGetFileName )
+    public static Map<String, List<RecordField>> getMapIdEntryListRecordField( List<IEntry> lisEntry, int nIdRecord, Plugin plugin, boolean bGetFileName )
     {
-        Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>(  );
+        Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>( );
 
-        RecordFieldFilter filter = new RecordFieldFilter(  );
+        RecordFieldFilter filter = new RecordFieldFilter( );
         filter.setIdRecord( nIdRecord );
 
         for ( IEntry entryFistLevel : lisEntry )
         {
-            if ( entryFistLevel.getChildren(  ) != null )
+            if ( entryFistLevel.getChildren( ) != null )
             {
-                for ( IEntry child : entryFistLevel.getChildren(  ) )
+                for ( IEntry child : entryFistLevel.getChildren( ) )
                 {
                     buildMapIdEntryListRecordField( map, child, filter, plugin, bGetFileName );
                 }
@@ -462,25 +450,27 @@ public final class DirectoryUtils
 
     /**
      * Build the map of <idEntry, RecordFields> from a given record
-     * @param record the record
+     * 
+     * @param record
+     *            the record
      * @return the map of <idEntry, RecordFields>
      */
     public static Map<String, List<RecordField>> buildMapIdEntryListRecordField( Record record )
     {
-        Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>(  );
+        Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>( );
 
-        for ( RecordField recordField : record.getListRecordField(  ) )
+        for ( RecordField recordField : record.getListRecordField( ) )
         {
-            if ( ( recordField != null ) && ( recordField.getEntry(  ) != null ) )
+            if ( ( recordField != null ) && ( recordField.getEntry( ) != null ) )
             {
                 recordField.setRecord( record );
 
-                String strIdEntry = Integer.toString( recordField.getEntry(  ).getIdEntry(  ) );
+                String strIdEntry = Integer.toString( recordField.getEntry( ).getIdEntry( ) );
                 List<RecordField> listRecordFields = map.get( strIdEntry );
 
                 if ( listRecordFields == null )
                 {
-                    listRecordFields = new ArrayList<RecordField>(  );
+                    listRecordFields = new ArrayList<RecordField>( );
                 }
 
                 listRecordFields.add( recordField );
@@ -504,17 +494,16 @@ public final class DirectoryUtils
      */
     public static List<RecordField> getListRecordField( IEntry entry, int nIdRecord, Plugin plugin )
     {
-        RecordFieldFilter filter = new RecordFieldFilter(  );
+        RecordFieldFilter filter = new RecordFieldFilter( );
         filter.setIdRecord( nIdRecord );
 
-        filter.setIdEntry( entry.getIdEntry(  ) );
+        filter.setIdEntry( entry.getIdEntry( ) );
 
         return RecordFieldHome.getRecordFieldList( filter, plugin );
     }
 
     /**
-     * get a Map which contains for each entry the list of recordField object
-     * associated
+     * get a Map which contains for each entry the list of recordField object associated
      *
      * @param lisEntry
      *            the list of entry associate to the record
@@ -522,35 +511,36 @@ public final class DirectoryUtils
      *            the id of the record
      * @param plugin
      *            plugin
-     * @param mapFieldEntry a map containing all fields associated to the list of entry           
+     * @param mapFieldEntry
+     *            a map containing all fields associated to the list of entry
      * @return a map
      */
-    public static Map<String, List<RecordField>> getSpecificMapIdEntryListRecordField( List<IEntry> lisEntry,
-        int nIdRecord, Plugin plugin ,Map<Integer,Field> mapFieldEntry )
+    public static Map<String, List<RecordField>> getSpecificMapIdEntryListRecordField( List<IEntry> lisEntry, int nIdRecord, Plugin plugin,
+            Map<Integer, Field> mapFieldEntry )
     {
-        Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>(  );
+        Map<String, List<RecordField>> map = new HashMap<String, List<RecordField>>( );
 
-        List<Integer> listIdEntry = new ArrayList<Integer>(  );
+        List<Integer> listIdEntry = new ArrayList<Integer>( );
 
         for ( IEntry entryFistLevel : lisEntry )
         {
-            listIdEntry.add( entryFistLevel.getIdEntry(  ) );
+            listIdEntry.add( entryFistLevel.getIdEntry( ) );
 
-            if ( entryFistLevel.getChildren(  ) != null )
+            if ( entryFistLevel.getChildren( ) != null )
             {
-                for ( IEntry child : entryFistLevel.getChildren(  ) )
+                for ( IEntry child : entryFistLevel.getChildren( ) )
                 {
-                    listIdEntry.add( child.getIdEntry(  ) );
+                    listIdEntry.add( child.getIdEntry( ) );
                 }
             }
         }
 
-        List<RecordField> lRF = RecordFieldHome.getRecordFieldSpecificList( listIdEntry, nIdRecord, plugin,mapFieldEntry );
-        Map<Integer, List<RecordField>> tt = new HashMap<Integer, List<RecordField>>(  );
+        List<RecordField> lRF = RecordFieldHome.getRecordFieldSpecificList( listIdEntry, nIdRecord, plugin, mapFieldEntry );
+        Map<Integer, List<RecordField>> tt = new HashMap<Integer, List<RecordField>>( );
 
         for ( RecordField rf : lRF )
         {
-            Integer nIdEntry = Integer.valueOf( rf.getEntry(  ).getIdEntry(  ) );
+            Integer nIdEntry = Integer.valueOf( rf.getEntry( ).getIdEntry( ) );
 
             if ( tt.containsKey( nIdEntry ) )
             {
@@ -558,27 +548,26 @@ public final class DirectoryUtils
             }
             else
             {
-                List<RecordField> lRFTmp = new ArrayList<RecordField>(  );
+                List<RecordField> lRFTmp = new ArrayList<RecordField>( );
                 lRFTmp.add( rf );
                 tt.put( nIdEntry, lRFTmp );
             }
         }
 
-        Iterator<Entry<Integer, List<RecordField>>> it = tt.entrySet(  ).iterator(  );
+        Iterator<Entry<Integer, List<RecordField>>> it = tt.entrySet( ).iterator( );
 
-        while ( it.hasNext(  ) )
+        while ( it.hasNext( ) )
         {
-            Entry<Integer, List<RecordField>> ent = it.next(  );
-            map.put( ent.getKey(  ).toString(  ), ent.getValue(  ) );
+            Entry<Integer, List<RecordField>> ent = it.next( );
+            map.put( ent.getKey( ).toString( ), ent.getValue( ) );
         }
 
         return map;
     }
 
     /**
-     * Get the request data and if there is no error insert the data in the
-     * record specified in parameter. return null if there is no error or else
-     * return a DirectoryError object
+     * Get the request data and if there is no error insert the data in the record specified in parameter. return null if there is no error or else return a
+     * DirectoryError object
      *
      * @param request
      *            the request
@@ -588,22 +577,22 @@ public final class DirectoryUtils
      *            the plugin
      * @param locale
      *            the locale
-     * @throws DirectoryErrorException If an error occurs
+     * @throws DirectoryErrorException
+     *             If an error occurs
      */
-    public static void getDirectoryRecordData( HttpServletRequest request, Record record, Plugin plugin, Locale locale )
-        throws DirectoryErrorException
+    public static void getDirectoryRecordData( HttpServletRequest request, Record record, Plugin plugin, Locale locale ) throws DirectoryErrorException
     {
         boolean bTestDirectoryError = true;
-        String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler(  ).getUploadAction( request );
+        String strUploadAction = DirectoryAsynchronousUploadHandler.getHandler( ).getUploadAction( request );
 
         if ( StringUtils.isNotBlank( strUploadAction ) )
         {
             bTestDirectoryError = false;
         }
 
-        List<RecordField> listRecordFieldResult = new ArrayList<RecordField>(  );
-        EntryFilter filter = new EntryFilter(  );
-        filter.setIdDirectory( record.getDirectory(  ).getIdDirectory(  ) );
+        List<RecordField> listRecordFieldResult = new ArrayList<RecordField>( );
+        EntryFilter filter = new EntryFilter( );
+        filter.setIdDirectory( record.getDirectory( ).getIdDirectory( ) );
         filter.setIsComment( EntryFilter.FILTER_FALSE );
         filter.setIsEntryParentNull( EntryFilter.FILTER_TRUE );
 
@@ -611,16 +600,14 @@ public final class DirectoryUtils
 
         for ( IEntry entry : listEntryFirstLevel )
         {
-            DirectoryUtils.getDirectoryRecordFieldData( record, request, entry.getIdEntry(  ), bTestDirectoryError,
-                listRecordFieldResult, plugin, locale );
+            DirectoryUtils.getDirectoryRecordFieldData( record, request, entry.getIdEntry( ), bTestDirectoryError, listRecordFieldResult, plugin, locale );
         }
 
         record.setListRecordField( listRecordFieldResult );
     }
 
     /**
-     * Get the request data and return a Map which contains for each entry the
-     * list of recordField object associated
+     * Get the request data and return a Map which contains for each entry the list of recordField object associated
      *
      * @param request
      *            the request
@@ -631,14 +618,15 @@ public final class DirectoryUtils
      * @param locale
      *            the locale
      * @return a map
-     * @throws DirectoryErrorException If an error occurs
+     * @throws DirectoryErrorException
+     *             If an error occurs
      */
-    public static HashMap<String, List<RecordField>> getSearchRecordData( HttpServletRequest request, int nIdDirectory,
-        Plugin plugin, Locale locale ) throws DirectoryErrorException
+    public static HashMap<String, List<RecordField>> getSearchRecordData( HttpServletRequest request, int nIdDirectory, Plugin plugin, Locale locale )
+            throws DirectoryErrorException
     {
-        HashMap<String, List<RecordField>> mapSearchQuery = new HashMap<String, List<RecordField>>(  );
+        HashMap<String, List<RecordField>> mapSearchQuery = new HashMap<String, List<RecordField>>( );
         List<RecordField> listRecordFieldTmp;
-        EntryFilter filter = new EntryFilter(  );
+        EntryFilter filter = new EntryFilter( );
         filter.setIdDirectory( nIdDirectory );
         filter.setIsComment( EntryFilter.FILTER_FALSE );
         filter.setIsGroup( EntryFilter.FILTER_FALSE );
@@ -648,21 +636,21 @@ public final class DirectoryUtils
 
         for ( IEntry entry : listEntry )
         {
-            listRecordFieldTmp = new ArrayList<RecordField>(  );
-            DirectoryUtils.getDirectoryRecordFieldData( null, request, entry.getIdEntry(  ), false, listRecordFieldTmp,
-                plugin, locale );
+            listRecordFieldTmp = new ArrayList<RecordField>( );
+            DirectoryUtils.getDirectoryRecordFieldData( null, request, entry.getIdEntry( ), false, listRecordFieldTmp, plugin, locale );
 
-            mapSearchQuery.put( Integer.toString( entry.getIdEntry(  ) ), listRecordFieldTmp );
+            mapSearchQuery.put( Integer.toString( entry.getIdEntry( ) ), listRecordFieldTmp );
         }
 
         return mapSearchQuery;
     }
 
     /**
-     * perform in the record field list the record field associates with a entry
-     * specify in parameter. return null if there is no error in the response
-     * else return a DirectoryError Object
-     * @param record The record
+     * perform in the record field list the record field associates with a entry specify in parameter. return null if there is no error in the response else
+     * return a DirectoryError Object
+     * 
+     * @param record
+     *            The record
      * @param request
      *            the request
      * @param nIdEntry
@@ -675,38 +663,38 @@ public final class DirectoryUtils
      *            the plugin
      * @param locale
      *            the locale
-     * @throws DirectoryErrorException If an error occurs
+     * @throws DirectoryErrorException
+     *             If an error occurs
      */
-    public static void getDirectoryRecordFieldData( Record record, HttpServletRequest request, int nIdEntry,
-        boolean bTestDirectoryError, List<RecordField> listRecordFieldResult, Plugin plugin, Locale locale )
-        throws DirectoryErrorException
+    public static void getDirectoryRecordFieldData( Record record, HttpServletRequest request, int nIdEntry, boolean bTestDirectoryError,
+            List<RecordField> listRecordFieldResult, Plugin plugin, Locale locale ) throws DirectoryErrorException
     {
         IEntry entry = null;
 
         entry = EntryHome.findByPrimaryKey( nIdEntry, plugin );
 
-        List<Field> listField = new ArrayList<Field>(  );
+        List<Field> listField = new ArrayList<Field>( );
 
-        for ( Field field : entry.getFields(  ) )
+        for ( Field field : entry.getFields( ) )
         {
-            field = FieldHome.findByPrimaryKey( field.getIdField(  ), plugin );
+            field = FieldHome.findByPrimaryKey( field.getIdField( ), plugin );
             listField.add( field );
         }
 
         entry.setFields( listField );
 
-        if ( entry.getEntryType(  ).getGroup(  ) )
+        if ( entry.getEntryType( ).getGroup( ) )
         {
-            for ( IEntry entryChild : entry.getChildren(  ) )
+            for ( IEntry entryChild : entry.getChildren( ) )
             {
-                getDirectoryRecordFieldData( record, request, entryChild.getIdEntry(  ), bTestDirectoryError,
-                    listRecordFieldResult, plugin, locale );
+                getDirectoryRecordFieldData( record, request, entryChild.getIdEntry( ), bTestDirectoryError, listRecordFieldResult, plugin, locale );
             }
         }
-        else if ( !entry.getEntryType(  ).getComment(  ) )
-        {
-            entry.getRecordFieldData( record, request, bTestDirectoryError, false, listRecordFieldResult, locale );
-        }
+        else
+            if ( !entry.getEntryType( ).getComment( ) )
+            {
+                entry.getRecordFieldData( record, request, bTestDirectoryError, false, listRecordFieldResult, locale );
+            }
     }
 
     /**
@@ -720,11 +708,11 @@ public final class DirectoryUtils
      */
     public static Field findFieldByIdInTheList( int nIdField, List<Field> listField )
     {
-        if ( ( listField != null ) && !listField.isEmpty(  ) )
+        if ( ( listField != null ) && !listField.isEmpty( ) )
         {
             for ( Field field : listField )
             {
-                if ( field.getIdField(  ) == nIdField )
+                if ( field.getIdField( ) == nIdField )
                 {
                     return field;
                 }
@@ -745,11 +733,11 @@ public final class DirectoryUtils
      */
     public static Field findFieldByValueInTheList( String strFieldValue, List<Field> listField )
     {
-        if ( ( strFieldValue != null ) && ( listField != null ) && !listField.isEmpty(  ) )
+        if ( ( strFieldValue != null ) && ( listField != null ) && !listField.isEmpty( ) )
         {
             for ( Field field : listField )
             {
-                if ( ( field.getValue(  ) != null ) && field.getValue(  ).trim(  ).equals( strFieldValue.trim(  ) ) )
+                if ( ( field.getValue( ) != null ) && field.getValue( ).trim( ).equals( strFieldValue.trim( ) ) )
                 {
                     return field;
                 }
@@ -761,13 +749,16 @@ public final class DirectoryUtils
 
     /**
      * Return the field which title is specified in parameter
-     * @param strTitle the title
-     * @param listFields the list of fields
+     * 
+     * @param strTitle
+     *            the title
+     * @param listFields
+     *            the list of fields
      * @return the field which title is specified in parameter
      */
     public static Field findFieldByTitleInTheList( String strTitle, List<Field> listFields )
     {
-        if ( ( listFields == null ) || listFields.isEmpty(  ) )
+        if ( ( listFields == null ) || listFields.isEmpty( ) )
         {
             return null;
         }
@@ -776,36 +767,35 @@ public final class DirectoryUtils
         {
             if ( StringUtils.isNotBlank( strTitle ) )
             {
-                if ( trim( strTitle ).equals( trim( field.getTitle(  ) ) ) )
+                if ( trim( strTitle ).equals( trim( field.getTitle( ) ) ) )
                 {
                     return field;
                 }
             }
-            else if ( StringUtils.isBlank( field.getTitle(  ) ) )
-            {
-                return field;
-            }
+            else
+                if ( StringUtils.isBlank( field.getTitle( ) ) )
+                {
+                    return field;
+                }
         }
 
         return null;
     }
 
     /**
-     * return true if the field which key is specified in parameter is in the
-     * response list
+     * return true if the field which key is specified in parameter is in the response list
      *
      * @param nIdField
      *            the id of the field who is search
      * @param listRecordField
      *            the list of object Response
-     * @return true if the field which key is specified in parameter is in the
-     *         response list
+     * @return true if the field which key is specified in parameter is in the response list
      */
     public static Boolean isFieldInTheRecordFieldList( int nIdField, List<RecordField> listRecordField )
     {
         for ( RecordField recordField : listRecordField )
         {
-            if ( ( recordField.getField(  ) != null ) && ( recordField.getField(  ).getIdField(  ) == nIdField ) )
+            if ( ( recordField.getField( ) != null ) && ( recordField.getField( ).getIdField( ) == nIdField ) )
             {
                 return true;
             }
@@ -848,7 +838,7 @@ public final class DirectoryUtils
         {
             if ( strParameter != null )
             {
-                String strTrimedParameter = strParameter.trim(  );
+                String strTrimedParameter = strParameter.trim( );
 
                 if ( strTrimedParameter.matches( REGEX_ID ) )
                 {
@@ -856,7 +846,7 @@ public final class DirectoryUtils
                 }
             }
         }
-        catch ( NumberFormatException ne )
+        catch( NumberFormatException ne )
         {
             AppLogService.error( ne );
         }
@@ -865,19 +855,17 @@ public final class DirectoryUtils
     }
 
     /**
-     * Returns a copy of the string , with leading and trailing whitespace
-     * omitted.
+     * Returns a copy of the string , with leading and trailing whitespace omitted.
      *
      * @param strParameter
      *            the string parameter to convert
-     * @return null if the strParameter is null other return with leading and
-     *         trailing whitespace omitted.
+     * @return null if the strParameter is null other return with leading and trailing whitespace omitted.
      */
     public static String trim( String strParameter )
     {
         if ( strParameter != null )
         {
-            return strParameter.trim(  );
+            return strParameter.trim( );
         }
 
         return strParameter;
@@ -890,21 +878,20 @@ public final class DirectoryUtils
      *            le name of the input file file
      * @param request
      *            the request
-     * @return file the file contains in the request from the name of the input
-     *         file
+     * @return file the file contains in the request from the name of the input file
      */
     public static File getFileData( String strFileInputName, HttpServletRequest request )
     {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         FileItem fileItem = multipartRequest.getFile( strFileInputName );
 
-        if ( ( fileItem != null ) && ( fileItem.getName(  ) != null ) && !EMPTY_STRING.equals( fileItem.getName(  ) ) )
+        if ( ( fileItem != null ) && ( fileItem.getName( ) != null ) && !EMPTY_STRING.equals( fileItem.getName( ) ) )
         {
-            File file = new File(  );
-            PhysicalFile physicalFile = new PhysicalFile(  );
-            physicalFile.setValue( fileItem.get(  ) );
+            File file = new File( );
+            PhysicalFile physicalFile = new PhysicalFile( );
+            physicalFile.setValue( fileItem.get( ) );
             file.setTitle( FileUploadService.getFileNameOnly( fileItem ) );
-            file.setSize( (int) fileItem.getSize(  ) );
+            file.setSize( (int) fileItem.getSize( ) );
             file.setPhysicalFile( physicalFile );
             file.setMimeType( FileSystemUtil.getMIMEType( FileUploadService.getFileNameOnly( fileItem ) ) );
 
@@ -915,8 +902,7 @@ public final class DirectoryUtils
     }
 
     /**
-     * Builds a query with filters placed in parameters. Consider using
-     * {@link #buildQueryWithFilter(StringBuilder, List, String)} instead.
+     * Builds a query with filters placed in parameters. Consider using {@link #buildQueryWithFilter(StringBuilder, List, String)} instead.
      *
      * @param strSelect
      *            the select of the query
@@ -955,7 +941,7 @@ public final class DirectoryUtils
 
             sbSQL.append( strFilter );
 
-            if ( nCount != listFilter.size(  ) )
+            if ( nCount != listFilter.size( ) )
             {
                 sbSQL.append( CONSTANT_AND );
             }
@@ -966,7 +952,7 @@ public final class DirectoryUtils
             sbSQL.append( strOrder );
         }
 
-        return sbSQL.toString(  );
+        return sbSQL.toString( );
     }
 
     /**
@@ -1003,7 +989,7 @@ public final class DirectoryUtils
      */
     public static List<Field> getAuthorizedFieldsByWorkgroup( List<Field> listField, AdminUser user )
     {
-        List<Field> listFieldAuthorized = new ArrayList<Field>(  );
+        List<Field> listFieldAuthorized = new ArrayList<Field>( );
 
         for ( Field field : listField )
         {
@@ -1020,20 +1006,21 @@ public final class DirectoryUtils
     /**
      * Filter a list of field for a given user
      *
-     * @param listField a list of field
-     * @param request The http request
+     * @param listField
+     *            a list of field
+     * @param request
+     *            The http request
      * @return a field list
      */
     public static List<Field> getAuthorizedFieldsByRole( HttpServletRequest request, List<Field> listField )
     {
-        List<Field> listFieldAuthorized = new ArrayList<Field>(  );
+        List<Field> listFieldAuthorized = new ArrayList<Field>( );
 
         for ( Field field : listField )
         {
             // filter by workgroup
-            if ( ( !SecurityService.isAuthenticationEnable(  ) ) || ( field.getRoleKey(  ) == null ) ||
-                    field.getRoleKey(  ).equals( Directory.ROLE_NONE ) ||
-                    SecurityService.getInstance(  ).isUserInRole( request, field.getRoleKey(  ) ) )
+            if ( ( !SecurityService.isAuthenticationEnable( ) ) || ( field.getRoleKey( ) == null ) || field.getRoleKey( ).equals( Directory.ROLE_NONE )
+                    || SecurityService.getInstance( ).isUserInRole( request, field.getRoleKey( ) ) )
             {
                 listFieldAuthorized.add( field );
             }
@@ -1043,8 +1030,7 @@ public final class DirectoryUtils
     }
 
     /**
-     * Removes from list all the elements that are not contained in the other
-     * list Faster than classic "List.retainAll" because each id is unique
+     * Removes from list all the elements that are not contained in the other list Faster than classic "List.retainAll" because each id is unique
      *
      * @param list1
      *            input list 1
@@ -1056,17 +1042,17 @@ public final class DirectoryUtils
     {
         List<Integer> lresult = null;
 
-        if ( list1.size(  ) < list2.size(  ) )
+        if ( list1.size( ) < list2.size( ) )
         {
             Set<Integer> ts1 = new TreeSet<Integer>( list2 );
 
-            Iterator<Integer> it = list1.iterator(  );
+            Iterator<Integer> it = list1.iterator( );
 
-            while ( it.hasNext(  ) )
+            while ( it.hasNext( ) )
             {
-                if ( !ts1.contains( it.next(  ) ) )
+                if ( !ts1.contains( it.next( ) ) )
                 {
-                    it.remove(  );
+                    it.remove( );
                 }
             }
 
@@ -1076,13 +1062,13 @@ public final class DirectoryUtils
         {
             Set<Integer> ts1 = new TreeSet<Integer>( list1 );
 
-            Iterator<Integer> it = list2.iterator(  );
+            Iterator<Integer> it = list2.iterator( );
 
-            while ( it.hasNext(  ) )
+            while ( it.hasNext( ) )
             {
-                if ( !ts1.contains( it.next(  ) ) )
+                if ( !ts1.contains( it.next( ) ) )
                 {
-                    it.remove(  );
+                    it.remove( );
                 }
             }
 
@@ -1093,9 +1079,7 @@ public final class DirectoryUtils
     }
 
     /**
-     * Like {@link List#retainAll(java.util.Collection)}, keeping first list
-     * order. This method is based on the fact that list1 and list2 have unique
-     * elements.
+     * Like {@link List#retainAll(java.util.Collection)}, keeping first list order. This method is based on the fact that list1 and list2 have unique elements.
      *
      * @param list1
      *            the first list
@@ -1105,16 +1089,16 @@ public final class DirectoryUtils
      */
     public static List<Integer> retainAllIdsKeepingFirstOrder( List<Integer> list1, List<Integer> list2 )
     {
-        Iterator<Integer> it = list1.iterator(  );
+        Iterator<Integer> it = list1.iterator( );
 
         // makes contains quicker
         TreeSet<Integer> ts = new TreeSet<Integer>( list2 );
 
-        while ( it.hasNext(  ) )
+        while ( it.hasNext( ) )
         {
-            if ( !ts.contains( it.next(  ) ) )
+            if ( !ts.contains( it.next( ) ) )
             {
-                it.remove(  );
+                it.remove( );
             }
         }
 
@@ -1123,14 +1107,16 @@ public final class DirectoryUtils
 
     /**
      * Get the search record creation date from the request
-     * @param request The request
-     * @param dateTypeParameter The date type parameter
-     * @param locale The locale
-     * @return The date formation into the given locale, or null if no date was
-     *         found
+     * 
+     * @param request
+     *            The request
+     * @param dateTypeParameter
+     *            The date type parameter
+     * @param locale
+     *            The locale
+     * @return The date formation into the given locale, or null if no date was found
      */
-    public static Date getSearchRecordDateCreationFromRequest( HttpServletRequest request, String dateTypeParameter,
-        Locale locale )
+    public static Date getSearchRecordDateCreationFromRequest( HttpServletRequest request, String dateTypeParameter, Locale locale )
     {
         String strDate = request.getParameter( dateTypeParameter );
 
@@ -1151,18 +1137,21 @@ public final class DirectoryUtils
      *            The {@link Directory}
      * @param bWorkflowServiceEnable
      *            true if the WorkflowService is enabled
-     * @param bUseFilterDirectory True to use filter directory
-     * @param searchFields The search field
-     * @param adminUser The admin user
-     * @param locale The locale
+     * @param bUseFilterDirectory
+     *            True to use filter directory
+     * @param searchFields
+     *            The search field
+     * @param adminUser
+     *            The admin user
+     * @param locale
+     *            The locale
      * @return The list of id records
      */
-    public static List<Integer> getListResults( HttpServletRequest request, Directory directory,
-        boolean bWorkflowServiceEnable, boolean bUseFilterDirectory, IDirectorySearchFields searchFields,
-        AdminUser adminUser, Locale locale )
+    public static List<Integer> getListResults( HttpServletRequest request, Directory directory, boolean bWorkflowServiceEnable, boolean bUseFilterDirectory,
+            IDirectorySearchFields searchFields, AdminUser adminUser, Locale locale )
     {
-        return getListResults( request, directory, bWorkflowServiceEnable, bUseFilterDirectory, null,
-            RecordFieldFilter.ORDER_NONE, searchFields, adminUser, locale );
+        return getListResults( request, directory, bWorkflowServiceEnable, bUseFilterDirectory, null, RecordFieldFilter.ORDER_NONE, searchFields, adminUser,
+                locale );
     }
 
     /**
@@ -1174,34 +1163,37 @@ public final class DirectoryUtils
      *            The {@link Directory}
      * @param bWorkflowServiceEnable
      *            true if the WorkflowService is enabled
-     * @param bUseFilterDirectory True to use filter directory
-     * @param sortEntry The entry to sort results by
-     * @param nSortOrder The sort order
-     * @param searchFields The search field
-     * @param adminUser The admin user
-     * @param locale The locale
+     * @param bUseFilterDirectory
+     *            True to use filter directory
+     * @param sortEntry
+     *            The entry to sort results by
+     * @param nSortOrder
+     *            The sort order
+     * @param searchFields
+     *            The search field
+     * @param adminUser
+     *            The admin user
+     * @param locale
+     *            The locale
      * @return The list of id records
      */
-    public static List<Integer> getListResults( HttpServletRequest request, Directory directory,
-        boolean bWorkflowServiceEnable, boolean bUseFilterDirectory, IEntry sortEntry, int nSortOrder,
-        IDirectorySearchFields searchFields, AdminUser adminUser, Locale locale )
+    public static List<Integer> getListResults( HttpServletRequest request, Directory directory, boolean bWorkflowServiceEnable, boolean bUseFilterDirectory,
+            IEntry sortEntry, int nSortOrder, IDirectorySearchFields searchFields, AdminUser adminUser, Locale locale )
     {
         // call search service
-        RecordFieldFilter filter = new RecordFieldFilter(  );
-        filter.setIdDirectory( directory.getIdDirectory(  ) );
+        RecordFieldFilter filter = new RecordFieldFilter( );
+        filter.setIdDirectory( directory.getIdDirectory( ) );
 
         List<Integer> listResultRecordId = null;
 
         // filter by record state
-        filter.setIsDisabled( searchFields.getIsDisabled(  ) );
+        filter.setIsDisabled( searchFields.getIsDisabled( ) );
 
         // filter by role
-        if ( searchFields instanceof DirectorySiteSearchFields &&
-                ( ( (DirectorySiteSearchFields) searchFields ).getRoleKeyList(  ) != null ) )
+        if ( searchFields instanceof DirectorySiteSearchFields && ( ( (DirectorySiteSearchFields) searchFields ).getRoleKeyList( ) != null ) )
         {
-            filter.setRoleKeyList( ( (DirectorySiteSearchFields) searchFields ).getRoleKeyList(  ),
-                ( (DirectorySiteSearchFields) searchFields ).isIncludeRoleNone(  ),
-                ( (DirectorySiteSearchFields) searchFields ).isIncludeRoleNull(  ) );
+            filter.setRoleKeyList( ( (DirectorySiteSearchFields) searchFields ).getRoleKeyList( ),
+                    ( (DirectorySiteSearchFields) searchFields ).isIncludeRoleNone( ), ( (DirectorySiteSearchFields) searchFields ).isIncludeRoleNull( ) );
         }
 
         // filter by workgroup
@@ -1213,7 +1205,7 @@ public final class DirectoryUtils
         // sort filter
         if ( sortEntry == null )
         {
-            filter.setSortEntry( searchFields.getSortEntry(  ) );
+            filter.setSortEntry( searchFields.getSortEntry( ) );
         }
         else
         {
@@ -1222,38 +1214,33 @@ public final class DirectoryUtils
 
         if ( nSortOrder == RecordFieldFilter.ORDER_NONE )
         {
-            filter.setSortOrder( searchFields.getSortOrder(  ) );
+            filter.setSortOrder( searchFields.getSortOrder( ) );
         }
         else
         {
             filter.setSortOrder( nSortOrder );
         }
 
-        filter.setOrderByDateModification( searchFields.isSortByDateModification(  ) );
+        filter.setOrderByDateModification( searchFields.isSortByDateModification( ) );
 
         // If workflow active, filter by workflow state
-        if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) && bWorkflowServiceEnable )
+        if ( ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) && bWorkflowServiceEnable )
         {
             if ( bUseFilterDirectory )
             {
-                listResultRecordId = DirectorySearchService.getInstance(  )
-                                                           .getSearchResults( directory, searchFields.getMapQuery(  ),
-                        searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ),
-                        searchFields.getDateCreationEndRecord(  ), searchFields.getDateModificationRecord(  ),
-                        searchFields.getDateModificationBeginRecord(  ), searchFields.getDateModificationEndRecord(  ),
-                        filter, getPlugin(  ) );
+                listResultRecordId = DirectorySearchService.getInstance( ).getSearchResults( directory, searchFields.getMapQuery( ),
+                        searchFields.getDateCreationRecord( ), searchFields.getDateCreationBeginRecord( ), searchFields.getDateCreationEndRecord( ),
+                        searchFields.getDateModificationRecord( ), searchFields.getDateModificationBeginRecord( ),
+                        searchFields.getDateModificationEndRecord( ), filter, getPlugin( ) );
             }
             else
             {
-                listResultRecordId = DirectorySearchService.getInstance(  )
-                                                           .getSearchResults( directory, null, null, null, null,
-                        filter, getPlugin(  ) );
+                listResultRecordId = DirectorySearchService.getInstance( ).getSearchResults( directory, null, null, null, null, filter, getPlugin( ) );
             }
 
-            List<Integer> listTmpResultRecordId = WorkflowService.getInstance(  )
-                                                                 .getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), ( (DirectoryAdminSearchFields) searchFields ).get_nIdWorkflowSate(  ),
-                    Integer.valueOf( directory.getIdDirectory(  ) ), adminUser );
+            List<Integer> listTmpResultRecordId = WorkflowService.getInstance( ).getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
+                    directory.getIdWorkflow( ), ( (DirectoryAdminSearchFields) searchFields ).get_nIdWorkflowSate( ),
+                    Integer.valueOf( directory.getIdDirectory( ) ), adminUser );
 
             listResultRecordId = DirectoryUtils.retainAllIdsKeepingFirstOrder( listResultRecordId, listTmpResultRecordId );
         }
@@ -1261,18 +1248,14 @@ public final class DirectoryUtils
         {
             if ( bUseFilterDirectory )
             {
-                listResultRecordId = DirectorySearchService.getInstance(  )
-                                                           .getSearchResults( directory, searchFields.getMapQuery(  ),
-                        searchFields.getDateCreationRecord(  ), searchFields.getDateCreationBeginRecord(  ),
-                        searchFields.getDateCreationEndRecord(  ), searchFields.getDateModificationRecord(  ),
-                        searchFields.getDateModificationBeginRecord(  ), searchFields.getDateModificationEndRecord(  ),
-                        filter, getPlugin(  ) );
+                listResultRecordId = DirectorySearchService.getInstance( ).getSearchResults( directory, searchFields.getMapQuery( ),
+                        searchFields.getDateCreationRecord( ), searchFields.getDateCreationBeginRecord( ), searchFields.getDateCreationEndRecord( ),
+                        searchFields.getDateModificationRecord( ), searchFields.getDateModificationBeginRecord( ),
+                        searchFields.getDateModificationEndRecord( ), filter, getPlugin( ) );
             }
             else
             {
-                listResultRecordId = DirectorySearchService.getInstance(  )
-                                                           .getSearchResults( directory, null, null, null, null,
-                        filter, getPlugin(  ) );
+                listResultRecordId = DirectorySearchService.getInstance( ).getSearchResults( directory, null, null, null, null, filter, getPlugin( ) );
             }
         }
 
@@ -1284,7 +1267,7 @@ public final class DirectoryUtils
      *
      * @return the plugin
      */
-    public static Plugin getPlugin(  )
+    public static Plugin getPlugin( )
     {
         return PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
     }
@@ -1306,13 +1289,13 @@ public final class DirectoryUtils
 
         String strSortedAttributeName = request.getParameter( Parameters.SORTED_ATTRIBUTE_NAME );
         String strAscSort = null;
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( directory != null ) && ( ( strSortedAttributeName != null ) || ( directory.getIdSortEntry(  ) != null ) ) )
+        if ( ( directory != null ) && ( ( strSortedAttributeName != null ) || ( directory.getIdSortEntry( ) != null ) ) )
         {
             if ( strSortedAttributeName == null )
             {
-                strSortedAttributeName = directory.getIdSortEntry(  );
+                strSortedAttributeName = directory.getIdSortEntry( );
             }
 
             strAscSort = request.getParameter( Parameters.SORTED_ASC );
@@ -1321,7 +1304,7 @@ public final class DirectoryUtils
             urlItem.addParameter( Parameters.SORTED_ASC, strAscSort );
         }
 
-        return urlItem.getUrl(  );
+        return urlItem.getUrl( );
     }
 
     /**
@@ -1333,13 +1316,13 @@ public final class DirectoryUtils
      */
     public static ReferenceList convertMapToReferenceList( Map<String, String> map )
     {
-        ReferenceList ref = new ReferenceList(  );
+        ReferenceList ref = new ReferenceList( );
 
         if ( map != null )
         {
-            for ( Entry<String, String> userInfo : map.entrySet(  ) )
+            for ( Entry<String, String> userInfo : map.entrySet( ) )
             {
-                ref.addItem( userInfo.getKey(  ), userInfo.getValue(  ) );
+                ref.addItem( userInfo.getKey( ), userInfo.getValue( ) );
             }
         }
 
@@ -1356,13 +1339,13 @@ public final class DirectoryUtils
     public static String getFileName( String strUrl )
     {
         String strFileName = StringUtils.EMPTY;
-        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler( );
 
         try
         {
             strFileName = handler.getFileName( strUrl );
         }
-        catch ( BlobStoreClientException e )
+        catch( BlobStoreClientException e )
         {
             AppLogService.error( e );
         }
@@ -1380,13 +1363,13 @@ public final class DirectoryUtils
      */
     public static void doDownloadFile( String strUrl, String strFilePath )
     {
-        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler( );
 
         try
         {
             handler.doDownloadFile( strUrl, strFilePath );
         }
-        catch ( BlobStoreClientException e )
+        catch( BlobStoreClientException e )
         {
             AppLogService.error( e );
         }
@@ -1403,25 +1386,25 @@ public final class DirectoryUtils
     {
         FileItem fileItem = null;
         File file = null;
-        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler(  );
+        DirectoryAsynchronousUploadHandler handler = DirectoryAsynchronousUploadHandler.getHandler( );
 
         try
         {
             fileItem = handler.doDownloadFile( strUrl );
         }
-        catch ( BlobStoreClientException e )
+        catch( BlobStoreClientException e )
         {
             AppLogService.error( e );
         }
 
         if ( fileItem != null )
         {
-            if ( fileItem.getSize(  ) < Integer.MAX_VALUE )
+            if ( fileItem.getSize( ) < Integer.MAX_VALUE )
             {
-                PhysicalFile physicalFile = new PhysicalFile(  );
-                physicalFile.setValue( fileItem.get(  ) );
+                PhysicalFile physicalFile = new PhysicalFile( );
+                physicalFile.setValue( fileItem.get( ) );
 
-                String strFileName = fileItem.getName(  );
+                String strFileName = fileItem.getName( );
 
                 if ( StringUtils.isNotBlank( strFileName ) )
                 {
@@ -1433,14 +1416,14 @@ public final class DirectoryUtils
                         strExtension = strFileName.substring( nLastIndexOfDot + 1 );
                     }
 
-                    file = new File(  );
+                    file = new File( );
                     file.setPhysicalFile( physicalFile );
-                    file.setSize( (int) fileItem.getSize(  ) );
+                    file.setSize( (int) fileItem.getSize( ) );
                     file.setTitle( strFileName );
 
-                    if ( StringUtils.isNotBlank( fileItem.getContentType(  ) ) )
+                    if ( StringUtils.isNotBlank( fileItem.getContentType( ) ) )
                     {
-                        file.setMimeType( fileItem.getContentType(  ) );
+                        file.setMimeType( fileItem.getContentType( ) );
                     }
                     else
                     {
@@ -1452,9 +1435,8 @@ public final class DirectoryUtils
             }
             else
             {
-                AppLogService.error( 
-                    "DirectoryUtils : File too big ! fr.paris.lutece.plugins.directory.business.File.setSize " +
-                    "must have Integer parameter, in other words a size lower than '" + Integer.MAX_VALUE + "'" );
+                AppLogService.error( "DirectoryUtils : File too big ! fr.paris.lutece.plugins.directory.business.File.setSize "
+                        + "must have Integer parameter, in other words a size lower than '" + Integer.MAX_VALUE + "'" );
             }
         }
 
@@ -1474,32 +1456,31 @@ public final class DirectoryUtils
      *            the plugin
      * @param bGetFileName
      *            true if it must get the file name, false otherwise <br />
-     *            Warning : The file name is fetch by a webservice call. Beware
-     *            of performance.
+     *            Warning : The file name is fetch by a webservice call. Beware of performance.
      */
-    private static void buildMapIdEntryListRecordField( Map<String, List<RecordField>> map, IEntry entry,
-        RecordFieldFilter filter, Plugin plugin, boolean bGetFileName )
+    private static void buildMapIdEntryListRecordField( Map<String, List<RecordField>> map, IEntry entry, RecordFieldFilter filter, Plugin plugin,
+            boolean bGetFileName )
     {
-        filter.setIdEntry( entry.getIdEntry(  ) );
+        filter.setIdEntry( entry.getIdEntry( ) );
 
         List<RecordField> listRecordFields = RecordFieldHome.getRecordFieldList( filter, plugin );
 
         // If entry is type download url, then fetch the file name
         if ( entry instanceof EntryTypeDownloadUrl && bGetFileName )
         {
-            if ( ( listRecordFields != null ) && !listRecordFields.isEmpty(  ) )
+            if ( ( listRecordFields != null ) && !listRecordFields.isEmpty( ) )
             {
                 for ( RecordField recordField : listRecordFields )
                 {
-                    if ( ( recordField != null ) && StringUtils.isNotBlank( recordField.getValue(  ) ) )
+                    if ( ( recordField != null ) && StringUtils.isNotBlank( recordField.getValue( ) ) )
                     {
-                        recordField.setFileName( getFileName( recordField.getValue(  ) ) );
+                        recordField.setFileName( getFileName( recordField.getValue( ) ) );
                     }
                 }
             }
         }
 
-        map.put( Integer.toString( entry.getIdEntry(  ) ), listRecordFields );
+        map.put( Integer.toString( entry.getIdEntry( ) ), listRecordFields );
     }
 
     /**
@@ -1532,20 +1513,22 @@ public final class DirectoryUtils
 
     /**
      * Depopulate the directory into a map of key - value
-     * @param directory the directory
+     * 
+     * @param directory
+     *            the directory
      * @return a map of key - value
      */
     public static Map<String, Object> depopulate( Directory directory )
     {
-        Map<String, Object> mapAttributes = new HashMap<String, Object>(  );
+        Map<String, Object> mapAttributes = new HashMap<String, Object>( );
 
-        for ( java.lang.reflect.Field field : Directory.class.getDeclaredFields(  ) )
+        for ( java.lang.reflect.Field field : Directory.class.getDeclaredFields( ) )
         {
             DirectoryAttribute attribute = field.getAnnotation( DirectoryAttribute.class );
 
             if ( attribute != null )
             {
-                String strAttributeKey = attribute.value(  );
+                String strAttributeKey = attribute.value( );
 
                 try
                 {
@@ -1554,7 +1537,7 @@ public final class DirectoryUtils
                     Object attributeValue = ReflectionUtils.getField( field, directory );
                     mapAttributes.put( strAttributeKey, attributeValue );
                 }
-                catch ( SecurityException e )
+                catch( SecurityException e )
                 {
                     AppLogService.error( e );
                 }
@@ -1563,35 +1546,33 @@ public final class DirectoryUtils
 
         return mapAttributes;
     }
-    
-    
+
     /**
-     * return a map containing all fields containing in the list of entry 
-     * @param listEntry the entyList
-     * @param plugin the plugin
+     * return a map containing all fields containing in the list of entry
+     * 
+     * @param listEntry
+     *            the entyList
+     * @param plugin
+     *            the plugin
      * @return a map of fields associated
      */
-    public static Map<Integer,Field>  getMapFieldsOfListEntry(List<IEntry> listEntry,Plugin plugin)
+    public static Map<Integer, Field> getMapFieldsOfListEntry( List<IEntry> listEntry, Plugin plugin )
     {
-    	
-    	 Map<Integer,Field> mapFieldEntry=new HashMap<Integer, Field>();
-         
-         for ( IEntry entry : listEntry )
-         {    
-        	 
-        	 
-        	 List<Field> listField=FieldHome.getFieldListByIdEntry(entry.getIdEntry(), plugin);
-         	for(Field field:listField)
-         	{
-         		mapFieldEntry.put(field.getIdField(), field);
-         	}
-      
-         }
-        
-         return mapFieldEntry;
+
+        Map<Integer, Field> mapFieldEntry = new HashMap<Integer, Field>( );
+
+        for ( IEntry entry : listEntry )
+        {
+
+            List<Field> listField = FieldHome.getFieldListByIdEntry( entry.getIdEntry( ), plugin );
+            for ( Field field : listField )
+            {
+                mapFieldEntry.put( field.getIdField( ), field );
+            }
+
+        }
+
+        return mapFieldEntry;
     }
-    
-    
-    
-    
+
 }

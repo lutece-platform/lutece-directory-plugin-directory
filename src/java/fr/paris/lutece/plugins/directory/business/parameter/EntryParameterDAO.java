@@ -38,7 +38,6 @@ import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.sql.DAOUtil;
 
-
 /**
  *
  * EntryParameterDAO
@@ -57,20 +56,20 @@ public class EntryParameterDAO implements IEntryParameterDAO
     @Override
     public ReferenceList selectAll( Plugin plugin )
     {
-        ReferenceList listParams = new ReferenceList(  );
+        ReferenceList listParams = new ReferenceList( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ALL, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            ReferenceItem param = new ReferenceItem(  );
+            ReferenceItem param = new ReferenceItem( );
             param.setCode( daoUtil.getString( 1 ) );
             param.setName( daoUtil.getString( 2 ) );
-            param.setChecked( param.getName(  ).equals( TRUE ) ? true : false );
+            param.setChecked( param.getName( ).equals( TRUE ) ? true : false );
             listParams.add( param );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listParams;
     }
@@ -84,16 +83,16 @@ public class EntryParameterDAO implements IEntryParameterDAO
         ReferenceItem param = null;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         daoUtil.setString( 1, strParameterKey );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            param = new ReferenceItem(  );
+            param = new ReferenceItem( );
             param.setCode( strParameterKey );
             param.setName( daoUtil.getString( 1 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return param;
     }
@@ -106,10 +105,10 @@ public class EntryParameterDAO implements IEntryParameterDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-        daoUtil.setString( 1, param.getName(  ) );
-        daoUtil.setString( 2, param.getCode(  ) );
+        daoUtil.setString( 1, param.getName( ) );
+        daoUtil.setString( 2, param.getCode( ) );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 }

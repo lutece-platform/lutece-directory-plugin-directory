@@ -50,7 +50,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * class EntryTypeCheckBox
@@ -116,10 +115,9 @@ public class EntryTypeCheckBox extends Entry
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim(  ) : null;
-        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim(  ) : null;
+        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim( ) : null;
+        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH )
+                .trim( ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
@@ -136,17 +134,18 @@ public class EntryTypeCheckBox extends Entry
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_TITLE;
         }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         // for don't update fields listFields=null
@@ -175,7 +174,7 @@ public class EntryTypeCheckBox extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return _template_create;
     }
@@ -184,7 +183,7 @@ public class EntryTypeCheckBox extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return _template_modify;
     }
@@ -193,19 +192,17 @@ public class EntryTypeCheckBox extends Entry
      * {@inheritDoc}
      */
     @Override
-    public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex )
+    public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName, String strPageIndex )
     {
-        return new Paginator( this.getFields(  ), nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex );
+        return new Paginator( this.getFields( ), nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex );
     }
 
     @Override
-    public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError, boolean bAddNewValue,
+            List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
-        List<String> lstValue = new ArrayList<String>(  );
-        String[] strTabIdField = request.getParameterValues( DirectoryUtils.EMPTY_STRING + this.getIdEntry(  ) );
+        List<String> lstValue = new ArrayList<String>( );
+        String [ ] strTabIdField = request.getParameterValues( DirectoryUtils.EMPTY_STRING + this.getIdEntry( ) );
 
         if ( strTabIdField != null )
         {
@@ -222,22 +219,21 @@ public class EntryTypeCheckBox extends Entry
      * {@inheritDoc}
      */
     @Override
-    public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError, List<RecordField> listRecordField, Locale locale )
+            throws DirectoryErrorException
     {
         String strMultipleValueSeparator = AppPropertiesService.getProperty( PROPERTY_IMPORT_MULTIPLE_VALUE_DELIMITER );
-        List<String> lstValue = new ArrayList<String>(  );
-        String[] tabStrValue = strImportValue.split( strMultipleValueSeparator );
+        List<String> lstValue = new ArrayList<String>( );
+        String [ ] tabStrValue = strImportValue.split( strMultipleValueSeparator );
         Field field;
 
         for ( String strValue : tabStrValue )
         {
-            field = DirectoryUtils.findFieldByValueInTheList( strValue, this.getFields(  ) );
+            field = DirectoryUtils.findFieldByValueInTheList( strValue, this.getFields( ) );
 
             if ( field != null )
             {
-                lstValue.add( Integer.toString( field.getIdField(  ) ) );
+                lstValue.add( Integer.toString( field.getIdField( ) ) );
             }
         }
 
@@ -248,11 +244,10 @@ public class EntryTypeCheckBox extends Entry
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError, boolean bAddNewValue, List<RecordField> listRecordField,
+            Locale locale ) throws DirectoryErrorException
     {
-        List<Field> listFieldInResponse = new ArrayList<Field>(  );
+        List<Field> listFieldInResponse = new ArrayList<Field>( );
         int nIdField = -1;
         Field field = null;
         RecordField recordField;
@@ -262,7 +257,7 @@ public class EntryTypeCheckBox extends Entry
             for ( String strIdField : lstValue )
             {
                 nIdField = DirectoryUtils.convertStringToInt( strIdField );
-                field = DirectoryUtils.findFieldByIdInTheList( nIdField, this.getFields(  ) );
+                field = DirectoryUtils.findFieldByIdInTheList( nIdField, this.getFields( ) );
 
                 if ( field != null )
                 {
@@ -271,13 +266,13 @@ public class EntryTypeCheckBox extends Entry
             }
         }
 
-        if ( bTestDirectoryError && this.isMandatory(  ) )
+        if ( bTestDirectoryError && this.isMandatory( ) )
         {
             boolean bAllFieldEmpty = true;
 
             for ( Field fieldInResponse : listFieldInResponse )
             {
-                if ( !fieldInResponse.getValue(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+                if ( !fieldInResponse.getValue( ).equals( DirectoryUtils.EMPTY_STRING ) )
                 {
                     bAllFieldEmpty = false;
                 }
@@ -285,13 +280,13 @@ public class EntryTypeCheckBox extends Entry
 
             if ( bAllFieldEmpty )
             {
-                throw new DirectoryErrorException( this.getTitle(  ) );
+                throw new DirectoryErrorException( this.getTitle( ) );
             }
         }
 
-        if ( listFieldInResponse.size(  ) == 0 )
+        if ( listFieldInResponse.size( ) == 0 )
         {
-            recordField = new RecordField(  );
+            recordField = new RecordField( );
             recordField.setEntry( this );
             listRecordField.add( recordField );
         }
@@ -299,9 +294,9 @@ public class EntryTypeCheckBox extends Entry
         {
             for ( Field fieldInResponse : listFieldInResponse )
             {
-                recordField = new RecordField(  );
+                recordField = new RecordField( );
                 recordField.setEntry( this );
-                recordField.setValue( fieldInResponse.getValue(  ) );
+                recordField.setValue( fieldInResponse.getValue( ) );
                 recordField.setField( fieldInResponse );
                 listRecordField.add( recordField );
             }
@@ -314,17 +309,17 @@ public class EntryTypeCheckBox extends Entry
     @Override
     public void addSearchCriteria( HashMap<String, Object> mapSearchItem, RecordField recordField )
     {
-        if ( ( recordField.getField(  ) != null ) && ( recordField.getField(  ).getValue(  ) != null ) &&
-                !recordField.getField(  ).getValue(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( recordField.getField( ) != null ) && ( recordField.getField( ).getValue( ) != null )
+                && !recordField.getField( ).getValue( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             List<Integer> listIdField = (List<Integer>) mapSearchItem.get( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD );
 
             if ( listIdField == null )
             {
-                listIdField = new ArrayList<Integer>(  );
+                listIdField = new ArrayList<Integer>( );
             }
 
-            listIdField.add( recordField.getField(  ).getIdField(  ) );
+            listIdField.add( recordField.getField( ).getIdField( ) );
             mapSearchItem.put( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD, listIdField );
         }
     }
@@ -333,7 +328,7 @@ public class EntryTypeCheckBox extends Entry
      * {@inheritDoc}
      */
     @Override
-    public boolean isSortable(  )
+    public boolean isSortable( )
     {
         return false;
     }
@@ -342,10 +337,8 @@ public class EntryTypeCheckBox extends Entry
      * {@inheritDoc}
      */
     @Override
-    public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex, Locale locale )
+    public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName, String strPageIndex, Locale locale )
     {
-        return new LocalizedPaginator( this.getFields(  ), nItemPerPage, strBaseUrl, strPageIndexParameterName,
-            strPageIndex, locale );
+        return new LocalizedPaginator( this.getFields( ), nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
     }
 }

@@ -75,7 +75,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Directory global indexer
  */
@@ -95,7 +94,7 @@ public class DirectorySearchIndexer implements SearchIndexer
      * {@inheritDoc}
      */
     @Override
-    public String getName(  )
+    public String getName( )
     {
         return INDEXER_NAME;
     }
@@ -104,7 +103,7 @@ public class DirectorySearchIndexer implements SearchIndexer
      * {@inheritDoc}
      */
     @Override
-    public String getDescription(  )
+    public String getDescription( )
     {
         return INDEXER_DESCRIPTION;
     }
@@ -113,7 +112,7 @@ public class DirectorySearchIndexer implements SearchIndexer
      * {@inheritDoc}
      */
     @Override
-    public String getVersion(  )
+    public String getVersion( )
     {
         return INDEXER_VERSION;
     }
@@ -122,7 +121,7 @@ public class DirectorySearchIndexer implements SearchIndexer
      * {@inheritDoc}
      */
     @Override
-    public boolean isEnable(  )
+    public boolean isEnable( )
     {
         String strEnable = AppPropertiesService.getProperty( PROPERTY_INDEXER_ENABLE );
 
@@ -133,7 +132,7 @@ public class DirectorySearchIndexer implements SearchIndexer
      * {@inheritDoc}
      */
     @Override
-    public List<String> getListType(  )
+    public List<String> getListType( )
     {
         List<String> listType = new ArrayList<String>( 1 );
         listType.add( DIRECTORY );
@@ -145,20 +144,19 @@ public class DirectorySearchIndexer implements SearchIndexer
      * {@inheritDoc}
      */
     @Override
-    public String getSpecificSearchAppUrl(  )
+    public String getSpecificSearchAppUrl( )
     {
-        UrlItem url = new UrlItem( AppPathService.getPortalUrl(  ) );
+        UrlItem url = new UrlItem( AppPathService.getPortalUrl( ) );
         url.addParameter( XPageAppService.PARAM_XPAGE_APP, DIRECTORY );
 
-        return url.getUrl(  );
+        return url.getUrl( );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Document> getDocuments( String recordId )
-        throws IOException, InterruptedException, SiteMessageException
+    public List<Document> getDocuments( String recordId ) throws IOException, InterruptedException, SiteMessageException
     {
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
@@ -168,7 +166,7 @@ public class DirectorySearchIndexer implements SearchIndexer
         {
             nIdRecord = Integer.parseInt( recordId );
         }
-        catch ( NumberFormatException ne )
+        catch( NumberFormatException ne )
         {
             AppLogService.error( recordId + " not parseable to an int", ne );
 
@@ -177,29 +175,29 @@ public class DirectorySearchIndexer implements SearchIndexer
 
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
         Record record = recordService.findByPrimaryKey( nIdRecord, plugin );
-        Directory directory = record.getDirectory(  );
+        Directory directory = record.getDirectory( );
 
-        if ( !record.isEnabled(  ) || !directory.isEnabled(  ) || !directory.isIndexed(  ) )
+        if ( !record.isEnabled( ) || !directory.isEnabled( ) || !directory.isIndexed( ) )
         {
             return new ArrayList<Document>( 0 );
         }
 
-        int nIdDirectory = directory.getIdDirectory(  );
+        int nIdDirectory = directory.getIdDirectory( );
 
-        //Parse the entries to gather the ones marked as indexed
-        EntryFilter entryFilter = new EntryFilter(  );
+        // Parse the entries to gather the ones marked as indexed
+        EntryFilter entryFilter = new EntryFilter( );
         entryFilter.setIdDirectory( nIdDirectory );
         entryFilter.setIsIndexed( EntryFilter.FILTER_TRUE );
 
         List<IEntry> listIndexedEntry = EntryHome.getEntryList( entryFilter, plugin );
 
-        entryFilter = new EntryFilter(  );
+        entryFilter = new EntryFilter( );
         entryFilter.setIdDirectory( nIdDirectory );
         entryFilter.setIsIndexedAsTitle( EntryFilter.FILTER_TRUE );
 
         List<IEntry> listIndexedAsTitleEntry = EntryHome.getEntryList( entryFilter, plugin );
 
-        entryFilter = new EntryFilter(  );
+        entryFilter = new EntryFilter( );
         entryFilter.setIdDirectory( nIdDirectory );
         entryFilter.setIsIndexedAsSummary( EntryFilter.FILTER_TRUE );
 
@@ -222,45 +220,45 @@ public class DirectorySearchIndexer implements SearchIndexer
      * {@inheritDoc}
      */
     @Override
-    public void indexDocuments(  ) throws IOException, InterruptedException, SiteMessageException
+    public void indexDocuments( ) throws IOException, InterruptedException, SiteMessageException
     {
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
         // Index only the directories that have the attribute is_indexed as true
-        DirectoryFilter dirFilter = new DirectoryFilter(  );
+        DirectoryFilter dirFilter = new DirectoryFilter( );
         dirFilter.setIsIndexed( DirectoryFilter.FILTER_TRUE );
-        dirFilter.setIsDisabled( DirectoryFilter.FILTER_TRUE ); //Bad naming: IsDisable( true ) stands for enabled
+        dirFilter.setIsDisabled( DirectoryFilter.FILTER_TRUE ); // Bad naming: IsDisable( true ) stands for enabled
 
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         for ( Directory directory : DirectoryHome.getDirectoryList( dirFilter, plugin ) )
         {
-            int nIdDirectory = directory.getIdDirectory(  );
+            int nIdDirectory = directory.getIdDirectory( );
 
-            //Index only the records that have the attribute is_enable as true
-            RecordFieldFilter recFilter = new RecordFieldFilter(  );
+            // Index only the records that have the attribute is_enable as true
+            RecordFieldFilter recFilter = new RecordFieldFilter( );
             recFilter.setIdDirectory( nIdDirectory );
-            recFilter.setIsDisabled( RecordFieldFilter.FILTER_TRUE ); //Bad naming: IsDisable( true ) stands for enabled
+            recFilter.setIsDisabled( RecordFieldFilter.FILTER_TRUE ); // Bad naming: IsDisable( true ) stands for enabled
 
             List<Record> listRecord = recordService.getListRecord( recFilter, plugin );
 
-            //Keep processing this directory only if there are enabled records
-            if ( !listRecord.isEmpty(  ) )
+            // Keep processing this directory only if there are enabled records
+            if ( !listRecord.isEmpty( ) )
             {
-                //Parse the entries to gather the ones marked as indexed
-                EntryFilter entryFilter = new EntryFilter(  );
+                // Parse the entries to gather the ones marked as indexed
+                EntryFilter entryFilter = new EntryFilter( );
                 entryFilter.setIdDirectory( nIdDirectory );
                 entryFilter.setIsIndexed( EntryFilter.FILTER_TRUE );
 
                 List<IEntry> listIndexedEntry = EntryHome.getEntryList( entryFilter, plugin );
 
-                entryFilter = new EntryFilter(  );
+                entryFilter = new EntryFilter( );
                 entryFilter.setIdDirectory( nIdDirectory );
                 entryFilter.setIsIndexedAsTitle( EntryFilter.FILTER_TRUE );
 
                 List<IEntry> listIndexedAsTitleEntry = EntryHome.getEntryList( entryFilter, plugin );
 
-                entryFilter = new EntryFilter(  );
+                entryFilter = new EntryFilter( );
                 entryFilter.setIdDirectory( nIdDirectory );
                 entryFilter.setIsIndexedAsSummary( EntryFilter.FILTER_TRUE );
 
@@ -272,13 +270,11 @@ public class DirectorySearchIndexer implements SearchIndexer
 
                     try
                     {
-                        recordDoc = getDocument( record, listIndexedEntry, listIndexedAsTitleEntry,
-                                listIndexedAsSummaryEntry, plugin );
+                        recordDoc = getDocument( record, listIndexedEntry, listIndexedAsTitleEntry, listIndexedAsSummaryEntry, plugin );
                     }
-                    catch ( Exception e )
+                    catch( Exception e )
                     {
-                        String strMessage = "Directory ID : " + directory.getIdDirectory(  ) + " - Record ID : " +
-                            record.getIdRecord(  );
+                        String strMessage = "Directory ID : " + directory.getIdDirectory( ) + " - Record ID : " + record.getIdRecord( );
                         IndexationService.error( this, e, strMessage );
                     }
 
@@ -292,22 +288,23 @@ public class DirectorySearchIndexer implements SearchIndexer
     }
 
     /**
-     * Builds a document which will be used by Lucene during the indexing of
-     * this record
-     * @param record the record to convert into a document
-     * @param listContentEntry the entries in this record that are marked as
-     *            is_indexed
-     * @param listTitleEntry the entries in this record that are marked as
-     *            is_indexed_as_title
-     * @param listSummaryEntry the entries in this record that are marked as
-     *            is_indexed_as_summary
-     * @param plugin the plugin object
+     * Builds a document which will be used by Lucene during the indexing of this record
+     * 
+     * @param record
+     *            the record to convert into a document
+     * @param listContentEntry
+     *            the entries in this record that are marked as is_indexed
+     * @param listTitleEntry
+     *            the entries in this record that are marked as is_indexed_as_title
+     * @param listSummaryEntry
+     *            the entries in this record that are marked as is_indexed_as_summary
+     * @param plugin
+     *            the plugin object
      * @return a lucene document filled with the record data
      */
-    public Document getDocument( Record record, List<IEntry> listContentEntry, List<IEntry> listTitleEntry,
-        List<IEntry> listSummaryEntry, Plugin plugin )
+    public Document getDocument( Record record, List<IEntry> listContentEntry, List<IEntry> listTitleEntry, List<IEntry> listSummaryEntry, Plugin plugin )
     {
-        Document doc = new Document(  );
+        Document doc = new Document( );
 
         FieldType ft = new FieldType( StringField.TYPE_STORED );
         ft.setOmitNorms( false );
@@ -318,9 +315,9 @@ public class DirectorySearchIndexer implements SearchIndexer
 
         boolean bFallback = false;
 
-        //Fallback if there is no entry marker as indexed_as_title
-        //Uses the first indexed field instead
-        if ( listTitleEntry.isEmpty(  ) && !listContentEntry.isEmpty(  ) )
+        // Fallback if there is no entry marker as indexed_as_title
+        // Uses the first indexed field instead
+        if ( listTitleEntry.isEmpty( ) && !listContentEntry.isEmpty( ) )
         {
             listTitleEntry.add( listContentEntry.get( 0 ) );
             bFallback = true;
@@ -328,16 +325,16 @@ public class DirectorySearchIndexer implements SearchIndexer
 
         String strTitle = getContentToIndex( record, listTitleEntry, plugin );
 
-        //Fallback if fields were empty
-        //Uses the first indexed field instead
-        if ( StringUtils.isBlank( strTitle ) && !bFallback && !listContentEntry.isEmpty(  ) )
+        // Fallback if fields were empty
+        // Uses the first indexed field instead
+        if ( StringUtils.isBlank( strTitle ) && !bFallback && !listContentEntry.isEmpty( ) )
         {
-            listTitleEntry.clear(  );
+            listTitleEntry.clear( );
             listTitleEntry.add( listContentEntry.get( 0 ) );
             strTitle = getContentToIndex( record, listTitleEntry, plugin );
         }
 
-        //No more fallback. Giving up
+        // No more fallback. Giving up
         if ( StringUtils.isBlank( strTitle ) )
         {
             return null;
@@ -345,7 +342,7 @@ public class DirectorySearchIndexer implements SearchIndexer
 
         doc.add( new Field( SearchItem.FIELD_TITLE, strTitle, ft ) );
 
-        if ( !listContentEntry.isEmpty(  ) )
+        if ( !listContentEntry.isEmpty( ) )
         {
             String strContent = getContentToIndex( record, listContentEntry, plugin );
 
@@ -355,7 +352,7 @@ public class DirectorySearchIndexer implements SearchIndexer
             }
         }
 
-        if ( !listSummaryEntry.isEmpty(  ) )
+        if ( !listSummaryEntry.isEmpty( ) )
         {
             String strSummary = getContentToIndex( record, listSummaryEntry, plugin );
 
@@ -365,7 +362,7 @@ public class DirectorySearchIndexer implements SearchIndexer
             }
         }
 
-        String strRoleKey = record.getRoleKey(  );
+        String strRoleKey = record.getRoleKey( );
 
         if ( StringUtils.isBlank( strRoleKey ) )
         {
@@ -374,24 +371,24 @@ public class DirectorySearchIndexer implements SearchIndexer
 
         doc.add( new Field( SearchItem.FIELD_ROLE, strRoleKey, ft ) );
 
-        String strDate = DateTools.dateToString( record.getDateCreation(  ), DateTools.Resolution.DAY );
+        String strDate = DateTools.dateToString( record.getDateCreation( ), DateTools.Resolution.DAY );
         doc.add( new Field( SearchItem.FIELD_DATE, strDate, ft ) );
 
-        String strDateModification = DateTools.dateToString( record.getDateModification(  ), DateTools.Resolution.DAY );
+        String strDateModification = DateTools.dateToString( record.getDateModification( ), DateTools.Resolution.DAY );
         doc.add( new Field( SearchItem.FIELD_DATE, strDateModification, ft ) );
 
         doc.add( new Field( SearchItem.FIELD_TYPE, DIRECTORY, ft ) );
 
-        UrlItem url = new UrlItem( AppPathService.getPortalUrl(  ) );
+        UrlItem url = new UrlItem( AppPathService.getPortalUrl( ) );
         url.addParameter( XPageAppService.PARAM_XPAGE_APP, DIRECTORY );
-        url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord(  ) );
+        url.addParameter( PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord( ) );
         url.addParameter( PARAMETER_VIEW_DIRECTORY_RECORD, "" );
-        doc.add( new Field( SearchItem.FIELD_URL, url.getUrl(  ), ft ) );
+        doc.add( new Field( SearchItem.FIELD_URL, url.getUrl( ), ft ) );
 
-        //Add the uid as a field, so that index can be incrementally maintained.
+        // Add the uid as a field, so that index can be incrementally maintained.
         // This field is not stored with question/answer, it is indexed, but it is not
         // tokenized prior to indexing.
-        String strUID = Integer.toString( record.getIdRecord(  ) ) + "_" + SHORT_NAME;
+        String strUID = Integer.toString( record.getIdRecord( ) ) + "_" + SHORT_NAME;
         doc.add( new Field( SearchItem.FIELD_UID, strUID, ftNotStored ) );
 
         return doc;
@@ -399,31 +396,35 @@ public class DirectorySearchIndexer implements SearchIndexer
 
     /**
      * Concatenates the value of the specified field in this record
-     * @param record the record to seek
-     * @param listEntry the list of field to concatenate
-     * @param plugin the plugin object
+     * 
+     * @param record
+     *            the record to seek
+     * @param listEntry
+     *            the list of field to concatenate
+     * @param plugin
+     *            the plugin object
      * @return
      */
     private String getContentToIndex( Record record, List<IEntry> listEntry, Plugin plugin )
     {
-        List<Integer> listIdEntry = new ArrayList<Integer>( listEntry.size(  ) );
+        List<Integer> listIdEntry = new ArrayList<Integer>( listEntry.size( ) );
 
         for ( IEntry entry : listEntry )
         {
-            listIdEntry.add( entry.getIdEntry(  ) );
+            listIdEntry.add( entry.getIdEntry( ) );
         }
 
-        StringBuffer sb = new StringBuffer(  );
+        StringBuffer sb = new StringBuffer( );
 
-        List<RecordField> listField = RecordFieldHome.getRecordFieldSpecificList( listIdEntry, record.getIdRecord(  ),
-                plugin,DirectoryUtils.getMapFieldsOfListEntry(listEntry, plugin) );
+        List<RecordField> listField = RecordFieldHome.getRecordFieldSpecificList( listIdEntry, record.getIdRecord( ), plugin,
+                DirectoryUtils.getMapFieldsOfListEntry( listEntry, plugin ) );
 
         for ( RecordField field : listField )
         {
-            sb.append( RecordFieldHome.findByPrimaryKey( field.getIdRecordField(  ), plugin ).getValue(  ) );
+            sb.append( RecordFieldHome.findByPrimaryKey( field.getIdRecordField( ), plugin ).getValue( ) );
             sb.append( " " );
         }
 
-        return sb.toString(  );
+        return sb.toString( );
     }
 }

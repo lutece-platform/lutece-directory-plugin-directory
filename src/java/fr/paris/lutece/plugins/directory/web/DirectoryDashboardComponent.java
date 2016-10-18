@@ -62,10 +62,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
- * Calendar Dashboard Component
- * This component displays directories
+ * Calendar Dashboard Component This component displays directories
  */
 public class DirectoryDashboardComponent extends DashboardComponent
 {
@@ -89,35 +87,32 @@ public class DirectoryDashboardComponent extends DashboardComponent
     @Override
     public String getDashboardData( AdminUser user, HttpServletRequest request )
     {
-        Right right = RightHome.findByPrimaryKey( getRight(  ) );
-        Plugin plugin = PluginService.getPlugin( right.getPluginName(  ) );
+        Right right = RightHome.findByPrimaryKey( getRight( ) );
+        Plugin plugin = PluginService.getPlugin( right.getPluginName( ) );
         List<DirectoryAction> listActions;
         List<DirectoryAction> listActionsForDirectoryEnable;
         List<DirectoryAction> listActionsForDirectoryDisable;
 
-        if ( !( ( plugin.getDbPoolName(  ) != null ) &&
-                !AppConnectionService.NO_POOL_DEFINED.equals( plugin.getDbPoolName(  ) ) ) )
+        if ( !( ( plugin.getDbPoolName( ) != null ) && !AppConnectionService.NO_POOL_DEFINED.equals( plugin.getDbPoolName( ) ) ) )
         {
             return EMPTY_STRING;
         }
 
-        UrlItem url = new UrlItem( right.getUrl(  ) );
-        url.addParameter( DirectoryPlugin.PLUGIN_NAME, right.getPluginName(  ) );
+        UrlItem url = new UrlItem( right.getUrl( ) );
+        url.addParameter( DirectoryPlugin.PLUGIN_NAME, right.getPluginName( ) );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
         List<Directory> directoryList = getDirectoryList( user, plugin );
 
-        listActionsForDirectoryEnable = DirectoryActionHome.selectActionsByFormState( Directory.STATE_ENABLE,
-                getPlugin(  ), user.getLocale(  ) );
-        listActionsForDirectoryDisable = DirectoryActionHome.selectActionsByFormState( Directory.STATE_DISABLE,
-                getPlugin(  ), user.getLocale(  ) );
+        listActionsForDirectoryEnable = DirectoryActionHome.selectActionsByFormState( Directory.STATE_ENABLE, getPlugin( ), user.getLocale( ) );
+        listActionsForDirectoryDisable = DirectoryActionHome.selectActionsByFormState( Directory.STATE_DISABLE, getPlugin( ), user.getLocale( ) );
 
-        Map<String, Object> recordCountMap = new HashMap<String, Object>(  );
-        List<Integer> nAuthorizedModificationList = new ArrayList<Integer>(  );
+        Map<String, Object> recordCountMap = new HashMap<String, Object>( );
+        List<Integer> nAuthorizedModificationList = new ArrayList<Integer>( );
 
         for ( Directory directory : directoryList )
         {
-            if ( directory.isEnabled(  ) )
+            if ( directory.isEnabled( ) )
             {
                 listActions = listActionsForDirectoryEnable;
             }
@@ -126,45 +121,45 @@ public class DirectoryDashboardComponent extends DashboardComponent
                 listActions = listActionsForDirectoryDisable;
             }
 
-            listActions = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActions, directory,
-                    user );
+            listActions = (List<DirectoryAction>) RBACService.getAuthorizedActionsCollection( listActions, directory, user );
             directory.setActions( listActions );
 
             if ( RBACService.isAuthorized( directory, DirectoryResourceIdService.PERMISSION_MODIFY, user ) )
             {
-                nAuthorizedModificationList.add( directory.getIdDirectory(  ) );
+                nAuthorizedModificationList.add( directory.getIdDirectory( ) );
             }
 
-            //count records
-            recordCountMap.put( Integer.toString( directory.getIdDirectory(  ) ),
-                DirectoryService.getInstance(  ).getRecordsCount( directory, user ) );
+            // count records
+            recordCountMap.put( Integer.toString( directory.getIdDirectory( ) ), DirectoryService.getInstance( ).getRecordsCount( directory, user ) );
         }
 
         model.put( MARK_DIRECTORY_LIST, directoryList );
         model.put( MARK_RECORD_COUNT_LIST, recordCountMap );
         model.put( MARK_AUTHORIZED_DIRECTORY_MODIFICATION_LIST, nAuthorizedModificationList );
 
-        model.put( MARK_URL, url.getUrl(  ) );
-        model.put( MARK_ICON, plugin.getIconUrl(  ) );
+        model.put( MARK_URL, url.getUrl( ) );
+        model.put( MARK_ICON, plugin.getIconUrl( ) );
         model.put( MARK_PERMISSION_CREATE,
-            RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                DirectoryResourceIdService.PERMISSION_CREATE, user ) );
+                RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryResourceIdService.PERMISSION_CREATE, user ) );
 
-        HtmlTemplate t = AppTemplateService.getTemplate( TEMPLATE_DASHBOARD, user.getLocale(  ), model );
+        HtmlTemplate t = AppTemplateService.getTemplate( TEMPLATE_DASHBOARD, user.getLocale( ), model );
 
-        return t.getHtml(  );
+        return t.getHtml( );
     }
 
     /**
      * Get the list of directories
-     * @param user the current user
-     * @param plugin Plugin
+     * 
+     * @param user
+     *            the current user
+     * @param plugin
+     *            Plugin
      * @return the list of calendars
      */
     private List<Directory> getDirectoryList( AdminUser user, Plugin plugin )
     {
-        DirectoryFilter filter = new DirectoryFilter(  );
-        List<Directory> directoryList = DirectoryHome.getDirectoryList( filter, getPlugin(  ) );
+        DirectoryFilter filter = new DirectoryFilter( );
+        List<Directory> directoryList = DirectoryHome.getDirectoryList( filter, getPlugin( ) );
 
         return (List<Directory>) AdminWorkgroupService.getAuthorizedCollection( directoryList, user );
     }

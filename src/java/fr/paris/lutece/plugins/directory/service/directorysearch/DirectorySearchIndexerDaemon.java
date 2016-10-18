@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.directory.service.directorysearch;
 
 import fr.paris.lutece.portal.service.daemon.Daemon;
 
-
 /**
  * DirectorySearchIndexerDaemon
  */
@@ -45,8 +44,8 @@ public class DirectorySearchIndexerDaemon extends Daemon
      * Process Direcory indexing
      */
     @Override
-    public void run(  )
+    public void run( )
     {
-        setLastRunLogs( DirectorySearchService.getInstance(  ).processIndexing( false ) );
+        setLastRunLogs( DirectorySearchService.getInstance( ).processIndexing( false ) );
     }
 }

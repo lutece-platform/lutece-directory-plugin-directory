@@ -46,7 +46,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  *
  * RecordComparator
@@ -61,8 +60,11 @@ public class RecordComparator implements Comparator<Record>
 
     /**
      * Constructor
-     * @param entry the entry to compare
-     * @param bIsAscSort true if it is sorted asc, false otherwise
+     * 
+     * @param entry
+     *            the entry to compare
+     * @param bIsAscSort
+     *            true if it is sorted asc, false otherwise
      */
     public RecordComparator( IEntry entry, boolean bIsAscSort )
     {
@@ -72,11 +74,12 @@ public class RecordComparator implements Comparator<Record>
 
     /**
      * Compare two records
-     * @param r1 Record 1
-     * @param r2 Record 2
-     * @return < 0 if r1 is before r2 in the alphabetical order
-     *         0 if r1 equals r2
-     *         > 0 if r1 is after r2
+     * 
+     * @param r1
+     *            Record 1
+     * @param r2
+     *            Record 2
+     * @return < 0 if r1 is before r2 in the alphabetical order 0 if r1 equals r2 > 0 if r1 is after r2
      */
     @Override
     public int compare( Record r1, Record r2 )
@@ -91,43 +94,46 @@ public class RecordComparator implements Comparator<Record>
             {
                 try
                 {
-                    Long lTime1 = Long.parseLong( rf1.getValue(  ) );
+                    Long lTime1 = Long.parseLong( rf1.getValue( ) );
                     Date date1 = new Date( lTime1 );
-                    Long lTime2 = Long.parseLong( rf2.getValue(  ) );
+                    Long lTime2 = Long.parseLong( rf2.getValue( ) );
                     Date date2 = new Date( lTime2 );
                     nStatus = date1.compareTo( date2 );
                 }
-                catch ( Exception e )
-                {
-                    AppLogService.error( e );
-                }
-            }
-            else if ( _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeNumbering )
-            {
-                try
-                {
-                    nStatus = Integer.parseInt( rf1.getValue(  ) ) - Integer.parseInt( rf2.getValue(  ) );
-                }
-                catch ( Exception e )
+                catch( Exception e )
                 {
                     AppLogService.error( e );
                 }
             }
             else
-            {
-                if ( ( rf1.getValue(  ) == null ) && ( rf2.getValue(  ) != null ) )
+                if ( _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeNumbering )
                 {
-                    nStatus = -1;
+                    try
+                    {
+                        nStatus = Integer.parseInt( rf1.getValue( ) ) - Integer.parseInt( rf2.getValue( ) );
+                    }
+                    catch( Exception e )
+                    {
+                        AppLogService.error( e );
+                    }
                 }
-                else if ( ( rf1.getValue(  ) != null ) && ( rf2.getValue(  ) == null ) )
+                else
                 {
-                    nStatus = 1;
+                    if ( ( rf1.getValue( ) == null ) && ( rf2.getValue( ) != null ) )
+                    {
+                        nStatus = -1;
+                    }
+                    else
+                        if ( ( rf1.getValue( ) != null ) && ( rf2.getValue( ) == null ) )
+                        {
+                            nStatus = 1;
+                        }
+                        else
+                            if ( ( rf1.getValue( ) != null ) && ( rf2.getValue( ) != null ) )
+                            {
+                                nStatus = rf1.getValue( ).compareToIgnoreCase( rf2.getValue( ) );
+                            }
                 }
-                else if ( ( rf1.getValue(  ) != null ) && ( rf2.getValue(  ) != null ) )
-                {
-                    nStatus = rf1.getValue(  ).compareToIgnoreCase( rf2.getValue(  ) );
-                }
-            }
         }
 
         if ( !_bIsAscSort )
@@ -140,23 +146,25 @@ public class RecordComparator implements Comparator<Record>
 
     /**
      * Get the record field
-     * @param r Record
+     * 
+     * @param r
+     *            Record
      * @return RecordField
      */
     private RecordField getRecordFieldToCompare( Record r )
     {
         RecordField rf = null;
 
-        if ( _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeCheckBox ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeSelect )
+        if ( _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeCheckBox
+                || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeSelect )
         {
-            List<RecordField> listRecordFields = new ArrayList<RecordField>(  );
+            List<RecordField> listRecordFields = new ArrayList<RecordField>( );
 
-            for ( RecordField recordField : r.getListRecordField(  ) )
+            for ( RecordField recordField : r.getListRecordField( ) )
             {
-                if ( recordField.getEntry(  ).getIdEntry(  ) == _entry.getIdEntry(  ) )
+                if ( recordField.getEntry( ).getIdEntry( ) == _entry.getIdEntry( ) )
                 {
-                    if ( recordField.getValue(  ) == null )
+                    if ( recordField.getValue( ) == null )
                     {
                         recordField.setValue( EMPTY_STRING );
                     }
@@ -167,43 +175,45 @@ public class RecordComparator implements Comparator<Record>
 
             Collections.sort( listRecordFields, new AttributeComparator( CONSTANT_VALUE, _bIsAscSort ) );
 
-            if ( listRecordFields.size(  ) > 0 )
+            if ( listRecordFields.size( ) > 0 )
             {
                 rf = listRecordFields.get( 0 );
             }
         }
-        else if ( _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation )
-        {
-            for ( RecordField recordField : r.getListRecordField(  ) )
+        else
+            if ( _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeGeolocation )
             {
-                if ( ( recordField.getEntry(  ).getIdEntry(  ) == _entry.getIdEntry(  ) ) &&
-                        recordField.getField(  ).getTitle(  ).equals( EntryTypeGeolocation.CONSTANT_ADDRESS ) )
+                for ( RecordField recordField : r.getListRecordField( ) )
                 {
-                    rf = recordField;
+                    if ( ( recordField.getEntry( ).getIdEntry( ) == _entry.getIdEntry( ) )
+                            && recordField.getField( ).getTitle( ).equals( EntryTypeGeolocation.CONSTANT_ADDRESS ) )
+                    {
+                        rf = recordField;
+                    }
                 }
             }
-        }
-        else if ( _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeDate ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeDirectory ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeMail ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeUrl ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeNumbering ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeSQL ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeText ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeTextArea ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeRadioButton ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeRichText ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeInternalLink ||
-                _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeMyLuteceUser )
-        {
-            for ( RecordField recordField : r.getListRecordField(  ) )
-            {
-                if ( recordField.getEntry(  ).getIdEntry(  ) == _entry.getIdEntry(  ) )
+            else
+                if ( _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeDate
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeDirectory
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeMail
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeUrl
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeNumbering
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeSQL
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeText
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeTextArea
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeRadioButton
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeRichText
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeInternalLink
+                        || _entry instanceof fr.paris.lutece.plugins.directory.business.EntryTypeMyLuteceUser )
                 {
-                    rf = recordField;
+                    for ( RecordField recordField : r.getListRecordField( ) )
+                    {
+                        if ( recordField.getEntry( ).getIdEntry( ) == _entry.getIdEntry( ) )
+                        {
+                            rf = recordField;
+                        }
+                    }
                 }
-            }
-        }
 
         return rf;
     }

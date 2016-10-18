@@ -47,14 +47,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
- * Basically send a redirect to create record page.
- * No template is associated.
+ * Basically send a redirect to create record page. No template is associated.
  *
  */
-public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
-    implements IDirectoryAction
+public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
 {
     private static final String ACTION_NAME = "Create record";
     private static final String TEMPLATE_BUTTON = "actions/create_directory_record.html";
@@ -74,7 +71,7 @@ public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryA
     /**
      * No template - default action
      */
-    public String getButtonTemplate(  )
+    public String getButtonTemplate( )
     {
         return TEMPLATE_BUTTON;
     }
@@ -82,7 +79,7 @@ public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryA
     /**
      * {@inheritDoc}
      */
-    public String getName(  )
+    public String getName( )
     {
         return ACTION_NAME;
     }
@@ -98,16 +95,16 @@ public class CreateRecordDirectoryAction extends AbstractPluginAction<DirectoryA
     /**
      * Sends a redirect
      */
-    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
-        DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser, DirectoryAdminSearchFields sessionFields )
+            throws AccessDeniedException
     {
-        DefaultPluginActionResult result = new DefaultPluginActionResult(  );
+        DefaultPluginActionResult result = new DefaultPluginActionResult( );
         String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
 
         UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_CREATE_DIRECTORY_RECORD );
         urlItem.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
 
-        result.setRedirect( urlItem.getUrl(  ) );
+        result.setRedirect( urlItem.getUrl( ) );
 
         return result;
     }

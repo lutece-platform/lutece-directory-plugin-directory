@@ -60,14 +60,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  *
  * Redirects to jsp/admin/plugins/directory/DoProcessActionWorkflow.jsp
  *
  */
-public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
-    implements IDirectoryAction
+public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
 {
     // ACTIONS
     private static final String ACTION_NAME = "Mass Workflow Actions";
@@ -99,16 +97,14 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
             Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
             Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-            if ( ( directory != null ) && ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
+            if ( ( directory != null ) && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) )
             {
-                List<Action> listMassActions = WorkflowService.getInstance(  )
-                                                              .getMassActions( directory.getIdWorkflow(  ) );
+                List<Action> listMassActions = WorkflowService.getInstance( ).getMassActions( directory.getIdWorkflow( ) );
 
-                if ( ( listMassActions != null ) && !listMassActions.isEmpty(  ) )
+                if ( ( listMassActions != null ) && !listMassActions.isEmpty( ) )
                 {
-                    refMassActions = new ReferenceList(  );
-                    refMassActions.addAll( ReferenceList.convert( listMassActions, DirectoryUtils.CONSTANT_ID,
-                            DirectoryUtils.CONSTANT_NAME, true ) );
+                    refMassActions = new ReferenceList( );
+                    refMassActions.addAll( ReferenceList.convert( listMassActions, DirectoryUtils.CONSTANT_ID, DirectoryUtils.CONSTANT_NAME, true ) );
                 }
             }
         }
@@ -119,7 +115,7 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
     /**
      * {@inheritDoc}
      */
-    public String getButtonTemplate(  )
+    public String getButtonTemplate( )
     {
         return TEMPLATE_BUTTON;
     }
@@ -127,7 +123,7 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
     /**
      * {@inheritDoc}
      */
-    public String getName(  )
+    public String getName( )
     {
         return ACTION_NAME;
     }
@@ -143,14 +139,14 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
     /**
      * Redirects to {@link #JSP_DO_PROCESS_ACTION_WORKFLOW}
      */
-    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
-        DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser, DirectoryAdminSearchFields sessionFields )
+            throws AccessDeniedException
     {
-        DefaultPluginActionResult result = new DefaultPluginActionResult(  );
+        DefaultPluginActionResult result = new DefaultPluginActionResult( );
 
         String strRedirect = StringUtils.EMPTY;
 
-        if ( ( sessionFields.getSelectedRecords(  ) != null ) && !sessionFields.getSelectedRecords(  ).isEmpty(  ) )
+        if ( ( sessionFields.getSelectedRecords( ) != null ) && !sessionFields.getSelectedRecords( ).isEmpty( ) )
         {
             String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
             String strIdAction = request.getParameter( DirectoryUtils.PARAMETER_ID_ACTION );
@@ -159,7 +155,7 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
             url.addParameter( DirectoryUtils.PARAMETER_ID_ACTION, strIdAction );
             url.addParameter( DirectoryUtils.PARAMETER_SHOW_ACTION_RESULT, DirectoryUtils.CONSTANT_TRUE );
 
-            for ( String strIdRecord : sessionFields.getSelectedRecords(  ) )
+            for ( String strIdRecord : sessionFields.getSelectedRecords( ) )
             {
                 if ( StringUtils.isNotBlank( strIdRecord ) && StringUtils.isNumeric( strIdRecord ) )
                 {
@@ -167,12 +163,11 @@ public class MassWorkflowDirectoryAction extends AbstractPluginAction<DirectoryA
                 }
             }
 
-            strRedirect = url.getUrl(  );
+            strRedirect = url.getUrl( );
         }
         else
         {
-            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS,
-                    AdminMessage.TYPE_INFO );
+            strRedirect = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_SELECT_RECORDS, AdminMessage.TYPE_INFO );
         }
 
         result.setRedirect( strRedirect );

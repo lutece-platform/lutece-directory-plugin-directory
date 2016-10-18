@@ -38,7 +38,6 @@ import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.sql.DAOUtil;
 
-
 /**
  *
  * DirectoryParameterDAO
@@ -67,21 +66,21 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
     @Override
     public ReferenceList selectAll( Plugin plugin )
     {
-        ReferenceList listParams = new ReferenceList(  );
+        ReferenceList listParams = new ReferenceList( );
         String strSQL = SQL_QUERY_SELECT_ALL + SQL_ORDER_BY + SQL_PARAMETER_KEY + SQL_ASC;
         DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            ReferenceItem param = new ReferenceItem(  );
+            ReferenceItem param = new ReferenceItem( );
             param.setCode( daoUtil.getString( 1 ) );
             param.setName( daoUtil.getString( 2 ) );
-            param.setChecked( TRUE.equals( param.getName(  ) ) ? true : false );
+            param.setChecked( TRUE.equals( param.getName( ) ) ? true : false );
             listParams.add( param );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listParams;
     }
@@ -95,17 +94,17 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
         ReferenceItem param = null;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         daoUtil.setString( 1, strParameterKey );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            param = new ReferenceItem(  );
+            param = new ReferenceItem( );
             param.setCode( strParameterKey );
             param.setName( daoUtil.getString( 1 ) );
-            param.setChecked( TRUE.equals( param.getName(  ) ) ? true : false );
+            param.setChecked( TRUE.equals( param.getName( ) ) ? true : false );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return param;
     }
@@ -118,11 +117,11 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-        daoUtil.setString( 1, param.getName(  ) );
-        daoUtil.setString( 2, param.getCode(  ) );
+        daoUtil.setString( 1, param.getName( ) );
+        daoUtil.setString( 2, param.getCode( ) );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -134,11 +133,11 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
         // Build SQL query
         StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
 
-        if ( filter.containsListParameterKeys(  ) )
+        if ( filter.containsListParameterKeys( ) )
         {
             sbSQL.append( SQL_WHERE + SQL_PARAMETER_KEY );
 
-            if ( filter.excludeParameterKeys(  ) )
+            if ( filter.excludeParameterKeys( ) )
             {
                 sbSQL.append( SQL_NOT );
             }
@@ -146,14 +145,14 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
             sbSQL.append( SQL_IN );
             sbSQL.append( OPEN_BRACKET );
 
-            for ( int i = 0; i < filter.getListParameterKeys(  ).size(  ); i++ )
+            for ( int i = 0; i < filter.getListParameterKeys( ).size( ); i++ )
             {
-                String strParameterKey = filter.getListParameterKeys(  ).get( i );
+                String strParameterKey = filter.getListParameterKeys( ).get( i );
                 sbSQL.append( SIMPLE_QUOTE );
                 sbSQL.append( strParameterKey );
                 sbSQL.append( SIMPLE_QUOTE );
 
-                if ( i < ( filter.getListParameterKeys(  ).size(  ) - 1 ) )
+                if ( i < ( filter.getListParameterKeys( ).size( ) - 1 ) )
                 {
                     sbSQL.append( COMMA );
                 }
@@ -163,20 +162,20 @@ public class DirectoryParameterDAO implements IDirectoryParameterDAO
         }
 
         // Execute SQL query
-        ReferenceList listParams = new ReferenceList(  );
-        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
-        daoUtil.executeQuery(  );
+        ReferenceList listParams = new ReferenceList( );
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            ReferenceItem param = new ReferenceItem(  );
+            ReferenceItem param = new ReferenceItem( );
             param.setCode( daoUtil.getString( 1 ) );
             param.setName( daoUtil.getString( 2 ) );
-            param.setChecked( TRUE.equals( param.getName(  ) ) ? true : false );
+            param.setChecked( TRUE.equals( param.getName( ) ) ? true : false );
             listParams.add( param );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listParams;
     }

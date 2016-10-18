@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-
 /**
  *
  * class entryType
@@ -52,14 +51,16 @@ public class EntryType
      *
      * @return the id of the entry type
      */
-    public int getIdType(  )
+    public int getIdType( )
     {
         return _nIdType;
     }
 
     /**
      * set the id of the entry type
-     * @param idType the id of the entry type
+     * 
+     * @param idType
+     *            the id of the entry type
      */
     public void setIdType( int idType )
     {
@@ -70,14 +71,16 @@ public class EntryType
      *
      * @return true if the type is a group
      */
-    public Boolean getGroup(  )
+    public Boolean getGroup( )
     {
         return _bGroup;
     }
 
     /**
      * set true if the type is a group
-     * @param isGroup if the type is a group
+     * 
+     * @param isGroup
+     *            if the type is a group
      */
     public void setGroup( Boolean isGroup )
     {
@@ -88,14 +91,16 @@ public class EntryType
      *
      * @return the I18n title key of the entry type
      */
-    public String getTitleI18nKey(  )
+    public String getTitleI18nKey( )
     {
         return _strTitleI18nKey;
     }
 
     /**
-     * set the I18n title key  of the entry type
-     * @param title the title of the entry type
+     * set the I18n title key of the entry type
+     * 
+     * @param title
+     *            the title of the entry type
      */
     public void setTitleI18nKey( String title )
     {
@@ -106,14 +111,16 @@ public class EntryType
      *
      * @return the path for acces to the Classe Entry
      */
-    public String getClassName(  )
+    public String getClassName( )
     {
         return _strClassName;
     }
 
     /**
      * set the path for acces to the Class Entry
-     * @param className the path for acces to the Class Entry
+     * 
+     * @param className
+     *            the path for acces to the Class Entry
      */
     public void setClassName( String className )
     {
@@ -124,14 +131,15 @@ public class EntryType
      *
      * @return true if the type is a comment
      */
-    public Boolean getComment(  )
+    public Boolean getComment( )
     {
         return _bComment;
     }
 
     /**
      *
-     * @param isComment set true if the type is a comment
+     * @param isComment
+     *            set true if the type is a comment
      */
     public void setComment( Boolean isComment )
     {
@@ -142,14 +150,16 @@ public class EntryType
      *
      * @return true if the type is a mylutece user
      */
-    public Boolean getMyLuteceUser(  )
+    public Boolean getMyLuteceUser( )
     {
         return _bIsMyLuteceUser;
     }
 
     /**
      * Set the mylutece user flag
-     * @param isMyLuteceUser set true if the type is a mylutece user
+     * 
+     * @param isMyLuteceUser
+     *            set true if the type is a mylutece user
      */
     public void setMyLuteceUser( Boolean isMyLuteceUser )
     {

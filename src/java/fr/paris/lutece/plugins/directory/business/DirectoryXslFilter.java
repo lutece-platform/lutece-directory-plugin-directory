@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business;
 
-
 /**
  *
  * class DirectoryXslFilter
@@ -46,16 +45,18 @@ public class DirectoryXslFilter
 
     /**
      *
-     * @return  the id of category insert in the filter
+     * @return the id of category insert in the filter
      */
-    public int getIdCategory(  )
+    public int getIdCategory( )
     {
         return _nIdCategory;
     }
 
     /**
-     * set  the id of category  in the filter
-     * @param idCategoryXsl the id of category to insert in the filter
+     * set the id of category in the filter
+     * 
+     * @param idCategoryXsl
+     *            the id of category to insert in the filter
      */
     public void setIdCategory( int idCategoryXsl )
     {
@@ -67,7 +68,7 @@ public class DirectoryXslFilter
      * @return true if the filter contain an id of category
      *
      */
-    public boolean containsIdCategory(  )
+    public boolean containsIdCategory( )
     {
         return ( _nIdCategory != ALL_INT );
     }

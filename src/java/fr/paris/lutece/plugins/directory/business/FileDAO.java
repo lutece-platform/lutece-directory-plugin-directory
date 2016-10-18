@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.directory.business;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
-
 /**
  * This class provides Data Access methods for Field objects
  */
@@ -44,13 +43,12 @@ public final class FileDAO implements IFileDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_file ) FROM directory_file";
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_file,title,id_physical_file,file_size,mime_type" +
-        " FROM directory_file WHERE id_file = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_file(id_file,title,id_physical_file,file_size,mime_type)" +
-        " VALUES(?,?,?,?,?)";
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_file,title,id_physical_file,file_size,mime_type"
+            + " FROM directory_file WHERE id_file = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_file(id_file,title,id_physical_file,file_size,mime_type)" + " VALUES(?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_file WHERE id_file = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE  directory_file SET " +
-        "id_file=?,title=?,id_physical_file=?,file_size=?,mime_type=? WHERE id_file = ?";
+    private static final String SQL_QUERY_UPDATE = "UPDATE  directory_file SET "
+            + "id_file=?,title=?,id_physical_file=?,file_size=?,mime_type=? WHERE id_file = ?";
 
     /**
      * {@inheritDoc}
@@ -59,18 +57,18 @@ public final class FileDAO implements IFileDAO
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nKey;
 
-        if ( !daoUtil.next(  ) )
+        if ( !daoUtil.next( ) )
         {
             // if the table is empty
             nKey = 1;
         }
 
         nKey = daoUtil.getInt( 1 ) + 1;
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
@@ -82,27 +80,27 @@ public final class FileDAO implements IFileDAO
     public synchronized int insert( File file, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
-        daoUtil.setString( 2, file.getTitle(  ) );
+        daoUtil.setString( 2, file.getTitle( ) );
 
-        if ( file.getPhysicalFile(  ) != null )
+        if ( file.getPhysicalFile( ) != null )
         {
-            daoUtil.setInt( 3, file.getPhysicalFile(  ).getIdPhysicalFile(  ) );
+            daoUtil.setInt( 3, file.getPhysicalFile( ).getIdPhysicalFile( ) );
         }
         else
         {
             daoUtil.setIntNull( 3 );
         }
 
-        daoUtil.setInt( 4, file.getSize(  ) );
-        daoUtil.setString( 5, file.getMimeType(  ) );
+        daoUtil.setInt( 4, file.getSize( ) );
+        daoUtil.setString( 5, file.getMimeType( ) );
 
         file.setIdFile( newPrimaryKey( plugin ) );
-        daoUtil.setInt( 1, file.getIdFile(  ) );
-        daoUtil.executeUpdate(  );
+        daoUtil.setInt( 1, file.getIdFile( ) );
+        daoUtil.executeUpdate( );
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
-        return file.getIdFile(  );
+        return file.getIdFile( );
     }
 
     /**
@@ -113,20 +111,20 @@ public final class FileDAO implements IFileDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
         daoUtil.setInt( 1, nId );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         File file = null;
         PhysicalFile physicalFile = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            file = new File(  );
+            file = new File( );
             file.setIdFile( daoUtil.getInt( 1 ) );
             file.setTitle( daoUtil.getString( 2 ) );
 
             if ( daoUtil.getObject( 3 ) != null )
             {
-                physicalFile = new PhysicalFile(  );
+                physicalFile = new PhysicalFile( );
                 physicalFile.setIdPhysicalFile( daoUtil.getInt( 3 ) );
                 file.setPhysicalFile( physicalFile );
             }
@@ -135,7 +133,7 @@ public final class FileDAO implements IFileDAO
             file.setMimeType( daoUtil.getString( 5 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return file;
     }
@@ -148,8 +146,8 @@ public final class FileDAO implements IFileDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdFile );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -159,22 +157,22 @@ public final class FileDAO implements IFileDAO
     public void store( File file, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
-        daoUtil.setInt( 1, file.getIdFile(  ) );
-        daoUtil.setString( 2, file.getTitle(  ) );
+        daoUtil.setInt( 1, file.getIdFile( ) );
+        daoUtil.setString( 2, file.getTitle( ) );
 
-        if ( file.getPhysicalFile(  ) != null )
+        if ( file.getPhysicalFile( ) != null )
         {
-            daoUtil.setInt( 3, file.getPhysicalFile(  ).getIdPhysicalFile(  ) );
+            daoUtil.setInt( 3, file.getPhysicalFile( ).getIdPhysicalFile( ) );
         }
         else
         {
             daoUtil.setIntNull( 3 );
         }
 
-        daoUtil.setInt( 4, file.getSize(  ) );
-        daoUtil.setString( 5, file.getMimeType(  ) );
-        daoUtil.setInt( 6, file.getIdFile(  ) );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.setInt( 4, file.getSize( ) );
+        daoUtil.setString( 5, file.getMimeType( ) );
+        daoUtil.setInt( 6, file.getIdFile( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 }

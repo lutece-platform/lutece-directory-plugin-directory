@@ -42,7 +42,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * class EntryTypeComment
@@ -78,17 +77,18 @@ public class EntryTypeComment extends Entry
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strComment == null ) || strComment.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strComment == null ) || strComment.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_COMMENT;
         }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         this.setComment( strComment );
@@ -102,7 +102,7 @@ public class EntryTypeComment extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return _template_create;
     }
@@ -111,17 +111,18 @@ public class EntryTypeComment extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return _template_modify;
     }
 
     /**
      * Check if entries of this type are anonymizable or not.
+     * 
      * @return True if the entry type is anonymizable, false otherwise
      */
     @Override
-    public boolean isAnonymizable(  )
+    public boolean isAnonymizable( )
     {
         return false;
     }

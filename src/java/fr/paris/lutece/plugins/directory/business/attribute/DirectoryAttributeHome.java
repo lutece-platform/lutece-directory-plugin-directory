@@ -41,7 +41,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
 /**
  *
  * DirectoryAttributeHome
@@ -56,13 +55,15 @@ public final class DirectoryAttributeHome
     /**
      * Private constructor
      */
-    private DirectoryAttributeHome(  )
+    private DirectoryAttributeHome( )
     {
     }
 
     /**
      * Load the attributes of the directory
-     * @param nIdDirectory the id directory
+     * 
+     * @param nIdDirectory
+     *            the id directory
      * @return a map of key - value
      */
     public static Map<String, Object> findByPrimaryKey( int nIdDirectory )
@@ -72,9 +73,13 @@ public final class DirectoryAttributeHome
 
     /**
      * Create an attribute of the directory
-     * @param nIdDirectory The id of the directory
-     * @param strAttributeKey The key of the attribute
-     * @param attributeValue The attribute value
+     * 
+     * @param nIdDirectory
+     *            The id of the directory
+     * @param strAttributeKey
+     *            The key of the attribute
+     * @param attributeValue
+     *            The attribute value
      */
     public static void create( int nIdDirectory, String strAttributeKey, Object attributeValue )
     {
@@ -83,20 +88,25 @@ public final class DirectoryAttributeHome
 
     /**
      * Create the attribute of the directory
-     * @param nIdDirectory the id directory
-     * @param mapAttributes the map of attributes
+     * 
+     * @param nIdDirectory
+     *            the id directory
+     * @param mapAttributes
+     *            the map of attributes
      */
     public static void create( int nIdDirectory, Map<String, Object> mapAttributes )
     {
-        for ( Entry<String, Object> attribute : mapAttributes.entrySet(  ) )
+        for ( Entry<String, Object> attribute : mapAttributes.entrySet( ) )
         {
-            create( nIdDirectory, attribute.getKey(  ), attribute.getValue(  ) );
+            create( nIdDirectory, attribute.getKey( ), attribute.getValue( ) );
         }
     }
 
     /**
      * Remove the attributes of the directory
-     * @param nIdDirectory the id directory
+     * 
+     * @param nIdDirectory
+     *            the id directory
      */
     public static void remove( int nIdDirectory )
     {

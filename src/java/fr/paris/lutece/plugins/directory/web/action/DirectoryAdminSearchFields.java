@@ -44,25 +44,22 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
- * Visualization of all needed session values.
- * Many features depends on search result or paginator.
- * Those fields may be required for actions.
+ * Visualization of all needed session values. Many features depends on search result or paginator. Those fields may be required for actions.
  *
  */
 public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFields
 {
     private static final long serialVersionUID = 7256733494058540733L;
 
-    //session fields
+    // session fields
     private String _strCurrentPageIndexDirectory;
     private int _nItemsPerPageDirectory;
     private String _strCurrentPageIndexEntry;
     private int _nItemsPerPageEntry;
     private String _strCurrentPageIndexPrintMass;
 
-    //private String _nItemsPerPagePrintMass;
+    // private String _nItemsPerPagePrintMass;
     private int _nItemsPerPagePrintMass;
     private String _strCurrentPageIndex;
     private String _strCurrentPageIndexDirectoryRecord;
@@ -81,16 +78,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Gets the selected records
+     * 
      * @return the selected records
      */
-    public List<String> getSelectedRecords(  )
+    public List<String> getSelectedRecords( )
     {
         return _listSelectedRecords;
     }
 
     /**
      * Sets the selected records
-     * @param listSelectedRecords the selected records
+     * 
+     * @param listSelectedRecords
+     *            the selected records
      */
     public void setSelectedRecords( List<String> listSelectedRecords )
     {
@@ -98,17 +98,20 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
     }
 
     /**
-          * Current page index directory
-          * @return current page index directory
-          */
-    public String getCurrentPageIndexDirectory(  )
+     * Current page index directory
+     * 
+     * @return current page index directory
+     */
+    public String getCurrentPageIndexDirectory( )
     {
         return _strCurrentPageIndexDirectory;
     }
 
     /**
      * Current page index directory
-     * @param strCurrentPageIndexDirectory current page index directory
+     * 
+     * @param strCurrentPageIndexDirectory
+     *            current page index directory
      */
     public void setCurrentPageIndexDirectory( String strCurrentPageIndexDirectory )
     {
@@ -117,16 +120,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Items per page directory
+     * 
      * @return item per page directory
      */
-    public int getItemsPerPageDirectory(  )
+    public int getItemsPerPageDirectory( )
     {
         return _nItemsPerPageDirectory;
     }
 
     /**
      * Items per page directory
-     * @param nItemsPerPageDirectory items per page directory
+     * 
+     * @param nItemsPerPageDirectory
+     *            items per page directory
      */
     public void setItemsPerPageDirectory( int nItemsPerPageDirectory )
     {
@@ -135,16 +141,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Current page index entry
+     * 
      * @return current page index entry
      */
-    public String getCurrentPageIndexEntry(  )
+    public String getCurrentPageIndexEntry( )
     {
         return _strCurrentPageIndexEntry;
     }
 
     /**
      * Current page index entry
-     * @param strCurrentPageIndexEntry current page index entry
+     * 
+     * @param strCurrentPageIndexEntry
+     *            current page index entry
      */
     public void setCurrentPageIndexEntry( String strCurrentPageIndexEntry )
     {
@@ -153,16 +162,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Items per page entry
+     * 
      * @return items per page entry
      */
-    public int getItemsPerPageEntry(  )
+    public int getItemsPerPageEntry( )
     {
         return _nItemsPerPageEntry;
     }
 
     /**
      * Items per page entry
-     * @param nItemsPerPageEntry items per page entry
+     * 
+     * @param nItemsPerPageEntry
+     *            items per page entry
      */
     public void setItemsPerPageEntry( int nItemsPerPageEntry )
     {
@@ -171,16 +183,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Current page index print mass
+     * 
      * @return current page index print mass
      */
-    public String getCurrentPageIndexPrintMass(  )
+    public String getCurrentPageIndexPrintMass( )
     {
         return _strCurrentPageIndexPrintMass;
     }
 
     /**
      * Current page index print mass
-     * @param strCurrentPageIndexPrintMass current page index print mass
+     * 
+     * @param strCurrentPageIndexPrintMass
+     *            current page index print mass
      */
     public void setCurrentPageIndexPrintMass( String strCurrentPageIndexPrintMass )
     {
@@ -189,16 +204,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Items per page print mass
+     * 
      * @return items per page print mass
      */
-    public int getItemsPerPagePrintMass(  )
+    public int getItemsPerPagePrintMass( )
     {
         return _nItemsPerPagePrintMass;
     }
 
     /**
      * Items per page print mass
-     * @param nItemsPerPagePrintMass items per page print mass
+     * 
+     * @param nItemsPerPagePrintMass
+     *            items per page print mass
      */
     public void setItemsPerPagePrintMass( int nItemsPerPagePrintMass )
     {
@@ -207,16 +225,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Current page index
+     * 
      * @return current page index
      */
-    public String getCurrentPageIndex(  )
+    public String getCurrentPageIndex( )
     {
         return _strCurrentPageIndex;
     }
 
     /**
      * Current page index
-     * @param strCurrentPageIndex current page index
+     * 
+     * @param strCurrentPageIndex
+     *            current page index
      */
     public void setCurrentPageIndex( String strCurrentPageIndex )
     {
@@ -225,16 +246,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Current page index directory record
+     * 
      * @return current page index directory record
      */
-    public String getCurrentPageIndexDirectoryRecord(  )
+    public String getCurrentPageIndexDirectoryRecord( )
     {
         return _strCurrentPageIndexDirectoryRecord;
     }
 
     /**
      * Current page index directory record
-     * @param strCurrentPageIndexDirectoryRecord current page index directory record
+     * 
+     * @param strCurrentPageIndexDirectoryRecord
+     *            current page index directory record
      */
     public void setCurrentPageIndexDirectoryRecord( String strCurrentPageIndexDirectoryRecord )
     {
@@ -243,16 +267,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Items per page directory record
+     * 
      * @return items per page directory record
      */
-    public int getItemsPerPageDirectoryRecord(  )
+    public int getItemsPerPageDirectoryRecord( )
     {
         return _nItemsPerPageDirectoryRecord;
     }
 
     /**
      * Items per page directory record
-     * @param nItemsPerPageDirectoryRecord items per page directory record
+     * 
+     * @param nItemsPerPageDirectoryRecord
+     *            items per page directory record
      */
     public void setItemsPerPageDirectoryRecord( int nItemsPerPageDirectoryRecord )
     {
@@ -261,16 +288,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Id active
+     * 
      * @return id active
      */
-    public int getIdActive(  )
+    public int getIdActive( )
     {
         return _nIdActive;
     }
 
     /**
      * Id active
-     * @param nIdActive id active
+     * 
+     * @param nIdActive
+     *            id active
      */
     public void setIdActive( int nIdActive )
     {
@@ -279,16 +309,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Workgroup
+     * 
      * @return workgroup
      */
-    public String getWorkGroup(  )
+    public String getWorkGroup( )
     {
         return _strWorkGroup;
     }
 
     /**
      * Workgroup
-     * @param strWorkGroup workgroup
+     * 
+     * @param strWorkGroup
+     *            workgroup
      */
     public void setWorkGroup( String strWorkGroup )
     {
@@ -297,16 +330,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Count line
+     * 
      * @return count line
      */
-    public int getCountLine(  )
+    public int getCountLine( )
     {
         return _nCountLine;
     }
 
     /**
      * Count line
-     * @param nCountLine count line
+     * 
+     * @param nCountLine
+     *            count line
      */
     public void setCountLine( int nCountLine )
     {
@@ -315,16 +351,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Count line failure
+     * 
      * @return count line failure
      */
-    public int getCountLineFailure(  )
+    public int getCountLineFailure( )
     {
         return _nCountLineFailure;
     }
 
     /**
      * Count line failure
-     * @param nCountLineFailure count line failure
+     * 
+     * @param nCountLineFailure
+     *            count line failure
      */
     public void setCountLineFailure( int nCountLineFailure )
     {
@@ -333,16 +372,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Id workfow state
+     * 
      * @return id workflow state
      */
-    public int get_nIdWorkflowSate(  )
+    public int get_nIdWorkflowSate( )
     {
         return _nIdWorkflowSate;
     }
 
     /**
      * Id workflow state
-     * @param nIdWorkflowSate id workflow state
+     * 
+     * @param nIdWorkflowSate
+     *            id workflow state
      */
     public void setIdWorkflowSate( int nIdWorkflowSate )
     {
@@ -351,16 +393,19 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Error
+     * 
      * @return error
      */
-    public StringBuffer getError(  )
+    public StringBuffer getError( )
     {
         return _strError;
     }
 
     /**
      * Error
-     * @param strError error
+     * 
+     * @param strError
+     *            error
      */
     public void setError( StringBuffer strError )
     {
@@ -369,7 +414,9 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Set the list of ids result record
-     * @param listIdsResultRecord the list of id result record
+     * 
+     * @param listIdsResultRecord
+     *            the list of id result record
      */
     public void setListIdsResultRecord( List<Integer> listIdsResultRecord )
     {
@@ -378,26 +425,31 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Get the list of ids result record
+     * 
      * @return the list of ids result record
      */
-    public List<Integer> getListIdsResultRecord(  )
+    public List<Integer> getListIdsResultRecord( )
     {
         return _listIdsResultRecord;
     }
 
     /**
      * Set the item navigator for records
-     * @param nCurrentIdRecord the current id record
-     * @param strUrl the url
-     * @param strParameterName the parameter name
+     * 
+     * @param nCurrentIdRecord
+     *            the current id record
+     * @param strUrl
+     *            the url
+     * @param strParameterName
+     *            the parameter name
      */
     public void setItemNavigatorViewRecords( int nCurrentIdRecord, String strUrl, String strParameterName )
     {
         if ( _itemNavigatorViewRecords == null )
         {
-            if ( ( _listIdsResultRecord != null ) && !_listIdsResultRecord.isEmpty(  ) )
+            if ( ( _listIdsResultRecord != null ) && !_listIdsResultRecord.isEmpty( ) )
             {
-                List<String> listIds = new ArrayList<String>( _listIdsResultRecord.size(  ) );
+                List<String> listIds = new ArrayList<String>( _listIdsResultRecord.size( ) );
                 int nCurrentItemId = 0;
                 int nIndex = 0;
 
@@ -424,7 +476,9 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Set the item navigator
-     * @param itemNavigator the item navigator
+     * 
+     * @param itemNavigator
+     *            the item navigator
      */
     public void setItemNavigatorViewRecords( ItemNavigator itemNavigator )
     {
@@ -433,26 +487,31 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Get the item navigator
+     * 
      * @return the item navigator
      */
-    public ItemNavigator getItemNavigatorViewRecords(  )
+    public ItemNavigator getItemNavigatorViewRecords( )
     {
         return _itemNavigatorViewRecords;
     }
 
     /**
      * Set the item navigator for records
-     * @param nCurrentIdRecord the current id record
-     * @param strUrl the url
-     * @param strParameterName the parameter name
+     * 
+     * @param nCurrentIdRecord
+     *            the current id record
+     * @param strUrl
+     *            the url
+     * @param strParameterName
+     *            the parameter name
      */
     public void setItemNavigatorHistory( int nCurrentIdRecord, String strUrl, String strParameterName )
     {
         if ( _itemNavigatorHistory == null )
         {
-            if ( ( _listIdsResultRecord != null ) && !_listIdsResultRecord.isEmpty(  ) )
+            if ( ( _listIdsResultRecord != null ) && !_listIdsResultRecord.isEmpty( ) )
             {
-                List<String> listIds = new ArrayList<String>( _listIdsResultRecord.size(  ) );
+                List<String> listIds = new ArrayList<String>( _listIdsResultRecord.size( ) );
                 int nCurrentItemId = 0;
                 int nIndex = 0;
 
@@ -479,7 +538,9 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Set the item navigator
-     * @param itemNavigator the item navigator
+     * 
+     * @param itemNavigator
+     *            the item navigator
      */
     public void setItemNavigatorHistory( ItemNavigator itemNavigator )
     {
@@ -488,37 +549,41 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
 
     /**
      * Get the history item navigator
+     * 
      * @return The history item navigator
      */
-    public ItemNavigator getItemNavigatorHistory(  )
+    public ItemNavigator getItemNavigatorHistory( )
     {
         return _itemNavigatorHistory;
     }
 
     /**
      * Set the redirect url
-     * @param request The request
+     * 
+     * @param request
+     *            The request
      */
     public void setRedirectUrl( HttpServletRequest request )
     {
-        String strNextUrl = request.getRequestURI(  );
+        String strNextUrl = request.getRequestURI( );
         UrlItem url = new UrlItem( strNextUrl );
-        Enumeration enumParams = request.getParameterNames(  );
+        Enumeration enumParams = request.getParameterNames( );
 
-        while ( enumParams.hasMoreElements(  ) )
+        while ( enumParams.hasMoreElements( ) )
         {
-            String strParamName = (String) enumParams.nextElement(  );
+            String strParamName = (String) enumParams.nextElement( );
             url.addParameter( strParamName, request.getParameter( strParamName ) );
         }
 
-        _strRedirectUrl = url.getUrl(  );
+        _strRedirectUrl = url.getUrl( );
     }
 
     /**
      * Get the redirect url
+     * 
      * @return the redirect url
      */
-    public String getRedirectUrl(  )
+    public String getRedirectUrl( )
     {
         return _strRedirectUrl;
     }
@@ -529,7 +594,7 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
     @Override
     public String getDefaultIdSortEntry( Directory directory )
     {
-        return directory.getIdSortEntry(  );
+        return directory.getIdSortEntry( );
     }
 
     /**
@@ -538,6 +603,6 @@ public final class DirectoryAdminSearchFields extends DefaultDirectorySearchFiel
     @Override
     public boolean isDefaultAscendingSort( Directory directory )
     {
-        return directory.isAscendingSort(  );
+        return directory.isAscendingSort( );
     }
 }

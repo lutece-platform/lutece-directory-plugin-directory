@@ -50,7 +50,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  * class ManageDirectoryJspBean
  */
@@ -63,13 +62,13 @@ public class ManageDirectoryJspBean extends PluginAdminPageJspBean
      */
     private static final long serialVersionUID = -2688672489375653849L;
 
-    //templates
+    // templates
     private static final String TEMPLATE_MANAGE_PLUGIN_DIRECTORY = "admin/plugins/directory/manage_plugin_directory.html";
 
     // other constants
     private static final String EMPTY_STRING = "";
 
-    //MARK 
+    // MARK
     private static final String MARK_PERMISSION_INDEX_ALL_DIRECTORY = "permission_index_all_directory";
     private static final String MARK_PERMISSION_XSL = "right_xsl";
 
@@ -77,46 +76,43 @@ public class ManageDirectoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Return management page of plugin directory
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return Html management page of plugin directory
      */
     public String getManageDirectory( HttpServletRequest request )
     {
         setPageTitleProperty( EMPTY_STRING );
 
-        HashMap<String, Object> model = new HashMap<String, Object>(  );
+        HashMap<String, Object> model = new HashMap<String, Object>( );
 
-        model.put( MARK_PERMISSION_INDEX_ALL_DIRECTORY,
-            RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                DirectoryResourceIdService.PERMISSION_INDEX_ALL_DIRECTORY, getUser(  ) ) );
+        model.put( MARK_PERMISSION_INDEX_ALL_DIRECTORY, RBACService.isAuthorized( Directory.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
+                DirectoryResourceIdService.PERMISSION_INDEX_ALL_DIRECTORY, getUser( ) ) );
 
-        List<DirectoryXsl> listDirectoryXsl = DirectoryXslHome.getList( new DirectoryXslFilter(  ), getPlugin(  ) );
+        List<DirectoryXsl> listDirectoryXsl = DirectoryXslHome.getList( new DirectoryXslFilter( ), getPlugin( ) );
         boolean right = false;
 
         for ( DirectoryXsl directoryXsl : listDirectoryXsl )
         {
-            if ( RBACService.isAuthorized( DirectoryXsl.RESOURCE_TYPE,
-                        Integer.toString( directoryXsl.getIdDirectoryXsl(  ) ),
-                        DirectoryXslResourceIdService.PERMISSION_DELETE, getUser(  ) ) ||
-                    RBACService.isAuthorized( DirectoryXsl.RESOURCE_TYPE,
-                        Integer.toString( directoryXsl.getIdDirectoryXsl(  ) ),
-                        DirectoryXslResourceIdService.PERMISSION_MODIFY, getUser(  ) ) )
+            if ( RBACService.isAuthorized( DirectoryXsl.RESOURCE_TYPE, Integer.toString( directoryXsl.getIdDirectoryXsl( ) ),
+                    DirectoryXslResourceIdService.PERMISSION_DELETE, getUser( ) )
+                    || RBACService.isAuthorized( DirectoryXsl.RESOURCE_TYPE, Integer.toString( directoryXsl.getIdDirectoryXsl( ) ),
+                            DirectoryXslResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
             {
                 right = true;
             }
         }
 
-        if ( RBACService.isAuthorized( DirectoryXsl.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID,
-                    DirectoryXslResourceIdService.PERMISSION_CREATE, getUser(  ) ) )
+        if ( RBACService.isAuthorized( DirectoryXsl.RESOURCE_TYPE, RBAC.WILDCARD_RESOURCES_ID, DirectoryXslResourceIdService.PERMISSION_CREATE, getUser( ) ) )
         {
             right = true;
         }
 
         model.put( MARK_PERMISSION_XSL, right );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_PLUGIN_DIRECTORY, getLocale(  ),
-                model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_PLUGIN_DIRECTORY, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 }

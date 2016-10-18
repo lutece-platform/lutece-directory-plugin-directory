@@ -58,7 +58,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * class EntryTypeNumbering
@@ -134,15 +133,14 @@ public class EntryTypeNumbering extends Entry
     {
         if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
-            model.put( MARK_MAX_NUMBER, DirectoryService.getInstance(  ).getMaxNumber( this ) );
+            model.put( MARK_MAX_NUMBER, DirectoryService.getInstance( ).getMaxNumber( this ) );
 
-            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale,
-                    model );
+            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale, model );
 
-            return template.getHtml(  );
+            return template.getHtml( );
         }
 
         return null;
@@ -155,8 +153,8 @@ public class EntryTypeNumbering extends Entry
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim(  ) : null;
+        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH )
+                .trim( ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
 
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
@@ -171,33 +169,34 @@ public class EntryTypeNumbering extends Entry
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_TITLE;
         }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         this.setTitle( strTitle );
         this.setHelpMessageSearch( strHelpMessageSearch );
         this.setComment( strComment );
 
-        if ( this.getFields(  ) == null )
+        if ( this.getFields( ) == null )
         {
-            ArrayList<Field> listFields = new ArrayList<Field>(  );
-            Field field = new Field(  );
+            ArrayList<Field> listFields = new ArrayList<Field>( );
+            Field field = new Field( );
             listFields.add( field );
             this.setFields( listFields );
         }
 
-        this.getFields(  ).get( 0 ).setValue( "1" );
-        this.getFields(  ).get( 0 ).setTitle( StringUtils.isNotEmpty( strPrefix ) ? strPrefix : StringUtils.EMPTY );
+        this.getFields( ).get( 0 ).setValue( "1" );
+        this.getFields( ).get( 0 ).setTitle( StringUtils.isNotEmpty( strPrefix ) ? strPrefix : StringUtils.EMPTY );
         this.setIndexed( strIndexed != null );
         this.setIndexedAsTitle( strIndexedAsTitle != null );
         this.setIndexedAsSummary( strIndexedAsSummary != null );
@@ -216,7 +215,7 @@ public class EntryTypeNumbering extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return _template_create;
     }
@@ -225,7 +224,7 @@ public class EntryTypeNumbering extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return _template_modify;
     }
@@ -234,19 +233,14 @@ public class EntryTypeNumbering extends Entry
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError, boolean bAddNewValue, List<RecordField> listRecordField,
+            Locale locale ) throws DirectoryErrorException
     {
         /*
-         * This method is called from several operations :
-         * 1) Creating a record
-         * 2) Updating a record
-         * 3) Search from BO
-         * 4) Search from FO
+         * This method is called from several operations : 1) Creating a record 2) Updating a record 3) Search from BO 4) Search from FO
          */
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-        RecordField recordField = new RecordField(  );
+        RecordField recordField = new RecordField( );
         recordField.setEntry( this );
 
         Record recordOld = null;
@@ -254,60 +248,54 @@ public class EntryTypeNumbering extends Entry
         if ( record != null )
         {
             /*
-             * CASES 1 AND 2 :
-             * (The record is not null for cases 1) and 2))
+             * CASES 1 AND 2 : (The record is not null for cases 1) and 2))
              */
             IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
-            recordOld = recordService.findByPrimaryKey( record.getIdRecord(  ), pluginDirectory );
+            recordOld = recordService.findByPrimaryKey( record.getIdRecord( ), pluginDirectory );
         }
 
-        String strValueEntry = ( ( lstValue != null ) && ( lstValue.size(  ) > 0 ) ) ? lstValue.get( 0 ) : null;
+        String strValueEntry = ( ( lstValue != null ) && ( lstValue.size( ) > 0 ) ) ? lstValue.get( 0 ) : null;
 
         if ( recordOld != null )
         {
             /*
-             * CASE 2 :
-             * (The record old is not null for case 2))
+             * CASE 2 : (The record old is not null for case 2))
              */
             recordField.setValue( strValueEntry );
         }
-        else if ( record == null )
-        {
-            /*
-             * CASES 3 AND 4 :
-             * (The record is null for cases 3) and 4))
-             */
-            if ( bTestDirectoryError && this.isMandatory(  ) && StringUtils.isBlank( strValueEntry ) )
-            {
-                throw new DirectoryErrorException( this.getTitle(  ) );
-            }
-
-            if ( StringUtils.isNotBlank( strValueEntry ) )
-            {
-                recordField.setValue( strValueEntry );
-            }
-        }
         else
+            if ( record == null )
+            {
+                /*
+                 * CASES 3 AND 4 : (The record is null for cases 3) and 4))
+                 */
+                if ( bTestDirectoryError && this.isMandatory( ) && StringUtils.isBlank( strValueEntry ) )
+                {
+                    throw new DirectoryErrorException( this.getTitle( ) );
+                }
+
+                if ( StringUtils.isNotBlank( strValueEntry ) )
+                {
+                    recordField.setValue( strValueEntry );
+                }
+            }
+            else
+            {
+                /*
+                 * CASE 1 : (Create the record, thus fetch the max number)
+                 */
+                int numbering = DirectoryService.getInstance( ).getMaxNumber( this );
+                this.getFields( ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
+                FieldHome.update( this.getFields( ).get( 0 ), pluginDirectory );
+
+                recordField.setValue( String.valueOf( numbering ) );
+            }
+
+        if ( recordField.getValue( ) != null )
         {
             /*
-             * CASE 1 :
-             * (Create the record, thus fetch the max number)
-             */
-            int numbering = DirectoryService.getInstance(  ).getMaxNumber( this );
-            this.getFields(  ).get( 0 ).setValue( String.valueOf( numbering + 1 ) );
-            FieldHome.update( this.getFields(  ).get( 0 ), pluginDirectory );
-
-            recordField.setValue( String.valueOf( numbering ) );
-        }
-
-        if ( recordField.getValue(  ) != null )
-        {
-            /*
-             * In cases 3 and 4, if the strValueEntry is null, then that means
-             * that the user
-             * did not use the search function and the user only wants to
-             * display every records or
-             * did not want to filter his/her search for this entry.
+             * In cases 3 and 4, if the strValueEntry is null, then that means that the user did not use the search function and the user only wants to display
+             * every records or did not want to filter his/her search for this entry.
              */
             listRecordField.add( recordField );
         }
@@ -317,15 +305,14 @@ public class EntryTypeNumbering extends Entry
      * {@inheritDoc}
      */
     @Override
-    public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError, List<RecordField> listRecordField, Locale locale )
+            throws DirectoryErrorException
     {
-        int numbering = DirectoryService.getInstance(  ).getNumber( this, strImportValue );
+        int numbering = DirectoryService.getInstance( ).getNumber( this, strImportValue );
 
         if ( numbering != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            RecordField recordField = new RecordField(  );
+            RecordField recordField = new RecordField( );
             recordField.setEntry( this );
             recordField.setValue( Integer.toString( numbering ) );
             listRecordField.add( recordField );
@@ -336,32 +323,31 @@ public class EntryTypeNumbering extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-        boolean bExportDirectory )
+    public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront, boolean bExportDirectory )
     {
         Field field = null;
 
-        if ( recordField.getField(  ) == null )
+        if ( recordField.getField( ) == null )
         {
-            if ( getFields(  ) == null )
+            if ( getFields( ) == null )
             {
                 Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-                setFields( FieldHome.getFieldListByIdEntry( getIdEntry(  ), plugin ) );
+                setFields( FieldHome.getFieldListByIdEntry( getIdEntry( ), plugin ) );
             }
 
-            if ( ( getFields(  ) != null ) && ( getFields(  ).size(  ) > 0 ) )
+            if ( ( getFields( ) != null ) && ( getFields( ).size( ) > 0 ) )
             {
-                field = getFields(  ).get( 0 );
+                field = getFields( ).get( 0 );
             }
         }
         else
         {
-            field = recordField.getField(  );
+            field = recordField.getField( );
         }
 
-        if ( ( field != null ) && StringUtils.isNotBlank( field.getTitle(  ) ) )
+        if ( ( field != null ) && StringUtils.isNotBlank( field.getTitle( ) ) )
         {
-            return field.getTitle(  ) + recordField.getValue(  );
+            return field.getTitle( ) + recordField.getValue( );
         }
 
         return super.convertRecordFieldValueToString( recordField, locale, bDisplayFront, bExportDirectory );
@@ -371,7 +357,7 @@ public class EntryTypeNumbering extends Entry
      * {@inheritDoc}
      */
     @Override
-    public boolean isSortable(  )
+    public boolean isSortable( )
     {
         return true;
     }
@@ -380,7 +366,7 @@ public class EntryTypeNumbering extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getSQLOrderBy(  )
+    public String getSQLOrderBy( )
     {
         // Special query in order to sort numerically and not alphabetically (thus avoiding list like 1, 10, 11, 2, ... instead of 1, 2, ..., 10, 11)
         return SQL_ORDER_BY_RECORD_FIELD_VALUE;

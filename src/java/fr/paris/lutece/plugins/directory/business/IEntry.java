@@ -47,7 +47,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * IEntry Class
@@ -57,11 +56,13 @@ public interface IEntry
     /**
      * @return the id of entry
      */
-    int getIdEntry(  );
+    int getIdEntry( );
 
     /**
      * set the id of the entry
-     * @param idEntry the id of the entry
+     * 
+     * @param idEntry
+     *            the id of the entry
      */
     void setIdEntry( int idEntry );
 
@@ -69,226 +70,260 @@ public interface IEntry
      *
      * @return the directory associate to the entry
      */
-    Directory getDirectory(  );
+    Directory getDirectory( );
 
     /**
      * set the directory associate to the entry
-     * @param directory the directory associate to the entry
+     * 
+     * @param directory
+     *            the directory associate to the entry
      */
     void setDirectory( Directory directory );
 
     /**
      * @return title entry
      */
-    String getTitle(  );
+    String getTitle( );
 
     /**
      * set title entry
-     * @param title title
+     * 
+     * @param title
+     *            title
      */
     void setTitle( String title );
 
     /**
      * @return the entry help message
      */
-    String getHelpMessage(  );
+    String getHelpMessage( );
 
     /**
      * set entry help message
-     * @param helpMessage entry helpMessage
+     * 
+     * @param helpMessage
+     *            entry helpMessage
      */
     void setHelpMessage( String helpMessage );
 
     /**
      * @return the entry help message for search
      */
-    String getHelpMessageSearch(  );
+    String getHelpMessageSearch( );
 
     /**
      * set the entry help message for search
-     * @param helpMessage the entry help message for search
+     * 
+     * @param helpMessage
+     *            the entry help message for search
      */
     void setHelpMessageSearch( String helpMessage );
 
     /**
      * @return the entry comment
      */
-    String getComment(  );
+    String getComment( );
 
     /**
      * set entry comment
-     * @param comment entry comment
+     * 
+     * @param comment
+     *            entry comment
      */
     void setComment( String comment );
 
     /**
      * @return true if the question is mandatory
      */
-    boolean isMandatory(  );
+    boolean isMandatory( );
 
     /**
      * set true if the question is mandatory
-     * @param mandatory true if the question is mandatory
+     * 
+     * @param mandatory
+     *            true if the question is mandatory
      */
     void setMandatory( boolean mandatory );
 
     /**
      * @return true if the field associate must be display in line
      */
-    boolean isFieldInLine(  );
+    boolean isFieldInLine( );
 
     /**
      * set true if the field associate must be display in line
-     * @param fieldInLine true if the field associate must be display in line
+     * 
+     * @param fieldInLine
+     *            true if the field associate must be display in line
      */
     void setFieldInLine( boolean fieldInLine );
 
     /**
      * @return true if the field must be shown in advanced search
      */
-    boolean isShownInAdvancedSearch(  );
+    boolean isShownInAdvancedSearch( );
 
     /**
      * @return true if the field must be shown in result list
      */
-    boolean isShownInResultList(  );
+    boolean isShownInResultList( );
 
     /**
      * set true if the field must be shown in result list page
-     * @param shown true if the entry must be shown in result list page
+     * 
+     * @param shown
+     *            true if the entry must be shown in result list page
      */
     void setShownInResultList( boolean shown );
 
     /**
      * @return true if the field must be shown in result record page
      */
-    boolean isShownInResultRecord(  );
+    boolean isShownInResultRecord( );
 
     /**
      * set true if the field must be shown in result record page
-     * @param shown true if the entry must be shown in result record page
+     * 
+     * @param shown
+     *            true if the entry must be shown in result record page
      */
     void setShownInResultRecord( boolean shown );
 
     /**
      * @return true if the field must be shown in result record page
      */
-    boolean isShownInHistory(  );
+    boolean isShownInHistory( );
 
     /**
      * set true if the field must be shown in history page
-     * @param shown true if the entry must be shown in history page
+     * 
+     * @param shown
+     *            true if the entry must be shown in history page
      */
     void setShownInHistory( boolean shown );
 
     /**
      * set true if the field must be shown advanced search
-     * @param shown true if the entry must be shown in advanced search
+     * 
+     * @param shown
+     *            true if the entry must be shown in advanced search
      */
     void setShownInAdvancedSearch( boolean shown );
 
     /**
      * @return true if the field must be shown in data export
      */
-    boolean isShownInExport(  );
+    boolean isShownInExport( );
 
     /**
      * set true if the field must be shown in data export
-     * @param shown true if the entry must be shown in data export
+     * 
+     * @param shown
+     *            true if the entry must be shown in data export
      */
     void setShownInExport( boolean shown );
 
     /**
      * @return true if the field must be shown in record completeness
      */
-    boolean isShownInCompleteness(  );
+    boolean isShownInCompleteness( );
 
     /**
      * set true if the field must be shown record completeness
-     * @param shown true if the entry must be shown in record completeness
+     * 
+     * @param shown
+     *            true if the entry must be shown in record completeness
      */
     void setShownInCompleteness( boolean shown );
 
     /**
      * @return true if the field must be indexed
      */
-    boolean isIndexed(  );
+    boolean isIndexed( );
 
     /**
      * set true if the field must be indexed
-     * @param indexed true if the field must be indexed
+     * 
+     * @param indexed
+     *            true if the field must be indexed
      */
     void setIndexed( boolean indexed );
 
     /**
-     * @return true if the field is (part of) the title of the document in the
-     *         global index
+     * @return true if the field is (part of) the title of the document in the global index
      */
-    boolean isIndexedAsTitle(  );
+    boolean isIndexedAsTitle( );
 
     /**
-     * set true if the field is (part of) the title of the document in the
-     * global index
-     * @param indexedAsTitle true if the field is (part of) the title of the
-     *            document in the global index
+     * set true if the field is (part of) the title of the document in the global index
+     * 
+     * @param indexedAsTitle
+     *            true if the field is (part of) the title of the document in the global index
      */
     void setIndexedAsTitle( boolean indexedAsTitle );
 
     /**
-     * @return true if the field is (part of) the summary of the document in the
-     *         global index
+     * @return true if the field is (part of) the summary of the document in the global index
      */
-    boolean isIndexedAsSummary(  );
+    boolean isIndexedAsSummary( );
 
     /**
-     * set true if the field is (part of) the summary of the document in the
-     * global index
-     * @param indexedAsSummary true if the field is (part of) the summary of the
-     *            document in the global index
+     * set true if the field is (part of) the summary of the document in the global index
+     * 
+     * @param indexedAsSummary
+     *            true if the field is (part of) the summary of the document in the global index
      */
     void setIndexedAsSummary( boolean indexedAsSummary );
 
     /**
      * @return position entry
      */
-    int getPosition(  );
+    int getPosition( );
 
     /**
      * set position entry
-     * @param position position entry
+     * 
+     * @param position
+     *            position entry
      */
     void setPosition( int position );
 
     /**
      * @return the type of the entry
      */
-    EntryType getEntryType(  );
+    EntryType getEntryType( );
 
     /**
      * set the type of the entry
-     * @param entryType the type of the entry
+     * 
+     * @param entryType
+     *            the type of the entry
      */
     void setEntryType( EntryType entryType );
 
     /**
      * @return the list of field who are associate to the entry
      */
-    List<Field> getFields(  );
+    List<Field> getFields( );
 
     /**
      * set the list of field who are associate to the entry
-     * @param fields the list of field
+     * 
+     * @param fields
+     *            the list of field
      */
     void setFields( List<Field> fields );
 
     /**
      * @return parent entry if the entry is insert in a group
      */
-    IEntry getParent(  );
+    IEntry getParent( );
 
     /**
      * set parent entry if the entry is insert in a group
-     * @param parent parent entry
+     * 
+     * @param parent
+     *            parent entry
      */
     void setParent( IEntry parent );
 
@@ -296,37 +331,39 @@ public interface IEntry
      *
      * @return the list of entry who are insert in the group
      */
-    List<IEntry> getChildren(  );
+    List<IEntry> getChildren( );
 
     /**
      * set the list of entry who are insert in the group
-     * @param children the list of entry
+     * 
+     * @param children
+     *            the list of entry
      */
     void setChildren( List<IEntry> children );
 
     /**
-     * @return true if the entry is the last entry of a group or the list of
-     *         entry
+     * @return true if the entry is the last entry of a group or the list of entry
      */
-    boolean isLastInTheList(  );
+    boolean isLastInTheList( );
 
     /**
      * set true if the entry is the last entry of a group or the list of entry
-     * @param lastInTheList true if the entry is the last entry of a group or
-     *            the list of entry
+     * 
+     * @param lastInTheList
+     *            true if the entry is the last entry of a group or the list of entry
      */
     void setLastInTheList( boolean lastInTheList );
 
     /**
-     * @return true if the entry is the first entry of a group or the list of
-     *         entry
+     * @return true if the entry is the first entry of a group or the list of entry
      */
-    boolean isFirstInTheList(  );
+    boolean isFirstInTheList( );
 
     /**
      * set true if the entry is the first entry of a group or the list of entry
-     * @param firstInTheList true if the entry is the last entry of a group or
-     *            the list of entry
+     * 
+     * @param firstInTheList
+     *            true if the entry is the last entry of a group or the list of entry
      */
     void setFirstInTheList( boolean firstInTheList );
 
@@ -334,11 +371,13 @@ public interface IEntry
      *
      * @return the width of the entry
      */
-    int getDisplayWidth(  );
+    int getDisplayWidth( );
 
     /**
      * set the width of the entry
-     * @param width width of the entry
+     * 
+     * @param width
+     *            width of the entry
      */
     void setDisplayWidth( int width );
 
@@ -346,11 +385,13 @@ public interface IEntry
      *
      * @return the height of the entry
      */
-    int getDisplayHeight(  );
+    int getDisplayHeight( );
 
     /**
      * set the height of the entry
-     * @param height the height of the entry
+     * 
+     * @param height
+     *            the height of the entry
      */
     void setDisplayHeight( int height );
 
@@ -358,11 +399,13 @@ public interface IEntry
      *
      * @return true if a role can be associated with a item
      */
-    boolean isRoleAssociated(  );
+    boolean isRoleAssociated( );
 
     /**
      * set true if a role can be associated with a item
-     * @param bRoleAssociated true if a role can be associated with a item
+     * 
+     * @param bRoleAssociated
+     *            true if a role can be associated with a item
      */
     void setRoleAssociated( boolean bRoleAssociated );
 
@@ -370,12 +413,13 @@ public interface IEntry
      *
      * @return true if a workgroup can be associated with a item
      */
-    boolean isWorkgroupAssociated(  );
+    boolean isWorkgroupAssociated( );
 
     /**
      * set true if a workgroup can be associated with a item
-     * @param bWorkGroupAssociated true if a workgroup can be associated with a
-     *            item
+     * 
+     * @param bWorkGroupAssociated
+     *            true if a workgroup can be associated with a item
      */
     void setWorkgroupAssociated( boolean bWorkGroupAssociated );
 
@@ -383,12 +427,13 @@ public interface IEntry
      *
      * @return true if the entry is display with Multiple search field
      */
-    boolean isMultipleSearchFields(  );
+    boolean isMultipleSearchFields( );
 
     /**
      * set true if the entry is display with Multiple search field
-     * @param multipleSearchFields true if the entry is display with Multiple
-     *            search field
+     * 
+     * @param multipleSearchFields
+     *            true if the entry is display with Multiple search field
      */
     void setMultipleSearchFields( boolean multipleSearchFields );
 
@@ -396,11 +441,13 @@ public interface IEntry
      *
      * @return the id entry associed
      */
-    int getEntryAssociate(  );
+    int getEntryAssociate( );
 
     /**
      * set id entry is display with Multiple search field
-     * @param idEntryAssociate id entry
+     * 
+     * @param idEntryAssociate
+     *            id entry
      */
     void setEntryAssociate( int idEntryAssociate );
 
@@ -408,11 +455,13 @@ public interface IEntry
      *
      * @return the request SQL
      */
-    String getRequestSQL(  );
+    String getRequestSQL( );
 
     /**
      * set request SQL
-     * @param strRequestSQL request SQL
+     * 
+     * @param strRequestSQL
+     *            request SQL
      */
     void setRequestSQL( String strRequestSQL );
 
@@ -420,21 +469,24 @@ public interface IEntry
      *
      * @return true if add value for all search
      */
-    boolean isAddValueAllSearch(  );
+    boolean isAddValueAllSearch( );
 
     /**
      * set the AddValueAllSearch boolean
-     * @param bAddValueAllSearch The AddValueAllSearch boolean
+     * 
+     * @param bAddValueAllSearch
+     *            The AddValueAllSearch boolean
      */
     void setAddValueAllSearch( boolean bAddValueAllSearch );
 
     /**
      * @return true if entry is autocomplete
      */
-    boolean isAutocompleteEntry(  );
+    boolean isAutocompleteEntry( );
 
     /**
      * set autocomplete entry type
+     * 
      * @param bIsAutocompleEntry
      */
     void setAutocompleteEntry( boolean bIsAutocompleEntry );
@@ -443,104 +495,133 @@ public interface IEntry
      *
      * @return the label of value for all search
      */
-    String getLabelValueAllSearch(  );
+    String getLabelValueAllSearch( );
 
     /**
      * Set the label value all search
-     * @param strLabelValueAllSearch The label value all search
+     * 
+     * @param strLabelValueAllSearch
+     *            The label value all search
      */
     void setLabelValueAllSearch( String strLabelValueAllSearch );
 
     /**
      * Get the request data
-     * @param request HttpRequest
-     * @param locale the locale
-     * @return null if all data requiered are in the request else the url of jsp
-     *         error
+     * 
+     * @param request
+     *            HttpRequest
+     * @param locale
+     *            the locale
+     * @return null if all data requiered are in the request else the url of jsp error
      */
     String getEntryData( HttpServletRequest request, Locale locale );
 
     /**
      * save in the list of record field the record field associate to the entry
-     * @param record the record associated to the record field
-     * @param request HttpRequest
-     * @param bTestDirectoryError true if the value contains in the request must
-     *            be tested
+     * 
+     * @param record
+     *            the record associated to the record field
+     * @param request
+     *            HttpRequest
+     * @param bTestDirectoryError
+     *            true if the value contains in the request must be tested
      * @param bAddNewValue
-     * @param listRecordField the list of record field associate to the record
-     * @param locale the locale
-     * @throws DirectoryErrorException If an error occurs
+     * @param listRecordField
+     *            the list of record field associate to the record
+     * @param locale
+     *            the locale
+     * @throws DirectoryErrorException
+     *             If an error occurs
      */
-    void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException;
+    void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError, boolean bAddNewValue, List<RecordField> listRecordField,
+            Locale locale ) throws DirectoryErrorException;
 
     /**
      * save in the list of record field the record field associate to the entry
-     * @param record the record associated to the record field
-     * @param listValue the list which contains the string value of the record
-     *            field
-     * @param bTestDirectoryError true if the value contains in the request must
-     *            be tested
+     * 
+     * @param record
+     *            the record associated to the record field
+     * @param listValue
+     *            the list which contains the string value of the record field
+     * @param bTestDirectoryError
+     *            true if the value contains in the request must be tested
      * @param bAddNewValue
-     * @param listRecordField the list of record field associate to the record
-     * @param locale the locale
-     * @throws DirectoryErrorException If an error occurs
+     * @param listRecordField
+     *            the list of record field associate to the record
+     * @param locale
+     *            the locale
+     * @throws DirectoryErrorException
+     *             If an error occurs
      */
-    void getRecordFieldData( Record record, List<String> listValue, boolean bTestDirectoryError, boolean bAddNewValue,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException;
+    void getRecordFieldData( Record record, List<String> listValue, boolean bTestDirectoryError, boolean bAddNewValue, List<RecordField> listRecordField,
+            Locale locale ) throws DirectoryErrorException;
 
     /**
      * save in the list of record field the record field associate to the entry
-     * @param record the record associated to the record field
-     * @param strImportValue the import string which contains the string value
-     *            of the record field
-     * @param bTestDirectoryError true if the value contains in the request must
-     *            be tested
-     * @param listRecordField the list of record field associate to the record
-     * @param locale the locale
-     * @throws DirectoryErrorException If an error occurs
+     * 
+     * @param record
+     *            the record associated to the record field
+     * @param strImportValue
+     *            the import string which contains the string value of the record field
+     * @param bTestDirectoryError
+     *            true if the value contains in the request must be tested
+     * @param listRecordField
+     *            the list of record field associate to the record
+     * @param locale
+     *            the locale
+     * @throws DirectoryErrorException
+     *             If an error occurs
      */
-    void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException;
+    void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError, List<RecordField> listRecordField, Locale locale )
+            throws DirectoryErrorException;
 
     /**
      * Get template create url
+     * 
      * @return template create url
      */
-    String getTemplateCreate(  );
+    String getTemplateCreate( );
 
     /**
      * Get the template modify url
+     * 
      * @return template modify url
      */
-    String getTemplateModify(  );
+    String getTemplateModify( );
 
     /**
      * The paginator who is use in the template modify of the entry
-     * @param nItemPerPage Number of items to display per page
-     * @param strBaseUrl The base Url for build links on each page link
-     * @param strPageIndexParameterName The parameter name for the page index
-     * @param strPageIndex The current page index
+     * 
+     * @param nItemPerPage
+     *            Number of items to display per page
+     * @param strBaseUrl
+     *            The base Url for build links on each page link
+     * @param strPageIndexParameterName
+     *            The parameter name for the page index
+     * @param strPageIndex
+     *            The current page index
      * @return the paginator who is use in the template modify of the entry
      */
     Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName, String strPageIndex );
 
     /**
      * Get the list of regular expression who is use in the template modify
-     * @param plugin the plugin
-     * @param entry the entry
+     * 
+     * @param plugin
+     *            the plugin
+     * @param entry
+     *            the entry
      * @return the regular expression list who is use in the template modify
      */
     ReferenceList getReferenceListRegularExpression( IEntry entry, Plugin plugin );
 
     /**
      * Get Html code used in entry form
-     * @param locale the locale
-     * @param isDisplayFront true if the template front or false if the template
-     *            back
+     * 
+     * @param locale
+     *            the locale
+     * @param isDisplayFront
+     *            true if the template front or false if the template back
      * @return html code
      *
      * */
@@ -548,10 +629,13 @@ public interface IEntry
 
     /**
      * Get Html code used in entry form
-     * @param locale the locale
-     * @param listRecordField the list of record field associate to the entry
-     * @param isDisplayFront true if the template front or false if the template
-     *            back
+     * 
+     * @param locale
+     *            the locale
+     * @param listRecordField
+     *            the list of record field associate to the entry
+     * @param isDisplayFront
+     *            true if the template front or false if the template back
      * @return html code
      *
      * */
@@ -559,9 +643,11 @@ public interface IEntry
 
     /**
      * Get Html code used in search form
-     * @param locale the locale
-     * @param isDisplayFront true if the template front or false if the template
-     *            back
+     * 
+     * @param locale
+     *            the locale
+     * @param isDisplayFront
+     *            true if the template front or false if the template back
      * @return html code
      *
      * */
@@ -569,10 +655,13 @@ public interface IEntry
 
     /**
      * Get Html code used in search form
-     * @param locale the locale
-     * @param listRecordField the list of record field associate to the entry
-     * @param isDisplayFront true if the template front or false if the template
-     *            back
+     * 
+     * @param locale
+     *            the locale
+     * @param listRecordField
+     *            the list of record field associate to the entry
+     * @param isDisplayFront
+     *            true if the template front or false if the template back
      * @return html code
      *
      * */
@@ -580,56 +669,74 @@ public interface IEntry
 
     /**
      * Get the Html code used in display records
-     * @param locale the locale
-     * @param recordField the record field associate to the entry
-     * @param isDisplayFront true if the template front or false if the template
-     *            back
+     * 
+     * @param locale
+     *            the locale
+     * @param recordField
+     *            the record field associate to the entry
+     * @param isDisplayFront
+     *            true if the template front or false if the template back
      * @return html code
      *
      * */
     String getHtmlRecordFieldValue( Locale locale, RecordField recordField, boolean isDisplayFront );
-    
+
     /**
      * convert the value contains in the record field to string
-     * @param recordField the recordField
-     * @param locale the locale
-     * @param bDisplayFront true if display front or false if display back
-     * @param bDisplayExport true if display export
+     * 
+     * @param recordField
+     *            the recordField
+     * @param locale
+     *            the locale
+     * @param bDisplayFront
+     *            true if display front or false if display back
+     * @param bDisplayExport
+     *            true if display export
      * @return string
      */
-    
-    
-    String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-        boolean bDisplayExport );
+
+    String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront, boolean bDisplayExport );
 
     /**
      * convert the title contains in the record field to string
-     * @param recordField the recordField
-     * @param locale the locale
-     * @param bDisplayFront true if display front or false if display back
+     * 
+     * @param recordField
+     *            the recordField
+     * @param locale
+     *            the locale
+     * @param bDisplayFront
+     *            true if display front or false if display back
      * @return string
      */
     String convertRecordFieldTitleToString( RecordField recordField, Locale locale, boolean bDisplayFront );
 
     /**
      * add in the search map the criteria
-     * @param recordField the record field
-     * @param mapSearchItem Search map
+     * 
+     * @param recordField
+     *            the record field
+     * @param mapSearchItem
+     *            Search map
      *
      */
     void addSearchCriteria( HashMap<String, Object> mapSearchItem, RecordField recordField );
 
     /**
      * add The Xml of the entry in the string buffer
-     * @param plugin plugin
-     * @param locale loclae
-     * @param strXml the string buffer
+     * 
+     * @param plugin
+     *            plugin
+     * @param locale
+     *            loclae
+     * @param strXml
+     *            the string buffer
      *
      */
     void getXml( Plugin plugin, Locale locale, StringBuffer strXml );
 
     /**
-     * @param record The record
+     * @param record
+     *            The record
      * @param decodedBytes
      * @param nomFile
      * @param b
@@ -637,123 +744,134 @@ public interface IEntry
      * @param locale
      * @throws DirectoryErrorException
      */
-    void getImportRecordFieldData( Record record, byte[] decodedBytes, String nomFile, boolean b,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException;
+    void getImportRecordFieldData( Record record, byte [ ] decodedBytes, String nomFile, boolean b, List<RecordField> listRecordField, Locale locale )
+            throws DirectoryErrorException;
 
     /**
      * Sets the map provider
-     * @param mapProvider the map provider
+     * 
+     * @param mapProvider
+     *            the map provider
      */
     void setMapProvider( IMapProvider mapProvider );
 
     /**
      * Gets the map provider
+     * 
      * @return the map provider
      */
-    IMapProvider getMapProvider(  );
+    IMapProvider getMapProvider( );
 
     /**
      * Check if the entry is sortable
+     * 
      * @return true if it is sortable, false otherwise
      */
-    boolean isSortable(  );
+    boolean isSortable( );
 
     /**
      * The paginator who is use in the template modify of the entry
-     * @param nItemPerPage Number of items to display per page
-     * @param strBaseUrl The base Url for build links on each page link
-     * @param strPageIndexParameterName The parameter name for the page index
-     * @param strPageIndex The current page index
-     * @param locale Locale
+     * 
+     * @param nItemPerPage
+     *            Number of items to display per page
+     * @param strBaseUrl
+     *            The base Url for build links on each page link
+     * @param strPageIndexParameterName
+     *            The parameter name for the page index
+     * @param strPageIndex
+     *            The current page index
+     * @param locale
+     *            Locale
      * @return the paginator who is use in the template modify of the entry
      */
-    LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex, Locale locale );
+    LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName, String strPageIndex, Locale locale );
 
     // SQL PART
     // ADDED TO SORT LIST WITH BETTER PERFORMANCES
     /**
-     * Gets the join clause for SQL in case of query order.
-     * This function has been added to provide better performances
-     * to sort record list.
+     * Gets the join clause for SQL in case of query order. This function has been added to provide better performances to sort record list.
+     * 
      * @return join clause (i.e <code>" JOIN some_table ON col1=col2 "</code>)
      * @see #isSortable
      */
-    String getSQLJoin(  );
+    String getSQLJoin( );
 
     /**
-     * Gets the order by clause in case of query order.
-     * Does not contain ASC or DESC clause (provided by DAO).
-     * This function has been added to provide better performances
-     * to sort record list.
+     * Gets the order by clause in case of query order. Does not contain ASC or DESC clause (provided by DAO). This function has been added to provide better
+     * performances to sort record list.
+     * 
      * @return order by clause (i.e. <code>" ORDER BY some_column "</code>)
      * @see #isSortable
      */
-    String getSQLOrderBy(  );
+    String getSQLOrderBy( );
 
     /**
-     * Use with {@link #getSQLJoin()} and {@link #getSQLOrderBy()} to add
-     * parameters values
-     * @return an empty list if no parameter needed, parameters values
-     *         otherwise.
+     * Use with {@link #getSQLJoin()} and {@link #getSQLOrderBy()} to add parameters values
+     * 
+     * @return an empty list if no parameter needed, parameters values otherwise.
      */
-    List<Object> getSQLParametersValues(  );
+    List<Object> getSQLParametersValues( );
 
     /**
-     * Check if the file can be uploaded or not.
-     * This method will check the size of each file and the number max of files
-     * that can be uploaded.
-     * @param listUploadedFileItems the list of uploaded files
-     * @param listFileItemsToUpload the list of files to upload
-     * @param locale the locale
-     * @throws DirectoryErrorException exception if there is an error
+     * Check if the file can be uploaded or not. This method will check the size of each file and the number max of files that can be uploaded.
+     * 
+     * @param listUploadedFileItems
+     *            the list of uploaded files
+     * @param listFileItemsToUpload
+     *            the list of files to upload
+     * @param locale
+     *            the locale
+     * @throws DirectoryErrorException
+     *             exception if there is an error
      */
-    void canUploadFiles( List<FileItem> listUploadedFileItems, List<FileItem> listFileItemsToUpload, Locale locale )
-        throws DirectoryErrorException;
+    void canUploadFiles( List<FileItem> listUploadedFileItems, List<FileItem> listFileItemsToUpload, Locale locale ) throws DirectoryErrorException;
 
     /**
      * Check if this entry should be anonymized when a record is anonymized.
+     * 
      * @return True if this entry should be anonymized, false otherwise.
      */
-    boolean getAnonymize(  );
+    boolean getAnonymize( );
 
     /**
      * Set the anonymize status of an entry.
-     * @param bAnonymize True if this entry should be anonymized when a record
-     *            is anonymized, false otherwise
+     * 
+     * @param bAnonymize
+     *            True if this entry should be anonymized when a record is anonymized, false otherwise
      */
     void setAnonymize( boolean bAnonymize );
 
     /**
      * Check if entries of this type are anonymizable or not.
+     * 
      * @return True if the entry is anonymizable, false otherwise
      */
-    boolean isAnonymizable(  );
+    boolean isAnonymizable( );
 
     /**
      * @return the _nNumberRow
      */
-    int getNumberRow(  );
+    int getNumberRow( );
 
     /**
-     * @param nNumberRow the _nNumberRow to set
+     * @param nNumberRow
+     *            the _nNumberRow to set
      */
     void setNumberRow( int nNumberRow );
 
     /**
      * @return the _nNumberColumn
      */
-    int getNumberColumn(  );
+    int getNumberColumn( );
 
     /**
-     * @param nNumberColumn the _nNumberColumn to set
+     * @param nNumberColumn
+     *            the _nNumberColumn to set
      */
     void setNumberColumn( int nNumberColumn );
 
-	String getHtmlFormEntryPopup(Locale locale, List<RecordField> defaultValues, boolean isDisplayFront);
+    String getHtmlFormEntryPopup( Locale locale, List<RecordField> defaultValues, boolean isDisplayFront );
 
-	String getHtmlListEntry(Locale locale, List<RecordField> defaultValues,	boolean isDisplayFront);
+    String getHtmlListEntry( Locale locale, List<RecordField> defaultValues, boolean isDisplayFront );
 
-	
 }

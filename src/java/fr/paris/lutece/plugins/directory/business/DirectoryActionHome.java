@@ -40,7 +40,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  * This class provides instances management methods (create, find, ...) for DirectortyAction objects
  */
@@ -52,15 +51,19 @@ public final class DirectoryActionHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private DirectoryActionHome(  )
+    private DirectoryActionHome( )
     {
     }
 
     /**
      * Load the list of actions by directory state
-     * @param nState the state of the directory
-     * @param locale the locale
-     * @param plugin the plugin
+     * 
+     * @param nState
+     *            the state of the directory
+     * @param locale
+     *            the locale
+     * @param plugin
+     *            the plugin
      * @return The Collection of actions
      */
     public static List<DirectoryAction> selectActionsByFormState( int nState, Plugin plugin, Locale locale )
@@ -72,9 +75,13 @@ public final class DirectoryActionHome
 
     /**
      * Load the list of actions by directory state
-     * @param nState the state of the directory
-     * @param locale the locale
-     * @param plugin the plugin
+     * 
+     * @param nState
+     *            the state of the directory
+     * @param locale
+     *            the locale
+     * @param plugin
+     *            the plugin
      * @return The Collection of actions
      */
     public static List<DirectoryAction> selectActionsRecordByFormState( int nState, Plugin plugin, Locale locale )
@@ -86,8 +93,11 @@ public final class DirectoryActionHome
 
     /**
      * Add a new action for directory record for module which uses plugin-directory
-     * @param directoryAction The action builded in module which uses plugin-directory
-     * @param plugin the plugin
+     * 
+     * @param directoryAction
+     *            The action builded in module which uses plugin-directory
+     * @param plugin
+     *            the plugin
      */
     public static void addNewActionInDirectoryRecordAction( DirectoryAction directoryAction, Plugin plugin )
     {
@@ -96,8 +106,11 @@ public final class DirectoryActionHome
 
     /**
      * Delete a directory record action
-     * @param plugin plugin
-     * @param directoryAction The action to delete
+     * 
+     * @param plugin
+     *            plugin
+     * @param directoryAction
+     *            The action to delete
      */
     public static void deleteActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin )
     {
@@ -106,8 +119,11 @@ public final class DirectoryActionHome
 
     /**
      * This method add new actions for directory record
-     * @param plugin plugin
-     * @param directoryAction action to check
+     * 
+     * @param plugin
+     *            plugin
+     * @param directoryAction
+     *            action to check
      * @return True if the action exists, false otherwise
      */
     public static boolean checkActionsDirectoryRecord( DirectoryAction directoryAction, Plugin plugin )
@@ -117,8 +133,11 @@ public final class DirectoryActionHome
 
     /**
      * Load the list of actions for directory Xsl
-     * @param locale the locale
-     * @param plugin the plugin
+     * 
+     * @param locale
+     *            the locale
+     * @param plugin
+     *            the plugin
      * @return The Collection of actions
      */
     public static List<DirectoryAction> selectActionsByDirectoryXsl( Plugin plugin, Locale locale )

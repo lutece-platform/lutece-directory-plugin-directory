@@ -39,7 +39,6 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * class CategoryDAO
@@ -47,8 +46,7 @@ import java.util.List;
  */
 public class CategoryDAO implements ICategoryDAO
 {
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_category,title_key" +
-        " FROM directory_category WHERE id_category=?";
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_category,title_key" + " FROM directory_category WHERE id_category=?";
     private static final String SQL_QUERY_SELECT = "SELECT id_category,title_key" + " FROM directory_category ";
 
     /**
@@ -59,18 +57,18 @@ public class CategoryDAO implements ICategoryDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
         daoUtil.setInt( 1, idKey );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         Category category = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            category = new Category(  );
+            category = new Category( );
             category.setIdCategory( daoUtil.getInt( 1 ) );
             category.setTitleI18nKey( daoUtil.getString( 2 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return category;
     }
@@ -81,21 +79,21 @@ public class CategoryDAO implements ICategoryDAO
     @Override
     public List<Category> select( Plugin plugin )
     {
-        List<Category> listCategory = new ArrayList<Category>(  );
+        List<Category> listCategory = new ArrayList<Category>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         Category category = null;
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            category = new Category(  );
+            category = new Category( );
             category.setIdCategory( daoUtil.getInt( 1 ) );
             category.setTitleI18nKey( daoUtil.getString( 2 ) );
             listCategory.add( category );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listCategory;
     }

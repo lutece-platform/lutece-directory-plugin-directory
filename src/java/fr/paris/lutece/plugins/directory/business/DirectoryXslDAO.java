@@ -40,7 +40,6 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * This class provides Data Access methods for Directory XSL objects
  */
@@ -48,14 +47,13 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_directory_xsl ) FROM directory_xsl";
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_directory_xsl,title,description,extension,id_file,id_category" +
-        " FROM directory_xsl WHERE id_directory_xsl = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_xsl( id_directory_xsl,title,description,extension,id_file,id_category)" +
-        " VALUES(?,?,?,?,?,?)";
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_directory_xsl,title,description,extension,id_file,id_category"
+            + " FROM directory_xsl WHERE id_directory_xsl = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_xsl( id_directory_xsl,title,description,extension,id_file,id_category)"
+            + " VALUES(?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_xsl WHERE id_directory_xsl = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE directory_xsl SET id_directory_xsl=?,title=?,description=?,extension=?,id_file=?,id_category=? WHERE id_directory_xsl = ? ";
-    private static final String SQL_QUERY_SELECT = "SELECT id_directory_xsl,title,description,extension,id_file,id_category" +
-        " FROM directory_xsl ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_directory_xsl,title,description,extension,id_file,id_category" + " FROM directory_xsl ";
     private static final String SQL_FILTER_ID_CATEGORY = " id_category = ? ";
     private static final String SQL_ORDER_BY_ID_CATEGORY = " ORDER BY id_category ";
 
@@ -66,18 +64,18 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nKey;
 
-        if ( !daoUtil.next(  ) )
+        if ( !daoUtil.next( ) )
         {
             // if the table is empty
             nKey = 1;
         }
 
         nKey = daoUtil.getInt( 1 ) + 1;
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
@@ -91,32 +89,32 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
         directoryXsl.setIdDirectoryXsl( newPrimaryKey( plugin ) );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
-        daoUtil.setInt( 1, directoryXsl.getIdDirectoryXsl(  ) );
-        daoUtil.setString( 2, directoryXsl.getTitle(  ) );
-        daoUtil.setString( 3, directoryXsl.getDescription(  ) );
-        daoUtil.setString( 4, directoryXsl.getExtension(  ) );
+        daoUtil.setInt( 1, directoryXsl.getIdDirectoryXsl( ) );
+        daoUtil.setString( 2, directoryXsl.getTitle( ) );
+        daoUtil.setString( 3, directoryXsl.getDescription( ) );
+        daoUtil.setString( 4, directoryXsl.getExtension( ) );
 
-        if ( directoryXsl.getFile(  ) != null )
+        if ( directoryXsl.getFile( ) != null )
         {
-            daoUtil.setInt( 5, directoryXsl.getFile(  ).getIdFile(  ) );
+            daoUtil.setInt( 5, directoryXsl.getFile( ).getIdFile( ) );
         }
         else
         {
             daoUtil.setIntNull( 5 );
         }
 
-        if ( directoryXsl.getCategory(  ) != null )
+        if ( directoryXsl.getCategory( ) != null )
         {
-            daoUtil.setInt( 6, directoryXsl.getCategory(  ).getIdCategory(  ) );
+            daoUtil.setInt( 6, directoryXsl.getCategory( ).getIdCategory( ) );
         }
         else
         {
             daoUtil.setIntNull( 6 );
         }
 
-        daoUtil.executeUpdate(  );
+        daoUtil.executeUpdate( );
 
-        daoUtil.free(  );
+        daoUtil.free( );
     }
 
     /**
@@ -127,15 +125,15 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
         daoUtil.setInt( 1, nId );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         DirectoryXsl directoryXsl = null;
         Category category = null;
         File file = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            directoryXsl = new DirectoryXsl(  );
+            directoryXsl = new DirectoryXsl( );
             directoryXsl.setIdDirectoryXsl( daoUtil.getInt( 1 ) );
             directoryXsl.setTitle( daoUtil.getString( 2 ) );
             directoryXsl.setDescription( daoUtil.getString( 3 ) );
@@ -143,20 +141,20 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
 
             if ( daoUtil.getObject( 5 ) != null )
             {
-                file = new File(  );
+                file = new File( );
                 file.setIdFile( daoUtil.getInt( 5 ) );
                 directoryXsl.setFile( file );
             }
 
             if ( daoUtil.getObject( 6 ) != null )
             {
-                category = new Category(  );
+                category = new Category( );
                 category.setIdCategory( daoUtil.getInt( 6 ) );
                 directoryXsl.setCategory( category );
             }
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return directoryXsl;
     }
@@ -169,8 +167,8 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdDirectoryXsl );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -180,32 +178,32 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
     public void store( DirectoryXsl directoryXsl, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
-        daoUtil.setInt( 1, directoryXsl.getIdDirectoryXsl(  ) );
-        daoUtil.setString( 2, directoryXsl.getTitle(  ) );
-        daoUtil.setString( 3, directoryXsl.getDescription(  ) );
-        daoUtil.setString( 4, directoryXsl.getExtension(  ) );
+        daoUtil.setInt( 1, directoryXsl.getIdDirectoryXsl( ) );
+        daoUtil.setString( 2, directoryXsl.getTitle( ) );
+        daoUtil.setString( 3, directoryXsl.getDescription( ) );
+        daoUtil.setString( 4, directoryXsl.getExtension( ) );
 
-        if ( directoryXsl.getFile(  ) != null )
+        if ( directoryXsl.getFile( ) != null )
         {
-            daoUtil.setInt( 5, directoryXsl.getFile(  ).getIdFile(  ) );
+            daoUtil.setInt( 5, directoryXsl.getFile( ).getIdFile( ) );
         }
         else
         {
             daoUtil.setIntNull( 5 );
         }
 
-        if ( directoryXsl.getCategory(  ) != null )
+        if ( directoryXsl.getCategory( ) != null )
         {
-            daoUtil.setInt( 6, directoryXsl.getCategory(  ).getIdCategory(  ) );
+            daoUtil.setInt( 6, directoryXsl.getCategory( ).getIdCategory( ) );
         }
         else
         {
             daoUtil.setIntNull( 6 );
         }
 
-        daoUtil.setInt( 7, directoryXsl.getIdDirectoryXsl(  ) );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.setInt( 7, directoryXsl.getIdDirectoryXsl( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -214,35 +212,34 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
     @Override
     public List<DirectoryXsl> selectList( DirectoryXslFilter filter, Plugin plugin )
     {
-        List<DirectoryXsl> directoryXslList = new ArrayList<DirectoryXsl>(  );
-        List<String> listStrFilter = new ArrayList<String>(  );
+        List<DirectoryXsl> directoryXslList = new ArrayList<DirectoryXsl>( );
+        List<String> listStrFilter = new ArrayList<String>( );
         DirectoryXsl directoryXsl = null;
         Category category = null;
         File file = null;
 
-        if ( filter.containsIdCategory(  ) )
+        if ( filter.containsIdCategory( ) )
         {
             listStrFilter.add( SQL_FILTER_ID_CATEGORY );
         }
 
-        String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_SELECT, listStrFilter,
-                SQL_ORDER_BY_ID_CATEGORY );
+        String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_SELECT, listStrFilter, SQL_ORDER_BY_ID_CATEGORY );
 
         DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
 
         int nIndex = 1;
 
-        if ( filter.containsIdCategory(  ) )
+        if ( filter.containsIdCategory( ) )
         {
-            daoUtil.setInt( nIndex, filter.getIdCategory(  ) );
+            daoUtil.setInt( nIndex, filter.getIdCategory( ) );
             nIndex++;
         }
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            directoryXsl = new DirectoryXsl(  );
+            directoryXsl = new DirectoryXsl( );
             directoryXsl.setIdDirectoryXsl( daoUtil.getInt( 1 ) );
             directoryXsl.setTitle( daoUtil.getString( 2 ) );
             directoryXsl.setDescription( daoUtil.getString( 3 ) );
@@ -250,14 +247,14 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
 
             if ( daoUtil.getObject( 5 ) != null )
             {
-                file = new File(  );
+                file = new File( );
                 file.setIdFile( daoUtil.getInt( 5 ) );
                 directoryXsl.setFile( file );
             }
 
             if ( daoUtil.getObject( 6 ) != null )
             {
-                category = new Category(  );
+                category = new Category( );
                 category.setIdCategory( daoUtil.getInt( 6 ) );
                 directoryXsl.setCategory( category );
             }
@@ -265,7 +262,7 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
             directoryXslList.add( directoryXsl );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return directoryXslList;
     }

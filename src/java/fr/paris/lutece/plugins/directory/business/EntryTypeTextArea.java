@@ -50,7 +50,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * class EntryTypeTextArea
@@ -116,10 +115,9 @@ public class EntryTypeTextArea extends Entry
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim(  ) : null;
-        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim(  ) : null;
+        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim( ) : null;
+        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH )
+                .trim( ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strValue = request.getParameter( PARAMETER_VALUE );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
@@ -140,26 +138,29 @@ public class EntryTypeTextArea extends Entry
 
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_TITLE;
         }
 
-        else if ( ( strWidth == null ) || strWidth.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
-        {
-            strFieldError = FIELD_WIDTH;
-        }
-        else if ( ( strHeight == null ) || strHeight.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
-        {
-            strFieldError = FIELD_HEIGHT;
-        }
+        else
+            if ( ( strWidth == null ) || strWidth.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
+            {
+                strFieldError = FIELD_WIDTH;
+            }
+            else
+                if ( ( strHeight == null ) || strHeight.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
+                {
+                    strFieldError = FIELD_HEIGHT;
+                }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         if ( nWidth == -1 )
@@ -167,17 +168,19 @@ public class EntryTypeTextArea extends Entry
             strFieldError = FIELD_WIDTH;
         }
 
-        else if ( nHeight == -1 )
-        {
-            strFieldError = FIELD_HEIGHT;
-        }
+        else
+            if ( nHeight == -1 )
+            {
+                strFieldError = FIELD_HEIGHT;
+            }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_NUMERIC_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         this.setTitle( strTitle );
@@ -185,17 +188,17 @@ public class EntryTypeTextArea extends Entry
         this.setHelpMessageSearch( strHelpMessageSearch );
         this.setComment( strComment );
 
-        if ( this.getFields(  ) == null )
+        if ( this.getFields( ) == null )
         {
-            ArrayList<Field> listFields = new ArrayList<Field>(  );
-            Field field = new Field(  );
+            ArrayList<Field> listFields = new ArrayList<Field>( );
+            Field field = new Field( );
             listFields.add( field );
             this.setFields( listFields );
         }
 
-        this.getFields(  ).get( 0 ).setValue( strValue );
-        this.getFields(  ).get( 0 ).setWidth( nWidth );
-        this.getFields(  ).get( 0 ).setHeight( nHeight );
+        this.getFields( ).get( 0 ).setValue( strValue );
+        this.getFields( ).get( 0 ).setWidth( nWidth );
+        this.getFields( ).get( 0 ).setHeight( nHeight );
         this.setMandatory( strMandatory != null );
         this.setIndexed( strIndexed != null );
         this.setIndexedAsTitle( strDocumentTitle != null );
@@ -214,7 +217,7 @@ public class EntryTypeTextArea extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return _template_create;
     }
@@ -223,7 +226,7 @@ public class EntryTypeTextArea extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return _template_modify;
     }
@@ -232,37 +235,35 @@ public class EntryTypeTextArea extends Entry
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError, boolean bAddNewValue, List<RecordField> listRecordField,
+            Locale locale ) throws DirectoryErrorException
     {
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
-        String strValueEntry = ( ( lstValue != null ) && ( lstValue.size(  ) > 0 ) ) ? lstValue.get( 0 ) : null;
-        RecordField recordField = new RecordField(  );
+        String strValueEntry = ( ( lstValue != null ) && ( lstValue.size( ) > 0 ) ) ? lstValue.get( 0 ) : null;
+        RecordField recordField = new RecordField( );
         recordField.setEntry( this );
 
         if ( ( record != null ) && bAddNewValue )
         {
-            RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-            recordFieldFilter.setIdDirectory( record.getDirectory(  ).getIdDirectory(  ) );
-            recordFieldFilter.setIdEntry( this.getIdEntry(  ) );
-            recordFieldFilter.setIdRecord( record.getIdRecord(  ) );
+            RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
+            recordFieldFilter.setIdDirectory( record.getDirectory( ).getIdDirectory( ) );
+            recordFieldFilter.setIdEntry( this.getIdEntry( ) );
+            recordFieldFilter.setIdRecord( record.getIdRecord( ) );
 
             List<RecordField> recordFieldList = RecordFieldHome.getRecordFieldList( recordFieldFilter, plugin );
 
-            if ( ( recordFieldList != null ) && !recordFieldList.isEmpty(  ) &&
-                    StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue(  ) ) )
+            if ( ( recordFieldList != null ) && !recordFieldList.isEmpty( ) && StringUtils.isNotBlank( recordFieldList.get( 0 ).getValue( ) ) )
             {
-                strValueEntry = recordFieldList.get( 0 ).getValue(  ) + ", " + strValueEntry;
+                strValueEntry = recordFieldList.get( 0 ).getValue( ) + ", " + strValueEntry;
             }
         }
 
         if ( strValueEntry != null )
         {
-            if ( bTestDirectoryError && this.isMandatory(  ) && strValueEntry.equals( DirectoryUtils.EMPTY_STRING ) )
+            if ( bTestDirectoryError && this.isMandatory( ) && strValueEntry.equals( DirectoryUtils.EMPTY_STRING ) )
             {
-                throw new DirectoryErrorException( this.getTitle(  ) );
+                throw new DirectoryErrorException( this.getTitle( ) );
             }
 
             recordField.setValue( strValueEntry );
@@ -275,7 +276,7 @@ public class EntryTypeTextArea extends Entry
      * {@inheritDoc}
      */
     @Override
-    public boolean isSortable(  )
+    public boolean isSortable( )
     {
         return true;
     }
@@ -284,7 +285,7 @@ public class EntryTypeTextArea extends Entry
      * {@inheritDoc}
      */
     @Override
-    public boolean isAnonymizable(  )
+    public boolean isAnonymizable( )
     {
         return true;
     }

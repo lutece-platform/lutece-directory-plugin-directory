@@ -36,17 +36,17 @@ package fr.paris.lutece.plugins.directory.service.directorysearch;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
  * SearchEngine
  */
 public interface IDirectorySearchEngine
 {
     /**
-    * Return a list of record key return by the search
-    *
-    * @param  mapSearchQuery a map which contain the fields search and for each field search the value to search
-    * @return Results as a collection of Record key
-    */
+     * Return a list of record key return by the search
+     *
+     * @param mapSearchQuery
+     *            a map which contain the fields search and for each field search the value to search
+     * @return Results as a collection of Record key
+     */
     List<Integer> getSearchResults( HashMap<String, Object> mapSearchQuery );
 }

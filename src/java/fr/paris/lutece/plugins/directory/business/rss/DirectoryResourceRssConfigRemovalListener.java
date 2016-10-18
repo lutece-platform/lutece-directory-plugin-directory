@@ -43,7 +43,6 @@ import fr.paris.lutece.portal.service.util.RemovalListener;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  * class DirectoryResourceRssConfigRemovalListener
  */
@@ -65,18 +64,15 @@ public class DirectoryResourceRssConfigRemovalListener implements RemovalListene
             return true;
         }
 
-        if ( pluginDirectory.isInstalled(  ) )
+        if ( pluginDirectory.isInstalled( ) )
         {
             List<DirectoryResourceRssConfig> listResourceRssConfig = DirectoryResourceRssConfigHome.getAll( pluginDirectory );
 
             for ( DirectoryResourceRssConfig directoryResourceRss : listResourceRssConfig )
             {
-                if ( ( directoryResourceRss.getIdEntryDescription(  ) == nIdEntry ) ||
-                        ( directoryResourceRss.getIdEntryTitle(  ) == nIdEntry ) ||
-                        ( directoryResourceRss.getIdEntryImage(  ) == nIdEntry ) ||
-                        ( directoryResourceRss.getIdEntryLink(  ) == nIdEntry ) ||
-                        ( directoryResourceRss.getIdEntryFilter1(  ) == nIdEntry ) ||
-                        ( directoryResourceRss.getIdEntryFilter2(  ) == nIdEntry ) )
+                if ( ( directoryResourceRss.getIdEntryDescription( ) == nIdEntry ) || ( directoryResourceRss.getIdEntryTitle( ) == nIdEntry )
+                        || ( directoryResourceRss.getIdEntryImage( ) == nIdEntry ) || ( directoryResourceRss.getIdEntryLink( ) == nIdEntry )
+                        || ( directoryResourceRss.getIdEntryFilter1( ) == nIdEntry ) || ( directoryResourceRss.getIdEntryFilter2( ) == nIdEntry ) )
                 {
                     return false;
                 }
@@ -94,7 +90,7 @@ public class DirectoryResourceRssConfigRemovalListener implements RemovalListene
     @Override
     public String getRemovalRefusedMessage( String strId, Locale locale )
     {
-        // Build a message 
+        // Build a message
         return I18nService.getLocalizedString( PROPERTY_DIRECTORY_RESOURCE_RSS_CONFIG_CANNOT_BE_REMOVED, locale );
     }
 }

@@ -41,7 +41,6 @@ import fr.paris.lutece.portal.service.util.RemovalListener;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  * class DirectoryWorkgroupRemovalListener
  */
@@ -60,12 +59,11 @@ public class DirectoryWorkgroupRemovalListener implements RemovalListener
             return true;
         }
 
-        List<Directory> listForms = DirectoryHome.getDirectoryList( new DirectoryFilter(  ),
-                PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+        List<Directory> listForms = DirectoryHome.getDirectoryList( new DirectoryFilter( ), PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
 
         for ( Directory form : listForms )
         {
-            if ( ( form.getWorkgroup(  ) != null ) && form.getWorkgroup(  ).equals( strId ) )
+            if ( ( form.getWorkgroup( ) != null ) && form.getWorkgroup( ).equals( strId ) )
             {
                 return false;
             }
@@ -80,7 +78,7 @@ public class DirectoryWorkgroupRemovalListener implements RemovalListener
     @Override
     public String getRemovalRefusedMessage( String strId, Locale locale )
     {
-        // Build a message 
+        // Build a message
         return I18nService.getLocalizedString( PROPERTY_WORKGROUP_CANNOT_BE_REMOVED, locale );
     }
 }

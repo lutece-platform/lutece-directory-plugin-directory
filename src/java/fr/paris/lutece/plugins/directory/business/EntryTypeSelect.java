@@ -50,7 +50,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * class EntryTypeSelect
@@ -118,10 +117,9 @@ public class EntryTypeSelect extends Entry
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim(  ) : null;
-        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim(  ) : null;
+        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim( ) : null;
+        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH )
+                .trim( ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
         String strIndexed = request.getParameter( PARAMETER_INDEXED );
@@ -139,21 +137,23 @@ public class EntryTypeSelect extends Entry
         String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_TITLE;
         }
-        else if ( ( strIsAllSearch != null ) && ( strLabelValueAllSearch == null ) )
-        {
-            strFieldError = FIELD_LABEL_ALL_SEARCH;
-        }
+        else
+            if ( ( strIsAllSearch != null ) && ( strLabelValueAllSearch == null ) )
+            {
+                strFieldError = FIELD_LABEL_ALL_SEARCH;
+            }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         // for don't update fields listFields=null
@@ -193,7 +193,7 @@ public class EntryTypeSelect extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return _template_create;
     }
@@ -202,7 +202,7 @@ public class EntryTypeSelect extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return _template_modify;
     }
@@ -211,27 +211,25 @@ public class EntryTypeSelect extends Entry
      * {@inheritDoc}
      */
     @Override
-    public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex )
+    public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName, String strPageIndex )
     {
-        return new Paginator( this.getFields(  ), nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex );
+        return new Paginator( this.getFields( ), nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError, List<RecordField> listRecordField, Locale locale )
+            throws DirectoryErrorException
     {
-        List<String> lstValue = new ArrayList<String>(  );
+        List<String> lstValue = new ArrayList<String>( );
         Field field;
-        field = DirectoryUtils.findFieldByValueInTheList( strImportValue, this.getFields(  ) );
+        field = DirectoryUtils.findFieldByValueInTheList( strImportValue, this.getFields( ) );
 
         if ( field != null )
         {
-            lstValue.add( Integer.toString( field.getIdField(  ) ) );
+            lstValue.add( Integer.toString( field.getIdField( ) ) );
         }
 
         getRecordFieldData( record, lstValue, bTestDirectoryError, false, listRecordField, locale );
@@ -241,45 +239,44 @@ public class EntryTypeSelect extends Entry
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError, boolean bAddNewValue, List<RecordField> listRecordField,
+            Locale locale ) throws DirectoryErrorException
     {
-        String strIdField = ( ( lstValue != null ) && ( lstValue.size(  ) > 0 ) ) ? lstValue.get( 0 ) : null;
+        String strIdField = ( ( lstValue != null ) && ( lstValue.size( ) > 0 ) ) ? lstValue.get( 0 ) : null;
         int nIdField = DirectoryUtils.convertStringToInt( strIdField );
         Field field = null;
-        RecordField recordField = new RecordField(  );
+        RecordField recordField = new RecordField( );
         recordField.setEntry( this );
 
         if ( nIdField != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            field = DirectoryUtils.findFieldByIdInTheList( nIdField, this.getFields(  ) );
+            field = DirectoryUtils.findFieldByIdInTheList( nIdField, this.getFields( ) );
         }
 
-        if ( bTestDirectoryError && this.isMandatory(  ) )
+        if ( bTestDirectoryError && this.isMandatory( ) )
         {
-            if ( ( field == null ) || field.getValue(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+            if ( ( field == null ) || field.getValue( ).equals( DirectoryUtils.EMPTY_STRING ) )
             {
-                throw new DirectoryErrorException( this.getTitle(  ) );
+                throw new DirectoryErrorException( this.getTitle( ) );
             }
         }
 
         if ( field != null )
         {
-            recordField.setValue( field.getValue(  ) );
+            recordField.setValue( field.getValue( ) );
             recordField.setField( field );
 
-            //set in the record the  workgroup and the role associated to the field  
+            // set in the record the workgroup and the role associated to the field
             if ( record != null )
             {
-                if ( this.isRoleAssociated(  ) )
+                if ( this.isRoleAssociated( ) )
                 {
-                    record.setRoleKey( field.getRoleKey(  ) );
+                    record.setRoleKey( field.getRoleKey( ) );
                 }
 
-                if ( this.isWorkgroupAssociated(  ) )
+                if ( this.isWorkgroupAssociated( ) )
                 {
-                    record.setWorkgroup( field.getWorkgroup(  ) );
+                    record.setWorkgroup( field.getWorkgroup( ) );
                 }
             }
         }
@@ -293,17 +290,17 @@ public class EntryTypeSelect extends Entry
     @Override
     public void addSearchCriteria( HashMap<String, Object> mapSearchItem, RecordField recordField )
     {
-        if ( ( recordField.getField(  ) != null ) && ( recordField.getField(  ).getValue(  ) != null ) &&
-                !recordField.getField(  ).getValue(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( recordField.getField( ) != null ) && ( recordField.getField( ).getValue( ) != null )
+                && !recordField.getField( ).getValue( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             List<Integer> listIdField = (List<Integer>) mapSearchItem.get( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD );
 
             if ( listIdField == null )
             {
-                listIdField = new ArrayList<Integer>(  );
+                listIdField = new ArrayList<Integer>( );
             }
 
-            listIdField.add( recordField.getField(  ).getIdField(  ) );
+            listIdField.add( recordField.getField( ).getIdField( ) );
             mapSearchItem.put( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD, listIdField );
         }
     }
@@ -312,7 +309,7 @@ public class EntryTypeSelect extends Entry
      * {@inheritDoc}
      */
     @Override
-    public boolean isSortable(  )
+    public boolean isSortable( )
     {
         return true;
     }
@@ -321,18 +318,16 @@ public class EntryTypeSelect extends Entry
      * {@inheritDoc}
      */
     @Override
-    public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex, Locale locale )
+    public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName, String strPageIndex, Locale locale )
     {
-        return new LocalizedPaginator( this.getFields(  ), nItemPerPage, strBaseUrl, strPageIndexParameterName,
-            strPageIndex, locale );
+        return new LocalizedPaginator( this.getFields( ), nItemPerPage, strBaseUrl, strPageIndexParameterName, strPageIndex, locale );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getSQLJoin(  )
+    public String getSQLJoin( )
     {
         return SQL_JOIN_DIRECTORY_RECORD_FIELD;
     }
@@ -341,7 +336,7 @@ public class EntryTypeSelect extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getSQLOrderBy(  )
+    public String getSQLOrderBy( )
     {
         return SQL_ORDER_BY_TITLE;
     }
@@ -350,8 +345,8 @@ public class EntryTypeSelect extends Entry
      * {@inheritDoc}
      */
     @Override
-    public List<Object> getSQLParametersValues(  )
+    public List<Object> getSQLParametersValues( )
     {
-        return Collections.<Object>singletonList( Integer.valueOf( getIdEntry(  ) ) );
+        return Collections.<Object> singletonList( Integer.valueOf( getIdEntry( ) ) );
     }
 }

@@ -46,7 +46,6 @@ import fr.paris.lutece.util.ReferenceList;
 
 import java.util.Locale;
 
-
 /**
  *
  * class ExportFormatResourceIdService
@@ -68,7 +67,7 @@ public class DirectoryXslResourceIdService extends ResourceIdService
     private static final String PROPERTY_LABEL_MODIFY = "directory.permission.label.modify_directory_xsl";
 
     /** Creates a new instance of DocumentTypeResourceIdService */
-    public DirectoryXslResourceIdService(  )
+    public DirectoryXslResourceIdService( )
     {
         setPluginName( DirectoryPlugin.PLUGIN_NAME );
     }
@@ -77,25 +76,25 @@ public class DirectoryXslResourceIdService extends ResourceIdService
      * {@inheritDoc}
      */
     @Override
-    public void register(  )
+    public void register( )
     {
-        ResourceType rt = new ResourceType(  );
-        rt.setResourceIdServiceClass( DirectoryXslResourceIdService.class.getName(  ) );
+        ResourceType rt = new ResourceType( );
+        rt.setResourceIdServiceClass( DirectoryXslResourceIdService.class.getName( ) );
         rt.setPluginName( DirectoryPlugin.PLUGIN_NAME );
         rt.setResourceTypeKey( DirectoryXsl.RESOURCE_TYPE );
         rt.setResourceTypeLabelKey( PROPERTY_LABEL_RESOURCE_TYPE );
 
-        Permission p = new Permission(  );
+        Permission p = new Permission( );
         p.setPermissionKey( PERMISSION_CREATE );
         p.setPermissionTitleKey( PROPERTY_LABEL_CREATE );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_MODIFY );
         p.setPermissionTitleKey( PROPERTY_LABEL_MODIFY );
         rt.registerPermission( p );
 
-        p = new Permission(  );
+        p = new Permission( );
         p.setPermissionKey( PERMISSION_DELETE );
         p.setPermissionTitleKey( PROPERTY_LABEL_DELETE );
         rt.registerPermission( p );
@@ -105,14 +104,15 @@ public class DirectoryXslResourceIdService extends ResourceIdService
 
     /**
      * Returns a list of export format resource ids
-     * @param locale The current locale
+     * 
+     * @param locale
+     *            The current locale
      * @return A list of resource ids
      */
     @Override
     public ReferenceList getResourceIdList( Locale locale )
     {
-        return DirectoryXslHome.getRefList( new DirectoryXslFilter(  ),
-            PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+        return DirectoryXslHome.getRefList( new DirectoryXslFilter( ), PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
     }
 
     /**
@@ -122,9 +122,8 @@ public class DirectoryXslResourceIdService extends ResourceIdService
     public String getTitle( String strId, Locale locale )
     {
         int nIdExport = DirectoryUtils.convertStringToInt( strId );
-        DirectoryXsl export = DirectoryXslHome.findByPrimaryKey( nIdExport,
-                PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+        DirectoryXsl export = DirectoryXslHome.findByPrimaryKey( nIdExport, PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
 
-        return ( export != null ) ? export.getTitle(  ) : null;
+        return ( export != null ) ? export.getTitle( ) : null;
     }
 }

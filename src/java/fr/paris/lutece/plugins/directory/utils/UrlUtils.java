@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  *
  * UrlUtils
@@ -55,43 +54,45 @@ public final class UrlUtils
     /**
      * Private constructor
      */
-    private UrlUtils(  )
+    private UrlUtils( )
     {
     }
 
     /**
      * Get the parameter map from a given url
-     * @param strUrl the url
+     * 
+     * @param strUrl
+     *            the url
      * @return the parameter map
      */
     public static Map<String, List<String>> getMapParametersFromUrl( String strUrl )
     {
-        Map<String, List<String>> mapParameters = new HashMap<String, List<String>>(  );
+        Map<String, List<String>> mapParameters = new HashMap<String, List<String>>( );
 
         if ( StringUtils.isNotBlank( strUrl ) && ( strUrl.indexOf( INTERROGATION_MARK ) > 0 ) )
         {
             String strUrlParameters = strUrl.substring( strUrl.indexOf( INTERROGATION_MARK ) + 1 );
-            String[] listParameters = strUrlParameters.split( AMPERSAND );
+            String [ ] listParameters = strUrlParameters.split( AMPERSAND );
 
             if ( ( listParameters != null ) && ( listParameters.length > 0 ) )
             {
                 for ( String strParameter : listParameters )
                 {
-                    String[] parameter = strParameter.split( EQUAL );
+                    String [ ] parameter = strParameter.split( EQUAL );
 
                     if ( ( parameter != null ) && ( parameter.length == 2 ) )
                     {
-                        List<String> listParameterValues = mapParameters.get( parameter[0] );
+                        List<String> listParameterValues = mapParameters.get( parameter [0] );
 
-                        if ( ( listParameterValues != null ) && !listParameterValues.isEmpty(  ) )
+                        if ( ( listParameterValues != null ) && !listParameterValues.isEmpty( ) )
                         {
-                            listParameterValues.add( parameter[1] );
+                            listParameterValues.add( parameter [1] );
                         }
                         else
                         {
-                            listParameterValues = new ArrayList<String>(  );
-                            listParameterValues.add( parameter[1] );
-                            mapParameters.put( parameter[0], listParameterValues );
+                            listParameterValues = new ArrayList<String>( );
+                            listParameterValues.add( parameter [1] );
+                            mapParameters.put( parameter [0], listParameterValues );
                         }
                     }
                 }

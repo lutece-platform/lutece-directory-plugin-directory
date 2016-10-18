@@ -55,7 +55,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * class Entry
@@ -72,7 +71,7 @@ public class Entry implements IEntry
     public static final String ATTRIBUTE_SHOWXY = "showxy";
     public static final String ATTRIBUTE_IS_SORTABLE = "is-sortable";
 
-    //	parameters Entry 
+    // parameters Entry
     protected static final String PARAMETER_TITLE = "title";
     protected static final String PARAMETER_HELP_MESSAGE = "help_message";
     protected static final String PARAMETER_HELP_MESSAGE_SEARCH = "help_message_search";
@@ -112,7 +111,7 @@ public class Entry implements IEntry
     protected static final String PARAMETER_NUMBER_ROWS = "num_row";
     protected static final String PARAMETER_NUMBER_COLUMNS = "num_column";
 
-    //	message
+    // message
     protected static final String MESSAGE_MANDATORY_FIELD = "directory.message.mandatory.field";
     protected static final String MESSAGE_NUMERIC_FIELD = "directory.message.numeric.field";
     protected static final String MESSAGE_BLOBSTORE_CLIENT_SERVICE_UNAVAILABLE = "directory.message.blobStoreClientService.unavailable";
@@ -135,10 +134,10 @@ public class Entry implements IEntry
     protected static final String FIELD_NUMBER_ROWS = "directory.create_entry.labelNumberRows";
     protected static final String FIELD_NUMBER_COLUMNS = "directory.create_entry.labelNumberColumns";
 
-    //  Jsp Definition
+    // Jsp Definition
     protected static final String JSP_DOWNLOAD_FILE = "jsp/site/plugins/directory/DoDownloadFile.jsp";
 
-    //MARK
+    // MARK
     protected static final String MARK_ENTRY = "entry";
     protected static final String MARK_LOCALE = "locale";
     protected static final String MARK_RECORD_FIELD = "record_field";
@@ -147,7 +146,7 @@ public class Entry implements IEntry
     protected static final String MARK_MYLUTECE_USER_INFOS_LIST = "mylutece_user_infos_list";
     protected static final String MARK_MYLUTECE_USER_LOGIN = "mylutece_user_login";
 
-    //PROPERTIES
+    // PROPERTIES
     protected static final String PROPERTY_IMPORT_MULTIPLE_VALUE_DELIMITER = "directory.import.multiple_value.delimiter";
 
     // SQL
@@ -196,7 +195,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public int getIdEntry(  )
+    public int getIdEntry( )
     {
         return _nIdEntry;
     }
@@ -214,7 +213,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public Directory getDirectory(  )
+    public Directory getDirectory( )
     {
         return _directory;
     }
@@ -232,7 +231,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String getTitle(  )
+    public String getTitle( )
     {
         return _strTitle;
     }
@@ -250,7 +249,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String getHelpMessage(  )
+    public String getHelpMessage( )
     {
         return _strHelpMessage;
     }
@@ -268,7 +267,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String getHelpMessageSearch(  )
+    public String getHelpMessageSearch( )
     {
         return _strHelpMessageSearch;
     }
@@ -286,7 +285,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String getComment(  )
+    public String getComment( )
     {
         return _strComment;
     }
@@ -304,7 +303,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isMandatory(  )
+    public boolean isMandatory( )
     {
         return _bMandatory;
     }
@@ -322,7 +321,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isFieldInLine(  )
+    public boolean isFieldInLine( )
     {
         return _bFieldInLine;
     }
@@ -340,7 +339,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isShownInAdvancedSearch(  )
+    public boolean isShownInAdvancedSearch( )
     {
         return _bShownInAdvancedSearch;
     }
@@ -358,7 +357,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isShownInResultList(  )
+    public boolean isShownInResultList( )
     {
         return _bShownInResultList;
     }
@@ -376,7 +375,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isShownInResultRecord(  )
+    public boolean isShownInResultRecord( )
     {
         return _bShownInResultRecord;
     }
@@ -394,7 +393,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isShownInHistory(  )
+    public boolean isShownInHistory( )
     {
         return _bShownInHistory;
     }
@@ -412,7 +411,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isShownInExport(  )
+    public boolean isShownInExport( )
     {
         return _bShownInExport;
     }
@@ -430,7 +429,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isShownInCompleteness(  )
+    public boolean isShownInCompleteness( )
     {
         return _bShownInCompleteness;
     }
@@ -448,7 +447,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isIndexed(  )
+    public boolean isIndexed( )
     {
         return _bIndexed;
     }
@@ -466,7 +465,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public int getPosition(  )
+    public int getPosition( )
     {
         return _nPosition;
     }
@@ -484,7 +483,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public EntryType getEntryType(  )
+    public EntryType getEntryType( )
     {
         return _entryType;
     }
@@ -502,7 +501,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public List<Field> getFields(  )
+    public List<Field> getFields( )
     {
         return _listFields;
     }
@@ -520,7 +519,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public IEntry getParent(  )
+    public IEntry getParent( )
     {
         return _entryParent;
     }
@@ -538,7 +537,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public List<IEntry> getChildren(  )
+    public List<IEntry> getChildren( )
     {
         return _listEntryChildren;
     }
@@ -556,7 +555,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isLastInTheList(  )
+    public boolean isLastInTheList( )
     {
         return _nLastInTheList;
     }
@@ -574,7 +573,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isFirstInTheList(  )
+    public boolean isFirstInTheList( )
     {
         return _nFirstInTheList;
     }
@@ -592,7 +591,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public int getDisplayWidth(  )
+    public int getDisplayWidth( )
     {
         return _nDisplayWidth;
     }
@@ -610,7 +609,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public int getDisplayHeight(  )
+    public int getDisplayHeight( )
     {
         return _nDisplayHeight;
     }
@@ -628,7 +627,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isRoleAssociated(  )
+    public boolean isRoleAssociated( )
     {
         return _bRoleAssociated;
     }
@@ -646,7 +645,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isWorkgroupAssociated(  )
+    public boolean isWorkgroupAssociated( )
     {
         return _bWorkgroupAssociated;
     }
@@ -664,7 +663,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isMultipleSearchFields(  )
+    public boolean isMultipleSearchFields( )
     {
         return _bMultipleSearchFields;
     }
@@ -682,7 +681,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public int getEntryAssociate(  )
+    public int getEntryAssociate( )
     {
         return _nIdEntryAssociate;
     }
@@ -700,7 +699,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String getRequestSQL(  )
+    public String getRequestSQL( )
     {
         return _strRequestSQL;
     }
@@ -718,7 +717,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isAddValueAllSearch(  )
+    public boolean isAddValueAllSearch( )
     {
         return _bAddValueAllSearch;
     }
@@ -736,7 +735,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isAutocompleteEntry(  )
+    public boolean isAutocompleteEntry( )
     {
         return _bIsAutocompleEntry;
     }
@@ -754,7 +753,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String getLabelValueAllSearch(  )
+    public String getLabelValueAllSearch( )
     {
         return _strLabelValueAllSearch;
     }
@@ -769,10 +768,10 @@ public class Entry implements IEntry
     }
 
     /**
-     * Get the url of the template wich contains the Html code used in entry
-     * form
-     * @param isDisplayFront true if display for front office or false if
-     *            display for back office
+     * Get the url of the template wich contains the Html code used in entry form
+     * 
+     * @param isDisplayFront
+     *            true if display for front office or false if display for back office
      * @return the template url
      *
      *
@@ -783,10 +782,10 @@ public class Entry implements IEntry
     }
 
     /**
-     * Get the url of the template wich contains the Html code used in search
-     * form
-     * @param isDisplayFront true if display for front office or false if
-     *            display for back office
+     * Get the url of the template wich contains the Html code used in search form
+     * 
+     * @param isDisplayFront
+     *            true if display for front office or false if display for back office
      * @return the template url
      *
      * */
@@ -796,10 +795,10 @@ public class Entry implements IEntry
     }
 
     /**
-     * Get the url of the template wich contains the Html code used in display
-     * records
-     * @param isDisplayFront true if display for front office or false if
-     *            display for back office
+     * Get the url of the template wich contains the Html code used in display records
+     * 
+     * @param isDisplayFront
+     *            true if display for front office or false if display for back office
      * @return the template url
      *
      * */
@@ -821,13 +820,12 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError, boolean bAddNewValue,
+            List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
-        List<String> lstValue = new ArrayList<String>(  );
-        String strValueEntry = ( request.getParameter( DirectoryUtils.EMPTY_STRING + this.getIdEntry(  ) ) != null )
-            ? request.getParameter( DirectoryUtils.EMPTY_STRING + this.getIdEntry(  ) ).trim(  ) : null;
+        List<String> lstValue = new ArrayList<String>( );
+        String strValueEntry = ( request.getParameter( DirectoryUtils.EMPTY_STRING + this.getIdEntry( ) ) != null ) ? request.getParameter(
+                DirectoryUtils.EMPTY_STRING + this.getIdEntry( ) ).trim( ) : null;
         lstValue.add( strValueEntry );
         getRecordFieldData( record, lstValue, bTestDirectoryError, bAddNewValue, listRecordField, locale );
     }
@@ -836,11 +834,10 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getImportRecordFieldData( Record record, String strImportValue, boolean bTestDirectoryError, List<RecordField> listRecordField, Locale locale )
+            throws DirectoryErrorException
     {
-        List<String> lstValue = new ArrayList<String>(  );
+        List<String> lstValue = new ArrayList<String>( );
         lstValue.add( strImportValue );
         getRecordFieldData( record, lstValue, bTestDirectoryError, false, listRecordField, locale );
     }
@@ -849,9 +846,8 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError, boolean bAddNewValue, List<RecordField> listRecordField,
+            Locale locale ) throws DirectoryErrorException
     {
         // Not implemented
     }
@@ -860,7 +856,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return null;
     }
@@ -869,7 +865,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return null;
     }
@@ -878,8 +874,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex )
+    public Paginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName, String strPageIndex )
     {
         return null;
     }
@@ -901,14 +896,13 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
 
-            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale,
-                    model );
+            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale, model );
 
-            return template.getHtml(  );
+            return template.getHtml( );
         }
 
         return null;
@@ -922,20 +916,20 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
-          	model.put( MARK_DEFAULT_VALUES, defaultValues );
-            
-            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale,
-                    model );
+            model.put( MARK_DEFAULT_VALUES, defaultValues );
 
-            return template.getHtml(  );
+            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormEntry( isDisplayFront ), locale, model );
+
+            return template.getHtml( );
         }
 
         return null;
     }
-    //popup display for task help filling
+
+    // popup display for task help filling
     /**
      * {@inheritDoc}
      */
@@ -944,32 +938,33 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
-            if( !defaultValues.isEmpty() )
+            if ( !defaultValues.isEmpty( ) )
             {
-          		model.put( MARK_DEFAULT_VALUES, defaultValues );
+                model.put( MARK_DEFAULT_VALUES, defaultValues );
             }
-            String res= this.getTitle() + " : " ;
-            for(RecordField list :defaultValues)
+            String res = this.getTitle( ) + " : ";
+            for ( RecordField list : defaultValues )
             {
-            	String value =list.getEntry().convertRecordFieldTitleToString(list, locale, false);
-            	if (!"".equals(value))
-            	{
-            		res+=  value;
-            	}
-            	else
-            	{
-            		res = "";
-            	}
+                String value = list.getEntry( ).convertRecordFieldTitleToString( list, locale, false );
+                if ( !"".equals( value ) )
+                {
+                    res += value;
+                }
+                else
+                {
+                    res = "";
+                }
             }
-            
+
             return res;
         }
 
         return null;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -978,19 +973,20 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlFormEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
-            if( !defaultValues.isEmpty() )
+            if ( !defaultValues.isEmpty( ) )
             {
-          		model.put( MARK_DEFAULT_VALUES, defaultValues );
+                model.put( MARK_DEFAULT_VALUES, defaultValues );
             }
-            
-            return this.getTitle() ;
+
+            return this.getTitle( );
         }
 
         return null;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -999,14 +995,13 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlFormSearchEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
 
-            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormSearchEntry( isDisplayFront ),
-                    locale, model );
+            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormSearchEntry( isDisplayFront ), locale, model );
 
-            return template.getHtml(  );
+            return template.getHtml( );
         }
 
         return null;
@@ -1020,15 +1015,14 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlFormSearchEntry( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
             model.put( MARK_ENTRY, this );
             model.put( MARK_LOCALE, locale );
             model.put( MARK_DEFAULT_VALUES, defaultValues );
 
-            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormSearchEntry( isDisplayFront ),
-                    locale, model );
+            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlFormSearchEntry( isDisplayFront ), locale, model );
 
-            return template.getHtml(  );
+            return template.getHtml( );
         }
 
         return null;
@@ -1042,15 +1036,14 @@ public class Entry implements IEntry
     {
         if ( getTemplateHtmlRecordFieldValue( isDisplayFront ) != null )
         {
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
             model.put( MARK_ENTRY, this );
             model.put( MARK_RECORD_FIELD, recordField );
             model.put( MARK_LOCALE, locale );
 
-            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlRecordFieldValue( isDisplayFront ),
-                    locale, model );
+            HtmlTemplate template = AppTemplateService.getTemplate( getTemplateHtmlRecordFieldValue( isDisplayFront ), locale, model );
 
-            return template.getHtml(  );
+            return template.getHtml( );
         }
 
         return null;
@@ -1060,23 +1053,21 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-        boolean bExportDirectory )
+    public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront, boolean bExportDirectory )
     {
-        if ( recordField.getValue(  ) != null )
+        if ( recordField.getValue( ) != null )
         {
-            if ( recordField.getField(  ) != null )
+            if ( recordField.getField( ) != null )
             {
-                if ( ( recordField.getField(  ).getValue(  ) != null ) &&
-                        !recordField.getField(  ).getValue(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+                if ( ( recordField.getField( ).getValue( ) != null ) && !recordField.getField( ).getValue( ).equals( DirectoryUtils.EMPTY_STRING ) )
                 {
-                    return recordField.getField(  ).getValue(  );
+                    return recordField.getField( ).getValue( );
                 }
 
-                return recordField.getValue(  );
+                return recordField.getValue( );
             }
 
-            return recordField.getValue(  );
+            return recordField.getValue( );
         }
 
         return DirectoryUtils.EMPTY_STRING;
@@ -1088,20 +1079,19 @@ public class Entry implements IEntry
     @Override
     public String convertRecordFieldTitleToString( RecordField recordField, Locale locale, boolean bDisplayFront )
     {
-        if ( recordField.getValue(  ) != null )
+        if ( recordField.getValue( ) != null )
         {
-            if ( recordField.getField(  ) != null )
+            if ( recordField.getField( ) != null )
             {
-                if ( ( recordField.getField(  ).getTitle(  ) != null ) &&
-                        !recordField.getField(  ).getTitle(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+                if ( ( recordField.getField( ).getTitle( ) != null ) && !recordField.getField( ).getTitle( ).equals( DirectoryUtils.EMPTY_STRING ) )
                 {
-                    return recordField.getField(  ).getTitle(  );
+                    return recordField.getField( ).getTitle( );
                 }
 
-                return recordField.getValue(  );
+                return recordField.getValue( );
             }
 
-            return recordField.getValue(  );
+            return recordField.getValue( );
         }
 
         return DirectoryUtils.EMPTY_STRING;
@@ -1115,11 +1105,11 @@ public class Entry implements IEntry
     {
         String strValue;
 
-        if ( recordField.getValue(  ) != null )
+        if ( recordField.getValue( ) != null )
         {
-            strValue = new String( recordField.getValue(  ) );
+            strValue = new String( recordField.getValue( ) );
 
-            if ( !strValue.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+            if ( !strValue.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
             {
                 mapSearchItem.put( DirectorySearchItem.FIELD_CONTENTS, strValue );
             }
@@ -1132,21 +1122,21 @@ public class Entry implements IEntry
     @Override
     public void getXml( Plugin plugin, Locale locale, StringBuffer strXml )
     {
-        if ( !this.getEntryType(  ).getComment(  ) )
+        if ( !this.getEntryType( ).getComment( ) )
         {
-            Map<String, String> model = new HashMap<String, String>(  );
-            model.put( ATTRIBUTE_ENTRY_ID, String.valueOf( this.getIdEntry(  ) ) );
-            model.put( ATTRIBUTE_ENTRY_ID_TYPE, String.valueOf( this.getEntryType(  ).getIdType(  ) ) );
-            model.put( Entry.ATTRIBUTE_IS_SORTABLE, Boolean.toString( this.isSortable(  ) ) );
+            Map<String, String> model = new HashMap<String, String>( );
+            model.put( ATTRIBUTE_ENTRY_ID, String.valueOf( this.getIdEntry( ) ) );
+            model.put( ATTRIBUTE_ENTRY_ID_TYPE, String.valueOf( this.getEntryType( ).getIdType( ) ) );
+            model.put( Entry.ATTRIBUTE_IS_SORTABLE, Boolean.toString( this.isSortable( ) ) );
 
             XmlUtil.beginElement( strXml, TAG_ENTRY, model );
-            XmlUtil.addElementHtml( strXml, TAG_TITLE, DirectoryUtils.substituteSpecialCaractersForExport( this.getTitle(  ) ) );
+            XmlUtil.addElementHtml( strXml, TAG_TITLE, DirectoryUtils.substituteSpecialCaractersForExport( this.getTitle( ) ) );
 
-            if ( this.getEntryType(  ).getGroup(  ) && ( this.getChildren(  ) != null ) )
+            if ( this.getEntryType( ).getGroup( ) && ( this.getChildren( ) != null ) )
             {
                 XmlUtil.beginElement( strXml, TAG_LIST_ENTRY, model );
 
-                for ( IEntry entry : this.getChildren(  ) )
+                for ( IEntry entry : this.getChildren( ) )
                 {
                     entry.getXml( plugin, locale, strXml );
                 }
@@ -1162,9 +1152,8 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public void getImportRecordFieldData( Record record, byte[] decodedBytes, String nomFile, boolean b,
-        List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getImportRecordFieldData( Record record, byte [ ] decodedBytes, String nomFile, boolean b, List<RecordField> listRecordField, Locale locale )
+            throws DirectoryErrorException
     {
         // TODO Auto-generated method stub
     }
@@ -1182,7 +1171,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public IMapProvider getMapProvider(  )
+    public IMapProvider getMapProvider( )
     {
         return _mapProvider;
     }
@@ -1191,7 +1180,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isSortable(  )
+    public boolean isSortable( )
     {
         return false;
     }
@@ -1200,8 +1189,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName,
-        String strPageIndex, Locale locale )
+    public LocalizedPaginator getPaginator( int nItemPerPage, String strBaseUrl, String strPageIndexParameterName, String strPageIndex, Locale locale )
     {
         return null;
     }
@@ -1210,7 +1198,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String getSQLJoin(  )
+    public String getSQLJoin( )
     {
         return SQL_JOIN_DIRECTORY_RECORD_FIELD;
     }
@@ -1219,7 +1207,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public String getSQLOrderBy(  )
+    public String getSQLOrderBy( )
     {
         return SQL_ORDER_BY_RECORD_FIELD_VALUE;
     }
@@ -1228,16 +1216,16 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public List<Object> getSQLParametersValues(  )
+    public List<Object> getSQLParametersValues( )
     {
-        return Collections.<Object>singletonList( Integer.valueOf( getIdEntry(  ) ) );
+        return Collections.<Object> singletonList( Integer.valueOf( getIdEntry( ) ) );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean isIndexedAsTitle(  )
+    public boolean isIndexedAsTitle( )
     {
         return _bIndexedAsTitle;
     }
@@ -1255,7 +1243,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isIndexedAsSummary(  )
+    public boolean isIndexedAsSummary( )
     {
         return _bIndexedAsSummary;
     }
@@ -1273,8 +1261,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public void canUploadFiles( List<FileItem> listUploadedFileItems, List<FileItem> listFileItemsToUpload,
-        Locale locale ) throws DirectoryErrorException
+    public void canUploadFiles( List<FileItem> listUploadedFileItems, List<FileItem> listFileItemsToUpload, Locale locale ) throws DirectoryErrorException
     {
         // Not implemented
     }
@@ -1283,7 +1270,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean isAnonymizable(  )
+    public boolean isAnonymizable( )
     {
         return false;
     }
@@ -1292,7 +1279,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public boolean getAnonymize(  )
+    public boolean getAnonymize( )
     {
         return _bAnonymize;
     }
@@ -1310,7 +1297,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public int getNumberRow(  )
+    public int getNumberRow( )
     {
         return _nNumberRow;
     }
@@ -1328,7 +1315,7 @@ public class Entry implements IEntry
      * {@inheritDoc}
      */
     @Override
-    public int getNumberColumn(  )
+    public int getNumberColumn( )
     {
         return _nNumberColumn;
     }
@@ -1342,5 +1329,4 @@ public class Entry implements IEntry
         this._nNumberColumn = nNumberColumn;
     }
 
-	
 }

@@ -41,7 +41,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * This class provides instances management methods (create, find, ...) for Field objects
  */
@@ -53,15 +52,17 @@ public final class FieldHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private FieldHome(  )
+    private FieldHome( )
     {
     }
 
     /**
      * Creation of an instance of field
      *
-     * @param field The instance of the Field which contains the informations to store
-     * @param plugin the Plugin
+     * @param field
+     *            The instance of the Field which contains the informations to store
+     * @param plugin
+     *            the Plugin
      * @return The primary key of the new Field.
      */
     public static int create( Field field, Plugin plugin )
@@ -72,8 +73,10 @@ public final class FieldHome
     /**
      * Copy of an instance of field
      *
-     * @param field The instance of the Field who must copy
-     * @param plugin the Plugin
+     * @param field
+     *            The instance of the Field who must copy
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void copy( Field field, Plugin plugin )
@@ -81,17 +84,19 @@ public final class FieldHome
         Field fieldCopy = field;
         fieldCopy.setIdField( create( field, plugin ) );
 
-        for ( RegularExpression regularExpression : field.getRegularExpressionList(  ) )
+        for ( RegularExpression regularExpression : field.getRegularExpressionList( ) )
         {
-            createVerifyBy( fieldCopy.getIdField(  ), regularExpression.getIdExpression(  ), plugin );
+            createVerifyBy( fieldCopy.getIdField( ), regularExpression.getIdExpression( ), plugin );
         }
     }
 
     /**
      * Update of the field which is specified in parameter
      *
-     * @param field The instance of the Field which contains the informations to update
-     * @param plugin the Plugin
+     * @param field
+     *            The instance of the Field which contains the informations to update
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void update( Field field, Plugin plugin )
@@ -102,8 +107,10 @@ public final class FieldHome
     /**
      * Remove the field whose identifier is specified in parameter
      *
-     * @param nIdField The field Id
-     * @param plugin the Plugin
+     * @param nIdField
+     *            The field Id
+     * @param plugin
+     *            the Plugin
      */
     public static void remove( int nIdField, Plugin plugin )
     {
@@ -117,14 +124,16 @@ public final class FieldHome
         _dao.delete( nIdField, plugin );
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Returns an instance of a Field whose identifier is specified in parameter
      *
-     * @param nKey The field primary key
-     * @param plugin the Plugin
+     * @param nKey
+     *            The field primary key
+     * @param plugin
+     *            the Plugin
      * @return an instance of Field
      */
     public static Field findByPrimaryKey( int nKey, Plugin plugin )
@@ -133,20 +142,19 @@ public final class FieldHome
 
         if ( field != null )
         {
-            List<RegularExpression> listRegularExpression = new ArrayList<RegularExpression>(  );
+            List<RegularExpression> listRegularExpression = new ArrayList<RegularExpression>( );
 
-            if ( RegularExpressionService.getInstance(  ).isAvailable(  ) )
+            if ( RegularExpressionService.getInstance( ).isAvailable( ) )
             {
                 List<Integer> listRegularExpressionKeyEntry = getListRegularExpressionKeyByIdField( nKey, plugin );
 
-                if ( ( listRegularExpressionKeyEntry != null ) && ( listRegularExpressionKeyEntry.size(  ) != 0 ) )
+                if ( ( listRegularExpressionKeyEntry != null ) && ( listRegularExpressionKeyEntry.size( ) != 0 ) )
                 {
                     RegularExpression regularExpression = null;
 
                     for ( Integer regularExpressionKey : listRegularExpressionKeyEntry )
                     {
-                        regularExpression = RegularExpressionService.getInstance(  )
-                                                                    .getRegularExpressionByKey( regularExpressionKey );
+                        regularExpression = RegularExpressionService.getInstance( ).getRegularExpressionByKey( regularExpressionKey );
 
                         if ( regularExpression != null )
                         {
@@ -165,9 +173,12 @@ public final class FieldHome
     /**
      * Returns an instance of a Field whose value is specified in parameter
      *
-     * @param nIdEntry The entry id
-     * @param strValue The value
-     * @param plugin the Plugin
+     * @param nIdEntry
+     *            The entry id
+     * @param strValue
+     *            The value
+     * @param plugin
+     *            the Plugin
      * @return an instance of Field
      */
     public static Field findByValue( int nIdEntry, String strValue, Plugin plugin )
@@ -176,21 +187,19 @@ public final class FieldHome
 
         if ( field != null )
         {
-            List<RegularExpression> listRegularExpression = new ArrayList<RegularExpression>(  );
+            List<RegularExpression> listRegularExpression = new ArrayList<RegularExpression>( );
 
-            if ( RegularExpressionService.getInstance(  ).isAvailable(  ) )
+            if ( RegularExpressionService.getInstance( ).isAvailable( ) )
             {
-                List<Integer> listRegularExpressionKeyEntry = getListRegularExpressionKeyByIdField( field.getIdField(  ),
-                        plugin );
+                List<Integer> listRegularExpressionKeyEntry = getListRegularExpressionKeyByIdField( field.getIdField( ), plugin );
 
-                if ( ( listRegularExpressionKeyEntry != null ) && ( listRegularExpressionKeyEntry.size(  ) != 0 ) )
+                if ( ( listRegularExpressionKeyEntry != null ) && ( listRegularExpressionKeyEntry.size( ) != 0 ) )
                 {
                     RegularExpression regularExpression = null;
 
                     for ( Integer regularExpressionKey : listRegularExpressionKeyEntry )
                     {
-                        regularExpression = RegularExpressionService.getInstance(  )
-                                                                    .getRegularExpressionByKey( regularExpressionKey );
+                        regularExpression = RegularExpressionService.getInstance( ).getRegularExpressionByKey( regularExpressionKey );
 
                         if ( regularExpression != null )
                         {
@@ -207,10 +216,13 @@ public final class FieldHome
     }
 
     /**
-     * Load the data of all the field of the entry  and returns them in a  list
-     * @param nIdEntry the id of the entry
-     * @param plugin the plugin
-     * @return  the list of field
+     * Load the data of all the field of the entry and returns them in a list
+     * 
+     * @param nIdEntry
+     *            the id of the entry
+     * @param plugin
+     *            the plugin
+     * @return the list of field
      */
     public static List<Field> getFieldListByIdEntry( int nIdEntry, Plugin plugin )
     {
@@ -218,11 +230,14 @@ public final class FieldHome
     }
 
     /**
-     * Delete an association between  field and a regular expression
+     * Delete an association between field and a regular expression
      *
-     * @param nIdField The identifier of the field
-     *  @param nIdExpression The identifier of the regular expression
-     * @param plugin the plugin
+     * @param nIdField
+     *            The identifier of the field
+     * @param nIdExpression
+     *            The identifier of the regular expression
+     * @param plugin
+     *            the plugin
      */
     public static void removeVerifyBy( int nIdField, int nIdExpression, Plugin plugin )
     {
@@ -230,11 +245,14 @@ public final class FieldHome
     }
 
     /**
-     * insert an association between  field and a regular expression
+     * insert an association between field and a regular expression
      *
-     * @param nIdField The identifier of the field
-     * @param nIdExpression The identifier of the regular expression
-     * @param plugin the plugin
+     * @param nIdField
+     *            The identifier of the field
+     * @param nIdExpression
+     *            The identifier of the regular expression
+     * @param plugin
+     *            the plugin
      */
     public static void createVerifyBy( int nIdField, int nIdExpression, Plugin plugin )
     {
@@ -242,11 +260,14 @@ public final class FieldHome
     }
 
     /**
-         * Load the key  of all the regularExpression associate to the field and returns them in a  list
-         * @param nIdField the id of the field
-         * @param plugin the plugin
-         * @return  the list of  regular expression key
-         */
+     * Load the key of all the regularExpression associate to the field and returns them in a list
+     * 
+     * @param nIdField
+     *            the id of the field
+     * @param plugin
+     *            the plugin
+     * @return the list of regular expression key
+     */
     public static List<Integer> getListRegularExpressionKeyByIdField( int nIdField, Plugin plugin )
     {
         return _dao.selectListRegularExpressionKeyByIdField( nIdField, plugin );
@@ -255,8 +276,10 @@ public final class FieldHome
     /**
      * verify if the regular expresssion is use
      *
-     * @param nIdExpression The identifier of the regular expression
-     * @param plugin the plugin
+     * @param nIdExpression
+     *            The identifier of the regular expression
+     * @param plugin
+     *            the plugin
      * @return true if the regular expression is use
      */
     public static boolean isRegularExpressionIsUse( int nIdExpression, Plugin plugin )

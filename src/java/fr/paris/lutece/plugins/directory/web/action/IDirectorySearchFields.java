@@ -44,9 +44,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  * Visualization of all needed for searched record.
+ * 
  * @author merlinfe
  *
  */
@@ -57,7 +57,7 @@ public interface IDirectorySearchFields
      *
      * @return default items per page
      */
-    int getDefaultItemsPerPage(  );
+    int getDefaultItemsPerPage( );
 
     /**
      * Default items per page
@@ -72,7 +72,7 @@ public interface IDirectorySearchFields
      *
      * @return current page index
      */
-    String getCurrentPageIndex(  );
+    String getCurrentPageIndex( );
 
     /**
      * Current page index
@@ -87,7 +87,7 @@ public interface IDirectorySearchFields
      *
      * @return id directory
      */
-    int getIdDirectory(  );
+    int getIdDirectory( );
 
     /**
      * Id directory
@@ -102,7 +102,7 @@ public interface IDirectorySearchFields
      *
      * @return id entry
      */
-    int getIdEntry(  );
+    int getIdEntry( );
 
     /**
      * Id entry
@@ -117,7 +117,7 @@ public interface IDirectorySearchFields
      *
      * @return map query
      */
-    HashMap<String, List<RecordField>> getMapQuery(  );
+    HashMap<String, List<RecordField>> getMapQuery( );
 
     /**
      * Map query
@@ -132,7 +132,7 @@ public interface IDirectorySearchFields
      *
      * @return date creation begin record
      */
-    Date getDateCreationBeginRecord(  );
+    Date getDateCreationBeginRecord( );
 
     /**
      * Date creation begin record
@@ -147,7 +147,7 @@ public interface IDirectorySearchFields
      *
      * @return date creation end record
      */
-    Date getDateCreationEndRecord(  );
+    Date getDateCreationEndRecord( );
 
     /**
      * Date creation end record
@@ -162,7 +162,7 @@ public interface IDirectorySearchFields
      *
      * @return date creation record
      */
-    Date getDateCreationRecord(  );
+    Date getDateCreationRecord( );
 
     /**
      * Date creation record
@@ -185,7 +185,7 @@ public interface IDirectorySearchFields
      *
      * @return the sort entry
      */
-    IEntry getSortEntry(  );
+    IEntry getSortEntry( );
 
     /**
      * Set the sort order
@@ -200,7 +200,7 @@ public interface IDirectorySearchFields
      *
      * @return the sort order
      */
-    int getSortOrder(  );
+    int getSortOrder( );
 
     /**
      * Set the sort parameters
@@ -216,27 +216,34 @@ public interface IDirectorySearchFields
 
     /**
      * return the default entry used for sorting the records
-     * @param directory the directory
+     * 
+     * @param directory
+     *            the directory
      * @return the default entry used for sorting the records
      */
     String getDefaultIdSortEntry( Directory directory );
 
     /**
      * return true if the record must be sorted by ascending sort
-     * @param directory the directory
+     * 
+     * @param directory
+     *            the directory
      * @return true if the record must be sorted by ascending sort
      */
     boolean isDefaultAscendingSort( Directory directory );
 
     /**
      * Items per page
+     * 
      * @return items per page
      */
-    int getItemsPerPage(  );
+    int getItemsPerPage( );
 
     /**
      * Items per page
-     * @param nItemsPerPage items per page
+     * 
+     * @param nItemsPerPage
+     *            items per page
      */
     void setItemsPerPage( int nItemsPerPage );
 
@@ -244,60 +251,73 @@ public interface IDirectorySearchFields
      *
      * @return true if the records must be disabled
      */
-    int getIsDisabled(  );
+    int getIsDisabled( );
 
     /***
      * set true if the records displayed must be disabled
-     * @param nIsDisabled true if the records displayed must be disabled
+     * 
+     * @param nIsDisabled
+     *            true if the records displayed must be disabled
      */
     void setIsDisabled( int nIsDisabled );
 
     /**
      * Date modification begin record
+     * 
      * @return date modification begin record
      */
-    Date getDateModificationBeginRecord(  );
+    Date getDateModificationBeginRecord( );
 
     /**
      * Date modification begin record
-     * @param dateModificationBeginRecord date modification begin record
+     * 
+     * @param dateModificationBeginRecord
+     *            date modification begin record
      */
     void setDateModificationBeginRecord( Date dateModificationBeginRecord );
 
     /**
      * Date modification end record
+     * 
      * @return date modification end record
      */
-    Date getDateModificationEndRecord(  );
+    Date getDateModificationEndRecord( );
 
     /**
      * Date modification end record
-     * @param dateModificationEndRecord date modification end record
+     * 
+     * @param dateModificationEndRecord
+     *            date modification end record
      */
     void setDateModificationEndRecord( Date dateModificationEndRecord );
 
     /**
      * Date modification record
+     * 
      * @return date modification record
      */
-    Date getDateModificationRecord(  );
+    Date getDateModificationRecord( );
 
     /**
      * Date modification record
-     * @param dateModificationRecord date modification record
+     * 
+     * @param dateModificationRecord
+     *            date modification record
      */
     void setDateModificationRecord( Date dateModificationRecord );
 
     /**
      * Set true if it must be sort by date modification
-     * @param bSortByDateModification true if it must be sort by date
-     *            modification
+     * 
+     * @param bSortByDateModification
+     *            true if it must be sort by date modification
      */
     void setSortByDateModification( boolean bSortByDateModification );
 
     /**
      * Check if it must be sort by date modification
+     * 
      * @return true if it must be sort by date modification, false otherwise
      */
-    boolean isSortByDateModification(  );
+    boolean isSortByDateModification( );
 }

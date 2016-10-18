@@ -41,7 +41,6 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
 
-
 /**
  *
  * DirectoryUserAttributesManager
@@ -55,31 +54,35 @@ public final class DirectoryUserAttributesManager
     /**
      * Private constructor
      */
-    private DirectoryUserAttributesManager(  )
+    private DirectoryUserAttributesManager( )
     {
     }
 
     /**
      * Get the instance of the service
+     * 
      * @return the service
      */
-    public static DirectoryUserAttributesManager getManager(  )
+    public static DirectoryUserAttributesManager getManager( )
     {
         return SpringContextService.getBean( BEAN_WORKFLOW_USER_ATTRIBUTES_MANAGER );
     }
 
     /**
      * Check if the UserAttributesService is enabled
+     * 
      * @return true if the service is enabled, false otherwise
      */
-    public boolean isEnabled(  )
+    public boolean isEnabled( )
     {
         return _userAttributesService != null;
     }
 
     /**
      * Set the UserAttributesService
-     * @param userAttributesService the UserAttributesService
+     * 
+     * @param userAttributesService
+     *            the UserAttributesService
      */
     public void setUserAttributesService( UserAttributesService userAttributesService )
     {
@@ -88,8 +91,11 @@ public final class DirectoryUserAttributesManager
 
     /**
      * Get the attribute
-     * @param strUserId the id user guid
-     * @param strAttribute the attribute
+     * 
+     * @param strUserId
+     *            the id user guid
+     * @param strAttribute
+     *            the attribute
      * @return the attribute value
      */
     public String getAttribute( String strUserId, String strAttribute )
@@ -98,12 +104,12 @@ public final class DirectoryUserAttributesManager
 
         try
         {
-            if ( isEnabled(  ) )
+            if ( isEnabled( ) )
             {
                 strAttributeValue = _userAttributesService.getAttribute( strUserId, strAttribute );
             }
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
             AppLogService.error( e );
         }
@@ -113,7 +119,9 @@ public final class DirectoryUserAttributesManager
 
     /**
      * Get the attributes
-     * @param strUserId the user id
+     * 
+     * @param strUserId
+     *            the user id
      * @return a map of attribute key - attribute value
      */
     public Map<String, String> getAttributes( String strUserId )
@@ -122,12 +130,12 @@ public final class DirectoryUserAttributesManager
 
         try
         {
-            if ( isEnabled(  ) )
+            if ( isEnabled( ) )
             {
                 attributes = _userAttributesService.getAttributes( strUserId );
             }
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
             AppLogService.error( e );
         }

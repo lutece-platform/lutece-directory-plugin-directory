@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.directory.service.directorysearch;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
  * SearchEngine
  */
@@ -44,7 +43,9 @@ public interface DirectorySearchEngine
 {
     /**
      * Return search results
-     * @param mapSearchQuery The map search query
+     * 
+     * @param mapSearchQuery
+     *            The map search query
      * @return Results as a collection of SearchResult
      */
     List<Integer> getSearchResults( HashMap<String, Object> mapSearchQuery );

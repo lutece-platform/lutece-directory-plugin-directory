@@ -38,7 +38,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.List;
 
-
 /**
  * DirectoryResourceRssConfigHome
  */
@@ -50,15 +49,17 @@ public final class DirectoryResourceRssConfigHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private DirectoryResourceRssConfigHome(  )
+    private DirectoryResourceRssConfigHome( )
     {
     }
 
     /**
      * Insert new configuration
      *
-     * @param config object configuration
-     * @param plugin the plugin
+     * @param config
+     *            object configuration
+     * @param plugin
+     *            the plugin
      */
     public static void create( DirectoryResourceRssConfig config, Plugin plugin )
     {
@@ -68,8 +69,10 @@ public final class DirectoryResourceRssConfigHome
     /**
      * Update a configuration
      *
-     * @param config object configuration
-     * @param plugin the plugin
+     * @param config
+     *            object configuration
+     * @param plugin
+     *            the plugin
      */
     public static void update( DirectoryResourceRssConfig config, Plugin plugin )
     {
@@ -78,8 +81,11 @@ public final class DirectoryResourceRssConfigHome
 
     /**
      * Delete a configuration
-     * @param nIdDirectoryResourceRssConfig id DirectoryResourceRssConfig
-     * @param plugin the plugin
+     * 
+     * @param nIdDirectoryResourceRssConfig
+     *            id DirectoryResourceRssConfig
+     * @param plugin
+     *            the plugin
      */
     public static void remove( int nIdDirectoryResourceRssConfig, Plugin plugin )
     {
@@ -88,8 +94,11 @@ public final class DirectoryResourceRssConfigHome
 
     /**
      * Delete a configuration
-     * @param nIdDirectoryResourceRssConfig id task
-     * @param plugin the plugin
+     * 
+     * @param nIdDirectoryResourceRssConfig
+     *            id task
+     * @param plugin
+     *            the plugin
      * @return a configuration
      *
      */
@@ -102,7 +111,9 @@ public final class DirectoryResourceRssConfigHome
 
     /**
      * Load All DirectoryResourceRssConfig
-     * @param plugin the plugin
+     * 
+     * @param plugin
+     *            the plugin
      * @return a list of DirectoryResourceRssConfig
      *
      */

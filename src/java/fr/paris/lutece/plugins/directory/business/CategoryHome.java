@@ -38,7 +38,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.List;
 
-
 /**
  *
  * class CategoryHome
@@ -52,15 +51,17 @@ public final class CategoryHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private CategoryHome(  )
+    private CategoryHome( )
     {
     }
 
     /**
-     * Returns an instance of a  Category whose identifier is specified in parameter
+     * Returns an instance of a Category whose identifier is specified in parameter
      *
-     * @param nKey The category  primary key
-     * @param plugin the Plugin
+     * @param nKey
+     *            The category primary key
+     * @param plugin
+     *            the Plugin
      * @return an instance of Category
      */
     public static Category findByPrimaryKey( int nKey, Plugin plugin )
@@ -69,11 +70,12 @@ public final class CategoryHome
     }
 
     /**
-         * Returns a list of all Category
-         *
-         * @param plugin the plugin
-         * @return  the list of category
-         */
+     * Returns a list of all Category
+     *
+     * @param plugin
+     *            the plugin
+     * @return the list of category
+     */
     public static List<Category> getList( Plugin plugin )
     {
         return _dao.select( plugin );

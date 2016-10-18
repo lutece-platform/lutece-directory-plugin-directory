@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
  *
  * ICategoryDAO
@@ -48,16 +47,20 @@ public interface ICategoryDAO
     /**
      * Load the data of the category type from the table
      *
-     * @param idKey The identifier of the category
-     * @param plugin the plugin
+     * @param idKey
+     *            The identifier of the category
+     * @param plugin
+     *            the plugin
      * @return the instance of the Category
      */
     Category load( int idKey, Plugin plugin );
 
     /**
-     * Load the data of all  category returns them in a  list
-     * @param plugin the plugin
-     * @return  the list of category
+     * Load the data of all category returns them in a list
+     * 
+     * @param plugin
+     *            the plugin
+     * @return the list of category
      */
     List<Category> select( Plugin plugin );
 }

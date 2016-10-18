@@ -37,98 +37,119 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
-* IEntryDAO Interface
-*/
+ * IEntryDAO Interface
+ */
 public interface IEntryDAO
 {
     /**
      * Insert a new record in the table.
      *
-     * @param entry instance of the Entry object to insert
-     * @param plugin the plugin
+     * @param entry
+     *            instance of the Entry object to insert
+     * @param plugin
+     *            the plugin
      * @return the id of the new entry
      */
     int insert( IEntry entry, Plugin plugin );
 
     /**
-         * Update the entry in the table
-         *
-         * @param entry instance of the Entry object to update
-         * @param plugin the plugin
-         */
+     * Update the entry in the table
+     *
+     * @param entry
+     *            instance of the Entry object to update
+     * @param plugin
+     *            the plugin
+     */
     void store( IEntry entry, Plugin plugin );
 
     /**
-         * Delete a record from the table
-         *
-         * @param nIdEntry The identifier of the entry
-         * @param plugin the plugin
-         */
+     * Delete a record from the table
+     *
+     * @param nIdEntry
+     *            The identifier of the entry
+     * @param plugin
+     *            the plugin
+     */
     void delete( int nIdEntry, Plugin plugin );
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
-         * Load the data of the entry from the table
-         *
-         * @param nIdEntry The identifier of the entry
-         * @param plugin the plugin
-         * @return the instance of the Entry
-         */
+     * Load the data of the entry from the table
+     *
+     * @param nIdEntry
+     *            The identifier of the entry
+     * @param plugin
+     *            the plugin
+     * @return the instance of the Entry
+     */
     IEntry load( int nIdEntry, Plugin plugin );
 
     /**
-         * Load the data of all the entry who verify the filter and returns them in a  list
-         *
-         * @param filter the filter
-         * @param plugin the plugin
-         * @return  the list of entry
-         */
+     * Load the data of all the entry who verify the filter and returns them in a list
+     *
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of entry
+     */
     List<IEntry> selectEntryListByFilter( EntryFilter filter, Plugin plugin );
 
     /**
-     * Load the data of all the entry who verify the filter and returns them in a  list
+     * Load the data of all the entry who verify the filter and returns them in a list
      *
-     * @param idTypeEntryList a of entry type needed (by id)
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the list of entry
+     * @param idTypeEntryList
+     *            a of entry type needed (by id)
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of entry
      */
     List<IEntry> selectEntryListByTypeByFilter( List<Integer> idTypeEntryList, EntryFilter filter, Plugin plugin );
 
     /**
      * Return the number of entry who verify the filter
      *
-     * @param filter the filter
-     * @param plugin the plugin
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
      * @return the number of entry who verify the filter
      */
     int selectNumberEntryByFilter( EntryFilter filter, Plugin plugin );
 
     /**
-     * Get the list of entries whith their titles, their ids and their
-     * anonymization status. Also get the class name of the entry type.
-     * @param plugin The plugin
-     * @return A list of entries with their titles, their ids and their
-     *         anonymization status.
+     * Get the list of entries whith their titles, their ids and their anonymization status. Also get the class name of the entry type.
+     * 
+     * @param plugin
+     *            The plugin
+     * @return A list of entries with their titles, their ids and their anonymization status.
      */
     List<IEntry> getEntryListAnonymizeStatus( Plugin plugin );
 
     /**
      * Update an entry anonymization status
-     * @param nEntryId Id of the entry
-     * @param bAnonymize True if the entry should be anonymize, false otherwise
-     * @param plugin The plugin
+     * 
+     * @param nEntryId
+     *            Id of the entry
+     * @param bAnonymize
+     *            True if the entry should be anonymize, false otherwise
+     * @param plugin
+     *            The plugin
      */
     void updateEntryAnonymizeStatus( Integer nEntryId, Boolean bAnonymize, Plugin plugin );
 
     /**
      * Finds all the entries without any parent
-     * @param plugin the plugin
-     * @param nIdDirectory the id of the concerned directory
+     * 
+     * @param plugin
+     *            the plugin
+     * @param nIdDirectory
+     *            the id of the concerned directory
      * @return List<IEntry> the list of all the entries without parent
      */
     List<IEntry> findEntriesWithoutParent( Plugin plugin, int nIdDirectory );

@@ -71,58 +71,70 @@ import fr.paris.lutece.util.ReferenceList;
  */
 import java.util.List;
 
-
 /**
-* IDirectoryDAO Interface
-*/
+ * IDirectoryDAO Interface
+ */
 public interface IDirectoryDAO
 {
     /**
      * Insert a new record in the table.
      *
-     * @param directory instance of the Directory to insert
-     * @param plugin the plugin
+     * @param directory
+     *            instance of the Directory to insert
+     * @param plugin
+     *            the plugin
      * @return the id of the new directory
      */
     int insert( Directory directory, Plugin plugin );
 
     /**
-    * Update the directory in the table
-    *
-    * @param directory instance of the Directory object to update
-    * @param plugin the plugin
-    */
+     * Update the directory in the table
+     *
+     * @param directory
+     *            instance of the Directory object to update
+     * @param plugin
+     *            the plugin
+     */
     void store( Directory directory, Plugin plugin );
 
     /**
      * Delete a record directory the table
      *
-     * @param nIdDirectory The identifier of the directory
-     * @param plugin the plugin
+     * @param nIdDirectory
+     *            The identifier of the directory
+     * @param plugin
+     *            the plugin
      */
     void delete( int nIdDirectory, Plugin plugin );
 
     /**
-         * Load the data of the Directory from the table
-         *
-         * @param nKey The identifier of the directory
-         * @param plugin the plugin
-         * @return the instance of the Directory
-         */
+     * Load the data of the Directory from the table
+     *
+     * @param nKey
+     *            The identifier of the directory
+     * @param plugin
+     *            the plugin
+     * @return the instance of the Directory
+     */
     Directory load( int nKey, Plugin plugin );
 
     /**
-         * Load the data of all the directory who verify the filter and returns them in a  list
-         * @param filter the filter
-         * @param plugin the plugin
-         * @return  the list of directory
-         */
+     * Load the data of all the directory who verify the filter and returns them in a list
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of directory
+     */
     List<Directory> selectDirectoryList( DirectoryFilter filter, Plugin plugin );
 
     /**
-         * Load the data of all enable directory  returns them in a  reference list
-         * @param plugin the plugin
-         * @return  a  reference list of directory
-         */
+     * Load the data of all enable directory returns them in a reference list
+     * 
+     * @param plugin
+     *            the plugin
+     * @return a reference list of directory
+     */
     ReferenceList getEnableDirectoryList( Plugin plugin );
 }

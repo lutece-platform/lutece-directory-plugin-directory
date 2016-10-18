@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.directory.service;
 
 import fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation;
 
-
 /**
  * class FormPlugin
  */
@@ -50,9 +49,9 @@ public class DirectoryPlugin extends PluginDefaultImplementation
      * {@inheritDoc}
      */
     @Override
-    public void init(  )
+    public void init( )
     {
         // Initialize the Directory service
-        DirectoryService.getInstance(  ).init(  );
+        DirectoryService.getInstance( ).init( );
     }
 }

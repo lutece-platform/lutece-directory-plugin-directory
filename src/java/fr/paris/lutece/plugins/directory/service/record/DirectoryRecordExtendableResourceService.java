@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  * Extendable resource service for directory records
  */
@@ -97,7 +96,7 @@ public class DirectoryRecordExtendableResourceService implements IExtendableReso
      * {@inheritDoc}
      */
     @Override
-    public String getResourceType(  )
+    public String getResourceType( )
     {
         return Record.EXTENDABLE_RESOURCE_TYPE;
     }
@@ -119,14 +118,13 @@ public class DirectoryRecordExtendableResourceService implements IExtendableReso
     {
         if ( StringUtils.isNotBlank( strIdResource ) && StringUtils.isNumeric( strIdResource ) )
         {
-            Record record = RecordHome.findByPrimaryKey( Integer.parseInt( strIdResource ),
-                    PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
-            UrlItem urlItem = new UrlItem( AppPathService.getPortalUrl(  ) );
+            Record record = RecordHome.findByPrimaryKey( Integer.parseInt( strIdResource ), PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+            UrlItem urlItem = new UrlItem( AppPathService.getPortalUrl( ) );
             urlItem.addParameter( PARAMETER_PAGE, CONSTANT_DIRECTORY );
-            urlItem.addParameter( PARAMETER_ID_DIRECTORY, record.getDirectory(  ).getIdDirectory(  ) );
+            urlItem.addParameter( PARAMETER_ID_DIRECTORY, record.getDirectory( ).getIdDirectory( ) );
             urlItem.addParameter( PARAMETER_ID_DIRECTORY_RECORD, strIdResource );
 
-            return urlItem.getUrl(  );
+            return urlItem.getUrl( );
         }
 
         return null;

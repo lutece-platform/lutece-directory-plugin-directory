@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.directory.business;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
-
 /**
  * This class provides instances management methods (create, find, ...) for physical file objects
  */
@@ -48,15 +47,17 @@ public final class PhysicalFileHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private PhysicalFileHome(  )
+    private PhysicalFileHome( )
     {
     }
 
     /**
      * Creation of an instance of record physical file
      *
-     * @param physicalFile The instance of the physical file which contains the informations to store
-     * @param plugin the plugin
+     * @param physicalFile
+     *            The instance of the physical file which contains the informations to store
+     * @param plugin
+     *            the plugin
      *
      * @return the id of the file after creation
      *
@@ -69,8 +70,10 @@ public final class PhysicalFileHome
     /**
      * Update of physical file which is specified in parameter
      *
-     * @param  physicalFile The instance of the  record physicalFile which contains the informations to update
-     * @param plugin the Plugin
+     * @param physicalFile
+     *            The instance of the record physicalFile which contains the informations to update
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void update( PhysicalFile physicalFile, Plugin plugin )
@@ -79,24 +82,28 @@ public final class PhysicalFileHome
     }
 
     /**
-     *Delete the physical file whose identifier is specified in parameter
+     * Delete the physical file whose identifier is specified in parameter
      *
-     * @param nIdPhysicalFile The identifier of the record physical file
-     * @param plugin the Plugin
+     * @param nIdPhysicalFile
+     *            The identifier of the record physical file
+     * @param plugin
+     *            the Plugin
      */
     public static void remove( int nIdPhysicalFile, Plugin plugin )
     {
         _dao.delete( nIdPhysicalFile, plugin );
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Returns an instance of a physical file whose identifier is specified in parameter
      *
-     * @param nKey The file  primary key
-     * @param plugin the Plugin
+     * @param nKey
+     *            The file primary key
+     * @param plugin
+     *            the Plugin
      * @return an instance of physical file
      */
     public static PhysicalFile findByPrimaryKey( int nKey, Plugin plugin )

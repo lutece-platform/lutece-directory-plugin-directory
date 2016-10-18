@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.directory.business;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
-
 /**
  * This class provides instances management methods (create, find, ...) for file objects
  */
@@ -48,24 +47,26 @@ public final class FileHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private FileHome(  )
+    private FileHome( )
     {
     }
 
     /**
      * Creation of an instance of record file
      *
-     * @param file The instance of the file which contains the informations to store
-     * @param plugin the plugin
+     * @param file
+     *            The instance of the file which contains the informations to store
+     * @param plugin
+     *            the plugin
      *
      * @return the id of the file after creation
      *
      */
     public static int create( File file, Plugin plugin )
     {
-        if ( file.getPhysicalFile(  ) != null )
+        if ( file.getPhysicalFile( ) != null )
         {
-            file.getPhysicalFile(  ).setIdPhysicalFile( PhysicalFileHome.create( file.getPhysicalFile(  ), plugin ) );
+            file.getPhysicalFile( ).setIdPhysicalFile( PhysicalFileHome.create( file.getPhysicalFile( ), plugin ) );
         }
 
         return _dao.insert( file, plugin );
@@ -74,46 +75,52 @@ public final class FileHome
     /**
      * Update of file which is specified in parameter
      *
-     * @param  file The instance of the  record file which contains the informations to update
-     * @param plugin the Plugin
+     * @param file
+     *            The instance of the record file which contains the informations to update
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void update( File file, Plugin plugin )
     {
-        if ( file.getPhysicalFile(  ) != null )
+        if ( file.getPhysicalFile( ) != null )
         {
-            PhysicalFileHome.update( file.getPhysicalFile(  ), plugin );
+            PhysicalFileHome.update( file.getPhysicalFile( ), plugin );
         }
 
         _dao.store( file, plugin );
     }
 
     /**
-     *Delete the file whose identifier is specified in parameter
+     * Delete the file whose identifier is specified in parameter
      *
-     * @param nIdFile The identifier of the record file
-     * @param plugin the Plugin
+     * @param nIdFile
+     *            The identifier of the record file
+     * @param plugin
+     *            the Plugin
      */
     public static void remove( int nIdFile, Plugin plugin )
     {
         File file = FileHome.findByPrimaryKey( nIdFile, plugin );
 
-        if ( file.getPhysicalFile(  ) != null )
+        if ( file.getPhysicalFile( ) != null )
         {
-            PhysicalFileHome.remove( file.getPhysicalFile(  ).getIdPhysicalFile(  ), plugin );
+            PhysicalFileHome.remove( file.getPhysicalFile( ).getIdPhysicalFile( ), plugin );
         }
 
         _dao.delete( nIdFile, plugin );
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Returns an instance of a file whose identifier is specified in parameter
      *
-     * @param nKey The file  primary key
-     * @param plugin the Plugin
+     * @param nKey
+     *            The file primary key
+     * @param plugin
+     *            the Plugin
      * @return an instance of file
      */
     public static File findByPrimaryKey( int nKey, Plugin plugin )

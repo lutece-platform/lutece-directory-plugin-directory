@@ -47,13 +47,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * Redirects to jsp/admin/plugins/directory/MassPrint.jsp
  *
  */
-public class MassPrintDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
-    implements IDirectoryAction
+public class MassPrintDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
 {
     private static final String ACTION_NAME = "Mass Print Directory";
     private static final String TEMPLATE_BUTTON = "actions/massprint.html";
@@ -73,7 +71,7 @@ public class MassPrintDirectoryAction extends AbstractPluginAction<DirectoryAdmi
     /**
      * {@inheritDoc}
      */
-    public String getButtonTemplate(  )
+    public String getButtonTemplate( )
     {
         return TEMPLATE_BUTTON;
     }
@@ -81,7 +79,7 @@ public class MassPrintDirectoryAction extends AbstractPluginAction<DirectoryAdmi
     /**
      * {@inheritDoc}
      */
-    public String getName(  )
+    public String getName( )
     {
         return ACTION_NAME;
     }
@@ -97,16 +95,16 @@ public class MassPrintDirectoryAction extends AbstractPluginAction<DirectoryAdmi
     /**
      * Redirects to {@link #JSP_DIRECTORY_MASS_PRINT}
      */
-    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
-        DirectoryAdminSearchFields sessionFields ) throws AccessDeniedException
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser, DirectoryAdminSearchFields sessionFields )
+            throws AccessDeniedException
     {
-        DefaultPluginActionResult result = new DefaultPluginActionResult(  );
+        DefaultPluginActionResult result = new DefaultPluginActionResult( );
 
         UrlItem urlItem = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_DIRECTORY_MASS_PRINT );
         String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
         urlItem.addParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY, strIdDirectory );
 
-        result.setRedirect( urlItem.getUrl(  ) );
+        result.setRedirect( urlItem.getUrl( ) );
 
         return result;
     }

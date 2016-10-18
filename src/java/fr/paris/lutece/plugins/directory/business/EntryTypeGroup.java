@@ -42,7 +42,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * class EntryTypeGroup
@@ -50,7 +49,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EntryTypeGroup extends Entry
 {
-    //	templates
+    // templates
     private final String _template_modify = "admin/plugins/directory/entrytypegroup/modify_entry_type_group.html";
 
     /**
@@ -62,17 +61,18 @@ public class EntryTypeGroup extends Entry
         String strTitle = request.getParameter( PARAMETER_TITLE );
         String strFieldError = DirectoryUtils.EMPTY_STRING;
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_INSERT_GROUP;
         }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         this.setTitle( strTitle );
@@ -86,7 +86,7 @@ public class EntryTypeGroup extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return _template_modify;
     }

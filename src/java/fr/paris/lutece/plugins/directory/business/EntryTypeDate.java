@@ -50,7 +50,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * class EntryTypeDate
@@ -123,10 +122,9 @@ public class EntryTypeDate extends Entry
     public String getEntryData( HttpServletRequest request, Locale locale )
     {
         String strTitle = request.getParameter( PARAMETER_TITLE );
-        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim(  ) : null;
-        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null )
-            ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ).trim(  ) : null;
+        String strHelpMessage = ( request.getParameter( PARAMETER_HELP_MESSAGE ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE ).trim( ) : null;
+        String strHelpMessageSearch = ( request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH ) != null ) ? request.getParameter( PARAMETER_HELP_MESSAGE_SEARCH )
+                .trim( ) : null;
         String strComment = request.getParameter( PARAMETER_COMMENT );
         String strValue = request.getParameter( PARAMETER_VALUE );
         String strMandatory = request.getParameter( PARAMETER_MANDATORY );
@@ -142,17 +140,18 @@ public class EntryTypeDate extends Entry
         String strShowInExport = request.getParameter( PARAMETER_SHOWN_IN_EXPORT );
         String strShowInCompleteness = request.getParameter( PARAMETER_SHOWN_IN_COMPLETENESS );
 
-        if ( ( strTitle == null ) || strTitle.trim(  ).equals( DirectoryUtils.EMPTY_STRING ) )
+        if ( ( strTitle == null ) || strTitle.trim( ).equals( DirectoryUtils.EMPTY_STRING ) )
         {
             strFieldError = FIELD_TITLE;
         }
 
         if ( !strFieldError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strFieldError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strFieldError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
         Date dDateValue = null;
@@ -172,15 +171,15 @@ public class EntryTypeDate extends Entry
         this.setHelpMessageSearch( strHelpMessageSearch );
         this.setComment( strComment );
 
-        if ( this.getFields(  ) == null )
+        if ( this.getFields( ) == null )
         {
-            ArrayList<Field> listFields = new ArrayList<Field>(  );
-            Field field = new Field(  );
+            ArrayList<Field> listFields = new ArrayList<Field>( );
+            Field field = new Field( );
             listFields.add( field );
             this.setFields( listFields );
         }
 
-        this.getFields(  ).get( 0 ).setValueTypeDate( dDateValue );
+        this.getFields( ).get( 0 ).setValueTypeDate( dDateValue );
         this.setMandatory( strMandatory != null );
         this.setIndexed( strIndexed != null );
         this.setIndexedAsTitle( strIndexedAsTitle != null );
@@ -200,7 +199,7 @@ public class EntryTypeDate extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateCreate(  )
+    public String getTemplateCreate( )
     {
         return _template_create;
     }
@@ -209,7 +208,7 @@ public class EntryTypeDate extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String getTemplateModify(  )
+    public String getTemplateModify( )
     {
         return _template_modify;
     }
@@ -218,19 +217,18 @@ public class EntryTypeDate extends Entry
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError, boolean bAddNewValue,
+            List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
-        if ( !this.isMultipleSearchFields(  ) || ( request.getParameterValues( PARAMETER_SEARCH_ACTION ) == null ) )
+        if ( !this.isMultipleSearchFields( ) || ( request.getParameterValues( PARAMETER_SEARCH_ACTION ) == null ) )
         {
             super.getRecordFieldData( record, request, bTestDirectoryError, bAddNewValue, listRecordField, locale );
         }
         else
         {
-            List<String> lstValue = new ArrayList<String>(  );
-            String strDateBegin = request.getParameter( PARAMETER_DATE_BEGIN + "_" + this.getIdEntry(  ) );
-            String strDateEnd = request.getParameter( PARAMETER_DATE_END + "_" + this.getIdEntry(  ) );
+            List<String> lstValue = new ArrayList<String>( );
+            String strDateBegin = request.getParameter( PARAMETER_DATE_BEGIN + "_" + this.getIdEntry( ) );
+            String strDateEnd = request.getParameter( PARAMETER_DATE_END + "_" + this.getIdEntry( ) );
             lstValue.add( strDateBegin );
             lstValue.add( strDateEnd );
             getRecordFieldData( record, lstValue, bTestDirectoryError, bAddNewValue, listRecordField, locale );
@@ -241,13 +239,12 @@ public class EntryTypeDate extends Entry
      * {@inheritDoc}
      */
     @Override
-    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError,
-        boolean bAddNewValue, List<RecordField> listRecordField, Locale locale )
-        throws DirectoryErrorException
+    public void getRecordFieldData( Record record, List<String> lstValue, boolean bTestDirectoryError, boolean bAddNewValue, List<RecordField> listRecordField,
+            Locale locale ) throws DirectoryErrorException
     {
         RecordField recordField;
 
-        if ( this.isMultipleSearchFields(  ) && ( ( lstValue != null ) && ( lstValue.size(  ) > 1 ) ) )
+        if ( this.isMultipleSearchFields( ) && ( ( lstValue != null ) && ( lstValue.size( ) > 1 ) ) )
         {
             String strDateBegin = lstValue.get( 0 );
             String strDateEnd = lstValue.get( 1 );
@@ -255,10 +252,8 @@ public class EntryTypeDate extends Entry
             Date tDateEnd = null;
             String strError = null;
 
-            if ( ( !strDateBegin.equals( DirectoryUtils.EMPTY_STRING ) &&
-                    strDateEnd.equals( DirectoryUtils.EMPTY_STRING ) ) ||
-                    ( !strDateEnd.equals( DirectoryUtils.EMPTY_STRING ) &&
-                    strDateBegin.equals( DirectoryUtils.EMPTY_STRING ) ) )
+            if ( ( !strDateBegin.equals( DirectoryUtils.EMPTY_STRING ) && strDateEnd.equals( DirectoryUtils.EMPTY_STRING ) )
+                    || ( !strDateEnd.equals( DirectoryUtils.EMPTY_STRING ) && strDateBegin.equals( DirectoryUtils.EMPTY_STRING ) ) )
             {
                 strError = _message_mandatory_date_begin_date_end;
             }
@@ -283,8 +278,7 @@ public class EntryTypeDate extends Entry
                 }
             }
 
-            if ( ( strError == null ) && ( tDateBegin != null ) && ( tDateEnd != null ) &&
-                    tDateEnd.before( tDateBegin ) )
+            if ( ( strError == null ) && ( tDateBegin != null ) && ( tDateEnd != null ) && tDateEnd.before( tDateBegin ) )
             {
                 strError = _message_illogical_date_end_before_date_begin;
             }
@@ -293,16 +287,16 @@ public class EntryTypeDate extends Entry
             {
                 strError = I18nService.getLocalizedString( strError, locale );
 
-                throw new DirectoryErrorException( this.getTitle(  ), strError );
+                throw new DirectoryErrorException( this.getTitle( ), strError );
             }
 
             if ( tDateBegin != null )
             {
-                recordField = new RecordField(  );
+                recordField = new RecordField( );
 
-                Field mockFieldDateBegin = new Field(  );
+                Field mockFieldDateBegin = new Field( );
                 mockFieldDateBegin.setIdField( _nIdFieldDateBegin );
-                recordField.setValue( ( DirectoryUtils.EMPTY_STRING + tDateBegin.getTime(  ) ) );
+                recordField.setValue( ( DirectoryUtils.EMPTY_STRING + tDateBegin.getTime( ) ) );
                 recordField.setField( mockFieldDateBegin );
                 recordField.setEntry( this );
                 listRecordField.add( recordField );
@@ -310,11 +304,11 @@ public class EntryTypeDate extends Entry
 
             if ( tDateEnd != null )
             {
-                recordField = new RecordField(  );
+                recordField = new RecordField( );
 
-                Field mockFieldDateEnd = new Field(  );
+                Field mockFieldDateEnd = new Field( );
                 mockFieldDateEnd.setIdField( _nIdFieldDateEnd );
-                recordField.setValue( ( DirectoryUtils.EMPTY_STRING + tDateEnd.getTime(  ) ) );
+                recordField.setValue( ( DirectoryUtils.EMPTY_STRING + tDateEnd.getTime( ) ) );
                 recordField.setField( mockFieldDateEnd );
                 recordField.setEntry( this );
                 listRecordField.add( recordField );
@@ -322,17 +316,16 @@ public class EntryTypeDate extends Entry
         }
         else
         {
-            recordField = new RecordField(  );
+            recordField = new RecordField( );
             recordField.setEntry( this );
 
-            String strValueEntry = ( ( lstValue != null ) && ( lstValue.size(  ) > 0 ) ) ? lstValue.get( 0 ) : null;
+            String strValueEntry = ( ( lstValue != null ) && ( lstValue.size( ) > 0 ) ) ? lstValue.get( 0 ) : null;
 
             if ( strValueEntry != null )
             {
-                if ( bTestDirectoryError && this.isMandatory(  ) &&
-                        strValueEntry.equals( DirectoryUtils.EMPTY_STRING ) )
+                if ( bTestDirectoryError && this.isMandatory( ) && strValueEntry.equals( DirectoryUtils.EMPTY_STRING ) )
                 {
-                    throw new DirectoryErrorException( this.getTitle(  ) );
+                    throw new DirectoryErrorException( this.getTitle( ) );
                 }
 
                 if ( !strValueEntry.equals( DirectoryUtils.EMPTY_STRING ) )
@@ -343,10 +336,10 @@ public class EntryTypeDate extends Entry
                     {
                         String strError = I18nService.getLocalizedString( _message_illogical_date, locale );
 
-                        throw new DirectoryErrorException( this.getTitle(  ), strError );
+                        throw new DirectoryErrorException( this.getTitle( ), strError );
                     }
 
-                    recordField.setValue( ( DirectoryUtils.EMPTY_STRING + tDateValue.getTime(  ) ) );
+                    recordField.setValue( ( DirectoryUtils.EMPTY_STRING + tDateValue.getTime( ) ) );
                 }
             }
 
@@ -358,19 +351,18 @@ public class EntryTypeDate extends Entry
      * {@inheritDoc}
      */
     @Override
-    public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront,
-        boolean bDisplayExport )
+    public String convertRecordFieldValueToString( RecordField recordField, Locale locale, boolean bDisplayFront, boolean bDisplayExport )
     {
-        if ( recordField.getValue(  ) != null )
+        if ( recordField.getValue( ) != null )
         {
             try
             {
-                Long lTime = Long.parseLong( recordField.getValue(  ) );
+                Long lTime = Long.parseLong( recordField.getValue( ) );
                 Date date = new Date( lTime );
 
                 return DateUtil.getDateString( date, locale );
             }
-            catch ( Exception e )
+            catch( Exception e )
             {
                 AppLogService.error( e );
             }
@@ -394,30 +386,31 @@ public class EntryTypeDate extends Entry
     @Override
     public void addSearchCriteria( HashMap<String, Object> mapSearchItem, RecordField recordField )
     {
-        if ( recordField.getValue(  ) != null )
+        if ( recordField.getValue( ) != null )
         {
             try
             {
-                Long lTime = Long.parseLong( new String( recordField.getValue(  ) ) );
+                Long lTime = Long.parseLong( new String( recordField.getValue( ) ) );
                 Date date = new Date( lTime );
 
-                if ( recordField.getField(  ) != null )
+                if ( recordField.getField( ) != null )
                 {
-                    if ( recordField.getField(  ).getIdField(  ) == _nIdFieldDateBegin )
+                    if ( recordField.getField( ).getIdField( ) == _nIdFieldDateBegin )
                     {
                         mapSearchItem.put( DirectorySearchItem.FIELD_DATE_BEGIN, date );
                     }
-                    else if ( recordField.getField(  ).getIdField(  ) == _nIdFieldDateEnd )
-                    {
-                        mapSearchItem.put( DirectorySearchItem.FIELD_DATE_END, date );
-                    }
+                    else
+                        if ( recordField.getField( ).getIdField( ) == _nIdFieldDateEnd )
+                        {
+                            mapSearchItem.put( DirectorySearchItem.FIELD_DATE_END, date );
+                        }
                 }
                 else
                 {
                     mapSearchItem.put( DirectorySearchItem.FIELD_DATE, date );
                 }
             }
-            catch ( Exception e )
+            catch( Exception e )
             {
                 AppLogService.error( e );
             }
@@ -428,7 +421,7 @@ public class EntryTypeDate extends Entry
      * {@inheritDoc}
      */
     @Override
-    public boolean isSortable(  )
+    public boolean isSortable( )
     {
         return true;
     }

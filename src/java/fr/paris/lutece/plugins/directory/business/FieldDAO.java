@@ -41,7 +41,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * This class provides Data Access methods for Field objects
  */
@@ -49,77 +48,78 @@ public final class FieldDAO implements IFieldDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_field ) FROM directory_field";
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_field,id_entry,title,default_value,height,width," +
-        "is_default_value,max_size_enter,field_position,value_type_date,role_key,workgroup_key" +
-        ",is_shown_in_result_list,is_shown_in_result_record,image_type " + " FROM directory_field WHERE id_field = ? ";
-    private static final String SQL_QUERY_FIND_BY_VALUE = "SELECT id_field,id_entry,title,default_value,height,width," +
-        "is_default_value,max_size_enter,field_position,value_type_date,role_key,workgroup_key" +
-        ",is_shown_in_result_list,is_shown_in_result_record, image_type" +
-        " FROM directory_field WHERE id_entry=? and default_value = ? ";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_field(id_field,id_entry,title,default_value,height," +
-        "width,is_default_value,max_size_enter,field_position,value_type_date,role_key,workgroup_key,is_shown_in_result_list," +
-        " is_shown_in_result_record, image_type)" + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_field,id_entry,title,default_value,height,width,"
+            + "is_default_value,max_size_enter,field_position,value_type_date,role_key,workgroup_key"
+            + ",is_shown_in_result_list,is_shown_in_result_record,image_type " + " FROM directory_field WHERE id_field = ? ";
+    private static final String SQL_QUERY_FIND_BY_VALUE = "SELECT id_field,id_entry,title,default_value,height,width,"
+            + "is_default_value,max_size_enter,field_position,value_type_date,role_key,workgroup_key"
+            + ",is_shown_in_result_list,is_shown_in_result_record, image_type" + " FROM directory_field WHERE id_entry=? and default_value = ? ";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_field(id_field,id_entry,title,default_value,height,"
+            + "width,is_default_value,max_size_enter,field_position,value_type_date,role_key,workgroup_key,is_shown_in_result_list,"
+            + " is_shown_in_result_record, image_type)" + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_field WHERE id_field = ? ";
     private static final String SQL_QUERY_INSERT_VERIF_BY = "INSERT INTO directory_verify_by(id_field,id_expression) VALUES(?,?) ";
     private static final String SQL_QUERY_DELETE_VERIF_BY = "DELETE FROM directory_verify_by WHERE id_field = ? and id_expression= ?";
-    private static final String SQL_QUERY_UPDATE = "UPDATE directory_field SET " +
-        "id_field=?,id_entry=?,title=?,default_value=?,height=?,width=?,is_default_value=?,max_size_enter=?, " +
-        "field_position=?,value_type_date=?,role_key=?,workgroup_key=?,is_shown_in_result_list=?,is_shown_in_result_record=?, image_type=?" +
-        "  WHERE id_field = ?";
-    private static final String SQL_QUERY_SELECT_FIELD_BY_ID_ENTRY = "SELECT id_field,id_entry,title,default_value,height,width,is_default_value," +
-        "max_size_enter,field_position,value_type_date,role_key,workgroup_key,is_shown_in_result_list" +
-        ",is_shown_in_result_record, image_type FROM directory_field  WHERE id_entry = ? ORDER BY field_position";
+    private static final String SQL_QUERY_UPDATE = "UPDATE directory_field SET "
+            + "id_field=?,id_entry=?,title=?,default_value=?,height=?,width=?,is_default_value=?,max_size_enter=?, "
+            + "field_position=?,value_type_date=?,role_key=?,workgroup_key=?,is_shown_in_result_list=?,is_shown_in_result_record=?, image_type=?"
+            + "  WHERE id_field = ?";
+    private static final String SQL_QUERY_SELECT_FIELD_BY_ID_ENTRY = "SELECT id_field,id_entry,title,default_value,height,width,is_default_value,"
+            + "max_size_enter,field_position,value_type_date,role_key,workgroup_key,is_shown_in_result_list"
+            + ",is_shown_in_result_record, image_type FROM directory_field  WHERE id_entry = ? ORDER BY field_position";
     private static final String SQL_QUERY_NEW_POSITION = "SELECT MAX(field_position)" + " FROM directory_field ";
-    private static final String SQL_QUERY_SELECT_REGULAR_EXPRESSION_BY_ID_FIELD = "SELECT id_expression " +
-        " FROM directory_verify_by where id_field=?";
-    private static final String SQL_QUERY_COUNT_FIELD_BY_ID_REGULAR_EXPRESSION = "SELECT COUNT(id_field) " +
-        " FROM directory_verify_by where id_expression = ?";
+    private static final String SQL_QUERY_SELECT_REGULAR_EXPRESSION_BY_ID_FIELD = "SELECT id_expression " + " FROM directory_verify_by where id_field=?";
+    private static final String SQL_QUERY_COUNT_FIELD_BY_ID_REGULAR_EXPRESSION = "SELECT COUNT(id_field) "
+            + " FROM directory_verify_by where id_expression = ?";
 
     /**
      * Generates a new primary key
      *
-     * @param plugin the plugin
+     * @param plugin
+     *            the plugin
      * @return The new primary key
      */
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nKey;
 
-        if ( !daoUtil.next(  ) )
+        if ( !daoUtil.next( ) )
         {
             // if the table is empty
             nKey = 1;
         }
 
         nKey = daoUtil.getInt( 1 ) + 1;
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
 
     /**
      * Generates a new field position
-     * @param plugin the plugin
+     * 
+     * @param plugin
+     *            the plugin
      * @return the new entry position
      */
     private int newPosition( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_POSITION, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nPos;
 
-        if ( !daoUtil.next(  ) )
+        if ( !daoUtil.next( ) )
         {
             // if the table is empty
             nPos = 1;
         }
 
         nPos = daoUtil.getInt( 1 ) + 1;
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nPos;
     }
@@ -134,28 +134,27 @@ public final class FieldDAO implements IFieldDAO
         field.setPosition( newPosition( plugin ) );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
-        daoUtil.setInt( 1, field.getIdField(  ) );
-        daoUtil.setInt( 2, field.getEntry(  ).getIdEntry(  ) );
-        daoUtil.setString( 3, field.getTitle(  ) );
-        daoUtil.setString( 4, field.getValue(  ) );
-        daoUtil.setInt( 5, field.getHeight(  ) );
-        daoUtil.setInt( 6, field.getWidth(  ) );
-        daoUtil.setBoolean( 7, field.isDefaultValue(  ) );
-        daoUtil.setInt( 8, field.getMaxSizeEnter(  ) );
-        daoUtil.setInt( 9, field.getPosition(  ) );
-        daoUtil.setDate( 10,
-            ( field.getValueTypeDate(  ) == null ) ? null : new Date( field.getValueTypeDate(  ).getTime(  ) ) );
+        daoUtil.setInt( 1, field.getIdField( ) );
+        daoUtil.setInt( 2, field.getEntry( ).getIdEntry( ) );
+        daoUtil.setString( 3, field.getTitle( ) );
+        daoUtil.setString( 4, field.getValue( ) );
+        daoUtil.setInt( 5, field.getHeight( ) );
+        daoUtil.setInt( 6, field.getWidth( ) );
+        daoUtil.setBoolean( 7, field.isDefaultValue( ) );
+        daoUtil.setInt( 8, field.getMaxSizeEnter( ) );
+        daoUtil.setInt( 9, field.getPosition( ) );
+        daoUtil.setDate( 10, ( field.getValueTypeDate( ) == null ) ? null : new Date( field.getValueTypeDate( ).getTime( ) ) );
 
-        daoUtil.setString( 11, field.getRoleKey(  ) );
-        daoUtil.setString( 12, field.getWorkgroup(  ) );
-        daoUtil.setBoolean( 13, field.isShownInResultList(  ) );
-        daoUtil.setBoolean( 14, field.isShownInResultRecord(  ) );
+        daoUtil.setString( 11, field.getRoleKey( ) );
+        daoUtil.setString( 12, field.getWorkgroup( ) );
+        daoUtil.setBoolean( 13, field.isShownInResultList( ) );
+        daoUtil.setBoolean( 14, field.isShownInResultRecord( ) );
         daoUtil.setString( 15, field.getImageType( ) );
-        
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
 
-        return field.getIdField(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
+
+        return field.getIdField( );
     }
 
     /**
@@ -166,17 +165,17 @@ public final class FieldDAO implements IFieldDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
         daoUtil.setInt( 1, nId );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         Field field = null;
         IEntry entry = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            field = new Field(  );
+            field = new Field( );
             field.setIdField( daoUtil.getInt( 1 ) );
-            //parent entry
-            entry = new Entry(  );
+            // parent entry
+            entry = new Entry( );
             entry.setIdEntry( daoUtil.getInt( 2 ) );
             field.setEntry( entry );
             field.setTitle( daoUtil.getString( 3 ) );
@@ -191,10 +190,10 @@ public final class FieldDAO implements IFieldDAO
             field.setWorkgroup( daoUtil.getString( 12 ) );
             field.setShownInResultList( daoUtil.getBoolean( 13 ) );
             field.setShownInResultRecord( daoUtil.getBoolean( 14 ) );
-            field.setImageType(daoUtil.getString( 15 ));
+            field.setImageType( daoUtil.getString( 15 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return field;
     }
@@ -208,17 +207,17 @@ public final class FieldDAO implements IFieldDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_VALUE, plugin );
         daoUtil.setInt( 1, nIdEntry );
         daoUtil.setString( 2, strValue );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         Field field = null;
         IEntry entry = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            field = new Field(  );
+            field = new Field( );
             field.setIdField( daoUtil.getInt( 1 ) );
-            //parent entry
-            entry = new Entry(  );
+            // parent entry
+            entry = new Entry( );
             entry.setIdEntry( daoUtil.getInt( 2 ) );
             field.setEntry( entry );
             field.setTitle( daoUtil.getString( 3 ) );
@@ -236,7 +235,7 @@ public final class FieldDAO implements IFieldDAO
             field.setImageType( daoUtil.getString( 15 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return field;
     }
@@ -249,8 +248,8 @@ public final class FieldDAO implements IFieldDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdField );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -260,25 +259,24 @@ public final class FieldDAO implements IFieldDAO
     public void store( Field field, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
-        daoUtil.setInt( 1, field.getIdField(  ) );
-        daoUtil.setInt( 2, field.getEntry(  ).getIdEntry(  ) );
-        daoUtil.setString( 3, field.getTitle(  ) );
-        daoUtil.setString( 4, field.getValue(  ) );
-        daoUtil.setInt( 5, field.getHeight(  ) );
-        daoUtil.setInt( 6, field.getWidth(  ) );
-        daoUtil.setBoolean( 7, field.isDefaultValue(  ) );
-        daoUtil.setInt( 8, field.getMaxSizeEnter(  ) );
-        daoUtil.setInt( 9, field.getPosition(  ) );
-        daoUtil.setDate( 10,
-            ( field.getValueTypeDate(  ) == null ) ? null : new Date( field.getValueTypeDate(  ).getTime(  ) ) );
-        daoUtil.setString( 11, field.getRoleKey(  ) );
-        daoUtil.setString( 12, field.getWorkgroup(  ) );
-        daoUtil.setBoolean( 13, field.isShownInResultList(  ) );
-        daoUtil.setBoolean( 14, field.isShownInResultRecord(  ) );
+        daoUtil.setInt( 1, field.getIdField( ) );
+        daoUtil.setInt( 2, field.getEntry( ).getIdEntry( ) );
+        daoUtil.setString( 3, field.getTitle( ) );
+        daoUtil.setString( 4, field.getValue( ) );
+        daoUtil.setInt( 5, field.getHeight( ) );
+        daoUtil.setInt( 6, field.getWidth( ) );
+        daoUtil.setBoolean( 7, field.isDefaultValue( ) );
+        daoUtil.setInt( 8, field.getMaxSizeEnter( ) );
+        daoUtil.setInt( 9, field.getPosition( ) );
+        daoUtil.setDate( 10, ( field.getValueTypeDate( ) == null ) ? null : new Date( field.getValueTypeDate( ).getTime( ) ) );
+        daoUtil.setString( 11, field.getRoleKey( ) );
+        daoUtil.setString( 12, field.getWorkgroup( ) );
+        daoUtil.setBoolean( 13, field.isShownInResultList( ) );
+        daoUtil.setBoolean( 14, field.isShownInResultRecord( ) );
         daoUtil.setString( 15, field.getImageType( ) );
-        daoUtil.setInt( 16, field.getIdField(  ) );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.setInt( 16, field.getIdField( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -287,20 +285,20 @@ public final class FieldDAO implements IFieldDAO
     @Override
     public List<Field> selectFieldListByIdEntry( int nIdEntry, Plugin plugin )
     {
-        List<Field> fieldList = new ArrayList<Field>(  );
+        List<Field> fieldList = new ArrayList<Field>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_FIELD_BY_ID_ENTRY, plugin );
         daoUtil.setInt( 1, nIdEntry );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         Field field = null;
         IEntry entry = null;
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            field = new Field(  );
+            field = new Field( );
             field.setIdField( daoUtil.getInt( 1 ) );
-            //parent entry
-            entry = new Entry(  );
+            // parent entry
+            entry = new Entry( );
             entry.setIdEntry( daoUtil.getInt( 2 ) );
             field.setEntry( entry );
             field.setTitle( daoUtil.getString( 3 ) );
@@ -317,11 +315,10 @@ public final class FieldDAO implements IFieldDAO
             field.setShownInResultRecord( daoUtil.getBoolean( 14 ) );
             field.setImageType( daoUtil.getString( 15 ) );
 
-            
             fieldList.add( field );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return fieldList;
     }
@@ -335,8 +332,8 @@ public final class FieldDAO implements IFieldDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_VERIF_BY, plugin );
         daoUtil.setInt( 1, nIdField );
         daoUtil.setInt( 2, nIdExpression );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -348,8 +345,8 @@ public final class FieldDAO implements IFieldDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT_VERIF_BY, plugin );
         daoUtil.setInt( 1, nIdField );
         daoUtil.setInt( 2, nIdExpression );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -358,17 +355,17 @@ public final class FieldDAO implements IFieldDAO
     @Override
     public List<Integer> selectListRegularExpressionKeyByIdField( int nIdField, Plugin plugin )
     {
-        List<Integer> regularExpressionList = new ArrayList<Integer>(  );
+        List<Integer> regularExpressionList = new ArrayList<Integer>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_REGULAR_EXPRESSION_BY_ID_FIELD, plugin );
         daoUtil.setInt( 1, nIdField );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             regularExpressionList.add( daoUtil.getInt( 1 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return regularExpressionList;
     }
@@ -383,14 +380,14 @@ public final class FieldDAO implements IFieldDAO
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_COUNT_FIELD_BY_ID_REGULAR_EXPRESSION, plugin );
         daoUtil.setInt( 1, nIdExpression );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nNumberEntry = daoUtil.getInt( 1 );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nNumberEntry != 0;
     }

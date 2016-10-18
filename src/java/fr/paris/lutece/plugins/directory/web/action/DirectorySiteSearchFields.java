@@ -37,9 +37,9 @@ import fr.paris.lutece.plugins.directory.business.Directory;
 
 import java.util.List;
 
-
 /**
  * implementation of IDirectorySearchFields for storing in session the search filter and sort filter used in DirectoryApp
+ * 
  * @author merlinfe
  *
  */
@@ -57,14 +57,16 @@ public class DirectorySiteSearchFields extends DefaultDirectorySearchFields
      *
      * @return true if the filter must included the role none
      */
-    public boolean isIncludeRoleNone(  )
+    public boolean isIncludeRoleNone( )
     {
         return _bIncludeRoleNone;
     }
 
     /**
-     *  used if the record must be filter by role
-     * @param bIncludeRoleNone true if the filter must included the role none
+     * used if the record must be filter by role
+     * 
+     * @param bIncludeRoleNone
+     *            true if the filter must included the role none
      */
     public void setIncludeRoleNone( boolean bIncludeRoleNone )
     {
@@ -73,7 +75,9 @@ public class DirectorySiteSearchFields extends DefaultDirectorySearchFields
 
     /**
      * a list of key role
-     * @param roleKeyList  a list of key role
+     * 
+     * @param roleKeyList
+     *            a list of key role
      */
     public void setRoleKeyList( List<String> roleKeyList )
     {
@@ -82,16 +86,19 @@ public class DirectorySiteSearchFields extends DefaultDirectorySearchFields
 
     /**
      * a list of key role
-     * @return  a list of key role
+     * 
+     * @return a list of key role
      */
-    public List<String> getRoleKeyList(  )
+    public List<String> getRoleKeyList( )
     {
         return _roleKeyList;
     }
 
     /**
      * used if the record must be filter by role
-     * @param _bIncludeRoleNull true if the filter must included the role null
+     * 
+     * @param _bIncludeRoleNull
+     *            true if the filter must included the role null
      */
     public void setIncludeRoleNull( boolean _bIncludeRoleNull )
     {
@@ -102,26 +109,30 @@ public class DirectorySiteSearchFields extends DefaultDirectorySearchFields
      *
      * @return true if the filter must included the role null
      */
-    public boolean isIncludeRoleNull(  )
+    public boolean isIncludeRoleNull( )
     {
         return _bIncludeRoleNull;
     }
 
     /*
      * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.web.action.DefaultDirectorySearchFields#getDefaultIdSortEntry(fr.paris.lutece.plugins.directory.business.Directory)
+     * 
+     * @see
+     * fr.paris.lutece.plugins.directory.web.action.DefaultDirectorySearchFields#getDefaultIdSortEntry(fr.paris.lutece.plugins.directory.business.Directory)
      */
     public String getDefaultIdSortEntry( Directory directory )
     {
-        return directory.getIdSortEntryFront(  );
+        return directory.getIdSortEntryFront( );
     }
 
     /*
      * (non-Javadoc)
-     * @see fr.paris.lutece.plugins.directory.web.action.DefaultDirectorySearchFields#isDefaultAscendingSort(fr.paris.lutece.plugins.directory.business.Directory)
+     * 
+     * @see
+     * fr.paris.lutece.plugins.directory.web.action.DefaultDirectorySearchFields#isDefaultAscendingSort(fr.paris.lutece.plugins.directory.business.Directory)
      */
     public boolean isDefaultAscendingSort( Directory directory )
     {
-        return directory.isAscendingSort(  );
+        return directory.isAscendingSort( );
     }
 }

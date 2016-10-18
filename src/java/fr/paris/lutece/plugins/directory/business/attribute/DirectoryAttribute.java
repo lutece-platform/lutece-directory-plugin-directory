@@ -40,10 +40,8 @@ import java.lang.annotation.Target;
 
 /**
  *
- * DirectoryAttribute
- * This annotation represente the directory attribute associated to
- * a directory. Each directory field that has this annotation will
- * be stored in the table 'directory_directory_attribute'.
+ * DirectoryAttribute This annotation represente the directory attribute associated to a directory. Each directory field that has this annotation will be stored
+ * in the table 'directory_directory_attribute'.
  *
  */
 @Retention( RetentionPolicy.RUNTIME )
@@ -52,7 +50,8 @@ public @interface DirectoryAttribute
 {
     /**
      * Get the key of the attribute
+     * 
      * @return the key of the attribute
      */
-    String value(  );
+    String value( );
 }

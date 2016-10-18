@@ -37,10 +37,9 @@ import fr.paris.lutece.portal.service.rbac.RBACResource;
 
 import java.util.List;
 
-
 /**
  *
- *  class DirectoryXsl
+ * class DirectoryXsl
  *
  */
 public class DirectoryXsl implements RBACResource
@@ -58,17 +57,19 @@ public class DirectoryXsl implements RBACResource
     private List<DirectoryAction> _listActions;
 
     /**
-    *
-    * @return the id of the directory xsl
-    */
-    public int getIdDirectoryXsl(  )
+     *
+     * @return the id of the directory xsl
+     */
+    public int getIdDirectoryXsl( )
     {
         return _nIdDirectoryXsl;
     }
 
     /**
-     * set  the id of the directory xsl
-     * @param idExport  the id of the directory xsl
+     * set the id of the directory xsl
+     * 
+     * @param idExport
+     *            the id of the directory xsl
      */
     public void setIdDirectoryXsl( int idExport )
     {
@@ -79,14 +80,16 @@ public class DirectoryXsl implements RBACResource
      *
      * @return the description of the directory xsl
      */
-    public String getDescription(  )
+    public String getDescription( )
     {
         return _strDescription;
     }
 
     /**
      * set the description of the directory xsl
-     * @param description the description of the directory xsl
+     * 
+     * @param description
+     *            the description of the directory xsl
      */
     public void setDescription( String description )
     {
@@ -97,14 +100,16 @@ public class DirectoryXsl implements RBACResource
      *
      * @return the title of the directory xsl
      */
-    public String getTitle(  )
+    public String getTitle( )
     {
         return _strTitle;
     }
 
     /**
      * set the title of the directory xsl
-     * @param title the title of the directory xsl
+     * 
+     * @param title
+     *            the title of the directory xsl
      */
     public void setTitle( String title )
     {
@@ -115,14 +120,16 @@ public class DirectoryXsl implements RBACResource
      *
      * @return the xsl file of the directory xsl
      */
-    public File getFile(  )
+    public File getFile( )
     {
         return _file;
     }
 
     /**
      * set the xsl file of the directory xsl
-     * @param file the xsl file of the directory xsl
+     * 
+     * @param file
+     *            the xsl file of the directory xsl
      */
     public void setFile( File file )
     {
@@ -133,7 +140,7 @@ public class DirectoryXsl implements RBACResource
      * {@inheritDoc}
      */
     @Override
-    public String getResourceTypeCode(  )
+    public String getResourceTypeCode( )
     {
         return RESOURCE_TYPE;
     }
@@ -142,23 +149,26 @@ public class DirectoryXsl implements RBACResource
      * {@inheritDoc}
      */
     @Override
-    public String getResourceId(  )
+    public String getResourceId( )
     {
         return "" + _nIdDirectoryXsl;
     }
 
     /**
      * get the extension of the output file generate by the xsl
+     * 
      * @return the extension of the out put file
      */
-    public String getExtension(  )
+    public String getExtension( )
     {
         return _strExtension;
     }
 
     /**
      * set the extension of the output file generate by the xsl
-     * @param extension the extension of the out put file
+     * 
+     * @param extension
+     *            the extension of the out put file
      */
     public void setExtension( String extension )
     {
@@ -169,14 +179,16 @@ public class DirectoryXsl implements RBACResource
      *
      * @return the category of the xsl
      */
-    public Category getCategory(  )
+    public Category getCategory( )
     {
         return _category;
     }
 
     /**
      * set the category of the xsl
-     * @param category the category of the xsl
+     * 
+     * @param category
+     *            the category of the xsl
      */
     public void setCategory( Category category )
     {
@@ -184,17 +196,19 @@ public class DirectoryXsl implements RBACResource
     }
 
     /**
-    *
-    * @return a list of action can be use for the directoryXsl
-    */
-    public List<DirectoryAction> getActions(  )
+     *
+     * @return a list of action can be use for the directoryXsl
+     */
+    public List<DirectoryAction> getActions( )
     {
         return _listActions;
     }
 
     /**
      * set a list of action can be use for the directoryXsl
-     * @param directoryActions a list of action must be use for the directoryXsl
+     * 
+     * @param directoryActions
+     *            a list of action must be use for the directoryXsl
      */
     public void setActions( List<DirectoryAction> directoryActions )
     {

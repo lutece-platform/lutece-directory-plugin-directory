@@ -43,7 +43,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 /**
  *
  * RecordService
@@ -83,8 +82,7 @@ public class RecordService implements IRecordService
     @Transactional( "directory.transactionManager" )
     public void remove( int nIdRecord, Plugin plugin )
     {
-        ExtendableResourceRemovalListenerService.doRemoveResourceExtentions( Record.EXTENDABLE_RESOURCE_TYPE,
-            Integer.toString( nIdRecord ) );
+        ExtendableResourceRemovalListenerService.doRemoveResourceExtentions( Record.EXTENDABLE_RESOURCE_TYPE, Integer.toString( nIdRecord ) );
         RecordHome.remove( nIdRecord, plugin );
     }
 

@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.directory.business.rss;
 
-
 /**
  *
  * DirectoryResourceRssConfig
@@ -54,17 +53,19 @@ public class DirectoryResourceRssConfig
     private int _nIdWorkflowState;
 
     /**
-    *
-    * @return id Rss
-    */
-    public int getIdRss(  )
+     *
+     * @return id Rss
+     */
+    public int getIdRss( )
     {
         return _nIdRss;
     }
 
     /**
      * set id Rss
-     * @param idRss id Rss
+     * 
+     * @param idRss
+     *            id Rss
      */
     public void setIdRss( int idRss )
     {
@@ -72,17 +73,19 @@ public class DirectoryResourceRssConfig
     }
 
     /**
-    *
-    * @return id directory
-    */
-    public int getIdDirectory(  )
+     *
+     * @return id directory
+     */
+    public int getIdDirectory( )
     {
         return _nIdDirectory;
     }
 
     /**
      * set id directory
-     * @param idDirectory id directory
+     * 
+     * @param idDirectory
+     *            id directory
      */
     public void setIdDirectory( int idDirectory )
     {
@@ -91,16 +94,19 @@ public class DirectoryResourceRssConfig
 
     /**
      * Return id entry of directory used as title
+     * 
      * @return id entry of directory
      */
-    public int getIdEntryTitle(  )
+    public int getIdEntryTitle( )
     {
         return _nIdEntryTitle;
     }
 
     /**
      * set id entry of directory used as title
-     * @param idEntryTitle id of Entry directory
+     * 
+     * @param idEntryTitle
+     *            id of Entry directory
      */
     public void setIdEntryTitle( int idEntryTitle )
     {
@@ -109,16 +115,19 @@ public class DirectoryResourceRssConfig
 
     /**
      * Return id entry of directory used as description
+     * 
      * @return id entry of directory
      */
-    public int getIdEntryDescription(  )
+    public int getIdEntryDescription( )
     {
         return _nIdEntryDescription;
     }
 
     /**
      * set id of Entry directory used as description
-     * @param idEntryDescription id of Entry directory
+     * 
+     * @param idEntryDescription
+     *            id of Entry directory
      */
     public void setIdEntryDescription( int idEntryDescription )
     {
@@ -127,16 +136,19 @@ public class DirectoryResourceRssConfig
 
     /**
      * Return id entry of directory used as image
+     * 
      * @return id entry of directory
      */
-    public int getIdEntryImage(  )
+    public int getIdEntryImage( )
     {
         return _nIdEntryImage;
     }
 
     /**
      * set id of Entry directory used as image
-     * @param idEntryImage id of Entry directory
+     * 
+     * @param idEntryImage
+     *            id of Entry directory
      */
     public void setIdEntryImage( int idEntryImage )
     {
@@ -145,16 +157,19 @@ public class DirectoryResourceRssConfig
 
     /**
      * Return id entry of directory used as Link
+     * 
      * @return id entry of directory
      */
-    public int getIdEntryLink(  )
+    public int getIdEntryLink( )
     {
         return _nIdEntryLink;
     }
 
     /**
      * set id of Entry directory used as Link
-     * @param idEntryLink id of Entry directory
+     * 
+     * @param idEntryLink
+     *            id of Entry directory
      */
     public void setIdEntryLink( int idEntryLink )
     {
@@ -163,16 +178,19 @@ public class DirectoryResourceRssConfig
 
     /**
      * Return id entry of directory used as filter 1
+     * 
      * @return id entry of directory
      */
-    public int getIdEntryFilter1(  )
+    public int getIdEntryFilter1( )
     {
         return _nIdEntryFilter1;
     }
 
     /**
      * set id of Entry directory used as filter 1
-     * @param idEntryFilter1 id of Entry directory
+     * 
+     * @param idEntryFilter1
+     *            id of Entry directory
      */
     public void setIdEntryFilter1( int idEntryFilter1 )
     {
@@ -181,16 +199,19 @@ public class DirectoryResourceRssConfig
 
     /**
      * Return value of entry of directory used as filter 1
+     * 
      * @return id entry of directory
      */
-    public String getValueFilter1(  )
+    public String getValueFilter1( )
     {
         return _strValueFilter1;
     }
 
     /**
      * set value of Entry directory used as filter 1
-     * @param strValueFilter1 id of Entry directory
+     * 
+     * @param strValueFilter1
+     *            id of Entry directory
      */
     public void setValueFilter1( String strValueFilter1 )
     {
@@ -199,16 +220,19 @@ public class DirectoryResourceRssConfig
 
     /**
      * Return id entry of directory used as filter 1
+     * 
      * @return id entry of directory
      */
-    public int getIdEntryFilter2(  )
+    public int getIdEntryFilter2( )
     {
         return _nIdEntryFilter2;
     }
 
     /**
      * set id of Entry directory used as filter 1
-     * @param nIdEntryFilter2 id of Entry directory
+     * 
+     * @param nIdEntryFilter2
+     *            id of Entry directory
      */
     public void setIdEntryFilter2( int nIdEntryFilter2 )
     {
@@ -217,16 +241,19 @@ public class DirectoryResourceRssConfig
 
     /**
      * Return value of entry of directory used as filter 2
+     * 
      * @return id entry of directory
      */
-    public String getValueFilter2(  )
+    public String getValueFilter2( )
     {
         return _strValueFilter2;
     }
 
     /**
      * set value of Entry directory used as filter 2
-     * @param strValueFilter2 id of Entry directory
+     * 
+     * @param strValueFilter2
+     *            id of Entry directory
      */
     public void setValueFilter2( String strValueFilter2 )
     {
@@ -235,16 +262,19 @@ public class DirectoryResourceRssConfig
 
     /**
      * Return id state of workflow
+     * 
      * @return id state of workflow
      */
-    public int getIdWorkflowState(  )
+    public int getIdWorkflowState( )
     {
         return _nIdWorkflowState;
     }
 
     /**
      * set id state of workflow
-     * @param idWorkflowState id state of workflow
+     * 
+     * @param idWorkflowState
+     *            id state of workflow
      */
     public void setIdWorkflowState( int idWorkflowState )
     {

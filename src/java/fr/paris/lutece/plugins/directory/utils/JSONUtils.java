@@ -46,7 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  *
  * JSONUtils
@@ -66,18 +65,20 @@ public final class JSONUtils
     /**
      * Private constructor
      */
-    private JSONUtils(  )
+    private JSONUtils( )
     {
     }
 
     /**
      * Builds a json object with the error message.
-     * @param strMessage the error message
+     * 
+     * @param strMessage
+     *            the error message
      * @return the json object.
      */
     public static JSONObject buildJsonError( String strMessage )
     {
-        JSONObject json = new JSONObject(  );
+        JSONObject json = new JSONObject( );
         buildJsonError( json, strMessage );
 
         return json;
@@ -85,8 +86,11 @@ public final class JSONUtils
 
     /**
      * Builds a json object with the error message.
-     * @param json the JSON
-     * @param strMessage the error message
+     * 
+     * @param json
+     *            the JSON
+     * @param strMessage
+     *            the error message
      */
     public static void buildJsonError( JSONObject json, String strMessage )
     {
@@ -98,26 +102,29 @@ public final class JSONUtils
 
     /**
      * Build the json form success removing file
-     * @param strIdEntry the id entry
-     * @param strSessionId the session id
+     * 
+     * @param strIdEntry
+     *            the id entry
+     * @param strSessionId
+     *            the session id
      * @return the json object
      */
     public static JSONObject buildJsonSuccess( String strIdEntry, String strSessionId )
     {
-        JSONObject json = new JSONObject(  );
-        json.accumulateAll( getUploadedFileJSON( DirectoryAsynchronousUploadHandler.getHandler(  )
-                                                                                   .getFileItems( strIdEntry,
-                    strSessionId ) ) );
-        buildJsonSuccess( DirectoryAsynchronousUploadHandler.getHandler(  ).buildFieldName( strIdEntry ), json );
+        JSONObject json = new JSONObject( );
+        json.accumulateAll( getUploadedFileJSON( DirectoryAsynchronousUploadHandler.getHandler( ).getFileItems( strIdEntry, strSessionId ) ) );
+        buildJsonSuccess( DirectoryAsynchronousUploadHandler.getHandler( ).buildFieldName( strIdEntry ), json );
 
         return json;
     }
 
     /**
      * Build the json form success removing file
-     * @param strFieldName the field name (WARNING : it is not the id entry, it
-     *            is 'directory_<id_entry>', ex: directory_11)
-     * @param json the JSON object
+     * 
+     * @param strFieldName
+     *            the field name (WARNING : it is not the id entry, it is 'directory_<id_entry>', ex: directory_11)
+     * @param json
+     *            the JSON object
      */
     public static void buildJsonSuccess( String strFieldName, JSONObject json )
     {
@@ -130,25 +137,25 @@ public final class JSONUtils
     }
 
     /**
-     * Builds a json object for the file item list.
-     * Key is {@link #JSON_KEY_UPLOADED_FILES}, value is the array of uploaded
-     * file.
-     * @param listFileItem the fileItem list
+     * Builds a json object for the file item list. Key is {@link #JSON_KEY_UPLOADED_FILES}, value is the array of uploaded file.
+     * 
+     * @param listFileItem
+     *            the fileItem list
      * @return the json
      */
     public static JSONObject getUploadedFileJSON( List<FileItem> listFileItem )
     {
-        JSONObject json = new JSONObject(  );
+        JSONObject json = new JSONObject( );
 
         if ( listFileItem != null )
         {
             for ( FileItem fileItem : listFileItem )
             {
-                json.accumulate( JSON_KEY_UPLOADED_FILES, fileItem.getName(  ) );
-                json.accumulate( JSON_KEY_UPLOADED_FILES_SIZE, fileItem.getSize(  ) );
+                json.accumulate( JSON_KEY_UPLOADED_FILES, fileItem.getName( ) );
+                json.accumulate( JSON_KEY_UPLOADED_FILES_SIZE, fileItem.getSize( ) );
             }
 
-            json.element( JSON_KEY_FILE_COUNT, listFileItem.size(  ) );
+            json.element( JSON_KEY_FILE_COUNT, listFileItem.size( ) );
         }
         else
         {
@@ -168,12 +175,14 @@ public final class JSONUtils
      * <br />{ "user-attribute-key": "user.home-info.online.email", "user-attribute-value": "EMAIL@EMAIL.EMAIL"}
      * <br />] }
      * </code>
-     * @param strJSON the json
+     * 
+     * @param strJSON
+     *            the json
      * @return the user attributes
      */
     public static Map<String, String> getUserInfos( String strJSON )
     {
-        Map<String, String> userInfos = new HashMap<String, String>(  );
+        Map<String, String> userInfos = new HashMap<String, String>( );
 
         if ( StringUtils.isNotBlank( strJSON ) )
         {
@@ -188,7 +197,7 @@ public final class JSONUtils
                 if ( arrayUserAttributes != null )
                 {
                     // Browse each user attribute
-                    for ( int i = 0; i < arrayUserAttributes.size(  ); i++ )
+                    for ( int i = 0; i < arrayUserAttributes.size( ); i++ )
                     {
                         put( userInfos, arrayUserAttributes.getJSONObject( i ) );
                     }
@@ -201,16 +210,19 @@ public final class JSONUtils
 
     /**
      * Insert user attribute to the map
-     * @param userInfos the map
-     * @param userAttribute the user attribute
+     * 
+     * @param userInfos
+     *            the map
+     * @param userAttribute
+     *            the user attribute
      */
     private static void put( Map<String, String> userInfos, JSONObject userAttribute )
     {
         if ( userAttribute != null )
         {
-            JSONArray listCodes = userAttribute.names(  );
+            JSONArray listCodes = userAttribute.names( );
 
-            for ( int i = 0; i < listCodes.size(  ); i++ )
+            for ( int i = 0; i < listCodes.size( ); i++ )
             {
                 String strCode = listCodes.getString( i );
                 String strValue = userAttribute.getString( strCode );

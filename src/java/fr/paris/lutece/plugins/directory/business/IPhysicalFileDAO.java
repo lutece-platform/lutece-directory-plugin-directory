@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.directory.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
-
 /**
  *
  * IPhysicalFileDAO
@@ -46,7 +45,8 @@ public interface IPhysicalFileDAO
     /**
      * Generates a new primary key
      *
-     * @param plugin the plugin
+     * @param plugin
+     *            the plugin
      * @return The new primary key
      */
     int newPrimaryKey( Plugin plugin );
@@ -54,8 +54,10 @@ public interface IPhysicalFileDAO
     /**
      * Insert a new record in the table.
      *
-     * @param physicalFile  instance of the PhysicalFile object to insert
-     * @param plugin the plugin
+     * @param physicalFile
+     *            instance of the PhysicalFile object to insert
+     * @param plugin
+     *            the plugin
      * @return the id of the new physical file
      */
     int insert( PhysicalFile physicalFile, Plugin plugin );
@@ -63,8 +65,10 @@ public interface IPhysicalFileDAO
     /**
      * Load the data of the PhysicalFile from the table
      *
-     * @param nId The identifier of the file
-     * @param plugin the plugin
+     * @param nId
+     *            The identifier of the file
+     * @param plugin
+     *            the plugin
      * @return the instance of the PhysicalFile
      */
     PhysicalFile load( int nId, Plugin plugin );
@@ -72,16 +76,20 @@ public interface IPhysicalFileDAO
     /**
      * Delete a record from the table
      *
-     * @param nIdPhysicalFile The identifier of the PhyscalFile
-     * @param plugin the plugin
+     * @param nIdPhysicalFile
+     *            The identifier of the PhyscalFile
+     * @param plugin
+     *            the plugin
      */
     void delete( int nIdPhysicalFile, Plugin plugin );
 
     /**
      * Update the physical file in the table
      *
-     * @param physicalFile instance of the physicalFile object to update
-     * @param plugin the plugin
+     * @param physicalFile
+     *            instance of the physicalFile object to update
+     * @param plugin
+     *            the plugin
      */
     void store( PhysicalFile physicalFile, Plugin plugin );
 }

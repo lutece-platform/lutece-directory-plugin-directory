@@ -38,7 +38,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.List;
 
-
 /**
  * This class provides instances management methods (create, find, ...) for IndexerAction objects
  */
@@ -50,15 +49,17 @@ public final class IndexerActionHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private IndexerActionHome(  )
+    private IndexerActionHome( )
     {
     }
 
     /**
      * Creation of an instance of Indexer Action
      *
-     * @param indexerAction The instance of the indexer action which contains the informations to store
-     * @param plugin the Plugin
+     * @param indexerAction
+     *            The instance of the indexer action which contains the informations to store
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void create( IndexerAction indexerAction, Plugin plugin )
@@ -69,8 +70,10 @@ public final class IndexerActionHome
     /**
      * Update of the indexerAction which is specified in parameter
      *
-     * @param indexerAction The instance of the indexerAction which contains the informations to update
-     * @param plugin the Plugin
+     * @param indexerAction
+     *            The instance of the indexerAction which contains the informations to update
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void update( IndexerAction indexerAction, Plugin plugin )
@@ -81,22 +84,26 @@ public final class IndexerActionHome
     /**
      * Remove the indexerAction whose identifier is specified in parameter
      *
-     * @param nId The IndexerActionId
-     * @param plugin the Plugin
+     * @param nId
+     *            The IndexerActionId
+     * @param plugin
+     *            the Plugin
      */
     public static void remove( int nId, Plugin plugin )
     {
         _dao.delete( nId, plugin );
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Returns an instance of a IndexerAction whose identifier is specified in parameter
      *
-     * @param nKey The indexerAction primary key
-     * @param plugin the Plugin
+     * @param nKey
+     *            The indexerAction primary key
+     * @param plugin
+     *            the Plugin
      * @return an instance of IndexerAction
      */
     public static IndexerAction findByPrimaryKey( int nKey, Plugin plugin )
@@ -107,9 +114,11 @@ public final class IndexerActionHome
     /**
      * Loads the data of all the IndexerAction who verify the filter and returns them in a list
      *
-     *@param  filter the filter
-     * @param plugin the Plugin
-     * @return the list which contains the data of all the  indexerAction
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the Plugin
+     * @return the list which contains the data of all the indexerAction
      */
     public static List<IndexerAction> getList( IndexerActionFilter filter, Plugin plugin )
     {

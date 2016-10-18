@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
  *
  * IDirectoryResourceRssConfigDAO
@@ -47,23 +46,31 @@ public interface IDirectoryResourceRssConfigDAO
 {
     /**
      * Insert a new record in the table.
-     * @param config The Instance of the object config
-     * @param plugin the plugin
+     * 
+     * @param config
+     *            The Instance of the object config
+     * @param plugin
+     *            the plugin
      */
     void insert( DirectoryResourceRssConfig config, Plugin plugin );
 
     /**
      * Update the record in the table
      *
-     * @param  config instance of config object to update
-     * @param plugin the plugin
+     * @param config
+     *            instance of config object to update
+     * @param plugin
+     *            the plugin
      */
     void store( DirectoryResourceRssConfig config, Plugin plugin );
 
     /**
      * load the data of DirectoryResourceRssConfig from the table
-     * @param nIdConfig the config id
-     * @param plugin the plugin
+     * 
+     * @param nIdConfig
+     *            the config id
+     * @param plugin
+     *            the plugin
      * @return The Instance of the object DirectoryResourceRssConfig
      *
      */
@@ -71,14 +78,19 @@ public interface IDirectoryResourceRssConfigDAO
 
     /**
      * Delete a record from the table
-     * @param nIdConfig The id of object DirectoryResourceRssConfig
-     * @param plugin le plugin
+     * 
+     * @param nIdConfig
+     *            The id of object DirectoryResourceRssConfig
+     * @param plugin
+     *            le plugin
      */
     void delete( int nIdConfig, Plugin plugin );
 
     /**
      * Return all record
-     * @param plugin le plugin
+     * 
+     * @param plugin
+     *            le plugin
      * @return List of DirectoryResourceRssConfig
      */
     List<DirectoryResourceRssConfig> loadAll( Plugin plugin );

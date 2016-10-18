@@ -37,10 +37,9 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
  *
- *  Interface IRecordDAO
+ * Interface IRecordDAO
  *
  */
 public interface IRecordDAO
@@ -48,8 +47,10 @@ public interface IRecordDAO
     /**
      * Insert a new record in the table.
      *
-     * @param record instance of the Record object to insert
-     * @param plugin the plugin
+     * @param record
+     *            instance of the Record object to insert
+     * @param plugin
+     *            the plugin
      * @return the key of the new record
      */
     int insert( Record record, Plugin plugin );
@@ -57,24 +58,32 @@ public interface IRecordDAO
     /**
      * Load the data of the record from the table
      *
-     * @param nIdRecord The identifier of the id record
-     * @param plugin the plugin
+     * @param nIdRecord
+     *            The identifier of the id record
+     * @param plugin
+     *            the plugin
      * @return the instance of the Record
      */
     Record load( int nIdRecord, Plugin plugin );
 
     /**
      * Test if the given directory record list as a worflow
-     * @param nIdDirectory directory Id
-     * @param plugin the plugin
+     * 
+     * @param nIdDirectory
+     *            directory Id
+     * @param plugin
+     *            the plugin
      * @return true if has at least one
      */
     Boolean direcytoryRecordListHasWorkflow( int nIdDirectory, Plugin plugin );
 
     /**
      * Load a list of record
-     * @param listId list of record id
-     * @param plugin the plugin
+     * 
+     * @param listId
+     *            list of record id
+     * @param plugin
+     *            the plugin
      * @return list of Record
      */
     List<Record> loadList( List<Integer> listId, Plugin plugin );
@@ -82,53 +91,73 @@ public interface IRecordDAO
     /**
      * Delete a record from the table
      *
-     * @param nIdRecord The identifier of the record
-     * @param plugin the plugin
+     * @param nIdRecord
+     *            The identifier of the record
+     * @param plugin
+     *            the plugin
      */
     void delete( int nIdRecord, Plugin plugin );
 
     /**
      * Delete list of record by directory id
-     * @param nDirectoryId the directory id
-     * @param plugin the plugin
+     * 
+     * @param nDirectoryId
+     *            the directory id
+     * @param plugin
+     *            the plugin
      */
     void deleteRecordByDirectoryId( Integer nDirectoryId, Plugin plugin );
 
     /**
      * Update the the record in the table
-     * @param record the record to update
-     * @param plugin the plugin
+     * 
+     * @param record
+     *            the record to update
+     * @param plugin
+     *            the plugin
      */
     void store( Record record, Plugin plugin );
 
     /**
-     * Load the data of all the record who verify the filter and returns them in a  list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the list of record
+     * Load the data of all the record who verify the filter and returns them in a list
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of record
      */
     List<Record> selectListByFilter( RecordFieldFilter filter, Plugin plugin );
 
     /**
      * Count record who verify the filter
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the number of record
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the number of record
      */
     int selectCountByFilter( RecordFieldFilter filter, Plugin plugin );
 
     /**
-     * Load the data of all the record id who verify the filter and returns them in a  list
-     * @param filter the filter
-     * @param plugin the plugin
-     * @return  the list of record id
+     * Load the data of all the record id who verify the filter and returns them in a list
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of record id
      */
     List<Integer> selectListIdByFilter( RecordFieldFilter filter, Plugin plugin );
 
     /**
      * Get directory id by record id
-     * @param nRecordId the record id
-     * @param plugin the plugin
+     * 
+     * @param nRecordId
+     *            the record id
+     * @param plugin
+     *            the plugin
      * @return directory id
      */
     Integer getDirectoryIdByRecordId( Integer nRecordId, Plugin plugin );

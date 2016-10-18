@@ -51,13 +51,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * Directory record search
  *
  */
-public class SearchRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields>
-    implements IDirectoryAction
+public class SearchRecordDirectoryAction extends AbstractPluginAction<DirectoryAdminSearchFields> implements IDirectoryAction
 {
     private static final String PARAMETER_BUTTON_SEARCH = "search";
     private static final String ACTION_NAME = "Search Directory";
@@ -80,7 +78,7 @@ public class SearchRecordDirectoryAction extends AbstractPluginAction<DirectoryA
     /**
      * Returns an empty string - nothing to print
      */
-    public String getButtonTemplate(  )
+    public String getButtonTemplate( )
     {
         return StringUtils.EMPTY;
     }
@@ -88,7 +86,7 @@ public class SearchRecordDirectoryAction extends AbstractPluginAction<DirectoryA
     /**
      *
      */
-    public String getName(  )
+    public String getName( )
     {
         return ACTION_NAME;
     }
@@ -104,54 +102,51 @@ public class SearchRecordDirectoryAction extends AbstractPluginAction<DirectoryA
     /**
      * {@inheritDoc}
      */
-    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser,
-        DirectoryAdminSearchFields searchFields ) throws AccessDeniedException
+    public IPluginActionResult process( HttpServletRequest request, HttpServletResponse response, AdminUser adminUser, DirectoryAdminSearchFields searchFields )
+            throws AccessDeniedException
     {
-        DefaultPluginActionResult result = new DefaultPluginActionResult(  );
+        DefaultPluginActionResult result = new DefaultPluginActionResult( );
         String strIdDirectory = request.getParameter( DirectoryUtils.PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
 
-        searchFields.setIdWorkflowSate( DirectoryUtils.convertStringToInt( request.getParameter( 
-                    PARAMETER_WORKFLOW_STATE_SELECTED ) ) );
+        searchFields.setIdWorkflowSate( DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_WORKFLOW_STATE_SELECTED ) ) );
 
         try
         {
-            Locale locale = adminUser.getLocale(  );
-            //get search filter
-            searchFields.setMapQuery( DirectoryUtils.getSearchRecordData( request, nIdDirectory,
-                    DirectoryUtils.getPlugin(  ), locale ) );
-            searchFields.setDateCreationBeginRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request,
-                    PARAMETER_DATE_BEGIN_CREATION, locale ) );
-            searchFields.setDateCreationEndRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request,
-                    PARAMETER_DATE_END_CREATION, locale ) );
-            searchFields.setDateCreationRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request,
-                    PARAMETER_DATE_CREATION, locale ) );
-            searchFields.setDateModificationBeginRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( 
-                    request, PARAMETER_DATE_BEGIN_MODIFICATION, locale ) );
-            searchFields.setDateModificationEndRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request,
-                    PARAMETER_DATE_END_MODIFICATION, locale ) );
-            searchFields.setDateModificationRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request,
-                    PARAMETER_DATE_MODIFICATION, locale ) );
+            Locale locale = adminUser.getLocale( );
+            // get search filter
+            searchFields.setMapQuery( DirectoryUtils.getSearchRecordData( request, nIdDirectory, DirectoryUtils.getPlugin( ), locale ) );
+            searchFields.setDateCreationBeginRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request, PARAMETER_DATE_BEGIN_CREATION, locale ) );
+            searchFields.setDateCreationEndRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request, PARAMETER_DATE_END_CREATION, locale ) );
+            searchFields.setDateCreationRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request, PARAMETER_DATE_CREATION, locale ) );
+            searchFields.setDateModificationBeginRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request, PARAMETER_DATE_BEGIN_MODIFICATION,
+                    locale ) );
+            searchFields
+                    .setDateModificationEndRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request, PARAMETER_DATE_END_MODIFICATION, locale ) );
+            searchFields.setDateModificationRecord( DirectoryUtils.getSearchRecordDateCreationFromRequest( request, PARAMETER_DATE_MODIFICATION, locale ) );
 
             // build redirect url
             result.setRedirect( DirectoryUtils.getJspManageDirectoryRecord( request, nIdDirectory ) ); // + "&" + PARAMETER_SEARCH + "=" + PARAMETER_SEARCH );
         }
-        catch ( DirectoryErrorException error )
+        catch( DirectoryErrorException error )
         {
             String strErrorMessage = DirectoryUtils.EMPTY_STRING;
 
-            if ( error.isMandatoryError(  ) )
+            if ( error.isMandatoryError( ) )
             {
-                Object[] tabRequiredFields = { error.getTitleField(  ) };
-                strErrorMessage = AdminMessageService.getMessageUrl( request,
-                        DirectoryUtils.MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields,
+                Object [ ] tabRequiredFields = {
+                    error.getTitleField( )
+                };
+                strErrorMessage = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_DIRECTORY_ERROR_MANDATORY_FIELD, tabRequiredFields,
                         AdminMessage.TYPE_STOP );
             }
             else
             {
-                Object[] tabRequiredFields = { error.getTitleField(  ), error.getErrorMessage(  ) };
-                strErrorMessage = AdminMessageService.getMessageUrl( request, DirectoryUtils.MESSAGE_DIRECTORY_ERROR,
-                        tabRequiredFields, AdminMessage.TYPE_STOP );
+                Object [ ] tabRequiredFields = {
+                        error.getTitleField( ), error.getErrorMessage( )
+                };
+                strErrorMessage = AdminMessageService
+                        .getMessageUrl( request, DirectoryUtils.MESSAGE_DIRECTORY_ERROR, tabRequiredFields, AdminMessage.TYPE_STOP );
             }
 
             result.setRedirect( strErrorMessage );

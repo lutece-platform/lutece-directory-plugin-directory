@@ -81,7 +81,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * DirectoryResourceRss
@@ -91,12 +90,12 @@ public class DirectoryResourceRss extends ResourceRss
     public static final String PROPERTY_RSS_STORAGE_FOLDER_PATH = "rss.storage.folder.path";
     public static final String PROPERTY_STORAGE_DIRECTORY_NAME = "rss.storage.directory.name";
 
-    //templates
+    // templates
     private static final String TEMPLATE_TASK_EVALUATION_CREATE_CONFIG = "admin/plugins/directory/rss/resource_create_config.html";
     private static final String TEMPLATE_TASK_EVALUATION_MODIFY_CONFIG = "admin/plugins/directory/rss/resource_modify_config.html";
     private static final String TEMPLATE_RSS_IMAGE = "admin/plugins/directory/rss/rss_image.html";
 
-    //	Markers
+    // Markers
     private static final String MARK_DIRECTORY_LIST = "directory_list";
     private static final String MARK_DIRECTORY_LIST_DEFAULT_ITEM = "directory_list_default_item";
     private static final String MARK_RSS_SITE_ID_DIRECTORY = "id_directory";
@@ -125,7 +124,7 @@ public class DirectoryResourceRss extends ResourceRss
     private static final String MARK_RSS_SITE_IMAGE_HEIGHT_ITEM = "entry_image_height";
     private static final String MARK_RSS_SITE_IMAGE_WIDTH_ITEM = "entry_image_width";
 
-    //Parameters
+    // Parameters
     private static final String PARAMETER_ID_DIRECTORY = "id_directory";
     private static final String PARAMETER_ID_ENTRY_TITLE = "id_entry_title";
     private static final String PARAMETER_ID_ENTRY_DESCRIPTION = "id_entry_description";
@@ -138,12 +137,12 @@ public class DirectoryResourceRss extends ResourceRss
     private static final String PARAMETER_ID_DIRECTORY_RECORD = "id_directory_record";
     private static final String PARAMETER_VIEW_DIRECTORY_RECORD = "view_directory_record";
 
-    //Properties
+    // Properties
     private static final String FIELD_ID_DIRECTORY = "directory.resource_rss.label_directory";
     private static final String FIELD_ID_ENTRY_TITLE = "directory.resource_rss.label_entry_title";
     private static final String FIELD_ID_ENTRY_DESCRIPTION = "directory.resource_rss.label_entry_description";
 
-    //Messages
+    // Messages
     private static final String MESSAGE_MANDATORY_FIELD = "directory.message.mandatory.field";
     private static final String MESSAGE_NO_REFRESH = "directory.message.no_refresh";
     private static final String MESSAGE_NO_REFRESH_FILTER = "directory.message.no_refresh_filter";
@@ -167,7 +166,7 @@ public class DirectoryResourceRss extends ResourceRss
      * {@inheritDoc}
      */
     @Override
-    public boolean contentResourceRss(  )
+    public boolean contentResourceRss( )
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
@@ -198,8 +197,8 @@ public class DirectoryResourceRss extends ResourceRss
         String strValueFilter1 = request.getParameter( idEntryFilter1 );
         String strValueFilter2 = request.getParameter( idEntryFilter2 );
 
-        DirectoryResourceRssConfig config = new DirectoryResourceRssConfig(  );
-        config.setIdRss( this.getId(  ) );
+        DirectoryResourceRssConfig config = new DirectoryResourceRssConfig( );
+        config.setIdRss( this.getId( ) );
         config.setIdDirectory( DirectoryUtils.convertStringToInt( idDirectory ) );
         config.setIdEntryTitle( DirectoryUtils.convertStringToInt( idEntryTitle ) );
         config.setIdEntryDescription( DirectoryUtils.convertStringToInt( idEntryDescription ) );
@@ -233,8 +232,8 @@ public class DirectoryResourceRss extends ResourceRss
         String strValueFilter1 = request.getParameter( idEntryFilter1 );
         String strValueFilter2 = request.getParameter( idEntryFilter2 );
 
-        DirectoryResourceRssConfig config = new DirectoryResourceRssConfig(  );
-        config.setIdRss( this.getId(  ) );
+        DirectoryResourceRssConfig config = new DirectoryResourceRssConfig( );
+        config.setIdRss( this.getId( ) );
         config.setIdDirectory( DirectoryUtils.convertStringToInt( idDirectory ) );
         config.setIdEntryTitle( DirectoryUtils.convertStringToInt( idEntryTitle ) );
         config.setIdEntryDescription( DirectoryUtils.convertStringToInt( idEntryDescription ) );
@@ -267,53 +266,55 @@ public class DirectoryResourceRss extends ResourceRss
         {
             strError = FIELD_ID_DIRECTORY;
         }
-        else if ( idEntryTitle == null )
-        {
-            strError = FIELD_ID_ENTRY_TITLE;
-        }
-        else if ( idEntryDescription == null )
-        {
-            strError = FIELD_ID_ENTRY_DESCRIPTION;
-        }
+        else
+            if ( idEntryTitle == null )
+            {
+                strError = FIELD_ID_ENTRY_TITLE;
+            }
+            else
+                if ( idEntryDescription == null )
+                {
+                    strError = FIELD_ID_ENTRY_DESCRIPTION;
+                }
 
         if ( !strError.equals( DirectoryUtils.EMPTY_STRING ) )
         {
-            Object[] tabRequiredFields = { I18nService.getLocalizedString( strError, locale ) };
+            Object [ ] tabRequiredFields = {
+                I18nService.getLocalizedString( strError, locale )
+            };
 
-            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields,
-                AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, MESSAGE_MANDATORY_FIELD, tabRequiredFields, AdminMessage.TYPE_STOP );
         }
 
-        IEntry entryTitle = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( idEntryTitle ),
-                pluginDirectory );
-        IEntry entryDescription = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( idEntryDescription ),
-                pluginDirectory );
+        IEntry entryTitle = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( idEntryTitle ), pluginDirectory );
+        IEntry entryDescription = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( idEntryDescription ), pluginDirectory );
 
-        if ( ( entryTitle != null ) && ( entryDescription != null ) &&
-                ( entryTitle.getDirectory(  ).getIdDirectory(  ) != DirectoryUtils.convertStringToInt( idDirectory ) ) )
+        if ( ( entryTitle != null ) && ( entryDescription != null )
+                && ( entryTitle.getDirectory( ).getIdDirectory( ) != DirectoryUtils.convertStringToInt( idDirectory ) ) )
         {
             return AdminMessageService.getMessageUrl( request, MESSAGE_NO_REFRESH, AdminMessage.TYPE_STOP );
         }
-        else if ( entryDescription.getDirectory(  ).getIdDirectory(  ) != DirectoryUtils.convertStringToInt( 
-                    idDirectory ) )
-        {
-            return AdminMessageService.getMessageUrl( request, MESSAGE_NO_REFRESH, AdminMessage.TYPE_STOP );
-        }
-        else if ( ( DirectoryUtils.convertStringToInt( idEntryFilter1 ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                ( request.getParameter( idEntryFilter1 ) == null ) )
-        {
-            return AdminMessageService.getMessageUrl( request, MESSAGE_NO_REFRESH_FILTER, AdminMessage.TYPE_STOP );
-        }
-        else if ( ( DirectoryUtils.convertStringToInt( idEntryFilter2 ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                ( request.getParameter( idEntryFilter2 ) == null ) )
-        {
-            return AdminMessageService.getMessageUrl( request, MESSAGE_NO_REFRESH_FILTER, AdminMessage.TYPE_STOP );
-        }
+        else
+            if ( entryDescription.getDirectory( ).getIdDirectory( ) != DirectoryUtils.convertStringToInt( idDirectory ) )
+            {
+                return AdminMessageService.getMessageUrl( request, MESSAGE_NO_REFRESH, AdminMessage.TYPE_STOP );
+            }
+            else
+                if ( ( DirectoryUtils.convertStringToInt( idEntryFilter1 ) != DirectoryUtils.CONSTANT_ID_NULL )
+                        && ( request.getParameter( idEntryFilter1 ) == null ) )
+                {
+                    return AdminMessageService.getMessageUrl( request, MESSAGE_NO_REFRESH_FILTER, AdminMessage.TYPE_STOP );
+                }
+                else
+                    if ( ( DirectoryUtils.convertStringToInt( idEntryFilter2 ) != DirectoryUtils.CONSTANT_ID_NULL )
+                            && ( request.getParameter( idEntryFilter2 ) == null ) )
+                    {
+                        return AdminMessageService.getMessageUrl( request, MESSAGE_NO_REFRESH_FILTER, AdminMessage.TYPE_STOP );
+                    }
 
-        Directory directory = DirectoryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( idDirectory ),
-                pluginDirectory );
-        this.setName( directory.getTitle(  ) );
-        this.setDescription( directory.getDescription(  ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( idDirectory ), pluginDirectory );
+        this.setName( directory.getTitle( ) );
+        this.setDescription( directory.getDescription( ) );
 
         return null;
     }
@@ -326,48 +327,44 @@ public class DirectoryResourceRss extends ResourceRss
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         ReferenceList directoryList = DirectoryHome.getDirectoryList( pluginDirectory );
-        HashMap<String, Object> model = new HashMap<String, Object>(  );
+        HashMap<String, Object> model = new HashMap<String, Object>( );
 
         String strEntryTypeImage = AppPropertiesService.getProperty( PROPERTY_ENTRY_DIRECTORY_TYPE_IMAGE );
         int entryTypeImage = DirectoryUtils.convertStringToInt( strEntryTypeImage );
         String strAcceptEntryType = AppPropertiesService.getProperty( PROPERTY_ACCEPT_DIRECTORY_TYPE );
-        String[] strTabAcceptEntryType = strAcceptEntryType.split( "," );
+        String [ ] strTabAcceptEntryType = strAcceptEntryType.split( "," );
         String strAcceptEntryTypeForLink = AppPropertiesService.getProperty( PROPERTY_ACCEPT_DIRECTORY_TYPE_FOR_LINK );
-        String[] strTabAcceptEntryTypeForLink = strAcceptEntryTypeForLink.split( "," );
+        String [ ] strTabAcceptEntryTypeForLink = strAcceptEntryTypeForLink.split( "," );
 
         int nIdDirectory = -1;
 
         if ( request.getParameter( PARAMETER_ID_DIRECTORY ) != null )
         {
             nIdDirectory = DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_DIRECTORY ) );
-            model.put( MARK_ENTRY_LIST_IMAGE_DEFAULT_ITEM,
-                DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_IMAGE ) ) );
-            model.put( MARK_ENTRY_LIST_TITLE_DEFAULT_ITEM,
-                DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_TITLE ) ) );
-            model.put( MARK_ENTRY_LIST_DESCRIPTION_DEFAULT_ITEM,
-                DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_DESCRIPTION ) ) );
-            model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM,
-                DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_LINK ) ) );
-            model.put( MARK_WORKFLOW_STATE_LIST_DEFAULT_ITEM,
-                DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_WORKFLOW_STATE ) ) );
+            model.put( MARK_ENTRY_LIST_IMAGE_DEFAULT_ITEM, DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_IMAGE ) ) );
+            model.put( MARK_ENTRY_LIST_TITLE_DEFAULT_ITEM, DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_TITLE ) ) );
+            model.put( MARK_ENTRY_LIST_DESCRIPTION_DEFAULT_ITEM, DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_DESCRIPTION ) ) );
+            model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM, DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_LINK ) ) );
+            model.put( MARK_WORKFLOW_STATE_LIST_DEFAULT_ITEM, DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_WORKFLOW_STATE ) ) );
         }
-        else if ( !directoryList.isEmpty(  ) && ( directoryList.get( 0 ) != null ) )
-        {
-            nIdDirectory = DirectoryUtils.convertStringToInt( directoryList.get( 0 ).getCode(  ) );
-            model.put( MARK_ENTRY_LIST_IMAGE_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-            model.put( MARK_ENTRY_LIST_TITLE_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-            model.put( MARK_ENTRY_LIST_DESCRIPTION_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-            model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-            model.put( MARK_WORKFLOW_STATE_LIST_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-        }
+        else
+            if ( !directoryList.isEmpty( ) && ( directoryList.get( 0 ) != null ) )
+            {
+                nIdDirectory = DirectoryUtils.convertStringToInt( directoryList.get( 0 ).getCode( ) );
+                model.put( MARK_ENTRY_LIST_IMAGE_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
+                model.put( MARK_ENTRY_LIST_TITLE_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
+                model.put( MARK_ENTRY_LIST_DESCRIPTION_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
+                model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
+                model.put( MARK_WORKFLOW_STATE_LIST_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
+            }
 
         if ( nIdDirectory != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            ReferenceList referenceEntryLink = new ReferenceList(  );
-            ReferenceList referenceEntryImage = new ReferenceList(  );
-            ReferenceList referenceEntry = new ReferenceList(  );
-            ReferenceList referenceEntryFilter = new ReferenceList(  );
-            EntryFilter filter = new EntryFilter(  );
+            ReferenceList referenceEntryLink = new ReferenceList( );
+            ReferenceList referenceEntryImage = new ReferenceList( );
+            ReferenceList referenceEntry = new ReferenceList( );
+            ReferenceList referenceEntryFilter = new ReferenceList( );
+            EntryFilter filter = new EntryFilter( );
             filter.setIdDirectory( nIdDirectory );
             model.put( MARK_DIRECTORY_LIST_DEFAULT_ITEM, String.valueOf( nIdDirectory ) );
 
@@ -377,44 +374,44 @@ public class DirectoryResourceRss extends ResourceRss
             {
                 for ( int i = 0; i < strTabAcceptEntryType.length; i++ )
                 {
-                    if ( entry.getEntryType(  ).getIdType(  ) == Integer.parseInt( strTabAcceptEntryType[i] ) )
+                    if ( entry.getEntryType( ).getIdType( ) == Integer.parseInt( strTabAcceptEntryType [i] ) )
                     {
-                        if ( entry.isMandatory(  ) )
+                        if ( entry.isMandatory( ) )
                         {
-                            referenceEntry.addItem( entry.getIdEntry(  ), entry.getTitle(  ) );
+                            referenceEntry.addItem( entry.getIdEntry( ), entry.getTitle( ) );
                         }
 
-                        referenceEntryFilter.addItem( entry.getIdEntry(  ), entry.getTitle(  ) );
+                        referenceEntryFilter.addItem( entry.getIdEntry( ), entry.getTitle( ) );
                     }
                 }
 
                 for ( int i = 0; i < strTabAcceptEntryTypeForLink.length; i++ )
                 {
-                    if ( entry.getEntryType(  ).getIdType(  ) == Integer.parseInt( strTabAcceptEntryTypeForLink[i] ) )
+                    if ( entry.getEntryType( ).getIdType( ) == Integer.parseInt( strTabAcceptEntryTypeForLink [i] ) )
                     {
-                        referenceEntryLink.addItem( entry.getIdEntry(  ), entry.getTitle(  ) );
+                        referenceEntryLink.addItem( entry.getIdEntry( ), entry.getTitle( ) );
                     }
                 }
 
-                if ( entry.getEntryType(  ).getIdType(  ) == entryTypeImage )
+                if ( entry.getEntryType( ).getIdType( ) == entryTypeImage )
                 {
-                    referenceEntryImage.addItem( entry.getIdEntry(  ), entry.getTitle(  ) );
+                    referenceEntryImage.addItem( entry.getIdEntry( ), entry.getTitle( ) );
                 }
             }
 
-            if ( !referenceEntryLink.isEmpty(  ) )
+            if ( !referenceEntryLink.isEmpty( ) )
             {
                 referenceEntryLink.addItem( -1, "" );
                 model.put( MARK_ENTRY_LIST_LINK, referenceEntryLink );
             }
 
-            if ( !referenceEntryImage.isEmpty(  ) )
+            if ( !referenceEntryImage.isEmpty( ) )
             {
                 referenceEntryImage.addItem( -1, "" );
                 model.put( MARK_ENTRY_LIST_IMAGE, referenceEntryImage );
             }
 
-            if ( !referenceEntryFilter.isEmpty(  ) )
+            if ( !referenceEntryFilter.isEmpty( ) )
             {
                 referenceEntryFilter.addItem( -1, "" );
                 model.put( MARK_ENTRY_LIST_FILTER, referenceEntryFilter );
@@ -422,15 +419,15 @@ public class DirectoryResourceRss extends ResourceRss
 
                 if ( request.getParameter( PARAMETER_ID_ENTRY_FILTER_1 ) != null )
                 {
-                    IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( request.getParameter( 
-                                    PARAMETER_ID_ENTRY_FILTER_1 ) ), pluginDirectory );
+                    IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_FILTER_1 ) ),
+                            pluginDirectory );
                     model.put( MARK_ENTRY_FILTER_1, entry );
                 }
 
                 if ( request.getParameter( PARAMETER_ID_ENTRY_FILTER_2 ) != null )
                 {
-                    IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( request.getParameter( 
-                                    PARAMETER_ID_ENTRY_FILTER_2 ) ), pluginDirectory );
+                    IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_FILTER_2 ) ),
+                            pluginDirectory );
                     model.put( MARK_ENTRY_FILTER_2, entry );
                 }
             }
@@ -439,11 +436,9 @@ public class DirectoryResourceRss extends ResourceRss
 
             Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, pluginDirectory );
 
-            if ( WorkflowService.getInstance(  ).isAvailable(  ) && ( directory != null ) &&
-                    ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
+            if ( WorkflowService.getInstance( ).isAvailable( ) && ( directory != null ) && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) )
             {
-                Collection<State> listState = WorkflowService.getInstance(  )
-                                                             .getAllStateByWorkflow( directory.getIdWorkflow(  ),
+                Collection<State> listState = WorkflowService.getInstance( ).getAllStateByWorkflow( directory.getIdWorkflow( ),
                         AdminUserService.getAdminUser( request ) );
                 ReferenceList referenceListState = ReferenceList.convert( listState, ID, NAME, true );
                 referenceListState.addItem( -1, "" );
@@ -458,14 +453,14 @@ public class DirectoryResourceRss extends ResourceRss
             model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
             model.put( MARK_WORKFLOW_STATE_LIST_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
             model.put( MARK_DIRECTORY_LIST_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-            model.put( MARK_ENTRY_LIST, new ArrayList<ReferenceItem>(  ) );
+            model.put( MARK_ENTRY_LIST, new ArrayList<ReferenceItem>( ) );
         }
 
         model.put( MARK_DIRECTORY_LIST, directoryList );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_TASK_EVALUATION_CREATE_CONFIG, locale, model );
 
-        return template.getHtml(  );
+        return template.getHtml( );
     }
 
     /**
@@ -478,23 +473,22 @@ public class DirectoryResourceRss extends ResourceRss
         int entryTypeImage = DirectoryUtils.convertStringToInt( strEntryTypeImage );
 
         String strAcceptEntryType = AppPropertiesService.getProperty( PROPERTY_ACCEPT_DIRECTORY_TYPE );
-        String[] strTabAcceptEntryType = strAcceptEntryType.split( "," );
+        String [ ] strTabAcceptEntryType = strAcceptEntryType.split( "," );
 
         String strAcceptEntryTypeForLink = AppPropertiesService.getProperty( PROPERTY_ACCEPT_DIRECTORY_TYPE_FOR_LINK );
-        String[] strTabAcceptEntryTypeForLink = strAcceptEntryTypeForLink.split( "," );
+        String [ ] strTabAcceptEntryTypeForLink = strAcceptEntryTypeForLink.split( "," );
 
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         ReferenceList directoryList = DirectoryHome.getDirectoryList( pluginDirectory );
 
-        DirectoryResourceRssConfig directoryResourceRssConfig = DirectoryResourceRssConfigHome.findByPrimaryKey( this.getId(  ),
-                pluginDirectory );
-        HashMap<String, Object> model = new HashMap<String, Object>(  );
+        DirectoryResourceRssConfig directoryResourceRssConfig = DirectoryResourceRssConfigHome.findByPrimaryKey( this.getId( ), pluginDirectory );
+        HashMap<String, Object> model = new HashMap<String, Object>( );
 
-        ReferenceList referenceEntryImage = new ReferenceList(  );
-        ReferenceList referenceEntry = new ReferenceList(  );
-        ReferenceList referenceEntryLink = new ReferenceList(  );
-        ReferenceList referenceEntryFilter = new ReferenceList(  );
-        EntryFilter filter = new EntryFilter(  );
+        ReferenceList referenceEntryImage = new ReferenceList( );
+        ReferenceList referenceEntry = new ReferenceList( );
+        ReferenceList referenceEntryLink = new ReferenceList( );
+        ReferenceList referenceEntryFilter = new ReferenceList( );
+        EntryFilter filter = new EntryFilter( );
 
         if ( request.getParameter( PARAMETER_ID_DIRECTORY ) != null )
         {
@@ -504,11 +498,9 @@ public class DirectoryResourceRss extends ResourceRss
 
             Directory directory = DirectoryHome.findByPrimaryKey( idDirectory, pluginDirectory );
 
-            if ( WorkflowService.getInstance(  ).isAvailable(  ) && ( directory != null ) &&
-                    ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
+            if ( WorkflowService.getInstance( ).isAvailable( ) && ( directory != null ) && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) )
             {
-                Collection<State> listState = WorkflowService.getInstance(  )
-                                                             .getAllStateByWorkflow( directory.getIdWorkflow(  ),
+                Collection<State> listState = WorkflowService.getInstance( ).getAllStateByWorkflow( directory.getIdWorkflow( ),
                         AdminUserService.getAdminUser( request ) );
                 ReferenceList referenceListState = ReferenceList.convert( listState, ID, NAME, true );
                 referenceListState.addItem( -1, "" );
@@ -517,16 +509,13 @@ public class DirectoryResourceRss extends ResourceRss
         }
         else
         {
-            Directory directory = DirectoryHome.findByPrimaryKey( directoryResourceRssConfig.getIdDirectory(  ),
-                    pluginDirectory );
-            filter.setIdDirectory( directory.getIdDirectory(  ) );
-            model.put( MARK_DIRECTORY_LIST_DEFAULT_ITEM, directoryResourceRssConfig.getIdDirectory(  ) );
+            Directory directory = DirectoryHome.findByPrimaryKey( directoryResourceRssConfig.getIdDirectory( ), pluginDirectory );
+            filter.setIdDirectory( directory.getIdDirectory( ) );
+            model.put( MARK_DIRECTORY_LIST_DEFAULT_ITEM, directoryResourceRssConfig.getIdDirectory( ) );
 
-            if ( WorkflowService.getInstance(  ).isAvailable(  ) &&
-                    ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) )
+            if ( WorkflowService.getInstance( ).isAvailable( ) && ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) )
             {
-                Collection<State> listState = WorkflowService.getInstance(  )
-                                                             .getAllStateByWorkflow( directory.getIdWorkflow(  ),
+                Collection<State> listState = WorkflowService.getInstance( ).getAllStateByWorkflow( directory.getIdWorkflow( ),
                         AdminUserService.getAdminUser( request ) );
                 ReferenceList referenceListState = ReferenceList.convert( listState, ID, NAME, true );
                 referenceListState.addItem( -1, "" );
@@ -540,44 +529,44 @@ public class DirectoryResourceRss extends ResourceRss
         {
             for ( int i = 0; i < strTabAcceptEntryType.length; i++ )
             {
-                if ( entry.getEntryType(  ).getIdType(  ) == Integer.parseInt( strTabAcceptEntryType[i] ) )
+                if ( entry.getEntryType( ).getIdType( ) == Integer.parseInt( strTabAcceptEntryType [i] ) )
                 {
-                    if ( entry.isMandatory(  ) )
+                    if ( entry.isMandatory( ) )
                     {
-                        referenceEntry.addItem( entry.getIdEntry(  ), entry.getTitle(  ) );
+                        referenceEntry.addItem( entry.getIdEntry( ), entry.getTitle( ) );
                     }
 
-                    referenceEntryFilter.addItem( entry.getIdEntry(  ), entry.getTitle(  ) );
+                    referenceEntryFilter.addItem( entry.getIdEntry( ), entry.getTitle( ) );
                 }
             }
 
             for ( int i = 0; i < strTabAcceptEntryTypeForLink.length; i++ )
             {
-                if ( entry.getEntryType(  ).getIdType(  ) == Integer.parseInt( strTabAcceptEntryTypeForLink[i] ) )
+                if ( entry.getEntryType( ).getIdType( ) == Integer.parseInt( strTabAcceptEntryTypeForLink [i] ) )
                 {
-                    referenceEntryLink.addItem( entry.getIdEntry(  ), entry.getTitle(  ) );
+                    referenceEntryLink.addItem( entry.getIdEntry( ), entry.getTitle( ) );
                 }
             }
 
-            if ( entry.getEntryType(  ).getIdType(  ) == entryTypeImage )
+            if ( entry.getEntryType( ).getIdType( ) == entryTypeImage )
             {
-                referenceEntryImage.addItem( entry.getIdEntry(  ), entry.getTitle(  ) );
+                referenceEntryImage.addItem( entry.getIdEntry( ), entry.getTitle( ) );
             }
         }
 
-        if ( !referenceEntryLink.isEmpty(  ) )
+        if ( !referenceEntryLink.isEmpty( ) )
         {
             referenceEntryLink.addItem( -1, "" );
             model.put( MARK_ENTRY_LIST_LINK, referenceEntryLink );
         }
 
-        if ( !referenceEntryImage.isEmpty(  ) )
+        if ( !referenceEntryImage.isEmpty( ) )
         {
             referenceEntryImage.addItem( -1, "" );
             model.put( MARK_ENTRY_LIST_IMAGE, referenceEntryImage );
         }
 
-        if ( !referenceEntryFilter.isEmpty(  ) )
+        if ( !referenceEntryFilter.isEmpty( ) )
         {
             referenceEntryFilter.addItem( -1, "" );
             model.put( MARK_ENTRY_LIST_FILTER, referenceEntryFilter );
@@ -586,290 +575,274 @@ public class DirectoryResourceRss extends ResourceRss
 
         if ( request.getParameter( PARAMETER_ID_DIRECTORY ) != null )
         {
-            model.put( MARK_ENTRY_LIST_IMAGE_DEFAULT_ITEM,
-                DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_IMAGE ) ) );
-            model.put( MARK_ENTRY_LIST_TITLE_DEFAULT_ITEM,
-                DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_TITLE ) ) );
-            model.put( MARK_ENTRY_LIST_DESCRIPTION_DEFAULT_ITEM,
-                DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_DESCRIPTION ) ) );
-            model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM,
-                DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_LINK ) ) );
-            model.put( MARK_WORKFLOW_STATE_LIST_DEFAULT_ITEM,
-                DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_WORKFLOW_STATE ) ) );
+            model.put( MARK_ENTRY_LIST_IMAGE_DEFAULT_ITEM, DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_IMAGE ) ) );
+            model.put( MARK_ENTRY_LIST_TITLE_DEFAULT_ITEM, DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_TITLE ) ) );
+            model.put( MARK_ENTRY_LIST_DESCRIPTION_DEFAULT_ITEM, DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_DESCRIPTION ) ) );
+            model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM, DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_LINK ) ) );
+            model.put( MARK_WORKFLOW_STATE_LIST_DEFAULT_ITEM, DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_WORKFLOW_STATE ) ) );
 
             if ( request.getParameter( PARAMETER_ID_ENTRY_FILTER_1 ) != null )
             {
-                IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( request.getParameter( 
-                                PARAMETER_ID_ENTRY_FILTER_1 ) ), pluginDirectory );
+                IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_FILTER_1 ) ),
+                        pluginDirectory );
                 model.put( MARK_ENTRY_FILTER_1, entry );
             }
 
             if ( request.getParameter( PARAMETER_ID_ENTRY_FILTER_2 ) != null )
             {
-                IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( request.getParameter( 
-                                PARAMETER_ID_ENTRY_FILTER_2 ) ), pluginDirectory );
-                model.put( MARK_ENTRY_FILTER_2, entry );
-            }
-        }
-        else if ( directoryResourceRssConfig != null )
-        {
-            model.put( MARK_ENTRY_LIST_IMAGE_DEFAULT_ITEM, directoryResourceRssConfig.getIdEntryImage(  ) );
-            model.put( MARK_ENTRY_LIST_TITLE_DEFAULT_ITEM, directoryResourceRssConfig.getIdEntryTitle(  ) );
-            model.put( MARK_ENTRY_LIST_DESCRIPTION_DEFAULT_ITEM, directoryResourceRssConfig.getIdEntryDescription(  ) );
-            model.put( MARK_WORKFLOW_STATE_LIST_DEFAULT_ITEM, directoryResourceRssConfig.getIdWorkflowState(  ) );
-            model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM, directoryResourceRssConfig.getIdEntryLink(  ) );
-
-            if ( directoryResourceRssConfig.getIdEntryFilter1(  ) != DirectoryUtils.CONSTANT_ID_NULL )
-            {
-                IEntry entry = EntryHome.findByPrimaryKey( directoryResourceRssConfig.getIdEntryFilter1(  ),
-                        pluginDirectory );
-                model.put( MARK_ENTRY_FILTER_1, entry );
-
-                RecordField recordField = new RecordField(  );
-                recordField.setEntry( entry );
-
-                if ( DirectoryUtils.convertStringToInt( directoryResourceRssConfig.getValueFilter1(  ) ) != DirectoryUtils.CONSTANT_ID_NULL )
-                {
-                    Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( 
-                                directoryResourceRssConfig.getValueFilter1(  ) ), pluginDirectory );
-                    recordField.setField( field );
-                }
-
-                recordField.setValue( directoryResourceRssConfig.getValueFilter1(  ) );
-
-                List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
-                recordFieldList.add( recordField );
-                model.put( MARK_RECORD_FIELD_FILTER_1, recordFieldList );
-            }
-
-            if ( directoryResourceRssConfig.getIdEntryFilter2(  ) != DirectoryUtils.CONSTANT_ID_NULL )
-            {
-                IEntry entry = EntryHome.findByPrimaryKey( directoryResourceRssConfig.getIdEntryFilter2(  ),
+                IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( request.getParameter( PARAMETER_ID_ENTRY_FILTER_2 ) ),
                         pluginDirectory );
                 model.put( MARK_ENTRY_FILTER_2, entry );
-
-                RecordField recordField = new RecordField(  );
-                recordField.setEntry( entry );
-
-                if ( DirectoryUtils.convertStringToInt( directoryResourceRssConfig.getValueFilter2(  ) ) != DirectoryUtils.CONSTANT_ID_NULL )
-                {
-                    Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( 
-                                directoryResourceRssConfig.getValueFilter2(  ) ), pluginDirectory );
-                    recordField.setField( field );
-                }
-
-                recordField.setValue( directoryResourceRssConfig.getValueFilter2(  ) );
-
-                List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
-                recordFieldList.add( recordField );
-                model.put( MARK_RECORD_FIELD_FILTER_2, recordFieldList );
             }
         }
         else
-        {
-            model.put( MARK_ENTRY_LIST_IMAGE_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-            model.put( MARK_DIRECTORY_LIST_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-            model.put( MARK_ENTRY_LIST_TITLE_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-            model.put( MARK_ENTRY_LIST_DESCRIPTION_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-            model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
-        }
+            if ( directoryResourceRssConfig != null )
+            {
+                model.put( MARK_ENTRY_LIST_IMAGE_DEFAULT_ITEM, directoryResourceRssConfig.getIdEntryImage( ) );
+                model.put( MARK_ENTRY_LIST_TITLE_DEFAULT_ITEM, directoryResourceRssConfig.getIdEntryTitle( ) );
+                model.put( MARK_ENTRY_LIST_DESCRIPTION_DEFAULT_ITEM, directoryResourceRssConfig.getIdEntryDescription( ) );
+                model.put( MARK_WORKFLOW_STATE_LIST_DEFAULT_ITEM, directoryResourceRssConfig.getIdWorkflowState( ) );
+                model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM, directoryResourceRssConfig.getIdEntryLink( ) );
+
+                if ( directoryResourceRssConfig.getIdEntryFilter1( ) != DirectoryUtils.CONSTANT_ID_NULL )
+                {
+                    IEntry entry = EntryHome.findByPrimaryKey( directoryResourceRssConfig.getIdEntryFilter1( ), pluginDirectory );
+                    model.put( MARK_ENTRY_FILTER_1, entry );
+
+                    RecordField recordField = new RecordField( );
+                    recordField.setEntry( entry );
+
+                    if ( DirectoryUtils.convertStringToInt( directoryResourceRssConfig.getValueFilter1( ) ) != DirectoryUtils.CONSTANT_ID_NULL )
+                    {
+                        Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( directoryResourceRssConfig.getValueFilter1( ) ),
+                                pluginDirectory );
+                        recordField.setField( field );
+                    }
+
+                    recordField.setValue( directoryResourceRssConfig.getValueFilter1( ) );
+
+                    List<RecordField> recordFieldList = new ArrayList<RecordField>( );
+                    recordFieldList.add( recordField );
+                    model.put( MARK_RECORD_FIELD_FILTER_1, recordFieldList );
+                }
+
+                if ( directoryResourceRssConfig.getIdEntryFilter2( ) != DirectoryUtils.CONSTANT_ID_NULL )
+                {
+                    IEntry entry = EntryHome.findByPrimaryKey( directoryResourceRssConfig.getIdEntryFilter2( ), pluginDirectory );
+                    model.put( MARK_ENTRY_FILTER_2, entry );
+
+                    RecordField recordField = new RecordField( );
+                    recordField.setEntry( entry );
+
+                    if ( DirectoryUtils.convertStringToInt( directoryResourceRssConfig.getValueFilter2( ) ) != DirectoryUtils.CONSTANT_ID_NULL )
+                    {
+                        Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( directoryResourceRssConfig.getValueFilter2( ) ),
+                                pluginDirectory );
+                        recordField.setField( field );
+                    }
+
+                    recordField.setValue( directoryResourceRssConfig.getValueFilter2( ) );
+
+                    List<RecordField> recordFieldList = new ArrayList<RecordField>( );
+                    recordFieldList.add( recordField );
+                    model.put( MARK_RECORD_FIELD_FILTER_2, recordFieldList );
+                }
+            }
+            else
+            {
+                model.put( MARK_ENTRY_LIST_IMAGE_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
+                model.put( MARK_DIRECTORY_LIST_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
+                model.put( MARK_ENTRY_LIST_TITLE_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
+                model.put( MARK_ENTRY_LIST_DESCRIPTION_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
+                model.put( MARK_ENTRY_LIST_LINK_DEFAULT_ITEM, DirectoryUtils.CONSTANT_ID_NULL );
+            }
 
         model.put( MARK_DIRECTORY_LIST, directoryList );
         model.put( MARK_ENTRY_LIST, referenceEntry );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_TASK_EVALUATION_MODIFY_CONFIG, locale, model );
 
-        return template.getHtml(  );
+        return template.getHtml( );
     }
 
     /**
      * {@inheritDoc}
+     * 
      * @deprecated This method is deprecated
      */
     @Deprecated
     @Override
-    public String createHtmlRss(  )
+    public String createHtmlRss( )
     {
-        HashMap<String, Object> model = new HashMap<String, Object>(  );
+        HashMap<String, Object> model = new HashMap<String, Object>( );
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-        DirectoryResourceRssConfig config = DirectoryResourceRssConfigHome.findByPrimaryKey( this.getId(  ),
-                pluginDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( config.getIdDirectory(  ), pluginDirectory );
+        DirectoryResourceRssConfig config = DirectoryResourceRssConfigHome.findByPrimaryKey( this.getId( ), pluginDirectory );
+        Directory directory = DirectoryHome.findByPrimaryKey( config.getIdDirectory( ), pluginDirectory );
 
         // Update the head of the document
         String strRssFileLanguage = AppPropertiesService.getProperty( PROPERTY_SITE_LANGUAGE );
 
         String strWebAppUrl = AppPropertiesService.getProperty( PROPERTY_WEBAPP_PROD_URL );
         String strSiteUrl = strWebAppUrl;
-        model.put( MARK_RSS_SITE_NAME, directory.getTitle(  ) );
+        model.put( MARK_RSS_SITE_NAME, directory.getTitle( ) );
         model.put( MARK_RSS_FILE_LANGUAGE, strRssFileLanguage );
         model.put( MARK_RSS_SITE_URL, strSiteUrl );
-        model.put( MARK_RSS_SITE_DESCRIPTION, directory.getDescription(  ) );
+        model.put( MARK_RSS_SITE_DESCRIPTION, directory.getDescription( ) );
 
         Locale locale = new Locale( strRssFileLanguage );
 
-        RecordFieldFilter filter = new RecordFieldFilter(  );
-        filter.setIdDirectory( directory.getIdDirectory(  ) );
+        RecordFieldFilter filter = new RecordFieldFilter( );
+        filter.setIdDirectory( directory.getIdDirectory( ) );
 
-        HashMap<String, List<RecordField>> mapSearchQuery = new HashMap<String, List<RecordField>>(  );
+        HashMap<String, List<RecordField>> mapSearchQuery = new HashMap<String, List<RecordField>>( );
 
-        if ( config.getIdEntryFilter1(  ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( config.getIdEntryFilter1( ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            IEntry entry = EntryHome.findByPrimaryKey( config.getIdEntryFilter1(  ), pluginDirectory );
-            RecordField recordField = new RecordField(  );
+            IEntry entry = EntryHome.findByPrimaryKey( config.getIdEntryFilter1( ), pluginDirectory );
+            RecordField recordField = new RecordField( );
             recordField.setEntry( entry );
 
-            if ( DirectoryUtils.convertStringToInt( config.getValueFilter1(  ) ) != DirectoryUtils.CONSTANT_ID_NULL )
+            if ( DirectoryUtils.convertStringToInt( config.getValueFilter1( ) ) != DirectoryUtils.CONSTANT_ID_NULL )
             {
-                Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( config.getValueFilter1(  ) ),
-                        pluginDirectory );
+                Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( config.getValueFilter1( ) ), pluginDirectory );
                 recordField.setField( field );
             }
 
-            recordField.setValue( config.getValueFilter1(  ) );
+            recordField.setValue( config.getValueFilter1( ) );
 
-            List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
+            List<RecordField> recordFieldList = new ArrayList<RecordField>( );
             recordFieldList.add( recordField );
 
-            mapSearchQuery.put( Integer.toString( config.getIdEntryFilter1(  ) ), recordFieldList );
+            mapSearchQuery.put( Integer.toString( config.getIdEntryFilter1( ) ), recordFieldList );
         }
 
-        if ( config.getIdEntryFilter2(  ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( config.getIdEntryFilter2( ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            IEntry entry = EntryHome.findByPrimaryKey( config.getIdEntryFilter2(  ), pluginDirectory );
-            RecordField recordField = new RecordField(  );
+            IEntry entry = EntryHome.findByPrimaryKey( config.getIdEntryFilter2( ), pluginDirectory );
+            RecordField recordField = new RecordField( );
             recordField.setEntry( entry );
 
-            if ( DirectoryUtils.convertStringToInt( config.getValueFilter2(  ) ) != DirectoryUtils.CONSTANT_ID_NULL )
+            if ( DirectoryUtils.convertStringToInt( config.getValueFilter2( ) ) != DirectoryUtils.CONSTANT_ID_NULL )
             {
-                Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( config.getValueFilter2(  ) ),
-                        pluginDirectory );
+                Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( config.getValueFilter2( ) ), pluginDirectory );
                 recordField.setField( field );
             }
 
-            recordField.setValue( config.getValueFilter2(  ) );
+            recordField.setValue( config.getValueFilter2( ) );
 
-            List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
+            List<RecordField> recordFieldList = new ArrayList<RecordField>( );
             recordFieldList.add( recordField );
 
-            mapSearchQuery.put( Integer.toString( config.getIdEntryFilter2(  ) ), recordFieldList );
+            mapSearchQuery.put( Integer.toString( config.getIdEntryFilter2( ) ), recordFieldList );
         }
 
-        List<Integer> listResultRecordId = DirectorySearchService.getInstance(  )
-                                                                 .getSearchResults( directory, mapSearchQuery, null,
-                null, null, filter, pluginDirectory );
+        List<Integer> listResultRecordId = DirectorySearchService.getInstance( ).getSearchResults( directory, mapSearchQuery, null, null, null, filter,
+                pluginDirectory );
 
-        if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                ( config.getIdWorkflowState(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                WorkflowService.getInstance(  ).isAvailable(  ) )
+        if ( ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) && ( config.getIdWorkflowState( ) != DirectoryUtils.CONSTANT_ID_NULL )
+                && WorkflowService.getInstance( ).isAvailable( ) )
         {
-            List<Integer> listTmpResultRecordId = WorkflowService.getInstance(  )
-                                                                 .getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), config.getIdWorkflowState(  ),
-                    Integer.valueOf( directory.getIdDirectory(  ) ), null );
+            List<Integer> listTmpResultRecordId = WorkflowService.getInstance( ).getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
+                    directory.getIdWorkflow( ), config.getIdWorkflowState( ), Integer.valueOf( directory.getIdDirectory( ) ), null );
 
             listResultRecordId = DirectoryUtils.retainAll( listResultRecordId, listTmpResultRecordId );
         }
 
-        List<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>(  );
+        List<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>( );
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         for ( Integer idRecord : listResultRecordId )
         {
             Record record = recordService.findByPrimaryKey( idRecord, pluginDirectory );
-            RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-            recordFieldFilter.setIdDirectory( config.getIdDirectory(  ) );
+            RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
+            recordFieldFilter.setIdDirectory( config.getIdDirectory( ) );
             recordFieldFilter.setIdRecord( idRecord );
 
-            recordFieldFilter.setIdEntry( config.getIdEntryTitle(  ) );
+            recordFieldFilter.setIdEntry( config.getIdEntryTitle( ) );
 
             List<RecordField> recordFieldList = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
             RecordField recordFieldTitle = recordFieldList.get( 0 );
 
-            recordFieldFilter.setIdEntry( config.getIdEntryDescription(  ) );
+            recordFieldFilter.setIdEntry( config.getIdEntryDescription( ) );
 
             List<RecordField> recordFieldList2 = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
             RecordField recordFieldDescription = recordFieldList2.get( 0 );
 
-            recordFieldFilter.setIdEntry( config.getIdEntryImage(  ) );
+            recordFieldFilter.setIdEntry( config.getIdEntryImage( ) );
 
-            List<RecordField> recordFieldListImage = RecordFieldHome.getRecordFieldList( recordFieldFilter,
-                    pluginDirectory );
+            List<RecordField> recordFieldListImage = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
             RecordField recordFieldImage = null;
 
-            if ( !recordFieldListImage.isEmpty(  ) )
+            if ( !recordFieldListImage.isEmpty( ) )
             {
                 recordFieldImage = recordFieldListImage.get( 0 );
             }
 
-            recordFieldFilter.setIdEntry( config.getIdEntryLink(  ) );
+            recordFieldFilter.setIdEntry( config.getIdEntryLink( ) );
 
-            List<RecordField> recordFieldListLink = RecordFieldHome.getRecordFieldList( recordFieldFilter,
-                    pluginDirectory );
+            List<RecordField> recordFieldListLink = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
             RecordField recordFieldLink = null;
 
-            if ( !recordFieldListLink.isEmpty(  ) )
+            if ( !recordFieldListLink.isEmpty( ) )
             {
                 recordFieldLink = recordFieldListLink.get( 0 );
             }
 
             if ( ( recordFieldTitle != null ) && ( recordFieldDescription != null ) )
             {
-                HashMap<String, Object> item = new HashMap<String, Object>(  );
+                HashMap<String, Object> item = new HashMap<String, Object>( );
                 item.put( MARK_RSS_SITE_ID_RECORD, idRecord );
 
-                if ( recordFieldTitle.getValue(  ) != null )
+                if ( recordFieldTitle.getValue( ) != null )
                 {
-                    item.put( MARK_RSS_SITE_TITLE, recordFieldTitle.getValue(  ) );
+                    item.put( MARK_RSS_SITE_TITLE, recordFieldTitle.getValue( ) );
                 }
                 else
                 {
-                    item.put( MARK_RSS_SITE_TITLE, recordFieldTitle.getField(  ).getValue(  ) );
+                    item.put( MARK_RSS_SITE_TITLE, recordFieldTitle.getField( ).getValue( ) );
                 }
 
-                if ( recordFieldDescription.getValue(  ) != null )
+                if ( recordFieldDescription.getValue( ) != null )
                 {
-                    item.put( MARK_RSS_SITE_DESCRIPTION_ITEM, recordFieldDescription.getValue(  ) );
+                    item.put( MARK_RSS_SITE_DESCRIPTION_ITEM, recordFieldDescription.getValue( ) );
                 }
                 else
                 {
-                    item.put( MARK_RSS_SITE_DESCRIPTION_ITEM, recordFieldDescription.getField(  ).getValue(  ) );
+                    item.put( MARK_RSS_SITE_DESCRIPTION_ITEM, recordFieldDescription.getField( ).getValue( ) );
                 }
 
-                if ( ( recordFieldImage != null ) && ( recordFieldImage.getFile(  ) != null ) )
+                if ( ( recordFieldImage != null ) && ( recordFieldImage.getFile( ) != null ) )
                 {
-                    item.put( MARK_RSS_SITE_IMAGE_ITEM, recordFieldImage.getFile(  ).getIdFile(  ) );
+                    item.put( MARK_RSS_SITE_IMAGE_ITEM, recordFieldImage.getFile( ).getIdFile( ) );
 
-                    if ( ( recordFieldImage.getEntry(  ) != null ) &&
-                            ( recordFieldImage.getEntry(  ).getDisplayHeight(  ) != -1 ) )
+                    if ( ( recordFieldImage.getEntry( ) != null ) && ( recordFieldImage.getEntry( ).getDisplayHeight( ) != -1 ) )
                     {
-                        item.put( MARK_RSS_SITE_IMAGE_HEIGHT_ITEM, recordFieldImage.getEntry(  ).getDisplayHeight(  ) );
+                        item.put( MARK_RSS_SITE_IMAGE_HEIGHT_ITEM, recordFieldImage.getEntry( ).getDisplayHeight( ) );
                     }
 
-                    if ( ( recordFieldImage.getEntry(  ) != null ) &&
-                            ( recordFieldImage.getEntry(  ).getDisplayWidth(  ) != -1 ) )
+                    if ( ( recordFieldImage.getEntry( ) != null ) && ( recordFieldImage.getEntry( ).getDisplayWidth( ) != -1 ) )
                     {
-                        item.put( MARK_RSS_SITE_IMAGE_WIDTH_ITEM, recordFieldImage.getEntry(  ).getDisplayWidth(  ) );
+                        item.put( MARK_RSS_SITE_IMAGE_WIDTH_ITEM, recordFieldImage.getEntry( ).getDisplayWidth( ) );
                     }
                 }
 
-                if ( ( recordFieldLink != null ) && ( recordFieldLink.getValue(  ) != null ) )
+                if ( ( recordFieldLink != null ) && ( recordFieldLink.getValue( ) != null ) )
                 {
-                    item.put( MARK_RSS_SITE_LINK_ITEM, recordFieldLink.getValue(  ) );
+                    item.put( MARK_RSS_SITE_LINK_ITEM, recordFieldLink.getValue( ) );
                 }
 
-                item.put( MARK_RSS_SITE_DATE, record.getDateCreation(  ) );
-                item.put( MARK_RSS_SITE_DATE_MODIFICATION, record.getDateModification(  ) );
+                item.put( MARK_RSS_SITE_DATE, record.getDateCreation( ) );
+                item.put( MARK_RSS_SITE_DATE_MODIFICATION, record.getDateModification( ) );
                 listItem.add( item );
             }
         }
 
         model.put( MARK_ITEM_LIST, listItem );
-        model.put( MARK_RSS_SITE_ID_DIRECTORY, config.getIdDirectory(  ) );
+        model.put( MARK_RSS_SITE_ID_DIRECTORY, config.getIdDirectory( ) );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_PUSH_RSS_XML, locale, model );
 
-        return template.getHtml(  );
+        return template.getHtml( );
     }
 
     /**
@@ -888,7 +861,7 @@ public class DirectoryResourceRss extends ResourceRss
     @Override
     public Map<String, String> getParameterToApply( HttpServletRequest request )
     {
-        Map<String, String> map = new HashMap<String, String>(  );
+        Map<String, String> map = new HashMap<String, String>( );
 
         map.put( PARAMETER_ID_DIRECTORY, request.getParameter( PARAMETER_ID_DIRECTORY ) );
         map.put( PARAMETER_ID_ENTRY_FILTER_1, request.getParameter( PARAMETER_ID_ENTRY_FILTER_1 ) );
@@ -906,14 +879,13 @@ public class DirectoryResourceRss extends ResourceRss
      * {@inheritDoc}
      */
     @Override
-    public boolean checkResource(  )
+    public boolean checkResource( )
     {
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-        DirectoryResourceRssConfig config = DirectoryResourceRssConfigHome.findByPrimaryKey( this.getId(  ),
-                pluginDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( config.getIdDirectory(  ), pluginDirectory );
-        IEntry entryTitle = EntryHome.findByPrimaryKey( config.getIdEntryTitle(  ), pluginDirectory );
-        IEntry entryDescription = EntryHome.findByPrimaryKey( config.getIdEntryDescription(  ), pluginDirectory );
+        DirectoryResourceRssConfig config = DirectoryResourceRssConfigHome.findByPrimaryKey( this.getId( ), pluginDirectory );
+        Directory directory = DirectoryHome.findByPrimaryKey( config.getIdDirectory( ), pluginDirectory );
+        IEntry entryTitle = EntryHome.findByPrimaryKey( config.getIdEntryTitle( ), pluginDirectory );
+        IEntry entryDescription = EntryHome.findByPrimaryKey( config.getIdEntryDescription( ), pluginDirectory );
 
         return ( ( directory != null ) && ( entryDescription != null ) && ( entryTitle != null ) );
     }
@@ -922,7 +894,7 @@ public class DirectoryResourceRss extends ResourceRss
      * {@inheritDoc}
      */
     @Override
-    public IFeedResource getFeed(  )
+    public IFeedResource getFeed( )
     {
         // Update the head of the document
         String strRssFileLanguage = AppPropertiesService.getProperty( PROPERTY_SITE_LANGUAGE );
@@ -931,200 +903,189 @@ public class DirectoryResourceRss extends ResourceRss
         String strSiteUrl = strWebAppUrl;
 
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
-        DirectoryResourceRssConfig config = DirectoryResourceRssConfigHome.findByPrimaryKey( this.getId(  ),
-                pluginDirectory );
-        Directory directory = DirectoryHome.findByPrimaryKey( config.getIdDirectory(  ), pluginDirectory );
+        DirectoryResourceRssConfig config = DirectoryResourceRssConfigHome.findByPrimaryKey( this.getId( ), pluginDirectory );
+        Directory directory = DirectoryHome.findByPrimaryKey( config.getIdDirectory( ), pluginDirectory );
 
-        IFeedResource resource = new FeedResource(  );
-        resource.setTitle( directory.getTitle(  ) );
-        resource.setDescription( directory.getDescription(  ) );
+        IFeedResource resource = new FeedResource( );
+        resource.setTitle( directory.getTitle( ) );
+        resource.setDescription( directory.getDescription( ) );
         resource.setLink( strSiteUrl );
         resource.setLanguage( strRssFileLanguage );
 
-        IFeedResourceImage image = new FeedResourceImage(  );
+        IFeedResourceImage image = new FeedResourceImage( );
         image.setUrl( strSiteUrl + "/images/local/skin/valid-rss.png" );
         image.setLink( strSiteUrl );
-        image.setTitle( directory.getTitle(  ) );
+        image.setTitle( directory.getTitle( ) );
 
         resource.setImage( image );
 
         Locale locale = new Locale( strRssFileLanguage );
 
-        RecordFieldFilter filter = new RecordFieldFilter(  );
-        filter.setIdDirectory( directory.getIdDirectory(  ) );
+        RecordFieldFilter filter = new RecordFieldFilter( );
+        filter.setIdDirectory( directory.getIdDirectory( ) );
         filter.setSortOrder( RecordFieldFilter.ORDER_DESC );
 
-        HashMap<String, List<RecordField>> mapSearchQuery = new HashMap<String, List<RecordField>>(  );
+        HashMap<String, List<RecordField>> mapSearchQuery = new HashMap<String, List<RecordField>>( );
 
-        if ( config.getIdEntryFilter1(  ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( config.getIdEntryFilter1( ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            IEntry entry = EntryHome.findByPrimaryKey( config.getIdEntryFilter1(  ), pluginDirectory );
-            RecordField recordField = new RecordField(  );
+            IEntry entry = EntryHome.findByPrimaryKey( config.getIdEntryFilter1( ), pluginDirectory );
+            RecordField recordField = new RecordField( );
             recordField.setEntry( entry );
 
-            if ( DirectoryUtils.convertStringToInt( config.getValueFilter1(  ) ) != DirectoryUtils.CONSTANT_ID_NULL )
+            if ( DirectoryUtils.convertStringToInt( config.getValueFilter1( ) ) != DirectoryUtils.CONSTANT_ID_NULL )
             {
-                Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( config.getValueFilter1(  ) ),
-                        pluginDirectory );
+                Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( config.getValueFilter1( ) ), pluginDirectory );
                 recordField.setField( field );
             }
 
-            recordField.setValue( config.getValueFilter1(  ) );
+            recordField.setValue( config.getValueFilter1( ) );
 
-            List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
+            List<RecordField> recordFieldList = new ArrayList<RecordField>( );
             recordFieldList.add( recordField );
 
-            mapSearchQuery.put( Integer.toString( config.getIdEntryFilter1(  ) ), recordFieldList );
+            mapSearchQuery.put( Integer.toString( config.getIdEntryFilter1( ) ), recordFieldList );
         }
 
-        if ( config.getIdEntryFilter2(  ) != DirectoryUtils.CONSTANT_ID_NULL )
+        if ( config.getIdEntryFilter2( ) != DirectoryUtils.CONSTANT_ID_NULL )
         {
-            IEntry entry = EntryHome.findByPrimaryKey( config.getIdEntryFilter2(  ), pluginDirectory );
-            RecordField recordField = new RecordField(  );
+            IEntry entry = EntryHome.findByPrimaryKey( config.getIdEntryFilter2( ), pluginDirectory );
+            RecordField recordField = new RecordField( );
             recordField.setEntry( entry );
 
-            if ( DirectoryUtils.convertStringToInt( config.getValueFilter2(  ) ) != DirectoryUtils.CONSTANT_ID_NULL )
+            if ( DirectoryUtils.convertStringToInt( config.getValueFilter2( ) ) != DirectoryUtils.CONSTANT_ID_NULL )
             {
-                Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( config.getValueFilter2(  ) ),
-                        pluginDirectory );
+                Field field = FieldHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( config.getValueFilter2( ) ), pluginDirectory );
                 recordField.setField( field );
             }
 
-            recordField.setValue( config.getValueFilter2(  ) );
+            recordField.setValue( config.getValueFilter2( ) );
 
-            List<RecordField> recordFieldList = new ArrayList<RecordField>(  );
+            List<RecordField> recordFieldList = new ArrayList<RecordField>( );
             recordFieldList.add( recordField );
 
-            mapSearchQuery.put( Integer.toString( config.getIdEntryFilter2(  ) ), recordFieldList );
+            mapSearchQuery.put( Integer.toString( config.getIdEntryFilter2( ) ), recordFieldList );
         }
 
-        List<Integer> listResultRecordId = DirectorySearchService.getInstance(  )
-                                                                 .getSearchResults( directory, mapSearchQuery, null,
-                null, null, filter, pluginDirectory );
+        List<Integer> listResultRecordId = DirectorySearchService.getInstance( ).getSearchResults( directory, mapSearchQuery, null, null, null, filter,
+                pluginDirectory );
 
-        if ( ( directory.getIdWorkflow(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                ( config.getIdWorkflowState(  ) != DirectoryUtils.CONSTANT_ID_NULL ) &&
-                WorkflowService.getInstance(  ).isAvailable(  ) )
+        if ( ( directory.getIdWorkflow( ) != DirectoryUtils.CONSTANT_ID_NULL ) && ( config.getIdWorkflowState( ) != DirectoryUtils.CONSTANT_ID_NULL )
+                && WorkflowService.getInstance( ).isAvailable( ) )
         {
-            List<Integer> listTmpResultRecordId = WorkflowService.getInstance(  )
-                                                                 .getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
-                    directory.getIdWorkflow(  ), config.getIdWorkflowState(  ),
-                    Integer.valueOf( directory.getIdDirectory(  ) ), null );
+            List<Integer> listTmpResultRecordId = WorkflowService.getInstance( ).getAuthorizedResourceList( Record.WORKFLOW_RESOURCE_TYPE,
+                    directory.getIdWorkflow( ), config.getIdWorkflowState( ), Integer.valueOf( directory.getIdDirectory( ) ), null );
 
             listResultRecordId = DirectoryUtils.retainAll( listResultRecordId, listTmpResultRecordId );
         }
 
-        List<IFeedResourceItem> listItems = new ArrayList<IFeedResourceItem>(  );
+        List<IFeedResourceItem> listItems = new ArrayList<IFeedResourceItem>( );
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
         for ( Integer idRecord : listResultRecordId )
         {
             Record record = recordService.findByPrimaryKey( idRecord, pluginDirectory );
-            RecordFieldFilter recordFieldFilter = new RecordFieldFilter(  );
-            recordFieldFilter.setIdDirectory( config.getIdDirectory(  ) );
+            RecordFieldFilter recordFieldFilter = new RecordFieldFilter( );
+            recordFieldFilter.setIdDirectory( config.getIdDirectory( ) );
             recordFieldFilter.setIdRecord( idRecord );
 
-            recordFieldFilter.setIdEntry( config.getIdEntryTitle(  ) );
+            recordFieldFilter.setIdEntry( config.getIdEntryTitle( ) );
 
             List<RecordField> recordFieldList = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
             RecordField recordFieldTitle = recordFieldList.get( 0 );
 
-            recordFieldFilter.setIdEntry( config.getIdEntryDescription(  ) );
+            recordFieldFilter.setIdEntry( config.getIdEntryDescription( ) );
 
             List<RecordField> recordFieldList2 = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
             RecordField recordFieldDescription = recordFieldList2.get( 0 );
 
-            recordFieldFilter.setIdEntry( config.getIdEntryImage(  ) );
+            recordFieldFilter.setIdEntry( config.getIdEntryImage( ) );
 
-            List<RecordField> recordFieldListImage = RecordFieldHome.getRecordFieldList( recordFieldFilter,
-                    pluginDirectory );
+            List<RecordField> recordFieldListImage = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
             RecordField recordFieldImage = null;
 
-            if ( !recordFieldListImage.isEmpty(  ) )
+            if ( !recordFieldListImage.isEmpty( ) )
             {
                 recordFieldImage = recordFieldListImage.get( 0 );
             }
 
-            recordFieldFilter.setIdEntry( config.getIdEntryLink(  ) );
+            recordFieldFilter.setIdEntry( config.getIdEntryLink( ) );
 
-            List<RecordField> recordFieldListLink = RecordFieldHome.getRecordFieldList( recordFieldFilter,
-                    pluginDirectory );
+            List<RecordField> recordFieldListLink = RecordFieldHome.getRecordFieldList( recordFieldFilter, pluginDirectory );
             RecordField recordFieldLink = null;
 
-            if ( !recordFieldListLink.isEmpty(  ) )
+            if ( !recordFieldListLink.isEmpty( ) )
             {
                 recordFieldLink = recordFieldListLink.get( 0 );
             }
 
             if ( ( recordFieldTitle != null ) && ( recordFieldDescription != null ) )
             {
-                IFeedResourceItem item = new FeedResourceItem(  );
+                IFeedResourceItem item = new FeedResourceItem( );
 
                 // image handling
                 // the image is put right before the description
                 String strImageDescription;
 
-                if ( ( recordFieldImage != null ) && ( recordFieldImage.getFile(  ) != null ) )
+                if ( ( recordFieldImage != null ) && ( recordFieldImage.getFile( ) != null ) )
                 {
-                    Map<String, Object> model = new HashMap<String, Object>(  );
-                    model.put( MARK_RSS_SITE_IMAGE_ITEM, recordFieldImage.getFile(  ).getIdFile(  ) );
+                    Map<String, Object> model = new HashMap<String, Object>( );
+                    model.put( MARK_RSS_SITE_IMAGE_ITEM, recordFieldImage.getFile( ).getIdFile( ) );
                     model.put( MARK_RSS_SITE_URL, strSiteUrl );
 
-                    if ( ( recordFieldImage.getEntry(  ) != null ) &&
-                            ( recordFieldImage.getEntry(  ).getDisplayHeight(  ) != -1 ) )
+                    if ( ( recordFieldImage.getEntry( ) != null ) && ( recordFieldImage.getEntry( ).getDisplayHeight( ) != -1 ) )
                     {
-                        model.put( MARK_RSS_SITE_IMAGE_HEIGHT_ITEM, recordFieldImage.getEntry(  ).getDisplayHeight(  ) );
+                        model.put( MARK_RSS_SITE_IMAGE_HEIGHT_ITEM, recordFieldImage.getEntry( ).getDisplayHeight( ) );
                     }
 
-                    if ( ( recordFieldImage.getEntry(  ) != null ) &&
-                            ( recordFieldImage.getEntry(  ).getDisplayWidth(  ) != -1 ) )
+                    if ( ( recordFieldImage.getEntry( ) != null ) && ( recordFieldImage.getEntry( ).getDisplayWidth( ) != -1 ) )
                     {
-                        model.put( MARK_RSS_SITE_IMAGE_WIDTH_ITEM, recordFieldImage.getEntry(  ).getDisplayWidth(  ) );
+                        model.put( MARK_RSS_SITE_IMAGE_WIDTH_ITEM, recordFieldImage.getEntry( ).getDisplayWidth( ) );
                     }
 
                     HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_RSS_IMAGE, locale, model );
-                    strImageDescription = template.getHtml(  );
+                    strImageDescription = template.getHtml( );
                 }
                 else
                 {
                     strImageDescription = EMPTY_STRING;
                 }
 
-                if ( recordFieldTitle.getValue(  ) != null )
+                if ( recordFieldTitle.getValue( ) != null )
                 {
-                    item.setTitle( recordFieldTitle.getValue(  ) );
+                    item.setTitle( recordFieldTitle.getValue( ) );
                 }
                 else
                 {
-                    item.setTitle( recordFieldTitle.getField(  ).getValue(  ) );
+                    item.setTitle( recordFieldTitle.getField( ).getValue( ) );
                 }
 
-                if ( recordFieldDescription.getValue(  ) != null )
+                if ( recordFieldDescription.getValue( ) != null )
                 {
-                    item.setDescription( strImageDescription + recordFieldDescription.getValue(  ) );
+                    item.setDescription( strImageDescription + recordFieldDescription.getValue( ) );
                 }
                 else
                 {
-                    item.setDescription( strImageDescription + recordFieldDescription.getField(  ).getValue(  ) );
+                    item.setDescription( strImageDescription + recordFieldDescription.getField( ).getValue( ) );
                 }
 
-                if ( ( recordFieldLink != null ) && ( recordFieldLink.getValue(  ) != null ) )
+                if ( ( recordFieldLink != null ) && ( recordFieldLink.getValue( ) != null ) )
                 {
-                    item.setLink( recordFieldLink.getValue(  ) );
+                    item.setLink( recordFieldLink.getValue( ) );
                 }
                 else
                 {
                     UrlItem urlItem = new UrlItem( strSiteUrl + "/jsp/site/Portal.jsp" );
                     urlItem.addParameter( PARAMETER_PAGE, CONSTANT_DIRECTORY );
-                    urlItem.addParameter( PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord(  ) );
-                    urlItem.addParameter( PARAMETER_VIEW_DIRECTORY_RECORD, directory.getIdDirectory(  ) );
+                    urlItem.addParameter( PARAMETER_ID_DIRECTORY_RECORD, record.getIdRecord( ) );
+                    urlItem.addParameter( PARAMETER_VIEW_DIRECTORY_RECORD, directory.getIdDirectory( ) );
 
-                    item.setLink( urlItem.getUrl(  ) );
+                    item.setLink( urlItem.getUrl( ) );
                 }
 
-                item.setGUID( item.getLink(  ) );
+                item.setGUID( item.getLink( ) );
 
-                item.setDate( record.getDateCreation(  ) );
+                item.setDate( record.getDateCreation( ) );
 
                 listItems.add( item );
             }

@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
  *
  * IDirectoryXslDAO
@@ -48,7 +47,8 @@ public interface IDirectoryXslDAO
     /**
      * Generates a new primary key
      *
-     * @param plugin the plugin
+     * @param plugin
+     *            the plugin
      * @return The new primary key
      */
     int newPrimaryKey( Plugin plugin );
@@ -56,40 +56,51 @@ public interface IDirectoryXslDAO
     /**
      * Insert a new record in the table.
      *
-     * @param directoryXsl instance of the DirectoryXsl object to insert
-     * @param plugin the plugin
+     * @param directoryXsl
+     *            instance of the DirectoryXsl object to insert
+     * @param plugin
+     *            the plugin
      */
     void insert( DirectoryXsl directoryXsl, Plugin plugin );
 
     /**
-     * Load the data of the DirectoryXsl  from the table
+     * Load the data of the DirectoryXsl from the table
      *
-     * @param nId The identifier of the xsl
-     * @param plugin the plugin
-     * @return the instance of the  DirectoryXsl
+     * @param nId
+     *            The identifier of the xsl
+     * @param plugin
+     *            the plugin
+     * @return the instance of the DirectoryXsl
      */
     DirectoryXsl load( int nId, Plugin plugin );
 
     /**
      * Delete a record from the table
      *
-     * @param nIdDirectoryXsl The identifier of the directory xsl
-     * @param plugin the plugin
+     * @param nIdDirectoryXsl
+     *            The identifier of the directory xsl
+     * @param plugin
+     *            the plugin
      */
     void delete( int nIdDirectoryXsl, Plugin plugin );
 
     /**
      * Update the directoryXsl in the table
      *
-     * @param directoryXsl instance of the DirectoryXsl object to update
-     * @param plugin the plugin
+     * @param directoryXsl
+     *            instance of the DirectoryXsl object to update
+     * @param plugin
+     *            the plugin
      */
     void store( DirectoryXsl directoryXsl, Plugin plugin );
 
     /**
      * Load the data of all the xsl and returns them in form of a list
-     * @param filter the search filter
-     * @param plugin the plugin
+     * 
+     * @param filter
+     *            the search filter
+     * @param plugin
+     *            the plugin
      * @return The List which contains the data of all the XSL
      */
     List<DirectoryXsl> selectList( DirectoryXslFilter filter, Plugin plugin );

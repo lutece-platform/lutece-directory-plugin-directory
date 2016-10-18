@@ -56,7 +56,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
  * LuceneSearchEngine
  */
@@ -68,174 +67,160 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
     @Override
     public List<Integer> getSearchResults( HashMap<String, Object> mapQuery )
     {
-        ArrayList<Integer> listResults = new ArrayList<Integer>(  );
+        ArrayList<Integer> listResults = new ArrayList<Integer>( );
         IndexSearcher searcher = null;
 
         try
         {
-            searcher = DirectorySearchService.getInstance(  ).getSearcher(  );
+            searcher = DirectorySearchService.getInstance( ).getSearcher( );
 
-            Collection<String> queries = new ArrayList<String>(  );
-            Collection<String> fields = new ArrayList<String>(  );
-            Collection<BooleanClause.Occur> flags = new ArrayList<BooleanClause.Occur>(  );
+            Collection<String> queries = new ArrayList<String>( );
+            Collection<String> fields = new ArrayList<String>( );
+            Collection<BooleanClause.Occur> flags = new ArrayList<BooleanClause.Occur>( );
 
             // contains id directory
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_ID_DIRECTORY ) )
             {
-                Query queryIdDirectory = new TermQuery( new Term( DirectorySearchItem.FIELD_ID_DIRECTORY,
-                            Integer.toString( (Integer) mapQuery.get( DirectorySearchItem.FIELD_ID_DIRECTORY ) ) ) );
-                queries.add( queryIdDirectory.toString(  ) );
+                Query queryIdDirectory = new TermQuery( new Term( DirectorySearchItem.FIELD_ID_DIRECTORY, Integer.toString( (Integer) mapQuery
+                        .get( DirectorySearchItem.FIELD_ID_DIRECTORY ) ) ) );
+                queries.add( queryIdDirectory.toString( ) );
                 fields.add( DirectorySearchItem.FIELD_ID_DIRECTORY );
                 flags.add( BooleanClause.Occur.MUST );
             }
 
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_ID_DIRECTORY_ENTRY ) )
             {
-                Query queryIdDirectory = new TermQuery( new Term( DirectorySearchItem.FIELD_ID_DIRECTORY_ENTRY,
-                            Integer.toString( (Integer) mapQuery.get( DirectorySearchItem.FIELD_ID_DIRECTORY_ENTRY ) ) ) );
-                queries.add( queryIdDirectory.toString(  ) );
+                Query queryIdDirectory = new TermQuery( new Term( DirectorySearchItem.FIELD_ID_DIRECTORY_ENTRY, Integer.toString( (Integer) mapQuery
+                        .get( DirectorySearchItem.FIELD_ID_DIRECTORY_ENTRY ) ) ) );
+                queries.add( queryIdDirectory.toString( ) );
                 fields.add( DirectorySearchItem.FIELD_ID_DIRECTORY_ENTRY );
                 flags.add( BooleanClause.Occur.MUST );
             }
 
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD ) )
             {
-                Collection<String> queriesIdDirectoryField = new ArrayList<String>(  );
-                Collection<String> fieldsIdDirectoryField = new ArrayList<String>(  );
-                Collection<BooleanClause.Occur> flagsIdDirectoryField = new ArrayList<BooleanClause.Occur>(  );
+                Collection<String> queriesIdDirectoryField = new ArrayList<String>( );
+                Collection<String> fieldsIdDirectoryField = new ArrayList<String>( );
+                Collection<BooleanClause.Occur> flagsIdDirectoryField = new ArrayList<BooleanClause.Occur>( );
 
                 for ( Integer idField : (List<Integer>) mapQuery.get( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD ) )
                 {
-                    Query queryIdDirectory = new TermQuery( new Term( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD,
-                                Integer.toString( idField ) ) );
-                    queriesIdDirectoryField.add( queryIdDirectory.toString(  ) );
+                    Query queryIdDirectory = new TermQuery( new Term( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD, Integer.toString( idField ) ) );
+                    queriesIdDirectoryField.add( queryIdDirectory.toString( ) );
                     fieldsIdDirectoryField.add( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD );
                     flagsIdDirectoryField.add( BooleanClause.Occur.SHOULD );
                 }
 
                 Query queryMultiIdDirectoryField = MultiFieldQueryParser.parse( IndexationService.LUCENE_INDEX_VERSION,
-                        queriesIdDirectoryField.toArray( new String[queriesIdDirectoryField.size(  )] ),
-                        queriesIdDirectoryField.toArray( new String[fieldsIdDirectoryField.size(  )] ),
-                        flagsIdDirectoryField.toArray( new BooleanClause.Occur[flagsIdDirectoryField.size(  )] ),
-                        IndexationService.getAnalyser(  ) );
+                        queriesIdDirectoryField.toArray( new String [ queriesIdDirectoryField.size( )] ),
+                        queriesIdDirectoryField.toArray( new String [ fieldsIdDirectoryField.size( )] ),
+                        flagsIdDirectoryField.toArray( new BooleanClause.Occur [ flagsIdDirectoryField.size( )] ), IndexationService.getAnalyser( ) );
 
-                queries.add( queryMultiIdDirectoryField.toString(  ) );
+                queries.add( queryMultiIdDirectoryField.toString( ) );
                 fields.add( DirectorySearchItem.FIELD_ID_DIRECTORY_FIELD );
                 flags.add( BooleanClause.Occur.MUST );
             }
 
-            //contains content
+            // contains content
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_CONTENTS ) )
             {
-                Query queryContent = new TermQuery( new Term( DirectorySearchItem.FIELD_CONTENTS,
-                            (String) mapQuery.get( DirectorySearchItem.FIELD_CONTENTS ) ) );
-                queries.add( queryContent.toString(  ) );
+                Query queryContent = new TermQuery( new Term( DirectorySearchItem.FIELD_CONTENTS, (String) mapQuery.get( DirectorySearchItem.FIELD_CONTENTS ) ) );
+                queries.add( queryContent.toString( ) );
                 fields.add( DirectorySearchItem.FIELD_CONTENTS );
                 flags.add( BooleanClause.Occur.MUST );
             }
 
-            //contains date
+            // contains date
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE ) )
             {
-                Query queryDate = new TermQuery( new Term( DirectorySearchItem.FIELD_DATE,
-                            DateTools.dateToString( (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE ),
-                                DateTools.Resolution.DAY ) ) );
-                queries.add( queryDate.toString(  ) );
+                Query queryDate = new TermQuery( new Term( DirectorySearchItem.FIELD_DATE, DateTools.dateToString(
+                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE ), DateTools.Resolution.DAY ) ) );
+                queries.add( queryDate.toString( ) );
                 fields.add( DirectorySearchItem.FIELD_CONTENTS );
                 flags.add( BooleanClause.Occur.MUST );
             }
 
-            //contains range date
-            if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_BEGIN ) &&
-                    mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_END ) )
+            // contains range date
+            if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_BEGIN ) && mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_END ) )
             {
-                BytesRef strLowerTerm = new BytesRef( DateTools.dateToString( 
-                            (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_BEGIN ), DateTools.Resolution.DAY ) );
-                BytesRef strUpperTerm = new BytesRef( DateTools.dateToString( 
-                            (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_END ), DateTools.Resolution.DAY ) );
-                Query queryRangeDate = new TermRangeQuery( DirectorySearchItem.FIELD_DATE, strLowerTerm, strUpperTerm,
-                        true, true );
-                queries.add( queryRangeDate.toString(  ) );
+                BytesRef strLowerTerm = new BytesRef( DateTools.dateToString( (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_BEGIN ),
+                        DateTools.Resolution.DAY ) );
+                BytesRef strUpperTerm = new BytesRef( DateTools.dateToString( (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_END ),
+                        DateTools.Resolution.DAY ) );
+                Query queryRangeDate = new TermRangeQuery( DirectorySearchItem.FIELD_DATE, strLowerTerm, strUpperTerm, true, true );
+                queries.add( queryRangeDate.toString( ) );
                 fields.add( DirectorySearchItem.FIELD_DATE );
                 flags.add( BooleanClause.Occur.MUST );
             }
 
-            //record date creation
-            //contains date creation
+            // record date creation
+            // contains date creation
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_CREATION ) )
             {
-                Query queryDate = new TermQuery( new Term( DirectorySearchItem.FIELD_DATE_CREATION,
-                            DateTools.dateToString( (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_CREATION ),
-                                DateTools.Resolution.DAY ) ) );
-                queries.add( queryDate.toString(  ) );
+                Query queryDate = new TermQuery( new Term( DirectorySearchItem.FIELD_DATE_CREATION, DateTools.dateToString(
+                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_CREATION ), DateTools.Resolution.DAY ) ) );
+                queries.add( queryDate.toString( ) );
                 fields.add( DirectorySearchItem.FIELD_DATE_CREATION );
                 flags.add( BooleanClause.Occur.MUST );
             }
 
-            //contains range date
-            if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_CREATION_BEGIN ) &&
-                    mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_CREATION_END ) )
+            // contains range date
+            if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_CREATION_BEGIN ) && mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_CREATION_END ) )
             {
-                BytesRef strLowerTerm = new BytesRef( DateTools.dateToString( 
-                            (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_CREATION_BEGIN ),
-                            DateTools.Resolution.DAY ) );
-                BytesRef strUpperTerm = new BytesRef( DateTools.dateToString( 
-                            (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_CREATION_END ), DateTools.Resolution.DAY ) );
-                Query queryRangeDate = new TermRangeQuery( DirectorySearchItem.FIELD_DATE_CREATION, strLowerTerm,
-                        strUpperTerm, true, true );
-                queries.add( queryRangeDate.toString(  ) );
+                BytesRef strLowerTerm = new BytesRef( DateTools.dateToString( (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_CREATION_BEGIN ),
+                        DateTools.Resolution.DAY ) );
+                BytesRef strUpperTerm = new BytesRef( DateTools.dateToString( (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_CREATION_END ),
+                        DateTools.Resolution.DAY ) );
+                Query queryRangeDate = new TermRangeQuery( DirectorySearchItem.FIELD_DATE_CREATION, strLowerTerm, strUpperTerm, true, true );
+                queries.add( queryRangeDate.toString( ) );
                 fields.add( DirectorySearchItem.FIELD_DATE_CREATION );
                 flags.add( BooleanClause.Occur.MUST );
             }
 
-            //record date creation
-            //contains date creation
+            // record date creation
+            // contains date creation
             if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_MODIFICATION ) )
             {
-                Query queryDate = new TermQuery( new Term( DirectorySearchItem.FIELD_DATE_MODIFICATION,
-                            DateTools.dateToString( 
-                                (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_MODIFICATION ),
-                                DateTools.Resolution.DAY ) ) );
-                queries.add( queryDate.toString(  ) );
+                Query queryDate = new TermQuery( new Term( DirectorySearchItem.FIELD_DATE_MODIFICATION, DateTools.dateToString(
+                        (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_MODIFICATION ), DateTools.Resolution.DAY ) ) );
+                queries.add( queryDate.toString( ) );
                 fields.add( DirectorySearchItem.FIELD_DATE_MODIFICATION );
                 flags.add( BooleanClause.Occur.MUST );
             }
 
-            //contains range modification date
-            if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_MODIFICATION_BEGIN ) &&
-                    mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_MODIFICATION_END ) )
+            // contains range modification date
+            if ( mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_MODIFICATION_BEGIN )
+                    && mapQuery.containsKey( DirectorySearchItem.FIELD_DATE_MODIFICATION_END ) )
             {
-                BytesRef strLowerTerm = new BytesRef( DateTools.dateToString( 
-                            (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_MODIFICATION_BEGIN ),
-                            DateTools.Resolution.DAY ) );
-                BytesRef strUpperTerm = new BytesRef( DateTools.dateToString( 
-                            (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_MODIFICATION_END ),
-                            DateTools.Resolution.DAY ) );
-                Query queryRangeDate = new TermRangeQuery( DirectorySearchItem.FIELD_DATE_MODIFICATION, strLowerTerm,
-                        strUpperTerm, true, true );
-                queries.add( queryRangeDate.toString(  ) );
+                BytesRef strLowerTerm = new BytesRef( DateTools.dateToString( (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_MODIFICATION_BEGIN ),
+                        DateTools.Resolution.DAY ) );
+                BytesRef strUpperTerm = new BytesRef( DateTools.dateToString( (Date) mapQuery.get( DirectorySearchItem.FIELD_DATE_MODIFICATION_END ),
+                        DateTools.Resolution.DAY ) );
+                Query queryRangeDate = new TermRangeQuery( DirectorySearchItem.FIELD_DATE_MODIFICATION, strLowerTerm, strUpperTerm, true, true );
+                queries.add( queryRangeDate.toString( ) );
                 fields.add( DirectorySearchItem.FIELD_DATE_MODIFICATION );
                 flags.add( BooleanClause.Occur.MUST );
             }
 
-            Query queryMulti = MultiFieldQueryParser.parse( IndexationService.LUCENE_INDEX_VERSION,
-                    queries.toArray( new String[queries.size(  )] ), fields.toArray( new String[fields.size(  )] ),
-                    flags.toArray( new BooleanClause.Occur[flags.size(  )] ), IndexationService.getAnalyser(  ) );
+            Query queryMulti = MultiFieldQueryParser
+                    .parse( IndexationService.LUCENE_INDEX_VERSION, queries.toArray( new String [ queries.size( )] ),
+                            fields.toArray( new String [ fields.size( )] ), flags.toArray( new BooleanClause.Occur [ flags.size( )] ),
+                            IndexationService.getAnalyser( ) );
 
             // Get results documents
             TopDocs topDocs = searcher.search( queryMulti, LuceneSearchEngine.MAX_RESPONSES );
-            ScoreDoc[] hits = topDocs.scoreDocs;
+            ScoreDoc [ ] hits = topDocs.scoreDocs;
 
             for ( int i = 0; i < hits.length; i++ )
             {
-                int docId = hits[i].doc;
+                int docId = hits [i].doc;
                 Document document = searcher.doc( docId );
-                listResults.add( new DirectorySearchItem( document ).getIdDirectoryRecord(  ) );
+                listResults.add( new DirectorySearchItem( document ).getIdDirectoryRecord( ) );
             }
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
-            AppLogService.error( e.getMessage(  ), e );
+            AppLogService.error( e.getMessage( ), e );
         }
 
         return listResults;

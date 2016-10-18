@@ -42,7 +42,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * This class provides instances management methods (create, find, ...) for Record field objects
  */
@@ -54,22 +53,24 @@ public final class RecordFieldHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private RecordFieldHome(  )
+    private RecordFieldHome( )
     {
     }
 
     /**
      * Creation of an instance of record field
      *
-     * @param recordField The instance of the record field which contains the informations to store
-     * @param plugin the Plugin
+     * @param recordField
+     *            The instance of the record field which contains the informations to store
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void create( RecordField recordField, Plugin plugin )
     {
-        if ( recordField.getFile(  ) != null )
+        if ( recordField.getFile( ) != null )
         {
-            recordField.getFile(  ).setIdFile( FileHome.create( recordField.getFile(  ), plugin ) );
+            recordField.getFile( ).setIdFile( FileHome.create( recordField.getFile( ), plugin ) );
         }
 
         _dao.insert( recordField, plugin );
@@ -78,23 +79,24 @@ public final class RecordFieldHome
     /**
      * Copy of an instance of record field
      *
-     * @param recordField The instance of the record field which contains the informations to store
-     * @param plugin the Plugin
+     * @param recordField
+     *            The instance of the record field which contains the informations to store
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void copy( RecordField recordField, Plugin plugin )
     {
-        if ( recordField.getFile(  ) != null )
+        if ( recordField.getFile( ) != null )
         {
-            File fileCopy = FileHome.findByPrimaryKey( recordField.getFile(  ).getIdFile(  ), plugin );
+            File fileCopy = FileHome.findByPrimaryKey( recordField.getFile( ).getIdFile( ), plugin );
 
-            if ( ( fileCopy != null ) && ( fileCopy.getPhysicalFile(  ) != null ) )
+            if ( ( fileCopy != null ) && ( fileCopy.getPhysicalFile( ) != null ) )
             {
-                fileCopy.setPhysicalFile( PhysicalFileHome.findByPrimaryKey( 
-                        fileCopy.getPhysicalFile(  ).getIdPhysicalFile(  ), plugin ) );
+                fileCopy.setPhysicalFile( PhysicalFileHome.findByPrimaryKey( fileCopy.getPhysicalFile( ).getIdPhysicalFile( ), plugin ) );
             }
 
-            recordField.getFile(  ).setIdFile( FileHome.create( fileCopy, plugin ) );
+            recordField.getFile( ).setIdFile( FileHome.create( fileCopy, plugin ) );
         }
 
         _dao.insert( recordField, plugin );
@@ -103,15 +105,17 @@ public final class RecordFieldHome
     /**
      * Update of the record field which is specified in parameter
      *
-     * @param  recordField The instance of the  record fields which contains the informations to update
-     * @param plugin the Plugin
+     * @param recordField
+     *            The instance of the record fields which contains the informations to update
+     * @param plugin
+     *            the Plugin
      *
      */
     public static void update( RecordField recordField, Plugin plugin )
     {
-        if ( recordField.getFile(  ) != null )
+        if ( recordField.getFile( ) != null )
         {
-            FileHome.update( recordField.getFile(  ), plugin );
+            FileHome.update( recordField.getFile( ), plugin );
         }
 
         _dao.store( recordField, plugin );
@@ -120,8 +124,10 @@ public final class RecordFieldHome
     /**
      * Delete the record field whose identifier is specified in parameter
      *
-     * @param nIdRecordField The identifier of the record field
-     * @param plugin the Plugin
+     * @param nIdRecordField
+     *            The identifier of the record field
+     * @param plugin
+     *            the Plugin
      */
     public static void remove( int nIdRecordField, Plugin plugin )
     {
@@ -131,58 +137,66 @@ public final class RecordFieldHome
     /**
      * Delete the record field whose identifier is specified in parameter
      *
-     * @param nIdRecordField The identifier of the record field
-     * @param bRemoveAsynchronousFiles true if it must remove the asynchronous files, false otherwise
-     * @param plugin the Plugin
+     * @param nIdRecordField
+     *            The identifier of the record field
+     * @param bRemoveAsynchronousFiles
+     *            true if it must remove the asynchronous files, false otherwise
+     * @param plugin
+     *            the Plugin
      */
     public static void remove( int nIdRecordField, boolean bRemoveAsynchronousFiles, Plugin plugin )
     {
         RecordField recordField = findByPrimaryKey( nIdRecordField, plugin );
 
-        if ( ( recordField != null ) && ( recordField.getFile(  ) != null ) )
+        if ( ( recordField != null ) && ( recordField.getFile( ) != null ) )
         {
-            FileHome.remove( recordField.getFile(  ).getIdFile(  ), plugin );
+            FileHome.remove( recordField.getFile( ).getIdFile( ), plugin );
         }
 
         if ( bRemoveAsynchronousFiles )
         {
-            DirectoryService.getInstance(  ).removeAsynchronousFile( recordField, plugin );
+            DirectoryService.getInstance( ).removeAsynchronousFile( recordField, plugin );
         }
 
         _dao.delete( nIdRecordField, plugin );
     }
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Returns an instance of a Record field whose identifier is specified in parameter
      *
-     * @param nKey The entry primary key
-     * @param plugin the Plugin
+     * @param nKey
+     *            The entry primary key
+     * @param plugin
+     *            the Plugin
      * @return an instance of Record field
      */
     public static RecordField findByPrimaryKey( int nKey, Plugin plugin )
     {
         RecordField recordField = _dao.load( nKey, plugin );
 
-        if ( ( recordField != null ) && ( recordField.getFile(  ) != null ) )
+        if ( ( recordField != null ) && ( recordField.getFile( ) != null ) )
         {
-            recordField.setFile( FileHome.findByPrimaryKey( recordField.getFile(  ).getIdFile(  ), plugin ) );
+            recordField.setFile( FileHome.findByPrimaryKey( recordField.getFile( ).getIdFile( ), plugin ) );
         }
 
-        if ( ( recordField != null ) && ( recordField.getField(  ) != null ) )
+        if ( ( recordField != null ) && ( recordField.getField( ) != null ) )
         {
-            recordField.setField( FieldHome.findByPrimaryKey( recordField.getField(  ).getIdField(  ), plugin ) );
+            recordField.setField( FieldHome.findByPrimaryKey( recordField.getField( ).getIdField( ), plugin ) );
         }
 
         return recordField;
     }
 
     /**
-     * remove all record field  who verify the filter
-     * @param filter the filter
-     * @param plugin the plugin
+     * remove all record field who verify the filter
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
      *
      */
     public static void removeByFilter( RecordFieldFilter filter, Plugin plugin )
@@ -192,9 +206,13 @@ public final class RecordFieldHome
 
     /**
      * remove all record field who verify the filter
-     * @param filter the filter
-     * @param bRemoveByAsynchronousFiles True to remove by asynchronous files
-     * @param plugin the plugin
+     * 
+     * @param filter
+     *            the filter
+     * @param bRemoveByAsynchronousFiles
+     *            True to remove by asynchronous files
+     * @param plugin
+     *            the plugin
      *
      */
     public static void removeByFilter( RecordFieldFilter filter, boolean bRemoveByAsynchronousFiles, Plugin plugin )
@@ -203,14 +221,17 @@ public final class RecordFieldHome
 
         for ( RecordField recordField : listRecordField )
         {
-            remove( recordField.getIdRecordField(  ), bRemoveByAsynchronousFiles, plugin );
+            remove( recordField.getIdRecordField( ), bRemoveByAsynchronousFiles, plugin );
         }
     }
 
     /**
      * Remove list of record field by list of record id
-     * @param lListRecordId the list of record id
-     * @param plugin the plugin
+     * 
+     * @param lListRecordId
+     *            the list of record id
+     * @param plugin
+     *            the plugin
      * @deprecated This function does not remove the associated files
      */
     public static void removeByListRecordId( List<Integer> lListRecordId, Plugin plugin )
@@ -220,8 +241,11 @@ public final class RecordFieldHome
 
     /**
      * Load the data of all the record field who verify the filter and returns them in a list
-     * @param filter the filter
-     * @param plugin the plugin
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
      * @return the list of record fields
      */
     public static List<RecordField> getRecordFieldList( RecordFieldFilter filter, Plugin plugin )
@@ -231,19 +255,19 @@ public final class RecordFieldHome
 
         for ( RecordField recordField : listRecordField )
         {
-            if ( recordField.getFile(  ) != null )
+            if ( recordField.getFile( ) != null )
             {
-                recordField.setFile( FileHome.findByPrimaryKey( recordField.getFile(  ).getIdFile(  ), plugin ) );
+                recordField.setFile( FileHome.findByPrimaryKey( recordField.getFile( ).getIdFile( ), plugin ) );
             }
 
-            if ( recordField.getField(  ) != null )
+            if ( recordField.getField( ) != null )
             {
-                recordField.setField( FieldHome.findByPrimaryKey( recordField.getField(  ).getIdField(  ), plugin ) );
+                recordField.setField( FieldHome.findByPrimaryKey( recordField.getField( ).getIdField( ), plugin ) );
             }
 
-            if ( recordField.getRecord(  ) != null )
+            if ( recordField.getRecord( ) != null )
             {
-                recordField.setRecord( recordService.findByPrimaryKey( recordField.getRecord(  ).getIdRecord(  ), plugin ) );
+                recordField.setRecord( recordService.findByPrimaryKey( recordField.getRecord( ).getIdRecord( ), plugin ) );
             }
         }
 
@@ -251,11 +275,12 @@ public final class RecordFieldHome
     }
 
     /**
-     * Load full record field data (except binary file data) of given list of
-     * Record id
-     * * /!\ include record data
-     * @param lIdRecordList the list of record id
-     * @param plugin the plugin
+     * Load full record field data (except binary file data) of given list of Record id * /!\ include record data
+     * 
+     * @param lIdRecordList
+     *            the list of record id
+     * @param plugin
+     *            the plugin
      * @return list of record
      */
     public static List<RecordField> getRecordFieldListByRecordIdList( List<Integer> lIdRecordList, Plugin plugin )
@@ -264,23 +289,27 @@ public final class RecordFieldHome
     }
 
     /**
-     * Load full record field data (except binary file data)
-     * /!\ record data is NOT load, only the id
-     * @param lEntryId List entry to load
-     * @param nIdRecord the record Id
-     * @param plugin the plugin
-     * @param mapFieldEntry a map containing all fields associated to the list of entry
+     * Load full record field data (except binary file data) /!\ record data is NOT load, only the id
+     * 
+     * @param lEntryId
+     *            List entry to load
+     * @param nIdRecord
+     *            the record Id
+     * @param plugin
+     *            the plugin
+     * @param mapFieldEntry
+     *            a map containing all fields associated to the list of entry
      * @return list of record
      */
-    public static List<RecordField> getRecordFieldSpecificList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin,Map<Integer,Field> mapFieldEntry )
+    public static List<RecordField> getRecordFieldSpecificList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin, Map<Integer, Field> mapFieldEntry )
     {
         List<RecordField> listRecordField = _dao.selectSpecificList( lEntryId, nIdRecord, plugin );
 
         for ( RecordField recordField : listRecordField )
         {
-            if ( recordField.getField(  ) != null )
+            if ( recordField.getField( ) != null )
             {
-                recordField.setField( mapFieldEntry.get( recordField.getField(  ).getIdField(  )) );
+                recordField.setField( mapFieldEntry.get( recordField.getField( ).getIdField( ) ) );
             }
         }
 
@@ -288,9 +317,12 @@ public final class RecordFieldHome
     }
 
     /**
-     *  return the number of record field who verify the filter
-     * @param filter  the filter
-     * @param plugin the plugin
+     * return the number of record field who verify the filter
+     * 
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
      * @return the number of record field who verify the filter
      */
     public static int getCountRecordField( RecordFieldFilter filter, Plugin plugin )
@@ -300,9 +332,13 @@ public final class RecordFieldHome
 
     /**
      * Get the max number from a given id directory
-     * @param nIdEntry the id of the entry
-     * @param nIdDirectory the id directory
-     * @param plugin {@link Plugin}
+     * 
+     * @param nIdEntry
+     *            the id of the entry
+     * @param nIdDirectory
+     *            the id directory
+     * @param plugin
+     *            {@link Plugin}
      * @return the max number
      */
     public static int findMaxNumber( int nIdEntry, int nIdDirectory, Plugin plugin )
@@ -311,15 +347,18 @@ public final class RecordFieldHome
     }
 
     /**
-     * Check if the given number is already on a record field or not.
-     * <br />
-     * In other words, this method serves the purpose of checking the given number
-     * before creating a new record field since the entry type numbering should
-     * have unique number.
-     * @param nIdEntry the id entry
-     * @param nIdDirectory the id directory
-     * @param nNumber the number to check
-     * @param plugin {@link Plugin}
+     * Check if the given number is already on a record field or not. <br />
+     * In other words, this method serves the purpose of checking the given number before creating a new record field since the entry type numbering should have
+     * unique number.
+     * 
+     * @param nIdEntry
+     *            the id entry
+     * @param nIdDirectory
+     *            the id directory
+     * @param nNumber
+     *            the number to check
+     * @param plugin
+     *            {@link Plugin}
      * @return true if it is already on, false otherwise
      */
     public static boolean isNumberOnARecordField( int nIdEntry, int nIdDirectory, int nNumber, Plugin plugin )
@@ -329,9 +368,13 @@ public final class RecordFieldHome
 
     /**
      * Load values of record field
-     * @param lEntryId List entry to load
-     * @param nIdRecord The record Id
-     * @param plugin The plugin
+     * 
+     * @param lEntryId
+     *            List entry to load
+     * @param nIdRecord
+     *            The record Id
+     * @param plugin
+     *            The plugin
      * @return list of record
      */
     public static List<RecordField> selectValuesList( List<Integer> lEntryId, Integer nIdRecord, Plugin plugin )
@@ -341,9 +384,13 @@ public final class RecordFieldHome
 
     /**
      * Update the value of a record field
-     * @param strNewValue The new value
-     * @param nIdRecordField The id of the record field to update
-     * @param plugin The plugin
+     * 
+     * @param strNewValue
+     *            The new value
+     * @param nIdRecordField
+     *            The id of the record field to update
+     * @param plugin
+     *            The plugin
      */
     public static void updateValue( String strNewValue, Integer nIdRecordField, Plugin plugin )
     {
