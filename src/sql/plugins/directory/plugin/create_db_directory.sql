@@ -199,6 +199,8 @@ CREATE TABLE directory_file (
   id_physical_file INT DEFAULT NULL,  
   file_size  INT DEFAULT NULL,
   mime_type VARCHAR(255) DEFAULT NULL,
+  extension VARCHAR(50) DEFAULT NULL,
+
   PRIMARY KEY  (id_file)
  );
 

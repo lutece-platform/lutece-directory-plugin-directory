@@ -254,6 +254,7 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
 
                     file.setTitle( this.getTitle( ) + "_" + c.getTime( ) );
                 }
+                file.setExtension(this.getFields( ).get( 2 ).getImageType( ) != null ? this.getFields( ).get( 2 ).getImageType( ) : "png");
                 PhysicalFile physicalFile = new PhysicalFile( );
                 String base64Image = sourceImage.split( "," ) [1];
                 byte [ ] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary( base64Image );
@@ -285,6 +286,7 @@ public class EntryTypeCamera extends AbstractEntryTypeUpload
                 recordField.setEntry( this );
                 recordField.setValue( FIELD_IMAGE + DirectoryUtils.CONSTANT_UNDERSCORE + 1 );
                 recordField.setFile( file );
+                recordField.setFileExtension(file.getExtension( ));
                 listRecordField.add( recordField );
             }
 

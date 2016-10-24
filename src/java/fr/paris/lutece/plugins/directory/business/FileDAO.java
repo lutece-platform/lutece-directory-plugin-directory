@@ -43,12 +43,12 @@ public final class FileDAO implements IFileDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_file ) FROM directory_file";
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_file,title,id_physical_file,file_size,mime_type"
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_file,title,id_physical_file,file_size,mime_type,extension"
             + " FROM directory_file WHERE id_file = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_file(id_file,title,id_physical_file,file_size,mime_type)" + " VALUES(?,?,?,?,?)";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_file(id_file,title,id_physical_file,file_size,mime_type,extension)" + " VALUES(?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_file WHERE id_file = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE  directory_file SET "
-            + "id_file=?,title=?,id_physical_file=?,file_size=?,mime_type=? WHERE id_file = ?";
+            + "id_file=?,title=?,id_physical_file=?,file_size=?,mime_type=?, extension=? WHERE id_file = ?";
 
     /**
      * {@inheritDoc}
@@ -93,7 +93,7 @@ public final class FileDAO implements IFileDAO
 
         daoUtil.setInt( 4, file.getSize( ) );
         daoUtil.setString( 5, file.getMimeType( ) );
-
+        daoUtil.setString( 6, file.getExtension( ) );
         file.setIdFile( newPrimaryKey( plugin ) );
         daoUtil.setInt( 1, file.getIdFile( ) );
         daoUtil.executeUpdate( );
@@ -131,6 +131,8 @@ public final class FileDAO implements IFileDAO
 
             file.setSize( daoUtil.getInt( 4 ) );
             file.setMimeType( daoUtil.getString( 5 ) );
+            file.setExtension(daoUtil.getString( 6 ));
+
         }
 
         daoUtil.free( );
@@ -171,7 +173,9 @@ public final class FileDAO implements IFileDAO
 
         daoUtil.setInt( 4, file.getSize( ) );
         daoUtil.setString( 5, file.getMimeType( ) );
-        daoUtil.setInt( 6, file.getIdFile( ) );
+        daoUtil.setString( 6, file.getExtension( ) );
+
+        daoUtil.setInt( 7, file.getIdFile( ) );
         daoUtil.executeUpdate( );
         daoUtil.free( );
     }
