@@ -228,7 +228,7 @@
 								<div class="form-group">
 									<label class="control-label col-xs-12 col-sm-3 col-md-3" for="">#i18n{directory.create_directory.label_workgroup}</label>
 									<div class="col-xs-12 col-sm-8 col-md-8">
-										<@comboWithParams name="workgroup"  default_value="directory.workgroup?string" additionalParameters=" class=\"form-control\"" items=user_workgroup_list />
+										<@comboWithParams name="workgroup"  default_value=directory.workgroup?string additionalParameters=" class=\"form-control\"" items=user_workgroup_list />
 										<span class="help-block">#i18n{directory.create_directory.label_workgroup_comment}</span>
 									</div>
 								</div>
@@ -236,7 +236,7 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 col-md-3" for="role">#i18n{directory.create_directory.label_role}</label>
 										<div class="col-xs-12 col-sm-8 col-md-8">
-											<@comboWithParams name="roleKey" default_value="directory.roleKey?string" additionalParameters=" class=\"form-control\""  items=role_list />
+											<@comboWithParams name="roleKey" default_value=directory.roleKey?string additionalParameters=" class=\"form-control\""  items=role_list />
 											<span class="help-block">#i18n{directory.create_directory.label_role}</span>
 										</div>
 									</div>
@@ -244,21 +244,21 @@
 								<div class="form-group">
 									<label class="control-label col-xs-12 col-sm-3 col-md-3" for="id_form_search_template">#i18n{directory.create_directory.label_form_search_template} * </label>
 									<div class="col-xs-12 col-sm-8 col-md-8">
-										<@comboWithParams name="id_form_search_template" default_value="directory.idFormSearchTemplate?string" additionalParameters=" class=\"form-control\"" items=form_search_template_list />
+										<@comboWithParams name="id_form_search_template" default_value=directory.idFormSearchTemplate?string additionalParameters=" class=\"form-control\"" items=form_search_template_list />
 										<span class="help-block">#i18n{directory.create_directory.label_form_search_template_comment}</span>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-xs-12 col-sm-3 col-md-3" for="id_result_list_template">#i18n{directory.create_directory.label_result_list_template} * </label>
 									<div class="col-xs-12 col-sm-8 col-md-8">
-										<@comboWithParams name="id_result_list_template" default_value="directory.idResultListTemplate?string" additionalParameters=" class=\"form-control\""  items=result_list_template_list />
+										<@comboWithParams name="id_result_list_template" default_value=directory.idResultListTemplate?string additionalParameters=" class=\"form-control\""  items=result_list_template_list />
 										<span class="help-block">#i18n{directory.create_directory.label_result_list_template_comment}</span>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-xs-12 col-sm-3 col-md-3" for="id_result_record_template">#i18n{directory.create_directory.label_result_record_template} *</label>
 									<div class="col-xs-12 col-sm-8 col-md-8">
-										<@comboWithParams name="id_result_record_template" default_value="idResultRecordTemplate!?string" additionalParameters=" class=\"form-control\"" items=result_record_template_list />
+										<@comboWithParams name="id_result_record_template" default_value=idResultRecordTemplate!?string additionalParameters=" class=\"form-control\"" items=result_record_template_list />
 										<span class="help-block">#i18n{directory.create_directory.label_result_record_template_comment}</span>
 									</div>
 								</div>
@@ -266,13 +266,13 @@
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 col-md-3" for="id_workflow_list">#i18n{directory.create_directory.label_worflow_list} : </label>
 										<div class="col-xs-12 col-sm-8 col-md-8">
-											<@comboWithParams name="id_workflow_list" default_value="workflow_selected?string" additionalParameters=" class=\"form-control\"" items=workflow_list />
+											<@comboWithParams name="id_workflow_list" default_value=workflow_selected?string additionalParameters=" class=\"form-control\"" items=workflow_list />
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-xs-12 col-sm-3 col-md-3" for="id_workflow_list">#i18n{directory.modify_directory.labelWorflowStateToRemoveRecords}</label>
 										<div class="col-xs-12 col-sm-8 col-md-8">
-											<@comboWithParams name="id_workflow_state" default_value="directory.idWorkflowStateToRemove?string" additionalParameters=" class=\"form-control\"" items=workflow_state_list />
+											<@comboWithParams name="id_workflow_state" default_value=directory.idWorkflowStateToRemove?string additionalParameters=" class=\"form-control\"" items=workflow_state_list />
 											<span class="help-block">#i18n{directory.modify_directory.labelWorflowStateToRemoveRecordsHelp}</span>
 										</div>
 									</div>
