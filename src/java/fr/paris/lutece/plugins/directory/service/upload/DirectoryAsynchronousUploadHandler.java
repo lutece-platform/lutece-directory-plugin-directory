@@ -65,7 +65,9 @@ import fr.paris.lutece.util.filesystem.UploadUtil;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemHeaders;
 import org.apache.commons.lang.StringUtils;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -847,6 +849,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         private static final long serialVersionUID = 1L;
         private byte [ ] _bValue;
         private final String _strFileName;
+        private FileItemHeaders _fileItemHeaders;
 
         /**
          * FormFileItem
@@ -995,6 +998,24 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         public void write( java.io.File file ) throws Exception
         {
             // nothing
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public FileItemHeaders getHeaders( )
+        {
+            return _fileItemHeaders;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void setHeaders( FileItemHeaders headers )
+        {
+            _fileItemHeaders = headers;
         }
     }
 }
