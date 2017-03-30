@@ -1,62 +1,62 @@
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12">
-    <div class="nav-tabs-custom">
-  		<ul class="nav nav-tabs">
+<@row>
+	<@columns>
+    <@tabs>
+  		<@listTabs>
         <li>
   				<a href="jsp/admin/plugins/directory/ManageAdvancedParameters.jsp" title="#i18n{directory.manage_advanced_parameters.title}">
-  					<i class="fa fa-cogs"></i> <span class="hidden-xs">#i18n{directory.manage_advanced_parameters.pageTitle}</span>
+  					<@icon style='cogs' /> <span class="hidden-xs">#i18n{directory.manage_advanced_parameters.pageTitle}</span>
   				</a>
   			</li>
-  			<li  class="active">
+  			<li class="active">
   				<a href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory" title="#i18n{directory.manage_directory_xsl.title}">
-  					<i class="fa fa-file-code-o"></i> <span class="hidden-xs"> #i18n{directory.manage_directory_xsl.title}</span>
+  					<@icon style='file-code-o' /> <span class="hidden-xs"> #i18n{directory.manage_directory_xsl.title}</span>
   				</a>
   			</li>
         <#if right_create>
   			  <li class="pull-right">
-             <form class="form-inline pull-right" method="post"  action="jsp/admin/plugins/directory/CreateDirectoryXsl.jsp" >
-               <button class="btn btn-primary btn-xs" type="submit" >
-               <i class="fa fa-plus"></i>
-                 <span class="hidden-xs" >#i18n{directory.manage_directory_xsl.button_create}</span>
-               </button>
-             </form>
+             <@tform class='form-inline pull-right' action='jsp/admin/plugins/directory/CreateDirectoryXsl.jsp'>
+               <@button type='submit' buttonIcon='plus' title='#i18n{directory.manage_directory_xsl.button_create}' showTitleXs=false />
+             </@tform>
           </li>
          </#if>
-  		</ul>
-      <div class="tab-content">
-        <div class="tab-pane active" >
-    		    <table class="table table-hover table-condensed">
-              <thead>
-    						<tr>
-                  <th>#i18n{directory.manage_directory_xsl.row_title}</th>
-                  <th class="hidden-xs">#i18n{directory.manage_directory_xsl.row_description}</th>
-                  <th class="hidden-xs">#i18n{directory.manage_directory_xsl.row_extension}</th>
-                  <th>#i18n{directory.manage_directory_xsl.row_actions}</th>
-                </tr>
-    					</thead>
-    					<tbody>
-              <#list directory_xsl_list as directory_xsl>
-    	        	<tr>
-    							<td>${directory_xsl.title}</td>
-    							<td class="hidden-xs">${directory_xsl.description}</td>
-    							<td class="hidden-xs">${directory_xsl.extension}</td>
-    	            <td>
-    								<#if directory_xsl.actions?exists>
-    									<#list directory_xsl.actions as action>
-    									<a class="btn btn-xs btn-flat <#if action.permission='MODIFY'>btn-primary<#else>btn-danger</#if>" href="${action.url}?id_directory_xsl=${directory_xsl.idDirectoryXsl}"  title="${action.description}" >
-    										<i class="${action.iconUrl}"></i>
-    									</a>
-    									</#list>
-    								</#if>
-    	       			</td>
-    	          </tr>
-    	        </#list>
-    				</tbody>
-          </table>
+  		</@listTabs>
+      <@tabContent>
+				<@table>
+					<thead>
+						<tr>
+							<th>#i18n{directory.manage_directory_xsl.row_title}</th>
+							<th class="hidden-xs">#i18n{directory.manage_directory_xsl.row_description}</th>
+							<th class="hidden-xs">#i18n{directory.manage_directory_xsl.row_extension}</th>
+							<th>#i18n{directory.manage_directory_xsl.row_actions}</th>
+						</tr>
+					</thead>
+					<tbody>
+					<#list directory_xsl_list as directory_xsl>
+						<tr>
+							<td>${directory_xsl.title}</td>
+							<td class="hidden-xs">${directory_xsl.description}</td>
+							<td class="hidden-xs">${directory_xsl.extension}</td>
+							<td>
+								<#if directory_xsl.actions?exists>
+									<#list directory_xsl.actions as action>
+									<#assign btnColor>
+										<#if action.permission='MODIFY'>
+											btn-primary
+										<#else>
+											btn-danger
+										</#if>
+									</#assign>
+									<@aButton color=btnColor href='${action.url}?id_directory_xsl=${directory_xsl.idDirectoryXsl}'  title=action.description buttonIcon=action.iconUrl showTitle=false />
+									</#list>
+								</#if>
+							</td>
+						</tr>
+					</#list>
+					</tbody>
+				</@table>
           <@paginationAdmin paginator=paginator combo=1 />
           <br>
-	      </div>
-	    </div>
-	  </div>
-  </div>
-</div>
+	    </@tabContent>
+	  </@tabs>
+	</@columns>
+</@row>

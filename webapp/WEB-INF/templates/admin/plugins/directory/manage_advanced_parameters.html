@@ -1,34 +1,28 @@
-<div class="row">
-	<div class="col-xs-12 col-sm-12">
-		<div class="nav-tabs-custom">
-			<ul class="nav nav-tabs">
+<@row>	
+	<@columns>
+		<@tabs>
+			<@listTabs>
 				<li class="active">
 					<a href="jsp/admin/plugins/directory/ManageAdvancedParameters.jsp" title="#i18n{directory.manage_advanced_parameters.title}">
-						<i class="fa fa-cogs"></i> <span class="hidden-xs">#i18n{directory.manage_advanced_parameters.pageTitle}</span>
+						<@icon style='cogs' /> <span class="hidden-xs">#i18n{directory.manage_advanced_parameters.pageTitle}</span>
 					</a>
 				</li>
 				<#if right_xsl?exists && right_xsl>
 				<li>
 					<a href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory" title="#i18n{directory.manage_directory_xsl.title}">
-						<i class="fa fa-file-code-o"></i> <span class="hidden-xs"> #i18n{directory.manage_directory_xsl.title}</span>
+						<@icon style='file-code-o' /> <span class="hidden-xs"> #i18n{directory.manage_directory_xsl.title}</span>
 					</a>
 				</li>
 				</#if>
 				<#if permission_index_all_directory?exists && permission_index_all_directory>
 				<li class="pull-right">
-					<form class="form-inline" method="post" action="jsp/admin/plugins/directory/ConfirmIndexAllDirectory.jsp" >
-						<button class="btn btn-primary btn-xs" type="submit" >
-								<i class="fa fa-flash fa-fw"></i> #i18n{directory.index_all_directory.label_begin_process}
-						</button>
-					</form>
+					<@tform class='form-inline' action='jsp/admin/plugins/directory/ConfirmIndexAllDirectory.jsp'>
+						<@button type='submit' buttonIcon='flash' title='#i18n{directory.index_all_directory.label_begin_process}' showTitleXs=false />
+					</@tform>
 				</li>
 				</#if>
-			</ul>
-			<div class="tab-content">
-				<div class="tab-pane active" >
-					<#include "advanced_parameters.html" />
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+			</@listTabs>
+		</@tabs>
+		<#include "advanced_parameters.html" />
+	</@columns>
+</@row>

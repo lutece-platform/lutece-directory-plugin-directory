@@ -1,201 +1,81 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-sm-12" id="main">
-		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id="">
-		<input name="id_type" value="${entry.entryType.idType}" type="hidden">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-				<h3 class="box-title">#i18n{directory.create_entry.title_field} : '${entry.directory.title}' <span class="label label-info" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span></h3>
-				<div class="box-tools">
-					<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				</div>
-			</div>
-			<div class="box-body">
-        <div class="row">
-					<div class="col-xs-12 col-sm-7">
-					  <div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="title">#i18n{directory.create_entry.label_title} *</label>
-							<div class="col-xs-12 col-sm-9">
-								<input type="text" name="title" id="title" value="" maxlength="255" class="form-control">
-								<span class="help-text">#i18n{directory.create_entry.label_title_comment}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for=""></label>
-							<div class="col-xs-12 col-sm-9">
-								<div class="checkbox">
-									<label for="mandatory">
-										<input name="mandatory" id="mandatory" value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)}>#i18n{directory.create_entry.label_mandatory}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3"  for="width">#i18n{directory.create_entry.label_presentation}</label>
-								<div class="col-xs-12 col-sm-9">
-								<select class="form-control" id="field_in_line" name="field_in_line">
-									<option value="1" <#if getName('field_in_line',list_param_default_values)="1">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_in_line}</option>
-									<option value="0" <#if getName('field_in_line',list_param_default_values)="0">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_not_in_line}</option>
-								</select>
-							</div>
-						</div>
-            <div class="form-group">
-              <label class="control-label col-xs-12 col-sm-3" for="help_message"> #i18n{directory.create_entry.label_help_message}</label>
-              <div class="col-xs-12 col-sm-9">
-                <textarea  name="help_message" id="help_message" class="form-control" rows="2"></textarea>
-                  <span class="help-text">#i18n{directory.create_entry.label_help_message_comment}</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-xs-12 col-sm-3"  for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
-                <div class="col-xs-12 col-sm-9">
-                  <textarea  name="help_message_search" id="help_message_search" class="form-control" rows="2"></textarea>
-                  <span class="help-text">#i18n{directory.create_entry.label_help_message_search_comment}</span>
-                </div>
-              </div>
-						<div class="form-group">
-							<div class="col-xs-12 col-sm-offset-3 col-sm-9">
-								<button class="btn btn-primary btn-sm btn-flat" type="submit" name="save">
-									<i class="fa fa-check" ></i>
-									<span class="hidden-xs" >#i18n{directory.create_entry.button_save}</span>
-								</button>
-								<button class="btn btn-primary btn-sm btn-flat" type="submit" name="apply" >
-									<i class="fa fa-check-circle"></i>
-									<span class="hidden-xs" >#i18n{directory.create_entry.button_apply_and_manage_response}</span>
-								</button>
-								<a class="btn btn-default btn-sm btn-flat" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
-									<i class="fa fa-remove" ></i>
-									<span class="hidden-xs" >#i18n{directory.create_entry.button_cancel}</span>
-								</a>
-							</div>
-						</div>
-					</div>
-          <div class="col-xs-12 col-sm-5">
-						<#if is_authentification_enabled&&(!is_association_entry_role || entry.roleAssociated)>
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3" for=""></label>
-								<div class="col-xs-12 col-sm-9">
-									<div class="checkbox">
-										<label for="role_associated">
-							 				<input name="role_associated" id="role_associated" value="1" type="checkbox" ${getChecked('role_associated',list_param_default_values)}> #i18n{directory.create_entry.label_role_associated}</label>
-									</div>
-								</div>
-							</div>
-						</#if>
-						<#if !is_association_entry_workgroup|| entry.workgroupAssociated>
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3" for=""></label>
-								<div class="col-xs-12 col-sm-9">
-								 	<div class="checkbox">
-									 <label for="workgroup_associated">
-											<input name="workgroup_associated" id="workgroup_associated" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)}> #i18n{directory.create_entry.label_workgroup_associated}
-										</label>
-									</div>
-								</div>
-							</div>
-						</#if>
+<@row>
+	<@columns id='main'>
+		<@tform action='jsp/admin/plugins/directory/DoCreateEntry.jsp#list'>
+			<input name="id_type" value="${entry.entryType.idType}" type="hidden">
+			<@box color='primary'>
+				<@boxHeader title='#i18n{directory.create_entry.title_field} : "${entry.directory.title}"' />
+				<@boxBody>
+					<@formGroup labelFor='entry_type' labelKey='#i18n{directory.create_entry.label_type}'>
+						<@input name='entry_type' id='entry_type' type='text' disabled=true value='#i18n{${entry.entryType.titleI18nKey}}' />
+					</@formGroup>
+					<@formGroup labelFor='title' labelKey='#i18n{directory.create_entry.label_title}' helpKey='#i18n{directory.create_entry.label_title_comment}' mandatory=true >
+						<@input type='text' name='title' id='title' value='' maxlength=255 />
+					</@formGroup>
+					<@formGroup>
+						<@checkBox labelFor='mandatory' labelKey='#i18n{directory.create_entry.label_mandatory}' name='mandatory' id='mandatory' value='1' checked=getChecked('mandatory',list_param_default_values) />
+					</@formGroup>
+					<@formGroup labelFor='width' labelKey='#i18n{directory.create_entry.label_presentation}'>
+						<@select name='field_in_line' id='field_in_line'>
+							<option value="1" <#if getName('field_in_line',list_param_default_values)="1">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_in_line}</option>
+							<option value="0" <#if getName('field_in_line',list_param_default_values)="0">selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_not_in_line}</option>
+						</@select>
+					</@formGroup>
+					<@formGroup labelFor='help_message' labelKey='#i18n{directory.create_entry.label_help_message}' helpKey='#i18n{directory.create_entry.label_help_message_comment}'>
+						<@input type='textarea' name='help_message' id='help_message'></@input>
+					</@formGroup>
+					<@formGroup labelFor='help_message_search' labelKey='#i18n{directory.create_entry.label_help_message_search}' helpKey='#i18n{directory.create_entry.label_help_message_search_comment}'>
+						<@input type='textarea' name='help_message_search' id='help_message_search'></@input>
+					</@formGroup>
 
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3" for=""></label>
-								<div class="col-xs-12 col-sm-9">
-									<div class="checkbox">
-										<label class="checkbox" for="indexed" title="#i18n{directory.create_entry.label_indexed_comment}">
-											<input name="indexed" id="indexed" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)}> #i18n{directory.create_entry.label_indexed}
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3" for=""></label>
-								<div class="col-xs-12 col-sm-9">
-									<div class="checkbox">
-										<label for="shown_in_advanced_search" title="#i18n{directory.create_entry.label_shown_in_advanced_search_comment}">
-											<input name="shown_in_advanced_search" id="shown_in_advanced_search"  value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)}>
-												#i18n{directory.create_entry.label_shown_in_advanced_search}
-										</label>
-									</div>
-								</div>
-							</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="indexed_as_title">
-													<input name="indexed_as_title" id="indexed_as_title" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)}> #i18n{directory.create_entry.label_indexed_as_title}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="indexed_as_summary">
-													<input name="indexed_as_summary" id="indexed_as_summary" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)}> #i18n{directory.create_entry.label_indexed_as_summary}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="shown_in_result_list" title="#i18n{directory.create_entry.label_shown_in_result_list_comment}">
-													<input name="shown_in_result_list" id="shown_in_result_list" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)}> #i18n{directory.create_entry.label_shown_in_result_list}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="shown_in_result_record" title="#i18n{directory.create_entry.label_shown_in_result_record_comment}">
-													<input name="shown_in_result_record" id="shown_in_result_record" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)}> #i18n{directory.create_entry.label_shown_in_result_record}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label class="" for="shown_in_history" title="#i18n{directory.create_entry.label_shown_in_history_comment}">
-													<input name="shown_in_history" id="shown_in_history" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)}> #i18n{directory.create_entry.label_shown_in_history}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="shown_in_export" title="#i18n{directory.create_entry.label_shown_in_export_comment}">
-													<input name="shown_in_export" id="shown_in_export"value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)}> #i18n{directory.create_entry.label_shown_in_export}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="shown_in_completeness" title="#i18n{directory.create_entry.label_shown_in_completeness_comment}">
-													<input name="shown_in_completeness" id="shown_in_completeness" value="1" type="checkbox" ${getChecked('workgroup_associated',list_param_default_values)}>	#i18n{directory.create_entry.label_shown_in_completeness}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for="comment"> #i18n{directory.create_entry.label_comment}</label>
-										<div class="col-xs-12 col-sm-9">
-											<textarea name="comment" class="form-control" rows="2"></textarea>
-										</div>
-								</div>
-							</div>
-						</div>
-          </div>
-        </div>
-		</form>
-	</div>
-</div>
+					<#if is_authentification_enabled&&(!is_association_entry_role || entry.roleAssociated)>
+						<@formGroup>
+							<@checkBox labelFor='role_associated' labelKey='#i18n{directory.create_entry.label_role_associated}' name='role_associated' id='role_associated' value='1' checked=getChecked('role_associated',list_param_default_values) />
+						</@formGroup>
+					</#if>
+					<#if !is_association_entry_workgroup|| entry.workgroupAssociated>
+						<@formGroup>
+							<@checkBox labelFor='workgroup_associated' labelKey='#i18n{directory.create_entry.label_workgroup_associated}' name='workgroup_associated' id='workgroup_associated' value='1' checked=getChecked('workgroup_associated',list_param_default_values) />
+						</@formGroup>
+					</#if>
+					<@formGroup>
+						<@checkBox labelFor='indexed' labelKey='#i18n{directory.create_entry.label_indexed_comment} #i18n{directory.create_entry.label_indexed}' name='indexed' id='indexed' value='1' checked=getChecked('workgroup_associated',list_param_default_values) />
+					</@formGroup>
+					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_advanced_search_comment}'>
+						<@checkBox labelFor='shown_in_advanced_search' labelKey='#i18n{directory.create_entry.label_shown_in_advanced_search}' name='shown_in_advanced_search' id='shown_in_advanced_search' value='1' checked=getChecked('workgroup_associated',list_param_default_values) />
+					</@formGroup>
+					<@formGroup>
+						<@checkBox labelFor='indexed_as_title' labelKey='#i18n{directory.create_entry.label_indexed_as_title}' name='indexed_as_title' id='indexed_as_title' value='1' checked=getChecked('workgroup_associated',list_param_default_values) />
+					</@formGroup>
+					<@formGroup>
+						<@checkBox labelFor='indexed_as_summary' labelKey='#i18n{directory.create_entry.label_indexed_as_summary}' name='indexed_as_summary' id='indexed_as_summary' value='1' checked=getChecked('workgroup_associated',list_param_default_values) />
+					</@formGroup>
+					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_list_comment}'>
+						<@checkBox labelFor='shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='shown_in_result_list' id='shown_in_result_list' value='1'  checked=getChecked('workgroup_associated',list_param_default_values) />
+					</@formGroup>
+					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_record_comment}'>
+						<@checkBox labelFor='shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='shown_in_result_record' id='shown_in_result_record' value='1' checked=getChecked('workgroup_associated',list_param_default_values) />
+					</@formGroup>
+					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_history_comment}'>
+						<@checkBox labelFor='shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='shown_in_history' id='shown_in_history' value='1' checked=getChecked('workgroup_associated',list_param_default_values) />
+					</@formGroup>
+					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_export_comment}'>
+						<@checkBox labelFor='shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='shown_in_export' id='shown_in_export' value='1' checked=getChecked('workgroup_associated',list_param_default_values) />
+					</@formGroup>
+					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_completeness_comment}'>
+						<@checkBox labelFor='shown_in_completeness' labelKey='#i18n{directory.create_entry.label_shown_in_completeness}' name='shown_in_completeness' id='shown_in_completeness' value='1' checked=getChecked('workgroup_associated',list_param_default_values) />
+					</@formGroup>
+					<@formGroup labelFor='comment' labelKey='#i18n{directory.create_entry.label_comment}' >
+						<@input name='comment' type='textarea'></@input>
+					</@formGroup>
+					<@formGroup>
+						<@button type='submit' name='save' buttonIcon='save' title='#i18n{directory.create_entry.button_save}' showTitleXs=false size='' />
+						<@button type='submit' name='apply' buttonIcon='check' title='#i18n{directory.create_entry.button_apply_and_manage_response}' showTitleXs=false size='' />
+						<@aButton href='jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}' name='cancel' buttonIcon='remove' title='#i18n{directory.create_entry.button_cancel}' showTitleXs=false color='btn-secondary' size='' />
+					</@formGroup>
+
+				</@boxBody>
+			</@box>
+		</@tform>
+	</@columns>
+</@row>

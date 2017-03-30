@@ -1,299 +1,141 @@
 <#include "/admin/plugins/directory/commons.html" />
 <#include "/admin/util/editor/editor.html" />
-<form action="jsp/admin/plugins/directory/DoCreateDirectory.jsp?plugin_name=directory" method="post" name="" id="" class="form-horizontal" id="main">
-<div class="row">
-	<div class="col-xs-12 col-sm-9 col-md-9" id="main">
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title">#i18n{directory.create_directory.title}</h3>
-				<div class="box-tools  pull-right">
-					<a class="btn btn-primary btn-xs" id="tgAdvancedSettings" href="#">
-						<i class="fa fa-cogs"></i>
-						<span class="hidden-xs"> #i18n{directory.create_directory.label_advancedsettings}</span>
-					</a>
-				</div>
-			</div>
-			<div class="box-body">
-				<div class="row">
-					<div class="col-xs-12 col-sm-6 col-md-6">
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 col-md-3" for="title">#i18n{directory.create_directory.label_title} * </label>
-							<div class="col-xs-12 col-sm-8 col-md-8">
-								<input type="text" class="form-control" name="title" id="" size="80" value=""  maxlength="255"/>
-								<span class="help-block">#i18n{directory.create_directory.label_title_comment}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 col-md-3" for="comment"> #i18n{directory.create_directory.label_description} *</label>
-							<div class="col-xs-12 col-sm-8 col-md-8">
-								<textarea name="description" class="form-control" rows="2"></textarea>
-								<span class="help-block">#i18n{directory.create_directory.label_description_comment}</span>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 col-md-3" for="unavailability_message">#i18n{directory.create_directory.label_unavailability_message} *</label>
-							<div class="col-xs-12 col-sm-8 col-md-8">
-								<textarea name="unavailability_message" id="unavailability_message" rows="5" class="richtext form-control">${getName('unavailability_message',list_param_default_values)}</textarea>
-								<span class="help-block">#i18n{directory.create_directory.label_unavailability_message_comment}</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6">
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 col-md-3" for="">#i18n{directory.create_directory.label_workgroup}</label>
-							<div class="col-xs-12 col-sm-8 col-md-8">
-								<@comboWithParams name="workgroup"  default_value="all" additionalParameters=" class=\"form-control\"" items=user_workgroup_list />
-								<span class="help-block">#i18n{directory.create_directory.label_workgroup_comment}</span>
-							</div>
-						</div>
+<@tform action='jsp/admin/plugins/directory/DoCreateDirectory.jsp?plugin_name=directory'>
+<@row>
+	<@columns id='main'>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directory.create_directory.title}' boxTools=true>
+				<@aButton href='#' buttonIcon='cogs' title='#i18n{directory.create_directory.label_advancedsettings}' showTitleXs=false id='tgAdvancedSettings' />
+			</@boxHeader>
+			<@boxBody>
+				<@row>
+					<@columns sm=6>
+						<@formGroup labelFor='title' labelKey='#i18n{directory.create_directory.label_title}' helpKey='#i18n{directory.create_directory.label_title_comment}' rows=2 mandatory=true>
+							<@input type='text' name='title' id='title' inputSize=80 value='' maxlength=255 />
+						</@formGroup>
+						<@formGroup labelFor='comment' labelKey='#i18n{directory.create_directory.label_description}' helpKey='#i18n{directory.create_directory.label_description_comment}' rows=2 mandatory=true>
+							<@input type='textarea' name='description' id='description' rows=2></@input>
+						</@formGroup>
+						<@formGroup labelFor='unavailability_message' labelKey='#i18n{directory.create_directory.label_unavailability_message}' helpKey='#i18n{directory.create_directory.label_unavailability_message_comment}' rows=2 mandatory=true>
+							<@input type='textarea' name='unavailability_message' id='unavailability_message' rows=5 richtext=true>${getName('unavailability_message',list_param_default_values)}</@input>
+						</@formGroup>
+					</@columns>
+					<@columns sm=6>
+						<@formGroup labelFor='' labelKey='#i18n{directory.create_directory.label_workgroup}' helpKey='#i18n{directory.create_directory.label_workgroup_comment}' rows=2>
+							<@select name='workgroup' id='workgroup' default_value='all' items=user_workgroup_list />
+						</@formGroup>
 						<#if role_list?exists >
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3 col-md-3" for="role">#i18n{directory.create_directory.label_role}</label>
-								<div class="col-xs-12 col-sm-8 col-md-8">
-									<@comboWithParams name="role_key" default_value="none" additionalParameters=" class=\"form-control\""  items=role_list />
-									<span class="help-block">#i18n{directory.create_directory.label_role}</span>
-								</div>
-							</div>
+							<@formGroup labelFor='role' labelKey='#i18n{directory.create_directory.label_role}' helpKey='#i18n{directory.create_directory.label_role}' rows=2>
+								<@select name='role_key' id='role_key' default_value='none' items=role_list />
+							</@formGroup>
 						</#if>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 col-md-3" for="id_form_search_template">#i18n{directory.create_directory.label_form_search_template} * </label>
-							<div class="col-xs-12 col-sm-8 col-md-8">
-								<@comboWithParams name="id_form_search_template" default_value="" additionalParameters=" class=\"form-control\"" items=form_search_template_list />
-								<span class="help-block">#i18n{directory.create_directory.label_form_search_template_comment}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 col-md-3" for="id_result_list_template">#i18n{directory.create_directory.label_result_list_template} * </label>
-							<div class="col-xs-12 col-sm-8 col-md-8">
-								<@comboWithParams name="id_result_list_template" default_value="" additionalParameters=" class=\"form-control\""  items=result_list_template_list />
-								<span class="help-block">#i18n{directory.create_directory.label_result_list_template_comment}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 col-md-3" for="id_result_record_template">#i18n{directory.create_directory.label_result_record_template} *</label>
-							<div class="col-xs-12 col-sm-8 col-md-8">
-								<@comboWithParams name="id_result_record_template" default_value="" additionalParameters=" class=\"form-control\"" items=result_record_template_list />
-								<span class="help-block">#i18n{directory.create_directory.label_result_record_template_comment}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 col-md-3" for="number_record_per_page">#i18n{directory.create_directory.label_number_record_per_page} * </label>
-							<div class="col-xs-12 col-sm-3 col-md-3">
-								<input type="text" class="form-control" name="number_record_per_page" id="number_record_per_page" size="5" value="${getName('number_record_per_page',list_param_default_values)}" />
-								<span class="help-block"> #i18n{directory.create_directory.label_number_record_per_page_comment}</span>
-							</div>
-						</div>
-						<#if workflow_list?has_content && workflow_list?size &gt; 1 >
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3 col-md-3" for="id_workflow_list">#i18n{directory.create_directory.label_worflow_list} : </label>
-								<div class="col-xs-12 col-sm-8 col-md-8">
-									<@comboWithParams name="id_workflow_list" default_value="" additionalParameters=" class=\"form-control\"" items=workflow_list />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3 col-md-3" for="workflow_state_filter_search">#i18n{directory.create_directory.label_state_search} : </label>
-								<div class="col-xs-12 col-sm-8 col-md-8">
-									<div class="radio">
-				  					<label>
-											<input type="radio" name="workflow_state_filter_search" value="1" <#if workflow_state_filter_search_selected="1">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search}
-										</label>
-									</div>
-									<div class="radio">
-				  					<label>
-											<input type="radio" name="workflow_state_filter_search" value="2" <#if workflow_state_filter_search_selected="2">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search_complementary}
-										</label>
-									</div>
-									<div class="radio">
-				  					<label>
-											<input type="radio" name="workflow_state_filter_search" value="3" <#if workflow_state_filter_search_selected="3">checked="checked"</#if>>#i18n{directory.create_directory.label_radio_state_search_no}
-										</label>
-									</div>
-								</div>
-							</div>
+						<@formGroup labelFor='id_form_search_template' labelKey='#i18n{directory.create_directory.label_form_search_template}' helpKey='#i18n{directory.create_directory.label_form_search_template_comment}' rows=2 mandatory=true>
+							<@select name='id_form_search_template' id='id_form_search_template' default_value='' items=form_search_template_list />
+						</@formGroup>
+						<@formGroup labelFor='id_result_list_template' labelKey='#i18n{directory.create_directory.label_result_list_template}' helpKey='#i18n{directory.create_directory.label_result_list_template_comment}' rows=2 mandatory=true>
+							<@select name='id_result_list_template' id='id_result_list_template' default_value='' items=result_list_template_list />
+						</@formGroup>
+						<@formGroup labelFor='id_result_record_template' labelKey='#i18n{directory.create_directory.label_result_record_template}' helpKey='#i18n{directory.create_directory.label_result_record_template_comment}' rows=2 mandatory=true>
+							<@select name='id_result_record_template' id='id_result_record_template' default_value='' items=result_record_template_list />
+						</@formGroup>
+						<@formGroup labelFor='number_record_per_page' labelKey='#i18n{directory.create_directory.label_number_record_per_page}' helpKey='#i18n{directory.create_directory.label_number_record_per_page_comment}' rows=2 mandatory=true>
+							<@input type='text' name='number_record_per_page' id='number_record_per_page' inputSize=5 value=getName('number_record_per_page',list_param_default_values) />
+						</@formGroup>
+						<#if workflow_list?has_content && workflow_list?size &gt; 1>
+							<@formGroup labelFor='id_workflow_list' labelKey='#i18n{directory.create_directory.label_worflow_list}' rows=2>
+								<@select name='id_workflow_list' id='id_workflow_list' default_value='' items=workflow_list />
+							</@formGroup>
+							<@formGroup labelFor='workflow_state_filter_search' labelKey='#i18n{directory.create_directory.label_state_search}' rows=2>
+								<@radioButton labelKey='#i18n{directory.create_directory.label_radio_state_search}' name='workflow_state_filter_search' value='1' checked=workflow_state_filter_search_selected='1' />
+								<@radioButton labelKey='#i18n{directory.create_directory.label_radio_state_search_complementary}' name='workflow_state_filter_search' value='2' checked=workflow_state_filter_search_selected='2' />
+								<@radioButton labelKey='#i18n{directory.create_directory.label_radio_state_search_no}' name='workflow_state_filter_search' value='3' checked=workflow_state_filter_search_selected='3' />
+							</@formGroup>
 						</#if>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12">
-					<div class="form-group">
-						<div class="col-sm-offset-3 col-md-offset-3 col-xs-12 col-sm-8 col-md-8">
-							<button type="submit" class="btn btn-primary btn-sm btn-flat" name="save" >
-								<i class="fa fa-check"></i> #i18n{directory.create_directory.button_save}
-							</button>
-							<a type="button" class="btn btn-default btn-sm btn-flat" href="jsp/admin/plugins/directory/ManageDirectory.jsp" >
-								<i class="fa fa-times"></i> #i18n{directory.create_directory.button_cancel}
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="col-xs-12 col-sm-3 col-md-3" id="advanced_settings">
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title">#i18n{directory.create_directory.label_advancedsettings}</h3>
-			</div>
-			<div class="box-body">
-				<label for="front_office_title">#i18n{directory.create_directory.label_title_front} : </label>
-				<input type="text" class="form-control" name="front_office_title" id="" class="input-large" value=""  maxlength="255">
-				<span class="help-block">#i18n{directory.create_directory.label_title_front_comment}</span>
-				<div class="panel">
-					<div class="panel-body">
-						<p><strong>#i18n{directory.create_directory.label_show_date_creation}</strong></p>
-						<div class="checkbox">
-							<label for="date_shown_in_result_list">
-								<input name="date_shown_in_result_list" id="date_shown_in_result_list" value="1" type="checkbox" ${getChecked('date_shown_in_result_list',list_param_default_values)}>
-								#i18n{directory.create_entry.label_shown_in_result_list}
-							</label>
-						</div>
-						<div class="checkbox">
-							<label for="date_shown_in_result_record">
-								<input name="date_shown_in_result_record" id="date_shown_in_result_record" value="1" type="checkbox" ${getChecked('date_shown_in_result_record',list_param_default_values)}>
-								#i18n{directory.create_entry.label_shown_in_result_record}
-							</label>
-						</div>
-						<div class="checkbox">
-							<label for="date_shown_in_history">
-								<input name="date_shown_in_history" id="date_shown_in_history" value="1" type="checkbox" ${getChecked('date_shown_in_history',list_param_default_values)}>
-								#i18n{directory.create_entry.label_shown_in_history}
-							</label>
-						</div>
-						<div class="checkbox">
-							<label for="date_shown_in_export">
-								<input name="date_shown_in_export" id="date_shown_in_export" value="1" type="checkbox" ${getChecked('date_shown_in_export',list_param_default_values)}>
-								#i18n{directory.create_entry.label_shown_in_export}
-							</label>
-						</div>
-						<div class="checkbox">
-							<label for="indexed">
-								<input id="indexed" name="indexed" value="1" type="checkbox" ${getChecked('date_shown_in_search',list_param_default_values)}/>
-								#i18n{directory.create_entry.label_indexed}
-							</label>
-						</div>
-						<blockquote id="show_multiple_search_fields" <#if getName('date_shown_in_search',list_param_default_values)="0">data="no"</#if>>
-							<div class="checkbox">
-								<label for="show_multiple_search_fields">
-									<input name="date_shown_in_multi_search" id="date_shown_in_multi_search" value="1" type="checkbox" ${getChecked('date_shown_in_multi_search',list_param_default_values)} />
-									#i18n{directory.create_entry.label_multiple_search_fields}
-								</label>
-							</div>
-							<div class="checkbox">
-								<label for="date_shown_in_advanced_search">
-									<input name="date_shown_in_advanced_search" id="date_shown_in_advanced_search" value="1" type="checkbox" ${getChecked('date_shown_in_advanced_search',list_param_default_values)} />
-									#i18n{directory.create_entry.label_shown_in_advanced_search}
-								</label>
-							</div>
-						</blockquote>
-					</div>
-				</div>
-				<div class="panel">
-					<div class="panel-body">
-						<p><strong>#i18n{directory.create_directory.label_show_date_modification}</strong></p>
-						<div class="checkbox">
-							<label for="date_modification_shown_in_result_list">
-								<input name="date_modification_shown_in_result_list" id="date_modification_shown_in_result_list" value="1" type="checkbox" ${getChecked('date_modification_shown_in_result_list',list_param_default_values)} />
-								#i18n{directory.create_entry.label_shown_in_result_list}
-							</label>
-						</div>
-						<div class="checkbox">
-							<label for="date_modification_shown_in_result_record">
-								<input name="date_modification_shown_in_result_record" id="date_modification_shown_in_result_record" value="1" type="checkbox" ${getChecked('date_modification_shown_in_result_record',list_param_default_values)} />
-								#i18n{directory.create_entry.label_shown_in_result_record}
-							</label>
-						</div>
-						<div class="checkbox">
-							<label for="date_modification_shown_in_history">
-								<input name="date_modification_shown_in_history" id="date_modification_shown_in_history" value="1" type="checkbox" ${getChecked('date_modification_shown_in_history',list_param_default_values)} />
-								#i18n{directory.create_entry.label_shown_in_history}
-							</label>
-						</div>
-						<div class="checkbox">
-							<label class="checkbox" for="date_modification_shown_in_export">
-								<input name="date_modification_shown_in_export" id="date_modification_shown_in_export" value="1" type="checkbox" ${getChecked('date_modification_shown_in_export',list_param_default_values)} />
-								#i18n{directory.create_entry.label_shown_in_export}
-							</label>
-						</div>
-						<div class="checkbox">
-							<label class="checkbox" for="date_modification_indexed">
-								<input id="date_modification_indexed" name="date_modification_indexed" value="1" type="checkbox" onclick="doDisplayDateModificationMultipleSearchFields();" ${getChecked('date_modification_shown_in_search',list_param_default_values)}/>
-								#i18n{directory.create_entry.label_indexed}
-							</label>
-						</div>
-						<blockquote id="date_modification_show_multiple_search_fields" <#if getName('date_modification_shown_in_search',list_param_default_values)="0">data="no"</#if>>
-							<div class="checkbox">
-								<label for="date_modification_shown_in_multi_search">
-									<input name="date_modification_shown_in_multi_search" id="date_modification_shown_in_multi_search" value="1" type="checkbox" ${getChecked('date_modification_shown_in_multi_search',list_param_default_values)} />
-									#i18n{directory.create_entry.label_multiple_search_fields}
-								</label>
-							</div>
-							<div class="checkbox">
-								<label for="date_modification_shown_in_advanced_search">
-									<input name="date_modification_shown_in_advanced_search" id="date_modification_shown_in_advanced_search" value="1" type="checkbox" ${getChecked('date_modification_shown_in_advanced_search',list_param_default_values)} />
-									#i18n{directory.create_entry.label_shown_in_advanced_search}
-								</label>
-							</div>
-						</blockquote>
-					</div>
-				</div>
-				<div class="panel">
-					<div class="panel-body">
-						<div class="checkbox">
-							<label for="activate_directory_record">
-								<input name="activate_directory_record" id="activate_directory_record" value="1" type="checkbox" ${getChecked('activate_directory_record',list_param_default_values)}>	#i18n{directory.create_directory_record.activate_directory_record}
-							</label>
-						</div>
-						<p class="help-block"> #i18n{directory.create_directory_record.activate_directory_record_comment}</p>
-						<div class="checkbox">
-							<label for="is_indexed">
-								<input name="is_indexed" id="is_indexed" value="1" type="checkbox" ${getChecked('is_indexed',list_param_default_values)}> #i18n{directory.create_directory.label.is_indexed}
-							</label>
-						</div>
-						<p class="help-block"> #i18n{directory.create_directory.label.is_indexed_comment}</p>
-						<!-- Not useful anymore ?
-							<div class="alert alert-danger">#i18n{directory.message.warning.directory_advanced_parameters_save}</div>
-						-->
-						<div class="checkbox">
-							<label for="is_search_operator_or">
-								<input name="is_search_operator_or" id="is_search_operator_or" value="1" type="checkbox" > #i18n{directory.create_directory.label.is_search_operator_or}
-							</label>
-						</div>
-						<p class="help-block"> #i18n{directory.create_directory.label.is_search_operator_or_comment}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</form>
+					</@columns>
+				</@row>
+				<@row>
+					<@columns>
+						<@formGroup rows=2>
+							<@button type='submit' name='save' buttonIcon='save' title='#i18n{directory.create_directory.button_save}' size='' />
+							<@aButton href='jsp/admin/plugins/directory/ManageDirectory.jsp' name='cancel' buttonIcon='remove' title='#i18n{directory.create_directory.button_cancel}' size='' color='btn-secondary' />
+						</@formGroup>
+					</@columns>
+				</@row>
+			</@boxBody>
+		</@box>
+	</@columns>
+	<@columns sm=3 id='advanced_settings'>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directory.create_directory.label_advancedsettings}' />
+			<@boxBody>
+				<@formGroup labelFor='front_office_title' labelKey='#i18n{directory.create_directory.label_title_front}' helpKey='#i18n{directory.create_directory.label_title_front_comment}' rows=2>
+					<@input type='text' name='front_office_title' id='' value='' maxlength=255 />
+				</@formGroup>
+				
+				<@formGroup labelFor='' labelKey='#i18n{directory.create_directory.label_show_date_creation}' rows=2>
+					<@checkBox labelFor='date_shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='date_shown_in_result_list' id='date_shown_in_result_list' value='1' checked=getChecked('date_shown_in_result_list',list_param_default_values) />
+					<@checkBox labelFor='date_shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='date_shown_in_result_record' id='date_shown_in_result_record' value='1' checked=getChecked('date_shown_in_result_record',list_param_default_values) />
+					<@checkBox labelFor='date_shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='date_shown_in_history' id='date_shown_in_history' value='1' checked=getChecked('date_shown_in_history',list_param_default_values) />
+					<@checkBox labelFor='date_shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='date_shown_in_export' id='date_shown_in_export' value='1' checked=getChecked('date_shown_in_export',list_param_default_values) />
+					<@checkBox labelFor='indexed' labelKey='#i18n{directory.create_entry.label_indexed}' name='indexed' id='indexed' value='1' checked=getChecked('date_shown_in_search',list_param_default_values) />
+					
+					<#assign params>
+						<#if getName('date_shown_in_search',list_param_default_values)="0">data="no"</#if>
+					</#assign>
+					<@callOut color='success' id='show_multiple_search_fields' params=params>
+						<@checkBox labelFor='date_shown_in_multi_search' labelKey='#i18n{directory.create_entry.label_multiple_search_fields}' name='date_shown_in_multi_search' id='date_shown_in_multi_search' value='1' checked=getChecked('date_shown_in_multi_search',list_param_default_values) />
+						<@checkBox labelFor='date_shown_in_advanced_search' labelKey='#i18n{directory.create_entry.label_shown_in_advanced_search}' name='date_shown_in_advanced_search' id='date_shown_in_advanced_search' value='1' checked=getChecked('date_shown_in_advanced_search',list_param_default_values) />
+					</@callOut>
+				</@formGroup>
+				<@formGroup labelKey='#i18n{directory.create_directory.label_show_date_modification}' rows=2>
+					<@checkBox labelFor='date_modification_shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='date_modification_shown_in_result_list' id='date_modification_shown_in_result_list' value='1' checked=getChecked('date_modification_shown_in_result_list',list_param_default_values) />
+					<@checkBox labelFor='date_modification_shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='date_modification_shown_in_result_record' id='date_modification_shown_in_result_record' value='1' checked=getChecked('date_modification_shown_in_result_record',list_param_default_values) />
+					<@checkBox labelFor='date_modification_shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='date_modification_shown_in_history' id='date_modification_shown_in_history' value='1' checked=getChecked('date_modification_shown_in_history',list_param_default_values) />
+					<@checkBox labelFor='date_modification_shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='date_modification_shown_in_export' id='date_modification_shown_in_export' value='1' checked=getChecked('date_modification_shown_in_export',list_param_default_values) />
+					<@checkBox labelFor='date_modification_indexed' labelKey='#i18n{directory.create_entry.label_indexed}' name='date_modification_indexed' id='date_modification_indexed' value='1' params='onclick="doDisplayDateModificationMultipleSearchFields();"' checked=getChecked('date_modification_shown_in_search',list_param_default_values) />
+					
+					<#assign params>
+						<#if getName('date_modification_shown_in_search',list_param_default_values)="0">data="no"</#if>
+					</#assign>
+					
+					<@callOut color='success' id='date_modification_show_multiple_search_fields' params=params>
+						<@checkBox labelFor='date_modification_shown_in_multi_search' labelKey='#i18n{directory.create_entry.label_multiple_search_fields}' name='date_modification_shown_in_multi_search' id='date_modification_shown_in_multi_search' value='1' checked=getChecked('date_modification_shown_in_multi_search',list_param_default_values) />
+						<@checkBox labelFor='date_modification_shown_in_advanced_search' labelKey='#i18n{directory.create_entry.label_shown_in_advanced_search}' name='date_modification_shown_in_advanced_search' id='date_modification_shown_in_advanced_search' value='1' checked=getChecked('date_modification_shown_in_advanced_search',list_param_default_values) />
+					</@callOut>
+				</@formGroup>
+				
+				<@formGroup helpKey='#i18n{directory.create_directory_record.activate_directory_record_comment}' rows=2>
+					<@checkBox labelFor='activate_directory_record' labelKey='#i18n{directory.create_directory_record.activate_directory_record}' name='activate_directory_record' id='activate_directory_record' value='1' checked=getChecked('activate_directory_record',list_param_default_values) />
+				</@formGroup>
+				
+				<@formGroup helpKey='#i18n{directory.create_directory.label.is_indexed_comment}' rows=2>
+					<@checkBox labelFor='is_indexed' labelKey='#i18n{directory.create_directory.label.is_indexed}' name='is_indexed' id='is_indexed' value='1' checked=getChecked('is_indexed',list_param_default_values) /> 
+				</@formGroup>
+
+				<@formGroup helpKey='#i18n{directory.create_directory.label.is_search_operator_or_comment}' rows=2>
+					<@checkBox labelFor='is_search_operator_or' labelKey='#i18n{directory.create_directory.label.is_search_operator_or}' name='is_search_operator_or' id='is_search_operator_or' value='1' />
+				</@formGroup>
+			</@boxBody>
+		</@box>
+	</@columns>
+</@row>
+</@tform>
 
 <script>
 $(document).ready(function() {
-	doDisplayAdvancedSettings();
+$("#advanced_settings").toggle();
 
 	if( $("#show_multiple_search_fields").attr("data")=="no"){
 		$("#show_multiple_search_fields").hide();
 	}
 	if( $("#date_modification_show_multiple_search_fields").attr("data")=="no"){
 		$("#date_modification_show_multiple_search_fields").hide();
-
 	}
 
 	$("#tgAdvancedSettings").click(function () {
-		/*$(this).toggle();*/
 		doDisplayAdvancedSettings();
 		return false;
   });
-
-	/*
-	$("#tgAdvancedSettingsBack").click(function () {
-		doDisplayAdvancedSettings();
-		$("#tgAdvancedSettings").toggle();
-		return false;
-    });
-		*/
 
 	$("#indexed").click(function(){
 		$("#show_multiple_search_fields").toggle();
@@ -305,7 +147,7 @@ $(document).ready(function() {
 
 	function doDisplayAdvancedSettings(){
 		$("#advanced_settings").toggle("fadeIn");
-		$("#main").toggleClass("col-md-9").toggleClass("col-md-12").toggleClass("col-sm-9").toggleClass("col-sm-12");
+		$("#main").toggleClass("col-sm-12").toggleClass("col-sm-9");
 	}
 
 });

@@ -14,14 +14,14 @@
 		<#list reference_list as reference_item>
 			<#if reference_item.code = code>
 				<#if reference_item.checked>
-  					<#return "checked='checked'">
+  					<#return true>
   				<#else>
-  					<#return "">
+  					<#return false>
   				</#if>
   			</#if>
   		</#list>
 	</#if>
-	<#return "">
+	<#return false>
 </#function>
 
 <#--

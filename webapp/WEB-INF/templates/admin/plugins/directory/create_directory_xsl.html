@@ -1,59 +1,48 @@
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12" id="main">
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title">#i18n{directory.create_directory_xsl.title}</h3>
-			</div>
-			<div class="box-body">
-				<form method="post" class="form-horizontal"  action="jsp/admin/plugins/directory/DoCreateDirectoryXsl.jsp" enctype="multipart/form-data">
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 " for="title" >#i18n{directory.create_directory_xsl.label_title} * : </label>
-		        <div class="col-xs-12 col-sm-6">
-							<input type="text" class="form-control" id="title" name="title" maxlength="255" value="">
-						</div>
-					</div>
-		      <div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 " for="">#i18n{directory.create_directory_xsl.label_category}  : </label>
-						<div class="col-xs-12 col-sm-6">
-							<select name="id_category" id="id_category" class="form-control">
-								<#list category_list as category>
-									<option value="${category.idCategory}">#i18n{${category.titleI18nKey}}</option>
-								</#list>
-							</select>
-							<span class="help-text">#i18n{directory.create_directory_xsl.label_category_comment}</span>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 " for="description" >#i18n{directory.create_directory_xsl.label_description} * : </label>
-			      <div class="col-xs-12 col-sm-6">
-							<input type="text" id="description" class="form-control" name="description" maxlength="255" value="">
-						</div>
-					</div>
-			    <div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 " for="extension" >#i18n{directory.create_directory_xsl.label_extension} (*) : </label>
-			      <div class="col-xs-12 col-sm-6">
-							<input type="text" id="extension"  class="form-control" name="extension" maxlength="10" value="">
-							<span class="help-text">#i18n{directory.create_directory_xsl.label_extension_comment}</span>
-						</div>
-					</div>
-			    <div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3" for="id_file" >#i18n{directory.create_directory_xsl.label_file} * : </label>
-			      <div class="col-xs-12 col-sm-6">
-							<input type="file" id="id_file" class="form-control"  name="id_file" maxlength="100">
-						</div>
-					</div>
-					<div class="form-group">
-					  <div class="col-xs-12 col-sm-offset-3 col-sm-9">
-			    		<button class="btn btn-primary btn-flat" type="submit" >
-									<i class="fa fa-check"></i> #i18n{directory.create_directory_xsl.button_save}
-							</button>
-			    		<a class="btn btn-default btn-flat" href="jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory" >
-									<i class="fa fa-remove"></i> #i18n{directory.create_directory_xsl.button_cancel}
-							</a>
-			    	</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+<@row>	
+	<@columns>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directory.create_directory_xsl.title}' />
+			<@boxBody>
+				<@tform action='jsp/admin/plugins/directory/DoCreateDirectoryXsl.jsp' params='enctype="multipart/form-data"'>
+					<@formGroup labelFor='title=' labelKey='#i18n{directory.create_directory_xsl.label_title}' mandatory=true>
+						<@input type='text' id='title' name='title' maxlength=255 value='' />
+					</@formGroup>
+					<@formGroup labelKey='#i18n{directory.create_directory_xsl.label_category}' helpKey='#i18n{directory.create_directory_xsl.label_category_comment}'>
+						<@select name='id_category' id='id_category' params='onchange="f1()"'>
+							<#list category_list as category>
+								<option value="${category.idCategory}">#i18n{${category.titleI18nKey}}</option>
+							</#list>
+						</@select>
+					</@formGroup>
+					<@formGroup labelFor='description' labelKey='#i18n{directory.create_directory_xsl.label_description}' mandatory=true>
+						<@input type='text' id='description' name='description' maxlength=255 value='' />
+					</@formGroup>
+					<@formGroup labelFor='extension' labelKey='#i18n{directory.create_directory_xsl.label_extension}' labelId='inputExtensionLabel' helpKey='#i18n{directory.create_directory_xsl.label_extension_comment}' mandatory=true>
+						<@input type='text' id='extension' name='extension' maxlength=10 value='' />
+					</@formGroup>
+					<@formGroup labelFor='id_file' labelKey='#i18n{directory.create_directory_xsl.label_file}' mandatory=true>
+						<@input type='file' id='id_file' name='id_file' maxlength=100 />
+					</@formGroup>
+					<@formGroup>
+						<@button type='submit' buttonIcon='save' title='#i18n{directory.create_directory_xsl.button_save}' size='' />
+						<@aButton href='jsp/admin/plugins/directory/ManageDirectoryXsl.jsp?plugin_name=directory' buttonIcon='remove' title='#i18n{directory.create_directory_xsl.button_cancel}' size='' color='btn-secondary' />
+					</@formGroup>
+				</@tform>
+			</@boxBody>
+		</@box>
+	</@columns>
+</@row>
+
+<script>
+	function f1() {
+		var e = document.getElementById("id_category");
+		if (e.options[e.selectedIndex].value == 1) {
+			document.getElementById("extension").setAttribute('required', 'required');
+			document.getElementById("inputExtensionLabel").innerHTML = '#i18n{directory.create_directory_xsl.label_extension} <i class=\"fa fa-asterisk\"></i>';
+		}
+		else {
+			document.getElementById("extension").removeAttribute('required');
+			document.getElementById("inputExtensionLabel").innerHTML = '#i18n{directory.create_directory_xsl.label_extension}';
+		}
+	}
+</script>
