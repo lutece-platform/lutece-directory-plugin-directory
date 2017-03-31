@@ -471,11 +471,6 @@ public class DirectorySearchService
                 bCreateIndex = true;
             }
 
-            if ( !bCreateIndex && IndexWriter.isLocked( _luceneDirectory ) )
-            {
-                IndexWriter.unlock( _luceneDirectory );
-            }
-
             IndexWriterConfig conf = new IndexWriterConfig( Version.LUCENE_46, _analyzer );
 
             if ( bCreateIndex )
