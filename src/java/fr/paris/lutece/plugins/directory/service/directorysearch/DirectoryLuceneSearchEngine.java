@@ -111,7 +111,7 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
                     flagsIdDirectoryField.add( BooleanClause.Occur.SHOULD );
                 }
 
-                Query queryMultiIdDirectoryField = MultiFieldQueryParser.parse( IndexationService.LUCENE_INDEX_VERSION,
+                Query queryMultiIdDirectoryField = MultiFieldQueryParser.parse(
                         queriesIdDirectoryField.toArray( new String [ queriesIdDirectoryField.size( )] ),
                         queriesIdDirectoryField.toArray( new String [ fieldsIdDirectoryField.size( )] ),
                         flagsIdDirectoryField.toArray( new BooleanClause.Occur [ flagsIdDirectoryField.size( )] ), IndexationService.getAnalyser( ) );
@@ -203,7 +203,7 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
             }
 
             Query queryMulti = MultiFieldQueryParser
-                    .parse( IndexationService.LUCENE_INDEX_VERSION, queries.toArray( new String [ queries.size( )] ),
+                    .parse( queries.toArray( new String [ queries.size( )] ),
                             fields.toArray( new String [ fields.size( )] ), flags.toArray( new BooleanClause.Occur [ flags.size( )] ),
                             IndexationService.getAnalyser( ) );
 

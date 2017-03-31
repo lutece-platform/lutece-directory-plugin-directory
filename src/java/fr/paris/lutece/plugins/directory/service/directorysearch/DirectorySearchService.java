@@ -70,6 +70,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -120,7 +121,7 @@ public class DirectorySearchService
 
         try
         {
-            _luceneDirectory = NIOFSDirectory.open( new File( strIndex ) );
+            _luceneDirectory = NIOFSDirectory.open( Paths.get( strIndex ) );
         }
         catch( IOException e1 )
         {
@@ -471,7 +472,7 @@ public class DirectorySearchService
                 bCreateIndex = true;
             }
 
-            IndexWriterConfig conf = new IndexWriterConfig( Version.LUCENE_46, _analyzer );
+            IndexWriterConfig conf = new IndexWriterConfig( _analyzer );
 
             if ( bCreateIndex )
             {
