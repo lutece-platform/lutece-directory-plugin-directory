@@ -4,7 +4,9 @@
 		<@tform action='jsp/admin/plugins/directory/DoCreateEntry.jsp#list'>
 			<input name="id_type" value="${entry.entryType.idType}" type="hidden">
 			<@box color='primary'>
-				<@boxHeader title='#i18n{directory.create_entry.title_field} : "${entry.directory.title}"' />
+				<@boxHeader title='#i18n{directory.create_entry.title_field} : "${entry.directory.title}"' boxTools=true>
+					<@tag color='info' title='#i18n{directory.create_entry.label_type}'>#i18n{${entry.entryType.titleI18nKey}}</@tag>
+				</@boxHeader>
 				<@boxBody>
 					<@formGroup labelFor='entry_type' labelKey='#i18n{directory.create_entry.label_type}'>
 						<@input name='entry_type' id='entry_type' type='text' disabled=true value='#i18n{${entry.entryType.titleI18nKey}}' />

@@ -5,7 +5,7 @@
 			<input name="id_entry" value="${entry.idEntry}" type="hidden">
 			<@box color='primary'>
 				<@boxHeader title='#i18n{directory.create_entry.title_field} : "${entry.directory.title}"' boxTools=true>
-					<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					<@button style='btn-box-tool' params='data-widget="collapse"' buttonIcon='minus' />
 				</@boxHeader>
 				<@boxBody>
 					<@formGroup labelFor='entry_type' labelKey='#i18n{directory.create_entry.label_type}'>

@@ -2,8 +2,10 @@
 <@row>
 	<@columns>
 		<@box color='primary'>
-		 <@boxHeader title='#i18n{directory.modify_entry.title_comment} : "${entry.directory.title}"' />
-		 <@boxBody>
+			<@boxHeader title='#i18n{directory.modify_entry.title_comment} : "${entry.directory.title}"' boxTools=true>
+				<@tag color='info' title='#i18n{directory.create_entry.label_type}'>#i18n{${entry.entryType.titleI18nKey}}</@tag>
+			</@boxHeader>
+			<@boxBody>
 			<@tform action='jsp/admin/plugins/directory/DoModifyEntry.jsp#list'>
 				<input name="id_entry" value="${entry.idEntry}" type="hidden">
 				<@formGroup labelFor='entry_type' labelKey='#i18n{directory.create_entry.label_type}'>
