@@ -3,65 +3,68 @@
 	<@columns id='main'>
 		<@box color='primary'>
 			<@boxHeader title='#i18n{directory.create_entry.title_field} : "${entry.directory.title}"' boxTools=true>
-				<@tag color='info' title='#i18n{directory.create_entry.label_type}'>#i18n{${entry.entryType.titleI18nKey}}</@tag>
+				<@button type='button' buttonIcon='cogs' title='#i18n{directory.create_directory.label_advancedsettings}' id='advanced' />
 			</@boxHeader>
 			<@boxBody>
 				<@tform action='jsp/admin/plugins/directory/DoCreateEntry.jsp#list'>
 					<input name="id_type" value="${entry.entryType.idType}" type="hidden">
-					<@formGroup labelFor='entry_type' labelKey='#i18n{directory.create_entry.label_type}'>
-						<@input type='text' name='entry_type' id='entry_type' disabled=true value='#i18n{${entry.entryType.titleI18nKey}}' />
-					</@formGroup>
-					<@formGroup labelFor='title' labelKey='#i18n{directory.create_entry.label_title}' helpKey='#i18n{directory.create_entry.label_title_comment}' mandatory=true>
-						<@input type='text' name='title' id='title' value='' maxlength=255 />
-					</@formGroup>
-					<@formGroup>
-						<@checkBox labelFor='mandatory' labelKey='#i18n{directory.create_entry.label_mandatory}' name='mandatory' id='mandatory' value='1' checked=getChecked('mandatory',list_param_default_values) />
-					</@formGroup>
-					<@formGroup labelFor='value' labelKey='#i18n{directory.create_entry.label_value_default}'>
-						<@inputGroup>
-							<@inputGroupItem type='addon'>
-								<@icon style='calendar' />
-							</@inputGroupItem>
-							<@input type='text' name='value' id='date' value='' />
-						</@inputGroup>
-					</@formGroup>
-					<@formGroup labelFor='help_message' labelKey='#i18n{directory.create_entry.label_help_message}' helpKey='#i18n{directory.create_entry.label_help_message_comment}'>
-						<@input type='textarea' name='help_message' id='help_message' rows=2></@input>
-					</@formGroup>
-					<@formGroup labelFor='help_message_search' labelKey='#i18n{directory.create_entry.label_help_message_search}' helpKey='#i18n{directory.create_entry.label_help_message_search_comment}'>
-						<@input type='textarea' name='help_message_search' id='help_message_search' rows=2></@input>
-					</@formGroup>
-
-					<@formGroup helpKey='#i18n{directory.create_entry.label_indexed_comment}'>
-						<@checkBox labelFor='indexed' labelKey='#i18n{directory.create_entry.label_indexed}' name='indexed' id='indexed' value='1' checked=getChecked('indexed',list_param_default_values) />
-					</@formGroup>
-					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_advanced_search_comment}'>
-						<@checkBox labelFor='shown_in_advanced_search' labelKey='#i18n{directory.create_entry.label_shown_in_advanced_search}' name='shown_in_advanced_search' id='shown_in_advanced_search'  value='1' checked=getChecked('shown_in_advanced_search',list_param_default_values) />
-					</@formGroup>
-					<@formGroup>
-						<@checkBox labelFor='indexed_as_title' labelKey='#i18n{directory.create_entry.label_indexed_as_title}' name='indexed_as_title' id='indexed_as_title' value='1' checked=getChecked('indexed_as_title',list_param_default_values) />
-					</@formGroup>
-					<@formGroup>
-						<@checkBox labelFor='indexed_as_summary' labelKey='#i18n{directory.create_entry.label_indexed_as_summary}' name='indexed_as_summary' id='indexed_as_summary' value='1' checked=getChecked('indexed_as_summary',list_param_default_values) />
-					</@formGroup>
-					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_list_comment}'>
-						<@checkBox labelFor='shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='shown_in_result_list' id='shown_in_result_list' value='1' checked=getChecked('shown_in_result_list',list_param_default_values) />
-					</@formGroup>
-					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_record_comment}'>
-						<@checkBox labelFor='shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='shown_in_result_record' id='shown_in_result_record' value='1' checked=getChecked('shown_in_result_record',list_param_default_values) />
-					</@formGroup>
-					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_history_comment}'>
-						<@checkBox labelFor='shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='shown_in_history' id='shown_in_history' value='1' checked=getChecked('shown_in_history',list_param_default_values) />
-					</@formGroup>
-					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_export_comment}'>
-						<@checkBox labelFor='shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='shown_in_export' id='shown_in_export' value='1' checked=getChecked('shown_in_export',list_param_default_values) />
-					</@formGroup>
-					<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_completeness_comment}'>
-						<@checkBox labelFor='shown_in_completeness' labelKey='#i18n{directory.create_entry.label_shown_in_completeness}' name='shown_in_completeness' id='shown_in_completeness' value='1' checked=getChecked('shown_in_completeness',list_param_default_values) />
-					</@formGroup>
-					<@formGroup labelFor='comment' labelKey='#i18n{directory.create_entry.label_comment}'>
-						<@input type='textarea' name='comment' rows=2></@input>
-					</@formGroup>
+					<div id="panel1">
+						<@formGroup labelFor='entry_type' labelKey='#i18n{directory.create_entry.label_type}'>
+							<@tag color='info' title='#i18n{directory.create_entry.label_type}'>#i18n{${entry.entryType.titleI18nKey}}</@tag>
+						</@formGroup>
+						<@formGroup labelFor='title' labelKey='#i18n{directory.create_entry.label_title}' helpKey='#i18n{directory.create_entry.label_title_comment}' mandatory=true>
+							<@input type='text' name='title' id='title' value='' maxlength=255 />
+						</@formGroup>
+						<@formGroup>
+							<@checkBox labelFor='mandatory' labelKey='#i18n{directory.create_entry.label_mandatory}' name='mandatory' id='mandatory' value='1' checked=getChecked('mandatory',list_param_default_values) />
+						</@formGroup>
+						<@formGroup labelFor='value' labelKey='#i18n{directory.create_entry.label_value_default}'>
+							<@inputGroup>
+								<@inputGroupItem type='addon'>
+									<@icon style='calendar' />
+								</@inputGroupItem>
+								<@input type='text' name='value' id='date' value='' />
+							</@inputGroup>
+						</@formGroup>
+						<@formGroup labelFor='help_message' labelKey='#i18n{directory.create_entry.label_help_message}' helpKey='#i18n{directory.create_entry.label_help_message_comment}'>
+							<@input type='textarea' name='help_message' id='help_message' rows=2></@input>
+						</@formGroup>
+						<@formGroup labelFor='help_message_search' labelKey='#i18n{directory.create_entry.label_help_message_search}' helpKey='#i18n{directory.create_entry.label_help_message_search_comment}'>
+							<@input type='textarea' name='help_message_search' id='help_message_search' rows=2></@input>
+						</@formGroup>
+					</div>
+					<div id="panel2">
+						<@formGroup helpKey='#i18n{directory.create_entry.label_indexed_comment}'>
+							<@checkBox labelFor='indexed' labelKey='#i18n{directory.create_entry.label_indexed}' name='indexed' id='indexed' value='1' checked=getChecked('indexed',list_param_default_values) />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_advanced_search_comment}'>
+							<@checkBox labelFor='shown_in_advanced_search' labelKey='#i18n{directory.create_entry.label_shown_in_advanced_search}' name='shown_in_advanced_search' id='shown_in_advanced_search'  value='1' checked=getChecked('shown_in_advanced_search',list_param_default_values) />
+						</@formGroup>
+						<@formGroup>
+							<@checkBox labelFor='indexed_as_title' labelKey='#i18n{directory.create_entry.label_indexed_as_title}' name='indexed_as_title' id='indexed_as_title' value='1' checked=getChecked('indexed_as_title',list_param_default_values) />
+						</@formGroup>
+						<@formGroup>
+							<@checkBox labelFor='indexed_as_summary' labelKey='#i18n{directory.create_entry.label_indexed_as_summary}' name='indexed_as_summary' id='indexed_as_summary' value='1' checked=getChecked('indexed_as_summary',list_param_default_values) />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_list_comment}'>
+							<@checkBox labelFor='shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='shown_in_result_list' id='shown_in_result_list' value='1' checked=getChecked('shown_in_result_list',list_param_default_values) />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_record_comment}'>
+							<@checkBox labelFor='shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='shown_in_result_record' id='shown_in_result_record' value='1' checked=getChecked('shown_in_result_record',list_param_default_values) />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_history_comment}'>
+							<@checkBox labelFor='shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='shown_in_history' id='shown_in_history' value='1' checked=getChecked('shown_in_history',list_param_default_values) />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_export_comment}'>
+							<@checkBox labelFor='shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='shown_in_export' id='shown_in_export' value='1' checked=getChecked('shown_in_export',list_param_default_values) />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_completeness_comment}'>
+							<@checkBox labelFor='shown_in_completeness' labelKey='#i18n{directory.create_entry.label_shown_in_completeness}' name='shown_in_completeness' id='shown_in_completeness' value='1' checked=getChecked('shown_in_completeness',list_param_default_values) />
+						</@formGroup>
+						<@formGroup labelFor='comment' labelKey='#i18n{directory.create_entry.label_comment}'>
+							<@input type='textarea' name='comment' rows=2></@input>
+						</@formGroup>
+					</div>
 					<@formGroup>
 						<@button type='submit' name='save' buttonIcon='save' title='#i18n{directory.create_entry.button_save}' showTitleXs=false size='' />
 						<@aButton href='jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}' buttonIcon='remove' title='#i18n{directory.create_entry.button_cancel}' showTitleXs=false size='' color='btn-secondary' />
@@ -72,3 +75,12 @@
 	</@columns>
 </@row>
 <@getDatePickerBootstrap idField="date" language=locale />
+<script>
+	$(document).ready(function(){
+		$('#panel2').hide();
+		$('#advanced').click(function(){
+			$('#panel1,#panel2').toggle();
+			$('#advanced').toggleClass('btn-primary btn-secondary');
+		});
+	});
+</script>
