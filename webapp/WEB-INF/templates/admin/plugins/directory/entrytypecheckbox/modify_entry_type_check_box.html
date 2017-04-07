@@ -1,143 +1,140 @@
 <#include "/admin/plugins/directory/commons.html" />
 <@row>
 	<@tform action='jsp/admin/plugins/directory/DoModifyEntry.jsp#list'>
+		<input name="id_entry" value="${entry.idEntry}" type="hidden" />
 		<@columns id='main'>
-			<input name="id_entry" value="${entry.idEntry}" type="hidden" />
 			<@box color='primary'>
 				<@boxHeader title='#i18n{directory.create_entry.title_field} : "${entry.directory.title}"' boxTools=true>
-					<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					<@button type='button' buttonIcon='cogs' title='#i18n{directory.create_directory.label_advancedsettings}' id='advanced' />
+					<@button style='btn-box-tool' params='data-widget="collapse"' buttonIcon='minus' />
 				</@boxHeader>
 				<@boxBody>
-					<@formGroup labelFor='entry_type' labelKey='#i18n{directory.create_entry.label_type}'>
-						<@input type='text' name='entry_type' id='entry_type' disabled=true value='#i18n{${entry.entryType.titleI18nKey}}' />
-					</@formGroup>
-					<@formGroup labelFor='title' labelKey='#i18n{directory.create_entry.label_title}' helpKey='#i18n{directory.create_entry.label_title_comment}' mandatory=true>
-						<@input type='text' name='title' id='title' value='${entry.title}' maxlength=255 />
-					</@formGroup>
-					<@formGroup>
-						<@checkBox labelFor='mandatory' labelKey='#i18n{directory.create_entry.label_mandatory}' name='mandatory' id='mandatory' value='1' checked=entry.mandatory />
-					</@formGroup>
-					<@formGroup labelFor='width' labelKey='#i18n{directory.create_entry.label_presentation}'>
-						<@select id='field_in_line' name='field_in_line'>
-							<option value="1" <#if entry.fieldInLine>selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_in_line}</option>
-							<option value="0" <#if !entry.fieldInLine>selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_not_in_line}</option>
-						</@select>
-					</@formGroup>
-					<@formGroup>
-						<@button type='submit' name='save' buttonIcon='save' title='#i18n{directory.create_entry.button_save}' showTitleXs=false size='' />
-						<@button type='submit' name='apply' buttonIcon='check' title='#i18n{directory.modify_entry.button_apply}' showTitleXs=false size='' />
-						<@aButton href='jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}' buttonIcon='remove' title='#i18n{directory.create_entry.button_cancel}' showTitleXs=false size='' color='btn-secondary' />
-					</@formGroup>
+					<div id="panel1">
+						<@formGroup labelFor='entry_type' labelKey='#i18n{directory.create_entry.label_type}'>
+							<@tag color='info' title='#i18n{directory.create_entry.label_type}'>#i18n{${entry.entryType.titleI18nKey}}</@tag>
+						</@formGroup>
+						<@formGroup labelFor='title' labelKey='#i18n{directory.create_entry.label_title}' helpKey='#i18n{directory.create_entry.label_title_comment}' mandatory=true>
+							<@input type='text' name='title' id='title' value='${entry.title}' maxlength=255 />
+						</@formGroup>
+						<@formGroup>
+							<@checkBox labelFor='mandatory' labelKey='#i18n{directory.create_entry.label_mandatory}' name='mandatory' id='mandatory' value='1' checked=entry.mandatory />
+						</@formGroup>
+						<@formGroup labelFor='width' labelKey='#i18n{directory.create_entry.label_presentation}'>
+							<@select id='field_in_line' name='field_in_line'>
+								<option value="1" <#if entry.fieldInLine>selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_in_line}</option>
+								<option value="0" <#if !entry.fieldInLine>selected="selected"</#if>>#i18n{directory.create_entry.select_presentation_not_in_line}</option>
+							</@select>
+						</@formGroup>
+						<@formGroup labelFor='help_message' labelKey='#i18n{directory.create_entry.label_help_message}' helpKey='#i18n{directory.create_entry.label_help_message_comment}'>
+							<@input type='textarea' name='help_message' id='help_message' rows=2>${entry.helpMessage!}</@input>
+						</@formGroup>
+						<@formGroup labelFor='help_message_search' labelKey='#i18n{directory.create_entry.label_help_message_search}' helpKey='#i18n{directory.create_entry.label_help_message_search_comment}'>
+							<@input type='textarea' name='help_message_search' id='help_message_search' rows=2>${entry.helpMessageSearch!}</@input>
+						</@formGroup>
+						<@formGroup>
+							<@button type='submit' name='save' buttonIcon='save' title='#i18n{directory.create_entry.button_save}' showTitleXs=false size='' />
+							<@button type='submit' name='apply' buttonIcon='check' title='#i18n{directory.modify_entry.button_apply}' showTitleXs=false size='' />
+							<@aButton href='jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}' buttonIcon='remove' title='#i18n{directory.create_entry.button_cancel}' showTitleXs=false size='' color='btn-secondary' />
+						</@formGroup>
+					</div>
+					<div id="panel2">
+						<@formGroup helpKey='#i18n{directory.create_entry.label_indexed_comment}'>
+							<@checkBox labelFor='indexed' labelKey='#i18n{directory.create_entry.label_indexed}' name='indexed' id='indexed' value='1' checked=entry.indexed />
+						</@formGroup>
+						<@formGroup  helpKey='#i18n{directory.create_entry.label_shown_in_advanced_search_comment}'>
+							<@checkBox labelFor='shown_in_advanced_search' labelKey='#i18n{directory.create_entry.label_shown_in_advanced_search}' name='shown_in_advanced_search' id='shown_in_advanced_search' value='1' checked=entry.shownInAdvancedSearch />
+						</@formGroup>
+						<@formGroup>
+							<@checkBox labelFor='indexed_as_title' labelKey='#i18n{directory.create_entry.label_indexed_as_title}' name='indexed_as_title' id='indexed_as_title' value='1' checked=entry.indexedAsTitle />
+						</@formGroup>
+						<@formGroup>
+							<@checkBox labelFor='indexed_as_summary' labelKey='#i18n{directory.create_entry.label_indexed_as_summary}' name='indexed_as_summary' id='indexed_as_summary' value='1' checked=entry.indexedAsSummary />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_list_comment}'>
+							<@checkBox labelFor='shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='shown_in_result_list' id='shown_in_result_list' value='1' checked=entry.shownInResultList />
+						</@formGroup>
+						<@formGroup  helpKey='#i18n{directory.create_entry.label_shown_in_result_record_comment}'>
+							<@checkBox labelFor='shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='shown_in_result_record' id='shown_in_result_record' value='1' checked=entry.shownInResultRecord />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_history_comment}'>
+							<@checkBox labelFor='shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='shown_in_history' id='shown_in_history' value='1' checked=entry.shownInHistory />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_export_comment}'>
+							<@checkBox labelFor='shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='shown_in_export' id='shown_in_export' value='1' checked=entry.shownInExport />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_completeness_comment}'>
+							<@checkBox labelFor='shown_in_completeness' labelKey='#i18n{directory.create_entry.label_shown_in_completeness}' name='shown_in_completeness' id='shown_in_completeness' value='1' checked=entry.shownInCompleteness />
+						</@formGroup>
+						<@formGroup labelFor='comment' labelKey='#i18n{directory.create_entry.label_comment}'>
+							<@input type='textarea' name='comment' rows=2>${entry.comment!}</@input>
+						</@formGroup>
+						<@formGroup>
+							<@button type='submit' name='save' buttonIcon='save' title='#i18n{directory.create_entry.button_save}' showTitleXs=false size='' />
+							<@button type='submit' name='apply' buttonIcon='check' title='#i18n{directory.modify_entry.button_apply}' showTitleXs=false size='' />
+							<@aButton href='jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}' name='cancel' buttonIcon='remove' title='#i18n{directory.create_entry.button_cancel}' showTitleXs=false size='' color='btn-secondary' />
+						</@formGroup>
+					</div>
 				</@boxBody>
 			</@box>
 		</@columns>
-		<@columns>
-			<@tabs>
-				<@listTabs>
-					<li class="active"><a href="#panel1" data-toggle="tab"><@icon style='list' /><span class="hidden-xs"> #i18n{directory.create_entry.manage_field.title}</span></a></li>
-					<li><a href="#panel2" data-toggle="tab"><@icon style='cogs' /><span class="hidden-xs"> #i18n{directory.create_directory.label_advancedsettings}</span></a></li>
-				</@listTabs>
-				<@tabContent>
-					<div class="tab-pane active" id="panel1">
-						<@box color='solid'>
-							<@boxHeader title='#i18n{directory.create_entry.manage_field.title}' boxTools=true>
-								<@aButton id='btn-create' href='jsp/admin/plugins/directory/CreateField.jsp' buttonIcon='plus' title='#i18n{directory.create_entry.manage_field.button_insert}' showTitleXs=false />
-								<@aButton href='jsp/admin/plugins/directory/ImportField.jsp?id_directory=${idDirectory}&amp;id_entry=${entry.idEntry}' buttonIcon='upload' title='#i18n{directory.import_field.title}' showTitleXs=false />
-							</@boxHeader>
-							<@boxBody>
-								<@table>
-									<thead>
-										<tr>
-											<th>#i18n{directory.create_entry.manage_field.row_title}</th>
-											<th>#i18n{directory.create_entry.manage_field.row_value}</th>
-											<th>#i18n{directory.create_entry.manage_field.row_default_value}</th>
-											<th>#i18n{directory.create_entry.manage_field.row_key}</th>
-											<th>#i18n{directory.create_entry.manage_field.row_actions}</th>
-										</tr>
-									</thead>
-									<tbody>
-										<#assign cpt=0>
-										<#list list as field>
-											<#assign cpt=cpt+1>
-											<tr>
-												<td>${field.title}</td>
-												<td>${field.value}</td>
-												<td>
-													<#if field.defaultValue>
-														<@tag color='success'><@icon style='check' /></@tag>
-													</#if>
-												</td >
-												<td>${field.idField}</td>
-												<td>
-													<@aButton href='jsp/admin/plugins/directory/ModifyField.jsp?id_field=${field.idField}' buttonIcon='pencil' title='#i18n{portal.util.labelModify}' showTitle=false />
-													<#if cpt!=1>
-														<@aButton href='jsp/admin/plugins/directory/DoMoveUpField.jsp?id_field=${field.idField}#list' buttonIcon='chevron-up' title='#i18n{directory.create_entry.manage_field.title_move_up}' showTitle=false />
-													</#if>
-													<#if field_has_next>
-														<@aButton href='jsp/admin/plugins/directory/DoMoveDownField.jsp?id_field=${field.idField}#list' buttonIcon='chevron-down' title='#i18n{directory.create_entry.manage_field.title_move_down}' showTitle=false />
-													</#if>
-													<@aButton href='jsp/admin/plugins/directory/ConfirmRemoveField.jsp?id_field=${field.idField}#list' buttonIcon='trash' title='#i18n{directory.create_entry.manage_field.title_delete}' showTitle=false color='btn-danger' />
-												</td>
-											</tr>
-										</#list>
-									</tbody>
-								</@table>
-								<@paginationAdmin paginator=paginator combo=1/>
-							</@boxBody>
-						</@box>
-					</div>
-					
-					<div class="tab-pane" id="panel2">
-						<@box color='solid'>
-							<@boxHeader title='#i18n{directory.create_directory.label_advancedsettings}' />
-							<@boxBody>
-								<input name="id_entry" value="${entry.idEntry}" type="hidden">
-								<@formGroup labelFor='help_message' labelKey='#i18n{directory.create_entry.label_help_message}' helpKey='#i18n{directory.create_entry.label_help_message_comment}'>
-									<@input type='textarea' name='help_message' id='help_message' rows=2>${entry.helpMessage!}</@input>
-								</@formGroup>
-								<@formGroup labelFor='help_message_search' labelKey='#i18n{directory.create_entry.label_help_message_search}' helpKey='#i18n{directory.create_entry.label_help_message_search_comment}'>
-									<@input type='textarea' name='help_message_search' id='help_message_search' rows=2>${entry.helpMessageSearch!}</@input>
-								</@formGroup>
-								<@formGroup helpKey='#i18n{directory.create_entry.label_indexed_comment}'>
-									<@checkBox labelFor='indexed' labelKey='#i18n{directory.create_entry.label_indexed}' name='indexed' id='indexed' value='1' checked=entry.indexed />
-								</@formGroup>
-								<@formGroup  helpKey='#i18n{directory.create_entry.label_shown_in_advanced_search_comment}'>
-									<@checkBox labelFor='shown_in_advanced_search' labelKey='#i18n{directory.create_entry.label_shown_in_advanced_search}' name='shown_in_advanced_search' id='shown_in_advanced_search' value='1' checked=entry.shownInAdvancedSearch />
-								</@formGroup>
-								<@formGroup>
-									<@checkBox labelFor='indexed_as_title' labelKey='#i18n{directory.create_entry.label_indexed_as_title}' name='indexed_as_title' id='indexed_as_title' value='1' checked=entry.indexedAsTitle />
-								</@formGroup>
-								<@formGroup>
-									<@checkBox labelFor='indexed_as_summary' labelKey='#i18n{directory.create_entry.label_indexed_as_summary}' name='indexed_as_summary' id='indexed_as_summary' value='1' checked=entry.indexedAsSummary />
-								</@formGroup>
-								<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_list_comment}'>
-									<@checkBox labelFor='shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='shown_in_result_list' id='shown_in_result_list' value='1' checked=entry.shownInResultList />
-								</@formGroup>
-								<@formGroup  helpKey='#i18n{directory.create_entry.label_shown_in_result_record_comment}'>
-									<@checkBox labelFor='shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='shown_in_result_record' id='shown_in_result_record' value='1' checked=entry.shownInResultRecord />
-								</@formGroup>
-								<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_history_comment}'>
-									<@checkBox labelFor='shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='shown_in_history' id='shown_in_history' value='1' checked=entry.shownInHistory />
-								</@formGroup>
-								<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_export_comment}'>
-									<@checkBox labelFor='shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='shown_in_export' id='shown_in_export' value='1' checked=entry.shownInExport />
-								</@formGroup>
-								<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_completeness_comment}'>
-									<@checkBox labelFor='shown_in_completeness' labelKey='#i18n{directory.create_entry.label_shown_in_completeness}' name='shown_in_completeness' id='shown_in_completeness' value='1' checked=entry.shownInCompleteness />
-								</@formGroup>
-								<@formGroup labelFor='comment' labelKey='#i18n{directory.create_entry.label_comment}'>
-									<@input type='textarea' name='comment' rows=2>${entry.comment!}</@input>
-								</@formGroup>
-								<@formGroup>
-									<@button type='submit' name='save' buttonIcon='save' title='#i18n{directory.create_entry.button_save}' showTitleXs=false size='' />
-									<@button type='submit' name='apply' buttonIcon='check' title='#i18n{directory.modify_entry.button_apply}' showTitleXs=false size='' />
-									<@aButton href='jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}' name='cancel' buttonIcon='remove' title='#i18n{directory.create_entry.button_cancel}' showTitleXs=false size='' color='btn-secondary' />
-								</@formGroup>
-							</@boxBody>
-						</@box>
-					</div>
-				</@tabContent>
-			</@tabs>
-		</@columns>
 	</@tform>
+	
+	<@columns>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directory.create_entry.manage_field.title}' boxTools=true>
+				<@aButton id='btn-create' href='jsp/admin/plugins/directory/CreateField.jsp' buttonIcon='plus' title='#i18n{directory.create_entry.manage_field.button_insert}' showTitleXs=false />
+				<@aButton href='jsp/admin/plugins/directory/ImportField.jsp?id_directory=${idDirectory}&amp;id_entry=${entry.idEntry}' buttonIcon='upload' title='#i18n{directory.import_field.title}' showTitleXs=false />
+			</@boxHeader>
+			<@boxBody>
+				<@table>
+					<thead>
+						<tr>
+							<th>#i18n{directory.create_entry.manage_field.row_title}</th>
+							<th>#i18n{directory.create_entry.manage_field.row_value}</th>
+							<th>#i18n{directory.create_entry.manage_field.row_default_value}</th>
+							<th>#i18n{directory.create_entry.manage_field.row_key}</th>
+							<th>#i18n{directory.create_entry.manage_field.row_actions}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<#assign cpt=0>
+						<#list list as field>
+							<#assign cpt=cpt+1>
+							<tr>
+								<td>${field.title}</td>
+								<td>${field.value}</td>
+								<td>
+									<#if field.defaultValue>
+										<@tag color='success'><@icon style='check' /></@tag>
+									</#if>
+								</td >
+								<td>${field.idField}</td>
+								<td>
+									<@aButton href='jsp/admin/plugins/directory/ModifyField.jsp?id_field=${field.idField}' buttonIcon='pencil' title='#i18n{portal.util.labelModify}' showTitle=false />
+									<#if cpt!=1>
+										<@aButton href='jsp/admin/plugins/directory/DoMoveUpField.jsp?id_field=${field.idField}#list' buttonIcon='chevron-up' title='#i18n{directory.create_entry.manage_field.title_move_up}' showTitle=false />
+									</#if>
+									<#if field_has_next>
+										<@aButton href='jsp/admin/plugins/directory/DoMoveDownField.jsp?id_field=${field.idField}#list' buttonIcon='chevron-down' title='#i18n{directory.create_entry.manage_field.title_move_down}' showTitle=false />
+									</#if>
+									<@aButton href='jsp/admin/plugins/directory/ConfirmRemoveField.jsp?id_field=${field.idField}#list' buttonIcon='trash' title='#i18n{directory.create_entry.manage_field.title_delete}' showTitle=false color='btn-danger' />
+								</td>
+							</tr>
+						</#list>
+					</tbody>
+				</@table>
+				<@paginationAdmin paginator=paginator combo=1/>
+			</@boxBody>
+		</@box>
+	</@columns>
 </@row>
+
+<script>
+	$(document).ready(function(){
+		$('#panel2').hide();
+		$('#advanced').click(function(){
+			$('#panel1,#panel2').toggle();
+			$('#advanced').toggleClass('btn-primary btn-secondary');
+		});
+	});
+</script>
