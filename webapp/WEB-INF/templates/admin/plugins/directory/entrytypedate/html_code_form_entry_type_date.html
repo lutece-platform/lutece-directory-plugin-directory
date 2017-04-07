@@ -1,23 +1,22 @@
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title} <#if entry.mandatory>*</#if></label>
-	<div class="col-xs-12 col-sm-9">
-		<div class="input-group dtBootstrap">
-			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-			<#list entry.fields as field>
-					<#if field.valueTypeDate?exists && !default_values?has_content>
-						<input type="text" class="form-control" name="${entry.idEntry}" id="${entry.idEntry}" value="${field.valueTypeDate}">
-					<#elseif default_values?has_content>
-						<#list default_values as default_value>
-							<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" class="form-control" value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}">
-						</#list>
-					<#else>
-					<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" class="form-control" value="">
-					</#if>
-			</#list>
-		</div>
-		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-text">${entry.helpMessage}</p>
-		</#if>
-	</div>
-</div>
+<#assign helpKey>
+	<#if entry.helpMessage?exists&&entry.helpMessage!=''>${entry.helpMessage}</#if>
+</#assign>
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=helpKey mandatory=entry.mandatory>
+	<@inputGroup>
+		<@inputGroupItem type='addon'>
+			<@icon style='calendar' />
+		</@inputGroupItem>
+		<#list entry.fields as field>
+			<#if field.valueTypeDate?exists && !default_values?has_content>
+				<@input type='text' name='${entry.idEntry}' id='${entry.idEntry}' value='${field.valueTypeDate}' />
+			<#elseif default_values?has_content>
+				<#list default_values as default_value>
+					<@input type='text' name='${entry.idEntry}' id='${entry.idEntry}' value='${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}' />
+				</#list>
+			<#else>
+				<@input type='text' name='${entry.idEntry}' id='${entry.idEntry}' />
+			</#if>
+		</#list>
+	</@inputGroup>
+</@formGroup>
 <@getDatePickerBootstrap idField="${entry.idEntry}" language=locale />

@@ -14,33 +14,34 @@
 	</#list>
 	 <#return "">
 </#function>
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}</label>
-	<div class="col-xs-12 col-sm-9">
-    <#if entry.multipleSearchFields>
+
+<#assign helpKey>
+<#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''>${entry.helpMessageSearch}</#if>
+</#assign>
+
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=helpKey>
+	<#if entry.multipleSearchFields>
 		<#if default_values?has_content>
 				<label>#i18n{directory.html_code_form_search_entry_type_date.of}</label>
-				<input type="text" class="form-control" name="date_begin_${entry.idEntry}" id="date_begin_${entry.idEntry}" value="${defaultValueDateBegin(default_values)}">
+				<@input type='text' name='date_begin_${entry.idEntry}' id='date_begin_${entry.idEntry}' value='${defaultValueDateBegin(default_values)}' />
 				<label>#i18n{directory.html_code_form_search_entry_type_date.to}</label>
-				<input type="text" class="form-control" name="date_end_${entry.idEntry}" id="date_end_${entry.idEntry}" value="${defaultValueDateEnd(default_values)}">
+				<@input type='text' name='date_end_${entry.idEntry}' id='date_end_${entry.idEntry}' value='${defaultValueDateEnd(default_values)}' />
 		<#else>
 				<label>#i18n{directory.html_code_form_search_entry_type_date.of}</label>
-				<input type="text" class="form-control" name="date_begin_${entry.idEntry}" id="date_begin_${entry.idEntry}" accept=""value="">
+				<@input type='text' name='date_begin_${entry.idEntry}' id='date_begin_${entry.idEntry}' />
 				<label>#i18n{directory.html_code_form_search_entry_type_date.to}</label>
-				<input type="text" class="form-control" name="date_end_${entry.idEntry}" id="date_end_${entry.idEntry}" value="">
+				<@input type='text' name='date_end_${entry.idEntry}' id='date_end_${entry.idEntry}' />
 		</#if>
 	<#else>
 		<#list entry.fields as field>
 			<#if default_values?has_content>
 				<#list default_values as default_value>
-						<input type="text" class="form-control" name="${entry.idEntry}" id="${entry.idEntry}" value="${entry.convertRecordFieldValueToString(default_value,locale,false,false)}">
+					<@input type='text' name='${entry.idEntry}' id='${entry.idEntry}' value='${entry.convertRecordFieldValueToString(default_value,locale,false,false)}' />
 				</#list>
 			<#else>
-					<input type="text" class="form-control" name="${entry.idEntry}" id="${entry.idEntry}" value="">
+					<@input type='text' name='${entry.idEntry}' id='${entry.idEntry}' />
 			</#if>
 		 </#list>
-    </#if>
-		<#if entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''><span class="help-text">${entry.helpMessageSearch}</span></#if>
-	</div>
-</div>
+  </#if>
+</@formGroup>
 <@getDatePickerBootstrap idField="date_limite" language=locale />
