@@ -41,12 +41,16 @@ import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.web.constants.Messages;
 import fr.paris.lutece.util.filesystem.FileSystemUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -129,6 +133,12 @@ public final class DoDownloadFile
         else
         {
             nIdFile = DirectoryUtils.convertStringToInt( strIdFile );
+        }
+
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+        if ( ! recordService.isFileAuthorized( nIdFile, request, plugin ) )
+        {
+            return AdminMessageService.getMessageUrl( request, Messages.USER_ACCESS_DENIED, AdminMessage.TYPE_STOP );
         }
 
         File file = FileHome.findByPrimaryKey( nIdFile, plugin );

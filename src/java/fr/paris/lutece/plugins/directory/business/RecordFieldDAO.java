@@ -107,6 +107,12 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     private static final String SQL_WHERE = " WHERE ";
     private static final String SQL_UPDATE_VALUE_RECORD_FIELD = "UPDATE directory_record_field SET record_field_value = ? WHERE id_record_field = ? ";
 
+    //Security on files
+    private static final String SQL_QUERY_FIND_BY_FILE = "SELECT "
+            + "drf.id_record_field,drf.id_record,drf.record_field_value,type.class_name,ent.id_entry,ent.title,ent.display_width,ent.display_height, "
+            + "drf.id_field,drf.id_file FROM directory_record_field drf,directory_entry ent,directory_entry_type type  "
+            + "WHERE drf.id_file=? and drf.id_entry =ent.id_entry and ent.id_type=type.id_type ";
+
     /**
      * Generates a new primary key
      *
@@ -178,6 +184,20 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     @Override
     public RecordField load( int nIdRecordField, Plugin plugin )
     {
+        return load ( nIdRecordField, SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RecordField loadByFile( int nIdRecordField, Plugin plugin )
+    {
+        return load ( nIdRecordField, SQL_QUERY_FIND_BY_FILE, plugin );
+    }
+
+    private RecordField load( int nIdRecordField, String strSQL, Plugin plugin )
+    {
         boolean bException = false;
         RecordField recordField = null;
         File file = null;
@@ -185,7 +205,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         EntryType entryType = null;
         Field field = null;
         Record record = null;
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
+        DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
         daoUtil.setInt( 1, nIdRecordField );
         daoUtil.executeQuery( );
 

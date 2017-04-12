@@ -177,6 +177,36 @@ public final class RecordFieldHome
     {
         RecordField recordField = _dao.load( nKey, plugin );
 
+        loadSubObjects( recordField, plugin );
+
+        return recordField;
+    }
+
+    /**
+     * Returns an instance of a Record field whose file identifier is specified in parameter
+     *
+     * @param nIdFile
+     *            The entry primary key
+     * @param plugin
+     *            the Plugin
+     * @return an instance of Record field
+     */
+    public static RecordField findByFile ( int nIdFile, Plugin plugin ) {
+        RecordField recordField = _dao.loadByFile( nIdFile, plugin );
+
+        loadSubObjects( recordField, plugin );
+        return recordField;
+    }
+
+    /**
+     * Replace "empty" sub object containing only an Id with "full" objects
+     *
+     * @param recordField
+     *            The recordField
+     * @param plugin
+     *            the Plugin
+     */
+    private static void loadSubObjects ( RecordField recordField, Plugin plugin ) {
         if ( ( recordField != null ) && ( recordField.getFile( ) != null ) )
         {
             recordField.setFile( FileHome.findByPrimaryKey( recordField.getFile( ).getIdFile( ), plugin ) );
@@ -186,8 +216,6 @@ public final class RecordFieldHome
         {
             recordField.setField( FieldHome.findByPrimaryKey( recordField.getField( ).getIdField( ), plugin ) );
         }
-
-        return recordField;
     }
 
     /**
