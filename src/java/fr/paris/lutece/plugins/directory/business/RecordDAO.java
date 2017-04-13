@@ -525,15 +525,11 @@ public final class RecordDAO implements IRecordDAO
 
             for ( ReferenceItem rWorkgroupKey : filter.getWorkgroupKeyList( ) )
             {
-                // FIXME : Hack for workgroup filter
                 if ( AdminWorkgroupService.ALL_GROUPS.equals( rWorkgroupKey.getCode( ) ) )
                 {
                     bContaintsAll = true;
                 }
-                else
-                {
-                    lWorkgroupKey.add( rWorkgroupKey.getCode( ) );
-                }
+                lWorkgroupKey.add( rWorkgroupKey.getCode( ) );
             }
 
             int nWorkgroupKeySize = lWorkgroupKey.size( );
@@ -668,12 +664,8 @@ public final class RecordDAO implements IRecordDAO
         {
             for ( ReferenceItem rWorkgroupKey : filter.getWorkgroupKeyList( ) )
             {
-                // FIXME : Hack for workgroup filter
-                if ( !AdminWorkgroupService.ALL_GROUPS.equals( rWorkgroupKey.getCode( ) ) )
-                {
-                    result.setString( nIndex, rWorkgroupKey.getCode( ) );
-                    nIndex++;
-                }
+                result.setString( nIndex, rWorkgroupKey.getCode( ) );
+                nIndex++;
             }
         }
 
