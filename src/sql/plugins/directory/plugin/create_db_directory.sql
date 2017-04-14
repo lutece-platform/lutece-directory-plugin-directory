@@ -189,6 +189,7 @@ CREATE TABLE directory_record_field (
 
 CREATE INDEX  id_entry_fk_ref ON directory_record_field (id_entry);
 CREATE INDEX  id_record ON directory_record_field (id_record);
+CREATE INDEX  record_field_id_file ON directory_record_field (id_file);
 
 /*==============================================================*/
 /* Table structure for table directory_file						*/
