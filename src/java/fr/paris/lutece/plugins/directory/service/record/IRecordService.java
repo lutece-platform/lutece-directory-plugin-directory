@@ -37,6 +37,8 @@ import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -184,4 +186,19 @@ public interface IRecordService
      * @return the directory id
      */
     Integer getDirectoryIdByRecordId( Integer nRecordId, Plugin plugin );
+
+    /**
+     * Is the file authorized for viewing.
+     *
+     * This checks for front and back access rules and does an OR.
+     *
+     * @param nFileId
+     *            the file id
+     * @param request
+     *            the request
+     * @param plugin
+     *            the plugin
+     * @return the directory id
+     */
+    boolean isFileAuthorized( int nFileId, HttpServletRequest request, Plugin plugin );
 }

@@ -33,11 +33,28 @@
  */
 package fr.paris.lutece.plugins.directory.service.record;
 
+import javax.servlet.http.HttpServletRequest;
+
+import fr.paris.lutece.plugins.directory.business.Directory;
+import fr.paris.lutece.plugins.directory.business.DirectoryHome;
+import fr.paris.lutece.plugins.directory.business.EntryHome;
+import fr.paris.lutece.plugins.directory.business.EntryTypeImg;
+import fr.paris.lutece.plugins.directory.business.IEntry;
 import fr.paris.lutece.plugins.directory.business.Record;
+import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
+import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
 import fr.paris.lutece.plugins.directory.business.RecordHome;
+import fr.paris.lutece.plugins.directory.service.DirectoryResourceIdService;
+import fr.paris.lutece.plugins.directory.web.ManageDirectoryJspBean;
+import fr.paris.lutece.portal.business.user.AdminUser;
+import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.rbac.RBACService;
 import fr.paris.lutece.portal.service.resource.ExtendableResourceRemovalListenerService;
+import fr.paris.lutece.portal.service.security.SecurityService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -169,5 +186,82 @@ public class RecordService implements IRecordService
     public List<Record> loadListByListId( List<Integer> lIdList, Plugin plugin )
     {
         return RecordHome.loadListByListId( lIdList, plugin );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFileAuthorized( int nFileId, HttpServletRequest request, Plugin plugin )
+    {
+        //We will try to match as best as we can the rules displaying links
+        //to files or images. They should remain accessible.
+        RecordField recordField = RecordFieldHome.findByFile( nFileId, plugin );
+        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+        Record record = recordService.findByPrimaryKey( recordField.getRecord( ).getIdRecord( ), plugin );
+        IEntry entry = EntryHome.findByPrimaryKey( recordField.getEntry().getIdEntry(), plugin);
+        //For images, there is a per field setting (full_size, big_thumbnail, small_thumbnail)
+        //For others, the isShownInX value in the field is not reliable
+        boolean bEntryImg = entry  instanceof EntryTypeImg;
+        boolean bShownList = entry.isShownInResultList( ) && (!bEntryImg || recordField.getField( ).isShownInResultList( ) );
+        boolean bShownRecord = entry.isShownInResultRecord( ) && (!bEntryImg || recordField.getField( ).isShownInResultList( ) ) ;
+        if ( record != null && record.getDirectory( ) != null )
+        {
+            Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory( ).getIdDirectory( ), plugin );
+
+            // Is the record visible in the front office ?
+            if ( directory != null && directory.isEnabled( ) && record.isEnabled( ) )
+            {
+                boolean directoryRoleOk = ! (
+                        ( directory.getRoleKey( ) != null ) && !directory.getRoleKey( ).equals( Directory.ROLE_NONE ) &&
+                        SecurityService.isAuthenticationEnable( ) && !SecurityService.getInstance( ).isUserInRole( request, directory.getRoleKey( ) )
+                );
+                if ( directoryRoleOk )
+                {
+                    boolean recordRoleOk = ! (
+                            ( record.getRoleKey( ) != null ) && !record.getRoleKey( ).equals( Directory.ROLE_NONE ) &&
+                            SecurityService.isAuthenticationEnable( ) && !SecurityService.getInstance( ) .isUserInRole( request, record.getRoleKey( ) )
+                    );
+                    if ( recordRoleOk )
+                    {
+                        return bShownList || bShownRecord;
+                    }
+                }
+            }
+
+            // Is the record visible in the back office ?
+            AdminUser adminUser = AdminUserService.getAdminUser( request );
+            if ( adminUser != null )
+            {
+                if ( adminUser.checkRight( ManageDirectoryJspBean.RIGHT_MANAGE_DIRECTORY ) )
+                {
+                    if ( AdminWorkgroupService.isAuthorized( directory, adminUser )
+                      && AdminWorkgroupService.isAuthorized( record, adminUser ) )
+                    {
+                        boolean bRbacModify = RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( directory.getIdDirectory( ) ),
+                            DirectoryResourceIdService.PERMISSION_MODIFY_RECORD, adminUser);
+                        if ( bRbacModify )
+                        {
+                            return true;
+                        }
+
+                        boolean bRbacManage = RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( directory.getIdDirectory( ) ),
+                            DirectoryResourceIdService.PERMISSION_MANAGE_RECORD, adminUser);
+                        if ( bRbacManage )
+                        {
+                            return bShownList;
+                        }
+
+                        boolean bRbacVisualize = RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( directory.getIdDirectory( ) ),
+                            DirectoryResourceIdService.PERMISSION_VISUALISATION_RECORD, adminUser );
+                        if ( bRbacVisualize )
+                        {
+                            return true; // In the Back office, all recordfields are shown even when isShownInResultRecord is false
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

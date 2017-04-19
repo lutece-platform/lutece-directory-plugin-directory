@@ -195,4 +195,15 @@ public interface IRecordFieldDAO
      *            The plugin
      */
     void updateValue( String strNewValue, Integer nIdRecordField, Plugin plugin );
+
+    /**
+     * Load the data of the record field from the table
+     *
+     * @param nIdFile
+     *            the filter
+     * @param plugin
+     *            the plugin
+     * @return the list of record field
+     */
+    RecordField loadByFile( int nIdFile, Plugin plugin );
 }

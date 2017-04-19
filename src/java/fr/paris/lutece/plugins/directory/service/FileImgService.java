@@ -33,17 +33,25 @@
  */
 package fr.paris.lutece.plugins.directory.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import fr.paris.lutece.plugins.directory.business.EntryTypeUrl;
 import fr.paris.lutece.plugins.directory.business.File;
 import fr.paris.lutece.plugins.directory.business.FileHome;
 import fr.paris.lutece.plugins.directory.business.PhysicalFile;
 import fr.paris.lutece.plugins.directory.business.PhysicalFileHome;
+import fr.paris.lutece.plugins.directory.service.record.IRecordService;
+import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.portal.service.image.ImageResource;
 import fr.paris.lutece.portal.service.image.ImageResourceManager;
 import fr.paris.lutece.portal.service.image.ImageResourceProvider;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.web.LocalVariables;
 import fr.paris.lutece.portal.web.constants.Parameters;
+import fr.paris.lutece.util.file.FileUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
 /**
@@ -90,18 +98,34 @@ public class FileImgService implements ImageResourceProvider
     @Override
     public ImageResource getImageResource( int nIdResource )
     {
+        //When using an older core version (before 5.1.5), the local variables will not
+        //have been set by the image servlet. So we can get null or a request from another thread.
+        //We could try to detect this by checking request.getServletPath( ) (or maybe other things?)
+        //but it would break if we decide to expose this provider through another entrypoint.
+        //Also, on tomcat (tested 8.5.5), it seems like the request object is reused just like
+        //the thread, so that even if the local variables were set in another request,
+        //the object we get here is the correct one (with the corect LuteceUser or AdminUser etc).
+        //Also, Portal.jsp, the main entry point of the webapp, does clean up the local variables.
+        //Note that the other request could even have run code from another webapp (not even a lutece webapp)
+        //Also, we could log a warning here when request is null, but then it would prevent from using
+        //this function from code not associated with a request. So no warnings.
+        HttpServletRequest request = LocalVariables.getRequest();
+
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         File file = FileHome.findByPrimaryKey( nIdResource, plugin );
-        PhysicalFile physicalFile = ( file.getPhysicalFile( ) != null ) ? PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile( ).getIdPhysicalFile( ),
-                plugin ) : null;
+        if ( ( file != null ) && ( file.getPhysicalFile( ) != null ) && FileUtil.hasImageExtension( file.getTitle( ) ) ) {
+            IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+            if ( request == null || recordService.isFileAuthorized( nIdResource, request, plugin ) ) {
+                PhysicalFile physicalFile = PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile( ).getIdPhysicalFile( ), plugin ) ;
+                if ( physicalFile != null )
+                {
+                    ImageResource imageResource = new ImageResource( );
+                    imageResource.setImage( physicalFile.getValue( ) );
+                    imageResource.setMimeType( file.getMimeType( ) );
 
-        if ( physicalFile != null )
-        {
-            ImageResource imageResource = new ImageResource( );
-            imageResource.setImage( physicalFile.getValue( ) );
-            imageResource.setMimeType( file.getMimeType( ) );
-
-            return imageResource;
+                    return imageResource;
+                }
+            }
         }
 
         return null;
