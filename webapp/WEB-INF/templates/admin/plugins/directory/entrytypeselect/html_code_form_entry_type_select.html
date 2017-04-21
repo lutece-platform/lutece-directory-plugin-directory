@@ -8,10 +8,13 @@
 	</#if>
  <#return false>
 </#function>
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
-	<div class=" col-xs-12 col-sm-9">
-		<select name="${entry.idEntry}" class="form-control"  id="${entry.idEntry}">
+<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+	<#assign helpKey = '${entry.helpMessage}' />
+<#else>
+	<#assign helpKey = '' />
+</#if>
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=helpKey mandatory=entry.mandatory>
+	<@select name='${entry.idEntry}' id='${entry.idEntry}'>
 		<#if !entry.isMandatory() && entry.isAddValueAllSearch()>
 			<option value="">${entry.labelValueAllSearch!}</option>
 		</#if>
@@ -20,7 +23,5 @@
 				<#if ( field.defaultValue && !default_values?has_content )||( default_values?has_content && isSelected (field.idField,default_values))>selected ="selected" </#if>>${field.title}
 			</option>
 		</#list>
-		</select>
-		<#if entry.helpMessage?exists&&entry.helpMessage!=''><span class="help-text">${entry.helpMessage}</span></#if>
-	</div>
-</div>
+	</@select>
+</@formGroup>

@@ -9,27 +9,24 @@
  <#return false>
 </#function>
  <#assign cpt=0>
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}_${cpt}">${entry.title}</label>
-	<div class="col-xs-12 col-sm-9">
+<#if entry.helpMessageSearch?exists && entry.helpMessageSearch!=''>
+	<#assign helpKey = '${entry.helpMessageSearch}' />
+<#else>
+	<#assign helpKey = '' />
+</#if>
+<@formGroup labelFor='${entry.idEntry}_${cpt}' labelKey='${entry.title}' helpKey=helpKey>
 	<#list entry.fields as field>
 		<#assign cpt=cpt+1>
 		<#if entry.fieldInLine>
-			<label class="checkbox-inline" for="${entry.idEntry}_${cpt}">
+			<#assign orientation = 'horizontal' />
 		<#else>
-			<div class="checkbox">
-				<label for="${entry.idEntry}">
+			<#assign orientation = 'vertical' />
 		</#if>
-			<input type="checkbox" name="${entry.idEntry}" id="${entry.idEntry}_${cpt}" title="${entry.helpMessageSearch!}" value="${field.idField}" <#if ( field.defaultValue && !default_values?has_content )||( default_values?has_content && isSelected (field.idField,default_values))>checked="checked" </#if> />${field.title}
-		<#if entry.fieldInLine>
-				</label>
+		<#if ( field.defaultValue && !default_values?has_content )||( default_values?has_content && isSelected (field.idField,default_values))>
+			<#assign checked = true />
 		<#else>
-				</label>
-			</div>
+			<#assign checked = false />
 		</#if>
-		</#list>
-		<#if !entry.fieldInLine&&cpt=1&&entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''>
-			<span class="help-text">${entry.helpMessageSearch}</span>
-		</#if>
-	</div>
-</div>
+		<@checkBox labelFor='${entry.idEntry}_${cpt}' labelKey='${field.title}' name='${entry.idEntry}' id='${entry.idEntry}_${cpt}' title='${entry.helpMessageSearch!}' value='${field.idField}' checked=checked orientation=orientation />
+	</#list>
+</@formGroup>

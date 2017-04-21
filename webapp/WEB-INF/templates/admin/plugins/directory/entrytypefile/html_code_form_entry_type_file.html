@@ -1,20 +1,20 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="form-group">
-  <label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
-  <div class="col-xs-12 col-sm-9">
+<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+	<#assign helpKey = '${entry.helpMessage}' />
+<#else>
+	<#assign helpKey = '' />
+</#if>
+
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=helpKey mandatory=entry.mandatory>
     <#list entry.fields as field>
       <#if !field.title??>
         <input type="hidden" name="_directory_upload_maxLength_directory_${entry.idEntry}" id="_directory_upload_maxLength_directory_${entry.idEntry}" value="${getFileMaxSize( entry )}">
         <input type="hidden" name="_directory_upload_fileTypes_directory_${entry.idEntry}" id="_directory_upload_fileTypes_directory_${entry.idEntry}" value="${getFileTypes( entry )}">
         <input type="file" name="directory_${entry.idEntry}" id="directory_${entry.idEntry}" size="${field.width}">
-        <button class="btn btn-primary btn-xs bnt-flat" type="button" id="_directory_upload_submit_directory_${entry.idEntry}" name="_directory_upload_submit_directory_${entry.idEntry}">
-          <i class="fa fa-upload"></i> #i18n{directory.action.send.name}
-        </button>
+        <@button type='button' id='_directory_upload_submit_directory_${entry.idEntry}' name='_directory_upload_submit_directory_${entry.idEntry}' buttonIcon='upload' title='#i18n{directory.action.send.name}' />
       </#if>
     </#list>
-    <#if entry.helpMessage?exists&&entry.helpMessage!=''>
-      <span class="help-text">${entry.helpMessage}</span>
-    </#if>
+    
     <#-- file removing -->
     <#assign has_files = false>
     <#if default_values?? && default_values?has_content>
@@ -48,12 +48,9 @@
           </#if>
           <#assign file_index = file_index + 1>
         </#list>
+				<div id="_file_deletion_button_directory_${entry.idEntry}">
+					<@button type='submit' name='_directory_upload_delete_directory_${entry.idEntry}' buttonIcon='trash' title='#i18n{directory.action.delete.name}' color='btn-danger' />
+				</div>
       </#if>
     </div>
-    <div id="_file_deletion_button_directory_${entry.idEntry}">
-      <button class="btn btn-danger btn-xs bnt-flat" name="_directory_upload_delete_directory_${entry.idEntry}" type="submit">
-        <i class="fa fa-trash"></i> #i18n{directory.action.delete.name}
-      </button>
-    </div>
-  </div>
-</div>
+</@formGroup>

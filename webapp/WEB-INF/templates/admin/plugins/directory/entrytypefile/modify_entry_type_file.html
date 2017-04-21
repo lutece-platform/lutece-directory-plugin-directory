@@ -1,177 +1,88 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-sm-12" id="main">
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title">#i18n{directory.create_entry.title_field} : '${entry.directory.title}' </h3>
-				<div class="box-tools">
-					<span class="label label-info pull-right" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span>
-				</div>
-			</div>
-			<div class="box-body">
-				<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id="">
-				<input name="id_entry" value="${entry.idEntry}" type="hidden">
-				<div class="row">
-					<div class="col-xs-12 col-sm-7">
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="title">#i18n{directory.create_entry.label_title} *</label>
-							<div class="col-xs-12 col-sm-9">
-								<input type="text" name="title" id="title" value="${entry.title}" maxlength="255" class="form-control">
-								<span class="help-text">#i18n{directory.create_entry.label_title_comment}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for=""></label>
-							<div class="col-xs-12 col-sm-9">
-								<div class="checkbox">
-									<label for="mandatory">
-										<input name="mandatory" id="mandatory"  value="1" type="checkbox" <#if entry.mandatory>checked="checked"</#if>>#i18n{directory.create_entry.label_mandatory}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
- 						 <label class="control-label col-xs-12 col-sm-3" for="file_max_size">#i18n{directory.create_entry.label_file_max_size} *</label>
-							<div class="col-xs-12 col-sm-3">
-								<input type="text" value="${getFileMaxSize(entry)}" class="form-control" id="file_max_size" name="file_max_size">
-							</div>
-						</div>
-						<div class="form-group">
- 						 <label class="control-label col-xs-12 col-sm-3" for="max_files">#i18n{directory.create_entry.label_max_files} * </label>
-							<div class="col-xs-12 col-sm-2">
-								<input type="text" maxlength="2" value="${getMaxFiles(entry)}" class="form-control" name="max_files">
-							</div>
-						</div>
-						<div class="form-group">
- 						 <label class="control-label col-xs-12 col-sm-3" for="width">#i18n{directory.create_entry.label_width} * </label>
- 	 				    <div class="col-xs-12 col-sm-2">
- 								<#list entry.fields as field>
-									<#if field.width &gt; 0>
- 	 									<input type="text" name="width" id="width" class="form-control" value="${field.width}">
-									</#if>
-									<#assign id_field=field.idField>
-
- 								</#list>
- 	 						</div>
- 	 					</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="help_message"> #i18n{directory.create_entry.label_help_message}</label>
-							<div class="col-xs-12 col-sm-9">
-								<textarea  name="help_message" id="help_message" class="form-control" rows="2">${entry.helpMessage!}</textarea>
-								<span class="help-text">#i18n{directory.create_entry.label_help_message_comment}</span>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3"  for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
-							<div class="col-xs-12 col-sm-9">
-								<textarea  name="help_message_search" id="help_message_search" class="form-control" rows="2">${entry.helpMessageSearch!}</textarea>
-								<span class="help-text">#i18n{directory.create_entry.label_help_message_search_comment}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-xs-12 col-sm-offset-3 col-sm-9">
-								<button class="btn btn-primary btn-flat" type="submit" name="save">
-									<i class="fa fa-check" ></i> <span class="hidden-xs" >#i18n{directory.create_entry.button_save}</span>
-								</button>
-								<button class="btn btn-primary btn-flat" type="submit" name="apply">
-									<i class="fa fa-check-circle" ></i>	<span class="hidden-xs">#i18n{directory.modify_entry.button_apply}</span>
-								</button>
-								<a class="btn btn-default btn-flat" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}#list">
-									<i class="fa fa-remove" ></i> <span class="hidden-xs" >#i18n{directory.create_entry.button_cancel}</span>
-								</a>
-							</div>
-						</div>
-				</div>
-				<div class="col-xs-12 col-sm-5">
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-2" for=""></label>
-						<div class="col-xs-12 col-sm-10">
-							<div class="checkbox">
-								<label for="shown_in_result_list" title="#i18n{directory.create_entry.label_shown_in_result_list_comment}">
-									<input name="shown_in_result_list" id="shown_in_result_list" value="1" type="checkbox" <#if entry.shownInResultList>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_result_list}
-								</label>
-							</div>
-						</div>
+<@row>
+	<@columns id='main'>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directory.create_entry.title_field} : "${entry.directory.title}"' boxTools=true>
+				<@button type='button' buttonIcon='cogs' title='#i18n{directory.create_directory.label_advancedsettings}' id='advanced' />
+			</@boxHeader>
+			<@boxBody>
+				<@tform action='jsp/admin/plugins/directory/DoModifyEntry.jsp#list'>
+					<input name="id_entry" value="${entry.idEntry}" type="hidden">
+					<div id="panel1">
+						<@formGroup labelFor='entry_type' labelKey='#i18n{directory.create_entry.label_type}'>
+							<@tag color='info' title='#i18n{directory.create_entry.label_type}'>#i18n{${entry.entryType.titleI18nKey}}</@tag>
+						</@formGroup>
+						<@formGroup labelFor='title' labelKey='#i18n{directory.create_entry.label_title}' helpKey='#i18n{directory.create_entry.label_title_comment}' mandatory=true>
+							<@input type='text' name='title' id='title' maxlength=255 value='${entry.title}' />
+						</@formGroup>
+						<@formGroup>
+							<@checkBox labelFor='mandatory' labelKey='#i18n{directory.create_entry.label_mandatory}' name='mandatory' id='mandatory' value='1' checked=entry.mandatory />
+						</@formGroup>
+						<@formGroup labelFor='file_max_size' labelKey='#i18n{directory.create_entry.label_file_max_size}' mandatory=true>
+							<@input type='text' name='file_max_size' id='file_max_size' value='${getFileMaxSize(entry)}' />
+						</@formGroup>
+						<@formGroup labelFor='max_files' labelKey='#i18n{directory.create_entry.label_max_files}' mandatory=true>
+							<@input type='text' name='max_files' value='${getMaxFiles(entry)}' maxlength=2 />
+						</@formGroup>
+						<@formGroup labelFor='width' labelKey='#i18n{directory.create_entry.label_width}' mandatory=true>
+							<#list entry.fields as field>
+								<#if field.width &gt; 0>
+									<@input type='text' name='width' id='width' value='${field.width}' />
+								</#if>
+								<#if field?index = 0><#assign id_field=field.idField></#if>
+							</#list>
+						</@formGroup>
+						<@formGroup labelFor='help_message' labelKey='#i18n{directory.create_entry.label_help_message}' helpKey='#i18n{directory.create_entry.label_help_message_comment}'>
+							<@input type='textarea' name='help_message' id='help_message' rows=2>${entry.helpMessage!}</@input>
+						</@formGroup>
 					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-2" for=""></label>
-						<div class="col-xs-12 col-sm-10">
-							<div class="checkbox">
-								<label for="shown_in_result_record" title="#i18n{directory.create_entry.label_shown_in_result_record_comment}">
-									<input name="shown_in_result_record" id="shown_in_result_record" value="1" type="checkbox" <#if entry.shownInResultRecord>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_result_record}
-								</label>
-							</div>
-						</div>
+					<div id="panel2">
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_list_comment}'>
+							<@checkBox labelFor='shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='shown_in_result_list' id='shown_in_result_list' value='1' checked=entry.shownInResultList />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_record_comment}'>
+							<@checkBox labelFor='shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='shown_in_result_record' id='shown_in_result_record' value='1' checked=entry.shownInResultRecord />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_history_comment}'>
+							<@checkBox labelFor='shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='shown_in_history' id='shown_in_history' value='1' checked=entry.shownInHistory />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_export_comment}'>
+							<@checkBox labelFor='shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='shown_in_export' id='shown_in_export' value='1' checked=entry.shownInExport />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_completeness_comment}'>
+							<@checkBox labelFor='shown_in_completeness' labelKey='#i18n{directory.create_entry.label_shown_in_completeness}' name='shown_in_completeness' id='shown_in_completeness' value='1' checked=entry.shownInCompleteness />
+						</@formGroup>
+						<@formGroup labelFor='comment' labelKey='#i18n{directory.create_entry.label_comment}'>
+							<@input type='textarea' name='comment' rows=2>${entry.comment}</@input>
+						</@formGroup>
 					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-2" for=""></label>
-						<div class="col-xs-12 col-sm-10">
-							<div class="checkbox">
-								<label class="" for="shown_in_history" title="#i18n{directory.create_entry.label_shown_in_history_comment}">
-									<input name="shown_in_history" id="shown_in_history" value="1" type="checkbox" <#if entry.shownInHistory>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_history}
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-2" for=""></label>
-						<div class="col-xs-12 col-sm-10">
-							<div class="checkbox">
-								<label for="shown_in_export" title="#i18n{directory.create_entry.label_shown_in_export_comment}">
-									<input name="shown_in_export" id="shown_in_export"value="1" type="checkbox" <#if entry.shownInExport>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_export}
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-2" for=""></label>
-						<div class="col-xs-12 col-sm-10">
-							<div class="checkbox">
-								<label for="shown_in_completeness" title="#i18n{directory.create_entry.label_shown_in_completeness_comment}">
-									<input name="shown_in_completeness" id="shown_in_completeness" value="1" type="checkbox" <#if entry.shownInCompleteness>checked="checked"</#if>>	#i18n{directory.create_entry.label_shown_in_completeness}
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-2"  for="comment"> #i18n{directory.create_entry.label_comment}</label>
-						<div class="col-xs-12 col-sm-9">
-							<textarea name="comment" class="form-control" rows="2">${entry.comment}</textarea>
-						</div>
-					</div>
-				</div>
-			</div>
-			</form>
-			</div>
-		</div>
-	</div>
-</div>
+					<@formGroup>
+						<@button type='submit' name='save' buttonIcon='save' title='#i18n{directory.create_entry.button_save}' size='' />
+						<@button type='submit' name='apply' buttonIcon='check' title='#i18n{directory.modify_entry.button_apply}' size='' />
+						<@aButton href='jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}#list' buttonIcon='remove' title='#i18n{directory.create_entry.button_cancel}' size='' color='btn-secondary' />
+					</@formGroup>
+				</@tform>
+			</@boxBody>
+		</@box>
+	</@columns>				
 <#if regular_expression_list??>
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-sm-12" id="main">
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title">#i18n{directory.create_entry.manage_regular_expression.title}</h3>
-				<div class="box-tools">
-					<form class="form-inline"  method="post"  action="jsp/admin/plugins/directory/DoInsertVerification.jsp#list">
-						<input name="id_field" value="${id_field!}" type="hidden">
-						<label for="id_expression">#i18n{directory.create_entry.manage_regular_expression.label_insert}</label>
-						<div class="input-group">
-							<@comboWithParams name="id_expression" default_value="-1" additionalParameters=" class=\"form-control input-xs\"" items=regular_expression_list />
-							<span class="input-group-btn">
-								<button class="btn btn-primary btn-xs" type="submit" >
-									<i class="fa fa-search"></i>&nbsp;#i18n{directory.create_entry.manage_regular_expression.button_insert}
-								</button>
-							</span>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div class="box-body">
-					<@paginationAdmin paginator=paginator combo=1 />
-			    <a name="list" id="list"></a>
-		      <table class="table table-hover table-condensed">
+	<@columns>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directory.create_entry.manage_regular_expression.title}' />
+			<@boxBody>
+				<a name="list" id="list"></a>
+				<@tform action='jsp/admin/plugins/directory/DoInsertVerification.jsp#list'>
+					<input name="id_field" value="${id_field!}" type="hidden">
+					<@formGroup labelFor='id_expression' labelKey='#i18n{directory.create_entry.manage_regular_expression.label_insert}' helpKey='#i18n{directory.create_entry.manage_regular_expression.label_insert_comment}'>
+						<@inputGroup>
+							<@select name='id_expression' default_value='-1' items=regular_expression_list size='sm' />
+							<@inputGroupItem>
+								<@button type='submit' buttonIcon='plus' title='#i18n{directory.create_entry.manage_regular_expression.button_insert}' showTitle=false />
+							</@inputGroupItem>
+						</@inputGroup>
+					</@formGroup>
+				</@tform>
+				<@table>
 					<thead>
 						<tr>
 							<th>#i18n{directory.create_entry.manage_regular_expression.row_title}</th>
@@ -182,22 +93,30 @@
 				</thead>
 				<tbody>
 					<#list list as expression>
-		          	<tr>
-		            	<td>${expression.title}</td>
-			            <td>${expression.informationMessage}</td>
-			            <td>${expression.validExemple}</td>
-			            <td>
-			             	<a class="btn btn-danger btn-mini" href="jsp/admin/plugins/directory/DoRemoveVerification.jsp?id_expression=${expression.idExpression}&id_field=${id_field}#list"  title="#i18n{directory.create_entry.manage_field.title_delete}" >
-								<i class="fa fa-trash"></i>
-							</a>
-						</td>
-			        </tr>
+						<tr>
+							<td>${expression.title}</td>
+							<td>${expression.informationMessage}</td>
+							<td>${expression.validExemple}</td>
+							<td>
+								<@aButton href='jsp/admin/plugins/directory/DoRemoveVerification.jsp?id_expression=${expression.idExpression}&id_field=${id_field}#list' buttonIcon='trash' title='#i18n{directory.create_entry.manage_field.title_delete}' showTitle=false color='btn-danger' />
+							</td>
+			      </tr>
 					</#list>
 				</tbody>
-		    </table>
-		        <@paginationAdmin paginator=paginator />
-			</div>
-		</div>
-	</div>
-</div>
+				</@table>
+				<@paginationAdmin paginator=paginator combo=1/>
+			</@boxBody>
+		</@box>
+	</@columns>
 </#if>
+</@row>
+
+<script>
+	$(document).ready(function(){
+		$('#panel2').hide();
+		$('#advanced').click(function(){
+			$('#panel1,#panel2').toggle();
+			$('#advanced').toggleClass('btn-primary btn-secondary');
+		});
+	});
+</script>

@@ -1,13 +1,22 @@
- <div class="form-group">
-	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}	<#if entry.mandatory> *	</#if> :</label>
-	<div class="col-xs-12 col-sm-9">
-		<#list entry.fields as field>
-			<#if field.title?? && field.title == "additionalAddress">
-				<input readonly="readonly" type="text" class="form-control" name="${entry.idEntry}" id="id_additional_address" size="${field.width}" <#if field.value?exists && !default_values?has_content >value="${field.value}"<#elseif default_values?has_content><#list default_values as default_value>value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}"</#list><#else>value=""</#if><#if field.maxSizeEnter!=-1> maxlength="${field.maxSizeEnter}"</#if>>
+<#assign helpKey><#if entry.helpMessage?exists&&entry.helpMessage!=''>${entry.helpMessage}</#if></#assign>
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=helpKey mandatory=entry.mandatory>
+	<#list entry.fields as field>
+		<#if field.title?? && field.title == "additionalAddress">
+			<#if field.value?exists && !default_values?has_content><#assign value='${field.value}' /><#elseif default_values?has_content><#list default_values as default_value><#assign value='${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}' /></#list><#else><#assign value='' /></#if>
+			<#if field.maxSizeEnter!=-1><#assign maxlength=field.maxSizeEnter /></#if>
+			<@input type='text' readonly=true name='${entry.idEntry}' id='id_additional_address' inputSize='${field.width}' value=value maxlength=maxlength />
+		<#else>
+			<#if field.value?exists && !default_values?has_content>
+				<#assign value='${field.value}' />
+			<#elseif default_values?has_content>
+				<#list default_values as default_value>
+					<#assign value='${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}' />
+				</#list>
 			<#else>
-				<input type="text" class="form-control" name="${entry.idEntry}" id="${entry.idEntry}" size="${field.width}" <#if field.value?exists && !default_values?has_content >value="${field.value}"<#elseif default_values?has_content><#list default_values as default_value>value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}"</#list><#else>value=""</#if><#if field.maxSizeEnter!=-1> maxlength="${field.maxSizeEnter}"</#if>>
+				<#assign value='' />
 			</#if>
-		</#list>
-	  <#if entry.helpMessage?exists&&entry.helpMessage!=''><span class="help-text">${entry.helpMessage}</span></#if>
-	</div>
-</div>
+			<#assign maxlength><#if field.maxSizeEnter!=-1>${field.maxSizeEnter}<#else>0</#if></#assign>
+			<@input type='text' name='${entry.idEntry}' id='${entry.idEntry}' inputSize=field.width value='${value}' maxlength=maxlength?number />
+		</#if>
+	</#list>
+</@formGroup>
