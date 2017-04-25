@@ -1,268 +1,137 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="row">
-	<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id="">
-	<input name="id_type" value="${entry.entryType.idType}" type="hidden">
-	<input name="id_entry" value="${entry.idEntry}" type="hidden">
-	<div class="col-xs-12 col-sm-8" id="main">
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title">#i18n{directory.create_entry.title_field} : '${entry.directory.title}' </h3>
-				<div class="box-tools">
-					<span class="label label-info pull-right" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span>
-				</div>
-			</div>
-			<div class="box-body">
-					<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="title">#i18n{directory.create_entry.label_title} *</label>
-							<div class="col-xs-12 col-sm-9">
-								<input type="text" name="title" id="title" value="${entry.title}" maxlength="255" class="form-control">
-								<span class="help-text">#i18n{directory.create_entry.label_title_comment}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for=""></label>
-							<div class="col-xs-12 col-sm-9">
-								<div class="checkbox">
-									<label for="mandatory">
-										<input name="mandatory" id="mandatory"  value="1" type="checkbox" <#if entry.mandatory>checked="checked"</#if>>#i18n{directory.create_entry.label_mandatory}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="file_max_size">#i18n{directory.create_entry.label_file_max_size} *</label>
-							<div class="col-xs-12 col-sm-3">
-								<input type="text" value="${getFileMaxSize(entry)}" class="form-control" id="file_max_size" name="file_max_size">
-							</div>
-						</div>
-						<div class="form-group">
-							 <label class="control-label col-xs-12 col-sm-3" for="max_files">#i18n{directory.create_entry.label_max_files} * </label>
-							<div class="col-xs-12 col-sm-2">
-								<input type="text" maxlength="2" value="${getMaxFiles(entry)}" class="form-control" name="max_files">
-							</div>
-						</div>
-						<div class="form-group">
- 						 <label class="control-label col-xs-12 col-sm-3" for="width">#i18n{directory.create_entry.label_width} * </label>
- 	 				    <div class="col-xs-12 col-sm-2">
-								<#list entry.fields as field>
-									<#if !field.title??>
- 	 									<input type="text" name="width" id="width" class="form-control" value="${field.width}">
-										<#assign id_field=field.idField>
-						    		<#break>
-						    	</#if>
-						    </#list>
- 	 						</div>
- 	 					</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="display_width">#i18n{directory.create_entry.label_width_display}</label>
-							<div class="col-xs-12 col-sm-2">
-								<input type="text" name="display_width" id="display_width" class="form-control" value="<#if entry.displayWidth!=-1>${entry.displayWidth}</#if>" >
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="display_height">#i18n{directory.create_entry.label_height_display}</label>
-							<div class="col-xs-12 col-sm-2">
-									<input type="text" name="display_height" id="display_height" class="form-control" value="<#if entry.displayHeight!=-1>${entry.displayHeight}</#if>">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3" >#i18n{directory.create_entry.label_image_full_size} </label>
-								<div class="col-xs-12 col-sm-9">
-									<label class="checkbox-inline" for="image_shown_in_result_list" >
-										<input name="image_shown_in_result_list" id="image_shown_in_result_list" value="1" type="checkbox" <#if image_field?? && image_field.isShownInResultList()>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_result_list}
-									</label>
-									<label class="checkbox-inline" for="image_shown_in_result_record">
-										<input name="image_shown_in_result_record" id="image_shown_in_result_record" value="1" type="checkbox" <#if image_field?? && image_field.isShownInResultRecord()>checked="checked"</#if> > #i18n{directory.create_entry.label_shown_in_result_record}
-									</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3" for="">#i18n{directory.create_entry.label_thumbnail}</label>
-								<div class="col-xs-12 col-sm-9">
-									<label class="checkbox-inline" title="#i18n{directory.create_entry.label_thumbnail_comment}" for="create_thumbnail">
-										<input name="create_thumbnail" id="create_thumbnail" value="1" type="checkbox" <#if has_thumbnail??>checked="checked"</#if>> #i18n{directory.create_entry.label_thumbnail_comment}
-									</label>
-									<label class="checkbox-inline" for="create_big_thumbnail" title="#i18n{directory.create_entry.label_big_thumbnail_comment}">
-										<input name="create_big_thumbnail" id="create_big_thumbnail" value="1" type="checkbox"<#if has_big_thumbnail??>checked="checked"</#if> >#i18n{directory.create_entry.label_big_thumbnail_comment}
-									</label>
-								</div>
-							</div>
-							<div class="form-group" id="thumbnail" >
-								<label class="control-label col-xs-12 col-sm-3" for=""></label>
-								<div class="col-xs-12 col-sm-9">
-									<div class="panel panel-default">
-										<div class="panel-heading"><i class="fa fa-picture-o"></i> #i18n{directory.create_entry.label_thumbnail}</div>
-										<div class="panel-body">
-											<div class="form-group">
-												<label class="control-label col-xs-12 col-sm-3" for=""></label>
-												<div class="col-xs-12 col-sm-9">
-														<label class="checkbox-inline"><input name="thbnail_shown_in_result_list" id="thbnail_shown_in_result_list" value="1" type="checkbox"<#if thumbnail_field?? && thumbnail_field.isShownInResultList()>checked="checked"</#if>>#i18n{directory.create_entry.label_shown_in_result_list}</label>
-														<label class="checkbox-inline"><input name="thbnail_shown_in_result_record" id="thbnail_shown_in_result_record" value="1" type="checkbox" <#if thumbnail_field?? && thumbnail_field.isShownInResultRecord()>checked="checked"</#if>>#i18n{directory.create_entry.label_shown_in_result_record}</label>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="control-label col-xs-12 col-sm-3" for="thumbnail_width"> #i18n{directory.create_entry.label_thumbnail_width} (*)</label>
-												<div class="col-xs-12 col-sm-2">
-													<input type="text" name="thumbnail_width" id="thumbnail_width" class="form-control" value="<#if thumbnail_field?? & thumbnail_field.width?? >${thumbnail_field.width}</#if>">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="control-label col-xs-12 col-sm-3" for="thumbnail_height">#i18n{directory.create_entry.label_thumbnail_height}(*)</label>
-												<div class="col-xs-12 col-sm-2">
-													<input type="text" name="thumbnail_height" id="thumbnail_height" class="form-control" value="<#if thumbnail_field?? & thumbnail_field.height??>${thumbnail_field.height}</#if>">
-	                			</div>
-	                		</div>
-	              	  </div>
-	              	</div>
-              	</div>
-              </div>
-							<div class="form-group" id="thumbnail_big" >
-								<label class="control-label col-xs-12 col-sm-3" for=""></label>
-								<div class="col-xs-12 col-sm-9">
-									<div class="panel panel-default">
-										<div class="panel-heading"><i class="fa fa-picture-o"></i> #i18n{directory.create_entry.label_big_thumbnail} </div>
-										<div class="panel-body">
-											<div class="form-group">
-												<label class="control-label col-xs-12 col-sm-3" for=""></label>
-												<div class="col-xs-12 col-sm-9">
-									  			<label class="checkbox-inline" for="big_thbnail_shown_in_result_list"><input name="big_thbnail_shown_in_result_list" value="1" type="checkbox" <#if big_thumbnail_field?? && big_thumbnail_field.isShownInResultList()>checked="checked"</#if>>#i18n{directory.create_entry.label_shown_in_result_list}</label>
-												<label class="checkbox-inline" for="big_thbnail_shown_in_result_record"><input name="big_thbnail_shown_in_result_record" value="1" type="checkbox" <#if big_thumbnail_field?? && big_thumbnail_field.isShownInResultRecord()>checked="checked"</#if>>#i18n{directory.create_entry.label_shown_in_result_record}</label>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="control-label col-xs-12 col-sm-3" for="thumbnail_big_width"> #i18n{directory.create_entry.label_thumbnail_width} (*)</label>
-											<div class="col-xs-12 col-sm-2">
-												<input type="text" name="thumbnail_big_width" id="thumbnail_big_width" class="form-control" value="<#if big_thumbnail_field?? & big_thumbnail_field.width??>${big_thumbnail_field.width}</#if>">
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="control-label col-xs-12 col-sm-3" for="thumbnail_big_height">#i18n{directory.create_entry.label_thumbnail_height} (*)</label>
-											<div class="col-xs-12 col-sm-2">
-												<input type="text" name="thumbnail_big_height" id="thumbnail_big_height" class="form-control" value="<#if big_thumbnail_field?? & big_thumbnail_field.height??>${big_thumbnail_field.height}</#if>">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-xs-12 col-sm-offset-3 col-sm-9">
-								<button class="btn btn-primary  btn-flat" type="submit" name="save">
-									<i class="fa fa-check" ></i>
-									<span class="hidden-xs" >#i18n{directory.create_entry.button_save}</span>
-								</button>
-								<button class="btn btn-primary btn-flat" type="submit" name="apply">
-									<i class="fa fa-check-circle"></i>
-									<span class="hidden-xs" >#i18n{directory.modify_entry.button_apply}</span>
-								</button>
-								<a class="btn btn-default btn-flat" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}#list">
-									<i class="fa fa-remove" ></i>
-									<span class="hidden-xs" >#i18n{directory.create_entry.button_cancel}</span>
-								</a>
-							</div>
-						</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-4">
-			<div class="box box-primary">
-				<div class="box-header">
-					<h3 class="box-title">Advance properties </h3>
-				</div>
-				<div class="box-body">
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3" for="help_message"> #i18n{directory.create_entry.label_help_message}</label>
-						<div class="col-xs-12 col-sm-9">
-							<textarea  name="help_message" id="help_message" class="form-control" rows="2">${entry.helpMessage}</textarea>
-							<span class="help-text">#i18n{directory.create_entry.label_help_message_comment}</span>
-						</div>
+<@row>
+	<@columns id='main'>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directory.modify_entry.title_field} : "${entry.directory.title}"' boxTools=true>
+				<@button type='button' buttonIcon='cogs' title='#i18n{directory.create_directory.label_advancedsettings}' id='advanced' />
+			</@boxHeader>
+			<@boxBody>
+				<@tform action='jsp/admin/plugins/directory/DoModifyEntry.jsp#list'>
+					<input name="id_type" value="${entry.entryType.idType}" type="hidden">
+					<input name="id_entry" value="${entry.idEntry}" type="hidden">
+					<div id="panel1">
+						<@formGroup labelFor='title' labelKey='#i18n{directory.create_entry.label_title}' helpKey='#i18n{directory.create_entry.label_title_comment}' mandatory=true>
+							<@input type='text' name='title' id='title' value='${entry.title}' maxlength=255 />
+						</@formGroup>
+						<@formGroup>
+							<@checkBox labelFor='mandatory' labelKey='#i18n{directory.create_entry.label_mandatory}' name='mandatory' id='mandatory'  value='1' checked=entry.mandatory />
+						</@formGroup>
+						<@formGroup labelFor='file_max_size' labelKey='#i18n{directory.create_entry.label_file_max_size}' mandatory=true>
+							<@input type='text' name='file_max_size' id='file_max_size' value='${getFileMaxSize(entry)}' />
+						</@formGroup>
+						<@formGroup labelFor='max_files' labelKey='#i18n{directory.create_entry.label_max_files}' mandatory=true>
+							<@input type='text' name='max_files' maxlength=2 value='${getMaxFiles(entry)}' />
+						</@formGroup>
+						<@formGroup labelFor='width' labelKey='#i18n{directory.create_entry.label_width}' mandatory=true>
+							<#list entry.fields as field>
+								<#if !field.title??>
+ 	 								<@input type='text' name='width' id='width' value='${field.width}' />
+									<#break>
+								</#if>
+								<#if field?index = 0><#assign id_field=field.idField></#if>
+						  </#list>
+						</@formGroup>
+						<@formGroup labelFor='display_width' labelKey='#i18n{directory.create_entry.label_width_display}'>
+							<#assign displayWidthValue><#if entry.displayWidth!=-1>${entry.displayWidth}</#if></#assign>
+							<@input type='text' name='display_width' id='display_width' value=displayWidthValue />
+						</@formGroup>
+						<@formGroup labelFor='display_height' labelKey='#i18n{directory.create_entry.label_height_display}'>
+							<#assign displayHeightValue><#if entry.displayHeight!=-1>${entry.displayHeight}</#if></#assign>
+							<@input type='text' name='display_height' id='display_height' value=displayHeightValue />
+						</@formGroup>
+						<@formGroup labelKey='#i18n{directory.create_entry.label_image_full_size}'>
+							<@checkBox labelFor='image_shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='image_shown_in_result_list' id='image_shown_in_result_list' value='1' checked=image_field??&&image_field.isShownInResultList() />
+							<@checkBox labelFor='image_shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='image_shown_in_result_record' id='image_shown_in_result_record' value='1' checked=image_field??&&image_field.isShownInResultRecord() />
+						</@formGroup>
+						<@formGroup labelKey='#i18n{directory.create_entry.label_thumbnail}'>
+							<@checkBox labelFor='create_thumbnail' labelKey='#i18n{directory.create_entry.label_thumbnail_comment}' name='create_thumbnail' id='create_thumbnail' value='1' checked=has_thumbnail?? />
+							<@checkBox labelFor='create_big_thumbnail' labelKey='#i18n{directory.create_entry.label_big_thumbnail_comment}' name='create_big_thumbnail' id='create_big_thumbnail' value='1' checked=has_big_thumbnail?? />
+						</@formGroup>
+						<@formGroup id='thumbnail'>
+							<@card header=true headerIcon=true headerTitle='#i18n{directory.create_entry.label_thumbnail}' headerTitleIcon='picture-o'>
+								<@formGroup>
+									<@checkBox labelFor='thbnail_shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='thbnail_shown_in_result_list' id='thbnail_shown_in_result_list' value='1' checked=thumbnail_field??&&thumbnail_field.isShownInResultList() />
+									<@checkBox labelFor='thbnail_shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='thbnail_shown_in_result_record' id='thbnail_shown_in_result_record' value='1' checked=thumbnail_field??&&thumbnail_field.isShownInResultRecord() />
+								</@formGroup>
+								<@formGroup labelFor='thumbnail_width' labelKey='#i18n{directory.create_entry.label_thumbnail_width}'>
+									<#assign thumbnailWidthValue><#if thumbnail_field??&thumbnail_field.width??>${thumbnail_field.width}</#if></#assign>
+									<@input type='text' name='thumbnail_width' id='thumbnail_width' value=thumbnailWidthValue />
+								</@formGroup>
+								<@formGroup labelFor='thumbnail_height' labelKey='#i18n{directory.create_entry.label_thumbnail_height}'>
+									<#assign thumbnailHeightValue><#if thumbnail_field??&thumbnail_field.height??>${thumbnail_field.height}</#if></#assign>
+									<@input type='text' name='thumbnail_height' id='thumbnail_height' value=thumbnailHeightValue />
+								</@formGroup>
+							</@card>
+						</@formGroup>
+						<@formGroup id='thumbnail_big'>
+							<@card header=true headerIcon=true headerTitle='#i18n{directory.create_entry.label_big_thumbnail}' headerTitleIcon='picture-o'>
+								<@formGroup>
+									<@checkBox labelFor='big_thbnail_shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='big_thbnail_shown_in_result_list' id='big_thbnail_shown_in_result_list' value='1' checked=big_thumbnail_field??&&big_thumbnail_field.isShownInResultList() />
+									<@checkBox labelFor='big_thbnail_shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='big_thbnail_shown_in_result_record' id='big_thbnail_shown_in_result_record' value='1' checked=big_thumbnail_field??&&big_thumbnail_field.isShownInResultRecord() />
+								</@formGroup>
+								<@formGroup labelFor='thumbnail_big_width' labelKey='#i18n{directory.create_entry.label_thumbnail_width}'>
+									<#assign thumbnailBigWidthValue><#if big_thumbnail_field?? & big_thumbnail_field.width??>${big_thumbnail_field.width}</#if></#assign>
+									<@input type='text' name='thumbnail_big_width' id='thumbnail_big_width' value=thumbnailBigWidthValue />
+								</@formGroup>
+								<@formGroup labelFor='thumbnail_big_height' labelKey='#i18n{directory.create_entry.label_thumbnail_height}'>
+									<#assign thumbnailBigHeightValue><#if big_thumbnail_field?? & big_thumbnail_field.height??>${big_thumbnail_field.height}</#if></#assign>
+									<@input type='text' name='thumbnail_big_height' id='thumbnail_big_height' value=thumbnailBigHeightValue />
+								</@formGroup>
+							</@card>
+						</@formGroup>
 					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3" for=""></label>
-						<div class="col-xs-12 col-sm-9">
-							<div class="checkbox">
-								<label for="shown_in_result_list" title="#i18n{directory.create_entry.label_shown_in_result_list_comment}">
-									<input name="shown_in_result_list" id="shown_in_result_list" value="1" type="checkbox" <#if entry.shownInResultList>checked="checked" </#if>> #i18n{directory.create_entry.label_shown_in_result_list}
-								</label>
-							</div>
-						</div>
+					<div id="panel2">
+						<@formGroup labelFor='help_message' labelKey='#i18n{directory.create_entry.label_help_message}' helpKey='#i18n{directory.create_entry.label_help_message_comment}'>
+							<@input type='textarea' name='help_message' id='help_message' rows=2>${entry.helpMessage}</@input>
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_list_comment}'>
+							<@checkBox labelFor='shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='shown_in_result_list' id='shown_in_result_list' value='1' checked=entry.shownInResultList />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_record_comment}'>
+							<@checkBox labelFor='shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}'  name='shown_in_result_record' id='shown_in_result_record' value='1' checked=entry.shownInResultRecord />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_history_comment}'>
+							<@checkBox labelFor='shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='shown_in_history' id='shown_in_history' value='1' checked=entry.shownInHistory />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_export_comment}'>
+							<@checkBox labelFor='shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='shown_in_export' id='shown_in_export' value='1' checked=entry.shownInExport />
+						</@formGroup>
+						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_completeness_comment}'>
+							<@checkBox labelFor='shown_in_completeness' labelKey='#i18n{directory.create_entry.label_shown_in_completeness}' name='shown_in_completeness' id='shown_in_completeness' value='1' checked=entry.shownInCompleteness />
+						</@formGroup>
+						<@formGroup labelFor='comment' labelKey='#i18n{directory.create_entry.label_comment}'>
+							<@input type='textarea' name='comment' rows=2>${entry.comment}</@input>
+						</@formGroup>
 					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3" for=""></label>
-						<div class="col-xs-12 col-sm-9">
-							<div class="checkbox">
-								<label for="shown_in_result_record" title="#i18n{directory.create_entry.label_shown_in_result_record_comment}">
-									<input name="shown_in_result_record" id="shown_in_result_record" value="1" type="checkbox" <#if entry.shownInResultRecord>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_result_record}
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3" for=""></label>
-						<div class="col-xs-12 col-sm-9">
-							<div class="checkbox">
-								<label class="" for="shown_in_history" title="#i18n{directory.create_entry.label_shown_in_history_comment}">
-									<input name="shown_in_history" id="shown_in_history" value="1" type="checkbox" <#if entry.shownInHistory>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_history}
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3" for=""></label>
-						<div class="col-xs-12 col-sm-9">
-							<div class="checkbox">
-								<label for="shown_in_export" title="#i18n{directory.create_entry.label_shown_in_export_comment}">
-									<input name="shown_in_export" id="shown_in_export"value="1" type="checkbox" <#if entry.shownInExport>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_export}
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3" for=""></label>
-						<div class="col-xs-12 col-sm-9">
-							<div class="checkbox">
-								<label for="shown_in_completeness" title="#i18n{directory.create_entry.label_shown_in_completeness_comment}">
-									<input name="shown_in_completeness" id="shown_in_completeness" value="1" type="checkbox" <#if entry.shownInCompleteness>checked="checked"</#if>>	#i18n{directory.create_entry.label_shown_in_completeness}
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3"  for="comment"> #i18n{directory.create_entry.label_comment}</label>
-						<div class="col-xs-12 col-sm-9">
-							<textarea name="comment" class="form-control" rows="2">${entry.comment}</textarea>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
-</div>
+					<@formGroup>
+						<@button type='submit' name='save' buttonIcon='save' title='#i18n{directory.create_entry.button_save}' showTitleXs=false size='' />
+						<@button type='submit' name='apply' buttonIcon='check' title='#i18n{directory.modify_entry.button_apply}' showTitleXs=false size='' />
+						<@aButton href='jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}#list' buttonIcon='remove' title='#i18n{directory.create_entry.button_cancel}' showTitleXs=false size='' color='btn-secondary' />
+					</@formGroup>
+				</@tform>
+			</@boxBody>
+		</@box>
+	</@columns>
+
 <#if regular_expression_list??>
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-sm-12" id="main">
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title">#i18n{directory.create_entry.manage_regular_expression.title}</h3>
-				<div class="box-tools">
-					<form class="form-inline"  method="post"  action="jsp/admin/plugins/directory/DoInsertVerification.jsp#list">
-						<input name="id_field" value="${id_field!}" type="hidden">
-						<label for="id_expression">#i18n{directory.create_entry.manage_regular_expression.label_insert}</label>
-						<div class="input-group">
-							<@comboWithParams name="id_expression" default_value="-1" additionalParameters=" class=\"form-control input-xs\"" items=regular_expression_list />
-							<span class="input-group-btn">
-								<button class="btn btn-primary btn-xs" type="submit" >
-									<i class="fa fa-search"></i>&nbsp;#i18n{directory.create_entry.manage_regular_expression.button_insert}
-								</button>
-							</span>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div class="box-body">
-					<@paginationAdmin paginator=paginator combo=1 />
-			    <a name="list" id="list"></a>
-		      <table class="table table-hover table-condensed">
+	<@columns>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directory.create_entry.manage_regular_expression.title}' />
+			<@boxBody>
+		    <a name="list" id="list"></a>
+				<@tform action='jsp/admin/plugins/directory/DoInsertVerification.jsp#list'>
+					<input name="id_field" value="${id_field!}" type="hidden">
+					<@formGroup labelFor='id_expression' labelKey='#i18n{directory.create_entry.manage_regular_expression.label_insert}' helpKey='#i18n{directory.create_entry.manage_regular_expression.label_insert_comment}'>
+						<@inputGroup>
+							<@select name='id_expression' default_value='-1' items=regular_expression_list size='sm' />
+							<@inputGroupItem>
+								<@button type='submit' buttonIcon='plus' title='#i18n{directory.create_entry.manage_regular_expression.button_insert}' showTitle=false />
+							</@inputGroupItem>
+						</@inputGroup>
+					</@formGroup>
+				</@tform>
+		    
+				<@table>
 					<thead>
 						<tr>
 							<th>#i18n{directory.create_entry.manage_regular_expression.row_title}</th>
@@ -270,36 +139,48 @@
 							<th>#i18n{directory.create_entry.manage_regular_expression.row_valid_exemple}</th>
 							<th>#i18n{directory.create_entry.manage_field.row_actions}</th>
 						</tr>
-				</thead>
-				<tbody>
-					<#list list as expression>
-		          	<tr>
-		            	<td>${expression.title}</td>
-			            <td>${expression.informationMessage}</td>
-			            <td>${expression.validExemple}</td>
-			            <td>
-			             	<a class="btn btn-danger btn-mini" href="jsp/admin/plugins/directory/DoRemoveVerification.jsp?id_expression=${expression.idExpression}&id_field=${id_field}#list"  title="#i18n{directory.create_entry.manage_field.title_delete}" >
-								<i class="fa fa-trash"></i>
-							</a>
-						</td>
+					</thead>
+					<tbody>
+						<#list list as expression>
+							<tr>
+								<td>${expression.title}</td>
+								<td>${expression.informationMessage}</td>
+								<td>${expression.validExemple}</td>
+								<td>
+									<@aButton href='jsp/admin/plugins/directory/DoRemoveVerification.jsp?id_expression=${expression.idExpression}&id_field=${id_field}#list' buttonIcon='trash' title='#i18n{directory.create_entry.manage_field.title_delete}' showTitle=false color='btn-danger' />
+								</td>
 			        </tr>
-					</#list>
-				</tbody>
-		    </table>
-		        <@paginationAdmin paginator=paginator />
-			</div>
-		</div>
-	</div>
-</div>
+						</#list>
+					</tbody>
+		    </@table>
+				<@paginationAdmin paginator=paginator combo=1 />
+			</@boxBody>
+		</@box>
+	</@columns>
 </#if>
+</@row>
 
 <script>
-function thumbnail( c, thumb ){
+function thumbnail(c,thumb){
 	if( $( c + ":checked").length > 0 ){
-		$( thumb ).show();
+		$(thumb).show();
 	} else {
-		$( thumb ).hide();
+		$(thumb).hide();
 	}
+}
+
+/* Function to add and remove label asterisks and input "required" attribute for thumbnail generation */
+function thumbnailMandatoryToggle(checkBoxId, inputLabel, inputName) {
+	$(checkBoxId).change(function(){
+		if ($(checkBoxId).is(':checked')) {
+			$(inputLabel).children().remove();
+			$(inputName).prop('required',true);
+			$(inputLabel).append('<i class=\"fa fa-asterisk\"></i>');
+		} else {
+			$(inputName).prop('required',false);
+			$(inputLabel).children().remove();
+		}
+	});
 }
 
 $(document).ready( function(){
@@ -311,5 +192,25 @@ $(document).ready( function(){
 	$("#create_big_thumbnail").click( function(){
 		thumbnail( "#create_big_thumbnail","#thumbnail_big" );
 	})
+		
+	/* If "create thumbnail" checkboxes are checked when the page is loaded, thumbnail width and height inputs must be mandatory */
+	if ($('#create_thumbnail').is(':checked')) {
+		$('#thumbnail_width,#thumbnail_height').prop('required',true);
+		$('label[for=thumbnail_width],label[for=thumbnail_height]').append('<i class=\"fa fa-asterisk\"></i>');
+		}
+	if ($('#create_big_thumbnail').is(':checked')) {
+		$('#thumbnail_big_width,#thumbnail_big_height').prop('required',true);
+		$('label[for=thumbnail_big_width],label[for=thumbnail_big_height]').append('<i class=\"fa fa-asterisk\"></i>');
+		}
+	
+	thumbnailMandatoryToggle("#create_thumbnail","label[for=thumbnail_width],label[for=thumbnail_height]","input[name=thumbnail_width],input[name=thumbnail_height]");
+	thumbnailMandatoryToggle("#create_big_thumbnail","label[for=thumbnail_big_width],label[for=thumbnail_big_height]","input[name=thumbnail_big_width],input[name=thumbnail_big_height]");
+	
+	$('#panel2').hide();
+	$('#advanced').click(function(){
+		$('#panel1,#panel2').toggle();
+		$('#advanced').toggleClass('btn-primary btn-secondary');
+	});
+	
 })
 </script>
