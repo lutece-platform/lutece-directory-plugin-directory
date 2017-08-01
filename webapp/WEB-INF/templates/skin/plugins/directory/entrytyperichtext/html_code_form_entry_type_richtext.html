@@ -1,7 +1,7 @@
 <div class="form-element">
 	<span class="form-label">
-		<div class="control-group">
-			<label class="control-label" for="entry_${entry.idEntry}">	
+		<div class="form-group">
+			<label class="control-label col-xs-12 col-sm-3" for="entry_${entry.idEntry}">	
 				${entry.title}<#if entry.mandatory> * </#if> : 
 			</label>
 		</div>
@@ -16,8 +16,7 @@
 				<#assign field_value = ""/>
 			</#if>
 			<div class="editor">
-				<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" class="richtext" 
-					style="width:100%" rows="20" cols="90">${field_value}</textarea>
+				<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" class="form-control richtext" style="width:100%" rows="20" cols="90">${field_value}</textarea>
 			</div>
 		 </#list>
 	</span>

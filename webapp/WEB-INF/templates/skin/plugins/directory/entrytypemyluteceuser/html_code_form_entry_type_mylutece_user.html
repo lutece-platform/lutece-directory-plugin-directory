@@ -8,10 +8,10 @@
 	</#if>
  <#return false>
 </#function>
-<div class="control-group">
-	<label class="control-label"  for="${entry.idEntry}">${entry.title} <#if entry.mandatory>*</#if></label>
-	<div class="controls">
-		<select name="${entry.idEntry}" id="${entry.idEntry}">
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3"  for="${entry.idEntry}">${entry.title} <#if entry.mandatory>*</#if></label>
+	<div class="col-xs-12 col-sm-6">
+		<select name="${entry.idEntry}" class="form-control" id="${entry.idEntry}">
 		<#if !entry.isMandatory() && entry.isAddValueAllSearch()>
 			<option value="">${entry.labelValueAllSearch!}</option>
 		</#if>

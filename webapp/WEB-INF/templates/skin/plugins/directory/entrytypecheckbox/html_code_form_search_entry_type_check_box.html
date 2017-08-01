@@ -9,16 +9,25 @@
  <#return false>
 </#function>
  <#assign cpt=0>
-<div class="control-group">
-<label class="control-label" for="${entry.idEntry}">${entry.title}</label>	
-	<div class="controls">
+<div class="form-group">
+<label class="control-label col-xs-12 col-sm-3" for="${entry.idEntry}">${entry.title}</label>	
+	<div class="col-xs-12 col-sm-6">
 	<#list entry.fields as field>
 		<#assign cpt=cpt+1>
-		<label class="checkbox <#if entry.fieldInLine>inline</#if>"> 
-			<input type="checkbox" name="${entry.idEntry}" id="${entry.idEntry}" value="${field.idField}" <#if ( field.defaultValue && !default_values?has_content )||( default_values?has_content && isSelected (field.idField,default_values))>checked="checked" </#if> />${field.title}</label>
-			<#if !entry.fieldInLine&&cpt=1&&entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''>
+		<#if entry.fieldInLine>
+			<label class="checkbox-inline">
+		<#else>
+			<div class="checkbox">
+				<label>
+		</#if>
+					<input type="checkbox" name="${entry.idEntry}" id="${entry.idEntry}" value="${field.idField}" <#if ( field.defaultValue && !default_values?has_content )||( default_values?has_content && isSelected (field.idField,default_values))>checked="checked" </#if> />${field.title}</label>
+				</label>
+		<#if !entry.fieldInLine>
+			</div>
+		</#if>
+		<#if !entry.fieldInLine&&cpt=1&&entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''>
 			<p class="help-block">${entry.helpMessageSearch}</p> 
-		</#if>	
+		</#if>
 	</#list>
 	<#if entry.fieldInLine&&entry.helpMessageSearch?exists&&entry.helpMessageSearch!=''><p class="help-block">${entry.helpMessageSearch}</p></#if>	
 	</div>

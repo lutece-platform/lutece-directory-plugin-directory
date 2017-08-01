@@ -1,6 +1,6 @@
-<div class="control-group">
-	<label class="control-label" for="entry_${entry.idEntry}">${entry.title}<#if entry.mandatory> * </#if></label>
-	<div class="controls">
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3" for="entry_${entry.idEntry}">${entry.title}<#if entry.mandatory> * </#if></label>
+	<div class="col-xs-12 col-sm-6">
 	<#list entry.fields as field>
 		<#if field.value?exists && !default_values?has_content>
 			<#assign field_value = field.value/>			
@@ -9,12 +9,12 @@
 		<#else>
 			<#assign field_value = ""/>
 		</#if>
-		<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" class="span6" readonly="readonly">${field_value}</textarea>
+		<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" class="form-control" readonly="readonly">${field_value}</textarea>
 		<img src="images/admin/skin/plugins/document/linkservice.png" id="img_linkservice_${entry.idEntry}"	alt="#i18n{directory.form_entry.labelLinkService}" title="#i18n{directory.form_entry.labelLinkService}" />
-		<button id="img_linkservice_clear_${entry.idEntry}" class="btn btn-danger btn-small">
+		<button id="img_linkservice_clear_${entry.idEntry}" class="btn btn-danger btn-sm">
 			<i class="icon-trash icon-white"></i>&nbsp;#i18n{directory.form_entry.internallink.labelLinkServiceClear}
 		</button>
-		<button class="btn btn-primary btn-small" id="#show_preview_section_${entry.idEntry}">
+		<button class="btn btn-primary btn-sm" id="#show_preview_section_${entry.idEntry}">
 			<i class="icon-eye-open icon-white"></i>&nbsp;#i18n{directory.form_entry.buttonShowPreview}
 		</button>
 		<div id="show_preview_${entry.idEntry}">&nbsp;</div>

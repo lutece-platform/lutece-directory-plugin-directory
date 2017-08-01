@@ -1,7 +1,7 @@
 <div class="form-element">
 	 <span class="form-label">
-		 <div class="control-group">
-		<label class="control-label" for="${entry.idEntry}">	
+		 <div class="form-group">
+		<label class="control-label col-xs-12 col-sm-3" for="${entry.idEntry}">	
 				${entry.title}
 				<#if entry.mandatory>
 					*
@@ -14,19 +14,19 @@
 	 	<#if default_values?has_content>	 
 			<#list default_values as default_value>
 		 		<#if default_value?exists && default_value.value?exists>
-		 			<div class="controls">
+		 			<div class="col-xs-12 col-sm-6">
 	<@combo name=entry.idEntry items=entry.getSqlQueryFields() default_value=default_value.value />
 		</div>
 	</div>
 		 		<#else>
-		 			<div class="controls">
+		 			<div class="col-xs-12 col-sm-6">
 	<@combo name=entry.idEntry items=entry.getSqlQueryFields() default_value=-1 />
 		</div>
 	</div>
 		 		</#if>
 		 	</#list>
 		 <#else>
-				<div class="controls">
+				<div class="col-xs-12 col-sm-6">
 	<@combo name=entry.idEntry  items=entry.getSqlQueryFields() default_value=-1 />
 		</div>
 	</div>		

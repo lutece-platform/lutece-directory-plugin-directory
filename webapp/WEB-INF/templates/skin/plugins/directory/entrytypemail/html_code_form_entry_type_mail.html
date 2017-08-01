@@ -1,8 +1,8 @@
-<div class="control-group">
-	<label class="control-label" for="${entry.idEntry}">${entry.title} <#if entry.mandatory>*</#if></label>
-	<div class="controls">
+<div class="form-group">
+	<label class="control-label col-xs-12 col-sm-3" for="${entry.idEntry}">${entry.title} <#if entry.mandatory>*</#if></label>
+	<div class="col-xs-12 col-sm-6">
 	<#list entry.fields as field>
-		<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" size="${field.width}" 
+		<input type="text" class="form-control" name="${entry.idEntry}" id="${entry.idEntry}" size="${field.width}" 
 			<#if field.value?exists && !default_values?has_content >
 				value="${field.value}" 
 			 	<#elseif default_values?has_content>

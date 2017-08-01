@@ -35,20 +35,19 @@
 		   			</#if>
 </#list>
 <div class="form-group">
-<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
-<div class="col-xs-12 col-sm-9">					
+<label class="control-label col-xs-12 col-sm-3" for="${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
+<div class="col-xs-12 col-sm-6">					
 	<div>
-		<video id="video" width="0" height="0" autoplay ></video>
-
+		<video id="video" width="0" height="0" autoplay></video>
 	</div>
 	<div>
-		<button align="" type="button" id="snap${entry.idEntry}" class="btn btn-primary btn-sm" ><i class="glyphicon glyphicon-camera" ></i> #i18n{directory.html_code_form_snap_photo}</button>
-		<button align="" type="button" id="clear${entry.idEntry}" class="btn btn-primary btn-sm" ><i class="glyphicon glyphicon-remove-circle" ></i> #i18n{directory.html_code_form_remove_photo}</button>	
+		<button type="button" id="snap${entry.idEntry}" class="btn btn-primary btn-sm" ><i class="fa fa-camera" ></i> #i18n{directory.html_code_form_snap_photo}</button>
+		<button type="button" id="clear${entry.idEntry}" class="btn btn-primary btn-sm" ><i class="fa fa-close" ></i> #i18n{directory.html_code_form_remove_photo}</button>	
 		
 	</div>
 	<div>
 		<canvas id="canvas${entry.idEntry}" width="${width}" height="${height}" class="camera" ></canvas>
-		<input type="text"  id="attribute${entry.idEntry}" name="directory_${entry.idEntry}"  />
+		<input type="text" class="form-control" id="attribute${entry.idEntry}" name="directory_${entry.idEntry}"  />
 	</div>
 </div>	
 </div>    			

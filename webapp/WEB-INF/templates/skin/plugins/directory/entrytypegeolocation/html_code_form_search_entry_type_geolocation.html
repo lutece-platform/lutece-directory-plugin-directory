@@ -11,8 +11,8 @@
 <div class="form-element">
 	
 	 <span class="form-label">
-		<div class="control-group">
-		<label class="control-label" for="${entry.idEntry}">	
+		<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-3" for="${entry.idEntry}">	
 			${entry.title}
 			<#if entry.mandatory>
 				*
@@ -23,15 +23,15 @@
 	    <span class="form-field-column">
     				<span class="form-field-column"> 
 		    		<#if address??>
-		    			<div class="controls">
-	<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${address}"/>
+		    			<div class="col-xs-12 col-sm-6">
+							<input type="text" class="form-control" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value="${address}"/>
+						</div>
 		</div>
-	</div>
 		    		<#else>
-		    			<div class="controls">
-	<input type="text" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value=""/>
+		    			<div class="col-xs-12 col-sm-6">
+							<input type="text" class="form-control" id="${entry.idEntry}_address" name="${entry.idEntry}_address" value=""/>
+						</div>
 		</div>
-	</div>
 		    		</#if>
 		    		</span>
 		</span>
