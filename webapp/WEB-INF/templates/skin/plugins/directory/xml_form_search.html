@@ -23,13 +23,13 @@
 			      	<#if entry_list_form_complementary_search?has_content>
 						<div class="highlight-box">
 					      	<div id="compementary_check_box">
-										<a href="#" class="btn btn-small" onclick="displayId('complementary'); return false;" title="#i18n{directory.xml_form_search.title_open_block}">
-											<i class="icon-chevron-down"></i>
-										</a>
-										<a href="#" class="btn btn-small" onclick="hideId('complementary'); return false;" title="#i18n{directory.xml_form_search.title_open_block}"> 
-											<i class="icon-chevron-up"></i>
-										</a>
-										<span>#i18n{directory.xml_form_search.label_complementary_search}</span>
+								<a href="#" class="btn btn-primary btn-sm" onclick="displayId('complementary'); return false;" title="#i18n{directory.xml_form_search.title_open_block}">
+									<i class="fa fa-chevron-down"></i>
+								</a>
+								<a href="#" class="btn btn-primary btn-sm" onclick="hideId('complementary'); return false;" title="#i18n{directory.xml_form_search.title_open_block}"> 
+									<i class="fa fa-chevron-up"></i>
+								</a>
+								<span>#i18n{directory.xml_form_search.label_complementary_search}</span>
 							</div>
 						    <div id="complementary">
 						    		<!-- starttttttt -->
@@ -47,13 +47,15 @@
 						    </div>
 						 </div> 	
 					   </#if>
-		  			<div class="form-actions">
-		  			 	<button type="submit" class="btn btn-small btn-primary" name="search">
-							#i18n{directory.xml_form_search.button_search} 
-						</button>
-		  			 	<button type="button"  class="btn btn-small" name="reset" id="reset" >
-							#i18n{directory.xml_form_search.button_reset}
-						</button>
+		  			<div class="form-group">
+						<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+							<button type="submit" class="btn btn-sm btn-primary" name="search">
+								#i18n{directory.xml_form_search.button_search} 
+							</button>
+							<button type="button"  class="btn btn-sm btn-default" name="reset" id="reset" >
+								#i18n{directory.xml_form_search.button_reset}
+							</button>
+						</div> 	
 		  			 </div> 	
 		</form>
 	]]>

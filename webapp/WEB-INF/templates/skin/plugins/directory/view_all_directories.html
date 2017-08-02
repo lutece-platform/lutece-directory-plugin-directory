@@ -1,25 +1,27 @@
 <div class="row">
-    <div class="span12">
+    <div class="col-xs-12">
 	    <a name="top"></a>
 		<#if directory_list?has_content >
 			<fieldset>
 	        <legend>#i18n{directory.view_all_directory.search.title}</legend>
 				<div class="row">
-					<div class="span4">
+					<div class="col-xs-12 col-sm-4">
 						<form class="form-search" name="form_search" method="post">
 							<input type="hidden" name="page" value="directory" >
 							<input type="hidden" name="type_filter" value="directory">
-							<div class="well well-small">
-								<div class="input-append">
-									<input class="input-large" type="text" name="query" id="query" value="${query!}" >
-									<button type="submit" class="btn" title="#i18n{directory.view_all_directory.search.buttonSearch}" >
-										<i class="icon-search"></i>
-									</button>
+							<div class="well well-sm">
+								<div class="input-group">
+									<input class="form-control" type="text" name="query" id="query" value="${query!}">
+									<span class="input-group-btn">
+										<button type="submit" class="btn btn-primary btn-sm" title="#i18n{directory.view_all_directory.search.buttonSearch}" >
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
 								</div>
 								<label for="default_operator" class="inline">
 									<#-- default_operator and/or -->
 									#i18n{directory.view_all_directory.search.operator}
-									<select name="default_operator" class="input-normal">
+									<select name="default_operator" class="form-control">
 									<#list ["OR","AND"] as i_operator>
 										<option value="${i_operator}" <#if i_operator == (operator!"OR")> selected="true"</#if> >
 											#i18n{directory.view_all_directory.search.operator.${i_operator}}
@@ -28,21 +30,21 @@
 									</select>
 								</label>
 								<p class="">#i18n{directory.view_all_directory.search.dateFilter}</p>	
-									<#-- date_filter -->
-									<div class="input-append">							
-										<label>#i18n{directory.view_all_directory.search.dateFilterBefore}&nbsp;</label>
-										<input type=text id="date_before" name="date_before" class="input-small" value="${date_before!}">
-										<span class="add-on"><i class="icon-calendar"></i></span>
-									</div>
-									<div class="input-append">
-										<label>#i18n{directory.view_all_directory.search.dateFilterAfter}&nbsp;</label> 
-										<input type=text id="date_after" name="date_after" class="input-small" value="${date_after!}">
-										<span class="add-on"><i class="icon-calendar"></i></span>
-									</div>
+								<#-- date_filter -->
+								<div class="input-group">							
+									<label>#i18n{directory.view_all_directory.search.dateFilterBefore}&nbsp;</label>
+									<input type=text id="date_before" name="date_before" class="form-control" value="${date_before!}">
+									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+								</div>
+								<div class="input-group">
+									<label>#i18n{directory.view_all_directory.search.dateFilterAfter}&nbsp;</label> 
+									<input type=text id="date_after" name="date_after" class="form-control" value="${date_after!}">
+									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+								</div>
 							</div>
 						</form>
 					</div>
-					<div class="span7">
+					<div class="col-xs-12 col-sm-7">
 						<#if result_list?has_content> 
 							<#list result_list as result>
 							<a href="${result.url?xhtml}">
@@ -71,7 +73,7 @@
 </div>
 <#if directory_list?has_content >
 	<div class="row">
-		<div class="span12">
+		<div class="col-xs-12">
 			<fieldset>
 	        <legend>#i18n{directory.view_all_directory.list.title}</legend>
 				<ul>
