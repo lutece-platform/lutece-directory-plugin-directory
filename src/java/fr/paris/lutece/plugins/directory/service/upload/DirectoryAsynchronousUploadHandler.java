@@ -1003,7 +1003,6 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        @Override
         public FileItemHeaders getHeaders( )
         {
             return _fileItemHeaders;
@@ -1012,7 +1011,6 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         /**
          * {@inheritDoc}
          */
-        @Override
         public void setHeaders( FileItemHeaders headers )
         {
             _fileItemHeaders = headers;
