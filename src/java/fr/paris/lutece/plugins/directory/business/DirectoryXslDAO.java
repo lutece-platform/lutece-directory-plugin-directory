@@ -57,6 +57,10 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
     private static final String SQL_FILTER_ID_CATEGORY = " id_category = ? ";
     private static final String SQL_ORDER_BY_ID_CATEGORY = " ORDER BY id_category ";
 
+    // Security on files
+    private static final String SQL_QUERY_FIND_BY_FILE = "SELECT id_directory_xsl,title,description,extension,id_file,id_category"
+            + " FROM directory_xsl WHERE id_file = ?";
+
     /**
      * {@inheritDoc}
      */
@@ -123,7 +127,21 @@ public final class DirectoryXslDAO implements IDirectoryXslDAO
     @Override
     public DirectoryXsl load( int nId, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
+        return load( nId, SQL_QUERY_FIND_BY_PRIMARY_KEY, plugin );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public DirectoryXsl loadByFile( int nIdFile, Plugin plugin )
+    {
+        return load( nIdFile, SQL_QUERY_FIND_BY_FILE, plugin );
+    }
+
+    private DirectoryXsl load( int nId, String strSQL, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
         daoUtil.setInt( 1, nId );
         daoUtil.executeQuery( );
 

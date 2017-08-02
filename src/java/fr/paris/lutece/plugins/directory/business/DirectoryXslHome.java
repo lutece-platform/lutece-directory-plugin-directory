@@ -125,6 +125,27 @@ public final class DirectoryXslHome
     }
 
     /**
+     * Returns an instance of a DirectoryXsl whose file is specified in parameter
+     *
+     * @param nIdFile
+     *            The file id
+     * @param plugin
+     *            the Plugin
+     * @return an instance of DirectoryXsl
+     */
+    public static DirectoryXsl findByFile( int nIdFile, Plugin plugin )
+    {
+        DirectoryXsl directoryXsl = _dao.loadByFile( nIdFile, plugin );
+
+        if ( ( directoryXsl != null ) && ( directoryXsl.getFile( ) != null ) )
+        {
+            directoryXsl.setFile( FileHome.findByPrimaryKey( directoryXsl.getFile( ).getIdFile( ), plugin ) );
+        }
+
+        return directoryXsl;
+    }
+
+    /**
      * Loads the data of all the DirectoryXsl who verify the filter and returns them in a list
      * 
      * @param filter

@@ -75,6 +75,17 @@ public interface IDirectoryXslDAO
     DirectoryXsl load( int nId, Plugin plugin );
 
     /**
+     * Load the data of the DirectoryXsl from the table
+     *
+     * @param nIdFile
+     *            The identifier of the file
+     * @param plugin
+     *            the plugin
+     * @return the instance of the DirectoryXsl
+     */
+    DirectoryXsl loadByFile( int nIdFile, Plugin plugin );
+
+    /**
      * Delete a record from the table
      *
      * @param nIdDirectoryXsl

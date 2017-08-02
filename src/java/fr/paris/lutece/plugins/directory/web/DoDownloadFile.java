@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.directory.web;
 
+import fr.paris.lutece.plugins.directory.business.DirectoryXsl;
+import fr.paris.lutece.plugins.directory.business.DirectoryXslHome;
 import fr.paris.lutece.plugins.directory.business.File;
 import fr.paris.lutece.plugins.directory.business.FileHome;
 import fr.paris.lutece.plugins.directory.business.PhysicalFile;
@@ -41,13 +43,17 @@ import fr.paris.lutece.plugins.directory.business.RecordField;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
 import fr.paris.lutece.plugins.directory.business.RecordFieldHome;
 import fr.paris.lutece.plugins.directory.service.DirectoryPlugin;
+import fr.paris.lutece.plugins.directory.service.DirectoryXslResourceIdService;
 import fr.paris.lutece.plugins.directory.service.record.IRecordService;
 import fr.paris.lutece.plugins.directory.service.record.RecordService;
 import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
+import fr.paris.lutece.portal.business.user.AdminUser;
+import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.rbac.RBACService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.web.constants.Messages;
@@ -135,13 +141,27 @@ public final class DoDownloadFile
             nIdFile = DirectoryUtils.convertStringToInt( strIdFile );
         }
 
-        IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
-        if ( ! recordService.isFileAuthorized( nIdFile, request, plugin ) )
+        DirectoryXsl directoryXsl = DirectoryXslHome.findByFile( nIdFile, plugin );
+        File file;
+
+        if ( directoryXsl != null )
         {
-            return AdminMessageService.getMessageUrl( request, Messages.USER_ACCESS_DENIED, AdminMessage.TYPE_STOP );
+            if ( !isXslAuthorized( directoryXsl.getIdDirectoryXsl( ), request ) )
+            {
+                return AdminMessageService.getMessageUrl( request, Messages.USER_ACCESS_DENIED, AdminMessage.TYPE_STOP );
+            }
+            file = directoryXsl.getFile( );
+        }
+        else
+        {
+            IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
+            if ( ! recordService.isFileAuthorized( nIdFile, request, plugin ) )
+            {
+                return AdminMessageService.getMessageUrl( request, Messages.USER_ACCESS_DENIED, AdminMessage.TYPE_STOP );
+            }
+            file = FileHome.findByPrimaryKey( nIdFile, plugin );
         }
 
-        File file = FileHome.findByPrimaryKey( nIdFile, plugin );
         PhysicalFile physicalFile = ( file != null ) ? PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile( ).getIdPhysicalFile( ), plugin ) : null;
 
         if ( physicalFile != null )
@@ -172,5 +192,23 @@ public final class DoDownloadFile
         }
 
         return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_DURING_DOWNLOAD_FILE, AdminMessage.TYPE_STOP );
+    }
+
+    private static boolean isXslAuthorized( int nIdDirectoryXsl, HttpServletRequest request )
+    {
+        AdminUser adminUser = AdminUserService.getAdminUser( request );
+        if ( adminUser != null )
+        {
+            if ( adminUser.checkRight( ManageDirectoryJspBean.RIGHT_MANAGE_DIRECTORY ) )
+            {
+                boolean bRbacModify = RBACService.isAuthorized( DirectoryXsl.RESOURCE_TYPE, Integer.toString( nIdDirectoryXsl ),
+                        DirectoryXslResourceIdService.PERMISSION_MODIFY, adminUser );
+                if ( bRbacModify )
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

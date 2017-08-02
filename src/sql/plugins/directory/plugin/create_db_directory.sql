@@ -157,6 +157,7 @@ CREATE TABLE directory_xsl (
   PRIMARY KEY  (id_directory_xsl)
 );
 
+CREATE INDEX  id_directory_idx_xsl_file ON directory_xsl (id_file);
 
 /*==============================================================*/
 /* Table structure for table directory_record					*/
