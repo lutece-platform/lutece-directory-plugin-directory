@@ -1,11 +1,7 @@
-<div class="btn-group" role="group">
-	<div class="btn-group" role="group">
-		<@comboWithParams name="id_directory_xsl" default_value="" additionalParameters=" class=\"pull-left form-control input-xs\"" items=xsl_export_list />
-	</div>
-	<button class="btn btn-primary btn-xs btn-flat" type="submit" id="export_search_result" name="export_search_result"  title="#i18n{directory.manage_directory_record.button_export_search_result}" >
-		<i class=" fa fa-download" ></i>
-	</button>
-	<button class="btn btn-primary btn-xs btn-flat" type="submit" id="export_search_all" name="export_search_all"  title="#i18n{directory.manage_directory_record.button_export_all_result}" >
-		<i class="fa fa-cloud-download" ></i>
-	</button>
-</div>
+<@btnGroup>
+	<@btnGroup>
+		<@select name='id_directory_xsl' default_value='' items=xsl_export_list size='sm' />
+	</@btnGroup>
+	<@button type='submit' id='export_search_result' name='export_search_result' title='#i18n{directory.manage_directory_record.button_export_search_result}' showTitle=false buttonIcon='download' />
+	<@button type='submit' id='export_search_all' name='export_search_all' title='#i18n{directory.manage_directory_record.button_export_all_result}' showTitle=false buttonIcon='cloud-download' />
+</@btnGroup>

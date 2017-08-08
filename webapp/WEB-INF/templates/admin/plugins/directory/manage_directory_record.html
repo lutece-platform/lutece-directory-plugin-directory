@@ -1,32 +1,26 @@
 <#include "include_records_list_header.html">
-<div class="row">
-	<div class="col-xs-12 col-sm-12">
-		<form class="form-horizontal" action="jsp/admin/plugins/directory/ManageDirectoryRecord.jsp" method="post" id="searchForm" >
-			<input type="hidden" name="id_directory" value="${directory.idDirectory}" >
-			<input type="hidden" name="session" value="session" >
-			<input name="page" value="directory" type="hidden" >
-			<input name="search_action" value="search_action" type="hidden" >
-			<div class="box box-primary">
-				<div class="box-header">
-					<h3 class="box-title">	${directory.title}</h3>
-					<div class="box-tools">
+<@row>
+	<@tform action='jsp/admin/plugins/directory/ManageDirectoryRecord.jsp' id='searchForm'>
+		<input type="hidden" name="id_directory" value="${directory.idDirectory}">
+		<input type="hidden" name="session" value="session">
+		<input name="page" value="directory" type="hidden">
+		<input name="search_action" value="search_action" type="hidden">
+		<@columns>
+				<@box color='primary'>
+						<@boxHeader title='${directory.title}' boxTools=true>
 							<#include "include_directory_actions.html">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12">
-					<#include "include_records_list_search.html">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12">
-					<#include "include_records_list.html">
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
+						</@boxHeader>
+				</@box>
+		</@columns>
+		<@columns>
+			<#include "include_records_list_search.html">
+		</@columns>
+		<@columns>
+			<#include "include_records_list.html">
+		</@columns>
+	</@tform>
+</@row>
+
 <script>
 $(document).ready(function () {
 

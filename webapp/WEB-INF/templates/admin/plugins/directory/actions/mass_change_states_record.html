@@ -1,7 +1,5 @@
 <#if permission_change_state_record>
-<div class="btn-group" role="group">
-	<button type="submit" name="mass_change_states_record" id="mass_change_states_record" title="#i18n{directory.action.mass_change_states_record.name}" class="btn btn-primary btn-xs btn-flat">
-		<i class="fa fa-check-circle-o"></i>
-	</button>
-</div>
+<@btnGroup>
+	<@button type='submit' name='mass_change_states_record' id='mass_change_states_record' title='#i18n{directory.action.mass_change_states_record.name}' showTitle=false buttonIcon='check' />
+</@btnGroup>
 </#if>
