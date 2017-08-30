@@ -123,7 +123,7 @@
 												</td>
 											</#if>
 											<td style="">
-												<@aButton href='jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}' title='#i18n{directory.modify_directory.manage_entry.edit}' showTitle=false buttonIcon='pencil' />
+												<@aButton href='jsp/admin/plugins/directory/ModifyEntry.jsp?id_entry=${entry.idEntry}' title='#i18n{directory.modify_directory.manage_entry.title_modify}' showTitle=false buttonIcon='pencil' />
 												<#if entry.parent?exists>
 													<@aButton href='jsp/admin/plugins/directory/DoMoveOutEntry.jsp?id_entry=${entry.idEntry}#list' title='#i18n{directory.modify_directory.manage_entry.title_go_out}' showTitle=false buttonIcon='chevron-up' />
 												<#elseif !entry.entryType.group>
