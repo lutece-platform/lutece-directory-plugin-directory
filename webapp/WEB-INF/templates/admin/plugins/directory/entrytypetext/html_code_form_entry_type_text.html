@@ -4,7 +4,7 @@
 		<#if field.title?? && field.title == "additionalAddress">
 			<#if field.value?exists && !default_values?has_content><#assign value='${field.value}' /><#elseif default_values?has_content><#list default_values as default_value><#assign value='${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}' /></#list><#else><#assign value='' /></#if>
 			<#if field.maxSizeEnter!=-1><#assign maxlength=field.maxSizeEnter /></#if>
-			<@input type='text' readonly=true name='${entry.idEntry}' id='id_additional_address' inputSize='${field.width}' value=value maxlength=maxlength />
+			<@input type='text' readonly=true name='${entry.idEntry}' id='id_additional_address' inputSize=field.width value=value maxlength=maxlength?number />
 		<#else>
 			<#if field.value?exists && !default_values?has_content>
 				<#assign value='${field.value}' />
