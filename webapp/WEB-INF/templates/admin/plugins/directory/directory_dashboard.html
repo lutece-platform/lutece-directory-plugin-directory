@@ -31,7 +31,7 @@
 								<#list directory.actions as action>
 									<#if action.permission='MANAGE_RECORD' || action.permission='DELETE' || action.permission='CHANGE_STATE'>
 										<a class="btn btn-xs btn-flat <#if action.permission='DELETE' || action.permission='DELETE_ALL_RECORD' || action.nameKey=='directory.action.disable.name' >btn-danger<#elseif action.nameKey=='directory.action.enable.name'>btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory=${directory.idDirectory}" title="${action.description}">
-											<i class="${action.iconUrl}"></i>
+											<@icon style=action.iconUrl/>
 										</a>
 								  	</#if>
 								</#list>

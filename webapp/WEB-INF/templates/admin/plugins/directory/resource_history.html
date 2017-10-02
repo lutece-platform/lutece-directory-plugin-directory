@@ -9,7 +9,7 @@
 	<#list resource_actions.record.actions as action>
 		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
 	 		<a  href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}" title="${action.description}" class="btn btn-xs btn-flat <#if action.nameKey="directory.action.delete.name" || action.nameKey=="directory.action.disable.name" >btn-danger<#elseif action.nameKey="directory.action.enable.name">btn-success<#else>btn-primary</#if>">
-	  			<i class="${action.iconUrl}" alt="${action.name}"></i>
+	  			<@icon style=action.iconUrl title=action.name/>
 	  		</a>
 		</#if>
 	</#list>

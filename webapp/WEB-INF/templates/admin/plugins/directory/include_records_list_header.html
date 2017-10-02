@@ -27,7 +27,7 @@
 	<#list resource_actions.record.actions as action>
 		<#if (action.nameKey!="directory.action.history.name") || (action.nameKey=="directory.action.history.name" && history_workflow)>
 	 		<a class="btn btn-xs btn-flat <#if action.nameKey="directory.action.delete.name" || action.nameKey=="directory.action.disable.name" >btn-danger<#elseif action.nameKey="directory.action.enable.name">btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory_record=${resource_actions.record.idRecord}&amp;id_directory=${directory.idDirectory}" title="${action.description}">
-	  		<i class="${action.iconUrl!}"></i>
+	  		<@icon style=action.iconUrl/>
 	  	</a>
 		</#if>
 	</#list>
