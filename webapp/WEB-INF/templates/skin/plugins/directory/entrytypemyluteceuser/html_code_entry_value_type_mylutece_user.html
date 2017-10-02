@@ -9,9 +9,9 @@
 	<#if record_field?? && record_field.record??>
 		<#assign id_directory_record = record_field.record.idRecord>
 		<a href="jsp/admin/plugins/directory/DoVisualisationMyLuteceUser.jsp?id_directory_record=${id_directory_record}&amp;id_entry=${record_field.entry.idEntry}">
-			${record_field.entry.convertRecordFieldValueToString(record_field,locale,false,false)}
+			${record_field.entry.convertRecordFieldValueToString(record_field,locale,true,false)}
 		</a>
 	<#else>
-		${record_field.entry.convertRecordFieldValueToString(record_field,locale,false,false)}
+		${record_field.entry.convertRecordFieldValueToString(record_field,locale,true,false)}
 	</#if>
 </#if>

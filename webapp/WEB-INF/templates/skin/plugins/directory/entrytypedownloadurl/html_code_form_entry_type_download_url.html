@@ -1,56 +1,46 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
-	<div class="col-xs-12 col-sm-6">
-		<input type="file" name="directory_${entry.idEntry}" id="directory_${entry.idEntry}" />
-		<input type="hidden" name="_directory_upload_maxLength_directory_${entry.idEntry}" id="_directory_upload_maxLength_directory_${entry.idEntry}" value="${getFileMaxSize( entry )}" />
-		<input type="hidden" name="_directory_upload_fileTypes_directory_${entry.idEntry}" id="_directory_upload_fileTypes_directory_${entry.idEntry}" value="${getFileTypes( entry )}" />
-		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-block">${entry.helpMessage}</p>
-		</#if>	
-		<button class="btn btn-primary btn-sm" type="submit" >
-			<i class="fa fa-mail"></i>&nbsp;#i18n{directory.action.send.name}
-		</button>
-		<#-- file removing -->
-		<#assign has_files = false>
-		<#if default_values?? && default_values?has_content>
-			<#assign record_field_error = default_values[0]>
-			<#if record_field_error.entry.idEntry == entry.idEntry>
-				<#assign has_files = true>
-			</#if>
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=entry.helpMessage mandatory=entry.mandatory>
+	<input type="file" name="directory_${entry.idEntry}" id="directory_${entry.idEntry}" />
+	<input type="hidden" name="_directory_upload_maxLength_directory_${entry.idEntry}" id="_directory_upload_maxLength_directory_${entry.idEntry}" value="${getFileMaxSize( entry )}" />
+	<input type="hidden" name="_directory_upload_fileTypes_directory_${entry.idEntry}" id="_directory_upload_fileTypes_directory_${entry.idEntry}" value="${getFileTypes( entry )}" />
+	<@button type='submit' name='send${entry.idEntry}' id='send${entry.idEntry}' buttonIcon='upload' title='#i18n{directory.action.send.name}' />
+	<#-- file removing -->
+	<#assign has_files = false>
+	<#if default_values?? && default_values?has_content>
+		<#assign record_field_error = default_values[0]>
+		<#if record_field_error.entry.idEntry == entry.idEntry>
+			<#assign has_files = true>
 		</#if>
-		<div id="_file_deletion_label_directory_${entry.idEntry}">
-			<label for="delete_${entry.idEntry}">#i18n{directory.create_directory_record.file.uploadedFile}</label>
-			<span id="_filename_directory_${entry.idEntry}">&nbsp;</span>
-		</div>
-		<#assign file_index = 0>
-		<div id="_file_deletion_directory_${entry.idEntry}">
-		<#if has_files>
-			<#list default_values as default_value>
-				<#if default_value.fileName?? && default_value.fileName != ''>
-				<span class="form-label" id="_file_deletion_${entry.idEntry}">
-					<span class="form-field-column" id="_filename_directory_${entry.idEntry}">
-					<input type="checkbox" id="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" name="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" value="1" />
-					<#-- Case when the user uploads without JS -->
-						<#if default_value.value?? && default_value.value != ''>
-							<a href="${default_value.value}">
-								${default_value.fileName}
-							</a>
-						<#else>
-							${default_value.fileName}
-						</#if>
-					</span>
-				</span>
-				</#if>
-				<#assign file_index = file_index + 1>
-			</#list>
-		</#if>
-		</div>
-		<div id="_file_deletion_button_directory_${entry.idEntry}">
-			<button class="btn btn-danger btn-sm" type="submit" >
-				<i class="fa fa-trash-o"></i>&nbsp;#i18n{directory.action.delete.name}
-			</button>
-		</div>
+	</#if>
+	<div id="_file_deletion_label_directory_${entry.idEntry}">
+		<label for="delete_${entry.idEntry}">#i18n{directory.create_directory_record.file.uploadedFile}</label>
+		<span id="_filename_directory_${entry.idEntry}">&nbsp;</span>
 	</div>
-</div>
+	<#assign file_index = 0>
+	<div id="_file_deletion_directory_${entry.idEntry}">
+	<#if has_files>
+		<#list default_values as default_value>
+			<#if default_value.fileName?? && default_value.fileName != ''>
+			<span class="form-label" id="_file_deletion_${entry.idEntry}">
+				<span class="form-field-column" id="_filename_directory_${entry.idEntry}">
+				<input type="checkbox" id="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" name="_directory_upload_checkbox_directory_${entry.idEntry}${file_index}" value="1" />
+				<#-- Case when the user uploads without JS -->
+					<#if default_value.value?? && default_value.value != ''>
+						<a href="${default_value.value}">
+							${default_value.fileName}
+						</a>
+					<#else>
+						${default_value.fileName}
+					</#if>
+				</span>
+			</span>
+			</#if>
+			<#assign file_index = file_index + 1>
+		</#list>
+	</#if>
+	</div>
+	<div id="_file_deletion_button_directory_${entry.idEntry}">
+	<@button type='submit' color='btn-danger' name='delete${entry.idEntry}' id='delete${entry.idEntry}' buttonIcon='trash-o' title='#i18n{directory.action.delete.name}' />
+	</div>
+</@formGroup>
 

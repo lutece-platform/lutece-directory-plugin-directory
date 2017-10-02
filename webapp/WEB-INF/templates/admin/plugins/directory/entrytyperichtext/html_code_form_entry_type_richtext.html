@@ -1,6 +1,4 @@
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-2" for="entry_${entry.idEntry}">${entry.title}<#if entry.mandatory> * </#if></label>
-	<div class="col-xs-12 col-sm-9">
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=entry.helpMessage mandatory=entry.mandatory>
 		<#list entry.fields as field>
 		<#if field.value?exists && !default_values?has_content>
 			<#assign field_value = field.value/>
@@ -9,10 +7,6 @@
 	 	<#else>
 			<#assign field_value = ""/>
 		</#if>
-		<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" class="richtext form-control" rows="20">${field_value}</textarea>
+		<@input type='textarea' name='${entry.idEntry}' id='${entry.idEntry}' rows=20>${field_value}</@input>
 		</#list>
-		<#if entry.helpMessage?exists && entry.helpMessage!=''>
-			<span class="help-text">${entry.helpMessage}</span>
-		</#if>
-	</div>
-</div>
+</@formGroup>

@@ -1,19 +1,13 @@
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}</label>
-	<div class="col-xs-12 col-sm-9">
-	 	<#if default_values?has_content>
-			<#list default_values as default_value>
-		 		<#if default_value?exists && default_value.value?exists>
-					<@comboWithParams name=entry.idEntry default_value=default_value.value additionalParameters=" class=\"form-control\" " items=entry.getSqlQueryFields() />
-		 		<#else>
-					<@comboWithParams name=entry.idEntry default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.getSqlQueryFields() />
-				</#if>
-			</#list>
-		 <#else>
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=entry.helpMessageSearch mandatory=false>
+ 	<#if default_values?has_content>
+		<#list default_values as default_value>
+	 		<#if default_value?exists && default_value.value?exists>
+				<@comboWithParams name=entry.idEntry default_value=default_value.value additionalParameters=" class=\"form-control\" " items=entry.getSqlQueryFields() />
+	 		<#else>
 				<@comboWithParams name=entry.idEntry default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.getSqlQueryFields() />
-		</#if>
-		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-text">${entry.helpMessage}</span>
-		</#if>
-	</div>
-</div>
+			</#if>
+		</#list>
+	 <#else>
+			<@comboWithParams name=entry.idEntry default_value="-1" additionalParameters=" class=\"form-control\" " items=entry.getSqlQueryFields() />
+	</#if>
+</@formGroup>

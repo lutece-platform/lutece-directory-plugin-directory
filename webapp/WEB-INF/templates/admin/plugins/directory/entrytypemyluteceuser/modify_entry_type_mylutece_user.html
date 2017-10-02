@@ -1,191 +1,35 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="row">
-	<div class="col-xs-12 col-sm-12" id="main">
-		<form class="form-horizontal" action="jsp/admin/plugins/directory/DoModifyEntry.jsp#list" method="post" name="" id="">
-		<input name="id_entry" value="${entry.idEntry}" type="hidden">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-				<h3 class="box-title">#i18n{directory.create_entry.title_field} : '${entry.directory.title}' </h3>
-				<div class="box-tools">
-					<span class="label label-info" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span>
-				</div>
-			</div>
-			<div class="box-body">
-				<div class="row">
-					<div class="col-xs-12 col-sm-8">
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="title">#i18n{directory.create_entry.label_title} *</label>
-							<div class="col-xs-12 col-sm-9">
-								<input type="text" name="title" id="title" value="${entry.title}" maxlength="255" class="form-control">
-								<span class="help-text">#i18n{directory.create_entry.label_title_comment}</span>
+<@row>
+	<@columns id='main'>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directory.create_entry.title_field} : "${entry.directory.title}"' boxTools=true>
+				<@button type='button' buttonIcon='cogs' title='#i18n{directory.create_directory.label_advancedsettings}' id='advanced' />
+			</@boxHeader>
+			<@boxBody>
+				<@directoryModifyForm entry=entry>
+					<div class="form-group">
+						<div class="col-xs-12 col-sm-9 col-sm-offset-3">
+							<div class="checkbox">
+								<label for="is_all_search">
+									<input type="checkbox" name="is_all_search" id="is_all_search" value="1" <#if entry.addValueAllSearch>checked="checked"</#if>> #i18n{directory.create_entry.label_is_all_search}
+								</label>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for=""></label>
-							<div class="col-xs-12 col-sm-9">
-								<div class="checkbox">
-									<label for="mandatory">
-										<input name="mandatory" id="mandatory" value="1" type="checkbox" <#if entry.mandatory>checked="checked"</#if>>#i18n{directory.create_entry.label_mandatory}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3"  for=""></label>
-							<div class="col-xs-12 col-sm-9">
-								<div class="checkbox">
-									<label for="is_all_search">
-										<input type="checkbox" name="is_all_search" id="is_all_search" value="1" <#if entry.addValueAllSearch>checked="checked"</#if>> #i18n{directory.create_entry.label_is_all_search}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group" id="label_value_all_search">
-					   <label class="control-label col-xs-12 col-sm-3"  for="label_all_search">#i18n{directory.create_entry.label_label_all_search} : </label>
-							<div class="col-xs-12 col-sm-9">
-								<input type="text" name="label_all_search" id="label_all_search" value="<#if entry.labelValueAllSearch??>${entry.labelValueAllSearch!}</#if>" class="form-control" maxlength="255">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="help_message"> #i18n{directory.create_entry.label_help_message}</label>
-							<div class="col-xs-12 col-sm-9">
-								<textarea name="help_message" id="help_message" class="form-control" rows="2">${entry.helpMessage!}</textarea>
-									<span class="help-text">#i18n{directory.create_entry.label_help_message_comment}</span>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3"  for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
-								<div class="col-xs-12 col-sm-9">
-									<textarea name="help_message_search" id="help_message_search" class="form-control" rows="2">${entry.helpMessageSearch!}</textarea>
-									<span class="help-text">#i18n{directory.create_entry.label_help_message_search_comment}</span>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-xs-12 col-sm-offset-3 col-sm-9">
-									<button class="btn btn-primary btn-sm btn-flat" type="submit" name="save">
-										<i class="fa fa-check" ></i>
-										<span class="hidden-xs" >#i18n{directory.create_entry.button_save}</span>
-									</button>
-									<button class="btn btn-primary btn-sm btn-flat" type="submit" name="apply" >
-										<i class="fa fa-check-circle"></i>
-										<span class="hidden-xs" >#i18n{directory.modify_entry.button_apply}</span>
-									</button>
-									<a class="btn btn-default btn-sm btn-flat" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
-										<i class="fa fa-remove" ></i>
-										<span class="hidden-xs" >#i18n{directory.create_entry.button_cancel}</span>
-									</a>
-								</div>
-							</div>
-				</div>
-				<div class="col-xs-12 col-sm-4">
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3" for=""></label>
-								<div class="col-xs-12 col-sm-9">
-									<div class="checkbox">
-										<label class="checkbox" for="indexed" title="#i18n{directory.create_entry.label_indexed_comment}">
-											<input name="indexed" id="indexed" value="1" type="checkbox" <#if entry.indexed>checked="checked"</#if>> #i18n{directory.create_entry.label_indexed}
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-xs-12 col-sm-3" for=""></label>
-								<div class="col-xs-12 col-sm-9">
-									<div class="checkbox">
-										<label for="shown_in_advanced_search" title="#i18n{directory.create_entry.label_shown_in_advanced_search_comment}">
-											<input name="shown_in_advanced_search" id="shown_in_advanced_search"  value="1" type="checkbox" <#if entry.shownInAdvancedSearch>checked="checked"</#if>>
-												#i18n{directory.create_entry.label_shown_in_advanced_search}
-										</label>
-									</div>
-								</div>
-							</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="indexed_as_title">
-													<input name="indexed_as_title" id="indexed_as_title" value="1" type="checkbox" <#if entry.shownInAdvancedSearch>checked="checked"</#if>> #i18n{directory.create_entry.label_indexed_as_title}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="indexed_as_summary">
-													<input name="indexed_as_summary" id="indexed_as_summary" value="1" type="checkbox" <#if entry.shownInAdvancedSearch>checked="checked"</#if>> #i18n{directory.create_entry.label_indexed_as_summary}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="shown_in_result_list" title="#i18n{directory.create_entry.label_shown_in_result_list_comment}">
-													<input name="shown_in_result_list" id="shown_in_result_list" value="1" type="checkbox" <#if entry.shownInAdvancedSearch>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_result_list}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="shown_in_result_record" title="#i18n{directory.create_entry.label_shown_in_result_record_comment}">
-													<input name="shown_in_result_record" id="shown_in_result_record" value="1" type="checkbox" <#if entry.shownInAdvancedSearch>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_result_record}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label class="" for="shown_in_history" title="#i18n{directory.create_entry.label_shown_in_history_comment}">
-													<input name="shown_in_history" id="shown_in_history" value="1" type="checkbox" <#if entry.shownInAdvancedSearch>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_history}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="shown_in_export" title="#i18n{directory.create_entry.label_shown_in_export_comment}">
-													<input name="shown_in_export" id="shown_in_export"value="1" type="checkbox" <#if entry.shownInAdvancedSearch>checked="checked"</#if>> #i18n{directory.create_entry.label_shown_in_export}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for=""></label>
-										<div class="col-xs-12 col-sm-9">
-											<div class="checkbox">
-												<label for="shown_in_completeness" title="#i18n{directory.create_entry.label_shown_in_completeness_comment}">
-													<input name="shown_in_completeness" id="shown_in_completeness" value="1" type="checkbox" <#if entry.shownInAdvancedSearch>checked="checked"</#if>>	#i18n{directory.create_entry.label_shown_in_completeness}
-												</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-12 col-sm-3" for="comment"> #i18n{directory.create_entry.label_comment}</label>
-										<div class="col-xs-12 col-sm-9">
-											<textarea name="comment" class="form-control" rows="2">${entry.comment}</textarea>
-										</div>
-								</div>
 						</div>
 					</div>
-			</form>
-	</div>
-</div>
+					<@formGroup labelFor='label_all_search' labelKey='#i18n{directory.create_entry.label_label_all_search}' id='label_value_all_search_block'>
+						<@input type='text' name='label_all_search' id='label_all_search' maxlength=255 value=entry.labelValueAllSearch/>
+					</@formGroup>
+				</@directoryModifyForm>
+			</@boxBody>
+		</@box>
+	</@columns>
+</@row>
 <script>
 function addAllSearch()	{
 	if( $("#is_all_search:checked").length > 0 ){
-		$("#label_value_all_search").show();
+		$("#label_value_all_search_block").show();
 	} else {
-		$("#label_value_all_search").hide();
+		$("#label_value_all_search_block").hide();
 	}
 }
 $(document).ready(function () {

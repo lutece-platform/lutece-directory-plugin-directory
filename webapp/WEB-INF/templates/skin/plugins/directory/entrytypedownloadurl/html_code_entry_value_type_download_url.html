@@ -1,4 +1,4 @@
-<#assign link=record_field.entry.convertRecordFieldValueToString(record_field,locale,false,false) />
+<#assign link=record_field.entry.convertRecordFieldValueToString(record_field,locale,true,false) />
 <#if link?has_content>
 	<a href="${link}">
 		<#if record_field.fileName?? && record_field.fileName != ''>

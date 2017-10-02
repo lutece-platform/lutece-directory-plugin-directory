@@ -1,11 +1,9 @@
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}</label>
-	<div class="col-xs-12 col-sm-9">
-		<#list entry.fields as field>
-		<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" <#if default_values?has_content><#list default_values as default_value>	value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}"</#list><#else>value="" </#if> ></#list>
-	</span>
-	<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-text">${entry.helpMessage}</span>
-		</#if>
-	</div>
-</div>
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=entry.helpMessageSearch mandatory=false>
+	<#assign valueText="" />
+	<#if default_values?has_content>
+		<#list default_values as default_value>
+			<#assign valueText=default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false) />
+		</#list>
+	</#if>
+	<@input type='text' name='${entry.idEntry}' id='${entry.idEntry}' value='${valueText}' />
+</@formGroup>

@@ -1,6 +1,6 @@
 <#include "/admin/plugins/directory/commons.html" />
 <div class="form-group">
- <label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory>	*</#if></label>
+ <label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
 <div class="col-xs-12 col-sm-9">
 		<input type="hidden" name="_directory_upload_maxLength_directory_${entry.idEntry}" id="_directory_upload_maxLength_directory_${entry.idEntry}" value="${getFileMaxSize( entry )}">
 		<input type="hidden" name="_directory_upload_fileTypes_directory_${entry.idEntry}" id="_directory_upload_fileTypes_directory_${entry.idEntry}" value="${getFileTypes( entry )}" >
@@ -13,7 +13,7 @@
 			</span>
 		</div>
 		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-text">${entry.helpMessage}</span>
+			<span class="help-block">${entry.helpMessage}</span>
 		</#if>
 		<#-- file removing -->
 		<#assign has_files = false>

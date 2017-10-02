@@ -1,63 +1,53 @@
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3" for="entry_${entry.idEntry}">${entry.title}<#if entry.mandatory> * </#if></label>
-	<div class="col-xs-12 col-sm-6">
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=entry.helpMessage mandatory=entry.mandatory>
 	<#list entry.fields as field>
 		<#if field.value?exists && !default_values?has_content>
 			<#assign field_value = field.value/>			
 		<#elseif default_values?has_content>
-			<#assign field_value = default_values[0].entry.convertRecordFieldValueToString(default_values[0],locale,false,false)/>
+			<#assign field_value = default_values[0].entry.convertRecordFieldValueToString(default_values[0],locale,true,false)/>
 		<#else>
 			<#assign field_value = ""/>
 		</#if>
 		<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" class="form-control" readonly="readonly">${field_value}</textarea>
 		<img src="images/admin/skin/plugins/document/linkservice.png" id="img_linkservice_${entry.idEntry}"	alt="#i18n{directory.form_entry.labelLinkService}" title="#i18n{directory.form_entry.labelLinkService}" />
-		<button id="img_linkservice_clear_${entry.idEntry}" class="btn btn-danger btn-sm">
-			<i class="icon-trash icon-white"></i>&nbsp;#i18n{directory.form_entry.internallink.labelLinkServiceClear}
-		</button>
-		<button class="btn btn-primary btn-sm" id="#show_preview_section_${entry.idEntry}">
-			<i class="icon-eye-open icon-white"></i>&nbsp;#i18n{directory.form_entry.buttonShowPreview}
-		</button>
+		<@button type='button' color='btn-danger' name='img_linkservice_clear_${entry.idEntry}' id='img_linkservice_clear_${entry.idEntry}' buttonIcon='trash' title='#i18n{directory.form_entry.internallink.labelLinkServiceClear}' />
+		<@button type='button' name='#show_preview_section_${entry.idEntry}' id='#show_preview_section_${entry.idEntry}' buttonIcon='eye' title='#i18n{directory.form_entry.buttonShowPreview}' />
 		<div id="show_preview_${entry.idEntry}">&nbsp;</div>
-			<!-- JS for insert service -->
-			<script>
-				function linkservice_${entry.idEntry}() {
-					jQuery("#show_preview_${entry.idEntry}").html("&nbsp;");
-					var baseUrl = document.getElementsByTagName("base"); 
-					var fen = window.open(
-						baseUrl[0].href + "jsp/admin/insert/GetAvailableInsertServices.jsp?input=entry_${entry.idEntry}&selected_text=",
-						"#i18n{directory.form_entry.labelLinkService}",
-						"toolbar=no, scrollbars=yes, status=yes, location=no, directories=no, menubar=no, width=550, height=450"
-					);
-					fen.focus();
-				}
-				
-				function linkservice_clear_${entry.idEntry}() {
-					jQuery("#entry_${entry.idEntry}").val("");
-					jQuery("#show_preview_${entry.idEntry}").html("&nbsp;");
-				}
-				
-				jQuery("#img_linkservice_${entry.idEntry}").click( linkservice_${entry.idEntry}	);
-				
-				jQuery("#img_linkservice_clear_${entry.idEntry}").click( linkservice_clear_${entry.idEntry}	);
-					
-				jQuery("#img_linkservice_${entry.idEntry}, #img_linkservice_clear_${entry.idEntry}").hover(function() {
-				$(this).css("cursor", "pointer");
-					}, function() {
-						$(this).css("cursor", "auto");
-				});
-				
-				//jQuery("#show_preview_section_${entry.idEntry}").show();
-				
-				jQuery("#show_preview_section_${entry.idEntry}").click( function(){
-						jQuery("#show_preview_${entry.idEntry}").html(	jQuery("#entry_${entry.idEntry}").val() + "&nbsp;"	);
-						return false;
-				});
-				
-			</script>
+		<!-- JS for insert service -->
+		<script>
+			function linkservice_${entry.idEntry}() {
+				jQuery("#show_preview_${entry.idEntry}").html("&nbsp;");
+				var baseUrl = document.getElementsByTagName("base"); 
+				var fen = window.open(
+					baseUrl[0].href + "jsp/admin/insert/GetAvailableInsertServices.jsp?input=entry_${entry.idEntry}&selected_text=",
+					"#i18n{directory.form_entry.labelLinkService}",
+					"toolbar=no, scrollbars=yes, status=yes, location=no, directories=no, menubar=no, width=550, height=450"
+				);
+				fen.focus();
+			}
 			
-		 </#list>
-		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-block">${entry.helpMessage}</p>
-		</#if>
-	</div>
-</div>
+			function linkservice_clear_${entry.idEntry}() {
+				jQuery("#entry_${entry.idEntry}").val("");
+				jQuery("#show_preview_${entry.idEntry}").html("&nbsp;");
+			}
+			
+			jQuery("#img_linkservice_${entry.idEntry}").click( linkservice_${entry.idEntry}	);
+			
+			jQuery("#img_linkservice_clear_${entry.idEntry}").click( linkservice_clear_${entry.idEntry}	);
+				
+			jQuery("#img_linkservice_${entry.idEntry}, #img_linkservice_clear_${entry.idEntry}").hover(function() {
+			$(this).css("cursor", "pointer");
+				}, function() {
+					$(this).css("cursor", "auto");
+			});
+			
+			//jQuery("#show_preview_section_${entry.idEntry}").show();
+			
+			jQuery("#show_preview_section_${entry.idEntry}").click( function(){
+					jQuery("#show_preview_${entry.idEntry}").html(	jQuery("#entry_${entry.idEntry}").val() + "&nbsp;"	);
+					return false;
+			});
+			
+		</script>
+		
+	 </#list>
+</@formGroup>

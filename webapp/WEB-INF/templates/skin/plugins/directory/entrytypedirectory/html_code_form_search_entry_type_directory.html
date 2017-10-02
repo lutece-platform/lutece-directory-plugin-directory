@@ -1,17 +1,13 @@
-<div class="form-group">
-		<label class="control-label col-xs-12 col-sm-3" for="${entry.idEntry}">${entry.title}</label>
-		<div class="col-xs-12 col-sm-6">
-		<#if default_values?has_content>	 
-			<#list default_values as default_value>
-				<#if default_value?exists && default_value.value?exists>
-					<@combo name=entry.idEntry items=entry.getSelectListRecordAssociate( true ) default_value=default_value.value />
-		 		<#else>
-					<@combo name=entry.idEntry items=entry.getSelectListRecordAssociate( true ) default_value=-1 />
-		 		</#if>
-		 	</#list>
-		 <#else>
-				<@combo name=entry.idEntry  items=entry.getSelectListRecordAssociate( true ) default_value=-1 />
-		</#if>
-		<#if entry.helpMessage?exists&&entry.helpMessageSearch!=''><p class="help-block">${entry.helpMessageSearch}</p></#if>	
-		</div>
-</div>		
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=entry.helpMessageSearch mandatory=false>
+<#if default_values?has_content>	 
+	<#list default_values as default_value>
+		<#if default_value?exists && default_value.value?exists>
+			<@comboWithParams name=entry.idEntry default_value=default_value.value items=entry.getSelectListRecordAssociate( true ) additionalParameters=" class=\"form-control\" "/>
+ 		<#else>
+			<@comboWithParams name=entry.idEntry default_value="-1" items=entry.getSelectListRecordAssociate( true ) additionalParameters=" class=\"form-control\" "/>
+ 		</#if>
+ 	</#list>
+ <#else>
+		<@comboWithParams name=entry.idEntry default_value="-1" items=entry.getSelectListRecordAssociate( true ) additionalParameters=" class=\"form-control\" "/>
+</#if>
+</@formGroup>

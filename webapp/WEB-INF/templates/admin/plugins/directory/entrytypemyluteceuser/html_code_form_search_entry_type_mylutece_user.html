@@ -8,19 +8,14 @@
 	</#if>
  <#return false>
 </#function>
-<div class="control-group">
-	<label class="control-label"  for="${entry.idEntry}">${entry.title}</label>
-	<div class="controls">
-		<select name="${entry.idEntry}"  id="${entry.idEntry}">
-		<#if entry.isAddValueAllSearch()>
-			<option value="">${entry.labelValueAllSearch!}</option>
-		</#if>
-		<#list entry.myLuteceUsers?sort_by('name') as user>
-			<option  value="${user.code}"<#if default_values?has_content && isSelected (user.code,default_values)>selected ="selected" </#if>>${user.name}</option>	
-		</#list>
-		</select>
-		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-block">${entry.helpMessage}</p>
-		</#if>
-	</div>
-</div>
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=entry.helpMessageSearch mandatory=false>
+	<select class="form-control" name="${entry.idEntry}"  id="${entry.idEntry}">
+	<#if entry.isAddValueAllSearch()>
+		<option value="">${entry.labelValueAllSearch!}</option>
+	</#if>
+	<#list entry.myLuteceUsers?sort_by('name') as user>
+		<option  value="${user.code}"<#if default_values?has_content && isSelected (user.code,default_values)>selected ="selected" </#if>>${user.name}</option>	
+	</#list>
+	</select>
+</@formGroup>
+		

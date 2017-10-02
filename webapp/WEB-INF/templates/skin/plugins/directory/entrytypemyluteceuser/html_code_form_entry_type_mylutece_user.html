@@ -8,20 +8,13 @@
 	</#if>
  <#return false>
 </#function>
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-3"  for="${entry.idEntry}">${entry.title} <#if entry.mandatory>*</#if></label>
-	<div class="col-xs-12 col-sm-6">
-		<select name="${entry.idEntry}" class="form-control" id="${entry.idEntry}">
-		<#if !entry.isMandatory() && entry.isAddValueAllSearch()>
-			<option value="">${entry.labelValueAllSearch!}</option>
-		</#if>
-		<#list entry.myLuteceUsers?sort_by('name') as user>
-			<option value="${user.code}"<#if default_values?has_content && isSelected( user.code,default_values ) >	selected="selected"</#if>	>${user.name}</option>	
-		</#list>
-		</select>
-	   </span>
-	  <#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-block">${entry.helpMessage}</p>
-		</#if>
-	</div>
-</div>
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=entry.helpMessage mandatory=entry.mandatory>
+	<select name="${entry.idEntry}" class="form-control" id="${entry.idEntry}">
+	<#if !entry.isMandatory() && entry.isAddValueAllSearch()>
+		<option value="">${entry.labelValueAllSearch!}</option>
+	</#if>
+	<#list entry.myLuteceUsers?sort_by('name') as user>
+		<option value="${user.code}"<#if default_values?has_content && isSelected( user.code,default_values ) >	selected="selected"</#if>	>${user.name}</option>	
+	</#list>
+	</select>
+</@formGroup>

@@ -28,33 +28,27 @@
 	<#assign width= entry.displayWidth>
 </#if>
 <#list entry.fields as field>
-		   			<#if field.imageType?? >
-		   				<#assign imageType= field.imageType>
-		   			<#else>
-		   				<#assign imageType= "png">
-		   			</#if>
+	<#if field.imageType?? >
+		<#assign imageType= field.imageType>
+	<#else>
+		<#assign imageType= "png">
+	</#if>
 </#list>
-<div class="form-group">
-<label class="control-label col-xs-12 col-sm-2" for="${entry.idEntry}">${entry.title}<#if entry.mandatory> *</#if></label>
-<div class="col-xs-12 col-sm-9">					
+
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=entry.helpMessage mandatory=entry.mandatory>
 	<div>
 		<video id="video" width="0" height="0" autoplay ></video>
 
 	</div>
 	<div>
-		<button align="" type="button" id="snap${entry.idEntry}" class="btn btn-primary btn-sm" ><i class="glyphicon glyphicon-camera" ></i> #i18n{directory.html_code_form_snap_photo}</button>
-		<button align="" type="button" id="clear${entry.idEntry}" class="btn btn-primary btn-sm" ><i class="glyphicon glyphicon-remove-circle" ></i> #i18n{directory.html_code_form_remove_photo}</button>	
-		
+		<@button type='button' name='snap${entry.idEntry}' id='snap${entry.idEntry}' buttonIcon='camera' title='#i18n{directory.html_code_form_snap_photo}' />
+		<@button type='button' name='clear${entry.idEntry}' id='clear${entry.idEntry}' buttonIcon='times' title='#i18n{directory.html_code_form_remove_photo}' />
 	</div>
 	<div>
 		<canvas id="canvas${entry.idEntry}" width="${width}" height="${height}" class="camera" ></canvas>
 		<input type="hidden"  id="attribute${entry.idEntry}" name="directory_${entry.idEntry}"  />
 	</div>
-</div>	
-</div>    			
-<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-	<span class="help-block">${entry.helpMessage}</span>
-</#if>
+</@formGroup>
 
 <script>
 	   // Put event listeners into place

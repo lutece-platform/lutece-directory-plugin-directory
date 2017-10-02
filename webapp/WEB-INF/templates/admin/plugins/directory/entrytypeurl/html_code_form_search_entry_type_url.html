@@ -3,7 +3,7 @@
 	<div class="col-xs-12 col-sm-9">
 		<#list entry.fields as field><input type="text" class="form-control" name="${entry.idEntry}" id="${entry.idEntry}" <#if default_values?has_content><#list default_values as default_value>value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}"</#list><#else>value=""</#if>>	</#list>
 		<#if entry.helpMessage?exists&&entry.helpMessageSearch!=''>
-			<span class="help-text">${entry.helpMessageSearch}</span>
+			<span class="help-block">${entry.helpMessageSearch}</span>
 		</#if>
 	</div>
 </div>

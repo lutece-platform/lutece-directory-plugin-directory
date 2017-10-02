@@ -9,7 +9,7 @@
 		</#list>
 		<#elseif default_values?has_content>
 			<#list default_values as default_value>
-				<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" value="${default_value.value}" />${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}
+				<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" value="${default_value.value}" />${default_value.entry.convertRecordFieldValueToString(default_value,locale,true,false)}
 			</#list>	 	
 		<#else>
 			<input type="hidden" name="${entry.idEntry}" id="${entry.idEntry}" />#i18n{directory.entry_type_numbering.labelAutomaticNumbering}

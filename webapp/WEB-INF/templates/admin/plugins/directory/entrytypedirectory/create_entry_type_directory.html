@@ -1,333 +1,47 @@
 <#include "/admin/plugins/directory/commons.html" />
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-sm-12" id="main">
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title">#i18n{directory.create_entry.title_field} : '${entry.directory.title}' </h3>
-				<div class="box-tools">
-					<span class="label label-info pull-right" title="#i18n{directory.create_entry.label_type}">#i18n{${entry.entryType.titleI18nKey}}</span>
-				</div>
-			</div>
-			<div class="box-body">
-				<form class="form-horizontal" action="jsp/admin/plugins/directory/DoCreateEntry.jsp#list" method="post" name="" id="">
-				<input name="id_type" value="${entry.entryType.idType}" type="hidden">
-				<div class="row">
-					<div class="col-xs-12 col-sm-7">
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for="title">#i18n{directory.create_entry.label_title} *</label>
-							<div class="col-xs-12 col-sm-9">
-								<input type="text" name="title" id="title" value="" maxlength="255" class="form-control">
-								<span class="help-text">#i18n{directory.create_entry.label_title_comment}</span>
+<@row>
+	<@columns id='main'>
+		<@box color='primary'>
+			<@boxHeader title='#i18n{directory.create_entry.title_field} : "${entry.directory.title}"' boxTools=true>
+				<@button type='button' buttonIcon='cogs' title='#i18n{directory.create_directory.label_advancedsettings}' id='advanced' />
+			</@boxHeader>
+			<@boxBody>
+				<@directoryCreateForm entry=entry>
+					<@formGroup labelFor='id_entry_associate' labelKey='#i18n{directory.create_entry.label_entry}' helpKey='#i18n{directory.create_entry.label_entry_comment}' mandatory=true>
+						<@comboWithParams name="id_entry_associate" default_value="-1" additionalParameters=" class=\"form-control\"" items=directory_entry_list_associate />
+					</@formGroup>
+					<div class="form-group">
+						<div class="col-xs-12 col-sm-9 col-sm-offset-3">
+							<div class="checkbox">
+								<label for="is_all_search">
+									<input id="is_all_search" name="is_all_search" value="1" type="checkbox" onclick="javascript:addAllSearch();" >		#i18n{directory.create_entry.label_is_all_search}
+								</label>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for=""></label>
-							<div class="col-xs-12 col-sm-9">
-								<div class="checkbox">
-									<label for="mandatory">
-										<input name="mandatory" id="mandatory"  value="1" type="checkbox" ${getChecked('mandatory',list_param_default_values)}>#i18n{directory.create_entry.label_mandatory}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3"  for="help_message"> #i18n{directory.create_entry.label_help_message_search} </label>
-							<div class="col-xs-12 col-sm-9">
-								<textarea  name="help_message_search" id="help_message" class="form-control" rows="2"></textarea>
-								<span class="help-text">#i18n{directory.create_entry.label_help_message_search}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3"  for="help_message_search"> #i18n{directory.create_entry.label_help_message_search} </label>
-							<div class="col-xs-12 col-sm-9">
-								<textarea  name="help_message_search" id="help_message_search" class="form-control" rows="2"></textarea>
-								<span class="help-text">#i18n{directory.create_entry.label_help_message_search_comment}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" or="id_entry_associate">#i18n{directory.create_entry.label_entry} *</label>
-							<div class="col-xs-12 col-sm-9">
-									<@comboWithParams name="id_entry_associate" default_value="-1" additionalParameters=" class=\"form-control\"" items=directory_entry_list_associate />
-									<span class="help-text">#i18n{directory.create_entry.label_entry_comment}</span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3" for=""></label>
-							<div class="col-xs-12 col-sm-9">
-								<div class="checkbox">
-									<label for="is_all_search">
-										<input id="is_all_search" name="is_all_search" value="1" type="checkbox" onclick="javascript:addAllSearch();" >		#i18n{directory.create_entry.label_is_all_search}
-									</label>
-									<span class="help-text">#i18n{directory.create_entry.label_is_all_search_comment}</span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group" id="label_value_all_search">
-							<label class="control-label col-xs-12 col-sm-3" for="label_all_search">#i18n{directory.create_entry.label_label_all_search} : </label>
-							<div class="col-xs-12 col-sm-9">
-					    	<input type="text" name="label_all_search" id="label_all_search" class="form-control" maxlength="255" value="">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-xs-12 col-sm-offset-3 col-sm-9">
-								<button class="btn btn-primary  btn-flat" type="submit" name="save">
-									<i class="fa fa-check" ></i>
-									<span class="hidden-xs" >#i18n{directory.create_entry.button_save}</span>
-								</button>
-								<a class="btn btn-default btn-flat" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}">
-									<i class="fa fa-remove" ></i>
-									<span class="hidden-xs" >#i18n{directory.create_entry.button_cancel}</span>
-								</a>
-							</div>
+							<span class="help-block">#i18n{directory.create_entry.label_is_all_search_comment}</span>
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-5">
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-2" for=""></label>
-							<div class="col-xs-12 col-sm-10">
-								<div class="checkbox">
-									<label class="checkbox" for="indexed" title="#i18n{directory.create_entry.label_indexed_comment}">
-										<input name="indexed" id="indexed" value="1" type="checkbox" ${getChecked('indexed',list_param_default_values)} > #i18n{directory.create_entry.label_indexed}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-2" for=""></label>
-							<div class="col-xs-12 col-sm-10">
-								<div class="checkbox">
-									<label for="shown_in_advanced_search" title="#i18n{directory.create_entry.label_shown_in_advanced_search_comment}">
-										<input name="shown_in_advanced_search" id="shown_in_advanced_search"  value="1" type="checkbox" ${getChecked('shown_in_advanced_search',list_param_default_values)}>
-										#i18n{directory.create_entry.label_shown_in_advanced_search}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-2" for=""></label>
-							<div class="col-xs-12 col-sm-10">
-								<div class="checkbox">
-									<label for="indexed_as_title">
-										<input name="indexed_as_title" id="indexed_as_title" value="1" type="checkbox" ${getChecked('indexed_as_title',list_param_default_values)}> #i18n{directory.create_entry.label_indexed_as_title}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-2" for=""></label>
-							<div class="col-xs-12 col-sm-10">
-								<div class="checkbox">
-									<label for="indexed_as_summary">
-										<input name="indexed_as_summary" id="indexed_as_summary" value="1" type="checkbox" ${getChecked('indexed_as_summary',list_param_default_values)}> #i18n{directory.create_entry.label_indexed_as_summary}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-2" for=""></label>
-							<div class="col-xs-12 col-sm-10">
-								<div class="checkbox">
-									<label for="shown_in_result_list" title="#i18n{directory.create_entry.label_shown_in_result_list_comment}">
-										<input name="shown_in_result_list" id="shown_in_result_list" value="1" type="checkbox" ${getChecked('shown_in_result_list',list_param_default_values)}> #i18n{directory.create_entry.label_shown_in_result_list}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-2" for=""></label>
-							<div class="col-xs-12 col-sm-10">
-								<div class="checkbox">
-									<label for="shown_in_result_record" title="#i18n{directory.create_entry.label_shown_in_result_record_comment}">
-										<input name="shown_in_result_record" id="shown_in_result_record" value="1" type="checkbox" ${getChecked('shown_in_result_record',list_param_default_values)}> #i18n{directory.create_entry.label_shown_in_result_record}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-2" for=""></label>
-							<div class="col-xs-12 col-sm-10">
-								<div class="checkbox">
-									<label class="" for="shown_in_history" title="#i18n{directory.create_entry.label_shown_in_history_comment}">
-										<input name="shown_in_history" id="shown_in_history" value="1" type="checkbox" ${getChecked('shown_in_history',list_param_default_values)}> #i18n{directory.create_entry.label_shown_in_history}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-2" for=""></label>
-							<div class="col-xs-12 col-sm-10">
-								<div class="checkbox">
-									<label for="shown_in_export" title="#i18n{directory.create_entry.label_shown_in_export_comment}">
-										<input name="shown_in_export" id="shown_in_export"value="1" type="checkbox" ${getChecked('shown_in_export',list_param_default_values)}> #i18n{directory.create_entry.label_shown_in_export}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-2" for=""></label>
-							<div class="col-xs-12 col-sm-10">
-								<div class="checkbox">
-									<label for="shown_in_completeness" title="#i18n{directory.create_entry.label_shown_in_completeness_comment}">
-										<input name="shown_in_completeness" id="shown_in_completeness" value="1" type="checkbox" ${getChecked('shown_in_completeness',list_param_default_values)}>	#i18n{directory.create_entry.label_shown_in_completeness}
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-2"  for="comment"> #i18n{directory.create_entry.label_comment}</label>
-							<div class="col-xs-12 col-sm-9">
-								<textarea name="comment" class="form-control" rows="2"></textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form>
-			</div>
-		</div>
-	</div>
-</div>
+					<@formGroup labelFor='label_all_search' labelKey='#i18n{directory.create_entry.label_label_all_search}' id='label_value_all_search_block'>
+						<@input type='text' name='label_all_search' id='label_all_search' maxlength=255 />
+					</@formGroup>
+				</@directoryCreateForm>
+			</@boxBody>
+		</@box>
+	</@columns>
+</@row>
 
- <script>
-/*
- function select_associate() {
-	var form = document.getElementById("settings");
-	var entry = form.childNodes[13];
-	form.removeChild(entry);
+<script>
 
-	var p = document.createElement("p");
-
-	var label = document.createElement("label");
-	label.innerHTML="#i18n{directory.create_entry.label_directory} * : ";
-
-	var listDirectory = document.createElement("select");
-	var name = document.createAttribute("name");
-	name.nodeValue = "id_directory_associate";
-	listDirectory.setAttributeNode(name);
-
-	<#list directory_list_associate as directory>
-	var option${directory.code} = document.createElement("option");
-	option${directory.code}.text="${directory.name}";
-
-	var value${directory.code} = document.createAttribute("value");
-	value${directory.code}.nodeValue = "${directory.code}";
-
-	var onclick${directory.code} = document.createAttribute("onclick");
-	onclick${directory.code}.nodeValue = "refresh_list(${directory.code})";
-
-	option${directory.code}.setAttributeNode(value${directory.code});
-	option${directory.code}.setAttributeNode(onclick${directory.code});
-
-	listDirectory.appendChild(option${directory.code});
-	</#list>
-
-	p.appendChild(label);
-	p.appendChild(listDirectory);
-
-	form.insertBefore(p,form.childNodes[12]);
-
- }
-
- function refresh_list(id_directory) {
-	 if(document.getElementById("id_entry_associate")!=null)
-	 {
-		 var parent = document.getElementById("id_entry_associate").parentNode;
-		 while (parent.firstChild) {
-			 parent.removeChild(parent.firstChild);
-		 }
-	 }
-
-		 var bool = false;
-		 var form = document.getElementById("settings");
-		 var listEntry = document.createElement("select");
-
-		 var name = document.createAttribute("name");
-		 name.nodeValue = "id_entry_associate";
-		 listEntry.setAttributeNode(name);
-
-		 var id = document.createAttribute("id");
-		 id.nodeValue = "id_entry_associate";
-		 listEntry.setAttributeNode(id);
-
-		 var p = document.createElement("p");
-
-		var label = document.createElement("label");
-		label.innerHTML="#i18n{directory.create_entry.label_entry} * : ";
-
-		var label2 = document.createElement("label");
-		label2.innerHTML="&nbsp;";
-
-		var text = document.createTextNode("#i18n{directory.create_entry.label_entry_comment}");
-
-	 <#assign i=1>
-	<#list directory_list_associate as directory>
-
-		if(id_directory==${directory.code})
-		{
-			add_entry_${i}(listEntry);
-		}
-		<#assign i=i+1>
-	</#list>
-
-
-	p.appendChild(label);
-	p.appendChild(listEntry);
-	p.appendChild(document.createElement("br"));
-	p.appendChild(label2);
-	p.appendChild(text);
-
-
-	form.insertBefore(p,form.childNodes[13]);
- }
-
-<#assign i=1>
-<#list entry_list_associate as entry_list>
-	function add_entry_${i}(listEntry){
-		<#list entry_list as entry>
-			var option${entry.idEntry} = document.createElement("option");
-			option${entry.idEntry}.text="${entry.title}";
-
-			var value${entry.idEntry} = document.createAttribute("value");
-			value${entry.idEntry}.nodeValue = "${entry.idEntry}";
-			option${entry.idEntry}.setAttributeNode(value${entry.idEntry});
-			listEntry.appendChild(option${entry.idEntry});
-		</#list>
-	}
-	<#assign i=i+1>
-</#list>
-
-var agt=navigator.userAgent.toLowerCase();
-
-var is_konq = (agt.indexOf('konqueror') != -1);
-var is_safari = ((agt.indexOf('safari')!=-1)
-&(agt.indexOf('mac')!=-1))?true:false;
-var is_khtml  = (is_safari || is_konq);
-var is_gecko = ((!is_khtml)&&(navigator.product)
-&&(navigator.product.toLowerCase()=="gecko"))?true:false;
-
- var is_fx = ((agt.indexOf('mozilla/5')!=-1) && (agt.indexOf('spoofer')==-1) &&
-         (agt.indexOf('compatible')==-1) && (agt.indexOf('opera')==-1)  &&
-         (agt.indexOf('webtv')==-1) && (agt.indexOf('hotjava')==-1)     &&
-         (is_gecko) && ((navigator.vendor=="Firefox")||(agt.indexOf('firefox')!=-1)));
- if(is_fx)
- {
-	 select_associate();
-	 <#list directory_list_associate as d>
-	 	refresh_list(${d.code});
-	 <#break>
-	 </#list>
- }
-*/
 function addAllSearch()	{
 	if( $("#is_all_search:checked").length > 0 ){
-		$("#label_value_all_search").show();
+		$("#label_value_all_search_block").show();
 	} else {
-		$("#label_value_all_search").hide();
+		$("#label_value_all_search_block").hide();
 	}
 }
 $(document).ready(function () {
 	$("#is_all_search").click( function(){
 		addAllSearch();
 	});
-	$("#label_value_all_search").hide();
+	$("#label_value_all_search_block").hide();
 });
  </script>

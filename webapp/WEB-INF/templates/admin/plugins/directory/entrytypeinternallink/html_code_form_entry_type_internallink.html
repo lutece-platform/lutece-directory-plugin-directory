@@ -1,6 +1,4 @@
-<div class="form-group">
-	<label class="control-label col-xs-12 col-sm-2"  for="entry_${entry.idEntry}">${entry.title}<#if entry.mandatory> * </#if></label>
-	<div class="col-xs-12 col-sm-9">
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=entry.helpMessage mandatory=entry.mandatory>
 	<#list entry.fields as field>
 		<#if field.value?exists && !default_values?has_content>
 			<#assign field_value = field.value/>
@@ -9,16 +7,12 @@
 		<#else>
 			<#assign field_value = ""/>
 		</#if>
-		<textarea name="${entry.idEntry}" id="entry_${entry.idEntry}" class="span6" readonly="readonly">${field_value}</textarea>
+		<@input type='textarea' name='${entry.idEntry}' id='${entry.idEntry}' readonly=true>${field_value}</@input>
 		<button class="btn btn-default btn-xs btn-flat" type="button" id="img_linkservice_${entry.idEntry}" >
 			<i class="icon-lutece-logo"></i>
 		</button>
-		<button id="img_linkservice_clear_${entry.idEntry}" class="btn btn-danger btn-xs btn-flat">
-			<i class="fa fa-trash"></i>&nbsp;#i18n{directory.form_entry.internallink.labelLinkServiceClear}
-		</button>
-		<button class="btn btn-primary btn-xs btn-flat" id="#show_preview_section_${entry.idEntry}">
-			<i class="fa fa-eye"></i>&nbsp;#i18n{directory.form_entry.buttonShowPreview}
-		</button>
+		<@button type='button' color='btn-danger' name='img_linkservice_clear_${entry.idEntry}' id='img_linkservice_clear_${entry.idEntry}' buttonIcon='trash' title='#i18n{directory.form_entry.internallink.labelLinkServiceClear}' />
+		<@button type='button' name='#show_preview_section_${entry.idEntry}' id='#show_preview_section_${entry.idEntry}' buttonIcon='eye' title='#i18n{directory.form_entry.buttonShowPreview}' />
 		<div id="show_preview_${entry.idEntry}">&nbsp;</div>
 
 		<!-- JS for insert service -->
@@ -58,8 +52,4 @@
 
 			</script>
 		 </#list>
-		<#if entry.helpMessage?exists&&entry.helpMessage!=''>
-			<span class="help-block">${entry.helpMessage}</p>
-		</#if>
-	</div>
-</div>
+</@formGroup>

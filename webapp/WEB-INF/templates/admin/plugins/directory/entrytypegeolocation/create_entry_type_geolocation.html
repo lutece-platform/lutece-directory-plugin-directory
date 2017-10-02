@@ -6,90 +6,30 @@
 				<@button type='button' buttonIcon='cogs' title='#i18n{directory.create_directory.label_advancedsettings}' id='advanced' />
 			</@boxHeader>
 			<@boxBody>
-				<@tform action='jsp/admin/plugins/directory/DoCreateEntry.jsp#list'>
-					<input name="id_type" value="${entry.entryType.idType}" type="hidden" />
+				<@directoryCreateForm entry=entry>
 					<input type="hidden" name="idEntry" id="idEntry" value="${entry.idEntry}" >
-					<input type="hidden" name="idDirectory" id="idDirectory" value="${entry.directory.idDirectory}" >					
-					<div id="panel1">
-						<@formGroup labelFor='entry_type' labelKey='#i18n{directory.create_entry.label_type}'>
-							<@tag color='info' title='#i18n{directory.create_entry.label_type}'>#i18n{${entry.entryType.titleI18nKey}}</@tag>
-						</@formGroup>
-						<@formGroup labelFor='title' labelKey='#i18n{directory.create_entry.label_title}' helpKey='#i18n{directory.create_entry.label_title_comment}' mandatory=true>
-							<@input type='text' name='title' id='title' maxlength=255 />
-						</@formGroup>
-						<@formGroup>
-							<@checkBox labelFor='mandatory' labelKey='#i18n{directory.create_entry.label_mandatory}' name='mandatory' id='mandatory' value='1' checked=getChecked('mandatory',list_param_default_values) />
-						</@formGroup>
-						<#-- map provider -->
-						<@formGroup labelFor='map_provider' labelKey='#i18n{directory.create_entry.label_map_provider}' helpKey='#i18n{directory.create_entry.label_map_provider_comment}'>
-							<@select name='map_provider' default_value='-1' items=entry.mapProvidersRefList size='sm' />
-						</@formGroup>
-						<#-- edit mode -->
-						<@formGroup labelFor='edit_mode' labelKey='#i18n{directory.create_entry.label_edit_mode}' helpKey='#i18n{directory.create_entry.label_edit_mode_comment}'>
-							<@select name='edit_mode' default_value='-1' items=entry.editModesRefList size='sm' />
-						</@formGroup>
-						<#-- view number att -->
-						<@formGroup labelFor='view_number_att' labelKey='#i18n{directory.create_entry.label_view_number_att}'>
-							<@input type='text' name='view_number_att' id='view_number_att' value=getName('view_number_att',list_param_default_values) />
-						</@formGroup>
-						<#-- view number ges -->
-						<@formGroup labelFor='view_number_ges' labelKey='#i18n{directory.create_entry.label_view_number_ges}'>
-							<@input type='text' name='view_number_ges' id='view_number_ges' value=getName('view_number_ges',list_param_default_values) />
-						</@formGroup>
-						<@formGroup labelFor='help_message' labelKey='#i18n{directory.create_entry.label_help_message}' helpKey='#i18n{directory.create_entry.label_help_message_comment}'>
-							<@input type='textarea' name='help_message' id='help_message' rows=2></@input>
-						</@formGroup>
-						<@formGroup labelFor='help_message_search' labelKey='#i18n{directory.create_entry.label_help_message_search}' helpKey='#i18n{directory.create_entry.label_help_message_search_comment}'>
-							<@input type='textarea' name='help_message_search' id='help_message_search' rows=2></@input>
-						</@formGroup>
-				</div>
-				<div id="panel2">
-						<@formGroup helpKey='#i18n{directory.create_entry.label_indexed_comment}'>
-							<@checkBox labelFor='indexed' labelKey='#i18n{directory.create_entry.label_indexed}' name='indexed' id='indexed' value='1' checked=getChecked('indexed',list_param_default_values) />
-						</@formGroup>
-						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_advanced_search_comment}'>
-							<@checkBox labelFor='shown_in_advanced_search' labelKey='#i18n{directory.create_entry.label_shown_in_advanced_search}' name='shown_in_advanced_search' id='shown_in_advanced_search' value='1' checked=getChecked('shown_in_advanced_search',list_param_default_values) />
-						</@formGroup>
-						<@formGroup>
-							<@checkBox labelFor='indexed_as_title' labelKey='#i18n{directory.create_entry.label_indexed_as_title}' name='indexed_as_title' id='indexed_as_title' value='1' checked=getChecked('indexed_as_title',list_param_default_values) />
-						</@formGroup>
-						<@formGroup>
-							<@checkBox  name='indexed_as_summary' id='indexed_as_summary' value='1' checked=getChecked('indexed_as_summary',list_param_default_values) />
-						</@formGroup>
-						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_list_comment}'>
-							<@checkBox labelFor='shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='shown_in_result_list' id='shown_in_result_list' value='1' checked=getChecked('shown_in_result_list',list_param_default_values) />
-						</@formGroup>
-						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_record_comment}'>
-							<@checkBox labelFor='shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='shown_in_result_record' id='shown_in_result_record' value='1' checked=getChecked('shown_in_result_record',list_param_default_values) />
-						</@formGroup>
-						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_history_comment}'>
-							<@checkBox labelFor='shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='shown_in_history' id='shown_in_history' value='1' checked=getChecked('shown_in_history',list_param_default_values) />
-						</@formGroup>
-						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_export_comment}'>
-							<@checkBox labelFor='shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='shown_in_export' id='shown_in_export' value='1' checked=getChecked('shown_in_export',list_param_default_values) />
-						</@formGroup>
-						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_completeness_comment}'>
-							<@checkBox labelFor='shown_in_completeness' labelKey='#i18n{directory.create_entry.label_shown_in_completeness}' name='shown_in_completeness' id='shown_in_completeness' value='1' checked=getChecked('shown_in_completeness',list_param_default_values) />
-						</@formGroup>
-						<@formGroup labelFor='comment' labelKey='#i18n{directory.create_entry.label_comment}'>
-							<@input type='textarea' name='comment' rows=2></@input>
-						</@formGroup>
-				</div>
-					<@formGroup>
-						<@button type='submit' name='save' buttonIcon='save' title='#i18n{directory.create_entry.button_save}' size='' />
-						<@aButton href='jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${entry.directory.idDirectory}' name='cancel' buttonIcon='remove' title='#i18n{directory.create_entry.button_cancel}' size='' color='btn-secondary' />
+					<input type="hidden" name="idDirectory" id="idDirectory" value="${entry.directory.idDirectory}" >
+					<#-- map provider -->
+					<@formGroup labelFor='map_provider' labelKey='#i18n{directory.create_entry.label_map_provider}' helpKey='#i18n{directory.create_entry.label_map_provider_comment}'>
+						<@select name='map_provider' default_value='-1' items=entry.mapProvidersRefList size='sm' />
 					</@formGroup>
-				</@tform>
+					<#-- edit mode -->
+					<@formGroup labelFor='edit_mode' labelKey='#i18n{directory.create_entry.label_edit_mode}' helpKey='#i18n{directory.create_entry.label_edit_mode_comment}'>
+						<@select name='edit_mode' default_value='-1' items=entry.editModesRefList size='sm' />
+					</@formGroup>
+					<#-- view number att -->
+					<@formGroup labelFor='view_number_att' labelKey='#i18n{directory.create_entry.label_view_number_att}'>
+						<@input type='text' name='view_number_att' id='view_number_att' value=getName('view_number_att',list_param_default_values) maxlength=255 />
+					</@formGroup>
+					<#-- view number ges -->
+					<@formGroup labelFor='view_number_ges' labelKey='#i18n{directory.create_entry.label_view_number_ges}'>
+						<@input type='text' name='view_number_ges' id='view_number_ges' value=getName('view_number_ges',list_param_default_values) />
+					</@formGroup>
+					<@formGroup>
+						<@checkBox labelFor='showxy' labelKey='#i18n{directory.create_entry.label_showxy}' name='showxy' id='showxy' value='true' checked=getChecked('showxy',list_param_default_values) />
+					</@formGroup>
+				</@directoryCreateForm>
 			</@boxBody>
 		</@box>
 	</@columns>
 </@row>
-<script>
-	$(document).ready(function(){
-		$('#panel2').hide();
-		$('#advanced').click(function(){
-			$('#panel1,#panel2').toggle();
-			$('#advanced').toggleClass('btn-primary btn-secondary');
-		});
-	});
-</script>

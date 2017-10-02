@@ -7,7 +7,7 @@
 			<#if field.valueTypeDate?exists && !default_values?has_content>
 				<input type="text" class="form-control datepicker-element" name="${entry.idEntry}" id="${entry.idEntry}" value="${field.valueTypeDate}" />
 			<#elseif default_values?has_content>
-				<#list default_values as default_value><input type="text" name="${entry.idEntry}" id="${entry.idEntry}" class="input-normal datepicker-element" value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,false,false)}" />
+				<#list default_values as default_value><input type="text" name="${entry.idEntry}" id="${entry.idEntry}" class="input-normal datepicker-element" value="${default_value.entry.convertRecordFieldValueToString(default_value,locale,true,false)}" />
 				</#list>	 	
 			<#else>
 				<input type="text" name="${entry.idEntry}" id="${entry.idEntry}" class="form-control datepicker-element" value="" />
