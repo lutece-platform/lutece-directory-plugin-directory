@@ -8,29 +8,26 @@
   	<div class="box-body table-responsive">
   	
   		<#if entry_list_geolocation?has_content>
-  				
-  				
+				<!-- TODO :  handle more than one geolocation entry with a distinct url_ws -->
+  				<#assign idGeolocationEntry = 0>
+				<#if entry_list_geolocation[0]?? && entry_list_geolocation[0]?has_content>
+					<#assign idGeolocationEntry = entry_list_geolocation[0].idEntry>
+  				</#if>
 				<!-- WS -->
-				<#assign list_record_field_ws = "">
-				<#assign nb_record_field_ws = 0>
+				<#assign list_record_ws = "">
+				<#assign nb_record_ws = 0>
 				<#list resource_actions_list as resource_actions>
-					<#list entry_list_search_result as entry>
-						<#assign entryKey = "" + entry.idEntry>
-						<#assign listRecordField = resource_actions.map_id_entry_list_record_field[entryKey]>
-						<#if listRecordField?has_content>
-							<#list listRecordField as record_field>
-								<#if nb_record_field_ws = 0>
-									<#assign list_record_field_ws = list_record_field_ws + record_field.idRecordField> 
+						<#assign record = resource_actions.record>
+						<#if record?has_content>
+								<#if nb_record_ws = 0>
+									<#assign list_record_ws = list_record_ws + record.idRecord> 
 								<#else>
-									<#assign list_record_field_ws = list_record_field_ws + "," + record_field.idRecordField>
+									<#assign list_record_ws = list_record_ws + "," + record.idRecord>
 								</#if>
-								<#assign nb_record_field_ws = nb_record_field_ws + 1>
-							</#list>
-						
+								<#assign nb_record_ws = nb_record_ws + 1>
 						</#if>							
-					</#list>
 				</#list>
-				<#assign url_ws = webapp_url + "rest/directory-gismap/listRecordField/" + list_record_field_ws> 
+				<#assign url_ws = webapp_url + "rest/directory-gismap/listRecord?idGeolocationEntry=" + idGeolocationEntry +  "&listIdRecord=" + list_record_ws> 
 				<#assign viewNumberGesValue = "1">
 				<#list entry_list_search_result as entry>
 					<#if entry.fields?? && entry.fields?has_content>
