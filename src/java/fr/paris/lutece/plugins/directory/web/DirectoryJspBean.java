@@ -4412,7 +4412,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
         if ( ( record == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdRecord ), DirectoryResourceIdService.PERMISSION_VISUALISATION_RECORD, getUser( ) )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_VISUALISATION_RECORD, getUser( ) )
                 || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                 || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
