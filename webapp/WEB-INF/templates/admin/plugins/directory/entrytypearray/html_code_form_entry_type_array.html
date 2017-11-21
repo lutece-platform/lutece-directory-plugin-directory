@@ -28,7 +28,7 @@
 					<#elseif i == 1 && j == 1>
 						<b>${entry.comment!}</b>
 					<#else>
-						<@input type='text' id='field_${i}_${j}' name='field_${i}_${j}' value='${title!}' />
+						<@input type='text' id='${entry.idEntry}_field_${i}_${j}' name='${entry.idEntry}_field_${i}_${j}' value='${title!}' />
 					</#if>
 				</td>
 				</#list>

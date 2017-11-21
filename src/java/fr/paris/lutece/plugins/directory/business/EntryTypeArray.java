@@ -287,7 +287,7 @@ public class EntryTypeArray extends Entry
     public void getRecordFieldData( Record record, HttpServletRequest request, boolean bTestDirectoryError, boolean bAddNewValue,
             List<RecordField> listRecordField, Locale locale ) throws DirectoryErrorException
     {
-        List<Field> fields = FieldHome.getFieldListByIdEntry( this.getIdEntry( ), PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
+    	List<Field> fields = FieldHome.getFieldListByIdEntry( this.getIdEntry( ), PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME ) );
 
         for ( int i = 1; i <= ( this.getNumberRow( ) + 1 ); i++ )
         {
@@ -305,7 +305,7 @@ public class EntryTypeArray extends Entry
                     }
                 }
 
-                String strValueEntry = request.getParameter( "field_" + i + "_" + j );
+                String strValueEntry = request.getParameter( this.getIdEntry() + "_field_" + i + "_" + j );
 
                 if ( ( i != 1 ) && ( j != 1 ) )
                 {
