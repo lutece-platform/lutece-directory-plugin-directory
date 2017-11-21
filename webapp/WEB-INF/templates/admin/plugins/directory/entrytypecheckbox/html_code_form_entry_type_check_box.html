@@ -14,7 +14,7 @@
 <#else>
 	<#assign helpKey = '' />
 </#if>
-<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=helpKey>
+<@formGroup labelFor='${entry.idEntry}' labelKey='${entry.title}' helpKey=helpKey mandatory=entry.mandatory>
 	<#list entry.fields as field>
 		<#assign cpt=cpt+1>
 		<#if entry.fieldInLine>
@@ -27,6 +27,6 @@
 		<#else>
 			<#assign checked = false />
 		</#if>
-		<@checkBox labelFor='${entry.idEntry}' labelKey='${field.title}' name='${entry.idEntry}' id='${entry.idEntry}' title='${entry.helpMessageSearch!}' value='${field.idField}' checked=checked orientation=orientation />
+		<@checkBox labelFor='${entry.idEntry}_${cpt}' labelKey='${field.title}' name='${entry.idEntry}' id='${entry.idEntry}_${cpt}' title='${entry.helpMessageSearch!}' value='${field.idField}' checked=checked orientation=orientation />
 	</#list>
 </@formGroup>

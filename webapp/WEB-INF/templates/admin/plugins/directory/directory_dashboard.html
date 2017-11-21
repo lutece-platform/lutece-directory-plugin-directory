@@ -1,15 +1,13 @@
-<div class="box box-solid box-success">
-	<div class="box-header box-widget" >
-		<h3 class="box-title">#i18n{directory.dashboard.directoryList}</h3>
-		<div class="box-tools">
-			<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-			<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-		</div>
-    </div>
-   <div class="box-body box-of table-responsive no-padding">
-		<table class="table table-hover table-condensed">
+<@box color='success box-solid'>
+	<@boxHeader title='#i18n{directory.dashboard.directoryList}'>
+		<@button style='btn-box-tool' params='data-widget="collapse"' buttonIcon='minus' />
+		<@button style='btn-box-tool' params='data-widget="remove"' buttonIcon='times' />
+	</@boxHeader>
+  <@boxBody params='style="overflow-x:auto; padding:0;"'>
+		<@table>
 			<thead>
 			   	<tr>
+						<th></th>
 			   		<th>#i18n{directory.dashboard.columnTitleLabel}</th>
 			   		<th>#i18n{directory.dashboard.columnTitleActions}</th>
 			   	</tr>
@@ -17,47 +15,54 @@
 			<tbody>
 			    <#list directory_list as directory>
 			    	<tr>
-						<td>
-							<strong><#if directory.enabled>
-								<span class="label label-success" title="#i18n{directory.dashboard.row_state}"><i class="fa fa-check-circle"></i></span>
+						<td style="width:10%;">
+							<#if directory.enabled>
+								<@tag color='success' title='#i18n{directory.dashboard.row_state}'><@icon style='check' /></@tag>
 							<#else>
-								<span class="label label-danger" title="#i18n{directory.dashboard.row_state}"><i class="fa fa-remove"></i></span>
-							</#if>&nbsp;${directory.title}</strong>
+								<@tag color='danger' title='#i18n{directory.dashboard.row_state}'><@icon style='remove' /></@tag>
+							</#if>
+						</td>
+						<td style="width:50%;">
+							<strong>&nbsp;${directory.title}</strong>
 							<br>
 							#i18n{directory.dashboard.nb_records} <strong>${record_count_list[directory.idDirectory?string]}</strong>
 						</td>
-						<td>
+						<td style="width:40%;">
 							<#if directory.actions?exists>
 								<#list directory.actions as action>
 									<#if action.permission='MANAGE_RECORD' || action.permission='DELETE' || action.permission='CHANGE_STATE'>
-										<a class="btn btn-xs btn-flat <#if action.permission='DELETE' || action.permission='DELETE_ALL_RECORD' || action.nameKey=='directory.action.disable.name' >btn-danger<#elseif action.nameKey=='directory.action.enable.name'>btn-success<#else>btn-primary</#if>" href="${action.url}?id_directory=${directory.idDirectory}" title="${action.description}">
-											<@icon style=action.iconUrl/>
-										</a>
-								  	</#if>
+										<#if action.permission='DELETE' || action.permission='DELETE_ALL_RECORD' || action.nameKey=='directory.action.disable.name' >
+											<#assign btnClass = 'btn-danger'>
+										<#elseif action.nameKey=='directory.action.enable.name'>
+											<#assign btnClass = 'btn-success'>
+										<#else>
+											<#assign btnClass = 'btn-primary'>
+										</#if>
+									
+										<@aButton class=btnClass href='${action.url}?id_directory=${directory.idDirectory}' title='${action.description}' showTitle=false buttonIcon=action.iconUrl />
+									</#if>
 								</#list>
 							</#if>
 							<#if authorized_directory_modification_list?seq_contains(directory.idDirectory)>
-								<a class="btn btn-xs btn-flat btn-primary" href="jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${directory.idDirectory}&plugin_name=directory">
-									<i class="fa fa-pencil"></i>
-								</a>
+								<@aButton href='jsp/admin/plugins/directory/ModifyDirectory.jsp?id_directory=${directory.idDirectory}&plugin_name=directory' buttonIcon='pencil' showTitle=false />
 							</#if>
-								<a class="btn btn-xs btn-flat btn-default" href="jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}" title="#i18n{directory.dashboard.view_directory}" target="_blank">
-									<i class="fa fa-external-link" title="#i18n{directory.dashboard.view_directory} ${directory.title}"></i>
-							</a>
+								<@aButton color='btn-secondary' href='jsp/site/Portal.jsp?page=directory&id_directory=${directory.idDirectory}' title='#i18n{directory.dashboard.view_directory} ${directory.title}' showTitle=false buttonIcon='external-link' params='target="_blank"' />
 			      </td>
 			    	</tr>
 			    </#list>
 			</tbody>
-		</table>
-   </div><!-- /.box-body -->
-    <div class="box-footer text-center">
-			<#if permission_create>
-				<a class="btn btn-link btn-xs btn-flat spaced"  href="jsp/admin/plugins/directory/CreateDirectory.jsp" title="#i18n{directory.dashboard.addDirectory}" >
-					<i class="fa fa-plus"></i> #i18n{directory.dashboard.addDirectory}
-				</a>
-			</#if>
-			<a class="btn btn-link btn-flat btn-xs spaced"  href="${url}" title="#i18n{directory.dashboard.directoryList}">
-				#i18n{directory.dashboard.directoryList} <i class="fa fa-arrow-circle-right"></i>
+		</@table>
+   </@boxBody>
+	<@boxFooter class='text-center'>
+		<#if permission_create>
+			<a href="jsp/admin/plugins/directory/CreateDirectory.jsp" title="#i18n{directory.dashboard.addDirectory}" >
+				#i18n{directory.dashboard.addDirectory}
+				<@icon style='plus-circle' />
 			</a>
-	</div><!-- /.box-footer-->
-</div>
+		</#if>
+		<a href="${url}" title="#i18n{directory.dashboard.directoryList}">
+			#i18n{directory.dashboard.directoryList}
+			<@icon style='arrow-circle-right' />
+		</a>
+	</@boxFooter>
+</@box>
