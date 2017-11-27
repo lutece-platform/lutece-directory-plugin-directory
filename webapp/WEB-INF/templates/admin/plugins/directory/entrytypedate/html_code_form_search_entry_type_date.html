@@ -32,6 +32,8 @@
 				<label>#i18n{directory.html_code_form_search_entry_type_date.to}</label>
 				<@input type='text' name='date_end_${entry.idEntry}' id='date_end_${entry.idEntry}' />
 		</#if>
+		<@getDatePickerBootstrap idField="date_begin_${entry.idEntry}" language=.locale />
+		<@getDatePickerBootstrap idField="date_end_${entry.idEntry}" language=.locale />
 	<#else>
 		<#list entry.fields as field>
 			<#if default_values?has_content>
@@ -41,7 +43,7 @@
 			<#else>
 					<@input type='text' name='${entry.idEntry}' id='${entry.idEntry}' />
 			</#if>
-		 </#list>
+		</#list>
+		<@getDatePickerBootstrap idField="${entry.idEntry}" language=.locale />
   </#if>
 </@formGroup>
-<@getDatePickerBootstrap idField="date_limite" language=locale />
