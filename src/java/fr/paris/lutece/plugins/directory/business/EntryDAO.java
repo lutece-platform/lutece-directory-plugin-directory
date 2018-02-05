@@ -732,23 +732,23 @@ public final class EntryDAO implements IEntryDAO
 
         return entry;
     }
-    
+
     /**
      * Return the trim of the title of the entry or null if the entry doesn't have a title
      * 
      * @param entry
-     *          The entry to retrieve the title from
+     *            The entry to retrieve the title from
      * @return the trim of the title of the entry or null if the entry doesn't have a title
      */
     private String trimEntryTitle( IEntry entry )
     {
         String strEntryTitle = entry.getTitle( );
-        
+
         if ( strEntryTitle != null )
         {
             strEntryTitle = strEntryTitle.trim( );
         }
-        
+
         return strEntryTitle;
     }
 
