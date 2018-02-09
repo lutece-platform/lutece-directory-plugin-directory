@@ -3,15 +3,14 @@
 	<fieldset>
 		<p class="clear">
 			<div class="control-group">
-		<label class="control-label" > #i18n{directory.viewing_mylutece_user.labelLogin} :</label>
+		<label class="control-label">#i18n{directory.viewing_mylutece_user.labelLogin} :</label>
 			${mylutece_user_login}
 		
 		<#list mylutece_user_infos_list as user_info>
 			<p class="clear">
 				<div class="control-group">
-		<label class="control-label" > #i18n{portal.security.${user_info.code}} :</label>
+		<label class="control-label">#i18n{portal.security.${user_info.code}} :</label>
 				${user_info.name}
-			
 		</#list>
 	</fieldset>
 <#else>
