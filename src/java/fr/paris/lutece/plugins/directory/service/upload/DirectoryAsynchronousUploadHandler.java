@@ -548,121 +548,262 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     public void doUploadAction( HttpServletRequest request, String strUploadAction, Map<String, List<RecordField>> map, Record record, Plugin plugin )
             throws DirectoryErrorException
     {
-        // Get the name of the upload field
-        String strIdEntry = ( strUploadAction.startsWith( UPLOAD_SUBMIT_PREFIX ) ? strUploadAction.substring( UPLOAD_SUBMIT_PREFIX.length( ) )
-                : strUploadAction.substring( UPLOAD_DELETE_PREFIX.length( ) ) );
-
-        String strFieldName = buildFieldName( strIdEntry );
+        String strIdEntry = findIdEntryFromAction( strUploadAction );
 
         if ( strUploadAction.startsWith( UPLOAD_SUBMIT_PREFIX ) )
         {
-            // A file was submitted
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-
-            FileItem fileItem = multipartRequest.getFile( strFieldName );
-
-            if ( fileItem != null )
-            {
-                // Check if the file can be uploaded first
-                List<FileItem> listFileItemsToUpload = new ArrayList<FileItem>( );
-                listFileItemsToUpload.add( fileItem );
-
-                HttpSession session = request.getSession( );
-                // The following method call throws a DirectoryErrorException if the file cannot be uploaded
-                canUploadFiles( strFieldName, getFileItems( strIdEntry, session.getId( ) ), listFileItemsToUpload, request.getLocale( ) );
-
-                // Add the file to the map of <idEntry, RecordFields>
-                IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( strIdEntry ), plugin );
-
-                if ( entry != null )
-                {
-                    RecordField recordField = new RecordField( );
-                    recordField.setRecord( record );
-                    recordField.setEntry( entry );
-
-                    String strFilename = FileUploadService.getFileNameOnly( fileItem );
-
-                    if ( ( fileItem.get( ) != null ) && ( fileItem.getSize( ) < Integer.MAX_VALUE ) )
-                    {
-                        if ( entry instanceof EntryTypeDownloadUrl )
-                        {
-                            recordField.setFileName( strFilename );
-                            recordField.setFileExtension( FileSystemUtil.getMIMEType( strFilename ) );
-                        }
-                        else
-                        {
-                            PhysicalFile physicalFile = new PhysicalFile( );
-                            physicalFile.setValue( fileItem.get( ) );
-
-                            File file = new File( );
-                            file.setPhysicalFile( physicalFile );
-                            file.setTitle( strFilename );
-                            file.setSize( (int) fileItem.getSize( ) );
-                            file.setMimeType( FileSystemUtil.getMIMEType( strFilename ) );
-
-                            recordField.setFile( file );
-                        }
-                    }
-
-                    List<RecordField> listRecordFields = map.get( strIdEntry );
-
-                    if ( listRecordFields == null )
-                    {
-                        listRecordFields = new ArrayList<RecordField>( );
-                    }
-
-                    listRecordFields.add( recordField );
-                    map.put( strIdEntry, listRecordFields );
-                }
-
-                // Add to the asynchronous uploaded files map
-                addFileItemToUploadedFile( fileItem, strIdEntry, request.getSession( ) );
-            }
+            doUploadFile( request, strIdEntry, map, record );
         }
         else
             if ( strUploadAction.startsWith( UPLOAD_DELETE_PREFIX ) )
             {
-                HttpSession session = request.getSession( false );
+                doDeleteFile( request, strIdEntry, map );
+            }
+    }
 
-                if ( session != null )
+    /**
+     * Finds the entry id from the specified action
+     * @param strAction the action
+     * @return the entry id as a {@code String}
+     */
+    private String findIdEntryFromAction( String strAction )
+    {
+        return strAction.startsWith( UPLOAD_SUBMIT_PREFIX ) ? strAction.substring( UPLOAD_SUBMIT_PREFIX.length( ) )
+                : strAction.substring( UPLOAD_DELETE_PREFIX.length( ) );
+    }
+
+    /**
+     * Uploads a file
+     * @param request the request containing the file to upload
+     * @param strIdEntry the entry id linked to the file
+     * @param map the map of {@code RecordFields}
+     * @param record the record on which the file is added
+     * @throws DirectoryErrorException if there is an error during the upload
+     */
+    public void doUploadFile( HttpServletRequest request, String strIdEntry, Map<String, List<RecordField>> map, Record record )
+            throws DirectoryErrorException
+    {
+        FileItem fileUploaded = findUploadedFileFromRequest( request, strIdEntry );
+
+        if ( fileUploaded != null && StringUtils.isNotBlank( fileUploaded.getName( ) ) )
+        {
+            canUploadFile( request, fileUploaded, strIdEntry );
+
+            List<RecordField> listRecordFields = findRecordFields( map, strIdEntry );
+            RecordField recordFieldForUploadedFile = createRecordFieldForUploadedFile( fileUploaded, strIdEntry );
+            addRecordFieldForUploadedFile( recordFieldForUploadedFile, record, listRecordFields );
+            addFileItemToUploadedFile( fileUploaded, strIdEntry, request.getSession( ) );
+        }
+    }
+
+    /**
+     * Finds the uploaded file from the specified request
+     * @param request the request containing the file to upload
+     * @param strIdEntry the entry id linked to the file
+     * @return the uploaded file as a {@code FileItem}
+     */
+    private FileItem findUploadedFileFromRequest( HttpServletRequest request, String strIdEntry )
+    {
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        String strFileParameter = buildFieldName( strIdEntry );
+
+        return multipartRequest.getFile( strFileParameter );
+    }
+
+    /**
+     * Tests if the file can be uploaded
+     * @param request the request used to test
+     * @param fileItem the file to test
+     * @param strIdEntry the entry id linked to the file
+     * @throws DirectoryErrorException if the file cannot be uploaded
+     */
+    private void canUploadFile( HttpServletRequest request, FileItem fileItem, String strIdEntry ) throws DirectoryErrorException
+    {
+        HttpSession session = request.getSession( );
+        String strFieldName = buildFieldName( strIdEntry );
+        List<FileItem> listFileItemsToUpload = new ArrayList<FileItem>( );
+        listFileItemsToUpload.add( fileItem );
+
+        canUploadFiles( strFieldName, getFileItems( strIdEntry, session.getId( ) ), listFileItemsToUpload, request.getLocale( ) );
+    }
+
+    /**
+     * Finds the record fields linked to the specified entry from the specified map
+     * @param map the map of {@code RecordFields}
+     * @param strIdEntry the entry id
+     * @return the list of record fields
+     */
+    private List<RecordField> findRecordFields( Map<String, List<RecordField>> map, String strIdEntry )
+    {
+        List<RecordField> listRecordFields = map.get( strIdEntry );
+
+        if ( listRecordFields == null )
+        {
+            listRecordFields = new ArrayList<RecordField>( );
+            map.put( strIdEntry, listRecordFields );
+        }
+
+        return listRecordFields;
+    }
+
+    /**
+     * Creates a {@code RecordField} for the uploaded file
+     * @param fileItem the uploaded file
+     * @param strIdEntry the entry id linked to the file
+     * @return the created {@code RecordField}
+     */
+    private RecordField createRecordFieldForUploadedFile( FileItem fileItem, String strIdEntry )
+    {
+        RecordField recordFieldForUploadedFile = null;
+        Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
+
+        // Add the file to the map of <idEntry, RecordFields>
+        IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( strIdEntry ), plugin );
+
+        if ( entry != null )
+        {
+            recordFieldForUploadedFile = new RecordField( );
+            recordFieldForUploadedFile.setEntry( entry );
+
+            String strFilename = FileUploadService.getFileNameOnly( fileItem );
+
+            if ( ( fileItem.get( ) != null ) && ( fileItem.getSize( ) < Integer.MAX_VALUE ) )
+            {
+                if ( entry instanceof EntryTypeDownloadUrl )
                 {
-                    // Some previously uploaded files were deleted
-                    // Build the prefix of the associated checkboxes
-                    String strPrefix = UPLOAD_CHECKBOX_PREFIX + strIdEntry;
+                    recordFieldForUploadedFile.setFileName( strFilename );
+                    recordFieldForUploadedFile.setFileExtension( FileSystemUtil.getMIMEType( strFilename ) );
+                }
+                else
+                {
+                    PhysicalFile physicalFile = new PhysicalFile( );
+                    physicalFile.setValue( fileItem.get( ) );
 
-                    // Look for the checkboxes in the request
-                    Enumeration<String> enumParamNames = request.getParameterNames( );
-                    List<Integer> listIndexes = new ArrayList<Integer>( );
+                    File file = new File( );
+                    file.setPhysicalFile( physicalFile );
+                    file.setTitle( strFilename );
+                    file.setSize( (int) fileItem.getSize( ) );
+                    file.setMimeType( FileSystemUtil.getMIMEType( strFilename ) );
 
-                    while ( enumParamNames.hasMoreElements( ) )
-                    {
-                        String strParamName = enumParamNames.nextElement( );
-
-                        if ( strParamName.startsWith( strPrefix ) )
-                        {
-                            // Get the index from the name of the checkbox
-                            listIndexes.add( Integer.parseInt( strParamName.substring( strPrefix.length( ) ) ) );
-                        }
-                    }
-
-                    Collections.sort( listIndexes );
-                    Collections.reverse( listIndexes );
-
-                    for ( int nIndex : listIndexes )
-                    {
-                        // Remove from the map of <idEntry, RecordField>
-                        List<RecordField> listRecordFields = map.get( strIdEntry );
-
-                        if ( listRecordFields != null )
-                        {
-                            listRecordFields.remove( nIndex );
-                        }
-
-                        // Remove from the asynchronous uploaded files map
-                        removeFileItem( strIdEntry, session.getId( ), nIndex );
-                    }
+                    recordFieldForUploadedFile.setFile( file );
                 }
             }
+        }
+
+        return recordFieldForUploadedFile;
+    }
+
+    /**
+     * Adds the record field in the specified record and in the specified list
+     * @param recordFieldForUploadedFile the record field to add
+     * @param record the record
+     * @param listRecordFields the list of record fields
+     */
+    private void addRecordFieldForUploadedFile( RecordField recordFieldForUploadedFile, Record record, List<RecordField> listRecordFields )
+    {
+        if ( recordFieldForUploadedFile != null )
+        {
+            recordFieldForUploadedFile.setRecord( record );
+            listRecordFields.add( recordFieldForUploadedFile );
+        }
+    }
+
+    /**
+     * Deletes a file
+     * @param request the request containing the file to delete
+     * @param strIdEntry the entry id linked to the file
+     * @param map the map of {@code RecordFields}
+     */
+    public void doDeleteFile( HttpServletRequest request, String strIdEntry, Map<String, List<RecordField>> map )
+    {
+        HttpSession session = request.getSession( false );
+
+        if ( session != null )
+        {
+            // Some previously uploaded files were deleted
+            // Build the prefix of the associated checkboxes
+            String strPrefix = UPLOAD_CHECKBOX_PREFIX + strIdEntry;
+
+            // Look for the checkboxes in the request
+            Enumeration<String> enumParamNames = request.getParameterNames( );
+            List<Integer> listIndexes = new ArrayList<Integer>( );
+
+            while ( enumParamNames.hasMoreElements( ) )
+            {
+                String strParamName = enumParamNames.nextElement( );
+
+                if ( strParamName.startsWith( strPrefix ) )
+                {
+                    // Get the index from the name of the checkbox
+                    listIndexes.add( Integer.parseInt( strParamName.substring( strPrefix.length( ) ) ) );
+                }
+            }
+
+            Collections.sort( listIndexes );
+            Collections.reverse( listIndexes );
+
+            for ( int nIndex : listIndexes )
+            {
+                // Remove from the map of <idEntry, RecordField>
+                List<RecordField> listRecordFields = map.get( strIdEntry );
+
+                if ( listRecordFields != null )
+                {
+                    listRecordFields.remove( nIndex );
+                }
+
+                // Remove from the asynchronous uploaded files map
+                removeFileItem( strIdEntry, session.getId( ), nIndex );
+            }
+        }
+    }
+
+    /**
+     * Performs an upload action.
+     *
+     * @param request
+     *            the HTTP request
+     * @param strUploadAction
+     *            the name of the upload action
+     * @param map
+     *            the map of <idEntry, RecordFields>
+     * @throws DirectoryErrorException
+     *             exception if there is an error
+     */
+    public void doUploadAction( HttpServletRequest request, String strUploadAction, Map<String, List<RecordField>> map )
+            throws DirectoryErrorException
+    {
+        String strIdEntry = findIdEntryFromAction( strUploadAction );
+
+        if ( strUploadAction.startsWith( UPLOAD_SUBMIT_PREFIX ) )
+        {
+            doUploadFile( request, strIdEntry, map );
+        }
+        else
+            if ( strUploadAction.startsWith( UPLOAD_DELETE_PREFIX ) )
+            {
+                doDeleteFile( request, strIdEntry, map );
+            }
+    }
+
+    /**
+     * Uploads a file
+     * @param request the request containing the file to upload
+     * @param strIdEntry the entry id linked to the file
+     * @param map the map of {@code RecordFields}
+     * @throws DirectoryErrorException if there is an error during the upload
+     */
+    public void doUploadFile( HttpServletRequest request, String strIdEntry, Map<String, List<RecordField>> map )
+            throws DirectoryErrorException
+    {
+        FileItem fileUploaded = findUploadedFileFromRequest( request, strIdEntry );
+
+        if ( fileUploaded != null && StringUtils.isNotBlank( fileUploaded.getName( ) ) )
+        {
+            canUploadFile( request, fileUploaded, strIdEntry );
+
+            addFileItemToUploadedFile( fileUploaded, strIdEntry, request.getSession( ) );
+        }
     }
 
     /**

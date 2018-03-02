@@ -221,7 +221,7 @@ public class EntryTypeFile extends AbstractEntryTypeUpload
             {
                 FileItem fileItem = ( (MultipartHttpServletRequest) request ).getFile( PREFIX_ENTRY_ID + this.getIdEntry( ) );
 
-                if ( fileItem != null )
+                if ( fileItem != null && StringUtils.isNotBlank( fileItem.getName( ) ) )
                 {
                     fileItems = new ArrayList<FileItem>( );
                     fileItems.add( fileItem );
