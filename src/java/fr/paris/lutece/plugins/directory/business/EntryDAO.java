@@ -186,7 +186,7 @@ public final class EntryDAO implements IEntryDAO
 
         daoUtil.setInt( 3, entry.getDirectory( ).getIdDirectory( ) );
         daoUtil.setInt( 4, entry.getEntryType( ).getIdType( ) );
-        daoUtil.setString( 5, entry.getTitle( ) );
+        daoUtil.setString( 5, trimEntryTitle( entry ) );
         daoUtil.setString( 6, entry.getHelpMessage( ) );
         daoUtil.setString( 7, entry.getHelpMessageSearch( ) );
         daoUtil.setString( 8, entry.getComment( ) );
@@ -365,7 +365,7 @@ public final class EntryDAO implements IEntryDAO
 
         daoUtil.setInt( 3, entry.getDirectory( ).getIdDirectory( ) );
         daoUtil.setInt( 4, entry.getEntryType( ).getIdType( ) );
-        daoUtil.setString( 5, entry.getTitle( ) );
+        daoUtil.setString( 5, trimEntryTitle( entry ) );
         daoUtil.setString( 6, entry.getHelpMessage( ) );
         daoUtil.setString( 7, entry.getHelpMessageSearch( ) );
         daoUtil.setString( 8, entry.getComment( ) );
@@ -731,6 +731,25 @@ public final class EntryDAO implements IEntryDAO
         entry.setShownInCompleteness( daoUtil.getBoolean( 36 ) );
 
         return entry;
+    }
+
+    /**
+     * Return the trim of the title of the entry or null if the entry doesn't have a title
+     * 
+     * @param entry
+     *            The entry to retrieve the title from
+     * @return the trim of the title of the entry or null if the entry doesn't have a title
+     */
+    private String trimEntryTitle( IEntry entry )
+    {
+        String strEntryTitle = entry.getTitle( );
+
+        if ( strEntryTitle != null )
+        {
+            strEntryTitle = strEntryTitle.trim( );
+        }
+
+        return strEntryTitle;
     }
 
     /**
