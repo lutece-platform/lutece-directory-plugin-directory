@@ -202,10 +202,8 @@ public class DirectoryLuceneSearchEngine implements IDirectorySearchEngine
                 flags.add( BooleanClause.Occur.MUST );
             }
 
-            Query queryMulti = MultiFieldQueryParser
-                    .parse( queries.toArray( new String [ queries.size( )] ),
-                            fields.toArray( new String [ fields.size( )] ), flags.toArray( new BooleanClause.Occur [ flags.size( )] ),
-                            IndexationService.getAnalyser( ) );
+            Query queryMulti = MultiFieldQueryParser.parse( queries.toArray( new String [ queries.size( )] ), fields.toArray( new String [ fields.size( )] ),
+                    flags.toArray( new BooleanClause.Occur [ flags.size( )] ), IndexationService.getAnalyser( ) );
 
             // Get results documents
             TopDocs topDocs = searcher.search( queryMulti, LuceneSearchEngine.MAX_RESPONSES );

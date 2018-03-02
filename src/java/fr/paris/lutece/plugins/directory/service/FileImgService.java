@@ -98,25 +98,27 @@ public class FileImgService implements ImageResourceProvider
     @Override
     public ImageResource getImageResource( int nIdResource )
     {
-        //When using an older core version (before 5.1.5), the local variables will not
-        //have been set by the image servlet. So we can get null or a request from another thread.
-        //We could try to detect this by checking request.getServletPath( ) (or maybe other things?)
-        //but it would break if we decide to expose this provider through another entrypoint.
-        //Also, on tomcat (tested 8.5.5), it seems like the request object is reused just like
-        //the thread, so that even if the local variables were set in another request,
-        //the object we get here is the correct one (with the corect LuteceUser or AdminUser etc).
-        //Also, Portal.jsp, the main entry point of the webapp, does clean up the local variables.
-        //Note that the other request could even have run code from another webapp (not even a lutece webapp)
-        //Also, we could log a warning here when request is null, but then it would prevent from using
-        //this function from code not associated with a request. So no warnings.
-        HttpServletRequest request = LocalVariables.getRequest();
+        // When using an older core version (before 5.1.5), the local variables will not
+        // have been set by the image servlet. So we can get null or a request from another thread.
+        // We could try to detect this by checking request.getServletPath( ) (or maybe other things?)
+        // but it would break if we decide to expose this provider through another entrypoint.
+        // Also, on tomcat (tested 8.5.5), it seems like the request object is reused just like
+        // the thread, so that even if the local variables were set in another request,
+        // the object we get here is the correct one (with the corect LuteceUser or AdminUser etc).
+        // Also, Portal.jsp, the main entry point of the webapp, does clean up the local variables.
+        // Note that the other request could even have run code from another webapp (not even a lutece webapp)
+        // Also, we could log a warning here when request is null, but then it would prevent from using
+        // this function from code not associated with a request. So no warnings.
+        HttpServletRequest request = LocalVariables.getRequest( );
 
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         File file = FileHome.findByPrimaryKey( nIdResource, plugin );
-        if ( ( file != null ) && ( file.getPhysicalFile( ) != null ) && FileUtil.hasImageExtension( file.getTitle( ) ) ) {
+        if ( ( file != null ) && ( file.getPhysicalFile( ) != null ) && FileUtil.hasImageExtension( file.getTitle( ) ) )
+        {
             IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
-            if ( request == null || recordService.isFileAuthorized( nIdResource, request, plugin ) ) {
-                PhysicalFile physicalFile = PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile( ).getIdPhysicalFile( ), plugin ) ;
+            if ( request == null || recordService.isFileAuthorized( nIdResource, request, plugin ) )
+            {
+                PhysicalFile physicalFile = PhysicalFileHome.findByPrimaryKey( file.getPhysicalFile( ).getIdPhysicalFile( ), plugin );
                 if ( physicalFile != null )
                 {
                     ImageResource imageResource = new ImageResource( );

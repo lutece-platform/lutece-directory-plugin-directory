@@ -68,7 +68,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemHeaders;
 import org.apache.commons.lang.StringUtils;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -563,25 +562,32 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Finds the entry id from the specified action
-     * @param strAction the action
+     * 
+     * @param strAction
+     *            the action
      * @return the entry id as a {@code String}
      */
     private String findIdEntryFromAction( String strAction )
     {
-        return strAction.startsWith( UPLOAD_SUBMIT_PREFIX ) ? strAction.substring( UPLOAD_SUBMIT_PREFIX.length( ) )
-                : strAction.substring( UPLOAD_DELETE_PREFIX.length( ) );
+        return strAction.startsWith( UPLOAD_SUBMIT_PREFIX ) ? strAction.substring( UPLOAD_SUBMIT_PREFIX.length( ) ) : strAction.substring( UPLOAD_DELETE_PREFIX
+                .length( ) );
     }
 
     /**
      * Uploads a file
-     * @param request the request containing the file to upload
-     * @param strIdEntry the entry id linked to the file
-     * @param map the map of {@code RecordFields}
-     * @param record the record on which the file is added
-     * @throws DirectoryErrorException if there is an error during the upload
+     * 
+     * @param request
+     *            the request containing the file to upload
+     * @param strIdEntry
+     *            the entry id linked to the file
+     * @param map
+     *            the map of {@code RecordFields}
+     * @param record
+     *            the record on which the file is added
+     * @throws DirectoryErrorException
+     *             if there is an error during the upload
      */
-    public void doUploadFile( HttpServletRequest request, String strIdEntry, Map<String, List<RecordField>> map, Record record )
-            throws DirectoryErrorException
+    public void doUploadFile( HttpServletRequest request, String strIdEntry, Map<String, List<RecordField>> map, Record record ) throws DirectoryErrorException
     {
         FileItem fileUploaded = findUploadedFileFromRequest( request, strIdEntry );
 
@@ -598,8 +604,11 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Finds the uploaded file from the specified request
-     * @param request the request containing the file to upload
-     * @param strIdEntry the entry id linked to the file
+     * 
+     * @param request
+     *            the request containing the file to upload
+     * @param strIdEntry
+     *            the entry id linked to the file
      * @return the uploaded file as a {@code FileItem}
      */
     private FileItem findUploadedFileFromRequest( HttpServletRequest request, String strIdEntry )
@@ -612,10 +621,15 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Tests if the file can be uploaded
-     * @param request the request used to test
-     * @param fileItem the file to test
-     * @param strIdEntry the entry id linked to the file
-     * @throws DirectoryErrorException if the file cannot be uploaded
+     * 
+     * @param request
+     *            the request used to test
+     * @param fileItem
+     *            the file to test
+     * @param strIdEntry
+     *            the entry id linked to the file
+     * @throws DirectoryErrorException
+     *             if the file cannot be uploaded
      */
     private void canUploadFile( HttpServletRequest request, FileItem fileItem, String strIdEntry ) throws DirectoryErrorException
     {
@@ -629,8 +643,11 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Finds the record fields linked to the specified entry from the specified map
-     * @param map the map of {@code RecordFields}
-     * @param strIdEntry the entry id
+     * 
+     * @param map
+     *            the map of {@code RecordFields}
+     * @param strIdEntry
+     *            the entry id
      * @return the list of record fields
      */
     private List<RecordField> findRecordFields( Map<String, List<RecordField>> map, String strIdEntry )
@@ -648,8 +665,11 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Creates a {@code RecordField} for the uploaded file
-     * @param fileItem the uploaded file
-     * @param strIdEntry the entry id linked to the file
+     * 
+     * @param fileItem
+     *            the uploaded file
+     * @param strIdEntry
+     *            the entry id linked to the file
      * @return the created {@code RecordField}
      */
     private RecordField createRecordFieldForUploadedFile( FileItem fileItem, String strIdEntry )
@@ -695,9 +715,13 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Adds the record field in the specified record and in the specified list
-     * @param recordFieldForUploadedFile the record field to add
-     * @param record the record
-     * @param listRecordFields the list of record fields
+     * 
+     * @param recordFieldForUploadedFile
+     *            the record field to add
+     * @param record
+     *            the record
+     * @param listRecordFields
+     *            the list of record fields
      */
     private void addRecordFieldForUploadedFile( RecordField recordFieldForUploadedFile, Record record, List<RecordField> listRecordFields )
     {
@@ -710,9 +734,13 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Deletes a file
-     * @param request the request containing the file to delete
-     * @param strIdEntry the entry id linked to the file
-     * @param map the map of {@code RecordFields}
+     * 
+     * @param request
+     *            the request containing the file to delete
+     * @param strIdEntry
+     *            the entry id linked to the file
+     * @param map
+     *            the map of {@code RecordFields}
      */
     public void doDeleteFile( HttpServletRequest request, String strIdEntry, Map<String, List<RecordField>> map )
     {
@@ -770,8 +798,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @throws DirectoryErrorException
      *             exception if there is an error
      */
-    public void doUploadAction( HttpServletRequest request, String strUploadAction, Map<String, List<RecordField>> map )
-            throws DirectoryErrorException
+    public void doUploadAction( HttpServletRequest request, String strUploadAction, Map<String, List<RecordField>> map ) throws DirectoryErrorException
     {
         String strIdEntry = findIdEntryFromAction( strUploadAction );
 
@@ -788,13 +815,17 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
 
     /**
      * Uploads a file
-     * @param request the request containing the file to upload
-     * @param strIdEntry the entry id linked to the file
-     * @param map the map of {@code RecordFields}
-     * @throws DirectoryErrorException if there is an error during the upload
+     * 
+     * @param request
+     *            the request containing the file to upload
+     * @param strIdEntry
+     *            the entry id linked to the file
+     * @param map
+     *            the map of {@code RecordFields}
+     * @throws DirectoryErrorException
+     *             if there is an error during the upload
      */
-    public void doUploadFile( HttpServletRequest request, String strIdEntry, Map<String, List<RecordField>> map )
-            throws DirectoryErrorException
+    public void doUploadFile( HttpServletRequest request, String strIdEntry, Map<String, List<RecordField>> map ) throws DirectoryErrorException
     {
         FileItem fileUploaded = findUploadedFileFromRequest( request, strIdEntry );
 

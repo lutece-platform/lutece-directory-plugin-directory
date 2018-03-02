@@ -194,17 +194,17 @@ public class RecordService implements IRecordService
     @Override
     public boolean isFileAuthorized( int nFileId, HttpServletRequest request, Plugin plugin )
     {
-        //We will try to match as best as we can the rules displaying links
-        //to files or images. They should remain accessible.
+        // We will try to match as best as we can the rules displaying links
+        // to files or images. They should remain accessible.
         RecordField recordField = RecordFieldHome.findByFile( nFileId, plugin );
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
         Record record = recordService.findByPrimaryKey( recordField.getRecord( ).getIdRecord( ), plugin );
-        IEntry entry = EntryHome.findByPrimaryKey( recordField.getEntry().getIdEntry(), plugin);
-        //For images, there is a per field setting (full_size, big_thumbnail, small_thumbnail)
-        //For others, the isShownInX value in the field is not reliable
-        boolean bEntryImg = entry  instanceof EntryTypeImg;
-        boolean bShownList = entry.isShownInResultList( ) && (!bEntryImg || recordField.getField( ).isShownInResultList( ) );
-        boolean bShownRecord = entry.isShownInResultRecord( ) && (!bEntryImg || recordField.getField( ).isShownInResultList( ) ) ;
+        IEntry entry = EntryHome.findByPrimaryKey( recordField.getEntry( ).getIdEntry( ), plugin );
+        // For images, there is a per field setting (full_size, big_thumbnail, small_thumbnail)
+        // For others, the isShownInX value in the field is not reliable
+        boolean bEntryImg = entry instanceof EntryTypeImg;
+        boolean bShownList = entry.isShownInResultList( ) && ( !bEntryImg || recordField.getField( ).isShownInResultList( ) );
+        boolean bShownRecord = entry.isShownInResultRecord( ) && ( !bEntryImg || recordField.getField( ).isShownInResultList( ) );
         if ( record != null && record.getDirectory( ) != null )
         {
             Directory directory = DirectoryHome.findByPrimaryKey( record.getDirectory( ).getIdDirectory( ), plugin );
@@ -212,16 +212,12 @@ public class RecordService implements IRecordService
             // Is the record visible in the front office ?
             if ( directory != null && directory.isEnabled( ) && record.isEnabled( ) )
             {
-                boolean directoryRoleOk = ! (
-                        ( directory.getRoleKey( ) != null ) && !directory.getRoleKey( ).equals( Directory.ROLE_NONE ) &&
-                        SecurityService.isAuthenticationEnable( ) && !SecurityService.getInstance( ).isUserInRole( request, directory.getRoleKey( ) )
-                );
+                boolean directoryRoleOk = !( ( directory.getRoleKey( ) != null ) && !directory.getRoleKey( ).equals( Directory.ROLE_NONE )
+                        && SecurityService.isAuthenticationEnable( ) && !SecurityService.getInstance( ).isUserInRole( request, directory.getRoleKey( ) ) );
                 if ( directoryRoleOk )
                 {
-                    boolean recordRoleOk = ! (
-                            ( record.getRoleKey( ) != null ) && !record.getRoleKey( ).equals( Directory.ROLE_NONE ) &&
-                            SecurityService.isAuthenticationEnable( ) && !SecurityService.getInstance( ) .isUserInRole( request, record.getRoleKey( ) )
-                    );
+                    boolean recordRoleOk = !( ( record.getRoleKey( ) != null ) && !record.getRoleKey( ).equals( Directory.ROLE_NONE )
+                            && SecurityService.isAuthenticationEnable( ) && !SecurityService.getInstance( ).isUserInRole( request, record.getRoleKey( ) ) );
                     if ( recordRoleOk )
                     {
                         return bShownList || bShownRecord;
@@ -235,25 +231,24 @@ public class RecordService implements IRecordService
             {
                 if ( adminUser.checkRight( ManageDirectoryJspBean.RIGHT_MANAGE_DIRECTORY ) )
                 {
-                    if ( AdminWorkgroupService.isAuthorized( directory, adminUser )
-                      && AdminWorkgroupService.isAuthorized( record, adminUser ) )
+                    if ( AdminWorkgroupService.isAuthorized( directory, adminUser ) && AdminWorkgroupService.isAuthorized( record, adminUser ) )
                     {
                         boolean bRbacModify = RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( directory.getIdDirectory( ) ),
-                            DirectoryResourceIdService.PERMISSION_MODIFY_RECORD, adminUser);
+                                DirectoryResourceIdService.PERMISSION_MODIFY_RECORD, adminUser );
                         if ( bRbacModify )
                         {
                             return true;
                         }
 
                         boolean bRbacManage = RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( directory.getIdDirectory( ) ),
-                            DirectoryResourceIdService.PERMISSION_MANAGE_RECORD, adminUser);
+                                DirectoryResourceIdService.PERMISSION_MANAGE_RECORD, adminUser );
                         if ( bRbacManage )
                         {
                             return bShownList;
                         }
 
                         boolean bRbacVisualize = RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( directory.getIdDirectory( ) ),
-                            DirectoryResourceIdService.PERMISSION_VISUALISATION_RECORD, adminUser );
+                                DirectoryResourceIdService.PERMISSION_VISUALISATION_RECORD, adminUser );
                         if ( bRbacVisualize )
                         {
                             return true; // In the Back office, all recordfields are shown even when isShownInResultRecord is false

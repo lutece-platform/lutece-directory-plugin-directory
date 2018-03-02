@@ -155,7 +155,7 @@ public final class DoDownloadFile
         else
         {
             IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
-            if ( ! recordService.isFileAuthorized( nIdFile, request, plugin ) )
+            if ( !recordService.isFileAuthorized( nIdFile, request, plugin ) )
             {
                 return AdminMessageService.getMessageUrl( request, Messages.USER_ACCESS_DENIED, AdminMessage.TYPE_STOP );
             }

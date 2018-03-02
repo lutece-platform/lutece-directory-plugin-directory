@@ -1537,8 +1537,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
 
         if ( ( entry == null )
                 || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -1635,11 +1635,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         IEntry entry;
 
         int nIdDirectory = _searchFields.getIdDirectory( );
-        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin ( ) );
+        Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
         if ( ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -1704,9 +1704,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( entry == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( entry == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -1875,9 +1876,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( nIdEntry == -1 ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( nIdEntry == -1 )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -1944,9 +1946,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( nIdEntry == -1 ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( nIdEntry == -1 )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -1989,9 +1992,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( entry == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( entry == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2045,9 +2049,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( entry == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( entry == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2092,9 +2097,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( entry == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( entry == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2139,8 +2145,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
         if ( ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2212,9 +2218,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( entry == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( entry == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2274,9 +2281,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( entry == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( entry == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2335,9 +2343,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( entry == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( entry == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2463,9 +2472,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( entry == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( entry == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2511,9 +2521,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( field == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( field == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2553,8 +2564,8 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
         if ( ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2600,9 +2611,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( field == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( field == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2695,9 +2707,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( request.getParameter( PARAMETER_ID_FIELD ) == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( request.getParameter( PARAMETER_ID_FIELD ) == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2726,9 +2739,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( nIdField == -1 ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( nIdField == -1 )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2767,9 +2781,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( field == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( field == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2814,9 +2829,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = _searchFields.getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, plugin );
 
-        if ( ( field == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( field == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2860,9 +2876,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
         if ( ( nIdExpression == DirectoryUtils.CONSTANT_ID_NULL )
-                || ( nIdField == DirectoryUtils.CONSTANT_ID_NULL ) || ( directory == null )
-                || ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+                || ( nIdField == DirectoryUtils.CONSTANT_ID_NULL )
+                || ( directory == null )
+                || ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -2892,9 +2909,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
         if ( ( nIdExpression == DirectoryUtils.CONSTANT_ID_NULL )
-                || ( nIdField == DirectoryUtils.CONSTANT_ID_NULL ) || ( directory == null )
-                || ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY, getUser( ) ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+                || ( nIdField == DirectoryUtils.CONSTANT_ID_NULL )
+                || ( directory == null )
+                || ( !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY,
+                        getUser( ) ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -3731,9 +3749,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = record.getDirectory( ).getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( record == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY_RECORD, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
+        if ( ( record == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY_RECORD,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                 || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
@@ -3815,9 +3834,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = record.getDirectory( ).getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( record == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY_RECORD, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
+        if ( ( record == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_MODIFY_RECORD,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                 || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
@@ -3887,10 +3907,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
                 Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-                if ( ( record == null ) || ( directory == null )
+                if ( ( record == null )
+                        || ( directory == null )
                         || ( record.getDirectory( ).getIdDirectory( ) != nIdDirectory )
-                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser( ) )
-                        || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
+                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                                DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser( ) ) || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                         || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
                 {
                     throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
@@ -3930,10 +3951,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
                 Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-                if ( ( record == null ) || ( directory == null )
+                if ( ( record == null )
+                        || ( directory == null )
                         || ( record.getDirectory( ).getIdDirectory( ) != nIdDirectory )
-                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser( ) )
-                        || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
+                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                                DirectoryResourceIdService.PERMISSION_DELETE_RECORD, getUser( ) ) || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                         || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
                 {
                     throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
@@ -3989,9 +4011,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = record.getDirectory( ).getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( record == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_COPY_RECORD, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
+        if ( ( record == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_COPY_RECORD,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                 || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
@@ -4045,9 +4068,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = record.getDirectory( ).getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( record == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
+        if ( ( record == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                        DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) ) || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                 || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
@@ -4079,9 +4103,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = record.getDirectory( ).getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( record == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
+        if ( ( record == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                        DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) ) || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                 || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
@@ -4123,9 +4148,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = record.getDirectory( ).getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( record == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
+        if ( ( record == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                        DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) ) || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                 || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
@@ -4323,9 +4349,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         // Get asynchronous file names
         boolean bGetFileName = true;
 
-        if ( ( record == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_HISTORY_RECORD, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
+        if ( ( record == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_HISTORY_RECORD,
+                        getUser( ) ) || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                 || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
@@ -4411,9 +4438,10 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = record.getDirectory( ).getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( record == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_VISUALISATION_RECORD, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
+        if ( ( record == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                        DirectoryResourceIdService.PERMISSION_VISUALISATION_RECORD, getUser( ) ) || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
                 || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
@@ -5181,10 +5209,11 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         int nIdDirectory = record.getDirectory( ).getIdDirectory( );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
 
-        if ( ( record == null ) || ( directory == null )
-                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_VISUALISATION_MYLUTECE_USER, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
-                || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+        if ( ( record == null )
+                || ( directory == null )
+                || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                        DirectoryResourceIdService.PERMISSION_VISUALISATION_MYLUTECE_USER, getUser( ) )
+                || !AdminWorkgroupService.isAuthorized( record, getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
         {
             throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
         }
@@ -5410,11 +5439,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
                 Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-                if ( ( record == null ) || ( directory == null )
+                if ( ( record == null )
+                        || ( directory == null )
                         || ( record.getDirectory( ).getIdDirectory( ) != nIdDirectory )
-                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) )
-                        || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
-                        || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                                DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) )
+                        || !AdminWorkgroupService.isAuthorized( record, getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
                 {
                     throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
                 }
@@ -5452,11 +5482,12 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 int nIdDirectoryRecord = DirectoryUtils.convertStringToInt( strIdDirectoryRecord );
                 Record record = _recordService.findByPrimaryKey( nIdDirectoryRecord, getPlugin( ) );
 
-                if ( ( record == null ) || ( directory == null )
+                if ( ( record == null )
+                        || ( directory == null )
                         || ( record.getDirectory( ).getIdDirectory( ) != nIdDirectory )
-                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ), DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) )
-                        || !AdminWorkgroupService.isAuthorized( record, getUser( ) )
-                        || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
+                        || !RBACService.isAuthorized( Directory.RESOURCE_TYPE, Integer.toString( nIdDirectory ),
+                                DirectoryResourceIdService.PERMISSION_CHANGE_STATE_RECORD, getUser( ) )
+                        || !AdminWorkgroupService.isAuthorized( record, getUser( ) ) || !AdminWorkgroupService.isAuthorized( directory, getUser( ) ) )
                 {
                     throw new AccessDeniedException( MESSAGE_ACCESS_DENIED );
                 }

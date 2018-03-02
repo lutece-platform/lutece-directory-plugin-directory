@@ -45,7 +45,8 @@ public final class FileDAO implements IFileDAO
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_file ) FROM directory_file";
     private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_file,title,id_physical_file,file_size,mime_type,extension"
             + " FROM directory_file WHERE id_file = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_file(id_file,title,id_physical_file,file_size,mime_type,extension)" + " VALUES(?,?,?,?,?,?)";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_file(id_file,title,id_physical_file,file_size,mime_type,extension)"
+            + " VALUES(?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_file WHERE id_file = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE  directory_file SET "
             + "id_file=?,title=?,id_physical_file=?,file_size=?,mime_type=?, extension=? WHERE id_file = ?";
@@ -131,7 +132,7 @@ public final class FileDAO implements IFileDAO
 
             file.setSize( daoUtil.getInt( 4 ) );
             file.setMimeType( daoUtil.getString( 5 ) );
-            file.setExtension(daoUtil.getString( 6 ));
+            file.setExtension( daoUtil.getString( 6 ) );
 
         }
 

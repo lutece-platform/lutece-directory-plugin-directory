@@ -191,7 +191,8 @@ public final class RecordFieldHome
      *            the Plugin
      * @return an instance of Record field
      */
-    public static RecordField findByFile ( int nIdFile, Plugin plugin ) {
+    public static RecordField findByFile( int nIdFile, Plugin plugin )
+    {
         RecordField recordField = _dao.loadByFile( nIdFile, plugin );
 
         loadSubObjects( recordField, plugin );
@@ -206,7 +207,8 @@ public final class RecordFieldHome
      * @param plugin
      *            the Plugin
      */
-    private static void loadSubObjects ( RecordField recordField, Plugin plugin ) {
+    private static void loadSubObjects( RecordField recordField, Plugin plugin )
+    {
         if ( ( recordField != null ) && ( recordField.getFile( ) != null ) )
         {
             recordField.setFile( FileHome.findByPrimaryKey( recordField.getFile( ).getIdFile( ), plugin ) );
