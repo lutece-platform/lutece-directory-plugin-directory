@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.directory.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
+import java.util.List;
 
 /**
  * This class provides instances management methods (create, find, ...) for file objects
@@ -126,5 +127,28 @@ public final class FileHome
     public static File findByPrimaryKey( int nKey, Plugin plugin )
     {
         return _dao.load( nKey, plugin );
+    }
+
+    /**
+     * Purge the file associated to given id
+     * 
+     * @param file
+     *            the file to purge
+     * @param plugin
+     *            The plugin
+     */
+    public static void purge( File file, Plugin plugin )
+    {
+        _dao.purge( file, plugin );
+    }
+
+    /**
+     * Get the files list
+     * 
+     * @return the list of files
+     */
+    public static List<File> getFilesList( Plugin plugin )
+    {
+        return _dao.selectFilesList( plugin );
     }
 }

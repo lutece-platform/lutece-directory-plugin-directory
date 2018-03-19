@@ -94,6 +94,7 @@ public final class RecordFieldDAO implements IRecordFieldDAO
     private static final String SQL_FILTER_ID_RECORD_IN = " drf.id_record IN ( ? ";
     private static final String SQL_FILTER_ID_FIELD = " drf.id_field = ? ";
     private static final String SQL_FILTER_ID_ENTRY = "  drf.id_entry = ? ";
+    private static final String SQL_FILTER_CONTAINS_FILE = "  drf.id_file IS NOT NULL ";
     private static final String SQL_FILTER_ID_ENTRY_IN = " AND drf.id_entry IN ( ?";
     private static final String SQL_FILTER_ADITIONAL_PARAMETER = ",?";
     private static final String SQL_FILTER_CLOSE_PARENTHESIS = " ) ";
@@ -704,6 +705,11 @@ public final class RecordFieldDAO implements IRecordFieldDAO
         if ( filter.containsIsEntryShownInResultRecord( ) )
         {
             listStrFilter.add( SQL_FILTER_IS_ENTRY_SHOWN_IN_RESULT_RECORD );
+        }
+
+        if ( filter.containsFile( ) )
+        {
+            listStrFilter.add( SQL_FILTER_CONTAINS_FILE );
         }
 
         String strSQL = DirectoryUtils.buildRequetteWithFilter( SQL_QUERY_SELECT_RECORD_FIELD_BY_FILTER, listStrFilter, SQL_ORDER_BY_ID_RECORD_FIELD );

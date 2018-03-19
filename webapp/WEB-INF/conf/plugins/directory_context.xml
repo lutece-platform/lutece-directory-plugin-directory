@@ -36,7 +36,8 @@
     <bean id="directory.directoryParameterService" class="fr.paris.lutece.plugins.directory.service.parameter.DirectoryParameterService" />
     <bean id="directory.entryParameterService" class="fr.paris.lutece.plugins.directory.service.parameter.EntryParameterService" />
     <bean id="directory.recordService" class="fr.paris.lutece.plugins.directory.service.record.RecordService" />
-
+    <bean id="directory.fileService" class="fr.paris.lutece.plugins.directory.service.file.DirectoryFileService" />
+    
     <!-- RSS -->
     <bean id="ResourceRssTypeDirectory" class="fr.paris.lutece.portal.business.rss.ResourceRssType" >
     	<property name="key" value="ResourceRssTypeDirectory" />

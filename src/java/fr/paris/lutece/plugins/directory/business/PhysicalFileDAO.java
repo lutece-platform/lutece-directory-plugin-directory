@@ -47,6 +47,7 @@ public final class PhysicalFileDAO implements IPhysicalFileDAO
             + " FROM directory_physical_file WHERE id_physical_file = ?";
     private static final String SQL_QUERY_INSERT = "INSERT INTO directory_physical_file(id_physical_file,file_value)" + " VALUES(?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_physical_file WHERE id_physical_file = ? ";
+    private static final String SQL_QUERY_PURGE = "UPDATE directory_physical_file SET file_value = ? WHERE id_physical_file = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE  directory_physical_file SET " + "id_physical_file=?,file_value=? WHERE id_physical_file = ?";
 
     /**
@@ -136,6 +137,20 @@ public final class PhysicalFileDAO implements IPhysicalFileDAO
         daoUtil.setInt( 1, physicalFile.getIdPhysicalFile( ) );
         daoUtil.setBytes( 2, physicalFile.getValue( ) );
         daoUtil.setInt( 3, physicalFile.getIdPhysicalFile( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void purge( PhysicalFile physicalFile, Plugin plugin )
+    {
+        int nIndex = 1;
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_PURGE, plugin );
+        daoUtil.setBytes( nIndex++, new byte [ 0] );
+        daoUtil.setInt( nIndex++, physicalFile.getIdPhysicalFile( ) );
         daoUtil.executeUpdate( );
         daoUtil.free( );
     }

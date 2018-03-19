@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.directory.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
+import java.util.List;
 
 /**
  *
@@ -92,4 +93,22 @@ public interface IFileDAO
      *            the plugin
      */
     void store( File file, Plugin plugin );
+
+    /**
+     * Purge file in the table
+     * 
+     * @param file
+     *            instance of the File object to purge
+     * @param plugin
+     *            the plugin
+     */
+    void purge( File file, Plugin plugin );
+
+    /**
+     * Get the files list
+     * 
+     * @return the list of files
+     */
+    List<File> selectFilesList( Plugin plugin );
+
 }

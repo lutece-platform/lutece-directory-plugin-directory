@@ -92,4 +92,12 @@ public interface IPhysicalFileDAO
      *            the plugin
      */
     void store( PhysicalFile physicalFile, Plugin plugin );
+
+    /**
+     * Purge the physical file in the table
+     * 
+     * @param physicalFile
+     *            the physical file to purge
+     */
+    void purge( PhysicalFile physicalFile, Plugin plugin );
 }

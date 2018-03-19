@@ -35,6 +35,8 @@ package fr.paris.lutece.plugins.directory.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class provides Data Access methods for Field objects
@@ -43,13 +45,15 @@ public final class FileDAO implements IFileDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_file ) FROM directory_file";
-    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_file,title,id_physical_file,file_size,mime_type,extension"
+    private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_file,title,id_physical_file,file_size,mime_type,extension, date_expiration "
             + " FROM directory_file WHERE id_file = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_file(id_file,title,id_physical_file,file_size,mime_type,extension)"
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_file(id_file,title,id_physical_file,file_size,mime_type,extension, date_expiration )"
             + " VALUES(?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_file WHERE id_file = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE  directory_file SET "
-            + "id_file=?,title=?,id_physical_file=?,file_size=?,mime_type=?, extension=? WHERE id_file = ?";
+            + "id_file=?,title=?,id_physical_file=?,file_size=?,mime_type=?, extension=?, date_expiration=? WHERE id_file = ?";
+    private static final String SQL_QUERY_PURGE = " UPDATE directory_file SET title = ?, file_size = ? WHERE id_file = ?";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_file,title,id_physical_file,file_size,mime_type, extension, date_expiration FROM directory_file ";
 
     /**
      * {@inheritDoc}
@@ -95,6 +99,7 @@ public final class FileDAO implements IFileDAO
         daoUtil.setInt( 4, file.getSize( ) );
         daoUtil.setString( 5, file.getMimeType( ) );
         daoUtil.setString( 6, file.getExtension( ) );
+        daoUtil.setTimestamp( 6, file.getDateExpiration( ) );
         file.setIdFile( newPrimaryKey( plugin ) );
         daoUtil.setInt( 1, file.getIdFile( ) );
         daoUtil.executeUpdate( );
@@ -133,6 +138,7 @@ public final class FileDAO implements IFileDAO
             file.setSize( daoUtil.getInt( 4 ) );
             file.setMimeType( daoUtil.getString( 5 ) );
             file.setExtension( daoUtil.getString( 6 ) );
+            file.setDateExpiration( daoUtil.getTimestamp( 7 ) );
 
         }
 
@@ -175,9 +181,59 @@ public final class FileDAO implements IFileDAO
         daoUtil.setInt( 4, file.getSize( ) );
         daoUtil.setString( 5, file.getMimeType( ) );
         daoUtil.setString( 6, file.getExtension( ) );
+        daoUtil.setTimestamp( 7, file.getDateExpiration( ) );
 
-        daoUtil.setInt( 7, file.getIdFile( ) );
+        daoUtil.setInt( 8, file.getIdFile( ) );
         daoUtil.executeUpdate( );
         daoUtil.free( );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void purge( File file, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_PURGE, plugin );
+        daoUtil.setString( 1, file.getTitle( ) );
+        daoUtil.setInt( 2, 0 );
+        daoUtil.setInt( 3, file.getIdFile( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<File> selectFilesList( Plugin plugin )
+    {
+        List<File> fileList = new ArrayList<>( );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ALL, plugin );
+        daoUtil.executeQuery( );
+
+        while ( daoUtil.next( ) )
+        {
+            File file = new File( );
+            PhysicalFile physicalFile = null;
+            file.setIdFile( daoUtil.getInt( 1 ) );
+            file.setTitle( daoUtil.getString( 2 ) );
+
+            if ( daoUtil.getObject( 3 ) != null )
+            {
+                physicalFile = new PhysicalFile( );
+                physicalFile.setIdPhysicalFile( daoUtil.getInt( 3 ) );
+                file.setPhysicalFile( physicalFile );
+            }
+
+            file.setSize( daoUtil.getInt( 4 ) );
+            file.setMimeType( daoUtil.getString( 5 ) );
+            file.setExtension( daoUtil.getString( 6 ) );
+            file.setDateExpiration( daoUtil.getTimestamp( 7 ) );
+
+            fileList.add( file );
+        }
+
+        daoUtil.free( );
+
+        return fileList;
     }
 }

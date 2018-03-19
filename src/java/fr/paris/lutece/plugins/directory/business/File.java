@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.directory.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.xml.XmlUtil;
+import java.sql.Timestamp;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -60,6 +61,7 @@ public class File
     private int _nSize;
     private String _strExtension;
     private String _strMimeType;
+    private Timestamp _dateExpiration;
 
     /**
      *
@@ -212,4 +214,36 @@ public class File
 
         return strXml;
     }
+
+    /**
+     * Get the expiration date of the file
+     * 
+     * @return the expiration date of the file
+     */
+    public Timestamp getDateExpiration( )
+    {
+        return _dateExpiration;
+    }
+
+    /**
+     * Set the expiration date of the file
+     * 
+     * @param _dateExpiration
+     *            the expiration date of the file
+     */
+    public void setDateExpiration( Timestamp _dateExpiration )
+    {
+        this._dateExpiration = _dateExpiration;
+    }
+
+    /**
+     * Return true if the file as expired, false otherwise
+     * 
+     * @return true if the file has expired
+     */
+    public boolean isFileExpired( )
+    {
+        return _dateExpiration.after( new Timestamp( System.currentTimeMillis( ) ) );
+    }
+
 }

@@ -202,6 +202,7 @@ CREATE TABLE directory_file (
   file_size  INT DEFAULT NULL,
   mime_type VARCHAR(255) DEFAULT NULL,
   extension VARCHAR(50) DEFAULT NULL,
+  date_expiration TIMESTAMP NULL DEFAULT NULL,
 
   PRIMARY KEY  (id_file)
  );

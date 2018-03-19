@@ -1,0 +1,1 @@
+ALTER TABLE directory_file ADD COLUMN date_expiration TIMESTAMP NULL DEFAULT NULL;

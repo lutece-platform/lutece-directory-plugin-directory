@@ -110,4 +110,18 @@ public final class PhysicalFileHome
     {
         return _dao.load( nKey, plugin );
     }
+
+    /**
+     * Purge the physical file for the given idPhysicalFile
+     * 
+     * @param physicalFile
+     *            the physical file to purge
+     * @param plugin
+     *            the plugin
+     */
+    public static void purge( PhysicalFile physicalFile, Plugin plugin )
+    {
+        _dao.purge( physicalFile, plugin );
+    }
+
 }

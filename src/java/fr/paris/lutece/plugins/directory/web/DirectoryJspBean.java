@@ -4883,7 +4883,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         String strIdDirectory = request.getParameter( PARAMETER_ID_DIRECTORY );
         int nIdDirectory = DirectoryUtils.convertStringToInt( strIdDirectory );
         Directory directory = DirectoryHome.findByPrimaryKey( nIdDirectory, getPlugin( ) );
-        Map<String, String> mapIdState = request.getParameterMap( );
+        Map<String, String[]> mapIdState = request.getParameterMap( );
         WorkflowService workflowService = WorkflowService.getInstance( );
 
         List<State> listAllState = (List<State>) workflowService.getAllStateByWorkflow( directory.getIdWorkflow( ), AdminUserService.getAdminUser( request ) );

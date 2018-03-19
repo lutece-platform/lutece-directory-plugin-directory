@@ -67,6 +67,7 @@ public class RecordFieldFilter
     private IEntry _sortEntry;
     private int _nSortOrder = ORDER_NONE;
     private boolean _bOrderByDateModification = false;
+    private boolean _bContainsFile = false;
 
     /**
      * Gets the entry that should be used to sort the results
@@ -502,4 +503,26 @@ public class RecordFieldFilter
     {
         return _bOrderByDateModification;
     }
+
+    /**
+     * Get the contains file boolean
+     * 
+     * @return true if filter by containing of file
+     */
+    public boolean containsFile( )
+    {
+        return _bContainsFile;
+    }
+
+    /**
+     * Set the contains file boolean
+     * 
+     * @param bContainsFile
+     *            the contains file boolean
+     */
+    public void setContainsFile( boolean bContainsFile )
+    {
+        _bContainsFile = bContainsFile;
+    }
+
 }
