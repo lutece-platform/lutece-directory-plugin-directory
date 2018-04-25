@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
+<?xml version="1.0" encoding="UTF-8"?><plug-in>
 
     <!-- Plugin Informations -->
     <name>directory</name>
     <class>fr.paris.lutece.plugins.directory.service.DirectoryPlugin</class>
-    <version>4.0.11-SNAPSHOT</version>
+    <version>4.0.11</version>
     <description>directory.plugin.description</description>
     <documentation/>
     <installation/>
