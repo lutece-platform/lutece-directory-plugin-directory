@@ -84,7 +84,7 @@ public class DirectorySearchService
     // Constants corresponding to the variables defined in the lutece.properties file
     private static DirectorySearchService _singleton;
 
-    /** 
+    /**
      * Creates a new instance of DirectorySearchService
      */
     public DirectorySearchService( )
@@ -405,7 +405,7 @@ public class DirectorySearchService
         {
             sbLogs.append( "\r\nIndexing all contents ...\r\n" );
             writer = _directorySearchFactory.getIndexWriter( bCreateIndex );
-            
+
             Date start = new Date( );
 
             sbLogs.append( "\r\n<strong>Indexer : " );
@@ -512,7 +512,8 @@ public class DirectorySearchService
      * return searcher
      * 
      * @return searcher
-     * @throws IOException - if there is a low-level IO error 
+     * @throws IOException
+     *             - if there is a low-level IO error
      */
     public IndexSearcher getSearcher( ) throws IOException
     {

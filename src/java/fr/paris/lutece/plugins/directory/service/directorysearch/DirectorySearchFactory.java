@@ -59,10 +59,10 @@ public class DirectorySearchFactory
     // Constants
     private static final String PATH_INDEX = "directory.internalIndexer.lucene.indexPath";
     private static final String PROPERTY_ANALYSER_CLASS_NAME = "directory.internalIndexer.lucene.analyser.className";
-    
+
     // Variables
     private Analyzer _analyzer;
-    
+
     /**
      * Constructor
      */
@@ -73,14 +73,14 @@ public class DirectorySearchFactory
             String strAnalyserClassName = AppPropertiesService.getProperty( PROPERTY_ANALYSER_CLASS_NAME );
             _analyzer = (Analyzer) Class.forName( strAnalyserClassName ).newInstance( );
         }
-        catch ( InstantiationException | IllegalAccessException | ClassNotFoundException exception )
+        catch( InstantiationException | IllegalAccessException | ClassNotFoundException exception )
         {
             AppLogService.error( "Failed to instanciate the analyzer of the type: " + PROPERTY_ANALYSER_CLASS_NAME );
-            
+
             _analyzer = new LuteceFrenchAnalyzer( );
         }
     }
-    
+
     /**
      * Return the instance of the DirectorySearchFactory
      * 
@@ -90,7 +90,7 @@ public class DirectorySearchFactory
     {
         return DirectorySearchFactoryHolder._instance;
     }
-    
+
     /**
      * Return the Analyzer to use for the search
      * 
@@ -100,12 +100,13 @@ public class DirectorySearchFactory
     {
         return _analyzer;
     }
-    
+
     /**
      * Return the IndexSearcher to use for the search
      * 
      * @return the index searcher to use for the search
-     * @throws IOException - if there is a low-level IO error
+     * @throws IOException
+     *             - if there is a low-level IO error
      */
     public IndexSearcher getIndexSearcher( ) throws IOException
     {
@@ -113,19 +114,20 @@ public class DirectorySearchFactory
 
         return new IndexSearcher( DirectoryReader.open( luceneDirectory ) );
     }
-    
+
     /**
      * Create the IndexWriter with its configuration
      * 
      * @param bCreateIndex
-     *          The boolean which tell if the index must be created
+     *            The boolean which tell if the index must be created
      * @return the created IndexWriter
-     * @throws IOException - if there is a low level IO error
+     * @throws IOException
+     *             - if there is a low level IO error
      */
     public IndexWriter getIndexWriter( MutableBoolean bCreateIndex ) throws IOException
     {
         Directory luceneDirectory = getDirectory( );
-        
+
         if ( !DirectoryReader.indexExists( luceneDirectory ) )
         {
             bCreateIndex.setValue( Boolean.TRUE );
@@ -149,15 +151,16 @@ public class DirectorySearchFactory
      * Return the Directory to use for the search
      * 
      * @return the Directory to use for the search
-     * @throws IOException - if the path string cannot be converted to a Path
+     * @throws IOException
+     *             - if the path string cannot be converted to a Path
      */
     private Directory getDirectory( ) throws IOException
     {
         String strIndex = AppPathService.getPath( PATH_INDEX );
-        
-        return NIOFSDirectory.open( Paths.get( strIndex ) ); 
+
+        return NIOFSDirectory.open( Paths.get( strIndex ) );
     }
-    
+
     /**
      * Holder to manage the DirectorySearchFactory singleton
      */
