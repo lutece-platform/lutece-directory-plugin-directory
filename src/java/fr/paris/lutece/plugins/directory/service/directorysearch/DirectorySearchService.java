@@ -33,6 +33,22 @@
  */
 package fr.paris.lutece.plugins.directory.service.directorysearch;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.search.IndexSearcher;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import fr.paris.lutece.plugins.directory.business.Directory;
 import fr.paris.lutece.plugins.directory.business.DirectoryHome;
 import fr.paris.lutece.plugins.directory.business.EntryTypeArray;
@@ -49,36 +65,7 @@ import fr.paris.lutece.plugins.directory.utils.DirectoryUtils;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
-import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
-import fr.paris.lutece.portal.service.util.AppPathService;
-import fr.paris.lutece.portal.service.util.AppPropertiesService;
-
-import org.apache.commons.collections.CollectionUtils;
-
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.IndexWriterConfig.OpenMode;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.store.NIOFSDirectory;
-import org.apache.lucene.util.Version;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * DirectorySearchService
@@ -86,69 +73,24 @@ import javax.servlet.http.HttpServletRequest;
 public class DirectorySearchService
 {
     private static final String BEAN_SEARCH_ENGINE = "directorySearchEngine";
-    private static final String PATH_INDEX = "directory.internalIndexer.lucene.indexPath";
-    private static final String PROPERTY_WRITER_MERGE_FACTOR = "directory.internalIndexer.lucene.writer.mergeFactor";
-    private static final String PROPERTY_WRITER_MAX_FIELD_LENGTH = "directory.internalIndexer.lucene.writer.maxFieldLength";
-    private static final String PROPERTY_ANALYSER_CLASS_NAME = "directory.internalIndexer.lucene.analyser.className";
     private static final String PARAMETER_ID_DIRECTORY = "id_directory";
     private static final String PARAMETER_ID_ENTRY = "id_entry";
     private static final String JSON_QUERY_RESULT = "query";
 
-    // private static final int DEFAULT_WRITER_MERGE_FACTOR = 20;
-    // private static final int DEFAULT_WRITER_MAX_FIELD_LENGTH = 1000000;
-    private static org.apache.lucene.store.Directory _luceneDirectory;
-
-    // private static int _nWriterMergeFactor;
-    // private static int _nWriterMaxFieldLength;
-    private static Analyzer _analyzer;
-    private static IndexSearcher _searcher;
     private static IDirectorySearchIndexer _indexer;
+    private static DirectorySearchFactory _directorySearchFactory;
     private static final int CONSTANT_TIME_CORRECTION = 3600000 * 12;
 
     // Constants corresponding to the variables defined in the lutece.properties file
     private static DirectorySearchService _singleton;
 
-    /** Creates a new instance of DirectorySearchService */
+    /** 
+     * Creates a new instance of DirectorySearchService
+     */
     public DirectorySearchService( )
     {
-        // Read configuration properties
-        String strIndex = AppPathService.getPath( PATH_INDEX );
-
-        if ( ( strIndex == null ) || ( strIndex.equals( "" ) ) )
-        {
-            throw new AppException( "Lucene index path not found in directory.properties", null );
-        }
-
-        try
-        {
-            _luceneDirectory = NIOFSDirectory.open( Paths.get( strIndex ) );
-        }
-        catch( IOException e1 )
-        {
-            throw new AppException( "Lucene index path not found in directory.properties", null );
-        }
-
-        // _nWriterMergeFactor = AppPropertiesService.getPropertyInt( PROPERTY_WRITER_MERGE_FACTOR,
-        // DEFAULT_WRITER_MERGE_FACTOR );
-        // _nWriterMaxFieldLength = AppPropertiesService.getPropertyInt( PROPERTY_WRITER_MAX_FIELD_LENGTH,
-        // DEFAULT_WRITER_MAX_FIELD_LENGTH );
-        String strAnalyserClassName = AppPropertiesService.getProperty( PROPERTY_ANALYSER_CLASS_NAME );
-
-        if ( ( strAnalyserClassName == null ) || ( strAnalyserClassName.equals( "" ) ) )
-        {
-            throw new AppException( "Analyser class name not found in directory.properties", null );
-        }
-
         _indexer = SpringContextService.getBean( "directoryIndexer" );
-
-        try
-        {
-            _analyzer = (Analyzer) Class.forName( strAnalyserClassName ).newInstance( );
-        }
-        catch( Exception e )
-        {
-            throw new AppException( "Failed to load Lucene Analyzer class", e );
-        }
+        _directorySearchFactory = DirectorySearchFactory.getInstance( );
     }
 
     /**
@@ -233,8 +175,6 @@ public class DirectorySearchService
 
             try
             {
-                _searcher = new IndexSearcher( DirectoryReader.open( _luceneDirectory ) );
-
                 IDirectorySearchEngine engine = SpringContextService.getBean( BEAN_SEARCH_ENGINE );
 
                 listRecordResultTmp = new ArrayList<Integer>( );
@@ -399,8 +339,6 @@ public class DirectorySearchService
         Plugin plugin = PluginService.getPlugin( "directory" );
         StringBuffer result = new StringBuffer( );
 
-        _searcher = new IndexSearcher( DirectoryReader.open( _luceneDirectory ) );
-
         IDirectorySearchEngine engine = SpringContextService.getBean( BEAN_SEARCH_ENGINE );
 
         if ( ( ( strIdDirectory != null ) && !strIdDirectory.equals( DirectoryUtils.EMPTY_STRING ) )
@@ -461,30 +399,13 @@ public class DirectorySearchService
     {
         StringBuffer sbLogs = new StringBuffer( );
         IndexWriter writer = null;
-        boolean bCreateIndex = bCreate;
+        MutableBoolean bCreateIndex = new MutableBoolean( bCreate );
 
         try
         {
             sbLogs.append( "\r\nIndexing all contents ...\r\n" );
-
-            if ( !DirectoryReader.indexExists( _luceneDirectory ) )
-            { // init index
-                bCreateIndex = true;
-            }
-
-            IndexWriterConfig conf = new IndexWriterConfig( _analyzer );
-
-            if ( bCreateIndex )
-            {
-                conf.setOpenMode( OpenMode.CREATE );
-            }
-            else
-            {
-                conf.setOpenMode( OpenMode.APPEND );
-            }
-
-            writer = new IndexWriter( _luceneDirectory, conf );
-
+            writer = _directorySearchFactory.getIndexWriter( bCreateIndex );
+            
             Date start = new Date( );
 
             sbLogs.append( "\r\n<strong>Indexer : " );
@@ -492,7 +413,7 @@ public class DirectorySearchService
             sbLogs.append( " - " );
             sbLogs.append( _indexer.getDescription( ) );
             sbLogs.append( "</strong>\r\n" );
-            _indexer.processIndexing( writer, bCreateIndex, sbLogs );
+            _indexer.processIndexing( writer, bCreateIndex.getValue( ), sbLogs );
 
             Date end = new Date( );
 
@@ -591,20 +512,10 @@ public class DirectorySearchService
      * return searcher
      * 
      * @return searcher
+     * @throws IOException - if there is a low-level IO error 
      */
-    public IndexSearcher getSearcher( )
+    public IndexSearcher getSearcher( ) throws IOException
     {
-        return _searcher;
-    }
-
-    /**
-     * set searcher
-     * 
-     * @param searcher
-     *            searcher
-     */
-    public void setSearcher( IndexSearcher searcher )
-    {
-        _searcher = searcher;
+        return _directorySearchFactory.getIndexSearcher( );
     }
 }
