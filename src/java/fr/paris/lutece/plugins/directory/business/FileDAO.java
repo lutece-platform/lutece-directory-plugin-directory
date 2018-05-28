@@ -47,8 +47,8 @@ public final class FileDAO implements IFileDAO
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_file ) FROM directory_file";
     private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_file,title,id_physical_file,file_size,mime_type,extension, date_expiration "
             + " FROM directory_file WHERE id_file = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_file(id_file,title,id_physical_file,file_size,mime_type,extension, date_expiration )"
-            + " VALUES(?,?,?,?,?,?)";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO directory_file(id_file,title,id_physical_file,file_size,mime_type,extension,date_expiration)"
+            + " VALUES(?,?,?,?,?,?,?)";
     private static final String SQL_QUERY_DELETE = "DELETE FROM directory_file WHERE id_file = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE  directory_file SET "
             + "id_file=?,title=?,id_physical_file=?,file_size=?,mime_type=?, extension=?, date_expiration=? WHERE id_file = ?";
@@ -99,7 +99,7 @@ public final class FileDAO implements IFileDAO
         daoUtil.setInt( 4, file.getSize( ) );
         daoUtil.setString( 5, file.getMimeType( ) );
         daoUtil.setString( 6, file.getExtension( ) );
-        daoUtil.setTimestamp( 6, file.getDateExpiration( ) );
+        daoUtil.setTimestamp( 7, file.getDateExpiration( ) );
         file.setIdFile( newPrimaryKey( plugin ) );
         daoUtil.setInt( 1, file.getIdFile( ) );
         daoUtil.executeUpdate( );
