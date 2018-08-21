@@ -7,6 +7,6 @@
 	 	<#else>
 			<#assign field_value = ""/>
 		</#if>
-		<@input type='textarea' name='${entry.idEntry}' id='${entry.idEntry}' rows=20>${field_value}</@input>
+		<@input type='textarea' name='${entry.idEntry}' id='${entry.idEntry}' rows=20 richtext=true>${field_value}</@input>
 		</#list>
 </@formGroup>
