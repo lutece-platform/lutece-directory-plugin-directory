@@ -280,25 +280,48 @@ public final class RecordFieldHome
      */
     public static List<RecordField> getRecordFieldList( RecordFieldFilter filter, Plugin plugin )
     {
+        return getRecordFieldList(  filter, true, true, true,  plugin );
+    }
+
+    /**
+     * Load the data of all the record field who verify the filter and returns them in a list
+     *
+     * @param filter
+     *            the filter
+     * @param withFile
+     *            if the recordField must be loaded with his file (if exists)
+     * @param withField
+     *            if the recordField must be loaded with his field (if exists)
+     * @param withRecord
+     *            if the recordField must be loaded with his record (if exists)
+     * @param plugin
+     *            the plugin
+     * @return the list of record fields
+     */
+    public static List<RecordField> getRecordFieldList( RecordFieldFilter filter, boolean withFile, boolean withField, boolean withRecord, Plugin plugin )
+    {
         List<RecordField> listRecordField = _dao.selectListByFilter( filter, plugin );
         IRecordService recordService = SpringContextService.getBean( RecordService.BEAN_SERVICE );
 
-        for ( RecordField recordField : listRecordField )
+        if ( withFile || withField || withRecord )
         {
-            if ( recordField.getFile( ) != null )
-            {
-                recordField.setFile( FileHome.findByPrimaryKey( recordField.getFile( ).getIdFile( ), plugin ) );
-            }
+	        for ( RecordField recordField : listRecordField )
+	        {
+	            if ( withFile && recordField.getFile( ) != null )
+	            {
+	                recordField.setFile( FileHome.findByPrimaryKey( recordField.getFile( ).getIdFile( ), plugin ) );
+	            }
 
-            if ( recordField.getField( ) != null )
-            {
-                recordField.setField( FieldHome.findByPrimaryKey( recordField.getField( ).getIdField( ), plugin ) );
-            }
+	            if ( withField && recordField.getField( ) != null )
+	            {
+	                recordField.setField( FieldHome.findByPrimaryKey( recordField.getField( ).getIdField( ), plugin ) );
+	            }
 
-            if ( recordField.getRecord( ) != null )
-            {
-                recordField.setRecord( recordService.findByPrimaryKey( recordField.getRecord( ).getIdRecord( ), plugin ) );
-            }
+	            if ( withRecord && recordField.getRecord( ) != null )
+	            {
+	                recordField.setRecord( recordService.findByPrimaryKey( recordField.getRecord( ).getIdRecord( ), plugin ) );
+	            }
+	        }
         }
 
         return listRecordField;
