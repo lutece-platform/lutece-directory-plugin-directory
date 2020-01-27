@@ -400,7 +400,7 @@ public final class RecordFieldHome
     }
 
     /**
-     * Check if the given number is already on a record field or not. <br />
+     * Check if the given number is already on a record field or not. <br>
      * In other words, this method serves the purpose of checking the given number before creating a new record field since the entry type numbering should have
      * unique number.
      * 

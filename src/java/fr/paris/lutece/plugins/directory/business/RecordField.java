@@ -55,14 +55,14 @@ public class RecordField
     /**
      * This attribute is used for EntryTypeDownloadURL
      * 
-     * @see {@link EntryTypeDownloadUrl}
+     * {@link EntryTypeDownloadUrl}
      */
     private String _strFileName;
 
     /**
      * This attribute is used for EntryTypeDownloadURL
      * 
-     * @see {@link EntryTypeDownloadUrl}
+     * {@link EntryTypeDownloadUrl}
      */
     private String _strFileExtension;
 
@@ -231,7 +231,7 @@ public class RecordField
     /**
      * Get the file extensions This attribute is used for EntryTypeDownloadURL
      * 
-     * @see {@link EntryTypeDownloadUrl}
+     * {@link EntryTypeDownloadUrl}
      * @return the file extension if the response value is a file
      */
     public String getFileExtension( )
@@ -242,7 +242,7 @@ public class RecordField
     /**
      * Set the file extension if the response value is a file This attribute is used for EntryTypeDownloadURL
      * 
-     * @see {@link EntryTypeDownloadUrl}
+     * {@link EntryTypeDownloadUrl}
      * @param fileExtension
      *            the file extension if the response value is a file
      */
@@ -254,7 +254,7 @@ public class RecordField
     /**
      * The file name if the response value is a file This attribute is used for EntryTypeDownloadURL
      * 
-     * @see {@link EntryTypeDownloadUrl}
+     * {@link EntryTypeDownloadUrl}
      * @return the file name if the response value is a file
      */
     public String getFileName( )
@@ -265,7 +265,7 @@ public class RecordField
     /**
      * The file name if the response value is a file This attribute is used for EntryTypeDownloadURL
      * 
-     * @see {@link EntryTypeDownloadUrl}
+     * {@link EntryTypeDownloadUrl}
      * @param fileName
      *            the file name if the response value is a file
      */

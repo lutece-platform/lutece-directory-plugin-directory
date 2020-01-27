@@ -98,6 +98,8 @@ public interface IPhysicalFileDAO
      * 
      * @param physicalFile
      *            the physical file to purge
+     * @param plugin 
+     * 				the plugin
      */
     void purge( PhysicalFile physicalFile, Plugin plugin );
 }

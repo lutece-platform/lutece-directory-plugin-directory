@@ -42,7 +42,7 @@ import java.util.List;
 
 /**
  *
- * MapProviderManager : manages all map providers register. <br />
+ * MapProviderManager : manages all map providers register. <br>
  * Map providers are registered through {@link SpringContextService#getBeansOfType}. Such providers implement {@link IMapProvider} and need to be declared in a
  * spring context file.
  * 

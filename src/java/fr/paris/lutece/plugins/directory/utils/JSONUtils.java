@@ -122,7 +122,7 @@ public final class JSONUtils
      * Build the json form success removing file
      * 
      * @param strFieldName
-     *            the field name (WARNING : it is not the id entry, it is 'directory_<id_entry>', ex: directory_11)
+     *            the field name (WARNING : it is not the id entry, it is 'directory_' + id_entry, ex: directory_11)
      * @param json
      *            the JSON object
      */
@@ -167,13 +167,13 @@ public final class JSONUtils
     }
 
     /**
-     * Get the user infos. <br />
-     * The json must be written with the following format : <br />
+     * Get the user infos. <br>
+     * The json must be written with the following format : <br>
      * <code>
-     * <br />{ "user-attributes": [
-     * <br />{ "user-attribute-key": "user.name.family", "user-attribute-value": "FAMILYNAME" },
-     * <br />{ "user-attribute-key": "user.home-info.online.email", "user-attribute-value": "EMAIL@EMAIL.EMAIL"}
-     * <br />] }
+     * <br>{ "user-attributes": [
+     * <br>{ "user-attribute-key": "user.name.family", "user-attribute-value": "FAMILYNAME" },
+     * <br>{ "user-attribute-key": "user.home-info.online.email", "user-attribute-value": "EMAIL@EMAIL.EMAIL"}
+     * <br>] }
      * </code>
      * 
      * @param strJSON

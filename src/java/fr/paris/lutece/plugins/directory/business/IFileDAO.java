@@ -107,6 +107,8 @@ public interface IFileDAO
     /**
      * Get the files list
      * 
+     * @param plugin 
+     * 			the plugin
      * @return the list of files
      */
     List<File> selectFilesList( Plugin plugin );

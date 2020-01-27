@@ -104,6 +104,8 @@ public interface IMapProvider
     /**
      * returns the Parameter class contains all the parameters of the map
      * 
+     * @param nKey 
+     * 				the key
      * @return the Parameter
      */
     Object getParameter( int nKey );

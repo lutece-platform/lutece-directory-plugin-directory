@@ -79,7 +79,7 @@ public class RecordComparator implements Comparator<Record>
      *            Record 1
      * @param r2
      *            Record 2
-     * @return < 0 if r1 is before r2 in the alphabetical order 0 if r1 equals r2 > 0 if r1 is after r2
+     * @return negative value if r1 is before r2 in the alphabetical order, 0 if r1 equals r2, positive value if r1 is after r2
      */
     @Override
     public int compare( Record r1, Record r2 )

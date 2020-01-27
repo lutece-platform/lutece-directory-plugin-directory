@@ -203,8 +203,8 @@ public class DirectoryService
     }
 
     /**
-     * Get the user infos from a given id record and id entry. <br />
-     * The retrieval of the user infos depends on the entry type : <br />
+     * Get the user infos from a given id record and id entry. <br>
+     * The retrieval of the user infos depends on the entry type : <br>
      * <ul>
      * <li>If it is an {@link EntryTypeMyLuteceUser}, then it will use the {@link SecurityService} API</li>
      * <li>If it is an {@link EntryTypeRemoteMyLuteceUser}, then it will use the {@link UserAttributesService} API</li>
@@ -249,7 +249,7 @@ public class DirectoryService
     }
 
     /**
-     * Get the user guid from a given id record and id entry. <br />
+     * Get the user guid from a given id record and id entry. <br>
      * Return an empty string if the entry is not an EntryTypeMyLuteceUser nor EntryTypeRemoteMyLuteceUser
      * 
      * @param nIdRecord

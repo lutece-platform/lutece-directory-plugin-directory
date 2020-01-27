@@ -1029,7 +1029,7 @@ public class Directory implements AdminWorkgroupResource, RBACResource
 
     /**
      *
-     * @param _bSearchOperatorOr
+     * @param bSearchOperatorOr
      *            true if the search operator using is OR
      */
     public void setSearchOperatorOr( boolean bSearchOperatorOr )

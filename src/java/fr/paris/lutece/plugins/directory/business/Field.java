@@ -382,7 +382,7 @@ public class Field implements AdminWorkgroupResource
     /**
      * Sets the field's ImageType
      * 
-     * @param ImageType
+     * @param strImageType
      *            The Image Type
      *
      */

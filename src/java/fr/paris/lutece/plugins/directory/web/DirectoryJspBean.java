@@ -3508,7 +3508,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         Map<String, Object> model = new HashMap<String, Object>( );
 
         /**
-         * Map of <idEntry, RecordFields> 1) The user has uploaded/deleted a file - The updated map is stored in the session 2) The user has not uploaded/delete
+         * Map of idEntry, RecordFields 1) The user has uploaded/deleted a file - The updated map is stored in the session 2) The user has not uploaded/delete
          * a file - The map is filled with the data from the database - The asynchronous uploaded files map is reinitialized
          */
         Map<String, List<RecordField>> map = null;
@@ -3531,7 +3531,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
         }
 
-        // Get the map <idEntry, RecordFields> classically from the database
+        // Get the map idEntry, RecordFields classically from the database
         /** 2) The user has not uploaded/delete a file */
         if ( map == null )
         {
@@ -3584,7 +3584,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         Map<String, Object> model = new HashMap<String, Object>( );
 
         /**
-         * Map of <idEntry, RecordFields> 1) The user has uploaded/deleted a file - The updated map is stored in the session 2) The user has not uploaded/delete
+         * Map of idEntry, RecordFields 1) The user has uploaded/deleted a file - The updated map is stored in the session 2) The user has not uploaded/delete
          * a file - The map is filled with the data from the database - The asynchronous uploaded files map is reinitialized
          */
         Map<String, List<RecordField>> map = null;
@@ -3607,7 +3607,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             }
         }
 
-        // Get the map <idEntry, RecordFields> classically from the database
+        // Get the map idEntry, RecordFields classically from the database
         /** 2) The user has not uploaded/delete a file */
         if ( map == null )
         {
@@ -3762,7 +3762,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
         List<IEntry> listEntry = DirectoryUtils.getFormEntries( record.getDirectory( ).getIdDirectory( ), getPlugin( ), getUser( ) );
 
         /**
-         * Map of <idEntry, RecordFields> 1) The user has uploaded/deleted a file - The updated map is stored in the session 2) The user has not uploaded/delete
+         * Map of idEntry, RecordFields 1) The user has uploaded/deleted a file - The updated map is stored in the session 2) The user has not uploaded/delete
          * a file - The map is filled with the data from the database - The asynchronous uploaded files map is reinitialized
          */
         Map<String, List<RecordField>> map = null;
@@ -3780,7 +3780,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
             session.removeAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS );
         }
 
-        // Get the map <idEntry, RecordFields> classically from the database
+        // Get the map idEntry, RecordFields classically from the database
         /** 2) The user has not uploaded/delete a file */
         if ( map == null )
         {
@@ -5636,7 +5636,7 @@ public class DirectoryJspBean extends PluginAdminPageJspBean
                 return strErrorMessage;
             }
 
-            // Put the map <idEntry, RecordFields> in the session
+            // Put the map idEntry, RecordFields in the session
             request.getSession( ).setAttribute( DirectoryUtils.SESSION_DIRECTORY_LIST_SUBMITTED_RECORD_FIELDS, mapListRecordFields );
 
             // Check whether it is an update or a creation

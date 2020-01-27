@@ -145,6 +145,8 @@ public final class FileHome
     /**
      * Get the files list
      * 
+     * @param plugin 
+     * 				the plugin
      * @return the list of files
      */
     public static List<File> getFilesList( Plugin plugin )

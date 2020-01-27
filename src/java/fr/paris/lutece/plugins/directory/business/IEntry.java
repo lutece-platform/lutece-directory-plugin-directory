@@ -526,6 +526,7 @@ public interface IEntry
      * @param bTestDirectoryError
      *            true if the value contains in the request must be tested
      * @param bAddNewValue
+     * 				true if add new value
      * @param listRecordField
      *            the list of record field associate to the record
      * @param locale
@@ -546,6 +547,7 @@ public interface IEntry
      * @param bTestDirectoryError
      *            true if the value contains in the request must be tested
      * @param bAddNewValue
+     * 				true if add new value
      * @param listRecordField
      *            the list of record field associate to the record
      * @param locale
@@ -737,12 +739,18 @@ public interface IEntry
     /**
      * @param record
      *            The record
-     * @param decodedBytes
-     * @param nomFile
-     * @param b
-     * @param listRecordField
-     * @param locale
+     * @param decodedBytes 
+     * 				decoded bytes
+     * @param nomFile 
+     * 				name of file
+     * @param b 
+     * 				flag
+     * @param listRecordField 
+     * 				list of record fields
+     * @param locale 
+     * 				the locale
      * @throws DirectoryErrorException
+     *              directory error exception
      */
     void getImportRecordFieldData( Record record, byte [ ] decodedBytes, String nomFile, boolean b, List<RecordField> listRecordField, Locale locale )
             throws DirectoryErrorException;

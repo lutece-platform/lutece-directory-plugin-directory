@@ -322,7 +322,8 @@ public class EntryTypeRemoteMyLuteceUser extends Entry
     }
 
     /**
-     * {@inheritDocs}
+     * 
+     * {@inheritDoc}
      */
     @Override
     public String convertRecordFieldTitleToString( RecordField recordField, Locale locale, boolean bDisplayFront )

@@ -60,14 +60,14 @@ public class DoRemoveAsynchronousFile
     private static final String PROPERTY_MESSAGE_ERROR_REMOVING_FILE = "directory.message.error.removingFile";
 
     /**
-     * Removes the uploaded fileItem. <br />
+     * Removes the uploaded fileItem. <br>
      * This method is called by the JSP <b>jsp/site/plugins/directory/DoRemoveFile.jsp</b> because this method is also used in front office in other module
      * (module-workflow-editrecord).
      * 
      * @param request
      *            the request
      * @return JSON
-     * @category CALLED_BY_JS (directoryupload.js)
+     * category CALLED_BY_JS (directoryupload.js)
      */
     public String doRemoveAsynchronousUploadedFile( HttpServletRequest request )
     {

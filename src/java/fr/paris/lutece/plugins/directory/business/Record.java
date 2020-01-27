@@ -280,7 +280,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @param locale
      *            the locale
      * @param bWithHtmlCode
-     *            true if the xml must contain html code like <img src ="">
+     *            true if the xml must contain html code 
      * @param state
      *            the state of the record
      * @param listEntryResultSearch
@@ -312,7 +312,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @param locale
      *            the locale
      * @param bWithHtmlCode
-     *            true if the xml must contain html code like <img src ="">
+     *            true if the xml must contain html code 
      * @param state
      *            the state of the record
      * @param listEntryResultSearch
@@ -402,7 +402,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @param locale
      *            the locale
      * @param bWithHtmlCode
-     *            true if the xml must contain html code like <img src ="">
+     *            true if the xml must contain html code 
      * @param listRecordField
      *            the list of recordField to display
      * @param bDisplayFront
@@ -525,7 +525,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @param locale
      *            the locale
      * @param bWithHtmlCode
-     *            true if the xml must contain html code like <img src ="">
+     *            true if the xml must contain html code
      * @param state
      *            the state of the record
      * @param listEntryResultSearch
@@ -557,7 +557,7 @@ public class Record implements AdminWorkgroupResource, IExtendableResource
      * @param locale
      *            the locale
      * @param bWithHtmlCode
-     *            true if the xml must contain html code like <img src ="">
+     *            true if the xml must contain html code 
      * @param state
      *            the state of the record
      * @param listEntryResultSearch

@@ -168,7 +168,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
     /**
      * {@inheritDoc}
      * 
-     * @category CALLED_BY_JS (directoryupload.js)
+     * category CALLED_BY_JS (directoryupload.js)
      */
     @Override
     public void process( HttpServletRequest request, HttpServletResponse response, JSONObject mainObject, List<FileItem> listFileItemsToUpload )
@@ -536,7 +536,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param strUploadAction
      *            the name of the upload action
      * @param map
-     *            the map of <idEntry, RecordFields>
+     *            the map of idEntry, RecordFields 
      * @param record
      *            the record
      * @param plugin
@@ -677,7 +677,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
         RecordField recordFieldForUploadedFile = null;
         Plugin plugin = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
 
-        // Add the file to the map of <idEntry, RecordFields>
+        // Add the file to the map of idEntry, RecordFields
         IEntry entry = EntryHome.findByPrimaryKey( DirectoryUtils.convertStringToInt( strIdEntry ), plugin );
 
         if ( entry != null )
@@ -794,7 +794,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param strUploadAction
      *            the name of the upload action
      * @param map
-     *            the map of <idEntry, RecordFields>
+     *            the map of idEntry, RecordFields
      * @throws DirectoryErrorException
      *             exception if there is an error
      */
@@ -843,7 +843,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param request
      *            the HTTP request
      * @param map
-     *            the map <idEntry, RecordFields>
+     *            the map idEntry, RecordFields
      * @param plugin
      *            the plugin
      */
@@ -950,7 +950,7 @@ public class DirectoryAsynchronousUploadHandler implements IAsynchronousUploadHa
      * @param locale
      *            the locale
      * @return true if the list of files can be uploaded, false otherwise
-     * @category CALLED_BY_JS (directoryupload.js)
+     * category CALLED_BY_JS (directoryupload.js)
      */
     private boolean canUploadFiles( String strFieldName, List<FileItem> listUploadedFileItems, List<FileItem> listFileItemsToUpload, JSONObject mainObject,
             Locale locale )

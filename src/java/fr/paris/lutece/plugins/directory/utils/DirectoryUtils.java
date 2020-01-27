@@ -421,7 +421,7 @@ public final class DirectoryUtils
      * @param plugin
      *            plugin
      * @param bGetFileName
-     *            true if it must get the file name, false otherwise <br />
+     *            true if it must get the file name, false otherwise <br>
      *            Warning : The file name is fetch by a webservice call. Beware of performance.
      * @return a map
      */
@@ -449,11 +449,11 @@ public final class DirectoryUtils
     }
 
     /**
-     * Build the map of <idEntry, RecordFields> from a given record
+     * Build the map of idEntry, RecordFields from a given record
      * 
      * @param record
      *            the record
-     * @return the map of <idEntry, RecordFields>
+     * @return the map of idEntry, RecordFields
      */
     public static Map<String, List<RecordField>> buildMapIdEntryListRecordField( Record record )
     {
@@ -1455,7 +1455,7 @@ public final class DirectoryUtils
      * @param plugin
      *            the plugin
      * @param bGetFileName
-     *            true if it must get the file name, false otherwise <br />
+     *            true if it must get the file name, false otherwise <br>
      *            Warning : The file name is fetch by a webservice call. Beware of performance.
      */
     private static void buildMapIdEntryListRecordField( Map<String, List<RecordField>> map, IEntry entry, RecordFieldFilter filter, Plugin plugin,

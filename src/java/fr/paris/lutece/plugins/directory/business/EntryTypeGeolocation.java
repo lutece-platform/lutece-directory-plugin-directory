@@ -127,8 +127,8 @@ public class EntryTypeGeolocation extends Entry
     }
 
     /**
-     * @param _entryAdditionalAddress
-     *            the _entryAdditionalAddress to set
+     * @param entryAdditionalAddress
+     *            the entryAdditionalAddress to set
      */
     public void setEntryAdditionalAddress( Entry entryAdditionalAddress )
     {

@@ -101,7 +101,8 @@ public class DirectoryFileService
     /**
      * Get the associated files of a given resource
      * 
-     * @param nIdResource
+     * @param nIdResource 
+     * 				the resource Id
      * @return the associated files of a given resource
      */
     public List<File> getAssociatedFiles( int nIdResource )
