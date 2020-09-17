@@ -93,6 +93,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -1089,20 +1090,11 @@ public final class DirectoryUtils
      */
     public static List<Integer> retainAllIdsKeepingFirstOrder( List<Integer> list1, List<Integer> list2 )
     {
-        Iterator<Integer> it = list1.iterator( );
-
+        
         // makes contains quicker
-        TreeSet<Integer> ts = new TreeSet<Integer>( list2 );
+        TreeSet<Integer> ts = new TreeSet<>( list2 );
 
-        while ( it.hasNext( ) )
-        {
-            if ( !ts.contains( it.next( ) ) )
-            {
-                it.remove( );
-            }
-        }
-
-        return list1;
+        return list1.stream().filter(ts::contains).collect(Collectors.toList());
     }
 
     /**
