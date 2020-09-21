@@ -16,17 +16,13 @@
 					</@formGroup>
 					<#if field.entry.roleAssociated && role_list?exists>
 						<@formGroup labelFor='role' labelKey='#i18n{directory.create_field.label_role}' helpKey='#i18n{directory.create_field.label_role_comment}'>
-							<#assign default_value>
-								<#if field.roleKey?exists>field.roleKey<#else>'none'</#if>
-							</#assign>
+							<#assign default_value><#if field.roleKey?exists>${field.roleKey}<#else>'none'</#if></#assign>
 							<@select name='role_key' default_value=default_value items=role_list />
 						</@formGroup>
 					</#if>
 					<#if field.entry.workgroupAssociated && user_workgroup_list?exists>
 						<@formGroup labelFor='workgroup' labelKey='#i18n{directory.create_field.label_workgroup}' helpKey='#i18n{directory.create_field.label_workgroup_comment}'>
-							<#assign default_value>
-								<#if field.workgroup?exists>field.workgroup<#else>'all'</#if>
-							</#assign>
+							<#assign default_value><#if field.workgroup?exists>${field.workgroup}<#else>'all'</#if></#assign>
 							<@select name='workgroup' items=user_workgroup_list default_value=default_value />
 						</@formGroup>
 					</#if>
