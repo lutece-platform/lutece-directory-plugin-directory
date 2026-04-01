@@ -58,25 +58,25 @@
 							<@checkBox labelFor='shown_in_advanced_search' labelKey='#i18n{directory.create_entry.label_shown_in_advanced_search}' name='shown_in_advanced_search' id='shown_in_advanced_search' value='1' checked=entry.shownInAdvancedSearch />
 						</@formGroup>
 						<@formGroup>
-							<@checkBox labelFor='indexed_as_title' labelKey='#i18n{directory.create_entry.label_indexed_as_title}' name='indexed_as_title' id='indexed_as_title' value='1' checked=entry.shownInAdvancedSearch />
+							<@checkBox labelFor='indexed_as_title' labelKey='#i18n{directory.create_entry.label_indexed_as_title}' name='indexed_as_title' id='indexed_as_title' value='1' checked=entry.indexedAsTitle />
 						</@formGroup>
 						<@formGroup>
-							<@checkBox labelFor='indexed_as_summary' labelKey='#i18n{directory.create_entry.label_indexed_as_summary}' name='indexed_as_summary' id='indexed_as_summary' value='1' checked=entry.shownInAdvancedSearch />
+							<@checkBox labelFor='indexed_as_summary' labelKey='#i18n{directory.create_entry.label_indexed_as_summary}' name='indexed_as_summary' id='indexed_as_summary' value='1' checked=entry.indexedAsSummary />
 						</@formGroup>
 						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_list_comment}'>
-							<@checkBox labelFor='shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='shown_in_result_list' id='shown_in_result_list' value='1' checked=entry.shownInAdvancedSearch />
+							<@checkBox labelFor='shown_in_result_list' labelKey='#i18n{directory.create_entry.label_shown_in_result_list}' name='shown_in_result_list' id='shown_in_result_list' value='1' checked=entry.shownInResultList />
 						</@formGroup>
 						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_result_record_comment}'>
-							<@checkBox labelFor='shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='shown_in_result_record' id='shown_in_result_record' value='1' checked=entry.shownInAdvancedSearch />
+							<@checkBox labelFor='shown_in_result_record' labelKey='#i18n{directory.create_entry.label_shown_in_result_record}' name='shown_in_result_record' id='shown_in_result_record' value='1' checked=entry.shownInResultRecord />
 						</@formGroup>
 						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_history_comment}'>
-							<@checkBox labelFor='shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='shown_in_history' id='shown_in_history' value='1' checked=entry.shownInAdvancedSearch />
+							<@checkBox labelFor='shown_in_history' labelKey='#i18n{directory.create_entry.label_shown_in_history}' name='shown_in_history' id='shown_in_history' value='1' checked=entry.shownInHistory />
 						</@formGroup>
 						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_export_comment}'>
-							<@checkBox labelFor='shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='shown_in_export' id='shown_in_export' value='1' checked=entry.shownInAdvancedSearch />
+							<@checkBox labelFor='shown_in_export' labelKey='#i18n{directory.create_entry.label_shown_in_export}' name='shown_in_export' id='shown_in_export' value='1' checked=entry.shownInExport />
 						</@formGroup>
 						<@formGroup helpKey='#i18n{directory.create_entry.label_shown_in_completeness_comment}'>
-							<@checkBox labelFor='shown_in_completeness' labelKey='#i18n{directory.create_entry.label_shown_in_completeness}' name='shown_in_completeness' id='shown_in_completeness' value='1' checked=entry.shownInAdvancedSearch />
+							<@checkBox labelFor='shown_in_completeness' labelKey='#i18n{directory.create_entry.label_shown_in_completeness}' name='shown_in_completeness' id='shown_in_completeness' value='1' checked=entry.shownInCompleteness />
 						</@formGroup>
 						<@formGroup labelFor='comment' labelKey='#i18n{directory.create_entry.label_comment}'>
 							<@input type='textarea' name='comment' rows=2>${entry.comment!}</@input>
